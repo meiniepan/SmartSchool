@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">智慧校园</string>
+    <string name="exit_app">再按一次退出程序</string>
+    <string name="empty_message">没有数据哎~</string>
+    <string name="error_message">发生了一些错误</string>
+    <string name="title">温馨提示</string>
+    <string name="done">确定</string>
+
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="logout">未登录</string>
+    <string name="account">账户</string>
+    <string name="password">密码</string>
+    <string name="login_tips">已有账户，快去登录</string>
+    <string name="register_tips">没有帐户，快去注册</string>
+    <string name="please_login">请登录</string>
+
+    <string name="no_version">已经是最新版本啦~</string>
+    <string name="new_version">有最新版本可更新：</string>
+    <string name="check_update_fail">检查新版本失败</string>
+    <string name="down_load_fail">下载安装包失败</string>
+
+
+
+    <string name="night_mode">夜间模式</string>
+    <string name="clear_cache">清除缓存</string>
+    <string name="clear_success">清理成功</string>
+    <string name="copyright">版权声明</string>
+    <string name="copyright_tip"></string>
+    <string name="copyright_summary">aa</string>
+    <string name="auther">作者</string>
+    <string name="auther_name">aa</string>
+    <string name="project_address">项目源码</string>
+    <string name="csdn博客">个人博客</string>
+    <string name="github_url">aa</string>
+    <string name="open_project">aa</string>
+    <string name="setting_about">关于</string>
+    <string name="setting_project">aa</string>
+    <string name="setting_version">检查更新</string>
+    <string name="cancel">取消</string>
+    <string name="updating">正在更新</string>
+</resources>
