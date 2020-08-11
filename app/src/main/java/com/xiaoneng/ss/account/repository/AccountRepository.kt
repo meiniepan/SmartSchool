@@ -19,27 +19,28 @@ import io.reactivex.schedulers.Schedulers
  * Time: 19:59
  */
 class AccountRepository(val loadState: MutableLiveData<State>) : ApiRepository() {
-    fun login(
-        username: String,
-        password: String,
-        liveData: MutableLiveData<BaseResponse<LoginResponse>>
-    ) {
-        apiService.onLogin(username, password)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                BaseObserver(
-                    liveData,
-                    loadState,
-                    this
-                )
-            )
-    }
+//    fun login(
+//        username: String,
+//        password: String,
+//        liveData: MutableLiveData<BaseResponse<LoginResponse>>
+//    ) {
+//        apiService.onLogin(username, password)
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(
+//                BaseObserver(
+//                    liveData,
+//                    loadState,
+//                    this
+//                )
+//            )
+//    }
 
 
     // 使用协程 + Retrofit2.6
     suspend fun loginCo(phone: String, vcode: String, password: String): LoginResponse {
-        return apiService.onLoginCo(phone, vcode,password).dataConvert(loadState)
+        return apiService.onStuLogin(phone, vcode,password).dataConvert(loadState)
+
     }
 
     suspend fun registerCo(
@@ -47,6 +48,6 @@ class AccountRepository(val loadState: MutableLiveData<State>) : ApiRepository()
         password: String,
         repassword: String
     ): RegisterResponse {
-        return apiService.onRegisterCo(username, password, repassword).dataConvert(loadState)
+        return apiService.onStuRegister(username, password,password,password, repassword).dataConvert(loadState)
     }
 }

@@ -52,6 +52,7 @@ class LoginActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClickLis
         when (v?.id) {
             R.id.button_login -> {
                 mViewModel.loginCo(account_text.text.toString(),"5848", password_text.text.toString())
+//                mViewModel.registerCo("aa","aa","aa")
             }
             R.id.register_text -> {
                 startActivity<RegisterActivity>(this)

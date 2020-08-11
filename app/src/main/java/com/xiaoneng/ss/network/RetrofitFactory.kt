@@ -95,7 +95,6 @@ class RetrofitFactory private constructor() {
                 .addHeader("Content-Type", "application/json")
                 .addHeader("charset", "UTF-8")
                 .build()
-            Log.e("==http_request", request.toString() )
             chain.proceed(request)
         }
     }

@@ -21,30 +21,24 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/user/login/sloginin")
 
-    suspend fun onLoginCo(
+    suspend fun onStuLogin(
         @Field("phone") phone: String,
         @Field("vcode") vcode: String,
         @Field("spassword") password: String
     ): BaseResponse<LoginResponse>
 
-    @POST("/login/sloginin")
-    suspend fun onSsLoginCo(
-        @Query("phone") phone: String,
-        @Query("vcode") vcode: String,
-        @Query("spassword") password: String
-    ): BaseResponse<LoginResponse>
+    @FormUrlEncoded
+    @POST("/api/v1/user/login/register")
 
-    @POST("/user/register")
-    suspend fun onRegisterCo(
-        @Query("username") username: String, @Query("password") password: String,
-        @Query("repassword") repassword: String
+    suspend fun onStuRegister(
+        @Field("phone") phone: String,
+        @Field("vcode") vcode: String,
+        @Field("invitecode") invitecode: String,
+        @Field("realname") realname: String,
+        @Field("spassword") password: String
     ): BaseResponse<RegisterResponse>
 
-    @POST("/user/login/sloginin")
-    fun onLogin(
-        @Query("username") username: String,
-        @Query("password") password: String
-    ): Observable<BaseResponse<LoginResponse>>
+
     //    @POST("/user/register")
 //    fun onRegister(
 //        @Query("username") username: String, @Query("password") password: String,
