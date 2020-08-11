@@ -15,6 +15,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.permission.PermissionResult
 import com.xiaoneng.ss.common.permission.Permissions
 import com.xiaoneng.ss.common.utils.startActivity
+import com.xiaoneng.ss.module.account.view.LoginActivity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -73,7 +74,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun startIntent() {
-        startActivity<MainActivity>(this)
+        startActivity<LoginActivity>(this)
         overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out)
     }
 

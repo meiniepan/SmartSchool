@@ -8,7 +8,7 @@ package com.xiaoneng.ss.common.utils
  * Time: 17:36
  */
 object Constant {
-    const val BASE_URL = "https://www.wanandroid.com"
+    const val BASE_URL = " http://api.huiwencloud.com:81"
     const val BASE_URL_2 = "http://localhost/api/v1/user"
 
     const val USERNAME_KEY = "username"

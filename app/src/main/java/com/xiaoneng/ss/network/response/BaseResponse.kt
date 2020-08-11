@@ -8,4 +8,4 @@ package com.xiaoneng.ss.network.response
  * Time: 16:04
  */
 
-open class BaseResponse<T>(var data: T, var errorCode: Int = -1, var errorMsg: String = "")
+open class BaseResponse<T>(var respResult: T, var respCode: Int = -1, var respMsg: String = "")

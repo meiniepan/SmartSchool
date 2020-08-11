@@ -49,6 +49,9 @@
             tools:ignore="LockedOrientationActivity">
 
         </activity>
+        <activity android:name=".module.account.view.LoginActivity"
+            android:screenOrientation="portrait"
+            />
     </application>
 
 </manifest>

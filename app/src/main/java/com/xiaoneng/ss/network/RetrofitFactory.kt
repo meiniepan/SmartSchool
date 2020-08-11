@@ -1,5 +1,7 @@
 package com.xiaoneng.ss.network
 
+import android.util.Log
+import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.LoggingInterceptor
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.SPreference
@@ -44,7 +46,9 @@ class RetrofitFactory private constructor() {
         return OkHttpClient.Builder()
             .addInterceptor(initCookieIntercept())
             .addInterceptor(initLoginIntercept())
-            .addInterceptor(LoggingInterceptor.Builder().build())
+            .addInterceptor(LoggingInterceptor.Builder()
+                .setLevel(Level.BASIC)
+                .build())
             .addInterceptor(initCommonInterceptor())
             .build()
     }
@@ -91,7 +95,7 @@ class RetrofitFactory private constructor() {
                 .addHeader("Content-Type", "application/json")
                 .addHeader("charset", "UTF-8")
                 .build()
-
+            Log.e("==http_request", request.toString() )
             chain.proceed(request)
         }
     }

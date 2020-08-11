@@ -6,10 +6,8 @@ import com.xiaoneng.ss.module.account.model.LoginResponse
 import com.xiaoneng.ss.module.account.model.RegisterResponse
 
 import io.reactivex.Observable
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import okhttp3.RequestBody
+import retrofit2.http.*
 
 /**
  * Created with Android Studio.
@@ -20,14 +18,34 @@ import retrofit2.http.Query
  */
 
 interface ApiService {
+    @FormUrlEncoded
+    @POST("/api/v1/user/login/sloginin")
 
-    @POST("/user/login")
+    suspend fun onLoginCo(
+        @Field("phone") phone: String,
+        @Field("vcode") vcode: String,
+        @Field("spassword") password: String
+    ): BaseResponse<LoginResponse>
+
+    @POST("/login/sloginin")
+    suspend fun onSsLoginCo(
+        @Query("phone") phone: String,
+        @Query("vcode") vcode: String,
+        @Query("spassword") password: String
+    ): BaseResponse<LoginResponse>
+
+    @POST("/user/register")
+    suspend fun onRegisterCo(
+        @Query("username") username: String, @Query("password") password: String,
+        @Query("repassword") repassword: String
+    ): BaseResponse<RegisterResponse>
+
+    @POST("/user/login/sloginin")
     fun onLogin(
         @Query("username") username: String,
         @Query("password") password: String
     ): Observable<BaseResponse<LoginResponse>>
-
-//    @POST("/user/register")
+    //    @POST("/user/register")
 //    fun onRegister(
 //        @Query("username") username: String, @Query("password") password: String,
 //        @Query("repassword") repassword: String
@@ -173,26 +191,9 @@ interface ApiService {
 //    suspend fun loadTopArticleCo(): BaseResponse<List<Article>>
 //
 //    @GET("/article/list/{pageNum}/json")
+
+
 //    suspend fun loadHomeArticleCo(@Path("pageNum") pageNum: Int): BaseResponse<HomeArticleResponse>
-
-    @POST("/user/login")
-    suspend fun onLoginCo(
-        @Query("username") username: String,
-        @Query("password") password: String
-    ): BaseResponse<LoginResponse>
-
-    @POST("/login/sloginin")
-    suspend fun onSsLoginCo(
-        @Query("phone") phone: String,
-        @Query("vcode") vcode: String,
-        @Query("spassword") password: String
-    ): BaseResponse<LoginResponse>
-
-    @POST("/user/register")
-    suspend fun onRegisterCo(
-        @Query("username") username: String, @Query("password") password: String,
-        @Query("repassword") repassword: String
-    ): BaseResponse<RegisterResponse>
 
 //    @GET("/wxarticle/chapters/json")
 //    suspend fun loadWeChatTabCo(): BaseResponse<List<WeChatTabNameResponse>>

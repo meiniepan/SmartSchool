@@ -21,24 +21,24 @@ import kotlinx.coroutines.launch
 fun <T> BaseResponse<T>.dataConvert(
     loadState: MutableLiveData<State>
 ): T {
-    when (errorCode) {
+    when (respCode) {
         Constant.SUCCESS -> {
-            if (data is List<*>) {
-                if ((data as List<*>).isEmpty()) {
+            if (respResult is List<*>) {
+                if ((respResult as List<*>).isEmpty()) {
                     loadState.postValue(State(StateType.EMPTY))
                 }
             }
             loadState.postValue(State(StateType.SUCCESS))
-            return data
+            return respResult
         }
         Constant.NOT_LOGIN -> {
             UserInfo.instance.logoutSuccess()
             loadState.postValue(State(StateType.ERROR, message = "请重新登录"))
-            return data
+            return respResult
         }
         else -> {
-            loadState.postValue(State(StateType.ERROR, message = errorMsg))
-            return data
+            loadState.postValue(State(StateType.ERROR, message = respMsg))
+            return respResult
         }
     }
 }

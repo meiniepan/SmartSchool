@@ -24,10 +24,10 @@ class BaseObserver<T : BaseResponse<*>>(
     val repository: BaseRepository
 ) : Observer<T> {
     override fun onNext(response: T) {
-        when (response.errorCode) {
+        when (response.respCode) {
             Constant.SUCCESS -> {
-                if (response.data is List<*>) {
-                    if ((response.data as List<*>).isEmpty()) {
+                if (response.respResult is List<*>) {
+                    if ((response.respResult as List<*>).isEmpty()) {
                         loadState.postValue(State(StateType.EMPTY))
                         return
                     }
@@ -40,7 +40,7 @@ class BaseObserver<T : BaseResponse<*>>(
                 loadState.postValue(State(StateType.ERROR, message = "请重新登录"))
             }
             else -> {
-                loadState.postValue(State(StateType.ERROR, message = response.errorMsg))
+                loadState.postValue(State(StateType.ERROR, message = response.respMsg))
             }
         }
     }

@@ -37,14 +37,9 @@ class AccountRepository(val loadState: MutableLiveData<State>) : ApiRepository()
     }
 
 
-
     // 使用协程 + Retrofit2.6
-    suspend fun loginCo(username: String, password: String): LoginResponse {
-        return apiService.onLoginCo(username, password).dataConvert(loadState)
-    }
-
-    suspend fun loginSsCo(): LoginResponse {
-        return apiService2.onSsLoginCo("13426046740", "5848","abc123").dataConvert(loadState)
+    suspend fun loginCo(phone: String, vcode: String, password: String): LoginResponse {
+        return apiService.onLoginCo(phone, vcode,password).dataConvert(loadState)
     }
 
     suspend fun registerCo(

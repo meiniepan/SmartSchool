@@ -51,8 +51,7 @@ class LoginActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClickLis
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.button_login -> {
-//                mViewModel.loginCo(account_text.text.toString(), password_text.text.toString())
-                mViewModel.loginSsCo()
+                mViewModel.loginCo(account_text.text.toString(),"5848", password_text.text.toString())
             }
             R.id.register_text -> {
                 startActivity<RegisterActivity>(this)

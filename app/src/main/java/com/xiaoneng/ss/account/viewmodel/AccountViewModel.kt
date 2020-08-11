@@ -39,13 +39,10 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
     val mLoginData: MutableLiveData<LoginResponse> = MutableLiveData()
     val mRegisterData: MutableLiveData<RegisterResponse> = MutableLiveData()
 
-    fun loginCo(username: String, password: String) {
-        initiateRequest({mLoginData.value = mRepository.loginCo(username, password)}, loadState)
+    fun loginCo(phone:String,vcode: String, password: String) {
+        initiateRequest({mLoginData.value = mRepository.loginCo(phone,vcode, password)}, loadState)
     }
 
-    fun loginSsCo() {
-        initiateRequest({ mLoginData.value = mRepository.loginSsCo() }, loadState)
-    }
 
     fun registerCo(username: String, password: String, repassword: String) {
         initiateRequest({mRegisterData.value = mRepository.registerCo(username, password, repassword)}, loadState)
