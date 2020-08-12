@@ -9,7 +9,7 @@ package com.xiaoneng.ss.common.utils
  */
 object Constant {
     const val BASE_URL = " http://api.huiwencloud.com:81"
-    const val BASE_URL_2 = "http://localhost/api/v1/user"
+//    const val BASE_URL = "https://www.sojson.com"
 
     const val USERNAME_KEY = "username"
     const val USERID_KEY = "userid"

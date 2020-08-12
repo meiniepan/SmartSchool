@@ -24,6 +24,7 @@ class LoginActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClickLis
         showSuccess()
     }
 
+
     private fun initColor() {
         login_background.setBackgroundColor(ColorUtil.getColor(this))
         button_login.setTextColor(ColorUtil.getColor(this))
@@ -51,7 +52,7 @@ class LoginActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClickLis
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.button_login -> {
-                mViewModel.loginCo(account_text.text.toString(),"5848", password_text.text.toString())
+                mViewModel.loginCo("18810472753","5848", "123456")
 //                mViewModel.registerCo("aa","aa","aa")
             }
             R.id.register_text -> {

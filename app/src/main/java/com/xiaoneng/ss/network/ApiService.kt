@@ -18,6 +18,19 @@ import retrofit2.http.*
  */
 
 interface ApiService {
+    /**
+     * 学生登录获取短信验证码
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/login/smsCode")
+
+    suspend fun onStuSmsCode(
+        @Field("phone") phone: String
+    ): BaseResponse<LoginResponse>
+
+    /**
+     * 学生登陆接口
+     */
     @FormUrlEncoded
     @POST("/api/v1/user/login/sloginin")
 
@@ -30,6 +43,9 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/user/login/register")
 
+    /**
+     * 学生注册绑定接口
+     */
     suspend fun onStuRegister(
         @Field("phone") phone: String,
         @Field("vcode") vcode: String,
@@ -37,6 +53,47 @@ interface ApiService {
         @Field("realname") realname: String,
         @Field("spassword") password: String
     ): BaseResponse<RegisterResponse>
+
+
+    @FormUrlEncoded
+    @POST("/api/v1/user/student/info")
+
+    /**
+     * 学生信息查询
+     */
+    suspend fun onStuInfo(
+        @Field("token") token: String
+    ): BaseResponse<LoginResponse>
+
+    @POST("/api/v1/user/student/modify")
+    @FormUrlEncoded
+
+    /**
+     * 学生信息修改接口
+     */
+    suspend fun onStuModifyInfo(
+        @FieldMap requestBody: HashMap<String,String>
+    ): BaseResponse<LoginResponse>
+
+    /**
+     *学生获取授权应用列表
+     */
+    @POST("/api/v1/user/student/apps")
+    @FormUrlEncoded
+    suspend fun onStuApps(
+        @Field("token") token: String
+    ): BaseResponse<LoginResponse>
+
+    /**
+     *教师登录接口
+     */
+    @POST("/api/v1/user/login/eloginin")
+    @FormUrlEncoded
+    suspend fun onTeaLogin(
+        @Field("phone") phone: String,
+        @Field("vcode") vcode: String,
+        @Field("spassword") password: String
+    ): BaseResponse<LoginResponse>
 
 
     //    @POST("/user/register")
