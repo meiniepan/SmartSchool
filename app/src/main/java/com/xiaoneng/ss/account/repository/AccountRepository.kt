@@ -44,7 +44,7 @@ class AccountRepository(val loadState: MutableLiveData<State>) : ApiRepository()
 //        map.put("token","66f9f08f34d84500a3d6d5334b87da36")
 //        map.put("realname","haha")
 //        return apiService.onStuModifyInfo(map).dataConvert(loadState)
-        return apiService.onTeaLogin(phone,vcode,password).dataConvert(loadState)
+        return apiService.onTeaSmsCode(phone).dataConvert(loadState)
 
     }
 

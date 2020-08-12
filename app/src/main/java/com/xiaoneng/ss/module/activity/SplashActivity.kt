@@ -1,11 +1,8 @@
 package com.xiaoneng.ss.module.activity
 
 import android.Manifest
-import android.animation.Animator
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -16,12 +13,7 @@ import com.xiaoneng.ss.common.permission.PermissionResult
 import com.xiaoneng.ss.common.permission.Permissions
 import com.xiaoneng.ss.common.utils.startActivity
 import com.xiaoneng.ss.module.account.view.LoginActivity
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import org.jetbrains.anko.configuration
 import pub.devrel.easypermissions.AppSettingsDialog
-import kotlin.coroutines.Continuation
 
 /**
  * @author Burning
@@ -29,8 +21,6 @@ import kotlin.coroutines.Continuation
  * @date :2020/8/10 3:02 PM
  */
 class SplashActivity : AppCompatActivity() {
-
-    private var mLottieAnimationView: LottieAnimationView? = null
 
     private var mSplashContainer: ViewGroup? = null
 
@@ -57,21 +47,9 @@ class SplashActivity : AppCompatActivity() {
      * 初始化进场动画
      */
     private fun initView() {
-//        GlobalScope.launch {
-//            delayTime()
-//
-//        }
-        Handler().postDelayed(Runnable { initPermission() },3000)
-    }
-
-    private suspend fun delayTime() {
-
-        Thread.currentThread().toString()
-        Log.e("===before", Thread.currentThread().toString())
-        delay(3000)
-        Log.e("===after", Thread.currentThread().toString())
         initPermission()
     }
+
 
     private fun startIntent() {
         startActivity<LoginActivity>(this)

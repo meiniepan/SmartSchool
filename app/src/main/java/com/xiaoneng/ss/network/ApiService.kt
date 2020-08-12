@@ -23,29 +23,28 @@ interface ApiService {
      */
     @FormUrlEncoded
     @POST("/api/v1/user/login/smsCode")
-
     suspend fun onStuSmsCode(
         @Field("phone") phone: String
     ): BaseResponse<LoginResponse>
+
 
     /**
      * 学生登陆接口
      */
     @FormUrlEncoded
     @POST("/api/v1/user/login/sloginin")
-
     suspend fun onStuLogin(
         @Field("phone") phone: String,
         @Field("vcode") vcode: String,
         @Field("spassword") password: String
     ): BaseResponse<LoginResponse>
 
-    @FormUrlEncoded
-    @POST("/api/v1/user/login/register")
 
     /**
      * 学生注册绑定接口
      */
+    @FormUrlEncoded
+    @POST("/api/v1/user/login/register")
     suspend fun onStuRegister(
         @Field("phone") phone: String,
         @Field("vcode") vcode: String,
@@ -55,25 +54,25 @@ interface ApiService {
     ): BaseResponse<RegisterResponse>
 
 
-    @FormUrlEncoded
-    @POST("/api/v1/user/student/info")
-
     /**
      * 学生信息查询
      */
+    @FormUrlEncoded
+    @POST("/api/v1/user/student/info")
     suspend fun onStuInfo(
         @Field("token") token: String
     ): BaseResponse<LoginResponse>
 
-    @POST("/api/v1/user/student/modify")
-    @FormUrlEncoded
 
     /**
      * 学生信息修改接口
      */
+    @POST("/api/v1/user/student/modify")
+    @FormUrlEncoded
     suspend fun onStuModifyInfo(
-        @FieldMap requestBody: HashMap<String,String>
+        @FieldMap requestBody: HashMap<String, String>
     ): BaseResponse<LoginResponse>
+
 
     /**
      *学生获取授权应用列表
@@ -83,6 +82,7 @@ interface ApiService {
     suspend fun onStuApps(
         @Field("token") token: String
     ): BaseResponse<LoginResponse>
+
 
     /**
      *教师登录接口
@@ -96,6 +96,64 @@ interface ApiService {
     ): BaseResponse<LoginResponse>
 
 
+    /**
+     * 教师登录获取短信验证码
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/login/esmsCode")
+    suspend fun onTeaSmsCode(
+        @Field("phone") phone: String
+    ): BaseResponse<LoginResponse>
+
+
+    /**
+     * 教师信息查询
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/teachers/info")
+    suspend fun onTeaInfo(
+        @Field("token") token: String
+    ): BaseResponse<LoginResponse>
+
+    /**
+     * 教师信息修改接口
+     */
+    @POST("/api/v1/user/teachers/modify")
+    @FormUrlEncoded
+    suspend fun onTeaModifyInfo(
+        @FieldMap requestBody: HashMap<String, String>
+    ): BaseResponse<LoginResponse>
+
+
+    /**
+     * 教师登录退出
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/login/eloginout")
+    suspend fun onTeaLoginOut(
+        @Field("phone") phone: String,
+        @Field("token") token: String
+    ): BaseResponse<LoginResponse>
+
+    /**
+     * 学生登录退出
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/login/loginout")
+    suspend fun onStuLoginOut(
+        @Field("phone") phone: String,
+        @Field("token") token: String
+    ): BaseResponse<LoginResponse>
+
+
+    /**
+     * 教师获取授权应用列表
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/teachers/apps")
+    suspend fun onTeaApps(
+        @Field("token") token: String
+    ): BaseResponse<LoginResponse>
     //    @POST("/user/register")
 //    fun onRegister(
 //        @Query("username") username: String, @Query("password") password: String,

@@ -3,7 +3,7 @@ ext {
     android = [
             compileSdkVersion: 29,
             buildToolsVersion: "29.0.2",
-            minSdkVersion    : 26,
+            minSdkVersion    : 19,
             targetSdkVersion : 29,
             versionCode      : 1,
             versionName      : "1.0",
@@ -14,7 +14,7 @@ ext {
     rx_kotlin_version = '2.3.0'
     rx_android_version = '2.1.1'
     anko_version = '0.10.5'
-    loadSir_version = '1.3.6'
+    loadSir_version = '1.3.8'
     lifecycle_version = '2.2.0-rc02'
     glide_version = '4.9.0'
     banner_version = '1.4.10'
@@ -84,7 +84,6 @@ ext {
             "preference"                 : "androidx.preference:preference:$preference_version",
             "material_dialog"            : "com.afollestad.material-dialogs:core:$material_dialog_version",
             "materiaal_dialog_color"     : "com.afollestad.material-dialogs:color:$material_dialog_color_version",
-            "circular_avatar"            : "com.github.wangjianxiandev:CircularAvatar:$circular_avatar",
             "easypermissions"            : "pub.devrel:easypermissions:$easypermissions_version",
             "zxing"                      : "com.github.yuzhiqiang1993:zxing:$zxing_version",
             "work_manager"               : "androidx.work:work-runtime:$work_manager_version",

@@ -6,7 +6,7 @@ import com.xiaoneng.ss.R
 /**
  * Created with Android Studio.
  * Description:
- * @author: 王拣贤
+ * @author: Burning
  * @date: 2020/02/22
  * Time: 14:29
  */

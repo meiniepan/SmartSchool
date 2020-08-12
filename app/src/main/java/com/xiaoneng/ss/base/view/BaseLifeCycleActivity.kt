@@ -2,11 +2,13 @@ package com.xiaoneng.ss.base.view
 
 
 import android.text.TextUtils
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
 import com.kingja.loadsir.callback.SuccessCallback
+import com.kingja.loadsir.core.Transport
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.viewmodel.BaseViewModel
 import com.xiaoneng.ss.common.callback.EmptyCallBack
@@ -15,6 +17,8 @@ import com.xiaoneng.ss.common.callback.LoadingCallBack
 import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.StateType
 import com.xiaoneng.ss.common.utils.CommonUtil
+import kotlinx.android.synthetic.main.layout_error.view.*
+
 
 /**
  * Created with Android Studio.
@@ -49,10 +53,15 @@ abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
     }
 
     open fun showError(msg: String) {
+        loadService.showCallback(ErrorCallBack::class.java)
         if (!TextUtils.isEmpty(msg)) {
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        loadService.setCallBack(ErrorCallBack::class.java, Transport { context, view ->
+            val mTvEmpty = view.findViewById(R.id.tv_error) as TextView
+            mTvEmpty.text = msg
+        })
         }
-        loadService.showCallback(ErrorCallBack::class.java)
+
     }
 
     open fun showTip(msg: String) {
