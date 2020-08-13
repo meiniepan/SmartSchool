@@ -56,7 +56,7 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
                 )
             }
             R.id.login_text -> {
-                startActivity<LoginActivity>(this)
+                startActivity<LoginActivityTest>(this)
                 finish()
             }
             R.id.ivBack -> {

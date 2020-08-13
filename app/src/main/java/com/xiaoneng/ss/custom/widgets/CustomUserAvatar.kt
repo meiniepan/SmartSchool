@@ -1,4 +1,4 @@
-package com.xiaoneng.ss.custom
+package com.xiaoneng.ss.custom.widgets
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,46 +8,45 @@ import android.widget.ImageView
 import com.xiaoneng.ss.R
 
 /**
- * Created with Android Studio.
- * Description: 含有用户默认昵称的头像
- *
- * @author: Burning
- * @date: 2020/02/07
- * Time: 15:07
+ * @author Burning
+ * @description:
+ * @date :2020/8/12 3:39 PM
  */
 @SuppressLint("AppCompatCustomView")
-class CustomUserAvatar : ImageView {
+class CustomUserAvatar constructor(context: Context?, attrs: AttributeSet?= null): ImageView(context, attrs, 0){
     private var mPaintText: Paint? = null
     private var mPaintBackground: Paint? = null
     private var mRect: Rect? = null
-    private var mCircleName: String? = null
-    private var mColor = 0
-    private var mCount = 0
-    private var mStyle = 0
-    private var mShadowRadius= 0f
+    private var mCircleName: String? = "空"
+    private var mTextColor = 0
+    private var mBackgroundColor = 0
+    private var mChineseCount = 0
+    private var mEnglishCount = 0
+    private var mBackgroundStyle = 0
+    private var mShadowRadius = 0f
     private var mIsShowBlurMask: Boolean = false
 
-    constructor(context: Context?) : super(context) {
+    init {
+        val typedArray =
+            getContext().obtainStyledAttributes(attrs, R.styleable.CustomUserAvatar)
+        val backgroundStyle = typedArray.getInteger(R.styleable.CustomUserAvatar_background_style, 0)
+        val textColor = typedArray.getInteger(R.styleable.CustomUserAvatar_text_color, R.color.always_white_text)
+        val backgroundColor = typedArray.getInteger(R.styleable.CustomUserAvatar_background_color, Color.BLUE)
+        val showBlurMask = typedArray.getBoolean(R.styleable.CustomUserAvatar_show_blur_Mask, false)
+        val chineseCount = typedArray.getInteger(R.styleable.CustomUserAvatar_chinese_name, 0)
+        val englishCount = typedArray.getInteger(R.styleable.CustomUserAvatar_english_name,0)
+        this.mBackgroundStyle = backgroundStyle
+        this.mTextColor = textColor
+        this.mBackgroundColor = backgroundColor
+        this.mIsShowBlurMask = showBlurMask
+        this.mChineseCount = chineseCount
+        this.mEnglishCount = englishCount
+        typedArray.recycle()
         init()
     }
 
-    constructor(context: Context?, attrs: AttributeSet?) : super(
-        context,
-        attrs
-    ) {
-        init()
-    }
-
-    constructor(
-        context: Context?,
-        attrs: AttributeSet?,
-        defStyleAttr: Int
-    ) : super(context, attrs, defStyleAttr) {
-        init()
-    }
 
     private fun init() {
-//        setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         mPaintText = Paint(Paint.ANTI_ALIAS_FLAG)
         mPaintBackground = Paint(Paint.ANTI_ALIAS_FLAG)
         mRect = Rect()
@@ -59,10 +58,12 @@ class CustomUserAvatar : ImageView {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        // 绘制发光效果
-        mPaintBackground!!.color = mColor
-        mPaintBackground!!.style = if (mStyle == 0) Paint.Style.STROKE else Paint.Style.FILL
+        // 设置背景颜色
+        mPaintBackground!!.color = mBackgroundColor
+        mPaintBackground!!.style =
+            if (mBackgroundStyle == 0) Paint.Style.STROKE else Paint.Style.FILL
         mPaintBackground!!.strokeWidth = 5f
+        // 是否绘制发光效果
         if (mIsShowBlurMask) {
             mPaintBackground!!.maskFilter = BlurMaskFilter(10.0f, BlurMaskFilter.Blur.SOLID)
         }
@@ -75,7 +76,7 @@ class CustomUserAvatar : ImageView {
         // 设置文本大小
         mPaintText!!.textSize = width / 3.toFloat()
         // 设置文本颜色跟随应用主题颜色
-        mPaintText!!.color = if (mStyle == 0) mColor else context.getColor(R.color.always_white_text)
+        mPaintText!!.color = mTextColor
         // 设置画笔粗细
         mPaintText!!.strokeWidth = 5f
         // 设置阴影半径
@@ -103,7 +104,7 @@ class CustomUserAvatar : ImageView {
     /**
      * 判断一个字符串是否含有中文
      *
-     * @param str
+     * @param str 输入的字符
      * @return
      */
     fun isChineseString(str: String?): Boolean {
@@ -121,18 +122,18 @@ class CustomUserAvatar : ImageView {
     /**
      * 设置显示的名字
      *
-     * @param circleName
+     * @param circleName 要显示的名字
      */
     fun setCircleName(circleName: String) { // 中文名字取后两个
         if (isChineseString(circleName)) {
-            mCircleName = if (circleName.length > if(mCount == 0)  2 else mCount) {
-                circleName.substring(0, if(mCount == 0)  2 else mCount)
+            mCircleName = if (circleName.length > if (mChineseCount == 0) 2 else mChineseCount) {
+                circleName.substring(0, if (mChineseCount == 0) 2 else mChineseCount)
             } else {
                 circleName
             }
         } else { // 非中文名字取第一个
-            if (circleName.length > 1) {
-                mCircleName = circleName.substring(0, 1)
+            if (circleName.length > if (mEnglishCount == 0) 1 else mEnglishCount) {
+                mCircleName = circleName.substring(0, if (mEnglishCount == 0) 1 else mEnglishCount)
                 mCircleName = mCircleName!!.toUpperCase()
             } else {
                 mCircleName = circleName
@@ -146,19 +147,27 @@ class CustomUserAvatar : ImageView {
         mIsShowBlurMask = isShow
     }
 
-    fun setShowNameCount(count: Int) {
-        mCount = count
+    fun setShowChineseNameCount(count: Int) {
+        mChineseCount = count
     }
 
-    fun setColor(color: Int) {
-        mColor = color
+    fun setShowEnglishNameCount(count: Int) {
+        mEnglishCount = count
     }
 
-    fun setStyle(style : Int) {
-        mStyle = style
+    fun setTextColor(color: Int) {
+        mTextColor = color
     }
 
-    fun setShadowRadius(radius : Float) {
+    fun setmBackgroundColor(color: Int) {
+        mBackgroundColor = color
+    }
+
+    fun setBackgroundStyle(style: Int) {
+        mBackgroundStyle = style
+    }
+
+    fun setShadowRadius(radius: Float) {
         mShadowRadius = radius
     }
 }

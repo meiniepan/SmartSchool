@@ -39,4 +39,8 @@
     <string name="setting_version">检查更新</string>
     <string name="cancel">取消</string>
     <string name="updating">正在更新</string>
+    <string name="navigation_1">1</string>
+    <string name="navigation_2">2</string>
+    <string name="navigation_3">3</string>
+    <string name="navigation_4">4</string>
 </resources>

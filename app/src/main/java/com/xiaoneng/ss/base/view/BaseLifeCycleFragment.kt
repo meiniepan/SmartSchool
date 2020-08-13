@@ -31,7 +31,7 @@ abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
 
     override fun initView() {
 
-        showLoading()
+        showSuccess()
 
         mViewModel = ViewModelProvider(this).get(CommonUtil.getClass(this))
 

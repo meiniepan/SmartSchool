@@ -35,7 +35,7 @@ abstract class BaseFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(getLayoutId(), null)
+        val rootView = inflater.inflate(getLayoutId(),container, false)
         loadService = LoadSir.getDefault().register(rootView) { reLoad() }
         EventBus.getDefault().register(this)
         return loadService.loadLayout

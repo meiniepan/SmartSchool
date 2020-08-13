@@ -26,7 +26,6 @@ object Constant {
     const val SYSTEM = 1
     const val WECHAT = 2
     const val NAVIGATION = 3
-    const val PROJECT = 4
 
     const val SUCCESS = 0
     const val NOT_LOGIN = -1001

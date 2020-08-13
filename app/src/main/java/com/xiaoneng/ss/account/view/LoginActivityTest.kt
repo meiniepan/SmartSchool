@@ -12,7 +12,7 @@ import com.xiaoneng.ss.module.account.viewmodel.AccountViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 import org.greenrobot.eventbus.Subscribe
 
-class LoginActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClickListener {
+class LoginActivityTest : BaseLifeCycleActivity<AccountViewModel>(), View.OnClickListener {
     override fun getLayoutId(): Int = R.layout.activity_login
 
     override fun initView() {

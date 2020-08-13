@@ -7,12 +7,11 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.airbnb.lottie.LottieAnimationView
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.account.view.LoginSwitchActivity
 import com.xiaoneng.ss.common.permission.PermissionResult
 import com.xiaoneng.ss.common.permission.Permissions
 import com.xiaoneng.ss.common.utils.startActivity
-import com.xiaoneng.ss.module.account.view.LoginActivity
 import pub.devrel.easypermissions.AppSettingsDialog
 
 /**
@@ -52,7 +51,7 @@ class SplashActivity : AppCompatActivity() {
 
 
     private fun startIntent() {
-        startActivity<LoginActivity>(this)
+        startActivity<LoginSwitchActivity>(this)
         overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out)
     }
 
