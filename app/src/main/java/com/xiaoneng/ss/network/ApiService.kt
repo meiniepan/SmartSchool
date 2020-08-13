@@ -1,12 +1,8 @@
 package com.xiaoneng.ss.network
 
-import com.xiaoneng.ss.network.response.BaseResponse
-import com.xiaoneng.ss.network.response.EmptyResponse
 import com.xiaoneng.ss.module.account.model.LoginResponse
 import com.xiaoneng.ss.module.account.model.RegisterResponse
-
-import io.reactivex.Observable
-import okhttp3.RequestBody
+import com.xiaoneng.ss.network.response.BaseResponse
 import retrofit2.http.*
 
 /**
@@ -68,9 +64,8 @@ interface ApiService {
      * 学生信息修改接口
      */
     @POST("/api/v1/user/student/modify")
-    @FormUrlEncoded
     suspend fun onStuModifyInfo(
-        @FieldMap requestBody: HashMap<String, String>
+        @Body requestBody: StudentInfoReq
     ): BaseResponse<LoginResponse>
 
 
