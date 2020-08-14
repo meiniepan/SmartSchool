@@ -21,9 +21,11 @@ import com.xiaoneng.ss.module.sys.view.SystemFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import org.greenrobot.eventbus.Subscribe
+import org.jetbrains.anko.toast
 
 
 class MainActivity : BaseActivity(){
+    private var mExitTime: Long = 0
     // 委托属性   将实现委托给了 -> Preference
     private var mUsername: String by SPreference(Constant.USERNAME_KEY, "未登录")
     private var isNightMode: Boolean by SPreference(Constant.NIGHT_MODE, false)
@@ -242,5 +244,15 @@ class MainActivity : BaseActivity(){
         }
     }
 
+    override fun onBackPressed() {
+        val time = System.currentTimeMillis()
+
+        if (time - mExitTime > 2000) {
+            toast(getString(R.string.exit_app))
+            mExitTime = time
+        } else {
+            AppManager.instance.exitApp(this)
+        }
+    }
 
 }

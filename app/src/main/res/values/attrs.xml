@@ -19,9 +19,13 @@
         <attr name="white_icon" format="boolean"/>
     </declare-styleable>
 
-    <declare-styleable name="BaseOneRightToolBar">
-        <attr name="right_icon" format="reference"/>
-        <attr name="right_text_color" format="color"/>
-        <attr name="right_text_size" format="dimension"/>
+    <declare-styleable name="SplashTimer">
+        <attr name="timer_duration" format="integer"/>
+        <attr name="android:text"/>
+        <attr name="android:textColor"/>
+        <attr name="android:textSize"/>
+        <attr name="timer_padding" format="dimension"/>
+        <attr name="timer_arcColor" format="color"/>
+        <attr name="timer_arcStrokeWidth" format="dimension"/>
     </declare-styleable>
 </resources>

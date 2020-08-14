@@ -4,14 +4,22 @@
     android:id="@+id/splash_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:background="@color/black_bg">
+    android:background="@drawable/bac_splash">
 
-    <ImageView
-        android:id="@+id/splash_animation"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@mipmap/ic_launcher"
-        android:layout_centerInParent="true"/>
+<com.xiaoneng.ss.custom.widgets.SplashTimerTextView
+    android:id="@+id/stt_splash"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:timer_padding="10dp"
+    android:layout_alignParentEnd="true"
+    android:layout_marginTop="20dp"
+    android:layout_marginEnd="20dp"
+    android:text="跳过"
+    android:textColor="@color/white"
+    app:timer_duration="3000"
+    app:timer_arcColor="@color/white"
+    app:timer_arcStrokeWidth="2dp"/>
 
 </RelativeLayout>

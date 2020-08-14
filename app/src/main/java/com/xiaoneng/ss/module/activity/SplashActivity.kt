@@ -3,15 +3,16 @@ package com.xiaoneng.ss.module.activity
 import android.Manifest
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.account.view.LoginSwitchActivity
 import com.xiaoneng.ss.common.permission.PermissionResult
 import com.xiaoneng.ss.common.permission.Permissions
 import com.xiaoneng.ss.common.utils.startActivity
-import com.xiaoneng.ss.module.account.view.LoginActivityTest
+import kotlinx.android.synthetic.main.activity_splash.*
 import pub.devrel.easypermissions.AppSettingsDialog
 
 /**
@@ -33,26 +34,29 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mContext = getApplicationContext()
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
         setContentView(R.layout.activity_splash)
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        mSplashContainer = findViewById<ViewGroup>(R.id.splash_container)
-        initView()
+        var handler = Handler()
+        var runnable = Runnable { initView() }
+        handler.postDelayed(runnable,stt_splash.getDurationTime())
+        stt_splash.setOnClickListener {
+            handler.removeCallbacks(runnable)
+            initView()
+        }
     }
 
     /**
      * 初始化进场动画
      */
     private fun initView() {
-        initPermission()
+        startIntent()
     }
 
 
     private fun startIntent() {
-        startActivity<LoginActivityTest>(this)
+        startActivity<LoginSwitchActivity>(this)
         overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out)
+        finish()
     }
 
     override fun onStop() {

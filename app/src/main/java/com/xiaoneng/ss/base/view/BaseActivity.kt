@@ -13,16 +13,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.ColorUtils
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import com.xiaoneng.ss.custom.graylayout.GrayFrameLayout
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.utils.AppManager
 import com.xiaoneng.ss.common.utils.ChangeThemeEvent
 import com.xiaoneng.ss.common.utils.ColorUtil
 import com.xiaoneng.ss.common.utils.RevealUtil.circularFinishReveal
 import com.xiaoneng.ss.common.utils.RevealUtil.setReveal
+import com.xiaoneng.ss.custom.graylayout.GrayFrameLayout
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import org.jetbrains.anko.toast
 import java.util.*
 
 
@@ -35,7 +34,7 @@ import java.util.*
  */
 abstract class BaseActivity : AppCompatActivity() {
 
-    private var mExitTime: Long = 0
+
 
     lateinit var mRootView: View
 
@@ -109,16 +108,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     open fun reLoad() {}
 
-    override fun onBackPressed() {
-        val time = System.currentTimeMillis()
-
-        if (time - mExitTime > 2000) {
-            toast(getString(R.string.exit_app))
-            mExitTime = time
-        } else {
-            AppManager.instance.exitApp(this)
-        }
-    }
 
     fun setUpReveal(savedInstanceState: Bundle?) {
         setReveal(savedInstanceState)

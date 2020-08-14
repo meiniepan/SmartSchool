@@ -1,9 +1,11 @@
 package com.xiaoneng.ss.custom.widgets
 
+import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import androidx.fragment.app.Fragment
 import com.xiaoneng.ss.R
 import kotlinx.android.synthetic.main.layout_title_bar.view.*
 
@@ -29,7 +31,21 @@ class CustomTitleBar @JvmOverloads constructor(
 
     private fun init() {
         View.inflate(context, R.layout.layout_title_bar, this)
-        tv_title_custom.text = title
-        
+        iv_back_custom.setOnClickListener {
+            if (context is Activity) {
+                (context as Activity).finish()
+            } else if (context is Fragment) {
+                (context as Fragment).activity?.finish()
+            }
+        }
+        title?.let {
+            tv_title_custom.visibility = View.VISIBLE
+            tv_title_custom.text = title
+        }
+        if (isWhiteIcon) {
+            tv_title_custom.setTextColor(resources.getColor(R.color.white));
+            iv_back_custom.setImageResource(R.drawable.icon_back_white_a)
+        }
+
     }
 }
