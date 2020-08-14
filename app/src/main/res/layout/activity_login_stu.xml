@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/login_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_stu_register"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/title_height"
+            android:layout_alignParentEnd="true"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/title_padding"
+            android:paddingEnd="@dimen/title_padding"
+            android:text="@string/register"
+            android:textColor="@color/colorGray555"
+            android:textSize="@dimen/sp_15" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/title_padding"
+        android:layout_marginTop="16.5dp"
+        android:layout_marginEnd="@dimen/title_padding"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="欢迎"
+            android:textSize="@dimen/sp_20"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="登录"
+            android:textColor="@color/commonBlue"
+            android:textSize="@dimen/sp_20"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  校能智慧校园"
+            android:textSize="@dimen/sp_20"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/title_padding"
+        android:layout_marginTop="7.5dp"
+        android:layout_marginEnd="@dimen/title_padding"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的身份是"
+            android:textColor="@color/colorGray999" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="学生"
+            android:textColor="@color/commonBlue" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/title_padding"
+        android:layout_marginTop="70.5dp"
+        android:layout_marginEnd="@dimen/title_padding"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="14dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_phone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="手机号"
+                android:textSize="@dimen/sp_12" />
+
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="4.5dp"
+                android:background="@null"
+                android:hint="请输入您的手机号"
+                android:inputType="phone"
+                android:textSize="@dimen/sp_12" />
+        </LinearLayout>
+    </LinearLayout>
+    <include layout="@layout/layout_split_margin"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/title_padding"
+        android:layout_marginTop="23.5dp"
+        android:layout_marginEnd="@dimen/title_padding"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="14dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_lock" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="密码"
+                android:textSize="@dimen/sp_12" />
+
+            <EditText
+                android:id="@+id/et_pwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="4.5dp"
+                android:background="@null"
+                android:hint="请输入您的密码"
+                android:inputType="textPassword"
+                android:maxLength="8"
+                android:textSize="@dimen/sp_12" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/iv_eye"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_eye_no" />
+    </LinearLayout>
+    <include layout="@layout/layout_split_margin"
+        />
+
+
+</LinearLayout>

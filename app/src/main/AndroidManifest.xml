@@ -55,6 +55,7 @@
         <activity android:name=".account.view.LoginSwitchActivity"
             android:screenOrientation="portrait"
             />
+        <activity android:name=".account.view.LoginStuActivity" />
     </application>
 
 </manifest>

@@ -9,9 +9,10 @@
     <color name="transparent">#00000000</color>
 
 
-    <color name="titleBlack">#222222</color>
-
-    <color name="sp_20">#222222</color>
+    <color name="titleBlack">#212121</color>
+    <color name="common_hint">#D3D9E0</color>
+    <color name="commonBlue">#5E37FF</color>
+    <color name="splitGray">#D3D9DF</color>
 
 
     <color name="white">#FFFFFF</color>
@@ -19,11 +20,11 @@
     <color name="black_bg">#000000</color>
     <color name="colorGray">#333</color>
     <color name="colorGray666">#666</color>
-    <color name="colorBlack333">#333</color>
+    <color name="colorGray555">#555555</color>
+    <color name="colorGray999">#999999</color>
     <color name="windowBackground">#80FFFFFF</color>
     <color name="background">#d8d8d8</color>
     <color name="textTipColor">#a0a0a0</color>
-    <color name="primary">#2196F3</color>
     <color name="primary_dark">#1976D2</color>
     <color name="primary_light">#BBDEFB</color>
     <color name="primary_text">#212121</color>
