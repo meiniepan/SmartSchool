@@ -1,9 +1,6 @@
 package com.xiaoneng.ss.network
 
-import com.xiaoneng.ss.module.account.model.CaptchaResponse
-import com.xiaoneng.ss.module.account.model.LoginReq
-import com.xiaoneng.ss.module.account.model.LoginResponse
-import com.xiaoneng.ss.module.account.model.RegisterResponse
+import com.xiaoneng.ss.account.model.*
 import com.xiaoneng.ss.network.response.BaseResponse
 import retrofit2.http.*
 
@@ -38,14 +35,9 @@ interface ApiService {
     /**
      * 学生注册绑定接口
      */
-    @FormUrlEncoded
     @POST("/api/v1/user/login/register")
     suspend fun onStuRegister(
-        @Field("phone") phone: String,
-        @Field("vcode") vcode: String,
-        @Field("invitecode") invitecode: String,
-        @Field("realname") realname: String,
-        @Field("spassword") password: String
+        @Body requestBody: RegisterReq
     ): BaseResponse<RegisterResponse>
 
 
@@ -82,11 +74,8 @@ interface ApiService {
      *教师登录接口
      */
     @POST("/api/v1/user/login/eloginin")
-    @FormUrlEncoded
     suspend fun onTeaLogin(
-        @Field("phone") phone: String,
-        @Field("vcode") vcode: String,
-        @Field("spassword") password: String
+        @Body requestBody: LoginReq
     ): BaseResponse<LoginResponse>
 
 
@@ -97,7 +86,7 @@ interface ApiService {
     @POST("/api/v1/user/login/esmsCode")
     suspend fun onTeaSmsCode(
         @Field("phone") phone: String
-    ): BaseResponse<LoginResponse>
+    ): BaseResponse<CaptchaResponse>
 
 
     /**

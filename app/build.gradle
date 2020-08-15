@@ -74,4 +74,5 @@ dependencies {
         exclude group: 'org.json', module: 'json'
     }
     implementation 'com.android.support:multidex:1.0.3'
+
 }

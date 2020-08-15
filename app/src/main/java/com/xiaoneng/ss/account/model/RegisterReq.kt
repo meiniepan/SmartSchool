@@ -5,10 +5,12 @@ package com.xiaoneng.ss.account.model
  * Description:
  * @author: Burning
  * @date: 2020/03/01
- * Time: 19:54
+ * Time: 19:57
  */
-data class LoginReq(
+data class RegisterReq(
     var phone : String,
     var vcode : String,
-    var spassword : String = ""
+    var invitecode : String,
+    var realname : String,//选填
+    var spassword : String//选填
 )

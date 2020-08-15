@@ -1,11 +1,9 @@
-package com.xiaoneng.ss.module.account.viewmodel
+package com.xiaoneng.ss.account.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import com.xiaoneng.ss.account.model.*
+import com.xiaoneng.ss.account.repository.AccountRepository
 import com.xiaoneng.ss.base.viewmodel.BaseViewModel
-import com.xiaoneng.ss.module.account.model.CaptchaResponse
-import com.xiaoneng.ss.module.account.model.LoginResponse
-import com.xiaoneng.ss.module.account.model.RegisterResponse
-import com.xiaoneng.ss.module.account.repository.AccountRepository
 import com.xiaoneng.ss.network.initiateRequest
 
 /**
@@ -30,17 +28,31 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
         )
     }
 
-    fun loginCo(phone: String, vcode: String = "", password: String = "") {
+    fun captchaTeacher(phone: String) {
         initiateRequest(
-            { mLoginData.value = mRepository.loginCo(phone, vcode, password) },
+            { mCaptchaData.value = mRepository.captchaTeacher(phone) },
+            loadState
+        )
+    }
+
+    fun loginCo(requestBody: LoginReq) {
+        initiateRequest(
+            { mLoginData.value = mRepository.loginCo(requestBody) },
+            loadState
+        )
+    }
+
+    fun loginTeacher(requestBody: LoginReq) {
+        initiateRequest(
+            { mLoginData.value = mRepository.loginTeacher(requestBody) },
             loadState
         )
     }
 
 
-    fun registerCo(username: String, password: String, repassword: String) {
+    fun registerCo(requestBody: RegisterReq) {
         initiateRequest({
-            mRegisterData.value = mRepository.registerCo(username, password, repassword)
+            mRegisterData.value = mRepository.registerCo(requestBody)
         }, loadState)
     }
 }

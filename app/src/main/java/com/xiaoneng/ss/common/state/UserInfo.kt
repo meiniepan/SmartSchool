@@ -14,22 +14,13 @@ import com.xiaoneng.ss.common.utils.SPreference
  * @date: 2020/03/01
  * Time: 19:30
  */
-class UserInfo private constructor() {
+object UserInfo {
 
     private var isLogin: Boolean by SPreference(Constant.LOGIN_KEY, false)
 
     // 设置默认状态
     var mState: UserState = if (isLogin) LoginState() else LogoutState()
 
-    companion object {
-        val instance =
-            Holder.INSTANCE
-    }
-
-    // 内部类 单利
-    private object Holder {
-        val INSTANCE = UserInfo()
-    }
 
     // 收藏
     fun collect(context: Context, position: Int, listener: CollectListener) {
@@ -46,14 +37,14 @@ class UserInfo private constructor() {
     fun loginSuccess(username: String, userId: String, collectIds: List<Int>?) {
         // 改变 sharedPreferences   isLogin值
         isLogin = true
-        UserInfo.instance.mState = LoginState()
+        mState = LoginState()
 
         // 登录成功 回调 -> DrawerLayout -> 个人信息更新状态
         LoginSuccessState.notifyLoginState(username, userId, collectIds)
     }
 
     fun logoutSuccess() {
-        UserInfo.instance.mState = LogoutState()
+        UserInfo.mState = LogoutState()
         // 清除 cookie、登录缓存
         var mCookie by SPreference("cookie", "")
         mCookie = ""

@@ -32,7 +32,7 @@ fun <T> BaseResponse<T>.dataConvert(
             return respResult
         }
         Constant.NOT_LOGIN -> {
-            UserInfo.instance.logoutSuccess()
+            UserInfo.logoutSuccess()
             loadState.postValue(State(StateType.ERROR, message = "请重新登录"))
             return respResult
         }

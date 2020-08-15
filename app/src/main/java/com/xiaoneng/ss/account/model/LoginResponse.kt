@@ -1,4 +1,4 @@
-package com.xiaoneng.ss.module.account.model
+package com.xiaoneng.ss.account.model
 
 /**
  * Created with Android Studio.
@@ -8,9 +8,27 @@ package com.xiaoneng.ss.module.account.model
  * Time: 19:54
  */
 data class LoginResponse(
-    var icon : String,
-    var type : String,
-    var id : Int,
-    var collectIds : List<Int>,
-    var username : String
+    var icon: String,
+    var uid: String,
+    var sno: String,
+    var realname: String,
+    var sex: String,
+    var phone: String,
+    var birthday: String,
+    var portrait: String,
+    var class_id: String,
+    var schoolid: String,
+    var classname: String,
+    var companyid: String,
+    var openid: String,
+    var wxname: String,
+    var remark: String,
+    var isactive: String,
+    var device_no: String,
+    var cno: String,
+    var roleid: String,
+    var usertype: String,
+    var parents: List<ParentBean>,
+    var token: String,
+    var domain: String
 )

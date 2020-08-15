@@ -1,14 +1,12 @@
-package com.xiaoneng.ss.module.account.view
+package com.xiaoneng.ss.account.view
 
 import android.view.View
-import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.ChangeThemeEvent
 import com.xiaoneng.ss.common.utils.ColorUtil
-import com.xiaoneng.ss.common.utils.startActivity
-import com.xiaoneng.ss.module.account.viewmodel.AccountViewModel
+import com.xiaoneng.ss.common.utils.mStartActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import org.greenrobot.eventbus.Subscribe
 
@@ -31,16 +29,16 @@ class LoginActivityTest : BaseLifeCycleActivity<AccountViewModel>(), View.OnClic
     }
 
     override fun initDataObserver() {
-        mViewModel.mLoginData.observe(this, Observer {
-            it?.let { loginResponse ->
-                UserInfo.instance.loginSuccess(
-                    loginResponse.username,
-                    loginResponse.id.toString(),
-                    loginResponse.collectIds
-                )
-                finish()
-            }
-        })
+//        mViewModel.mLoginData.observe(this, Observer {
+//            it?.let { loginResponse ->
+//                UserInfo.loginSuccess(
+//                    loginResponse.username,
+//                    loginResponse.id.toString(),
+//                    loginResponse.collectIds
+//                )
+//                finish()
+//            }
+//        })
     }
 
     override fun showCreateReveal(): Boolean = true
@@ -52,11 +50,11 @@ class LoginActivityTest : BaseLifeCycleActivity<AccountViewModel>(), View.OnClic
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.button_login -> {
-                mViewModel.loginCo("18810472753","5848", "123456")
+//                mViewModel.loginCo("18810472753","5848", "123456")
 //                mViewModel.registerCo("aa","aa","aa")
             }
             R.id.register_text -> {
-                startActivity<RegisterActivity>(this)
+                mStartActivity<RegisterActivity>(this)
                 finish()
             }
             R.id.ivBack -> {

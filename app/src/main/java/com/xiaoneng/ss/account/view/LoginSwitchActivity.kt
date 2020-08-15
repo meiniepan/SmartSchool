@@ -3,7 +3,7 @@ package com.xiaoneng.ss.account.view
 import android.view.View
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseActivity
-import com.xiaoneng.ss.common.utils.startActivity
+import com.xiaoneng.ss.common.utils.mStartActivity
 import kotlinx.android.synthetic.main.activity_login_switch.*
 
 /**
@@ -26,10 +26,10 @@ class LoginSwitchActivity :BaseActivity() ,View.OnClickListener{
 
             }
             R.id.iv_item_tea -> {
-
+                mStartActivity<LoginTeacherActivity>(this)
             }
             R.id.iv_item_stu -> {
-                startActivity<LoginStuActivity>(this)
+                mStartActivity<LoginStuActivity>(this)
             }
         }
     }

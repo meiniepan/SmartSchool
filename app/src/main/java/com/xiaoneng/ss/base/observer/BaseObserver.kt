@@ -36,7 +36,7 @@ class BaseObserver<T : BaseResponse<*>>(
                 liveData.postValue(response)
             }
             Constant.NOT_LOGIN -> {
-                UserInfo.instance.logoutSuccess()
+                UserInfo.logoutSuccess()
                 loadState.postValue(State(StateType.ERROR, message = "请重新登录"))
             }
             else -> {

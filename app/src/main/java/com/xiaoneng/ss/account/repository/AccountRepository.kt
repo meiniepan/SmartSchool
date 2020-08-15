@@ -1,12 +1,9 @@
-package com.xiaoneng.ss.module.account.repository
+package com.xiaoneng.ss.account.repository
 
 import androidx.lifecycle.MutableLiveData
+import com.xiaoneng.ss.account.model.*
 import com.xiaoneng.ss.base.repository.ApiRepository
 import com.xiaoneng.ss.common.state.State
-import com.xiaoneng.ss.module.account.model.CaptchaResponse
-import com.xiaoneng.ss.module.account.model.LoginReq
-import com.xiaoneng.ss.module.account.model.LoginResponse
-import com.xiaoneng.ss.module.account.model.RegisterResponse
 import com.xiaoneng.ss.network.dataConvert
 
 /**
@@ -36,12 +33,19 @@ class AccountRepository(val loadState: MutableLiveData<State>) : ApiRepository()
 
 
     // 使用协程 + Retrofit2.6
-    suspend fun loginCo(phone: String, vcode: String, password: String): LoginResponse {
+    suspend fun loginCo(requestBody: LoginReq): LoginResponse {
 
         return apiService.onStuLogin(
-            LoginReq(phone = phone,vcode = vcode,spassword = password)
+            requestBody
         ).dataConvert(loadState)
-//        return apiService.onTeaSmsCode(phone).dataConvert(loadState)
+
+    }
+
+    suspend fun loginTeacher(requestBody: LoginReq): LoginResponse {
+
+        return apiService.onTeaLogin(
+            requestBody
+        ).dataConvert(loadState)
 
     }
 
@@ -50,11 +54,14 @@ class AccountRepository(val loadState: MutableLiveData<State>) : ApiRepository()
 
     }
 
+    suspend fun captchaTeacher(phone: String): CaptchaResponse {
+        return apiService.onTeaSmsCode(phone).dataConvert(loadState)
+
+    }
+
     suspend fun registerCo(
-        username: String,
-        password: String,
-        repassword: String
+        requestBody: RegisterReq
     ): RegisterResponse {
-        return apiService.onStuRegister(username, password,password,password, repassword).dataConvert(loadState)
+        return apiService.onStuRegister(requestBody).dataConvert(loadState)
     }
 }

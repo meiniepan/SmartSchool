@@ -10,9 +10,11 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.account.model.LoginReq
+import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
-import com.xiaoneng.ss.module.account.viewmodel.AccountViewModel
 import kotlinx.android.synthetic.main.activity_login_stu.*
 import org.jetbrains.anko.toast
 
@@ -39,13 +41,17 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
         tvSwitchType.setOnClickListener(this)
         tvSendCaptcha.setOnClickListener(this)
         tvLogin.setOnClickListener(this)
+        tvSwitchId.setOnClickListener(this)
 
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
+            R.id.tvSwitchId -> {
+                mStartActivity<LoginSwitchActivity>(this)
+            }
             R.id.tv_stu_register -> {
-
+                mStartActivity<RegisterActivity>(this)
             }
             R.id.iv_eye -> {
                 if (isHideFirst) {
@@ -104,14 +110,20 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
             R.id.tvLogin -> {
                 var phoneStr = et_phone.text.toString()
                 var vCodeStr = et_captcha.text.toString()
-                if (!RegexUtils.isMobileSimple(phoneStr)||TextUtils.isEmpty(vCodeStr)) {
-                    showTip("请输入完整信息")
-                    return
-                }
+                var pwdStr = et_pwd.text.toString()
                 if (isPwdType) {
+                    if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(pwdStr)) {
+                        showTip("请输入完整信息")
+                        return
+                    }
                 } else {
-                    mViewModel.loginCo(phoneStr,vcode = vCodeStr)
+                    if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(vCodeStr)) {
+                        showTip("请输入完整信息")
+                        return
+                    }
                 }
+
+                mViewModel.loginCo(LoginReq(phoneStr, vCodeStr, pwdStr))
             }
 
         }

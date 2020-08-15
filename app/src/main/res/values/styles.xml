@@ -14,6 +14,7 @@
         <item name="android:textColor">@color/titleBlack</item>
         <item name="android:editTextColor">@color/titleBlack</item>
         <item name="android:textColorHint">@color/common_hint</item>
+        <item name="android:screenOrientation">portrait</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowAnimationStyle">@style/anim_fade</item>

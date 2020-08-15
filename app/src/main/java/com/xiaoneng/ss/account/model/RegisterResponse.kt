@@ -1,4 +1,4 @@
-package com.xiaoneng.ss.module.account.model
+package com.xiaoneng.ss.account.model
 
 /**
  * Created with Android Studio.

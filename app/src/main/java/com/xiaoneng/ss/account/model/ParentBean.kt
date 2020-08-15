@@ -7,7 +7,10 @@ package com.xiaoneng.ss.account.model
  * @date: 2020/03/01
  * Time: 19:54
  */
-data class CaptchaResponse(
-    var code : String
-
+data class ParentBean(
+    var id: String,
+    var schoolid: String,
+    var phone: String,
+    var sid: String,
+    var createtime: String
 )

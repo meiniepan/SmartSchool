@@ -11,7 +11,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.view.LoginSwitchActivity
 import com.xiaoneng.ss.common.permission.PermissionResult
 import com.xiaoneng.ss.common.permission.Permissions
-import com.xiaoneng.ss.common.utils.startActivity
+import com.xiaoneng.ss.common.utils.mStartActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 import pub.devrel.easypermissions.AppSettingsDialog
 
@@ -54,7 +54,7 @@ class SplashActivity : AppCompatActivity() {
 
 
     private fun startIntent() {
-        startActivity<LoginSwitchActivity>(this)
+        mStartActivity<LoginSwitchActivity>(this)
         overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out)
         finish()
     }

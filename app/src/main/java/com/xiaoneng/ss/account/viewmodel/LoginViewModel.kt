@@ -1,4 +1,4 @@
-package com.xiaoneng.ss.module.account.viewmodel
+package com.xiaoneng.ss.account.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

@@ -2,8 +2,6 @@ package com.xiaoneng.ss.common.state
 
 import android.content.Context
 import com.xiaoneng.ss.common.state.callback.CollectListener
-import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.startActivity
 
 /**
  * Created with Android Studio.

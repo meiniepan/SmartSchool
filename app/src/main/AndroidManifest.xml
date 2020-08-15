@@ -16,8 +16,10 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -49,13 +51,19 @@
             tools:ignore="LockedOrientationActivity">
 
         </activity>
-        <activity android:name=".module.account.view.LoginActivityTest"
-            android:screenOrientation="portrait"
+        <activity
+            android:name=".module.account.view.LoginActivityTest"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".account.view.LoginSwitchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".account.view.LoginStuActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".account.view.RegisterActivity"
+
             />
-        <activity android:name=".account.view.LoginSwitchActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".account.view.LoginStuActivity" />
+        <activity android:name=".account.view.LoginTeacherActivity" />
     </application>
 
 </manifest>
