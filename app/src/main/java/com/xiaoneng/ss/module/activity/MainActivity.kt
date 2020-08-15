@@ -97,7 +97,7 @@ class MainActivity : BaseActivity(){
         toolbar.setBackgroundColor(ColorUtil.getColor(this))
         bottom_navigation.setItemIconTintList(ColorUtil.getColorStateList(this))
         bottom_navigation.setItemTextColor(ColorUtil.getColorStateList(this))
-        bottom_navigation.setBackgroundColor(ContextCompat.getColor(this, R.color.white_bg))
+        bottom_navigation.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
     }
 
     private fun initDrawerLayout() {

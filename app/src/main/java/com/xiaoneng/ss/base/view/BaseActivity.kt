@@ -35,7 +35,6 @@ import java.util.*
 abstract class BaseActivity : AppCompatActivity() {
 
 
-
     lateinit var mRootView: View
 
     val loadService: LoadService<*> by lazy {
@@ -45,7 +44,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val modes = window.windowManager.defaultDisplay.supportedModes
             modes.sortBy {
                 it.refreshRate
@@ -66,6 +65,7 @@ abstract class BaseActivity : AppCompatActivity() {
             setUpReveal(savedInstanceState)
         }
         EventBus.getDefault().register(this)
+
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -165,9 +165,16 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @Subscribe
     fun changeThemeEvent(event: ChangeThemeEvent) {
         initStatusColor(0)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    fun setStatusBarDark() {
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+
     }
 }

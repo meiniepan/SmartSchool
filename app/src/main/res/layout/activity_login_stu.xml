@@ -89,8 +89,8 @@
         android:layout_marginStart="@dimen/title_padding"
         android:layout_marginTop="70.5dp"
         android:layout_marginEnd="@dimen/title_padding"
-        android:gravity="center_vertical"
         android:layout_marginBottom="14dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
@@ -108,30 +108,29 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="手机号"
-                android:textSize="@dimen/sp_12" />
+                android:text="手机号" />
 
             <EditText
                 android:id="@+id/et_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="4.5dp"
                 android:background="@null"
                 android:hint="请输入您的手机号"
                 android:inputType="phone"
-                android:textSize="@dimen/sp_12" />
+                android:paddingTop="4.5dp" />
         </LinearLayout>
     </LinearLayout>
-    <include layout="@layout/layout_split_margin"
-        />
+
+    <include layout="@layout/layout_split_margin" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/title_padding"
         android:layout_marginTop="23.5dp"
         android:layout_marginEnd="@dimen/title_padding"
-        android:gravity="center_vertical"
         android:layout_marginBottom="14dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
@@ -141,37 +140,83 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:layout_marginEnd="@dimen/title_padding"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="密码"
-                android:textSize="@dimen/sp_12" />
+                android:text="密码" />
 
             <EditText
                 android:id="@+id/et_pwd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="4.5dp"
                 android:background="@null"
                 android:hint="请输入您的密码"
                 android:inputType="textPassword"
                 android:maxLength="8"
-                android:textSize="@dimen/sp_12" />
+                android:paddingTop="4.5dp" />
         </LinearLayout>
+
         <ImageView
             android:id="@+id/iv_eye"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_eye_no" />
     </LinearLayout>
-    <include layout="@layout/layout_split_margin"
-        />
 
+    <include layout="@layout/layout_split_margin" />
+    <TextView
+        android:id="@+id/tvSwitchType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="验证码登录"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/colorGray555"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center_horizontal"/>
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+    <TextView
+        android:id="@+id/tvLogin"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:text="登      录"
+        android:textSize="@dimen/sp_16"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/title_padding"
+        android:background="@drawable/bac_blue_bac"
+        android:layout_marginEnd="@dimen/title_padding"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="身份不对应？"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/colorGray999"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center_horizontal"/>
+    <TextView
+        android:id="@+id/tvSwitchId"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:text="切换身份"
+        android:textSize="@dimen/sp_16"
+        android:gravity="center"
+        android:textColor="@color/commonBlue"
+        android:layout_marginBottom="93dp"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/bac_blue_line"
+        android:layout_marginStart="@dimen/title_padding"
+        android:layout_marginEnd="@dimen/title_padding"
+        />
 
 </LinearLayout>

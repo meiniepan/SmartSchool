@@ -1,9 +1,11 @@
 package com.xiaoneng.ss.account.view
 
+import android.os.Build
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.text.method.TransformationMethod
 import android.view.View
+import androidx.annotation.RequiresApi
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseActivity
 import kotlinx.android.synthetic.main.activity_login_stu.*
@@ -19,8 +21,10 @@ class LoginStuActivity : BaseActivity(), View.OnClickListener {
     private var isHideFirst: Boolean = true
 
     override fun getLayoutId() = R.layout.activity_login_stu
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initView() {
         super.initView()
+        setStatusBarDark()
         tv_stu_register.setOnClickListener(this)
         iv_eye.setOnClickListener(this)
 
