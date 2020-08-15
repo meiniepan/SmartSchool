@@ -124,6 +124,7 @@
     <include layout="@layout/layout_split_margin" />
 
     <LinearLayout
+        android:id="@+id/llPwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/title_padding"
@@ -167,6 +168,60 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_eye_no" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/llCaptcha"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/title_padding"
+        android:layout_marginTop="23.5dp"
+        android:layout_marginEnd="@dimen/title_padding"
+        android:layout_marginBottom="14dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_captcha" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="验证码" />
+
+            <EditText
+                android:id="@+id/et_captcha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="请输入短信验证码"
+                android:inputType="textPassword"
+                android:maxLength="8"
+                android:paddingTop="4.5dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvSendCaptcha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="发送验证码"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:layout_marginStart="@dimen/title_padding"
+            android:background="@drawable/selector_captcha"
+            android:layout_marginEnd="@dimen/title_padding"
+            />
     </LinearLayout>
 
     <include layout="@layout/layout_split_margin" />

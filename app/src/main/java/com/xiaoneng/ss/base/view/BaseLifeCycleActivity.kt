@@ -17,7 +17,6 @@ import com.xiaoneng.ss.common.callback.LoadingCallBack
 import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.StateType
 import com.xiaoneng.ss.common.utils.CommonUtil
-import kotlinx.android.synthetic.main.layout_error.view.*
 
 
 /**
@@ -31,7 +30,6 @@ abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
     protected lateinit var mViewModel: VM
 
     override fun initView() {
-        showLoading()
 
         mViewModel = ViewModelProvider(this).get(CommonUtil.getClass(this))
 

@@ -1,5 +1,7 @@
 package com.xiaoneng.ss.network
 
+import com.xiaoneng.ss.module.account.model.CaptchaResponse
+import com.xiaoneng.ss.module.account.model.LoginReq
 import com.xiaoneng.ss.module.account.model.LoginResponse
 import com.xiaoneng.ss.module.account.model.RegisterResponse
 import com.xiaoneng.ss.network.response.BaseResponse
@@ -21,18 +23,15 @@ interface ApiService {
     @POST("/api/v1/user/login/smsCode")
     suspend fun onStuSmsCode(
         @Field("phone") phone: String
-    ): BaseResponse<LoginResponse>
+    ): BaseResponse<CaptchaResponse>
 
 
     /**
      * 学生登陆接口
      */
-    @FormUrlEncoded
     @POST("/api/v1/user/login/sloginin")
     suspend fun onStuLogin(
-        @Field("phone") phone: String,
-        @Field("vcode") vcode: String,
-        @Field("spassword") password: String
+        @Body requestBody: LoginReq
     ): BaseResponse<LoginResponse>
 
 
