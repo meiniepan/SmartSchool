@@ -52,7 +52,7 @@
 
         </activity>
         <activity
-            android:name=".module.account.view.LoginActivityTest"
+            android:name=".account.view.LoginActivityTest"
             android:screenOrientation="portrait" />
         <activity
             android:name=".account.view.LoginSwitchActivity"
