@@ -1,17 +1,18 @@
 package com.xiaoneng.ss.account.view
 
+import android.os.Build
 import android.os.CountDownTimer
 import android.text.TextUtils
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.text.method.TransformationMethod
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.model.RegisterReq
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import kotlinx.android.synthetic.main.activity_register.*
@@ -24,6 +25,7 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
 
     override fun getLayoutId(): Int = R.layout.activity_register
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initView() {
         super.initView()
         setStatusBarDark()
@@ -36,8 +38,16 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
     }
 
     override fun initDataObserver() {
+        mViewModel.mCaptchaData.observe(this, Observer {
+            it?.let {
+                toast(it.code)
+            }
+        })
         mViewModel.mRegisterData.observe(this, Observer {
-            UserInfo.loginSuccess(it.username, it.id.toString(), it.collectIds)
+            it?.let{
+                toast(R.string.register_success)
+                mStartActivity<LoginStuActivity>(this)
+            }
             finish()
         })
     }

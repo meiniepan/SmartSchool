@@ -105,7 +105,7 @@
 
                     <EditText
                         android:id="@+id/et_name_register"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:hint="请输入您的姓名"
@@ -144,7 +144,7 @@
 
                     <EditText
                         android:id="@+id/et_invite_register"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:hint="请输入您的邀请码"
@@ -183,7 +183,7 @@
 
                     <EditText
                         android:id="@+id/et_phone_register"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:hint="请输入您的手机号"
@@ -224,11 +224,11 @@
 
                     <EditText
                         android:id="@+id/et_captcha_register"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:hint="请输入短信验证码"
-                        android:inputType="textPassword"
+                        android:inputType="phone"
                         android:maxLength="8"
                         android:paddingTop="4.5dp" />
                 </LinearLayout>
@@ -278,7 +278,7 @@
 
                     <EditText
                         android:id="@+id/et_pwd_register"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:hint="请输入您的密码"

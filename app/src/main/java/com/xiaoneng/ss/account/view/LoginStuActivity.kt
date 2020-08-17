@@ -15,6 +15,7 @@ import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
+import com.xiaoneng.ss.module.activity.MainActivity
 import kotlinx.android.synthetic.main.activity_login_stu.*
 import org.jetbrains.anko.toast
 
@@ -138,6 +139,12 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
         mViewModel.mCaptchaData.observe(this, Observer {
             it?.let {
                 toast(it.code)
+            }
+        })
+        mViewModel.mLoginData.observe(this, Observer {
+            it?.let {
+                toast(R.string.login_success)
+                mStartActivity<MainActivity>(this)
             }
         })
     }

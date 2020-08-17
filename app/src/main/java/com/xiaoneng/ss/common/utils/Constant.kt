@@ -27,8 +27,8 @@ object Constant {
     const val WECHAT = 2
     const val NAVIGATION = 3
 
-    const val SUCCESS = 0
-    const val NOT_LOGIN = -1001
+    const val SUCCESS:String = "0000"
+    const val NOT_LOGIN = "-1001"
 
     const val ADD_TODO = 1.toString() + ""
 
