@@ -6,6 +6,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="AnimActivity" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -26,8 +27,17 @@
         <item name="android:activityCloseEnterAnimation">@anim/alpha_in</item>
         <item name="android:activityCloseExitAnimation">@anim/alpha_out</item>
     </style>
+
     <style name="App.Theme.Launch" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="title_style" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/title_height</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginStart">@dimen/title_padding</item>
+        <item name="android:layout_marginEnd">@dimen/title_padding</item>
     </style>
 </resources>

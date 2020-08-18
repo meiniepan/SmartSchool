@@ -10,6 +10,6 @@ import com.xiaoneng.ss.module.sys.repository.CircularRepository
  * @date: 2020/02/27
  * Time: 17:09
  */
-class SystemViewModel : BaseViewModel<CircularRepository>() {
+class CircularViewModel : BaseViewModel<CircularRepository>() {
 
 }

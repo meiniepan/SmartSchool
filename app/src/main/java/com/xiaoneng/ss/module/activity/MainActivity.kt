@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseActivity
 import com.xiaoneng.ss.common.utils.*
-import com.xiaoneng.ss.module.sys.view.SystemFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import org.greenrobot.eventbus.Subscribe
