@@ -13,8 +13,8 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseActivity
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.circular.view.CircularFragment
-import com.xiaoneng.ss.module.circular.view.SchoolFragment
-import com.xiaoneng.ss.module.sys.view.SystemFragment
+import com.xiaoneng.ss.module.mine.view.MineFragment
+import com.xiaoneng.ss.module.school.view.SchoolFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 
@@ -136,7 +136,7 @@ class MainActivity : BaseActivity() {
             when (index) {
                 Constant.HOME -> fragment = CircularFragment.getInstance()
                 Constant.SCHOOL -> fragment = SchoolFragment.getInstance()
-                Constant.MINE -> fragment = SystemFragment.getInstance()
+                Constant.MINE -> fragment = MineFragment.getInstance()
             }
             mFragmentSparseArray.put(index, fragment)
         }

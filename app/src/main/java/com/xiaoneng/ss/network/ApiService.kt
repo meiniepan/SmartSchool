@@ -140,11 +140,23 @@ interface ApiService {
     ): BaseResponse<LoginResponse>
 
     /**
-     *通知列表
+     *学生通知列表
      */
     @FormUrlEncoded
     @POST("/api/v1/student/notices/lists")
     suspend fun getNoticeList(
+        @Field("token") token: String,
+        @Field("id") page: String = "",
+        @Field("pagenum") pagenum: String = "",
+        @Field("type") type: String = ""
+    ): BaseResponse<NoticeResponse>
+
+    /**
+     *教师通知列表
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/notices/lists")
+    suspend fun getNoticeList2(
         @Field("token") token: String,
         @Field("id") page: String = "",
         @Field("pagenum") pagenum: String = "",

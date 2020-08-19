@@ -15,6 +15,8 @@ object Constant {
     const val USERID_KEY = "userid"
     const val LOGIN_KEY = "login"
     const val TOKEN = "token"
+    const val USER_TYPE = "user_type"
+    const val USER_INFO = "user_info"
 
     const val SAVE_USER_LOGIN_KEY = "user/login"
     const val SAVE_USER_REGISTER_KEY = "user/register"

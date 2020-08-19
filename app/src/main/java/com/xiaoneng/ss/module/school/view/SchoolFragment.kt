@@ -1,9 +1,9 @@
-package com.xiaoneng.ss.module.circular.view
+package com.xiaoneng.ss.module.school.view
 
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
-import com.xiaoneng.ss.module.circular.viewmodel.SchoolViewModel
-import com.xiaoneng.ss.module.sys.adapter.FragmentCircularAdapter
+import com.xiaoneng.ss.module.circular.adapter.FragmentCircularAdapter
+import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 
 /**
  * Created with Android Studio.

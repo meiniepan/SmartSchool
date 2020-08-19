@@ -1,10 +1,9 @@
-package com.xiaoneng.ss.module.sys.view
+package com.xiaoneng.ss.module.mine.view
 
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
-import com.xiaoneng.ss.module.circular.view.SchoolFragment
-import com.xiaoneng.ss.module.sys.adapter.SystemAdapter
-import com.xiaoneng.ss.module.circular.viewmodel.SchoolViewModel
+import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
+import com.xiaoneng.ss.module.mine.adapter.MineAdapter
 
 /**
  * Created with Android Studio.
@@ -13,12 +12,12 @@ import com.xiaoneng.ss.module.circular.viewmodel.SchoolViewModel
  * @date: 2020/02/27
  * Time: 17:01
  */
-class SystemFragment : BaseLifeCycleFragment<SchoolViewModel>() {
-    protected lateinit var mAdapter: SystemAdapter
+class MineFragment : BaseLifeCycleFragment<SchoolViewModel>() {
+    protected lateinit var mAdapter: MineAdapter
 
     companion object {
-        fun getInstance(): SchoolFragment? {
-            return SchoolFragment()
+        fun getInstance(): MineFragment? {
+            return MineFragment()
         }
     }
 

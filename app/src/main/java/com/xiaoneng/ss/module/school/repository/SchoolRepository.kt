@@ -1,4 +1,4 @@
-package com.xiaoneng.ss.module.circular.repository
+package com.xiaoneng.ss.module.school.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.base.repository.ApiRepository
@@ -18,6 +18,6 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
 
     suspend fun getNoticeList(page: String, pagenum: String): NoticeResponse {
-        return apiService.getNoticeList(UserInfo.token,page,pagenum).dataConvert(loadState)
+        return apiService.getNoticeList(UserInfo.getUserBean().token,page,pagenum).dataConvert(loadState)
     }
 }

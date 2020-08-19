@@ -1,4 +1,4 @@
-package com.xiaoneng.ss.module.sys.adapter
+package com.xiaoneng.ss.module.circular.adapter
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -18,8 +18,15 @@ class NoticeAdapter(layoutId: Int, listData: MutableList<NoticeBean>?) :
 
     override fun convert(viewHolder: BaseViewHolder?, item: NoticeBean?) {
         viewHolder?.let { holder ->
+
             holder.setText(R.id.tvTitle2, item?.title)
                 .setText(R.id.tvTime2,item?.noticetime)
+                .setText(R.id.tvContent,item?.remark)
+            if (item?.status == "0"){
+                holder.setVisible(R.id.vOval,true)
+            }else{
+                holder.setVisible(R.id.vOval,false)
+            }
         }
     }
 }

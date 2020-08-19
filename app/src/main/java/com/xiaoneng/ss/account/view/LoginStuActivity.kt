@@ -143,7 +143,7 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
         })
         mViewModel.mLoginData.observe(this, Observer {
             it?.let {
-                UserInfo.loginSuccess(it.token)
+                UserInfo.loginSuccess(it)
                 toast(R.string.login_success)
                 mStartActivity<MainActivity>(this)
             }

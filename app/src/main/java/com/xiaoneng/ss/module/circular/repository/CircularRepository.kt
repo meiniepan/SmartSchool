@@ -18,6 +18,14 @@ class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository(
 
 
     suspend fun getNoticeList(page: String, pagenum: String): NoticeResponse {
-        return apiService.getNoticeList(UserInfo.token,page,pagenum).dataConvert(loadState)
+        if (UserInfo.getUserBean().usertype == "1") {
+            return apiService.getNoticeList(UserInfo.getUserBean().token, page, pagenum).dataConvert(loadState)
+        } else if (UserInfo.getUserBean().usertype == "2") {
+            return apiService.getNoticeList2(UserInfo.getUserBean().token, page, pagenum).dataConvert(loadState)
+
+        } else {
+            return apiService.getNoticeList(UserInfo.getUserBean().token, page, pagenum).dataConvert(loadState)
+
+        }
     }
 }

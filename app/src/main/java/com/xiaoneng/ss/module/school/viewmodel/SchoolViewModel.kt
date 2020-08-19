@@ -1,9 +1,9 @@
-package com.xiaoneng.ss.module.circular.viewmodel
+package com.xiaoneng.ss.module.school.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.base.viewmodel.BaseViewModel
 import com.xiaoneng.ss.module.circular.model.NoticeResponse
-import com.xiaoneng.ss.module.circular.repository.SchoolRepository
+import com.xiaoneng.ss.module.school.repository.SchoolRepository
 import com.xiaoneng.ss.network.initiateRequest
 
 /**

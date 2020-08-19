@@ -3,7 +3,7 @@ package com.xiaoneng.ss.module.circular.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.base.viewmodel.BaseViewModel
 import com.xiaoneng.ss.module.circular.model.NoticeResponse
-import com.xiaoneng.ss.module.circular.repository.SchoolRepository
+import com.xiaoneng.ss.module.circular.repository.CircularRepository
 import com.xiaoneng.ss.network.initiateRequest
 
 /**
@@ -13,7 +13,7 @@ import com.xiaoneng.ss.network.initiateRequest
  * @date: 2020/02/27
  * Time: 17:09
  */
-class CircularViewModel : BaseViewModel<SchoolRepository>() {
+class CircularViewModel : BaseViewModel<CircularRepository>() {
 
     val mNoticeData: MutableLiveData<NoticeResponse> = MutableLiveData()
 

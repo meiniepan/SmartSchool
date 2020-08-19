@@ -1,4 +1,4 @@
-package com.xiaoneng.ss.module.sys.adapter
+package com.xiaoneng.ss.module.mine.adapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -14,7 +14,7 @@ import com.xiaoneng.ss.module.school.model.SchoolResponse
  * @date: 2020/02/27
  * Time: 17:32
  */
-class SystemAdapter(layoutId: Int, listData: MutableList<SchoolResponse>?) :
+class MineAdapter(layoutId: Int, listData: MutableList<SchoolResponse>?) :
     BaseQuickAdapter<SchoolResponse, BaseViewHolder>(layoutId, listData) {
 
     override fun convert(viewHolder: BaseViewHolder?, item: SchoolResponse?) {

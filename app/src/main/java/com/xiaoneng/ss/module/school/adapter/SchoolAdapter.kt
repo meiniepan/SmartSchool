@@ -1,4 +1,4 @@
-package com.xiaoneng.ss.module.sys.adapter
+package com.xiaoneng.ss.module.school.adapter
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder

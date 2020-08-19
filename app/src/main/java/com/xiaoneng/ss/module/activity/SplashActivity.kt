@@ -56,7 +56,7 @@ class SplashActivity : AppCompatActivity() {
         if (TextUtils.isEmpty(token)) {
             mStartActivity<LoginSwitchActivity>(this)
         } else {
-            mStartActivity<MainActivity>(this)
+            mStartActivity<LoginSwitchActivity>(this)
         }
         overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out)
         finish()

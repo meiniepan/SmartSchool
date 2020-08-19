@@ -1,46 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/tintBac"
-    android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <LinearLayout style="@style/title_style" >
-
-    <com.xiaoneng.ss.custom.widgets.CustomTabView
-        android:id="@+id/tvCircular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:check="true"
-        app:text="通知" />
-
-    <com.xiaoneng.ss.custom.widgets.CustomTabView
-        android:id="@+id/tvSchedule"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_marginStart="21dp"
-        android:layout_height="wrap_content"
-        app:text="日程" />
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="1dp"
-            android:src="@drawable/ic_notice"
-            />
-        <View
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:background="@drawable/shape_orange_oval"
-            android:layout_gravity="right"/>
-        
-    </FrameLayout>
-    </LinearLayout>
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vpCircular"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout style="@style/title_style">
+
+            <com.xiaoneng.ss.custom.widgets.CustomTabView
+                android:id="@+id/tvCircular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:check="true"
+                app:text="通知" />
+
+            <com.xiaoneng.ss.custom.widgets.CustomTabView
+                android:id="@+id/tvSchedule"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="21dp"
+                android:layout_weight="1"
+                app:text="日程" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_margin="1dp"
+                    android:src="@drawable/ic_notice" />
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_gravity="right"
+                    android:background="@drawable/shape_orange_oval" />
+
+            </FrameLayout>
+        </LinearLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vpCircular"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</RelativeLayout>

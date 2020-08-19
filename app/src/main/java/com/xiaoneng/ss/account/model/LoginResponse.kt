@@ -27,7 +27,7 @@ data class LoginResponse(
     var device_no: String,
     var cno: String,
     var roleid: String,
-    var usertype: String,
+    var usertype: String,//学生1  老师2  家长3
     var parents: List<ParentBean>,
     var token: String,
     var domain: String

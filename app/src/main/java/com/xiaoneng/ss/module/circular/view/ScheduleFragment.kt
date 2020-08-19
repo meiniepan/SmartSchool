@@ -3,7 +3,7 @@ package com.xiaoneng.ss.module.circular.view
 import androidx.fragment.app.Fragment
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
-import com.xiaoneng.ss.module.circular.viewmodel.SchoolViewModel
+import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 
 /**
  * Created with Android Studio.

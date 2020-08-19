@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
-import com.xiaoneng.ss.module.circular.viewmodel.SchoolViewModel
-import com.xiaoneng.ss.module.sys.adapter.FragmentCircularAdapter
+import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
+import com.xiaoneng.ss.module.circular.adapter.FragmentCircularAdapter
 import kotlinx.android.synthetic.main.fragment_circular.*
 
 /**
@@ -22,8 +22,8 @@ class CircularFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_circular
 
     companion object {
-        fun getInstance(): SchoolFragment? {
-            return SchoolFragment()
+        fun getInstance(): CircularFragment? {
+            return CircularFragment()
         }
 
     }

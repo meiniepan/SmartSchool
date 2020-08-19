@@ -8,8 +8,8 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.utils.RecycleViewDivider
 import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.module.circular.model.NoticeBean
-import com.xiaoneng.ss.module.circular.viewmodel.SchoolViewModel
-import com.xiaoneng.ss.module.sys.adapter.SchoolAdapter
+import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
+import com.xiaoneng.ss.module.school.adapter.SchoolAdapter
 import kotlinx.android.synthetic.main.fragment_notice.*
 
 /**
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_notice.*
  * @date: 2020/02/27
  * Time: 17:01
  */
-class NoticeFragment : BaseLifeCycleFragment<SchoolViewModel>() {
+class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
     lateinit var mAdapter: SchoolAdapter
      var mData=ArrayList<NoticeBean>()
 

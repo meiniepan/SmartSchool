@@ -1,4 +1,4 @@
-package com.xiaoneng.ss.module.sys.adapter
+package com.xiaoneng.ss.module.circular.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
