@@ -1,10 +1,11 @@
-package com.xiaoneng.ss.module.sys.view
+package com.xiaoneng.ss.module.circular.view
 
 import androidx.fragment.app.Fragment
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
+import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import com.xiaoneng.ss.module.sys.adapter.FragmentCircularAdapter
-import com.xiaoneng.ss.module.sys.viewmodel.CircularViewModel
+import kotlinx.android.synthetic.main.fragment_circular.*
 
 /**
  * Created with Android Studio.
@@ -15,18 +16,39 @@ import com.xiaoneng.ss.module.sys.viewmodel.CircularViewModel
  */
 class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
     lateinit var fragmentAdapter: FragmentCircularAdapter
-    lateinit var fragmentlist: ArrayList<Fragment>
+    var fragmentlist = ArrayList<Fragment>()
+
+    override fun getLayoutId(): Int = R.layout.fragment_circular
 
     companion object {
         fun getInstance(): CircularFragment? {
             return CircularFragment()
         }
+
     }
 
     override fun initView() {
         super.initView()
-        fragmentAdapter = FragmentCircularAdapter(this,fragmentlist)
+        initViewPager()
+        initTab()
     }
+
+    private fun initTab() {
+        tvCircular.setOnClickListener{
+            vpCircular.setCurrentItem(0,true)
+        }
+        tvSchedule.setOnClickListener{
+            vpCircular.setCurrentItem(1,true)
+        }
+    }
+
+    private fun initViewPager() {
+        fragmentlist.add(ScheduleFragment1.getInstance())
+        fragmentlist.add(ScheduleFragment2.getInstance())
+        fragmentAdapter = FragmentCircularAdapter(childFragmentManager, fragmentlist)
+        vpCircular.adapter = fragmentAdapter
+    }
+
     override fun initDataObserver() {
 //        mViewModel.mSystemTabNameData.observe(this, Observer { response ->
 //            response?.let {
@@ -34,8 +56,6 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
 //            }
 //        })
     }
-
-    override fun getLayoutId(): Int = R.layout.fragment_circular
 
 
 }

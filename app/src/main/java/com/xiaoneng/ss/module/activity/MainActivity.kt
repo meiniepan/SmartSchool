@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseActivity
 import com.xiaoneng.ss.common.utils.*
+import com.xiaoneng.ss.module.circular.view.CircularFragment
+import com.xiaoneng.ss.module.sys.view.SystemFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import org.greenrobot.eventbus.Subscribe
@@ -170,7 +172,7 @@ class MainActivity : BaseActivity(){
         var fragment: Fragment? = mFragmentSparseArray.get(index)
         if (fragment == null) {
             when (index) {
-                Constant.HOME -> fragment = SystemFragment.getInstance()
+                Constant.HOME -> fragment = CircularFragment.getInstance()
                 Constant.SYSTEM -> fragment = SystemFragment.getInstance()
                 Constant.NAVIGATION -> fragment = SystemFragment.getInstance()
                 Constant.WECHAT -> fragment = SystemFragment.getInstance()

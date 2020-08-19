@@ -74,6 +74,5 @@ dependencies {
         exclude group: 'org.json', module: 'json'
     }
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'androidx.viewpager2:viewpager2:1.0.0-alpha01'
 
 }

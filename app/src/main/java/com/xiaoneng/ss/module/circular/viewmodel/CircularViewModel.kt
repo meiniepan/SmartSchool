@@ -1,7 +1,7 @@
-package com.xiaoneng.ss.module.sys.viewmodel
+package com.xiaoneng.ss.module.circular.viewmodel
 
 import com.xiaoneng.ss.base.viewmodel.BaseViewModel
-import com.xiaoneng.ss.module.sys.repository.CircularRepository
+import com.xiaoneng.ss.module.circular.repository.CircularRepository
 
 /**
  * Created with Android Studio.

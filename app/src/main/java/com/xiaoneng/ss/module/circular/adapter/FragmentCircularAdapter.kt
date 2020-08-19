@@ -1,8 +1,8 @@
 package com.xiaoneng.ss.module.sys.adapter
 
 import androidx.fragment.app.Fragment
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.xiaoneng.ss.module.sys.view.CircularFragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 
 
 /**
@@ -13,16 +13,16 @@ import com.xiaoneng.ss.module.sys.view.CircularFragment
  * Time: 17:32
  */
 class FragmentCircularAdapter(
-    fragmentManager: CircularFragment,
-    fragmentlist: ArrayList<Fragment>
+    fragmentManager: FragmentManager,
+    val fragmentlist: ArrayList<Fragment>
 ) :
-    FragmentStateAdapter(fragmentManager) {
+    FragmentPagerAdapter(fragmentManager) {
     override fun getItem(position: Int): Fragment {
-
+        return fragmentlist[position]
     }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+    override fun getCount(): Int {
+        return fragmentlist.size
     }
 
 

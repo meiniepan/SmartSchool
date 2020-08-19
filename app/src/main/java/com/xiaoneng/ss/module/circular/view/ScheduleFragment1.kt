@@ -1,9 +1,8 @@
-package com.xiaoneng.ss.module.sys.view
+package com.xiaoneng.ss.module.circular.view
 
+import androidx.fragment.app.Fragment
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
-import com.xiaoneng.ss.module.circular.view.CircularFragment
-import com.xiaoneng.ss.module.sys.adapter.SystemAdapter
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 
 /**
@@ -13,18 +12,22 @@ import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
  * @date: 2020/02/27
  * Time: 17:01
  */
-class SystemFragment : BaseLifeCycleFragment<CircularViewModel>() {
-    protected lateinit var mAdapter: SystemAdapter
+class ScheduleFragment1 : BaseLifeCycleFragment<CircularViewModel>() {
+
+    override fun getLayoutId(): Int = R.layout.fragment_schedule_1
 
     companion object {
-        fun getInstance(): CircularFragment? {
-            return CircularFragment()
+        fun getInstance(): Fragment {
+            return ScheduleFragment1()
         }
+
     }
 
     override fun initView() {
         super.initView()
+
     }
+
     override fun initDataObserver() {
 //        mViewModel.mSystemTabNameData.observe(this, Observer { response ->
 //            response?.let {
@@ -33,7 +36,6 @@ class SystemFragment : BaseLifeCycleFragment<CircularViewModel>() {
 //        })
     }
 
-    override fun getLayoutId(): Int = R.layout.fragment_article_list
 
 
 }

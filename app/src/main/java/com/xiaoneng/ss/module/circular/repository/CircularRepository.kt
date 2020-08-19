@@ -1,4 +1,4 @@
-package com.xiaoneng.ss.module.sys.repository
+package com.xiaoneng.ss.module.circular.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.base.repository.ApiRepository

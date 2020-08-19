@@ -4,7 +4,7 @@ import android.animation.ObjectAnimator
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.custom.interpolator.CustomScaleInterpolator
-import com.xiaoneng.ss.module.sys.model.SystemTabNameResponse
+import com.xiaoneng.ss.module.circular.model.CircularResponse
 
 
 /**
@@ -14,10 +14,10 @@ import com.xiaoneng.ss.module.sys.model.SystemTabNameResponse
  * @date: 2020/02/27
  * Time: 17:32
  */
-class SystemAdapter(layoutId: Int, listData: MutableList<SystemTabNameResponse>?) :
-    BaseQuickAdapter<SystemTabNameResponse, BaseViewHolder>(layoutId, listData) {
+class SystemAdapter(layoutId: Int, listData: MutableList<CircularResponse>?) :
+    BaseQuickAdapter<CircularResponse, BaseViewHolder>(layoutId, listData) {
 
-    override fun convert(viewHolder: BaseViewHolder?, item: SystemTabNameResponse?) {
+    override fun convert(viewHolder: BaseViewHolder?, item: CircularResponse?) {
         viewHolder?.let { holder ->
 
         }

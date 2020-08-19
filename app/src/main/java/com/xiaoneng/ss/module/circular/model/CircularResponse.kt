@@ -1,4 +1,4 @@
-package com.xiaoneng.ss.module.sys.model
+package com.xiaoneng.ss.module.circular.model
 
 /**
  * Created with Android Studio.
@@ -7,7 +7,7 @@ package com.xiaoneng.ss.module.sys.model
  * @date: 2020/02/27
  * Time: 17:06
  */
-data class SystemTabNameResponse(
+data class CircularResponse(
     var children : String,
     var name : String
 )

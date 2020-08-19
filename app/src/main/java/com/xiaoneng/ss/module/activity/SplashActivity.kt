@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.account.view.LoginSwitchActivity
 import com.xiaoneng.ss.common.permission.PermissionResult
 import com.xiaoneng.ss.common.permission.Permissions
 import com.xiaoneng.ss.common.utils.mStartActivity
@@ -54,7 +53,7 @@ class SplashActivity : AppCompatActivity() {
 
 
     private fun startIntent() {
-        mStartActivity<LoginSwitchActivity>(this)
+        mStartActivity<MainActivity>(this)
         overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out)
         finish()
     }
