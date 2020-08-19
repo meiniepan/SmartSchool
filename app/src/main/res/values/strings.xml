@@ -41,9 +41,10 @@
     <string name="setting_version">检查更新</string>
     <string name="cancel">取消</string>
     <string name="updating">正在更新</string>
-    <string name="navigation_1">1</string>
-    <string name="navigation_2">2</string>
-    <string name="navigation_3">3</string>
+    <string name="navigation_1">通告</string>
+    <string name="navigation_2">校园</string>
+    <string name="navigation_3">我的</string>
     <string name="navigation_4">4</string>
     <string name="not_open">暂未开通</string>
+    <string name="at_u">\@了你</string>
 </resources>

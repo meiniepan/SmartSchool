@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import com.xiaoneng.ss.R
-import kotlinx.android.synthetic.main.layout_title_bar.view.*
+import kotlinx.android.synthetic.main.custom_title_bar.view.*
 
 /**
  * @author Burning
@@ -19,18 +19,20 @@ class CustomTitleBar @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
     private var title: String?
     private var isWhiteIcon: Boolean = false
+    private var isHideBack: Boolean = false
 
     init {
         val typedArray =
             getContext().obtainStyledAttributes(attrs, R.styleable.CustomTitleBar)
         title = typedArray.getString(R.styleable.CustomTitleBar_title)
-        isWhiteIcon = typedArray.getBoolean(R.styleable.CustomTitleBar_white_icon, false)
+        isWhiteIcon = typedArray.getBoolean(R.styleable.CustomTitleBar_is_white_icon, false)
+        isHideBack = typedArray.getBoolean(R.styleable.CustomTitleBar_is_hide_back, false)
         typedArray.recycle()
         init()
     }
 
     private fun init() {
-        View.inflate(context, R.layout.layout_title_bar, this)
+        View.inflate(context, R.layout.custom_title_bar, this)
         iv_back_custom.setOnClickListener {
             if (context is Activity) {
                 (context as Activity).finish()
@@ -39,12 +41,14 @@ class CustomTitleBar @JvmOverloads constructor(
             }
         }
         title?.let {
-            tv_title_custom.visibility = View.VISIBLE
             tv_title_custom.text = title
         }
         if (isWhiteIcon) {
             tv_title_custom.setTextColor(resources.getColor(R.color.white));
             iv_back_custom.setImageResource(R.drawable.icon_back_white_a)
+        }
+        if (isHideBack){
+            iv_back_custom.visibility = View.GONE
         }
 
     }

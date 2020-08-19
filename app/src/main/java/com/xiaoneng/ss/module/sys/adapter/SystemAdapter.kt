@@ -4,7 +4,7 @@ import android.animation.ObjectAnimator
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.custom.interpolator.CustomScaleInterpolator
-import com.xiaoneng.ss.module.circular.model.CircularResponse
+import com.xiaoneng.ss.module.school.model.SchoolResponse
 
 
 /**
@@ -14,10 +14,10 @@ import com.xiaoneng.ss.module.circular.model.CircularResponse
  * @date: 2020/02/27
  * Time: 17:32
  */
-class SystemAdapter(layoutId: Int, listData: MutableList<CircularResponse>?) :
-    BaseQuickAdapter<CircularResponse, BaseViewHolder>(layoutId, listData) {
+class SystemAdapter(layoutId: Int, listData: MutableList<SchoolResponse>?) :
+    BaseQuickAdapter<SchoolResponse, BaseViewHolder>(layoutId, listData) {
 
-    override fun convert(viewHolder: BaseViewHolder?, item: CircularResponse?) {
+    override fun convert(viewHolder: BaseViewHolder?, item: SchoolResponse?) {
         viewHolder?.let { holder ->
 
         }

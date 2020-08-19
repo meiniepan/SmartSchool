@@ -3,20 +3,17 @@
     <item
         android:id="@+id/menu_home"
         android:checked="true"
-        android:icon="@drawable/ic_open"
+        android:icon="@drawable/ic_tab_notice"
         android:title="@string/navigation_1" />
 
     <item
-        android:id="@+id/menu_system"
-        android:icon="@drawable/ic_open"
+        android:id="@+id/menu_school"
+        android:icon="@drawable/ic_tab_school"
         android:title="@string/navigation_2" />
     <item
-        android:id="@+id/menu_wechat"
-        android:icon="@drawable/ic_open"
+        android:id="@+id/menu_mine"
+        android:icon="@drawable/ic_tab_mine"
         android:title="@string/navigation_3" />
-    <item
-        android:id="@+id/menu_navigation"
-        android:icon="@drawable/ic_open"
-        android:title="@string/navigation_4" />
+
 
 </menu>

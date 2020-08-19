@@ -1,15 +1,17 @@
 package com.xiaoneng.ss.module.activity
 
 import android.Manifest
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
-import android.view.ViewGroup
+import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.account.view.LoginSwitchActivity
 import com.xiaoneng.ss.common.permission.PermissionResult
 import com.xiaoneng.ss.common.permission.Permissions
+import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.SPreference
 import com.xiaoneng.ss.common.utils.mStartActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -21,9 +23,7 @@ import pub.devrel.easypermissions.AppSettingsDialog
  */
 class SplashActivity : AppCompatActivity() {
 
-    private var mSplashContainer: ViewGroup? = null
-
-    private var mContext: Context? = null
+    private var token: String by SPreference(Constant.TOKEN, "")
 
     private val mPermissions = arrayOf(
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -37,7 +37,7 @@ class SplashActivity : AppCompatActivity() {
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         var handler = Handler()
         var runnable = Runnable { initView() }
-        handler.postDelayed(runnable,stt_splash.getDurationTime())
+        handler.postDelayed(runnable, stt_splash.getDurationTime())
         stt_splash.setOnClickListener {
             handler.removeCallbacks(runnable)
             initView()
@@ -53,7 +53,11 @@ class SplashActivity : AppCompatActivity() {
 
 
     private fun startIntent() {
-        mStartActivity<MainActivity>(this)
+        if (TextUtils.isEmpty(token)) {
+            mStartActivity<LoginSwitchActivity>(this)
+        } else {
+            mStartActivity<MainActivity>(this)
+        }
         overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out)
         finish()
     }

@@ -30,7 +30,6 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initView() {
         super.initView()
-        setStatusBarDark()
         tvSendCaptchaTeacher.setOnClickListener(this)
         tvLoginTeacher.setOnClickListener(this)
         tvSwitchIdTeacher.setOnClickListener(this)

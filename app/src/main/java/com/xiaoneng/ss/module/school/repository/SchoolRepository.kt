@@ -14,7 +14,7 @@ import com.xiaoneng.ss.network.dataConvert
  * @date: 2020/02/27
  * Time: 17:09
  */
-class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository() {
+class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() {
 
 
     suspend fun getNoticeList(page: String, pagenum: String): NoticeResponse {

@@ -1,9 +1,9 @@
 package com.xiaoneng.ss.module.circular.view
 
-import androidx.fragment.app.Fragment
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
-import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
+import com.xiaoneng.ss.module.circular.viewmodel.SchoolViewModel
+import com.xiaoneng.ss.module.sys.adapter.FragmentCircularAdapter
 
 /**
  * Created with Android Studio.
@@ -12,13 +12,14 @@ import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
  * @date: 2020/02/27
  * Time: 17:01
  */
-class ScheduleFragment2 : BaseLifeCycleFragment<CircularViewModel>() {
+class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
+    lateinit var mAda: FragmentCircularAdapter
 
-    override fun getLayoutId(): Int = R.layout.fragment_schedule_2
+    override fun getLayoutId(): Int = R.layout.fragment_school
 
     companion object {
-        fun getInstance(): Fragment {
-            return ScheduleFragment2()
+        fun getInstance(): SchoolFragment? {
+            return SchoolFragment()
         }
 
     }
@@ -27,6 +28,8 @@ class ScheduleFragment2 : BaseLifeCycleFragment<CircularViewModel>() {
         super.initView()
     }
 
+
+
     override fun initDataObserver() {
 //        mViewModel.mSystemTabNameData.observe(this, Observer { response ->
 //            response?.let {
@@ -34,7 +37,6 @@ class ScheduleFragment2 : BaseLifeCycleFragment<CircularViewModel>() {
 //            }
 //        })
     }
-
 
 
 }

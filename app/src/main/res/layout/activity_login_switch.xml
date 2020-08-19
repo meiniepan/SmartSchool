@@ -10,7 +10,7 @@
     <com.xiaoneng.ss.custom.widgets.CustomTitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:white_icon="true" />
+        app:is_white_icon="true" />
 
     <TextView
         android:layout_width="wrap_content"

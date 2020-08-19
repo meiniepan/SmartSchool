@@ -17,6 +17,8 @@ import com.xiaoneng.ss.common.utils.SPreference
 object UserInfo {
 
     private var isLogin: Boolean by SPreference(Constant.LOGIN_KEY, false)
+    var token: String by SPreference(Constant.TOKEN, "")
+//    var token: String  = "683fa08d7b0e133c3a96859b04cc1fea"
 
     // 设置默认状态
     var mState: UserState = if (isLogin) LoginState() else LogoutState()
@@ -34,13 +36,14 @@ object UserInfo {
         mState.login(context)
     }
 
-    fun loginSuccess(username: String, userId: String, collectIds: List<Int>?) {
+    fun loginSuccess(token:String) {
         // 改变 sharedPreferences   isLogin值
         isLogin = true
         mState = LoginState()
+        this.token = token
 
         // 登录成功 回调 -> DrawerLayout -> 个人信息更新状态
-        LoginSuccessState.notifyLoginState(username, userId, collectIds)
+//        LoginSuccessState.notifyLoginState(username, userId, collectIds)
     }
 
     fun logoutSuccess() {

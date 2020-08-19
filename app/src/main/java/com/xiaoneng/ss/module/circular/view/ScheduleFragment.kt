@@ -3,7 +3,7 @@ package com.xiaoneng.ss.module.circular.view
 import androidx.fragment.app.Fragment
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
-import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
+import com.xiaoneng.ss.module.circular.viewmodel.SchoolViewModel
 
 /**
  * Created with Android Studio.
@@ -12,20 +12,19 @@ import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
  * @date: 2020/02/27
  * Time: 17:01
  */
-class ScheduleFragment1 : BaseLifeCycleFragment<CircularViewModel>() {
+class ScheduleFragment : BaseLifeCycleFragment<SchoolViewModel>() {
 
-    override fun getLayoutId(): Int = R.layout.fragment_schedule_1
+    override fun getLayoutId(): Int = R.layout.fragment_schedule_2
 
     companion object {
         fun getInstance(): Fragment {
-            return ScheduleFragment1()
+            return ScheduleFragment()
         }
 
     }
 
     override fun initView() {
         super.initView()
-
     }
 
     override fun initDataObserver() {

@@ -13,6 +13,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.model.LoginReq
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.module.activity.MainActivity
@@ -36,7 +37,6 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initView() {
         super.initView()
-        setStatusBarDark()
         tv_stu_register.setOnClickListener(this)
         iv_eye.setOnClickListener(this)
         tvSwitchType.setOnClickListener(this)
@@ -143,6 +143,7 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
         })
         mViewModel.mLoginData.observe(this, Observer {
             it?.let {
+                UserInfo.loginSuccess(it.token)
                 toast(R.string.login_success)
                 mStartActivity<MainActivity>(this)
             }

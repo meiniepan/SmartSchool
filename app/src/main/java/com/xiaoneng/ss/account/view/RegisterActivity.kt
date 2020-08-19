@@ -28,7 +28,6 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initView() {
         super.initView()
-        setStatusBarDark()
         tvSendCaptcha_register.setOnClickListener(this)
         iv_eye_register.setOnClickListener(this)
         tvRegister.setOnClickListener(this)

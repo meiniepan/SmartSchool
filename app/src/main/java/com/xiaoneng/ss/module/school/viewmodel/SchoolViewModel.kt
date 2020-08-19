@@ -13,7 +13,7 @@ import com.xiaoneng.ss.network.initiateRequest
  * @date: 2020/02/27
  * Time: 17:09
  */
-class CircularViewModel : BaseViewModel<SchoolRepository>() {
+class SchoolViewModel : BaseViewModel<SchoolRepository>() {
 
     val mNoticeData: MutableLiveData<NoticeResponse> = MutableLiveData()
 

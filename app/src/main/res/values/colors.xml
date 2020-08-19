@@ -9,6 +9,7 @@
     <color name="transparent">#00000000</color>
     <color name="tintBac">#F6F8FE</color>
     <color name="orange">#FF9040</color>
+    <color name="tabGray">#ADB1B7</color>
 
 
     <color name="titleBlack">#212121</color>
@@ -25,7 +26,6 @@
     <color name="colorGray999">#999999</color>
     <color name="windowBackground">#80FFFFFF</color>
     <color name="background">#d8d8d8</color>
-    <color name="textTipColor">#a0a0a0</color>
     <color name="primary_dark">#1976D2</color>
     <color name="primary_light">#BBDEFB</color>
     <color name="primary_text">#212121</color>

@@ -244,7 +244,7 @@ object ColorUtil {
      * @return
      */
     fun getColor(context: Context): Int {
-        val defaultColor = ContextCompat.getColor(context!!, R.color.colorPrimaryDark)
+        val defaultColor = ContextCompat.getColor(context!!, R.color.commonBlue)
         var colorTheme: Int by SPreference("color", defaultColor)
         return if (colorTheme != 0 && Color.alpha(colorTheme) != 255) {
             defaultColor
@@ -274,7 +274,7 @@ object ColorUtil {
         Intrinsics.checkParameterIsNotNull(context, "context")
         val colors = intArrayOf(
             getColor(context),
-            ContextCompat.getColor(context!!, R.color.colorGray)
+            ContextCompat.getColor(context!!, R.color.tabGray)
         )
         val states = arrayOf(
             intArrayOf(

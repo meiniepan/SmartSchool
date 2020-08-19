@@ -2,31 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/tintBac"
     android:orientation="vertical">
 
     <LinearLayout style="@style/title_style" >
 
-    <TextView
+    <com.xiaoneng.ss.custom.widgets.CustomTabView
         android:id="@+id/tvCircular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="通知" />
+        app:check="true"
+        app:text="通知" />
 
-    <TextView
+    <com.xiaoneng.ss.custom.widgets.CustomTabView
         android:id="@+id/tvSchedule"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_marginStart="21dp"
         android:layout_height="wrap_content"
-        android:text="日程" />
+        app:text="日程" />
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@mipmap/ic_launcher"
+            android:layout_margin="1dp"
+            android:src="@drawable/ic_notice"
             />
         <View
             android:layout_width="8dp"

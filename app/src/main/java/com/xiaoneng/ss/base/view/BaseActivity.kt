@@ -1,5 +1,6 @@
 package com.xiaoneng.ss.base.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
@@ -59,6 +60,7 @@ abstract class BaseActivity : AppCompatActivity() {
         setContentView(getLayoutId())
         mRootView = (findViewById(android.R.id.content) as ViewGroup).getChildAt(0)
         AppManager.instance.addActivity(this)
+        setStatusBarDark()
         initView()
         initData()
         if (showCreateReveal()) {
@@ -106,7 +108,13 @@ abstract class BaseActivity : AppCompatActivity() {
 
     abstract fun getLayoutId(): Int
 
-    open fun reLoad() {}
+    open fun reLoad() {
+        getData()
+    }
+
+    private fun getData() {
+
+    }
 
 
     fun setUpReveal(savedInstanceState: Bundle?) {
@@ -151,7 +159,7 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    @SuppressLint("NewApi")
     private fun initStatusColor(color: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             window.statusBarColor = if (color == 0) ColorUtil.getColor(this) else color
@@ -166,13 +174,11 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @Subscribe
     fun changeThemeEvent(event: ChangeThemeEvent) {
         initStatusColor(0)
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun setStatusBarDark() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 

@@ -1,16 +1,15 @@
 package com.xiaoneng.ss.network
 
-import android.util.Log
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.LoggingInterceptor
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.SPreference
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.internal.platform.Platform
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.StringBuilder
 
 /**
  * Created with Android Studio.
@@ -48,6 +47,7 @@ class RetrofitFactory private constructor() {
             .addInterceptor(initLoginIntercept())
             .addInterceptor(LoggingInterceptor.Builder()
                 .setLevel(Level.BASIC)
+                .log(Platform.WARN)
                 .build())
             .addInterceptor(initCommonInterceptor())
             .build()

@@ -7,7 +7,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AnimActivity" parent="Theme.AppCompat.NoActionBar">
+    <style name="AnimActivity" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/commonBlue</item>
@@ -33,10 +33,18 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="title_style" >
+    <style name="title_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/title_height</item>
         <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginStart">@dimen/title_padding</item>
+        <item name="android:layout_marginEnd">@dimen/title_padding</item>
+    </style>
+
+    <style name="recycler_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:overScrollMode">never</item>
         <item name="android:layout_marginStart">@dimen/title_padding</item>
         <item name="android:layout_marginEnd">@dimen/title_padding</item>
     </style>
