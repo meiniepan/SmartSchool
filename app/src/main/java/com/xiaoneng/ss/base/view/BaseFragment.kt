@@ -49,6 +49,7 @@ abstract class BaseFragment : Fragment() {
             initStatusColor(0)
         }
 //        setStatusBarDark()
+//        initStatusColor(getColor(requireContext(), R.color.titleBlack))
         initView()
         initData()
     }
