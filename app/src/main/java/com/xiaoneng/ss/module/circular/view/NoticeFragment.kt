@@ -5,8 +5,10 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
+import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.RecycleViewDivider
 import com.xiaoneng.ss.common.utils.dp2px
+import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import com.xiaoneng.ss.module.school.adapter.SchoolAdapter
@@ -44,6 +46,12 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(RecycleViewDivider(context,dp2px(context,10f).toInt()))
             adapter = mAdapter
+        }
+        mAdapter.setOnItemClickListener { _, view, position ->
+            mStartActivity<NoticeDetailActivity>(context){
+                putExtra(Constant.TITLE,mData[position].title)
+                putExtra(Constant.ID,mData[position].id)
+            }
         }
     }
 

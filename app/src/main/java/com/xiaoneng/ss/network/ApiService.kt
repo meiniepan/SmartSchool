@@ -1,6 +1,7 @@
 package com.xiaoneng.ss.network
 
 import com.xiaoneng.ss.account.model.*
+import com.xiaoneng.ss.module.circular.model.NoticeDetailBean
 import com.xiaoneng.ss.module.circular.model.NoticeResponse
 import com.xiaoneng.ss.network.response.BaseResponse
 import retrofit2.http.*
@@ -162,4 +163,24 @@ interface ApiService {
         @Field("pagenum") pagenum: String = "",
         @Field("type") type: String = ""
     ): BaseResponse<NoticeResponse>
+
+    /**
+     *学生通知详情
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/student/notices/info")
+    suspend fun getNoticeDetail(
+        @Field("token") token: String,
+        @Field("id") page: String = ""
+    ): BaseResponse<NoticeDetailBean>
+
+    /**
+     *教师通知详情
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/notices/info")
+    suspend fun getNoticeDetail2(
+        @Field("token") token: String,
+        @Field("id") page: String = ""
+    ): BaseResponse<NoticeDetailBean>
 }

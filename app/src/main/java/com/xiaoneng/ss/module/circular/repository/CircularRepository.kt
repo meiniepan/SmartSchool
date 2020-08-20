@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.base.repository.ApiRepository
 import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.module.circular.model.NoticeDetailBean
 import com.xiaoneng.ss.module.circular.model.NoticeResponse
 import com.xiaoneng.ss.network.dataConvert
 
@@ -18,14 +19,40 @@ class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository(
 
 
     suspend fun getNoticeList(page: String, pagenum: String): NoticeResponse {
-        if (UserInfo.getUserBean().usertype == "1") {
-            return apiService.getNoticeList(UserInfo.getUserBean().token, page, pagenum).dataConvert(loadState)
-        } else if (UserInfo.getUserBean().usertype == "2") {
-            return apiService.getNoticeList2(UserInfo.getUserBean().token, page, pagenum).dataConvert(loadState)
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.getNoticeList(UserInfo.getUserBean().token, page, pagenum)
+                    .dataConvert(loadState)
+            }
+            "2" -> {
+                apiService.getNoticeList2(UserInfo.getUserBean().token, page, pagenum)
+                    .dataConvert(loadState)
 
-        } else {
-            return apiService.getNoticeList(UserInfo.getUserBean().token, page, pagenum).dataConvert(loadState)
+            }
+            else -> {
+                apiService.getNoticeList(UserInfo.getUserBean().token, page, pagenum)
+                    .dataConvert(loadState)
 
+            }
+        }
+    }
+
+    suspend fun getNoticeDetail(id: String): NoticeDetailBean {
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.getNoticeDetail(UserInfo.getUserBean().token, id)
+                    .dataConvert(loadState)
+            }
+            "2" -> {
+                apiService.getNoticeDetail2(UserInfo.getUserBean().token, id)
+                    .dataConvert(loadState)
+
+            }
+            else -> {
+                apiService.getNoticeDetail(UserInfo.getUserBean().token, id)
+                    .dataConvert(loadState)
+
+            }
         }
     }
 }

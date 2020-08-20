@@ -52,7 +52,7 @@ class CustomTitleBar @JvmOverloads constructor(
         }
 
     }
-    fun setTitle(title:String){
+    fun setTitle(title:String?){
         tv_title_custom.text = title
     }
 }

@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/tintBac"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
+    <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+        style="@style/title_style"
+        app:title="系统消息" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvNotice"
+        android:id="@+id/rvSysMsg"
         style="@style/recycler_style"
-        android:layout_marginTop="14dp"
-       />
+        android:layout_marginTop="20dp" />
 
 
 </LinearLayout>

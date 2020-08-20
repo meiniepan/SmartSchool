@@ -24,6 +24,7 @@
     <color name="colorGray666">#666</color>
     <color name="colorGray555">#555555</color>
     <color name="colorGray999">#999999</color>
+    <color name="colorGray777">#777777</color>
     <color name="windowBackground">#80FFFFFF</color>
     <color name="background">#d8d8d8</color>
     <color name="primary_dark">#1976D2</color>
