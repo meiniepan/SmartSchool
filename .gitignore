@@ -3,7 +3,7 @@
 *.apk
 /local.properties
 .idea
-/release
+/*/release
 .DS_Store
 /build
 /captures
