@@ -39,7 +39,8 @@ abstract class BaseActivity : AppCompatActivity() {
     lateinit var mRootView: View
 
     val loadService: LoadService<*> by lazy {
-        LoadSir.getDefault().register(this) {
+        val contentLayout = findViewById<View>(R.id.contentLayout)
+        LoadSir.getDefault().register(contentLayout) {
             reLoad()
         }
     }

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+            style="@style/title_style"
+            app:title="任务" />
+
+        <LinearLayout
+            android:id="@+id/contentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/title_padding"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/title_style">
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    >
+
+                <com.xiaoneng.ss.custom.widgets.CustomTabView2
+                    android:id="@+id/tvTaskTab1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:check="true"
+                    android:layout_centerInParent="true"
+                    app:text="全部任务" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+                <com.xiaoneng.ss.custom.widgets.CustomTabView2
+                    android:id="@+id/tvTaskTab2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:text="进行中" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+                    <com.xiaoneng.ss.custom.widgets.CustomTabView2
+                        android:id="@+id/tvTaskTab3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:text="未发布" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+                    <com.xiaoneng.ss.custom.widgets.CustomTabView2
+                        android:id="@+id/tvTaskTab4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:text="已关闭" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/vpCircular"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -51,9 +51,7 @@
             tools:ignore="LockedOrientationActivity">
 
         </activity>
-        <activity
-            android:name=".account.view.LoginActivityTest"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".account.view.LoginSwitchActivity"
             android:screenOrientation="portrait" />
@@ -64,7 +62,11 @@
 
             />
         <activity android:name=".account.view.LoginTeacherActivity" />
-        <activity android:name=".module.circular.view.SystemMsgListActivity" />
+        <activity android:name=".module.circular.view.SystemMsgListActivity">
+        </activity>
+        <activity android:name=".module.circular.view.NoticeDetailActivity" />
+        <activity android:name=".module.school.view.TaskActivity" />
+
     </application>
 
 </manifest>

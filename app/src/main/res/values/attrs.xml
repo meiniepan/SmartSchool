@@ -23,6 +23,8 @@
     <declare-styleable name="CustomTabView">
         <attr name="text" format="string"/>
         <attr name="check" format="boolean"/>
+        <attr name="textColor" format="color"/>
+        <attr name="textSize" format="dimension"/>
     </declare-styleable>
 
     <declare-styleable name="SplashTimer">

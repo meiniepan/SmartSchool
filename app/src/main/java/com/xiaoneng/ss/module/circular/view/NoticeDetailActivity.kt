@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_notice_detail.*
  * @date :2020/8/20 11:32 AM
  */
 class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>(), View.OnClickListener {
-    var id:String? = ""
+    var id:String = ""
     override fun getLayoutId(): Int {
         return R.layout.activity_notice_detail
     }
@@ -23,6 +23,11 @@ class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>(), View.On
         super.initView()
         id = intent.getStringExtra(Constant.ID)
         ctbNoticeDetail.setTitle(intent.getStringExtra("title"))
+    }
+
+    override fun initData() {
+        super.initData()
+        mViewModel.getNoticeDetail(id)
     }
     override fun initDataObserver() {
         mViewModel.mNoticeDetail.observe(this, Observer { response ->

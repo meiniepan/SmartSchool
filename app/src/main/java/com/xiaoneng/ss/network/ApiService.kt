@@ -147,7 +147,7 @@ interface ApiService {
     @POST("/api/v1/student/notices/lists")
     suspend fun getNoticeList(
         @Field("token") token: String,
-        @Field("id") page: String = "",
+        @Field("id") id: String,
         @Field("pagenum") pagenum: String = "",
         @Field("type") type: String = ""
     ): BaseResponse<NoticeResponse>
@@ -159,7 +159,7 @@ interface ApiService {
     @POST("/api/v1/teacher/notices/lists")
     suspend fun getNoticeList2(
         @Field("token") token: String,
-        @Field("id") page: String = "",
+        @Field("id") id: String,
         @Field("pagenum") pagenum: String = "",
         @Field("type") type: String = ""
     ): BaseResponse<NoticeResponse>
@@ -171,7 +171,7 @@ interface ApiService {
     @POST("/api/v1/student/notices/info")
     suspend fun getNoticeDetail(
         @Field("token") token: String,
-        @Field("id") page: String = ""
+        @Field("id") id: String
     ): BaseResponse<NoticeDetailBean>
 
     /**
@@ -181,6 +181,30 @@ interface ApiService {
     @POST("/api/v1/teacher/notices/info")
     suspend fun getNoticeDetail2(
         @Field("token") token: String,
-        @Field("id") page: String = ""
+        @Field("id") id: String
     ): BaseResponse<NoticeDetailBean>
+
+    /**
+     *学生通知状态变更
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/student/notices/modify")
+    suspend fun readNotice(
+        @Field("token") token: String,
+        @Field("id") id: String = "",
+        @Field("status") status: String = "",
+        @Field("received") received: String = ""
+    ): BaseResponse<Any>
+
+    /**
+     *教师通知状态变更
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/notices/modify")
+    suspend fun readNotice2(
+        @Field("token") token: String,
+        @Field("id") id: String = "",
+        @Field("status") status: String = "",
+        @Field("received") received: String = ""
+    ): BaseResponse<Any>
 }

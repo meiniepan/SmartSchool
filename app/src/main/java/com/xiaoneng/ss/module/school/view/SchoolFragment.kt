@@ -2,8 +2,9 @@ package com.xiaoneng.ss.module.school.view
 
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
-import com.xiaoneng.ss.module.circular.adapter.FragmentCircularAdapter
+import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
+import kotlinx.android.synthetic.main.fragment_school.*
 
 /**
  * Created with Android Studio.
@@ -13,7 +14,6 @@ import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
  * Time: 17:01
  */
 class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
-    lateinit var mAda: FragmentCircularAdapter
 
     override fun getLayoutId(): Int = R.layout.fragment_school
 
@@ -26,6 +26,18 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
+        llTask.setOnClickListener {
+            mStartActivity<TaskActivity>(context)
+        }
+        llTimeTable.setOnClickListener {
+            mStartActivity<TaskActivity>(context)
+        }
+        llAttendance.setOnClickListener {
+            mStartActivity<TaskActivity>(context)
+        }
+        llPerformance.setOnClickListener {
+            mStartActivity<TaskActivity>(context)
+        }
     }
 
 

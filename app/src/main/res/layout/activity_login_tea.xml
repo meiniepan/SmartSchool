@@ -8,197 +8,190 @@
     android:orientation="vertical">
 
 
-        <com.xiaoneng.ss.custom.widgets.CustomTitleBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
+    <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
+        android:id="@+id/contentLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/title_padding"
-        android:layout_marginTop="16.5dp"
-        android:layout_marginEnd="@dimen/title_padding"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="欢迎"
-            android:textSize="@dimen/sp_20"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="登录"
-            android:textColor="@color/commonBlue"
-            android:textSize="@dimen/sp_20"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="  校能智慧校园"
-            android:textSize="@dimen/sp_20"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/title_padding"
-        android:layout_marginTop="7.5dp"
-        android:layout_marginEnd="@dimen/title_padding"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="我的身份是"
-            android:textColor="@color/colorGray999" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="老师"
-            android:textColor="@color/commonBlue" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/title_padding"
-        android:layout_marginTop="70.5dp"
-        android:layout_marginEnd="@dimen/title_padding"
-        android:layout_marginBottom="14dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_phone" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginEnd="@dimen/title_padding"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="手机号" />
-
-            <EditText
-                android:id="@+id/etPhoneTeacher"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:hint="请输入您的手机号"
-                android:inputType="phone"
-                android:paddingTop="4.5dp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <include layout="@layout/layout_split_margin" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/title_padding"
-        android:layout_marginTop="23.5dp"
-        android:layout_marginEnd="@dimen/title_padding"
-        android:layout_marginBottom="14dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_captcha" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginEnd="@dimen/title_padding"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="验证码" />
-
-            <EditText
-                android:id="@+id/etCaptchaTeacher"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:hint="请输入短信验证码"
-                android:inputType="textPassword"
-                android:maxLength="8"
-                android:paddingTop="4.5dp" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvSendCaptchaTeacher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="发送验证码"
-            android:gravity="center"
-            android:textColor="@color/white"
             android:layout_marginStart="@dimen/title_padding"
-            android:background="@drawable/selector_captcha"
+            android:layout_marginTop="16.5dp"
             android:layout_marginEnd="@dimen/title_padding"
-            />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="欢迎"
+                android:textSize="@dimen/sp_20"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="登录"
+                android:textColor="@color/commonBlue"
+                android:textSize="@dimen/sp_20"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  校能智慧校园"
+                android:textSize="@dimen/sp_20"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/title_padding"
+            android:layout_marginTop="7.5dp"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我的身份是"
+                android:textColor="@color/colorGray999" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="老师"
+                android:textColor="@color/commonBlue" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/title_padding"
+            android:layout_marginTop="70.5dp"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:layout_marginBottom="14dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_phone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="@dimen/title_padding"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="手机号" />
+
+                <EditText
+                    android:id="@+id/etPhoneTeacher"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="请输入您的手机号"
+                    android:inputType="phone"
+                    android:paddingTop="4.5dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <include layout="@layout/layout_split_margin" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/title_padding"
+            android:layout_marginTop="23.5dp"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:layout_marginBottom="14dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_captcha" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="@dimen/title_padding"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="验证码" />
+
+                <EditText
+                    android:id="@+id/etCaptchaTeacher"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="请输入短信验证码"
+                    android:inputType="textPassword"
+                    android:maxLength="8"
+                    android:paddingTop="4.5dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvSendCaptchaTeacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/title_padding"
+                android:layout_marginEnd="@dimen/title_padding"
+                android:background="@drawable/selector_captcha"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="发送验证码"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <include layout="@layout/layout_split_margin" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tvLoginTeacher"
+            style="@style/button_blue_bac_style"
+            android:text="登      录"
+             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:text="身份不对应？"
+            android:textColor="@color/colorGray999"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/tvSwitchIdTeacher"
+            style="@style/button_blue_line_style"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="93dp"
+            android:text="切换身份"
+             />
+
     </LinearLayout>
-
-    <include layout="@layout/layout_split_margin" />
-
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        />
-    <TextView
-        android:id="@+id/tvLoginTeacher"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:text="登      录"
-        android:textSize="@dimen/sp_16"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:layout_marginStart="@dimen/title_padding"
-        android:background="@drawable/bac_blue_bac"
-        android:layout_marginEnd="@dimen/title_padding"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="身份不对应？"
-        android:textSize="@dimen/sp_12"
-        android:textColor="@color/colorGray999"
-        android:layout_marginTop="12dp"
-        android:layout_gravity="center_horizontal"/>
-    <TextView
-        android:id="@+id/tvSwitchIdTeacher"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:text="切换身份"
-        android:textSize="@dimen/sp_16"
-        android:gravity="center"
-        android:textColor="@color/commonBlue"
-        android:layout_marginBottom="93dp"
-        android:layout_marginTop="13dp"
-        android:background="@drawable/bac_blue_line"
-        android:layout_marginStart="@dimen/title_padding"
-        android:layout_marginEnd="@dimen/title_padding"
-        />
-
 </LinearLayout>

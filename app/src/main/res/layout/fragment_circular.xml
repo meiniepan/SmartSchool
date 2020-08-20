@@ -20,13 +20,18 @@
 
             <com.xiaoneng.ss.custom.widgets.CustomTabView
                 android:id="@+id/tvSchedule"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="21dp"
-                android:layout_weight="1"
                 app:text="日程" />
 
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
             <FrameLayout
+                android:id="@+id/flSysMsg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 

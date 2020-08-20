@@ -13,8 +13,9 @@
         android:layout_height="wrap_content" />
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/contentLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:overScrollMode="never"
         android:scrollbars="none">
 
@@ -42,7 +43,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingStart="@dimen/title_padding"
                 android:paddingTop="20dp"
@@ -57,17 +58,17 @@
                     <TextView
                         android:id="@+id/tvName"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:textColor="@color/commonBlue"
                         android:textSize="@dimen/sp_16" />
+
                     <TextView
                         android:id="@+id/tvReadNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="1dp"
-                        android:textColor="@color/colorGray999"
-                         />
+                        android:textColor="@color/colorGray999" />
 
                 </LinearLayout>
 
@@ -80,30 +81,40 @@
                     <TextView
                         android:id="@+id/tvTime1"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:textColor="@color/colorGray999"
                         android:textSize="@dimen/sp_12" />
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_read"/>
+                        android:src="@drawable/ic_read" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="已阅数量"
                         android:layout_marginStart="1dp"
+                        android:text="已阅数量"
                         android:textColor="@color/colorGray999"
                         android:textSize="@dimen/sp_12" />
 
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/tvNoticeInfo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="14dp"
-                    />
+                    android:layout_marginTop="14dp" />
+
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvRead"
+                style="@style/button_blue_bac_style"
+                android:layout_marginTop="58dp"
+                android:layout_marginBottom="20dp"
+                android:text="我已阅读" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

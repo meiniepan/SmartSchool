@@ -23,9 +23,9 @@ class NoticeAdapter(layoutId: Int, listData: MutableList<NoticeBean>?) :
                 .setText(R.id.tvTime2,item?.noticetime)
                 .setText(R.id.tvContent,item?.remark)
             if (item?.status == "0"){
-                holder.setVisible(R.id.vOval,true)
+                holder.setGone(R.id.vOval,true)
             }else{
-                holder.setVisible(R.id.vOval,false)
+                holder.setGone(R.id.vOval,false)
             }
         }
     }

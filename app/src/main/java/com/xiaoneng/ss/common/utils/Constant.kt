@@ -8,6 +8,7 @@ package com.xiaoneng.ss.common.utils
  * Time: 17:36
  */
 object Constant {
+    const val DATA = "DATA"
     const val BASE_URL = " http://api.huiwencloud.com:81"
 //    const val BASE_URL = "https://www.sojson.com"
 

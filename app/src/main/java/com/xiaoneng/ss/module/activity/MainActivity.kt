@@ -113,7 +113,7 @@ class MainActivity : BaseActivity() {
             }
             if (mCurrentFragment == null) {
                 mCurrentFragment = getFragment(index)
-                transaction.add(R.id.content, mCurrentFragment!!, index.toString())
+                transaction.add(R.id.contentLayout, mCurrentFragment!!, index.toString())
             } else {
                 transaction.show(mCurrentFragment!!)
             }
@@ -123,7 +123,7 @@ class MainActivity : BaseActivity() {
         if (index == mLastIndex) {
             if (mCurrentFragment == null) {
                 mCurrentFragment = getFragment(index)
-                transaction.add(R.id.content, mCurrentFragment!!, index.toString())
+                transaction.add(R.id.contentLayout, mCurrentFragment!!, index.toString())
             }
         }
         transaction.commit()

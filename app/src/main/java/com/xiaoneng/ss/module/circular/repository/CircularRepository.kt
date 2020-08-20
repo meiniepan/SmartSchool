@@ -55,4 +55,23 @@ class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository(
             }
         }
     }
+
+    suspend fun read(id: String,status:String): Any {
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.readNotice(UserInfo.getUserBean().token, id,status = status)
+                    .dataConvert(loadState)
+            }
+            "2" -> {
+                apiService.readNotice2(UserInfo.getUserBean().token, id,status = status)
+                    .dataConvert(loadState)
+
+            }
+            else -> {
+                apiService.readNotice(UserInfo.getUserBean().token, id,status = status)
+                    .dataConvert(loadState)
+
+            }
+        }
+    }
 }

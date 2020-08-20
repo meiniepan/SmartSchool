@@ -11,10 +11,15 @@
         style="@style/title_style"
         app:title="系统消息" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSysMsg"
-        style="@style/recycler_style"
-        android:layout_marginTop="20dp" />
+    <LinearLayout
+        android:id="@+id/contentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSysMsg"
+            style="@style/recycler_style"
+            android:layout_marginTop="20dp" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -28,6 +28,7 @@
     <View
         android:layout_width="10dp"
         android:layout_height="10dp"
+        android:visibility="gone"
         android:background="@drawable/shape_orange_oval"
         android:layout_gravity="right"
         />

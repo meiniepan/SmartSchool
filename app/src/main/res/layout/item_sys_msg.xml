@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/time3"
+        android:id="@+id/tvTime3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -48,7 +48,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tvTime3"
+        android:id="@+id/tvAction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tool:text="haha"

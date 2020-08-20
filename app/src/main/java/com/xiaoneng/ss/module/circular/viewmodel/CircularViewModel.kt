@@ -18,6 +18,7 @@ class CircularViewModel : BaseViewModel<CircularRepository>() {
 
     val mNoticeData: MutableLiveData<NoticeResponse> = MutableLiveData()
     val mNoticeDetail: MutableLiveData<NoticeDetailBean> = MutableLiveData()
+    val mReadData: MutableLiveData<Any> = MutableLiveData()
 
     fun getNoticeList(page: String = "", pagenum: String = "") {
         initiateRequest(
@@ -26,9 +27,16 @@ class CircularViewModel : BaseViewModel<CircularRepository>() {
         )
     }
 
-    fun getNoticeDetail(id: String ) {
+    fun getNoticeDetail(id: String) {
         initiateRequest(
             { mNoticeDetail.value = mRepository.getNoticeDetail(id) },
+            loadState
+        )
+    }
+
+    fun read(id: String,status:String) {
+        initiateRequest(
+            { mReadData.value = mRepository.read(id,status) },
             loadState
         )
     }

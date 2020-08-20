@@ -2,9 +2,9 @@ package com.xiaoneng.ss.common.state
 
 import android.content.Context
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.account.view.LoginSwitchActivity
 import com.xiaoneng.ss.common.state.callback.CollectListener
 import com.xiaoneng.ss.common.utils.mStartActivity
-import com.xiaoneng.ss.account.view.LoginActivityTest
 import org.jetbrains.anko.toast
 
 /**
@@ -28,7 +28,7 @@ class LogoutState :UserState {
     private fun startLoginActivity(context: Context) {
         context?.let {
             it.toast(it.getString(R.string.please_login))
-            mStartActivity<LoginActivityTest>(it)
+            mStartActivity<LoginSwitchActivity>(it)
         }
     }
 

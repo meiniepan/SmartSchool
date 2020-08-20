@@ -1,16 +1,17 @@
-package com.xiaoneng.ss.module.circular.view
+package com.xiaoneng.ss.module.school.view
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
-import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.module.circular.adapter.FragmentCircularAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
+import com.xiaoneng.ss.module.circular.view.NoticeFragment
+import com.xiaoneng.ss.module.circular.view.ScheduleFragment
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import kotlinx.android.synthetic.main.fragment_circular.*
+import kotlinx.android.synthetic.main.activity_task.*
+import kotlinx.android.synthetic.main.fragment_circular.vpCircular
 
 /**
  * Created with Android Studio.
@@ -19,16 +20,16 @@ import kotlinx.android.synthetic.main.fragment_circular.*
  * @date: 2020/02/27
  * Time: 17:01
  */
-class CircularFragment : BaseLifeCycleFragment<SchoolViewModel>() {
+class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var fragmentAdapter: FragmentCircularAdapter
     var fragmentList = ArrayList<Fragment>()
     var mData=ArrayList<NoticeBean>()
 
-    override fun getLayoutId(): Int = R.layout.fragment_circular
+    override fun getLayoutId(): Int = R.layout.activity_task
 
     companion object {
-        fun getInstance(): CircularFragment? {
-            return CircularFragment()
+        fun getInstance(): TaskActivity? {
+            return TaskActivity()
         }
 
     }
@@ -37,11 +38,7 @@ class CircularFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         super.initView()
         initViewPager()
         initTab()
-        flSysMsg.setOnClickListener{
-            mStartActivity<SystemMsgListActivity>(context){
-                putExtra(Constant.DATA,mData)
-            }
-        }
+
     }
 
     override fun initData() {
@@ -50,30 +47,36 @@ class CircularFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     }
 
     private fun initTab() {
-        tvCircular.setOnClickListener {
+        tvTaskTab1.setOnClickListener {
             checkFirsTab()
         }
-        tvSchedule.setOnClickListener {
+        tvTaskTab2.setOnClickListener {
+            checkSecondTab()
+        }
+        tvTaskTab3.setOnClickListener {
+            checkSecondTab()
+        }
+        tvTaskTab4.setOnClickListener {
             checkSecondTab()
         }
     }
 
     private fun checkSecondTab() {
-        tvCircular.setChecked(false)
-        tvSchedule.setChecked(true)
+        tvTaskTab1.setChecked(false)
+        tvTaskTab2.setChecked(true)
         vpCircular.setCurrentItem(1, true)
     }
 
     private fun checkFirsTab() {
-        tvCircular.setChecked(true)
-        tvSchedule.setChecked(false)
+        tvTaskTab1.setChecked(true)
+        tvTaskTab2.setChecked(false)
         vpCircular.setCurrentItem(0, true)
     }
 
     private fun initViewPager() {
         fragmentList.add(NoticeFragment.getInstance())
         fragmentList.add(ScheduleFragment.getInstance())
-        fragmentAdapter = FragmentCircularAdapter(childFragmentManager, fragmentList)
+        fragmentAdapter = FragmentCircularAdapter(supportFragmentManager, fragmentList)
         vpCircular.adapter = fragmentAdapter
         vpCircular.addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
