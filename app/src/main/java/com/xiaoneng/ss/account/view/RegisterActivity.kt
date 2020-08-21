@@ -28,8 +28,8 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initView() {
         super.initView()
-        tvSendCaptcha_register.setOnClickListener(this)
-        iv_eye_register.setOnClickListener(this)
+        tvSendCaptchaRegister.setOnClickListener(this)
+        ivEyeRegiter.setOnClickListener(this)
         tvRegister.setOnClickListener(this)
         tvSwitchIdRegister.setOnClickListener(this)
         tvProtocolRegister.setOnClickListener(this)
@@ -65,22 +65,22 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
                 doRegister()
             }
 
-            R.id.iv_eye_register -> {
+            R.id.ivEyeRegiter -> {
                 doEye()
             }
 
-            R.id.tvSendCaptcha_register -> {
+            R.id.tvSendCaptchaRegister -> {
                 dpCaptcha()
             }
         }
     }
 
     private fun doRegister() {
-        var phoneStr = et_phone_register.text.toString()
-        var vCodeStr = et_captcha_register.text.toString()
-        var inviteStr = et_invite_register.text.toString()
-        var nameStr = et_name_register.text.toString()
-        var pwdStr = et_pwd_register.text.toString()
+        var phoneStr = etPhoneRegister.text.toString()
+        var vCodeStr = etCaptchaRegister.text.toString()
+        var inviteStr = etInviteRegister.text.toString()
+        var nameStr = etNameRegister.text.toString()
+        var pwdStr = etPwdRegister.text.toString()
         if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(vCodeStr) || TextUtils.isEmpty(
                 inviteStr
             )
@@ -94,46 +94,46 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
     }
 
     private fun dpCaptcha() {
-        var phoneStr = et_phone_register.text.toString()
+        var phoneStr = etPhoneRegister.text.toString()
         if (!RegexUtils.isMobileSimple(phoneStr)) {
             showTip("请输入正确手机号")
             return
         }
         mViewModel.captcha(phoneStr)
-        tvSendCaptcha_register.isEnabled = false
+        tvSendCaptchaRegister.isEnabled = false
         timer = object : CountDownTimer(60 * 1000, 1000) {
             override fun onFinish() {
-                tvSendCaptcha_register.text = "发送验证码"
-                tvSendCaptcha_register.isEnabled = true
+                tvSendCaptchaRegister.text = "发送验证码"
+                tvSendCaptchaRegister.isEnabled = true
             }
 
             override fun onTick(p0: Long) {
                 var mm = p0 / 1000
-                tvSendCaptcha_register.text = "发送验证码 $mm"
+                tvSendCaptchaRegister.text = "发送验证码 $mm"
             }
         }.start()
     }
 
     private fun doEye() {
         if (isHideFirst) {
-            iv_eye_register.setImageResource(R.drawable.ic_eye);
+            ivEyeRegiter.setImageResource(R.drawable.ic_eye);
             //密文
             var method1: HideReturnsTransformationMethod =
                 HideReturnsTransformationMethod.getInstance()
-            et_pwd_register.transformationMethod = method1;
+            etPwdRegister.transformationMethod = method1;
             isHideFirst = false;
         } else {
-            iv_eye_register.setImageResource(R.drawable.ic_eye_no);
+            ivEyeRegiter.setImageResource(R.drawable.ic_eye_no);
             //密文
             var method: TransformationMethod =
                 PasswordTransformationMethod.getInstance();
-            et_pwd_register.transformationMethod = method;
+            etPwdRegister.transformationMethod = method;
             isHideFirst = true;
 
         }
         // 光标的位置
-        val index: Int = et_pwd_register.text.toString().length
-        et_pwd_register.setSelection(index)
+        val index: Int = etPwdRegister.text.toString().length
+        etPwdRegister.setSelection(index)
     }
 
     override fun onDestroy() {

@@ -56,12 +56,15 @@
             android:name=".account.view.LoginSwitchActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".account.view.LoginStuActivity"
-            android:screenOrientation="portrait" />
+            android:name=".account.view.LoginStuActivity">
+
+        </activity>
         <activity android:name=".account.view.RegisterActivity"
 
             />
-        <activity android:name=".account.view.LoginTeacherActivity" />
+        <activity android:name=".account.view.LoginTeacherActivity" >
+
+        </activity>
         <activity android:name=".module.circular.view.SystemMsgListActivity">
         </activity>
         <activity android:name=".module.circular.view.NoticeDetailActivity" />

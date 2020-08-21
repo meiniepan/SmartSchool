@@ -7,17 +7,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.getColor
 import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.utils.ChangeThemeEvent
 import com.xiaoneng.ss.common.utils.ColorUtil
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import java.util.*
 
 /**
  * Created with Android Studio.
@@ -45,13 +42,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (Date().month + 1 == 4 && Date().date == 4) {
-            initStatusColor(getColor(requireContext(), R.color.colorGray666))
-        } else {
-            initStatusColor(0)
-        }
-//        setStatusBarDark()
-//        initStatusColor(getColor(requireContext(), R.color.titleBlack))
+        setStatusBarDark()
         initView()
         initData()
     }

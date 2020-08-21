@@ -29,7 +29,7 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
 
 
     private var isHideFirst: Boolean = true
-    private var isPwdType: Boolean = true
+    private var isPwdType: Boolean = false
     private var timer: CountDownTimer? = null
 
     override fun getLayoutId() = R.layout.activity_login_stu
@@ -88,7 +88,7 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
             }
 
             R.id.tvSendCaptcha -> {
-                var phoneStr = et_phone.text.toString()
+                var phoneStr = etPhone.text.toString()
                 if (!RegexUtils.isMobileSimple(phoneStr)) {
                     showTip("请输入正确手机号")
                     return
@@ -109,8 +109,8 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
             }
 
             R.id.tvLogin -> {
-                var phoneStr = et_phone.text.toString()
-                var vCodeStr = et_captcha.text.toString()
+                var phoneStr = etPhone.text.toString()
+                var vCodeStr = etCaptcha.text.toString()
                 var pwdStr = et_pwd.text.toString()
                 if (isPwdType) {
                     if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(pwdStr)) {

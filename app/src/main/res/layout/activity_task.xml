@@ -18,11 +18,12 @@
             android:id="@+id/contentLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/title_padding"
-            android:layout_marginEnd="@dimen/title_padding"
             android:orientation="vertical">
 
-            <LinearLayout style="@style/title_style">
+            <LinearLayout style="@style/title_style"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                >
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"

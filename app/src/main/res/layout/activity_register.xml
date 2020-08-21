@@ -24,8 +24,9 @@
 
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginStart="@dimen/title_padding"
                 android:layout_marginTop="16.5dp"
                 android:layout_marginEnd="@dimen/title_padding"
@@ -55,8 +56,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginStart="@dimen/title_padding"
                 android:layout_marginTop="7.5dp"
                 android:layout_marginEnd="@dimen/title_padding"
@@ -80,240 +82,179 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/title_padding"
-                android:layout_marginTop="70.5dp"
+                android:layout_marginTop="80.5dp"
                 android:layout_marginEnd="@dimen/title_padding"
                 android:layout_marginBottom="14dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
                     android:src="@drawable/ic_person" />
 
-                <LinearLayout
+
+                <EditText
+                    android:id="@+id/etNameRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginEnd="@dimen/title_padding"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="姓名" />
-
-                    <EditText
-                        android:id="@+id/et_name_register"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:hint="请输入您的姓名"
-                        android:paddingTop="4.5dp" />
-                </LinearLayout>
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="26dp"
+                    android:background="@null"
+                    android:hint="请输入您的姓名"
+                    android:textSize="@dimen/sp_20" />
             </LinearLayout>
 
-            <include layout="@layout/layout_split_margin" />
+            <include layout="@layout/layout_split_margin_login" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/title_padding"
-                android:layout_marginTop="70.5dp"
+                android:layout_marginTop="28dp"
                 android:layout_marginEnd="@dimen/title_padding"
                 android:layout_marginBottom="14dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
                     android:src="@drawable/ic_invite" />
 
-                <LinearLayout
+
+                <EditText
+                    android:id="@+id/etInviteRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginEnd="@dimen/title_padding"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="班级邀请码" />
-
-                    <EditText
-                        android:id="@+id/et_invite_register"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:hint="请输入您的邀请码"
-                        android:paddingTop="4.5dp" />
-                </LinearLayout>
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="26dp"
+                    android:background="@null"
+                    android:hint="请输入您的邀请码"
+                    android:textSize="@dimen/sp_20" />
             </LinearLayout>
 
-            <include layout="@layout/layout_split_margin" />
+            <include layout="@layout/layout_split_margin_login" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/title_padding"
-                android:layout_marginTop="70.5dp"
+                android:layout_marginTop="28dp"
                 android:layout_marginEnd="@dimen/title_padding"
                 android:layout_marginBottom="14dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
                     android:src="@drawable/icon_phone" />
 
-                <LinearLayout
+
+                <EditText
+                    android:id="@+id/etPhoneRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginEnd="@dimen/title_padding"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="手机号" />
-
-                    <EditText
-                        android:id="@+id/et_phone_register"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:hint="请输入您的手机号"
-                        android:inputType="phone"
-                        android:paddingTop="4.5dp" />
-                </LinearLayout>
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="26dp"
+                    android:background="@null"
+                    android:hint="请输入您的手机号"
+                    android:inputType="phone"
+                    android:textSize="@dimen/sp_20" />
             </LinearLayout>
 
-            <include layout="@layout/layout_split_margin" />
+            <include layout="@layout/layout_split_margin_login" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/title_padding"
-                android:layout_marginTop="23.5dp"
+                android:layout_marginTop="28dp"
                 android:layout_marginEnd="@dimen/title_padding"
                 android:layout_marginBottom="14dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
                     android:src="@drawable/icon_captcha" />
 
-                <LinearLayout
+
+
+                <EditText
+                    android:id="@+id/etCaptchaRegister"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginEnd="@dimen/title_padding"
                     android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="验证码" />
-
-                    <EditText
-                        android:id="@+id/et_captcha_register"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:hint="请输入短信验证码"
-                        android:inputType="phone"
-                        android:maxLength="8"
-                        android:paddingTop="4.5dp" />
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="验证码"
+                    android:textSize="@dimen/sp_20"
+                    android:layout_marginStart="12dp"
+                    android:maxLength="8"
+                    />
 
                 <TextView
-                    android:id="@+id/tvSendCaptcha_register"
+                    android:id="@+id/tvSendCaptchaRegister"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/title_padding"
-                    android:layout_marginEnd="@dimen/title_padding"
-                    android:background="@drawable/selector_captcha"
+                    android:layout_marginEnd="26dp"
                     android:gravity="center"
-                    android:padding="5dp"
                     android:text="发送验证码"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/commonBlue" />
             </LinearLayout>
 
-            <include layout="@layout/layout_split_margin" />
+            <include layout="@layout/layout_split_margin_login" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/title_padding"
-                android:layout_marginTop="23.5dp"
+                android:layout_marginTop="28dp"
                 android:layout_marginEnd="@dimen/title_padding"
                 android:layout_marginBottom="14dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
                     android:src="@drawable/ic_lock" />
 
-                <LinearLayout
+
+
+                <EditText
+                    android:id="@+id/etPwdRegister"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginEnd="@dimen/title_padding"
                     android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="密码" />
-
-                    <EditText
-                        android:id="@+id/et_pwd_register"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:hint="请输入您的密码"
-                        android:inputType="textPassword"
-                        android:maxLength="8"
-                        android:paddingTop="4.5dp" />
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="请输入您的密码"
+                    android:textSize="@dimen/sp_20"
+                    android:layout_marginStart="12dp"
+                    android:inputType="textPassword"
+                    android:maxLength="8"
+                    />
 
                 <ImageView
-                    android:id="@+id/iv_eye_register"
+                    android:id="@+id/ivEyeRegiter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="26dp"
                     android:src="@drawable/ic_eye_no" />
             </LinearLayout>
 
 
-            <include layout="@layout/layout_split_margin" />
+            <include layout="@layout/layout_split_margin_login" />
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/tvRegister"
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:layout_marginStart="@dimen/title_padding"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="@dimen/title_padding"
-                android:background="@drawable/bac_blue_bac"
-                android:gravity="center"
+                android:layout_marginTop="120dp"
                 android:text="注      册"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_16" />
+                style="@style/button_blue_bac_style" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -340,17 +281,10 @@
 
             <TextView
                 android:id="@+id/tvSwitchIdRegister"
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:layout_marginStart="@dimen/title_padding"
                 android:layout_marginTop="13dp"
-                android:layout_marginEnd="@dimen/title_padding"
                 android:layout_marginBottom="93dp"
-                android:background="@drawable/bac_blue_line"
-                android:gravity="center"
                 android:text="切换身份"
-                android:textColor="@color/commonBlue"
-                android:textSize="@dimen/sp_16" />
+                style="@style/button_blue_line_style" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

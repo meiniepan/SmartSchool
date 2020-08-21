@@ -19,8 +19,9 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginStart="@dimen/title_padding"
             android:layout_marginTop="16.5dp"
             android:layout_marginEnd="@dimen/title_padding"
@@ -50,8 +51,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginStart="@dimen/title_padding"
             android:layout_marginTop="7.5dp"
             android:layout_marginEnd="@dimen/title_padding"
@@ -75,95 +77,73 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/title_padding"
-            android:layout_marginTop="70.5dp"
+            android:layout_marginTop="80.5dp"
             android:layout_marginEnd="@dimen/title_padding"
             android:layout_marginBottom="14dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
                 android:src="@drawable/icon_phone" />
 
-            <LinearLayout
+
+            <EditText
+                android:id="@+id/etPhoneTeacher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_marginEnd="@dimen/title_padding"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="手机号" />
-
-                <EditText
-                    android:id="@+id/etPhoneTeacher"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="请输入您的手机号"
-                    android:inputType="phone"
-                    android:paddingTop="4.5dp" />
-            </LinearLayout>
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="26dp"
+                android:background="@null"
+                android:hint="请输入您的手机号"
+                android:inputType="phone"
+                android:textSize="@dimen/sp_20" />
         </LinearLayout>
 
-        <include layout="@layout/layout_split_margin" />
+        <include layout="@layout/layout_split_margin_login" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/title_padding"
-            android:layout_marginTop="23.5dp"
+            android:layout_marginTop="28dp"
             android:layout_marginEnd="@dimen/title_padding"
             android:layout_marginBottom="14dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
                 android:src="@drawable/icon_captcha" />
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_marginEnd="@dimen/title_padding"
-                android:layout_weight="1"
-                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="验证码" />
 
                 <EditText
                     android:id="@+id/etCaptchaTeacher"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:hint="请输入短信验证码"
-                    android:inputType="textPassword"
+                    android:hint="验证码"
+                    android:textSize="@dimen/sp_20"
+                    android:layout_marginStart="12dp"
                     android:maxLength="8"
-                    android:paddingTop="4.5dp" />
-            </LinearLayout>
+                     />
 
             <TextView
                 android:id="@+id/tvSendCaptchaTeacher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/title_padding"
-                android:layout_marginEnd="@dimen/title_padding"
-                android:background="@drawable/selector_captcha"
+                android:layout_marginEnd="26dp"
                 android:gravity="center"
-                android:padding="5dp"
                 android:text="发送验证码"
-                android:textColor="@color/white" />
+                android:textColor="@color/commonBlue" />
         </LinearLayout>
 
-        <include layout="@layout/layout_split_margin" />
+        <include layout="@layout/layout_split_margin_login" />
 
         <Space
             android:layout_width="0dp"
@@ -173,8 +153,7 @@
         <TextView
             android:id="@+id/tvLoginTeacher"
             style="@style/button_blue_bac_style"
-            android:text="登      录"
-             />
+            android:text="登      录" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -190,8 +169,7 @@
             style="@style/button_blue_line_style"
             android:layout_marginTop="13dp"
             android:layout_marginBottom="93dp"
-            android:text="切换身份"
-             />
+            android:text="切换身份" />
 
     </LinearLayout>
 </LinearLayout>

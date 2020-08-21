@@ -44,6 +44,7 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initData() {
         super.initData()
         mViewModel.getNoticeList()
+
     }
 
     private fun initTab() {
@@ -65,12 +66,14 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvTaskTab1.setChecked(false)
         tvTaskTab2.setChecked(true)
         vpCircular.setCurrentItem(1, true)
+        setStatusBarDark()
     }
 
     private fun checkFirsTab() {
         tvTaskTab1.setChecked(true)
         tvTaskTab2.setChecked(false)
         vpCircular.setCurrentItem(0, true)
+        setStatusBarDark()
     }
 
     private fun initViewPager() {

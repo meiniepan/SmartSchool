@@ -9,7 +9,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout style="@style/title_style">
+        <LinearLayout style="@style/title_style"
+            android:paddingStart="@dimen/title_padding"
+            android:paddingEnd="@dimen/title_padding"
+            >
 
             <com.xiaoneng.ss.custom.widgets.CustomTabView
                 android:id="@+id/tvCircular"

@@ -53,13 +53,13 @@ class SplashActivity : AppCompatActivity() {
 
 
     private fun startIntent() {
+        finish()
         if (TextUtils.isEmpty(token)) {
             mStartActivity<LoginSwitchActivity>(this)
         } else {
             mStartActivity<MainActivity>(this)
         }
         overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out)
-        finish()
     }
 
     override fun onStop() {

@@ -3,6 +3,7 @@ package com.xiaoneng.ss.custom.widgets
 import android.animation.ValueAnimator
 import android.animation.ValueAnimator.AnimatorUpdateListener
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Canvas
