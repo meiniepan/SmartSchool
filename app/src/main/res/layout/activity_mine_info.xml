@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent">
+<com.xiaoneng.ss.custom.widgets.CustomTitleBar
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    />
+    <androidx.core.widget.NestedScrollView style="@style/nes_scroll_style">
+
+        <LinearLayout
+            android:id="@+id/contentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.xiaoneng.ss.custom.widgets.RoundImageView
+                android:id="@+id/ivAvatarMineInfo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/ic_performance" />
+
+            <TextView
+                android:id="@+id/tvNameMineInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="60dp"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingStart="24dp"
+
+                >
+
+                <LinearLayout
+                    android:id="@+id/llMineItem1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="姓名" />
+
+                        <TextView
+                            android:id="@+id/tvMineItem1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="24dp" />
+
+                    </LinearLayout>
+
+                    <include layout="@layout/layout_split" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llMineItem2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="性别" />
+
+                        <TextView
+                            android:id="@+id/tvMineItem2"
+                            android:layout_width="wrap_content"
+                            android:hint="请选择"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="24dp" />
+
+                    </LinearLayout>
+
+                    <include layout="@layout/layout_split" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llMineItem3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="出生年月" />
+
+                        <TextView
+                            android:id="@+id/tvMineItem3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="请选择"
+                            android:layout_marginEnd="24dp" />
+
+                    </LinearLayout>
+
+                    <include layout="@layout/layout_split" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llMineItem4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="手机号码" />
+
+                        <TextView
+                            android:id="@+id/tvMineItem4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="24dp" />
+
+                    </LinearLayout>
+
+                    <include layout="@layout/layout_split" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llMineItem5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="学号" />
+
+                        <TextView
+                            android:id="@+id/tvMineItem5"
+                            android:hint="请输入您的学号"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="24dp" />
+
+                    </LinearLayout>
+
+                    <include layout="@layout/layout_split" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llMineItem6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="工号" />
+
+                        <TextView
+                            android:id="@+id/tvMineItem6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="24dp" />
+
+                    </LinearLayout>
+
+                    <include layout="@layout/layout_split" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llMineItem7"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="学籍号" />
+
+                        <TextView
+                            android:id="@+id/tvMineItem7"
+                            android:hint="请输入您的学籍号"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="24dp" />
+
+                    </LinearLayout>
+
+                    <include layout="@layout/layout_split" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llMineItem8"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="微信号" />
+
+                        <TextView
+                            android:id="@+id/tvMineItem8"
+                            android:layout_width="wrap_content"
+                            android:hint="请输入您的微信号"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="24dp" />
+
+                    </LinearLayout>
+
+                    <include layout="@layout/layout_split" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

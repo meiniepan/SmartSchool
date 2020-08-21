@@ -1,14 +1,11 @@
 package com.xiaoneng.ss.module.school.view
 
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.module.circular.adapter.FragmentCircularAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
-import com.xiaoneng.ss.module.circular.view.NoticeFragment
-import com.xiaoneng.ss.module.circular.view.ScheduleFragment
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_task.*
 import kotlinx.android.synthetic.main.fragment_circular.vpCircular
@@ -21,9 +18,9 @@ import kotlinx.android.synthetic.main.fragment_circular.vpCircular
  * Time: 17:01
  */
 class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    lateinit var fragmentAdapter: FragmentCircularAdapter
-    var fragmentList = ArrayList<Fragment>()
-    var mData=ArrayList<NoticeBean>()
+    private lateinit var fragmentAdapter: FragmentCircularAdapter
+    private var fragmentList = ArrayList<Fragment>()
+    var mData = ArrayList<NoticeBean>()
 
     override fun getLayoutId(): Int = R.layout.activity_task
 
@@ -43,7 +40,7 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initData() {
         super.initData()
-        mViewModel.getNoticeList()
+//        mViewModel.getNoticeList()
 
     }
 
@@ -55,30 +52,54 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             checkSecondTab()
         }
         tvTaskTab3.setOnClickListener {
-            checkSecondTab()
+            checkThirdTab()
         }
         tvTaskTab4.setOnClickListener {
-            checkSecondTab()
+            check4Tab()
         }
-    }
-
-    private fun checkSecondTab() {
-        tvTaskTab1.setChecked(false)
-        tvTaskTab2.setChecked(true)
-        vpCircular.setCurrentItem(1, true)
-        setStatusBarDark()
     }
 
     private fun checkFirsTab() {
         tvTaskTab1.setChecked(true)
         tvTaskTab2.setChecked(false)
+        tvTaskTab3.setChecked(false)
+        tvTaskTab4.setChecked(false)
         vpCircular.setCurrentItem(0, true)
         setStatusBarDark()
     }
 
+    private fun checkSecondTab() {
+        tvTaskTab2.setChecked(true)
+        tvTaskTab1.setChecked(false)
+        tvTaskTab3.setChecked(false)
+        tvTaskTab4.setChecked(false)
+        vpCircular.setCurrentItem(1, true)
+        setStatusBarDark()
+    }
+
+    private fun checkThirdTab() {
+        tvTaskTab3.setChecked(true)
+        tvTaskTab1.setChecked(false)
+        tvTaskTab2.setChecked(false)
+        tvTaskTab4.setChecked(false)
+        vpCircular.setCurrentItem(2, true)
+        setStatusBarDark()
+    }
+
+    private fun check4Tab() {
+        tvTaskTab4.setChecked(true)
+        tvTaskTab1.setChecked(false)
+        tvTaskTab2.setChecked(false)
+        tvTaskTab3.setChecked(false)
+        vpCircular.setCurrentItem(3, true)
+        setStatusBarDark()
+    }
+
     private fun initViewPager() {
-        fragmentList.add(NoticeFragment.getInstance())
-        fragmentList.add(ScheduleFragment.getInstance())
+        fragmentList.add(TaskStatusFragment.getInstance())
+        fragmentList.add(TaskStatusFragment.getInstance())
+        fragmentList.add(TaskStatusFragment.getInstance())
+        fragmentList.add(TaskStatusFragment.getInstance())
         fragmentAdapter = FragmentCircularAdapter(supportFragmentManager, fragmentList)
         vpCircular.adapter = fragmentAdapter
         vpCircular.addOnPageChangeListener(object : OnPageChangeListener {
@@ -99,21 +120,17 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     checkFirsTab()
                 } else if (position == 1) {
                     checkSecondTab()
+                } else if (position == 2) {
+                    checkThirdTab()
+                } else if (position == 3) {
+                    check4Tab()
                 }
             }
         })
     }
 
     override fun initDataObserver() {
-        mViewModel.mNoticeData.observe(this, Observer { response ->
-            response?.let {
-                mData.clear()
-                for (i in it.data){
-                    if (i.type == "system")
-                        mData.add(i)
-                }
-            }
-        })
+
     }
 
 

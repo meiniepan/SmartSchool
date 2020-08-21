@@ -2,7 +2,7 @@ package com.xiaoneng.ss.module.school.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.base.viewmodel.BaseViewModel
-import com.xiaoneng.ss.module.circular.model.NoticeResponse
+import com.xiaoneng.ss.module.school.model.TaskResponse
 import com.xiaoneng.ss.module.school.repository.SchoolRepository
 import com.xiaoneng.ss.network.initiateRequest
 
@@ -15,11 +15,11 @@ import com.xiaoneng.ss.network.initiateRequest
  */
 class SchoolViewModel : BaseViewModel<SchoolRepository>() {
 
-    val mNoticeData: MutableLiveData<NoticeResponse> = MutableLiveData()
+    val mTaskListData: MutableLiveData<TaskResponse> = MutableLiveData()
 
-    fun getNoticeList(page:String = "",pagenum:String = "") {
+    fun getTaskList(pagenum:String = "") {
         initiateRequest(
-            { mNoticeData.value = mRepository.getNoticeList( page,pagenum) },
+            { mTaskListData.value = mRepository.getTaskList( pagenum) },
             loadState
         )
     }

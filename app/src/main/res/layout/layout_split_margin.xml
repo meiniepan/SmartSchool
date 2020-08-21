@@ -2,7 +2,7 @@
 <View xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="1dp"
-    android:background="@color/common_hint"
+    android:background="@color/splitColor"
     android:layout_marginStart="@dimen/title_padding"
     android:layout_marginEnd="@dimen/title_padding"
     />

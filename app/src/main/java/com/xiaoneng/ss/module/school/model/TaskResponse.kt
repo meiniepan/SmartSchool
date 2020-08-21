@@ -7,7 +7,9 @@ package com.xiaoneng.ss.module.school.model
  * @date: 2020/02/27
  * Time: 17:06
  */
-data class SchoolResponse(
-    var children : String,
-    var name : String
+data class TaskResponse(
+    var data : MutableList<TaskBean>,
+    var totle : String,
+    var complete : String,
+    var lastid : String
 )

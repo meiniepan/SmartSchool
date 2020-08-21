@@ -9,7 +9,7 @@ import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.circular.adapter.FragmentCircularAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
-import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
+import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import kotlinx.android.synthetic.main.fragment_circular.*
 
 /**
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_circular.*
  * @date: 2020/02/27
  * Time: 17:01
  */
-class CircularFragment : BaseLifeCycleFragment<SchoolViewModel>() {
+class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
     lateinit var fragmentAdapter: FragmentCircularAdapter
     var fragmentList = ArrayList<Fragment>()
     var mData=ArrayList<NoticeBean>()

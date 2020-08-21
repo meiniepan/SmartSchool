@@ -4,7 +4,7 @@ import android.animation.ObjectAnimator
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.custom.interpolator.CustomScaleInterpolator
-import com.xiaoneng.ss.module.school.model.SchoolResponse
+import com.xiaoneng.ss.module.school.model.TaskResponse
 
 
 /**
@@ -14,10 +14,10 @@ import com.xiaoneng.ss.module.school.model.SchoolResponse
  * @date: 2020/02/27
  * Time: 17:32
  */
-class MineAdapter(layoutId: Int, listData: MutableList<SchoolResponse>?) :
-    BaseQuickAdapter<SchoolResponse, BaseViewHolder>(layoutId, listData) {
+class MineAdapter(layoutId: Int, listData: MutableList<TaskResponse>?) :
+    BaseQuickAdapter<TaskResponse, BaseViewHolder>(layoutId, listData) {
 
-    override fun convert(viewHolder: BaseViewHolder?, item: SchoolResponse?) {
+    override fun convert(viewHolder: BaseViewHolder?, item: TaskResponse?) {
         viewHolder?.let { holder ->
 
         }

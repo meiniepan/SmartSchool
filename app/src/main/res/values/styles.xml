@@ -46,6 +46,12 @@
         <item name="android:layout_marginStart">@dimen/title_padding</item>
         <item name="android:layout_marginEnd">@dimen/title_padding</item>
     </style>
+    <style name="nes_scroll_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:overScrollMode">never</item>
+        <item name="android:scrollbars">none</item>
+    </style>
     <style name="button_blue_bac_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">42dp</item>
@@ -66,4 +72,6 @@
         <item name="android:textColor">@color/commonBlue</item>
         <item name="android:textSize">@dimen/sp_16</item>
     </style>
+
+
 </resources>

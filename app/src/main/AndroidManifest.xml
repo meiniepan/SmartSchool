@@ -69,6 +69,7 @@
         </activity>
         <activity android:name=".module.circular.view.NoticeDetailActivity" />
         <activity android:name=".module.school.view.TaskActivity" />
+        <activity android:name=".module.mine.view.MineInfoActivity" />
 
     </application>
 

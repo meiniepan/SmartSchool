@@ -21,8 +21,8 @@
             android:orientation="vertical">
 
             <LinearLayout style="@style/title_style"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
                 >
                 <RelativeLayout
                     android:layout_width="0dp"

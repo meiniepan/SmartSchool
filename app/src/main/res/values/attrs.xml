@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CustomUserAvatar">
-        <!--绘制头像背景风格-->
-        <attr name="background_style" format="integer" />
-        <!--头像中文字颜色-->
-        <attr name="text_color" format="integer" />
-        <!--头像背景颜色-->
-        <attr name="background_color" format="integer" />
-        <!--是否绘制发光效果-->
-        <attr name="show_blur_Mask" format="boolean" />
-        <!--显示的中文名字字数-->
-        <attr name="chinese_name" format="integer"/>
-        <!--显示的英文名字字数-->
-        <attr name="english_name" format="integer"/>
-    </declare-styleable>
+
     <declare-styleable name="CustomTitleBar">
         <attr name="title" format="string"/>
         <attr name="is_white_icon" format="boolean"/>
         <attr name="is_hide_back" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomJumpItem">
+        <attr name="jumpTitle" format="string"/>
+        <attr name="icon" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="CustomTabView">
@@ -35,5 +27,11 @@
         <attr name="timer_padding" format="dimension"/>
         <attr name="timer_arcColor" format="color"/>
         <attr name="timer_arcStrokeWidth" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="roundImage">
+        <attr name="border_thickness" format="dimension" />
+        <attr name="border_inside_color" format="color" />
+        <attr name="border_outside_color" format="color"></attr>
     </declare-styleable>
 </resources>

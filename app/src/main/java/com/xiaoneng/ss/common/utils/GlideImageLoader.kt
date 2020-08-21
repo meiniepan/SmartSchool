@@ -3,7 +3,7 @@ package com.xiaoneng.ss.common.utils
 import android.content.Context
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.youth.banner.loader.ImageLoader
+import com.xiaoneng.ss.R
 
 /**
  * Created with Android Studio.
@@ -12,8 +12,10 @@ import com.youth.banner.loader.ImageLoader
  * @date: 2020/02/26
  * Time: 11:12
  */
-class GlideImageLoader :ImageLoader() {
-    override fun displayImage(context: Context, path: Any?, imageView: ImageView) {
-        Glide.with(context).load(path).into(imageView)
-    }
+fun displayImage(context: Context, path: Any?, imageView: ImageView) {
+    Glide.with(context)
+        .load(path)
+        .error(R.drawable.ic_eye)
+        .placeholder(R.drawable.ic_eye)
+        .into(imageView)
 }

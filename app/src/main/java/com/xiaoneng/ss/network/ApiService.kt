@@ -3,6 +3,7 @@ package com.xiaoneng.ss.network
 import com.xiaoneng.ss.account.model.*
 import com.xiaoneng.ss.module.circular.model.NoticeDetailBean
 import com.xiaoneng.ss.module.circular.model.NoticeResponse
+import com.xiaoneng.ss.module.school.model.TaskResponse
 import com.xiaoneng.ss.network.response.BaseResponse
 import retrofit2.http.*
 
@@ -191,7 +192,7 @@ interface ApiService {
     @POST("/api/v1/student/notices/modify")
     suspend fun readNotice(
         @Field("token") token: String,
-        @Field("id") id: String = "",
+        @Field("id") id: String ,
         @Field("status") status: String = "",
         @Field("received") received: String = ""
     ): BaseResponse<Any>
@@ -203,8 +204,32 @@ interface ApiService {
     @POST("/api/v1/teacher/notices/modify")
     suspend fun readNotice2(
         @Field("token") token: String,
-        @Field("id") id: String = "",
+        @Field("id") id: String,
         @Field("status") status: String = "",
         @Field("received") received: String = ""
     ): BaseResponse<Any>
+
+    /**
+     *学生任务接口
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/student/tasks/lists")
+    suspend fun getTaskList(
+        @Field("token") token: String,
+        @Field("id") id: String = "",
+        @Field("pagenum") pagenum: String = "",
+        @Field("type") type: String = ""
+    ): BaseResponse<TaskResponse>
+
+    /**
+     *教师任务接口
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/tasks/lists")
+    suspend fun getTaskList2(
+        @Field("token") token: String,
+        @Field("id") id: String = "",
+        @Field("pagenum") pagenum: String = "",
+        @Field("type") type: String = ""
+    ): BaseResponse<TaskResponse>
 }

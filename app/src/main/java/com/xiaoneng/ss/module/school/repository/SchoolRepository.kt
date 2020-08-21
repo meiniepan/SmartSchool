@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.base.repository.ApiRepository
 import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.module.circular.model.NoticeResponse
+import com.xiaoneng.ss.module.school.model.TaskResponse
 import com.xiaoneng.ss.network.dataConvert
 
 /**
@@ -16,8 +16,23 @@ import com.xiaoneng.ss.network.dataConvert
  */
 class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() {
 
+    suspend fun getTaskList(pagenum: String): TaskResponse {
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.getTaskList(UserInfo.getUserBean().token,pagenum = pagenum)
+                    .dataConvert(loadState)
+            }
+            "2" -> {
+                apiService.getTaskList2(UserInfo.getUserBean().token, pagenum = pagenum)
+                    .dataConvert(loadState)
 
-    suspend fun getNoticeList(page: String, pagenum: String): NoticeResponse {
-        return apiService.getNoticeList(UserInfo.getUserBean().token,page,pagenum).dataConvert(loadState)
+            }
+            else -> {
+                apiService.getTaskList(UserInfo.getUserBean().token,pagenum = pagenum)
+                    .dataConvert(loadState)
+
+            }
+        }
     }
+
 }

@@ -2,6 +2,7 @@ package com.xiaoneng.ss.common.utils
 
 import android.content.Context
 import android.content.Intent
+import com.xiaoneng.ss.common.utils.regex.RegexUtils
 
 /**
  * Created with Android Studio.
@@ -19,4 +20,11 @@ inline fun <reified T> mStartActivity(context: Context?, block: Intent.() -> Uni
     val intent = Intent(context, T::class.java)
     intent.block()
     context?.startActivity(intent)
+}
+inline fun starPhoneNum(phone:String):String {
+    return if (RegexUtils.isMobileSimple(phone)) {
+        phone.substring(0,3)+"****"+phone.substring(7,11)
+    }else{
+        phone
+    }
 }
