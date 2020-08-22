@@ -70,6 +70,13 @@
         <activity android:name=".module.circular.view.NoticeDetailActivity" />
         <activity android:name=".module.school.view.TaskActivity" />
         <activity android:name=".module.mine.view.MineInfoActivity" />
+        <activity android:name=".module.mine.view.AccountSecureActivity" />
+        <activity android:name=".module.mine.view.InviteCodeActivity" />
+        <activity android:name=".module.mine.view.ChooseChildActivity" />
+        <activity android:name=".module.mine.view.SwitchIdActivity" />
+        <activity android:name=".module.mine.view.BindParentActivity" />
+        <activity android:name=".module.mine.view.SysSettingActivity" />
+        <activity android:name=".module.school.view.TimetableActivity" />
 
     </application>
 

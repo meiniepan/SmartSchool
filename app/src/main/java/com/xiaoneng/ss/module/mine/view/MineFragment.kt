@@ -36,6 +36,34 @@ class MineFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         llItem1.setOnClickListener {
             mStartActivity<MineInfoActivity>(requireContext())
         }
+
+        llItem2. setOnClickListener {
+            mStartActivity<AccountSecureActivity>(requireContext())
+        }
+
+
+        llItem3. setOnClickListener {
+            mStartActivity<ChooseChildActivity>(requireContext())
+        }
+
+
+        llItem4. setOnClickListener {
+            mStartActivity<InviteCodeActivity>(requireContext())
+        }
+
+        llItem5. setOnClickListener {
+            mStartActivity<SwitchIdActivity>(requireContext())
+        }
+
+        llItem6. setOnClickListener {
+            mStartActivity<BindParentActivity>(requireContext())
+        }
+
+        llItem7. setOnClickListener {
+            mStartActivity<SysSettingActivity>(requireContext())
+        }
+
+
     }
 
     override fun initDataObserver() {

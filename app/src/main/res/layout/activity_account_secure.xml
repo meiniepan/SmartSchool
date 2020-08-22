@@ -13,7 +13,6 @@
         style="@style/title_style"
         app:title="账号与安全"  />
 
-    <androidx.core.widget.NestedScrollView style="@style/nes_scroll_style">
 
         <LinearLayout
             android:id="@+id/contentLayout"
@@ -56,11 +55,6 @@
                 android:id="@+id/vpSecurity"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-
-
-
-
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
 </RelativeLayout>

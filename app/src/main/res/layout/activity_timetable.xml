@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tintBac"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+    <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+        app:title="课表"
+        style="@style/title_style"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/contentLayout"
+        android:paddingTop="75dp"
+        style="@style/recycler_style"/>
+
+</LinearLayout>

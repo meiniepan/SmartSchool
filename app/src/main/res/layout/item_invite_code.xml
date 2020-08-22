@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bac_invite"
+    android:orientation="vertical"
+    android:paddingTop="48dp"
+    android:gravity="center_horizontal"
+    android:paddingBottom="40dp">
+
+
+    <TextView
+        android:id="@+id/tvNameInviteCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_16"
+        android:ellipsize="end"
+        android:maxLines="1" />
+    <TextView
+        android:id="@+id/tvCodeInviteCode"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:layout_marginTop="14dp"
+        android:textSize="@dimen/sp_20"
+        android:ellipsize="end"
+        android:maxLines="1" />
+    <TextView
+        android:id="@+id/tvCopyInviteCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="复制邀请码"
+        android:autoLink="none"
+        android:textColor="@color/commonBlue"
+        android:layout_marginTop="26dp"
+        android:textSize="@dimen/sp_16"
+        android:ellipsize="end"
+        android:maxLines="1" />
+</LinearLayout>

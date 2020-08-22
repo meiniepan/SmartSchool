@@ -24,4 +24,11 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
+    fun getTimetable(pagenum:String = "") {
+        initiateRequest(
+            { mTaskListData.value = mRepository.getTimetable( pagenum) },
+            loadState
+        )
+    }
+
 }

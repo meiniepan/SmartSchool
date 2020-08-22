@@ -7,7 +7,6 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.module.circular.adapter.FragmentCircularAdapter
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_account_secure.*
-import kotlinx.android.synthetic.main.fragment_circular.vpCircular
 
 /**
  * Created with Android Studio.
@@ -50,7 +49,7 @@ class AccountSecureActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvSecurityTab1.setChecked(true)
         tvSecurityTab2.setChecked(false)
         
-        vpCircular.setCurrentItem(0, true)
+        vpSecurity.setCurrentItem(0, true)
         setStatusBarDark()
     }
 
@@ -58,17 +57,17 @@ class AccountSecureActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvSecurityTab2.setChecked(true)
         tvSecurityTab1.setChecked(false)
         
-        vpCircular.setCurrentItem(1, true)
+        vpSecurity.setCurrentItem(1, true)
         setStatusBarDark()
     }
     
 
     private fun initViewPager() {
-        fragmentList.add(SecurityStatusFragment.getInstance())
-        fragmentList.add(SecurityStatusFragment.getInstance())
+        fragmentList.add(RebindPhoneFragment.getInstance())
+        fragmentList.add(ModifyPwdFragment.getInstance())
         fragmentAdapter = FragmentCircularAdapter(supportFragmentManager, fragmentList)
-        vpCircular.adapter = fragmentAdapter
-        vpCircular.addOnPageChangeListener(object : OnPageChangeListener {
+        vpSecurity.adapter = fragmentAdapter
+        vpSecurity.addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
 
             }

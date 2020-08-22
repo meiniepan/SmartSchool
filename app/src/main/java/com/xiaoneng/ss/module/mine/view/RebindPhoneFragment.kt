@@ -1,6 +1,7 @@
 package com.xiaoneng.ss.module.mine.view
 
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.state.UserInfo
@@ -20,7 +21,7 @@ class RebindPhoneFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_rebind
 
     companion object {
-        fun getInstance(): RebindPhoneFragment? {
+        fun getInstance(): Fragment {
             return RebindPhoneFragment()
         }
 

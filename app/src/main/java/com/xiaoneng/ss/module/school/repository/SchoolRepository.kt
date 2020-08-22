@@ -35,4 +35,23 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         }
     }
 
+    suspend fun getTimetable(pagenum: String): TaskResponse {
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.getTimetable(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+            }
+            "2" -> {
+                apiService.getTimetable(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+
+            }
+            else -> {
+                apiService.getTimetable2(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+
+            }
+        }
+    }
+
 }

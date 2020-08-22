@@ -232,4 +232,27 @@ interface ApiService {
         @Field("pagenum") pagenum: String = "",
         @Field("type") type: String = ""
     ): BaseResponse<TaskResponse>
+
+    /**
+     *学生课程表
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/student/courses/timeTable")
+    suspend fun getTimetable(
+        @Field("token") token: String,
+        @Field("time") time: String = "",
+        @Field("semesterid") semesterid: String = ""
+    ): BaseResponse<TaskResponse>
+
+    /**
+     *教师课程表
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/courses/timeTable")
+    suspend fun getTimetable2(
+        @Field("token") token: String,
+        @Field("time") time: String = "",
+        @Field("classid") classid: String = "",
+        @Field("groupid") groupid: String = ""
+    ): BaseResponse<TaskResponse>
 }
