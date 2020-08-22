@@ -36,7 +36,6 @@
     <style name="title_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/title_height</item>
-        <item name="android:gravity">center_vertical</item>
     </style>
 
     <style name="recycler_style">

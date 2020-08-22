@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
-    android:layout_height="match_parent">
-<com.xiaoneng.ss.custom.widgets.CustomTitleBar
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    />
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+        style="@style/title_style"/>
+
     <androidx.core.widget.NestedScrollView style="@style/nes_scroll_style">
 
         <LinearLayout
@@ -22,7 +22,7 @@
                 android:layout_height="80dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
-                android:src="@drawable/ic_performance" />
+                android:src="@drawable/ic_avatar_default" />
 
             <TextView
                 android:id="@+id/tvNameMineInfo"
@@ -97,9 +97,9 @@
                         <TextView
                             android:id="@+id/tvMineItem2"
                             android:layout_width="wrap_content"
-                            android:hint="请选择"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="24dp" />
+                            android:layout_marginEnd="24dp"
+                            android:hint="请选择" />
 
                     </LinearLayout>
 
@@ -130,8 +130,8 @@
                             android:id="@+id/tvMineItem3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:hint="请选择"
-                            android:layout_marginEnd="24dp" />
+                            android:layout_marginEnd="24dp"
+                            android:hint="请选择" />
 
                     </LinearLayout>
 
@@ -191,10 +191,10 @@
 
                         <TextView
                             android:id="@+id/tvMineItem5"
-                            android:hint="请输入您的学号"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="24dp" />
+                            android:layout_marginEnd="24dp"
+                            android:hint="请输入您的学号" />
 
                     </LinearLayout>
 
@@ -254,10 +254,10 @@
 
                         <TextView
                             android:id="@+id/tvMineItem7"
-                            android:hint="请输入您的学籍号"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="24dp" />
+                            android:layout_marginEnd="24dp"
+                            android:hint="请输入您的学籍号" />
 
                     </LinearLayout>
 
@@ -287,9 +287,9 @@
                         <TextView
                             android:id="@+id/tvMineItem8"
                             android:layout_width="wrap_content"
-                            android:hint="请输入您的微信号"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="24dp" />
+                            android:layout_marginEnd="24dp"
+                            android:hint="请输入您的微信号" />
 
                     </LinearLayout>
 

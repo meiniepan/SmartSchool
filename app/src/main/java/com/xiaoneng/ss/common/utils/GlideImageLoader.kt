@@ -15,7 +15,7 @@ import com.xiaoneng.ss.R
 fun displayImage(context: Context, path: Any?, imageView: ImageView) {
     Glide.with(context)
         .load(path)
-        .error(R.drawable.ic_eye)
-        .placeholder(R.drawable.ic_eye)
+        .error(R.drawable.ic_avatar_default)
+        .placeholder(R.drawable.ic_avatar_default)
         .into(imageView)
 }

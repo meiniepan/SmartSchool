@@ -1,13 +1,12 @@
-package com.xiaoneng.ss.module.school.view
+package com.xiaoneng.ss.module.mine.view
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.module.circular.adapter.FragmentCircularAdapter
-import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import kotlinx.android.synthetic.main.activity_task.*
+import kotlinx.android.synthetic.main.activity_account_secure.*
 import kotlinx.android.synthetic.main.fragment_circular.vpCircular
 
 /**
@@ -17,12 +16,11 @@ import kotlinx.android.synthetic.main.fragment_circular.vpCircular
  * @date: 2020/02/27
  * Time: 17:01
  */
-class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+class AccountSecureActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private lateinit var fragmentAdapter: FragmentCircularAdapter
     private var fragmentList = ArrayList<Fragment>()
-    var mData = ArrayList<NoticeBean>()
 
-    override fun getLayoutId(): Int = R.layout.activity_task
+    override fun getLayoutId(): Int = R.layout.activity_account_secure
 
 
     override fun initView() {
@@ -39,61 +37,35 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initTab() {
-        tvTaskTab1.setOnClickListener {
+        tvSecurityTab1.setOnClickListener {
             checkFirsTab()
         }
-        tvTaskTab2.setOnClickListener {
+        tvSecurityTab2.setOnClickListener {
             checkSecondTab()
         }
-        tvTaskTab3.setOnClickListener {
-            checkThirdTab()
-        }
-        tvTaskTab4.setOnClickListener {
-            check4Tab()
-        }
+        
     }
 
     private fun checkFirsTab() {
-        tvTaskTab1.setChecked(true)
-        tvTaskTab2.setChecked(false)
-        tvTaskTab3.setChecked(false)
-        tvTaskTab4.setChecked(false)
+        tvSecurityTab1.setChecked(true)
+        tvSecurityTab2.setChecked(false)
+        
         vpCircular.setCurrentItem(0, true)
         setStatusBarDark()
     }
 
     private fun checkSecondTab() {
-        tvTaskTab2.setChecked(true)
-        tvTaskTab1.setChecked(false)
-        tvTaskTab3.setChecked(false)
-        tvTaskTab4.setChecked(false)
+        tvSecurityTab2.setChecked(true)
+        tvSecurityTab1.setChecked(false)
+        
         vpCircular.setCurrentItem(1, true)
         setStatusBarDark()
     }
-
-    private fun checkThirdTab() {
-        tvTaskTab3.setChecked(true)
-        tvTaskTab1.setChecked(false)
-        tvTaskTab2.setChecked(false)
-        tvTaskTab4.setChecked(false)
-        vpCircular.setCurrentItem(2, true)
-        setStatusBarDark()
-    }
-
-    private fun check4Tab() {
-        tvTaskTab4.setChecked(true)
-        tvTaskTab1.setChecked(false)
-        tvTaskTab2.setChecked(false)
-        tvTaskTab3.setChecked(false)
-        vpCircular.setCurrentItem(3, true)
-        setStatusBarDark()
-    }
+    
 
     private fun initViewPager() {
-        fragmentList.add(TaskStatusFragment.getInstance())
-        fragmentList.add(TaskStatusFragment.getInstance())
-        fragmentList.add(TaskStatusFragment.getInstance())
-        fragmentList.add(TaskStatusFragment.getInstance())
+        fragmentList.add(SecurityStatusFragment.getInstance())
+        fragmentList.add(SecurityStatusFragment.getInstance())
         fragmentAdapter = FragmentCircularAdapter(supportFragmentManager, fragmentList)
         vpCircular.adapter = fragmentAdapter
         vpCircular.addOnPageChangeListener(object : OnPageChangeListener {
@@ -114,11 +86,7 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     checkFirsTab()
                 } else if (position == 1) {
                     checkSecondTab()
-                } else if (position == 2) {
-                    checkThirdTab()
-                } else if (position == 3) {
-                    check4Tab()
-                }
+                } 
             }
         })
     }

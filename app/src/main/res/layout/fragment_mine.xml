@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
 <androidx.core.widget.NestedScrollView
     style="@style/nes_scroll_style">
     <LinearLayout
@@ -16,7 +17,7 @@
             android:layout_height="80dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
-            android:src="@drawable/ic_performance" />
+            android:src="@drawable/ic_avatar_default" />
 
         <TextView
             android:id="@+id/tvNameMine"
@@ -39,43 +40,43 @@
                 android:id="@+id/llItem1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:icon="@drawable/ic_performance"
+                app:icon="@drawable/ic_ziliao"
                 app:jumpTitle="我的资料" />
             <com.xiaoneng.ss.custom.widgets.CustomJumpItem
                 android:id="@+id/llItem2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:icon="@drawable/ic_performance"
+                app:icon="@drawable/ic_anquan"
                 app:jumpTitle="账号与安全" />
             <com.xiaoneng.ss.custom.widgets.CustomJumpItem
                 android:id="@+id/llItem3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:icon="@drawable/ic_performance"
+                app:icon="@drawable/ic_xuanzehaizi"
                 app:jumpTitle="选择孩子" />
             <com.xiaoneng.ss.custom.widgets.CustomJumpItem
                 android:id="@+id/llItem4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:icon="@drawable/ic_performance"
+                app:icon="@drawable/ic_yaoqing"
                 app:jumpTitle="我的邀请码" />
             <com.xiaoneng.ss.custom.widgets.CustomJumpItem
                 android:id="@+id/llItem5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:icon="@drawable/ic_performance"
+                app:icon="@drawable/ic_qiehuanshenfen"
                 app:jumpTitle="切换身份" />
             <com.xiaoneng.ss.custom.widgets.CustomJumpItem
                 android:id="@+id/llItem6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:icon="@drawable/ic_performance"
+                app:icon="@drawable/ic_bangding"
                 app:jumpTitle="绑定家长" />
             <com.xiaoneng.ss.custom.widgets.CustomJumpItem
                 android:id="@+id/llItem7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:icon="@drawable/ic_performance"
+                app:icon="@drawable/ic_setting"
                 app:jumpTitle="系统设置" />
         </LinearLayout>
     </LinearLayout>
