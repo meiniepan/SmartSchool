@@ -35,9 +35,9 @@ class CustomTitleBar @JvmOverloads constructor(
         View.inflate(context, R.layout.custom_title_bar, this)
         iv_back_custom.setOnClickListener {
             if (context is Activity) {
-                (context as Activity).finish()
+                (context as Activity).onBackPressed()
             } else if (context is Fragment) {
-                (context as Fragment).activity?.finish()
+                (context as Fragment).activity?.onBackPressed()
             }
         }
         title?.let {

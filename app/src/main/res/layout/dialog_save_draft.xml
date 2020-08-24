@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/bac_dialog_bac_20"
+    android:layout_height="match_parent">
+<TextView
+    android:id="@+id/tvSaveDraft"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="28dp"
+    android:layout_marginBottom="28dp"
+    android:text="保存草稿"
+    android:textSize="@dimen/sp_16"
+
+    android:gravity="center"
+    />
+    <include layout="@layout/layout_split"/>
+    <TextView
+        android:id="@+id/tvNoSaveDraft"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="28dp"
+        android:textSize="@dimen/sp_16"
+        android:text="不保存"
+        android:textColor="@color/orange"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/tvCancelDraft"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginBottom="44dp"
+        android:textSize="@dimen/sp_16"
+        android:text="取消"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/bac_gray_bac_20"
+        android:gravity="center"
+        />
+
+</LinearLayout>

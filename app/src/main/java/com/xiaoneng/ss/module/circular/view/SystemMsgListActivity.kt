@@ -8,9 +8,9 @@ import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.RecycleViewDivider
 import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.module.circular.adapter.SysMsgAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
-import com.xiaoneng.ss.module.school.adapter.SysMsgAdapter
 import kotlinx.android.synthetic.main.activity_system_msg.*
 
 /**

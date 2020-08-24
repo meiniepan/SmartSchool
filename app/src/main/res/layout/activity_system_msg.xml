@@ -18,7 +18,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSysMsg"
-            style="@style/recycler_style"
+            style="@style/recycler_margin_style"
             android:layout_marginTop="20dp" />
     </LinearLayout>
 

@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.circular.adapter.FragmentCircularAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
@@ -29,6 +30,9 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.initView()
         initViewPager()
         initTab()
+        ivAddTask.setOnClickListener {
+            mStartActivity<AddTaskActivity>(this)
+        }
 
     }
 

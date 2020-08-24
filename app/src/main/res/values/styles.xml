@@ -38,13 +38,20 @@
         <item name="android:layout_height">@dimen/title_height</item>
     </style>
 
-    <style name="recycler_style">
+    <style name="recycler_margin_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:overScrollMode">never</item>
         <item name="android:layout_marginStart">@dimen/title_padding</item>
         <item name="android:layout_marginEnd">@dimen/title_padding</item>
     </style>
+
+    <style name="recycler_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:overScrollMode">never</item>
+    </style>
+
     <style name="nes_scroll_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -72,5 +79,24 @@
         <item name="android:textSize">@dimen/sp_16</item>
     </style>
 
+    <style name="BottomDialog" parent="@style/Base.V7.Theme.AppCompat.Light.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 
+    <style name="BottomDialog.Animation" parent="Animation.AppCompat.Dialog">
+
+        <item name="android:windowEnterAnimation">@anim/translate_dialog_in</item>
+
+        <item name="android:windowExitAnimation">@anim/translate_dialog_out</item>
+
+    </style>
+
+    <style name="TopDialog.Animation" parent="Animation.AppCompat.Dialog">
+
+        <item name="android:windowEnterAnimation">@anim/translate_dialog_in_top</item>
+
+        <item name="android:windowExitAnimation">@anim/translate_dialog_out_top</item>
+
+    </style>
 </resources>

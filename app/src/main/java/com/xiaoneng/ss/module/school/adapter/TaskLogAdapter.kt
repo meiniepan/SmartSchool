@@ -13,15 +13,16 @@ import com.xiaoneng.ss.module.circular.model.NoticeBean
  * @date: 2020/02/27
  * Time: 17:32
  */
-class SysMsgAdapter(layoutId: Int, listData: MutableList<NoticeBean>?) :
+class TaskLogAdapter(layoutId: Int, listData: MutableList<NoticeBean>?) :
     BaseQuickAdapter<NoticeBean, BaseViewHolder>(layoutId, listData) {
 
     override fun convert(viewHolder: BaseViewHolder?, item: NoticeBean?) {
         viewHolder?.let { holder ->
-            holder.setText(R.id.tvTitle3, item?.title)
-                .setText(R.id.tvTime3,item?.noticetime)
-
-            holder.setText(R.id.tvAction, item?.title)
+            holder.addOnClickListener(R.id.tvAction1)
+//            holder.setText(R.id.tvTitle3, item?.title)
+//                .setText(R.id.tvTime3,item?.noticetime)
+//
+//            holder.setText(R.id.tvAction, item?.title)
         }
     }
 }

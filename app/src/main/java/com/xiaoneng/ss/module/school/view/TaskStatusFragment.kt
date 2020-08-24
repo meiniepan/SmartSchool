@@ -9,7 +9,6 @@ import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.RecycleViewDivider
 import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.common.utils.mStartActivity
-import com.xiaoneng.ss.module.circular.view.NoticeDetailActivity
 import com.xiaoneng.ss.module.school.adapter.TaskStatusAdapter
 import com.xiaoneng.ss.module.school.model.TaskBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
@@ -50,7 +49,7 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         }
         mAdapter.setOnItemClickListener { _, view, position ->
 
-            mStartActivity<NoticeDetailActivity>(context) {
+            mStartActivity<TaskDetailActivity>(context) {
                 putExtra(Constant.TITLE, mData[position].taskname)
                 putExtra(Constant.ID, mData[position].id)
             }

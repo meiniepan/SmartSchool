@@ -9,7 +9,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvNotice"
-        style="@style/recycler_style"
+        style="@style/recycler_margin_style"
         android:layout_marginTop="14dp"
        />
 

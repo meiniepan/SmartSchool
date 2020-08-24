@@ -20,51 +20,57 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout style="@style/title_style"
+            <LinearLayout
+                style="@style/title_style"
                 android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                >
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    >
+                android:paddingEnd="12dp">
 
-                <com.xiaoneng.ss.custom.widgets.CustomTabView2
-                    android:id="@+id/tvTaskTab1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:check="true"
-                    android:layout_centerInParent="true"
-                    app:text="全部任务" />
-                </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:gravity="center">
-                <com.xiaoneng.ss.custom.widgets.CustomTabView2
-                    android:id="@+id/tvTaskTab2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:text="进行中" />
+                    android:layout_weight="1">
+
+                    <com.xiaoneng.ss.custom.widgets.CustomTabView2
+                        android:id="@+id/tvTaskTab1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        app:check="true"
+                        app:text="全部任务" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:gravity="center">
+
+                    <com.xiaoneng.ss.custom.widgets.CustomTabView2
+                        android:id="@+id/tvTaskTab2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:text="进行中" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
                     <com.xiaoneng.ss.custom.widgets.CustomTabView2
                         android:id="@+id/tvTaskTab3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:text="未发布" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:gravity="center">
+
                     <com.xiaoneng.ss.custom.widgets.CustomTabView2
                         android:id="@+id/tvTaskTab4"
                         android:layout_width="wrap_content"
@@ -73,10 +79,23 @@
                 </RelativeLayout>
             </LinearLayout>
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vpCircular"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/ivAddTask"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_add_blue"
+                android:layout_marginBottom="104dp"
+                android:layout_gravity="end|bottom"
+                android:layout_marginEnd="@dimen/title_padding"
+                />
+        </FrameLayout>
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout></RelativeLayout>
