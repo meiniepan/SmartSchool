@@ -33,7 +33,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
             mStartActivity<TimetableActivity>(context)
         }
         llAttendance.setOnClickListener {
-            mStartActivity<TaskActivity>(context)
+            mStartActivity<AttendanceStuActivity>(context)
         }
         llPerformance.setOnClickListener {
             mStartActivity<TaskActivity>(context)
