@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bac_white_bac_20"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/item_start_padding"
+    android:paddingTop="@dimen/item_top_padding"
+    android:paddingEnd="@dimen/item_start_padding"
+    android:paddingBottom="@dimen/item_top_padding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:gravity="center_vertical">
+
+        <View
+            android:id="@+id/vOval"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/shape_blue_oval" />
+
+        <TextView
+            android:id="@+id/tvTitle5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+             />
+
+        <TextView
+            android:id="@+id/tvTime5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+             />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="60dp"
+            android:text="地点:"
+            android:gravity="fill_horizontal"
+            android:layout_height="wrap_content"
+            />
+    <TextView
+        android:id="@+id/tvAddress5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:layout_marginStart="7dp"
+        android:maxLines="1" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="60dp"
+            android:text="参与者:"
+            android:gravity="fill"
+            android:layout_height="wrap_content"
+            />
+    <TextView
+        android:id="@+id/tvParticipant5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:layout_marginStart="7dp"
+        android:maxLines="1" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="60dp"
+            android:text="备注:"
+            android:gravity="fill"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/tvRemark5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:layout_marginStart="7dp"
+            android:maxLines="2" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -58,16 +58,18 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
         }
     }
 
-    private fun checkSecondTab() {
-        tvCircular.setChecked(false)
-        tvSchedule.setChecked(true)
-        vpCircular.setCurrentItem(1, true)
-    }
-
     private fun checkFirsTab() {
         tvCircular.setChecked(true)
         tvSchedule.setChecked(false)
         vpCircular.setCurrentItem(0, true)
+        setStatusBarDark()
+    }
+
+    private fun checkSecondTab() {
+        tvCircular.setChecked(false)
+        tvSchedule.setChecked(true)
+        vpCircular.setCurrentItem(1, true)
+        setStatusBarDark()
     }
 
     private fun initViewPager() {

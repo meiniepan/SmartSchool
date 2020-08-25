@@ -49,7 +49,9 @@ abstract class BaseFragment : Fragment() {
 
     abstract fun initView()
 
-    open fun initData() {}
+    open fun initData() {
+
+    }
 
     // 重新加载
     open fun reLoad() = initData()

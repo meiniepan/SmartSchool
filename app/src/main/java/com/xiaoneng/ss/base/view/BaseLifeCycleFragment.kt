@@ -42,7 +42,7 @@ abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
 
     abstract fun initDataObserver()
 
-    private fun showLoading() {
+     fun showLoading() {
         loadService.showCallback(LoadingCallBack::class.java)
     }
 

@@ -12,6 +12,7 @@
         <LinearLayout style="@style/title_style"
             android:paddingStart="@dimen/title_padding"
             android:paddingEnd="@dimen/title_padding"
+            android:gravity="center_vertical"
             >
 
             <com.xiaoneng.ss.custom.widgets.CustomTabView

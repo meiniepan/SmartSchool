@@ -74,7 +74,7 @@
                 <TextView
                     android:id="@+id/tvSettingItem2"
                     android:layout_width="wrap_content"
-                    android:drawableRight="@drawable/ic_bangding"
+                    android:drawableRight="@drawable/ic_next"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp" />
 
@@ -107,7 +107,7 @@
                     android:id="@+id/tvSettingItem3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/ic_bangding"
+                    android:drawableRight="@drawable/ic_next"
                     android:layout_marginEnd="24dp" />
 
             </LinearLayout>

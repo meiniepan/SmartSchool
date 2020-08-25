@@ -105,7 +105,9 @@ abstract class BaseActivity : AppCompatActivity() {
     open fun showDestroyReveal(): Boolean = false
 
     open fun initView() {}
-    open fun initData() {}
+    open fun initData() {
+
+    }
 
     abstract fun getLayoutId(): Int
 

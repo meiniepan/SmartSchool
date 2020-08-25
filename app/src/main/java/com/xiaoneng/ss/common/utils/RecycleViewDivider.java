@@ -71,17 +71,21 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(Rect outRect, View view,
                                RecyclerView parent, RecyclerView.State state) {
-        if (parent.getLayoutManager() != null) {
-            if (parent.getLayoutManager() instanceof LinearLayoutManager && !(parent.getLayoutManager() instanceof GridLayoutManager)) {
-                if (((LinearLayoutManager) parent.getLayoutManager()).getOrientation() == LinearLayoutManager.HORIZONTAL) {
-                    outRect.set(space, 0, space, 0);
-                } else {
-                    outRect.set(0, space, 0, space);
+        super.getItemOffsets(outRect,view,parent,state);
+
+            if (parent.getLayoutManager() != null) {
+                if (parent.getLayoutManager() instanceof LinearLayoutManager && !(parent.getLayoutManager() instanceof GridLayoutManager)) {
+                    if (view!=parent.getChildAt(parent.getAdapter().getItemCount()-1)) {
+                    if (((LinearLayoutManager) parent.getLayoutManager()).getOrientation() == LinearLayoutManager.HORIZONTAL) {
+                        outRect.set(0, 0, space, 0);
+                    } else {
+                        outRect.set(0, 0, 0, space);
+                    }
+                } }else {
+
+                    outRect.set(0, 0, space, space);
                 }
-            } else {
-                outRect.set(space, space, space, space);
             }
-        }
 
     }
 
