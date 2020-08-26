@@ -3,6 +3,7 @@ package com.xiaoneng.ss.network
 import com.xiaoneng.ss.account.model.*
 import com.xiaoneng.ss.module.circular.model.NoticeDetailBean
 import com.xiaoneng.ss.module.circular.model.NoticeResponse
+import com.xiaoneng.ss.module.school.model.PerformanceResponse
 import com.xiaoneng.ss.module.school.model.TaskResponse
 import com.xiaoneng.ss.network.response.BaseResponse
 import retrofit2.http.*
@@ -255,4 +256,44 @@ interface ApiService {
         @Field("classid") classid: String = "",
         @Field("groupid") groupid: String = ""
     ): BaseResponse<TaskResponse>
+
+    /**
+     *学生查看成绩
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/student/achievements/lists")
+    suspend fun getPerformance(
+        @Field("token") token: String,
+        @Field("crid") crid: String = ""
+    ): BaseResponse<PerformanceResponse>
+
+    /**
+     *教师查看成绩
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/achievements/lists")
+    suspend fun getPerformance2(
+        @Field("token") token: String,
+        @Field("crid") crid: String = ""
+    ): BaseResponse<PerformanceResponse>
+
+    /**
+     *学生登录退出
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/login/sloginout")
+    suspend fun logout(
+        @Field("phone") phone: String,
+        @Field("token") token: String
+    ): BaseResponse<Any>
+
+    /**
+     *教师查看成绩
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/login/eloginout")
+    suspend fun logout2(
+        @Field("phone") phone: String,
+        @Field("token") token: String
+    ): BaseResponse<Any>
 }

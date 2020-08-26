@@ -60,7 +60,7 @@ class MineFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         }
 
         llItem7. setOnClickListener {
-//            mStartActivity<SysSettingActivity>(requireContext())
+            mStartActivity<SysSettingActivity>(requireContext())
 //            uploadFile()
         }
 

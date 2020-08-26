@@ -54,14 +54,19 @@
 
         <activity
             android:name=".account.view.LoginSwitchActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity android:name=".account.view.LoginStuActivity">
+        <activity android:name=".account.view.LoginStuActivity"
+            android:launchMode="singleTask"
+            >
 
         </activity>
         <activity android:name=".account.view.RegisterActivity"
-
+            android:launchMode="singleTask"
             />
-        <activity android:name=".account.view.LoginTeacherActivity">
+        <activity android:name=".account.view.LoginTeacherActivity"
+            android:launchMode="singleTask"
+            >
 
         </activity>
         <activity android:name=".module.circular.view.SystemMsgListActivity"></activity>
@@ -82,6 +87,8 @@
         <activity android:name=".module.school.view.AttendanceStuActivity" />
         <activity android:name=".module.circular.view.ScheduleDetailActivity" />
         <activity android:name=".module.circular.view.AddScheduleActivity" />
+        <activity android:name=".module.school.view.PerformanceMasterActivity" />
+        <activity android:name=".module.school.view.PerformanceStuActivity" />
 
     </application>
 

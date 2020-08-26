@@ -22,6 +22,8 @@
             android:textSize="@dimen/sp_20"
             android:textColor="@color/commonBlue"
             android:layout_height="wrap_content"
+            android:drawableRight="@drawable/ic_bule_triangle"
+            android:drawablePadding="10dp"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             />

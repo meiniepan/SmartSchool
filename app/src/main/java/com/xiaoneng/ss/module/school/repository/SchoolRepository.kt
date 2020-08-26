@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.base.repository.ApiRepository
 import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.module.school.model.PerformanceResponse
 import com.xiaoneng.ss.module.school.model.TaskResponse
 import com.xiaoneng.ss.network.dataConvert
 
@@ -42,14 +43,32 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getTimetable(UserInfo.getUserBean().token)
+                apiService.getTimetable2(UserInfo.getUserBean().token)
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.getTimetable2(UserInfo.getUserBean().token)
+                apiService.getTimetable(UserInfo.getUserBean().token)
                     .dataConvert(loadState)
 
+            }
+        }
+    }
+
+    suspend fun getPerformance(crid: String): PerformanceResponse {
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.getPerformance(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+            }
+            "2" -> {
+                apiService.getPerformance2(UserInfo.getUserBean().token,crid)
+                    .dataConvert(loadState)
+
+            }
+            else -> {
+                apiService.getPerformance(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
             }
         }
     }

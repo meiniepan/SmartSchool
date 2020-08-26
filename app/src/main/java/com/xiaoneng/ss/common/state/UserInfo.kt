@@ -6,7 +6,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.xiaoneng.ss.account.model.LoginResponse
 import com.xiaoneng.ss.common.state.callback.CollectListener
-import com.xiaoneng.ss.common.state.callback.LoginSuccessState
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.SPreference
 
@@ -20,7 +19,7 @@ import com.xiaoneng.ss.common.utils.SPreference
 object UserInfo {
 
     private var isLogin: Boolean by SPreference(Constant.LOGIN_KEY, false)
-    var emptyJson = Gson().toJson(ArrayList<LoginResponse>())
+    var emptyJson = Gson().toJson(LoginResponse())
     var userInfoJson: String by SPreference(Constant.USER_INFO, emptyJson)
     lateinit var userInfo: LoginResponse
 //    var token: String  = "683fa08d7b0e133c3a96859b04cc1fea"
@@ -56,11 +55,8 @@ object UserInfo {
     }
 
     fun logoutSuccess() {
-        UserInfo.mState = LogoutState()
-        // 清除 cookie、登录缓存
-        var mCookie by SPreference("cookie", "")
-        mCookie = ""
-        isLogin = false
-        LoginSuccessState.notifyLoginState("未登录", "--", null)
+        var bean = getUserBean()
+        bean.token = ""
+        userInfoJson = Gson().toJson(bean)
     }
 }

@@ -2,6 +2,7 @@ package com.xiaoneng.ss.module.school.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.base.viewmodel.BaseViewModel
+import com.xiaoneng.ss.module.school.model.PerformanceResponse
 import com.xiaoneng.ss.module.school.model.TaskResponse
 import com.xiaoneng.ss.module.school.repository.SchoolRepository
 import com.xiaoneng.ss.network.initiateRequest
@@ -16,6 +17,7 @@ import com.xiaoneng.ss.network.initiateRequest
 class SchoolViewModel : BaseViewModel<SchoolRepository>() {
 
     val mTaskListData: MutableLiveData<TaskResponse> = MutableLiveData()
+    val mPerformanceData: MutableLiveData<PerformanceResponse> = MutableLiveData()
 
     fun getTaskList(pagenum:String = "") {
         initiateRequest(
@@ -27,6 +29,13 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     fun getTimetable(pagenum:String = "") {
         initiateRequest(
             { mTaskListData.value = mRepository.getTimetable( pagenum) },
+            loadState
+        )
+    }
+
+    fun getPerformance(crid:String = "") {
+        initiateRequest(
+            { mPerformanceData.value = mRepository.getPerformance( crid) },
             loadState
         )
     }
