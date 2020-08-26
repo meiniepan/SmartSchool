@@ -60,11 +60,14 @@ class MineFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         }
 
         llItem7. setOnClickListener {
-            mStartActivity<SysSettingActivity>(requireContext())
+//            mStartActivity<SysSettingActivity>(requireContext())
+//            uploadFile()
         }
 
 
     }
+
+
 
     override fun initDataObserver() {
 //        mViewModel.mSystemTabNameData.observe(this, Observer { response ->

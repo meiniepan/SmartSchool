@@ -64,6 +64,13 @@
         <item name="android:overScrollMode">never</item>
         <item name="android:scrollbars">none</item>
     </style>
+
+    <style name="edit_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/edit_height</item>
+        <item name="android:background">@null</item>
+    </style>
+
     <style name="button_blue_bac_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">42dp</item>

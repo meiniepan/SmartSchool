@@ -7,12 +7,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
-import com.xiaoneng.ss.common.utils.Lunar
-import com.xiaoneng.ss.common.utils.RecycleViewDivider
-import com.xiaoneng.ss.common.utils.dp2px
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.circular.adapter.DaysOfWeekAdapter
 import com.xiaoneng.ss.module.circular.adapter.EventAdapter
 import com.xiaoneng.ss.module.circular.model.DayBean
+import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import kotlinx.android.synthetic.main.fragment_schedule.*
 
@@ -27,9 +26,9 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
     lateinit var mAdapter: DaysOfWeekAdapter
     lateinit var mAdapterEvent: EventAdapter
     var isDayOfWeek = true
-    var mData = ArrayList<DayBean>()
+    var mDataWeek = ArrayList<DayBean>()
     var mDataMonth = ArrayList<DayBean>()
-    var mDataEvent = ArrayList<DayBean>()
+    var mDataEvent = ArrayList<NoticeBean>()
     override fun getLayoutId(): Int = R.layout.fragment_schedule
 
     companion object {
@@ -54,22 +53,22 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
     }
 
     private fun addEvent() {
-
+        mStartActivity<AddScheduleActivity>(requireContext())
     }
 
     override fun initData() {
         super.initData()
-        mDataEvent.add(DayBean(""))
-        mDataEvent.add(DayBean(""))
+        mDataEvent.add(NoticeBean(""))
+        mDataEvent.add(NoticeBean(""))
         mAdapterEvent.notifyDataSetChanged()
     }
 
     private fun initAdapterDayOfWeek() {
         view?.post {
 
-            mData.clear()
-            mData = Lunar.getCurrentDaysOfWeek()
-            mAdapter = DaysOfWeekAdapter(R.layout.item_days_week, mData)
+            mDataWeek.clear()
+            mDataWeek = Lunar.getCurrentDaysOfWeek()
+            mAdapter = DaysOfWeekAdapter(R.layout.item_days_week, mDataWeek)
             var space = spaceView.width
             rvWeek.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -82,8 +81,8 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
                 adapter = mAdapter
             }
             mAdapter.setOnItemClickListener { adapter, view, position ->
-                for (i in 0 until mData.size) {
-                    mData[i].isCheck = i == position
+                for (i in 0 until mDataWeek.size) {
+                    mDataWeek[i].isCheck = i == position
                 }
                 adapter.notifyDataSetChanged()
             }
@@ -135,7 +134,10 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
             adapter = mAdapterEvent
         }
         mAdapterEvent.setOnItemClickListener { adapter, view, position ->
-
+            mStartActivity<ScheduleDetailActivity>(context) {
+                putExtra(Constant.TITLE, mDataEvent[position].title)
+                putExtra(Constant.ID, mDataEvent[position].id)
+            }
         }
     }
 
@@ -143,10 +145,12 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
         isDayOfWeek = if (isDayOfWeek) {
             rvWeek.visibility = View.GONE
             rvMonth.visibility = View.VISIBLE
+            tvWeekSchedule.text = DateUtil.getWhichMonth()
             false
         } else {
             rvWeek.visibility = View.VISIBLE
             rvMonth.visibility = View.GONE
+            tvWeekSchedule.text = Lunar.getWhichWeek()
             true
         }
 

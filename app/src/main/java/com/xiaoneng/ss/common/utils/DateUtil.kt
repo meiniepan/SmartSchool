@@ -60,4 +60,11 @@ object DateUtil {
         return sdf.format(Date(date))
 
     }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getWhichMonth(date: Long = Date().time): String {
+        val sdf = SimpleDateFormat("yyyy年MM月")
+        return sdf.format(Date(date))
+
+    }
 }

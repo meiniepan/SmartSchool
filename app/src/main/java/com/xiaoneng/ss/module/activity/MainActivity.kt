@@ -9,14 +9,18 @@ import android.util.SparseArray
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseActivity
+import com.xiaoneng.ss.common.permission.PermissionResult
+import com.xiaoneng.ss.common.permission.Permissions
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.circular.view.CircularFragment
 import com.xiaoneng.ss.module.mine.view.MineFragment
 import com.xiaoneng.ss.module.school.view.SchoolFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
+import pub.devrel.easypermissions.AppSettingsDialog
 
 
 class MainActivity : BaseActivity() {
@@ -34,7 +38,8 @@ class MainActivity : BaseActivity() {
 
     private val mPermissions = arrayOf(
         Manifest.permission.CAMERA,
-        Manifest.permission.READ_EXTERNAL_STORAGE
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
 
     private lateinit var mToolbarTitles: List<String>
@@ -53,6 +58,7 @@ class MainActivity : BaseActivity() {
             switchFragment(Constant.HOME)
             checkUpdate(this, false)
         }
+        initCameraPermission()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -177,6 +183,38 @@ class MainActivity : BaseActivity() {
         } else {
             AppManager.instance.exitApp(this)
         }
+    }
+
+    private fun initCameraPermission() {
+        Permissions(this).request(*mPermissions).observe(
+            this, Observer {
+                when (it) {
+                    is PermissionResult.Grant -> {
+//                        val intent = Intent(this@MainActivity, CaptureActivity::class.java)
+//                        var config = ZxingConfig()
+//                        config.isShowAlbum = false
+//                        intent.putExtra(Constant.INTENT_ZXING_CONFIG, config)
+//                        startActivityForResult(intent, Constant.REQUEST_CODE_SCAN)
+                    }
+                    // 进入设置界面申请权限
+                    is PermissionResult.Rationale -> {
+                        AppSettingsDialog.Builder(this)
+                            .setTitle("申请权限")
+                            .setRationale("没有相关权限应用将无法正常运行，点击确定进入权限设置界面来进行更改")
+                            .build()
+                            .show()
+                    }
+                    // 进入设置界面申请权限
+                    is PermissionResult.Deny -> {
+                        AppSettingsDialog.Builder(this)
+                            .setTitle("申请权限")
+                            .setRationale("没有相关权限应用将无法正常运行，点击确定进入权限设置界面来进行更改")
+                            .build()
+                            .show()
+                    }
+                }
+            }
+        )
     }
 
 }

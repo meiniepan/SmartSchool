@@ -2,7 +2,7 @@ package com.xiaoneng.ss.module.circular.adapter
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.xiaoneng.ss.module.circular.model.DayBean
+import com.xiaoneng.ss.module.circular.model.NoticeBean
 
 
 /**
@@ -12,10 +12,10 @@ import com.xiaoneng.ss.module.circular.model.DayBean
  * @date: 2020/02/27
  * Time: 17:32
  */
-class EventAdapter(layoutId: Int, listData: MutableList<DayBean>?) :
-    BaseQuickAdapter<DayBean, BaseViewHolder>(layoutId, listData) {
+class EventAdapter(layoutId: Int, listData: MutableList<NoticeBean>?) :
+    BaseQuickAdapter<NoticeBean, BaseViewHolder>(layoutId, listData) {
 
-    override fun convert(viewHolder: BaseViewHolder?, item: DayBean?) {
+    override fun convert(viewHolder: BaseViewHolder?, item: NoticeBean?) {
         viewHolder?.let { holder ->
 var addressStr = "地点"
 var participantStr = ""

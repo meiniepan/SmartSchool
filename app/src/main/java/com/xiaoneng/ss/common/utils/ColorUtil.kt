@@ -5,7 +5,9 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.core.content.ContextCompat
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.module.circular.model.ColorBean
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.jvm.internal.Intrinsics
 
 /**
@@ -322,5 +324,22 @@ object ColorUtil {
         } else {
             lastColor
         }
+    }
+
+    fun getCustomColors(): ArrayList<ColorBean> {
+        var list = ArrayList<ColorBean>()
+        list.add(ColorBean("#ED4CA9"))
+        list.add(ColorBean("#F56965"))
+        list.add(ColorBean("#FF8F3F"))
+        list.add(ColorBean("#F9C70F"))
+        list.add(ColorBean("#3FDB77"))
+        list.add(ColorBean("#42D5BB"))
+        list.add(ColorBean("#41BFFD"))
+        list.add(ColorBean("#4C83FD"))
+        list.add(ColorBean("#5D37FF"))
+        list.add(ColorBean("#915BF5"))
+        list.add(ColorBean("#CF37D1"))
+        list.add(ColorBean("#8F959D"))
+        return list
     }
 }

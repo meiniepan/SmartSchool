@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+            style="@style/title_style"
+            app:title="添加" />
+
+        <TextView
+            android:layout_width="57dp"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:background="@drawable/bac_blue_bac_14"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/layout_split" />
+
+    <LinearLayout
+        android:id="@+id/contentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/tintBac"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/title_padding"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:background="@drawable/bac_white_bac_20"
+            android:orientation="vertical"
+            android:paddingStart="28dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="28dp"
+            android:paddingBottom="20dp">
+
+            <EditText
+                style="@style/edit_style"
+                android:hint="请输入您的主题" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:drawableLeft="@drawable/ic_time"
+                android:drawablePadding="2dp"
+                android:hint="时间" />
+
+            <TextView
+                android:id="@+id/tvBeginAddSchedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="42dp"
+                android:layout_marginTop="13dp"
+                android:drawableLeft="@drawable/ic_begin"
+                android:drawablePadding="2dp"
+                android:hint="点击添加开始时间" />
+
+            <TextView
+                android:id="@+id/tvStopAddSchedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="42dp"
+                android:layout_marginTop="13dp"
+                android:drawableLeft="@drawable/ic_stop"
+                android:drawablePadding="2dp"
+                android:hint="点击添加结束时间" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="136dp"
+            android:layout_marginStart="@dimen/title_padding"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:background="@drawable/bac_white_bac_20"
+            android:orientation="vertical"
+            android:paddingStart="28dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="28dp"
+            android:paddingBottom="20dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_remark"
+                android:drawablePadding="2dp"
+                android:hint="备注" />
+
+            <EditText
+                style="@style/edit_style"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:gravity="start" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llChooseColor"
+            android:layout_width="match_parent"
+            android:layout_height="123dp"
+            android:layout_marginStart="@dimen/title_padding"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:background="@drawable/bac_white_bac_20"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingStart="28dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="28dp"
+            android:paddingBottom="10dp">
+
+
+            <TextView
+                android:id="@+id/tvSa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="选择日程颜色" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvChooseColor"
+                android:layout_marginTop="9dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

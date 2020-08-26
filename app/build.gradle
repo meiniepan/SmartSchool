@@ -84,5 +84,6 @@ dependencies {
     }
     implementation 'com.android.support:multidex:1.0.3'
     implementation  'com.github.addappcn:android-pickers:2.0.0'
-
+// 阿里云oss
+    implementation 'com.aliyun.dpa:oss-android-sdk:+'
 }
