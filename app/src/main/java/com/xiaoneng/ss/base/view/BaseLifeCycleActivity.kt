@@ -10,13 +10,18 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.Transport
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.account.view.LoginStuActivity
+import com.xiaoneng.ss.account.view.LoginSwitchActivity
+import com.xiaoneng.ss.account.view.LoginTeacherActivity
 import com.xiaoneng.ss.base.viewmodel.BaseViewModel
 import com.xiaoneng.ss.common.callback.EmptyCallBack
 import com.xiaoneng.ss.common.callback.ErrorCallBack
 import com.xiaoneng.ss.common.callback.LoadingCallBack
 import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.StateType
+import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.CommonUtil
+import com.xiaoneng.ss.common.utils.mStartActivity
 
 
 /**
@@ -54,10 +59,10 @@ abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
         loadService.showCallback(ErrorCallBack::class.java)
         if (!TextUtils.isEmpty(msg)) {
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-        loadService.setCallBack(ErrorCallBack::class.java, Transport { context, view ->
-            val mTvEmpty = view.findViewById(R.id.tv_error) as TextView
-            mTvEmpty.text = msg
-        })
+            loadService.setCallBack(ErrorCallBack::class.java, Transport { context, view ->
+                val mTvEmpty = view.findViewById(R.id.tv_error) as TextView
+                mTvEmpty.text = msg
+            })
         }
 
     }
@@ -92,6 +97,19 @@ abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
                     StateType.NETWORK_ERROR -> showError("网络出现问题啦")
                     StateType.TIP -> showTip(it.message)
                     StateType.EMPTY -> showEmpty()
+                    StateType.NOT_LOGIN -> {
+                        when (UserInfo.getUserBean().usertype) {
+                            "1" -> {
+                                mStartActivity<LoginStuActivity>(this)
+                            }
+                            "2" -> {
+                                mStartActivity<LoginTeacherActivity>(this)
+                            }
+                            else -> {
+                                mStartActivity<LoginSwitchActivity>(this)
+                            }
+                        }
+                    }
                 }
             }
         }

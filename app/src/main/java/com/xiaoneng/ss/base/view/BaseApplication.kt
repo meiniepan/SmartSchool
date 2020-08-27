@@ -3,6 +3,7 @@ package com.xiaoneng.ss.base.view
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import com.kingja.loadsir.core.LoadSir
+import com.tencent.bugly.Bugly
 import com.xiaoneng.ss.common.callback.EmptyCallBack
 import com.xiaoneng.ss.common.callback.ErrorCallBack
 import com.xiaoneng.ss.common.callback.LoadingCallBack
@@ -22,6 +23,7 @@ open class BaseApplication : Application() {
     }
     override fun onCreate() {
         super.onCreate()
+        Bugly.init(getApplicationContext(), "c55b4f8e6e", false);
         instance = this
         SPreference.setContext(applicationContext)
         initMode()

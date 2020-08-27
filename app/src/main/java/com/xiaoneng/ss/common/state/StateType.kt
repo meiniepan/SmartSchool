@@ -6,6 +6,7 @@ package com.xiaoneng.ss.common.state
 enum class StateType {
     SUCCESS,
     ERROR,
+    NOT_LOGIN,
     EMPTY,
     NETWORK_ERROR,
     LOADING,

@@ -26,6 +26,7 @@ data class LoginResponse(
     var isactive: String= "",
     var device_no: String= "",
     var cno: String= "",
+    var classmaster: String= "",
     var roleid: String= "",
     var usertype: String= "",//学生1  老师2  家长3
     var parents: ArrayList<ParentBean> = ArrayList(),

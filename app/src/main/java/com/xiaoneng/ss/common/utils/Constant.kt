@@ -33,7 +33,7 @@ object Constant {
     const val MINE = 2
 
     const val SUCCESS:String = "0000"
-    const val NOT_LOGIN = "-1001"
+    const val NOT_LOGIN = "0004"
 
 
 

@@ -33,7 +33,7 @@ fun <T> BaseResponse<T>.dataConvert(
         }
         Constant.NOT_LOGIN -> {
             UserInfo.logoutSuccess()
-            loadState.postValue(State(StateType.ERROR, message = "请重新登录"))
+            loadState.postValue(State(StateType.NOT_LOGIN, message = "请重新登录"))
             return respResult
         }
         else -> {

@@ -10,6 +10,7 @@ import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.tencent.bugly.crashreport.CrashReport
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseActivity
 import com.xiaoneng.ss.common.permission.PermissionResult
