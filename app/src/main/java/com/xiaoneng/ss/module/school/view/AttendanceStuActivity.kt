@@ -1,8 +1,18 @@
 package com.xiaoneng.ss.module.school.view
 
+import android.app.Dialog
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.utils.RecycleViewDivider
+import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.custom.popup.StringPopupWindow
+import com.xiaoneng.ss.module.school.adapter.DialogListAdapter
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_attendance_stu.*
 
@@ -14,8 +24,10 @@ import kotlinx.android.synthetic.main.activity_attendance_stu.*
  * Time: 17:01
  */
 class AttendanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+    private val bottomDialog: Dialog by lazy {
+        initDialog()
+    }
     private var stringPopupWindow: StringPopupWindow? = null
-    var titles = ArrayList<String>()
 
     override fun getLayoutId(): Int = R.layout.activity_attendance_stu
 
@@ -26,14 +38,15 @@ class AttendanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initTitle() {
-        titles.add("我的考勤")
-        titles.add("你的考勤")
-        tvTitleAttendanceStu.text = titles[0]
+
+        tvTitleAttendanceStu.text = "今日考勤"
         tvTitleAttendanceStu.setOnClickListener {
-            if (stringPopupWindow == null) {
-                initPopWindow()
-            }
-            stringPopupWindow?.showPopupWindow(tvTitleAttendanceStu)
+//            if (stringPopupWindow == null) {
+//                initPopWindow()
+//            }
+//            stringPopupWindow?.showPopupWindow(tvTitleAttendanceStu)
+
+            bottomDialog.show()
         }
 
 
@@ -62,17 +75,55 @@ class AttendanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initPopWindow() {
-        stringPopupWindow = StringPopupWindow(this, titles)
-        //  //这里设置宽度 否则非正常显示  构造方法设置定值默认无效 必须popwindow 初始化之后 设置才有效
-        val width = windowManager?.defaultDisplay?.width
-        stringPopupWindow?.width = tvTitleAttendanceStu.width
-        stringPopupWindow?.setCallBack(object : StringPopupWindow.CallBack {
-            override fun onShowContent(content: String) {
-                tvTitleAttendanceStu.text = content
-            }
+//        stringPopupWindow = StringPopupWindow(this, titles)
+//        //  //这里设置宽度 否则非正常显示  构造方法设置定值默认无效 必须popwindow 初始化之后 设置才有效
+//        val width = windowManager?.defaultDisplay?.width
+//        stringPopupWindow?.width = tvTitleAttendanceStu.width
+//        stringPopupWindow?.setCallBack(object : StringPopupWindow.CallBack {
+//            override fun onShowContent(content: String) {
+//                tvTitleAttendanceStu.text = content
+//            }
+//
+//
+//        })
 
+    }
 
-        })
+    private fun initDialog(): Dialog {
+        var titles = ArrayList<String>().apply {
+            add("今日考勤")
+            add("班级考勤")
+            add("课堂考勤")
+        }
+        // 底部弹出对话框
+        var bottomDialog =
+            Dialog(this, R.style.BottomDialog)
+        val contentView: View =
+            LayoutInflater.from(this).inflate(R.layout.dialog_list, null)
+        bottomDialog.setContentView(contentView)
+        val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
+        params.width =
+            resources.displayMetrics.widthPixels
+        params.bottomMargin = dp2px(this, 0f).toInt()
+        contentView.layoutParams = params
+        bottomDialog.window!!.setGravity(Gravity.BOTTOM)
+        bottomDialog.window!!.setWindowAnimations(R.style.BottomDialog_Animation)
+        var dialogAdapter = DialogListAdapter(R.layout.item_dialog_list, titles)
+        var recyclerView = contentView.findViewById<RecyclerView>(R.id.rvDialogList).apply {
+            layoutManager = LinearLayoutManager(this@AttendanceStuActivity)
+            addItemDecoration(
+                RecycleViewDivider(
+                    dp2px(context, 1f).toInt(),
+                    context.resources.getColor(R.color.splitColor)
+                )
+            )
+            adapter = dialogAdapter
+        }
+        dialogAdapter.setOnItemClickListener { adapter, view, position ->
+            tvTitleAttendanceStu.text = titles[position]
+            bottomDialog.dismiss()
+        }
 
+        return bottomDialog
     }
 }

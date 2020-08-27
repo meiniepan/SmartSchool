@@ -67,4 +67,16 @@ object DateUtil {
         return sdf.format(Date(date))
 
     }
+
+    fun isSameDay(date: Long = Date().time): Boolean {
+       var cal1 :Calendar  = Calendar.getInstance()
+       var cal2 :Calendar  = Calendar.getInstance()
+        var date1 = Date(System.currentTimeMillis())
+        var date2 = Date(date)
+        cal1.time= date1
+        cal2.time = date2
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
+
+    }
 }

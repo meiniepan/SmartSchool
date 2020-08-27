@@ -25,6 +25,11 @@ class MineRepository(val loadState: MutableLiveData<State>) : ApiRepository() {
                     .dataConvert(loadState)
 
             }
+            "99" -> {
+                apiService.logout2(UserInfo.getUserBean().phone,UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+
+            }
             else -> {
                 apiService.logout(UserInfo.getUserBean().phone,UserInfo.getUserBean().token)
                     .dataConvert(loadState)

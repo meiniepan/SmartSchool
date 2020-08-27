@@ -7,10 +7,6 @@ package com.xiaoneng.ss.module.school.model
  * @date: 2020/02/27
  * Time: 17:06
  */
-data class TimetableBean(
-    var date: String = "",
-    var time: String= "",
-    var week: String= "",
-    var list:ArrayList<LessonBean> = ArrayList()
-
+data class TimetableResponse(
+    var list : MutableList<TimetableBean>
 )

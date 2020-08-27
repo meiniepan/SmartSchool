@@ -29,6 +29,11 @@ class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository(
                     .dataConvert(loadState)
 
             }
+            "99" -> {
+                apiService.getNoticeList2(UserInfo.getUserBean().token, page, pagenum)
+                    .dataConvert(loadState)
+
+            }
             else -> {
                 apiService.getNoticeList(UserInfo.getUserBean().token, page, pagenum)
                     .dataConvert(loadState)

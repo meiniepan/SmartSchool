@@ -6,6 +6,7 @@ import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.module.school.model.PerformanceResponse
 import com.xiaoneng.ss.module.school.model.TaskResponse
+import com.xiaoneng.ss.module.school.model.TimetableResponse
 import com.xiaoneng.ss.network.dataConvert
 
 /**
@@ -20,7 +21,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
     suspend fun getTaskList(pagenum: String): TaskResponse {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.getTaskList(UserInfo.getUserBean().token,pagenum = pagenum)
+                apiService.getTaskList(UserInfo.getUserBean().token, pagenum = pagenum)
                     .dataConvert(loadState)
             }
             "2" -> {
@@ -28,15 +29,20 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                     .dataConvert(loadState)
 
             }
+            "99" -> {
+                apiService.getTaskList2(UserInfo.getUserBean().token, pagenum = pagenum)
+                    .dataConvert(loadState)
+
+            }
             else -> {
-                apiService.getTaskList(UserInfo.getUserBean().token,pagenum = pagenum)
+                apiService.getTaskList(UserInfo.getUserBean().token, pagenum = pagenum)
                     .dataConvert(loadState)
 
             }
         }
     }
 
-    suspend fun getTimetable(pagenum: String): TaskResponse {
+    suspend fun getTimetable(pagenum: String): TimetableResponse {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
                 apiService.getTimetable(UserInfo.getUserBean().token)
@@ -47,12 +53,19 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                     .dataConvert(loadState)
 
             }
+            "99" -> {
+                apiService.getTimetable2(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+
+            }
             else -> {
                 apiService.getTimetable(UserInfo.getUserBean().token)
                     .dataConvert(loadState)
 
             }
+
         }
+
     }
 
     suspend fun getPerformance(crid: String): PerformanceResponse {
@@ -62,7 +75,12 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getPerformance2(UserInfo.getUserBean().token,crid)
+                apiService.getPerformance2(UserInfo.getUserBean().token, crid)
+                    .dataConvert(loadState)
+
+            }
+            "99" -> {
+                apiService.getPerformance2(UserInfo.getUserBean().token, crid)
                     .dataConvert(loadState)
 
             }

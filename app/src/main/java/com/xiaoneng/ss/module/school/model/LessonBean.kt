@@ -9,12 +9,36 @@ package com.xiaoneng.ss.module.school.model
  */
 data class LessonBean(
     var id: String = "",
-    var taskid: String= "",
-    var taskname: String= "",
-    var uid: String= "",
-    var usertype: String= "",
-    var fileinfo: String= "",
-    var feedback: String= "",
-    var examine: String= ""
+    var cno: String = "",
+    var coursename: String = "",
+    var type: String = "",
+    var total: String = "",
+    var remark: String = "",
+    var classroomid: String = "",
+    var classroomname: String = "",
+    var teacheruid: String = "",
+    var teachername: String = "",
+    var semesterid: String = "",
+    var classid: String = "",
+    var groupid: String = "",
+    var semester: String = "",
+    var campusid: String = "",
+    var campus: String = "",
+    var level: String = "",
+    var weekday: String = "",
+    var weeks: String = "",
+    var hour: String = "",
+    var minute: String = "",
+    var hmin: String = "",
+    var coursetime: String = "",
+    var schoolid: String = "",
+    var schoolname: String = "",
+    var muser_id: String = "",
+    var cuser_id: String = "",
+    var issingle: String = "",
+    var createtime: String = "",
+    var updatetime: String = "",
+    var showhim: String = ""
 
-)
+
+    )

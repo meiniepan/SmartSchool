@@ -5,6 +5,7 @@ import com.xiaoneng.ss.module.circular.model.NoticeDetailBean
 import com.xiaoneng.ss.module.circular.model.NoticeResponse
 import com.xiaoneng.ss.module.school.model.PerformanceResponse
 import com.xiaoneng.ss.module.school.model.TaskResponse
+import com.xiaoneng.ss.module.school.model.TimetableResponse
 import com.xiaoneng.ss.network.response.BaseResponse
 import retrofit2.http.*
 
@@ -243,7 +244,7 @@ interface ApiService {
         @Field("token") token: String,
         @Field("time") time: String = "",
         @Field("semesterid") semesterid: String = ""
-    ): BaseResponse<TaskResponse>
+    ): BaseResponse<TimetableResponse>
 
     /**
      *教师课程表
@@ -255,7 +256,7 @@ interface ApiService {
         @Field("time") time: String = "",
         @Field("classid") classid: String = "",
         @Field("groupid") groupid: String = ""
-    ): BaseResponse<TaskResponse>
+    ): BaseResponse<TimetableResponse>
 
     /**
      *学生查看成绩

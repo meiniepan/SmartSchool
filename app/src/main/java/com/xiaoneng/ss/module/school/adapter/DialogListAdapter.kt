@@ -3,7 +3,6 @@ package com.xiaoneng.ss.module.school.adapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.module.school.model.TimetableLabelBean
 
 
 /**
@@ -13,13 +12,13 @@ import com.xiaoneng.ss.module.school.model.TimetableLabelBean
  * @date: 2020/02/27
  * Time: 17:32
  */
-class TimetableLabelAdapter(layoutId: Int, listData: MutableList<TimetableLabelBean>) :
-    BaseQuickAdapter<TimetableLabelBean, BaseViewHolder>(layoutId, listData) {
+class DialogListAdapter(layoutId: Int, listData: MutableList<String>) :
+    BaseQuickAdapter<String, BaseViewHolder>(layoutId, listData) {
 
 
-    override fun convert(viewHolder: BaseViewHolder, item: TimetableLabelBean) {
+    override fun convert(viewHolder: BaseViewHolder, item: String) {
         viewHolder?.let { holder ->
-            holder.setText(R.id.tvLabelTimetable, item.label)
+            holder.setText(R.id.tvDialogList, item)
 //                .setText(R.id.tvTime3,item?.noticetime)
 //
 //            holder.setText(R.id.tvAction, item?.title)

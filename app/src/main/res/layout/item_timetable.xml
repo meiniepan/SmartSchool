@@ -10,10 +10,10 @@
 
 
     <TextView
+        android:id="@+id/tvNameWeek"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_gravity="center_vertical"
-        android:text="周二"
+        android:text=""
         android:textColor="@color/common_hint"
         />
     <androidx.recyclerview.widget.RecyclerView

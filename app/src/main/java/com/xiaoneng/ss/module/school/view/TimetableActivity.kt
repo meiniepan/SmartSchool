@@ -5,13 +5,13 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.module.school.adapter.TimetableAdapter
 import com.xiaoneng.ss.module.school.adapter.TimetableLabelAdapter
-import com.xiaoneng.ss.module.school.model.LessonBean
 import com.xiaoneng.ss.module.school.model.TimetableBean
 import com.xiaoneng.ss.module.school.model.TimetableLabelBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
@@ -52,29 +52,29 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mLabelData.add(TimetableLabelBean("06:00-06:45"))
         mLabelData.add(TimetableLabelBean("06:00-06:45"))
         mLabelData.add(TimetableLabelBean("06:00-06:45"))
-//        mViewModel.getTimetable()
-        var lessonBean = ArrayList<LessonBean>().apply {
-            add(LessonBean())
-            add(LessonBean())
-            add(LessonBean())
-            add(LessonBean())
-            add(LessonBean())
-            add(LessonBean())
-            add(LessonBean())
-            add(LessonBean())
-            add(LessonBean())
-            add(LessonBean())
-            add(LessonBean())
-        }
-        mData.add(TimetableBean(lessons = lessonBean))
-        mData.add(TimetableBean(lessons = lessonBean))
-        mData.add(TimetableBean(lessons = lessonBean))
-        mData.add(TimetableBean(lessons = lessonBean))
-        mData.add(TimetableBean(lessons = lessonBean))
-        mData.add(TimetableBean(lessons = lessonBean))
-        mData.add(TimetableBean(lessons = lessonBean))
-        mAdapter.notifyDataSetChanged()
-        mAdapterLabel.notifyDataSetChanged()
+        mViewModel.getTimetable()
+//        var lessonBean = ArrayList<LessonBean>().apply {
+//            add(LessonBean())
+//            add(LessonBean())
+//            add(LessonBean())
+//            add(LessonBean())
+//            add(LessonBean())
+//            add(LessonBean())
+//            add(LessonBean())
+//            add(LessonBean())
+//            add(LessonBean())
+//            add(LessonBean())
+//            add(LessonBean())
+//        }
+//        mData.add(TimetableBean(lessons = lessonBean))
+//        mData.add(TimetableBean(lessons = lessonBean))
+//        mData.add(TimetableBean(lessons = lessonBean))
+//        mData.add(TimetableBean(lessons = lessonBean))
+//        mData.add(TimetableBean(lessons = lessonBean))
+//        mData.add(TimetableBean(lessons = lessonBean))
+//        mData.add(TimetableBean(lessons = lessonBean))
+//        mAdapter.notifyDataSetChanged()
+//        mAdapterLabel.notifyDataSetChanged()
     }
 
     private fun initAdapter() {
@@ -102,17 +102,17 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
 
     override fun initDataObserver() {
-//        mViewModel.mNoticeData.observe(this, Observer { response ->
-//            response?.let {
-//                mData.clear()
-//                mData.addAll(it.data)
-//                if (mData.size > 0) {
-//                    mAdapter.notifyDataSetChanged()
-//                } else {
-//                    showEmpty()
-//                }
-//            }
-//        })
+        mViewModel.mTimetableData.observe(this, Observer { response ->
+            response?.let {
+                mData.clear()
+                mData.addAll(it.list)
+                if (mData.size > 0) {
+                    mAdapter.notifyDataSetChanged()
+                } else {
+                    showEmpty()
+                }
+            }
+        })
 
     }
 
