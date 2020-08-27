@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.xiaoneng.ss.account.model.LoginResponse
 import com.xiaoneng.ss.common.state.callback.CollectListener
+import com.xiaoneng.ss.common.utils.AppManager
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.SPreference
 
@@ -58,5 +59,6 @@ object UserInfo {
         var bean = getUserBean()
         bean.token = ""
         userInfoJson = Gson().toJson(bean)
+        AppManager.finishAllActivity()
     }
 }

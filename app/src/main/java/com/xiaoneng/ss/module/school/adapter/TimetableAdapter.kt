@@ -1,6 +1,5 @@
 package com.xiaoneng.ss.module.school.adapter
 
-import android.graphics.Color
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -28,7 +27,6 @@ class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>) :
     override fun convert(viewHolder: BaseViewHolder, item: TimetableBean) {
         viewHolder?.let { holder ->
             holder.setText(R.id.tvNameWeek, item?.week)
-
 //                .setText(R.id.tvTime3,item?.noticetime)
 //
 //            holder.setText(R.id.tvAction, item?.title)

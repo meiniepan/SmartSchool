@@ -14,14 +14,9 @@ import kotlin.system.exitProcess
  * Time: 19:05
  */
 
-class AppManager {
+object AppManager {
     private val activityStack : Stack<Activity> = Stack()
 
-    companion object {
-        val instance by lazy {
-            AppManager()
-        }
-    }
 
     fun addActivity(activity: Activity) {
         activityStack.add(activity)
@@ -31,7 +26,7 @@ class AppManager {
         activityStack.remove(activity)
     }
 
-    private fun finishAllActivity() {
+     fun finishAllActivity() {
         for(activity in activityStack) {
             activity.finish()
         }
