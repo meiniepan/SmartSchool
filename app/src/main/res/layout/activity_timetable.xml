@@ -3,17 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/tintBac"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <com.xiaoneng.ss.custom.widgets.CustomTitleBar
-        app:title="课表"
-        style="@style/title_style"/>
+        style="@style/title_style"
+        app:title="课表" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/contentLayout"
-        android:paddingTop="75dp"
-        style="@style/recycler_margin_style"/>
+    <androidx.core.widget.NestedScrollView style="@style/nes_scroll_style">
 
+        <LinearLayout
+            android:id="@+id/contentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/tintBac"
+            android:orientation="horizontal">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvLabelTimetable"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:background="@color/white"
+                android:paddingStart="10dp"
+                android:paddingTop="30dp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTimetable"
+                style="@style/recycler_style"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

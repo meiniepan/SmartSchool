@@ -33,10 +33,6 @@ class AttendanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             if (stringPopupWindow == null) {
                 initPopWindow()
             }
-            //  //这里设置宽度 否则非正常显示  构造方法设置定值默认无效 必须popwindow 初始化之后 设置才有效
-            val width = windowManager?.defaultDisplay?.width
-            stringPopupWindow?.width = tvTitleAttendanceStu.width
-//showPopupWindow  不能直接放在initview 中
             stringPopupWindow?.showPopupWindow(tvTitleAttendanceStu)
         }
 
@@ -66,10 +62,13 @@ class AttendanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initPopWindow() {
-        stringPopupWindow = StringPopupWindow(this,titles)
+        stringPopupWindow = StringPopupWindow(this, titles)
+        //  //这里设置宽度 否则非正常显示  构造方法设置定值默认无效 必须popwindow 初始化之后 设置才有效
+        val width = windowManager?.defaultDisplay?.width
+        stringPopupWindow?.width = tvTitleAttendanceStu.width
         stringPopupWindow?.setCallBack(object : StringPopupWindow.CallBack {
             override fun onShowContent(content: String) {
-tvTitleAttendanceStu.text = content
+                tvTitleAttendanceStu.text = content
             }
 
 

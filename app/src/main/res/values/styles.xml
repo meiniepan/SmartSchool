@@ -45,6 +45,12 @@
         <item name="android:layout_marginEnd">@dimen/title_padding</item>
     </style>
 
+    <style name="space_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
     <style name="recycler_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
