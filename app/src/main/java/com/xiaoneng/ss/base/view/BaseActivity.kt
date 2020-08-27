@@ -2,7 +2,6 @@ package com.xiaoneng.ss.base.view
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.AttributeSet
@@ -20,10 +19,8 @@ import com.xiaoneng.ss.common.utils.ChangeThemeEvent
 import com.xiaoneng.ss.common.utils.ColorUtil
 import com.xiaoneng.ss.common.utils.RevealUtil.circularFinishReveal
 import com.xiaoneng.ss.common.utils.RevealUtil.setReveal
-import com.xiaoneng.ss.custom.graylayout.GrayFrameLayout
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import java.util.*
 
 
 /**
@@ -61,7 +58,6 @@ abstract class BaseActivity : AppCompatActivity() {
         setContentView(getLayoutId())
         mRootView = (findViewById(android.R.id.content) as ViewGroup).getChildAt(0)
         AppManager.instance.addActivity(this)
-        setStatusBarDark()
         initView()
         initData()
         if (showCreateReveal()) {
@@ -77,25 +73,26 @@ abstract class BaseActivity : AppCompatActivity() {
         context: Context,
         attrs: AttributeSet
     ): View? {
-        if (Date().month + 1 == 4 && Date().date == 4) {
-            initStatusColor(getColor(R.color.colorGray666))
-            if ("FrameLayout" == name) {
-                val count: Int = attrs.getAttributeCount()
-                for (i in 0 until count) {
-                    val attributeName: String = attrs.getAttributeName(i)
-                    val attributeValue: String = attrs.getAttributeValue(i)
-                    if (attributeName == "id") {
-                        val id = attributeValue.substring(1).toInt()
-                        val idVal = resources.getResourceName(id)
-                        if ("android:id/content" == idVal) {
-                            return GrayFrameLayout(context, attrs)
-                        }
-                    }
-                }
-            }
-        } else {
-            initStatusColor(0)
-        }
+//        if (Date().month + 1 == 4 && Date().date == 4) {
+//            initStatusColor(getColor(R.color.colorGray666))
+//            if ("FrameLayout" == name) {
+//                val count: Int = attrs.getAttributeCount()
+//                for (i in 0 until count) {
+//                    val attributeName: String = attrs.getAttributeName(i)
+//                    val attributeValue: String = attrs.getAttributeValue(i)
+//                    if (attributeName == "id") {
+//                        val id = attributeValue.substring(1).toInt()
+//                        val idVal = resources.getResourceName(id)
+//                        if ("android:id/content" == idVal) {
+//                            return GrayFrameLayout(context, attrs)
+//                        }
+//                    }
+//                }
+//            }
+//        } else {
+//        }
+        initStatusBar()
+        setStatusBarDark()
         return super.onCreateView(name, context, attrs)
     }
 
@@ -162,12 +159,16 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
+    open fun initStatusBar() {
+        initStatusColor(resources.getColor(R.color.white))
+    }
+
     @SuppressLint("NewApi")
-    private fun initStatusColor(color: Int) {
+    fun initStatusColor(color: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             window.statusBarColor = if (color == 0) ColorUtil.getColor(this) else color
         }
-        if (ColorUtils.calculateLuminance(Color.TRANSPARENT) >= 0.5) {
+        if (ColorUtils.calculateLuminance(color) >= 0.5) {
             // 设置状态栏中字体的颜色为黑色
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         } else {
@@ -183,7 +184,8 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     fun setStatusBarDark() {
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+//        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+//        JavaUtils.setStatusBarTransparent(this)
 
     }
 }

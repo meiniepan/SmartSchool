@@ -36,6 +36,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
+
         initAdapter()
         tvBeginAddTask.setOnClickListener {
             showBegin()
@@ -45,6 +46,9 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
     }
 
+    override fun initStatusBar() {
+        initStatusColor(resources.getColor(R.color.white))
+    }
     private fun showBegin() {
         pick.setOnDateTimePickListener(object : DateTimePicker.OnYearMonthDayTimePickListener {
             override fun onDateTimePicked(

@@ -5,7 +5,6 @@
     android:id="@+id/drawer_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/tintBac"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
