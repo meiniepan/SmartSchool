@@ -8,15 +8,13 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.account.view.LoginStuActivity
-import com.xiaoneng.ss.account.view.LoginSwitchActivity
-import com.xiaoneng.ss.account.view.LoginTeacherActivity
 import com.xiaoneng.ss.common.permission.PermissionResult
 import com.xiaoneng.ss.common.permission.Permissions
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.SPreference
 import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.common.utils.mainLogin
 import kotlinx.android.synthetic.main.activity_splash.*
 import pub.devrel.easypermissions.AppSettingsDialog
 
@@ -61,17 +59,7 @@ class SplashActivity : AppCompatActivity() {
     private fun startIntent() {
         finish()
         if (TextUtils.isEmpty(UserInfo.getUserBean().token)) {
-            when (UserInfo.getUserBean().usertype) {
-                "1" -> {
-                    mStartActivity<LoginStuActivity>(this)
-                }
-                "2" -> {
-                    mStartActivity<LoginTeacherActivity>(this)
-                }
-                else -> {
-                    mStartActivity<LoginSwitchActivity>(this)
-                }
-            }
+            mainLogin(this)
         } else {
             mStartActivity<MainActivity>(this)
         }

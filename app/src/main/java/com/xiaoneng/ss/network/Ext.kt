@@ -6,7 +6,6 @@ import com.xiaoneng.ss.base.repository.BaseRepository
 import com.xiaoneng.ss.base.viewmodel.BaseViewModel
 import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.StateType
-import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.network.response.BaseResponse
 import kotlinx.coroutines.launch
@@ -32,7 +31,6 @@ fun <T> BaseResponse<T>.dataConvert(
             return respResult
         }
         Constant.NOT_LOGIN -> {
-            UserInfo.logoutSuccess()
             loadState.postValue(State(StateType.NOT_LOGIN, message = "请重新登录"))
             return respResult
         }

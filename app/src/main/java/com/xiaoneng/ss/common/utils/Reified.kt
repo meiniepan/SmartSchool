@@ -4,7 +4,12 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import cn.addapp.pickers.picker.DateTimePicker
+import com.xiaoneng.ss.account.view.LoginStuActivity
+import com.xiaoneng.ss.account.view.LoginSwitchActivity
+import com.xiaoneng.ss.account.view.LoginTeacherActivity
+import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
+import java.io.File
 import java.util.*
 
 /**
@@ -45,4 +50,41 @@ inline fun getDatePick(context: Activity):DateTimePicker{
         )
 
     }
+}
+
+inline fun mainLogin(context: Context){
+    UserInfo.logoutSuccess()
+    when (UserInfo.getUserBean().usertype) {
+        "1" -> {
+            mStartActivity<LoginStuActivity>(context)
+        }
+        "2" -> {
+            mStartActivity<LoginTeacherActivity>(context)
+        }
+        "99" -> {
+            mStartActivity<LoginTeacherActivity>(context)
+        }
+        else -> {
+            mStartActivity<LoginSwitchActivity>(context)
+        }
+    }
+
+
+}
+
+fun mReadTxtFile(context: Context): String? {
+
+
+
+    val filePath = context.getExternalFilesDir(null)?.absolutePath + File.separator + "a.txt"
+
+    File(filePath).appendText("Burning ")
+            return filePath
+
+}
+
+fun mDownloadFile(context: Context): String? {
+
+    return context.getExternalFilesDir(null)?.absolutePath + File.separator + "ss.txt"
+
 }

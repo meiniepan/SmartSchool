@@ -10,7 +10,6 @@ import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.tencent.bugly.crashreport.CrashReport
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseActivity
 import com.xiaoneng.ss.common.permission.PermissionResult
@@ -182,7 +181,7 @@ class MainActivity : BaseActivity() {
             toast(getString(R.string.exit_app))
             mExitTime = time
         } else {
-            AppManager.instance.exitApp(this)
+            AppManager.exitApp(this)
         }
     }
 

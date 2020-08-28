@@ -57,7 +57,7 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
         mRootView = (findViewById(android.R.id.content) as ViewGroup).getChildAt(0)
-        AppManager.instance.addActivity(this)
+        AppManager.addActivity(this)
         initView()
         initData()
         if (showCreateReveal()) {
@@ -137,7 +137,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         EventBus.getDefault().unregister(this)
-        AppManager.instance.removeActivity(this)
+        AppManager.removeActivity(this)
     }
 
     override fun onPause() {

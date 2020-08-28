@@ -10,9 +10,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.Transport
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.account.view.LoginStuActivity
-import com.xiaoneng.ss.account.view.LoginSwitchActivity
-import com.xiaoneng.ss.account.view.LoginTeacherActivity
 import com.xiaoneng.ss.base.viewmodel.BaseViewModel
 import com.xiaoneng.ss.common.callback.EmptyCallBack
 import com.xiaoneng.ss.common.callback.ErrorCallBack
@@ -21,7 +18,7 @@ import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.StateType
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.CommonUtil
-import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.common.utils.mainLogin
 
 /**
  * Created with Android Studio.
@@ -94,17 +91,7 @@ abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
                     StateType.TIP -> showTip(it.message)
                     StateType.EMPTY -> showEmpty()
                     StateType.NOT_LOGIN -> {
-                        when (UserInfo.getUserBean().usertype) {
-                            "1" -> {
-                                mStartActivity<LoginStuActivity>(requireContext())
-                            }
-                            "2" -> {
-                                mStartActivity<LoginTeacherActivity>(requireContext())
-                            }
-                            else -> {
-                                mStartActivity<LoginSwitchActivity>(requireContext())
-                            }
-                        }
+                        mainLogin(requireContext())
                     }
                 }
             }
