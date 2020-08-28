@@ -10,7 +10,7 @@ import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.school.adapter.PerformanceStuAdapter
 import com.xiaoneng.ss.module.school.model.PerformanceBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import kotlinx.android.synthetic.main.activity_performance_master.*
+import kotlinx.android.synthetic.main.activity_performance_stu.*
 
 /**
  * @author Burning
@@ -27,7 +27,6 @@ class PerformanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initView() {
         super.initView()
         tvAction1.setOnClickListener {
-
         }
         initAdapter()
     }
@@ -51,11 +50,7 @@ class PerformanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initData() {
         super.initData()
-        mData.add(PerformanceBean(""))
-        mData.add(PerformanceBean(""))
-        mData.add(PerformanceBean(""))
-        mData.add(PerformanceBean(""))
-//        mViewModel.getPerformance()
+        mViewModel.getPerformance()
     }
     override fun initDataObserver() {
         mViewModel.mPerformanceData.observe(this, Observer { response ->

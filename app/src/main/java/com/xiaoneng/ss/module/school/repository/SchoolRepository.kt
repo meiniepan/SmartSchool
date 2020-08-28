@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.base.repository.ApiRepository
 import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.module.school.model.AttendanceResponse
 import com.xiaoneng.ss.module.school.model.PerformanceResponse
 import com.xiaoneng.ss.module.school.model.TaskResponse
 import com.xiaoneng.ss.module.school.model.TimetableResponse
@@ -86,6 +87,29 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             }
             else -> {
                 apiService.getPerformance(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+            }
+        }
+    }
+
+    suspend fun getAttendance(classid: String): AttendanceResponse {
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.getAttendance(UserInfo.getUserBean().token, classid)
+                    .dataConvert(loadState)
+            }
+            "2" -> {
+                apiService.getAttendance2(UserInfo.getUserBean().token, classid)
+                    .dataConvert(loadState)
+
+            }
+            "99" -> {
+                apiService.getAttendance2(UserInfo.getUserBean().token, classid)
+                    .dataConvert(loadState)
+
+            }
+            else -> {
+                apiService.getAttendance(UserInfo.getUserBean().token, classid)
                     .dataConvert(loadState)
             }
         }

@@ -86,6 +86,9 @@ dependencies {
     implementation  'com.github.addappcn:android-pickers:2.0.0'
 // 阿里云oss
     implementation 'com.aliyun.dpa:oss-android-sdk:+'
+
     implementation 'com.tencent.bugly:crashreport_upgrade:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
     implementation 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
+
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.8'
 }

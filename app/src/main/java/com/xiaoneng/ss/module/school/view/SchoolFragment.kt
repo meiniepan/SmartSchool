@@ -44,8 +44,11 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                 "2" -> {
                     mStartActivity<PerformanceMasterActivity>(context)
                 }
+                "99" -> {
+                    mStartActivity<PerformanceMasterActivity>(context)
+                }
                 else -> {
-
+                    mStartActivity<PerformanceStuActivity>(context)
                 }
             }
 

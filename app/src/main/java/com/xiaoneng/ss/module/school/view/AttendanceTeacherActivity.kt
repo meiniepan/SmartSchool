@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_attendance_stu.*
  * @date: 2020/02/27
  * Time: 17:01
  */
-class AttendanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+class AttendanceTeacherActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapter: AttendanceStuAdapter
     var mData: ArrayList<AttendanceBean> = ArrayList()
     private val bottomDialog: Dialog by lazy {
@@ -115,7 +115,7 @@ class AttendanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         bottomDialog.window!!.setWindowAnimations(R.style.BottomDialog_Animation)
         var dialogAdapter = DialogListAdapter(R.layout.item_dialog_list, titles)
         var recyclerView = contentView.findViewById<RecyclerView>(R.id.rvDialogList).apply {
-            layoutManager = LinearLayoutManager(this@AttendanceStuActivity)
+            layoutManager = LinearLayoutManager(this@AttendanceTeacherActivity)
             addItemDecoration(
                 RecycleViewDivider(
                     dp2px(context, 1f).toInt(),

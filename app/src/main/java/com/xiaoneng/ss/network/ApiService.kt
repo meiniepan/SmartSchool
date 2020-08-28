@@ -1,8 +1,10 @@
 package com.xiaoneng.ss.network
 
 import com.xiaoneng.ss.account.model.*
+import com.xiaoneng.ss.model.StsTokenResp
 import com.xiaoneng.ss.module.circular.model.NoticeDetailBean
 import com.xiaoneng.ss.module.circular.model.NoticeResponse
+import com.xiaoneng.ss.module.school.model.AttendanceResponse
 import com.xiaoneng.ss.module.school.model.PerformanceResponse
 import com.xiaoneng.ss.module.school.model.TaskResponse
 import com.xiaoneng.ss.module.school.model.TimetableResponse
@@ -289,7 +291,7 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
-     *教师查看成绩
+     *教师登录退出
      */
     @FormUrlEncoded
     @POST("/api/v1/user/login/eloginout")
@@ -297,4 +299,46 @@ interface ApiService {
         @Field("phone") phone: String,
         @Field("token") token: String
     ): BaseResponse<Any>
+
+    /**
+     *学生查看考勤
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/student/attendances/lists")
+    suspend fun getAttendance(
+        @Field("token") token: String,
+        @Field("classid") classid: String,
+        @Field("groupid") groupid: String = "",
+        @Field("teacheruid") teacheruid: String = "",
+        @Field("atttime") atttime: String = ""
+    ): BaseResponse<AttendanceResponse>
+    /**
+     *教师查看考勤
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/attendances/lists")
+    suspend fun getAttendance2(
+        @Field("token") token: String,
+        @Field("classid") classid: String,
+        @Field("groupid") groupid: String = "",
+        @Field("teacheruid") teacheruid: String = "",
+        @Field("atttime") atttime: String = ""
+    ): BaseResponse<AttendanceResponse>
+
+    /**
+     *学生上传文件oss签名接口
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/student/osssts")
+    suspend fun getSts(
+        @Field("token") token: String
+    ): BaseResponse<StsTokenResp>
+    /**
+     *教师上传文件oss签名接口
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/teachers/osssts")
+    suspend fun getSts2(
+        @Field("token") token: String
+    ): BaseResponse<StsTokenResp>
 }

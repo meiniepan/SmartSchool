@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.base.repository.ApiRepository
 import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.model.StsTokenResp
 import com.xiaoneng.ss.network.dataConvert
 
 /**
@@ -17,21 +18,45 @@ class MineRepository(val loadState: MutableLiveData<State>) : ApiRepository() {
     suspend fun logout(): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.logout(UserInfo.getUserBean().phone,UserInfo.getUserBean().token)
+                apiService.logout(UserInfo.getUserBean().phone, UserInfo.getUserBean().token)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.logout2(UserInfo.getUserBean().phone,UserInfo.getUserBean().token)
+                apiService.logout2(UserInfo.getUserBean().phone, UserInfo.getUserBean().token)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.logout2(UserInfo.getUserBean().phone,UserInfo.getUserBean().token)
+                apiService.logout2(UserInfo.getUserBean().phone, UserInfo.getUserBean().token)
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.logout(UserInfo.getUserBean().phone,UserInfo.getUserBean().token)
+                apiService.logout(UserInfo.getUserBean().phone, UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+
+            }
+        }
+    }
+
+    suspend fun getSts(): StsTokenResp {
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.getSts(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+            }
+            "2" -> {
+                apiService.getSts2(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+
+            }
+            "99" -> {
+                apiService.getSts2(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+
+            }
+            else -> {
+                apiService.getSts(UserInfo.getUserBean().token)
                     .dataConvert(loadState)
 
             }

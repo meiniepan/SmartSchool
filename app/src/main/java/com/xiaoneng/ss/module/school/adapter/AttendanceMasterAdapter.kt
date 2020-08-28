@@ -12,7 +12,7 @@ import com.xiaoneng.ss.module.school.model.PerformanceBean
  * @date: 2020/02/27
  * Time: 17:32
  */
-class PerformanceMasterAdapter(layoutId: Int, listData: MutableList<PerformanceBean>) :
+class AttendanceMasterAdapter(layoutId: Int, listData: MutableList<PerformanceBean>) :
     BaseQuickAdapter<PerformanceBean, BaseViewHolder>(layoutId, listData) {
 
     override fun convert(viewHolder: BaseViewHolder?, item: PerformanceBean) {

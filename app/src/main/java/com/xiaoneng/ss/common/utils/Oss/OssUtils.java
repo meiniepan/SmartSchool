@@ -1,4 +1,4 @@
-package com.xiaoneng.ss.common.utils;
+package com.xiaoneng.ss.common.utils.Oss;
 
 import android.content.Context;
 import android.util.Log;
@@ -18,7 +18,7 @@ import com.alibaba.sdk.android.oss.model.GetObjectRequest;
 import com.alibaba.sdk.android.oss.model.GetObjectResult;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
-import com.xiaoneng.ss.module.circular.model.StsTokenBean;
+import com.xiaoneng.ss.model.StsTokenBean;
 
 import java.io.FileOutputStream;
 
@@ -28,10 +28,10 @@ import java.io.FileOutputStream;
  * @date :2020/8/26 10:11 AM
  */
 public class OssUtils {
-
     static String END_POINT = "oss-cn-beijing.aliyuncs.com";
     static String BUCKET = "xiaoneng";
-    private static String OBJECT_KEY = "";
+    private static String OBJECT_KEY = "student/id/fileName";
+    private static String FILE_PATH = "student/id/fileName";
 
     //同步上传文件方法
 
@@ -74,7 +74,7 @@ public class OssUtils {
 
     //异步上传文件方法
 
-    public static void asyncUploadFile(Context context, StsTokenBean stsTokenBean, String filePath) {
+    public static void asyncUploadFile(Context context, StsTokenBean stsTokenBean, String filePath,OssListener listener) {
 
         String endpoint = END_POINT;
 
@@ -109,6 +109,7 @@ public class OssUtils {
                 Log.d("PutObject", "UploadSuccess");
                 Log.d("ETag", result.getETag());
                 Log.d("RequestId", result.getRequestId());
+                listener.onSuccess(filePath);
             }
 
             @Override
@@ -125,15 +126,15 @@ public class OssUtils {
                     Log.e("HostId", serviceException.getHostId());
                     Log.e("RawMessage", serviceException.getRawMessage());
                 }
+                listener.onFail();
             }
         });
 // task.cancel(); // 可以取消任务。
 // task.waitUntilFinished(); // 等待任务完成
     }
 
-    public static void downloadFile(Context context, StsTokenBean stsTokenBean, String objectKey, String filePath) {
+    public static void downloadFile(Context context, StsTokenBean stsTokenBean, String objectKey, String filePath,OssListener listener) {
         String endpoint = END_POINT;
-
         //移动端建议使用该方式，此时，stsToken中的前三个参数就派上用场了
         OSSCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(stsTokenBean.getAccessKeyId(), stsTokenBean.getAccessKeySecret(), stsTokenBean.getSecurityToken());
 
@@ -173,6 +174,7 @@ public class OssUtils {
                     FileOutputStream fout = new FileOutputStream(filePath);
                     fout.write(buffer);
                     fout.close();
+                    listener.onSuccess(filePath);
                 } catch (Exception e) {
                     OSSLog.logInfo(e.toString());
                 }
@@ -181,7 +183,7 @@ public class OssUtils {
             @Override
             public void onFailure(GetObjectRequest request, ClientException clientException,
                                   ServiceException serviceException) {
-                String i = request.toString();
+                listener.onFail();
             }
         });
     }
