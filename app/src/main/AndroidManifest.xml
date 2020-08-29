@@ -88,6 +88,10 @@
         <activity android:name=".module.circular.view.AddScheduleActivity" />
         <activity android:name=".module.school.view.PerformanceMasterActivity" />
         <activity android:name=".module.school.view.PerformanceStuActivity" />
+        <activity android:name=".module.school.view.ApplyLeaveActivity" />
+        <activity android:name=".module.school.view.SickLeaveActivity" />
+        <activity android:name=".module.school.view.ThingLeaveActivity" />
+        <activity android:name=".module.school.view.AddStudentActivity" />
 
 
         <provider

@@ -1,5 +1,7 @@
 package com.xiaoneng.ss.module.school.model
 
+import com.xiaoneng.ss.model.CourseBean
+
 /**
  * Created with Android Studio.
  * Description:
@@ -10,6 +12,10 @@ package com.xiaoneng.ss.module.school.model
 data class PerformanceResponse(
     var data : MutableList<PerformanceBean>,
     var totle : String,
-    var complete : String,
-    var lastid : String
+    var course : MutableList<CourseBean>,
+    var classs : String,
+    var groups : String,
+    var lastid : String,
+    var day : String,
+    var semesters : String
 )

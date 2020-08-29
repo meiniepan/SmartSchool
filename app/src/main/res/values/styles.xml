@@ -117,4 +117,5 @@
         <item name="android:windowExitAnimation">@anim/translate_dialog_out_top</item>
 
     </style>
+
 </resources>

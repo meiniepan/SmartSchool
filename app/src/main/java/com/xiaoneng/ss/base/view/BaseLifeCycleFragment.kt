@@ -16,7 +16,6 @@ import com.xiaoneng.ss.common.callback.ErrorCallBack
 import com.xiaoneng.ss.common.callback.LoadingCallBack
 import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.StateType
-import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.CommonUtil
 import com.xiaoneng.ss.common.utils.mainLogin
 
@@ -48,7 +47,7 @@ abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
         loadService.showCallback(LoadingCallBack::class.java)
     }
 
-    private fun showSuccess() {
+    fun showSuccess() {
         loadService.showCallback(SuccessCallback::class.java)
     }
 

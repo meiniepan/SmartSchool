@@ -5,7 +5,6 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.getDatePick
 import com.xiaoneng.ss.module.circular.model.NoticeBean
-import com.xiaoneng.ss.module.mine.adapter.InviteCodeAdapter
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_add_task.*
 
@@ -17,7 +16,6 @@ import kotlinx.android.synthetic.main.activity_add_task.*
  * Time: 17:01
  */
 class AddLogActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    lateinit var mAdapter: InviteCodeAdapter
     var mData = ArrayList<NoticeBean>()
     private val pick: DateTimePicker by lazy {
         getDatePick(this)

@@ -1,13 +1,19 @@
 package com.xiaoneng.ss.module.mine.view
 
+import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.oss.OssListener
+import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.common.utils.displayImage
+import com.xiaoneng.ss.common.utils.mDownloadFile
 import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.model.StsTokenResp
 import com.xiaoneng.ss.module.mine.adapter.MineAdapter
 import com.xiaoneng.ss.module.mine.viewmodel.MineViewModel
 import kotlinx.android.synthetic.main.fragment_mine.*
+import org.jetbrains.anko.toast
 
 /**
  * Created with Android Studio.
@@ -18,6 +24,7 @@ import kotlinx.android.synthetic.main.fragment_mine.*
  */
 class MineFragment : BaseLifeCycleFragment<MineViewModel>() {
     protected lateinit var mAdapter: MineAdapter
+    private val OBJECT_KEY = "avatar/student/id/avatar"
 
     override fun getLayoutId(): Int = R.layout.fragment_mine
 
@@ -73,18 +80,49 @@ class MineFragment : BaseLifeCycleFragment<MineViewModel>() {
 //                )
 //            )
         }
-
+initAvatar()
 
     }
-
+    private fun initAvatar() {
+        mViewModel.getSts()
+    }
 
     override fun initDataObserver() {
-//        mViewModel.mSystemTabNameData.observe(this, Observer { response ->
-//            response?.let {
-//                setSystemTabData(it)
-//            }
-//        })
+        mViewModel.mStsData.observe(this, Observer { response ->
+            response?.let {
+                    doDownload(it)
+            }
+        })
     }
 
+    private fun doDownload(it: StsTokenResp) {
+        showLoading()
+        OssUtils.downloadFile(
+            requireContext(),
+            it.Credentials,
+            OBJECT_KEY,
+            mDownloadFile(requireContext()),
+            object : OssListener {
+                override fun onSuccess(filePath: String) {
 
+
+                }
+
+                override fun onFail() {
+                    view?.post {
+                        requireContext().toast("头像下载失败")
+                    }
+                }
+
+                override fun onSuccess2(filePath: ByteArray?) {
+                    view?.post {
+                        showSuccess()
+                        displayImage(
+                            requireContext(), filePath,
+                            ivAvatarMine
+                        )
+                    }
+                }
+            })
+    }
 }

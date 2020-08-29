@@ -341,4 +341,14 @@ interface ApiService {
     suspend fun getSts2(
         @Field("token") token: String
     ): BaseResponse<StsTokenResp>
+
+    /**
+     *app应用权限接口
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/admin/rbac/apps")
+    suspend fun getAuthority(
+        @Field("token") token: String,
+        @Field("roleid") roleid: String
+    ): BaseResponse<RegisterResponse>
 }

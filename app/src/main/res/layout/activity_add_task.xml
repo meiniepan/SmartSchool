@@ -22,7 +22,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/title_padding"
-            android:background="@drawable/bac_blue_bac_14"
+            android:background="@drawable/bac_blue_bac_5"
             android:gravity="center"
             android:text="发布"
             android:textColor="@color/white" />

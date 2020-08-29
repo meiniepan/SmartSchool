@@ -1,4 +1,4 @@
-package com.xiaoneng.ss.common.utils.Oss;
+package com.xiaoneng.ss.common.utils.oss;
 
 import android.content.Context;
 import android.util.Log;

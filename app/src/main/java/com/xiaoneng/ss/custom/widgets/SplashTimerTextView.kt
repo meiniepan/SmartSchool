@@ -3,7 +3,6 @@ package com.xiaoneng.ss.custom.widgets
 import android.animation.ValueAnimator
 import android.animation.ValueAnimator.AnimatorUpdateListener
 import android.annotation.SuppressLint
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Canvas
@@ -31,6 +30,8 @@ import com.xiaoneng.ss.common.utils.sp2px
 
 @SuppressLint("AppCompatCustomView")
 class SplashTimerTextView : TextView {
+    private var hasDraw: Boolean = false
+
     /**
      * 获取倒计时的时长，进行界面更新或逻辑
      * @return
@@ -178,7 +179,10 @@ class SplashTimerTextView : TextView {
         val y: Float =
             mHeight / 2 + (Math.abs(fontMetrics.ascent) - fontMetrics.descent) / 2
         textStr?.let { canvas.drawText(it, x, y, mTextPaint) }
-        startAnim()
+        if (!hasDraw) {
+            startAnim()
+            hasDraw = true
+        }
     }
 
     /**

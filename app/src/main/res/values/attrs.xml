@@ -34,4 +34,34 @@
         <attr name="border_inside_color" format="color" />
         <attr name="border_outside_color" format="color"></attr>
     </declare-styleable>
+
+    <declare-styleable name="StatusRecyclerView">
+        <attr name="emptyLayout"  />
+        <attr name="emptyViewDrawable" />
+        <attr name="emptyViewText" />
+        <attr name="errorLayout" />
+        <attr name="errorViewDrawable" />
+        <attr name="errorViewText" />
+        <attr name="loadingLayout"/>
+        <attr name="loadingViewText"/>
+    </declare-styleable>
+
+    <declare-styleable name="RefreshStatusRecyclerView">
+        <attr name="emptyLayout"  />
+        <attr name="emptyViewDrawable" />
+        <attr name="emptyViewText" />
+        <attr name="errorLayout" />
+        <attr name="errorViewDrawable" />
+        <attr name="errorViewText" />
+        <attr name="loadingLayout"/>
+        <attr name="loadingViewText" />
+    </declare-styleable>
+    <attr name="emptyLayout" format="reference" />      <!-- 自定义空布局的布局id -->
+    <attr name="emptyViewDrawable"  format="reference"/><!-- 空布局中错误图片资源id：id为iv_empty的Iv -->
+    <attr name="emptyViewText" format="string"/>        <!-- 空布局中的文案：id为tv_empty的tv -->
+    <attr name="errorLayout" format="reference" />      <!-- 自定义错误布局的布局id -->
+    <attr name="errorViewDrawable"  format="reference"/><!-- 错误布局中错误图片资源id：id为iv_error的iv -->
+    <attr name="errorViewText" format="string"/>        <!-- 错误布局中的文案：id为tv_error的tv -->
+    <attr name="loadingLayout" format="reference" />    <!-- 自定义加载中布局的布局id-->
+    <attr name="loadingViewText" format="string"/>      <!-- 加载中布局中的文案：id为tv_loading的tv -->
 </resources>

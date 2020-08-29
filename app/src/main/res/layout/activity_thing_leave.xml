@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+            style="@style/title_style"
+            app:title="事假情况" />
+
+        <TextView
+            android:layout_width="57dp"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:background="@drawable/bac_blue_bac_5"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/tintBac" />
+
+    <androidx.core.widget.NestedScrollView style="@style/nes_scroll_style">
+
+        <LinearLayout
+            android:id="@+id/contentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingStart="24dp"
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="事由" />
+
+                        <EditText
+                            android:id="@+id/etItem1ApplyLeaveThing"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="24dp"
+                            android:background="@null"
+                            android:hint="请填写具体原因" />
+
+                    </LinearLayout>
+
+                    <include layout="@layout/layout_split" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingStart="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="请假时长" />
+
+                        <TextView
+                            android:id="@+id/tvItem2ApplyLeaveThing"
+                            android:layout_width="wrap_content"
+                            android:layout_height="22dp"
+                            android:layout_marginEnd="24dp"
+                            android:background="@drawable/bac_blue_bac_11"
+                            android:gravity="center"
+                            android:paddingStart="13dp"
+                            android:paddingEnd="13dp"
+                            android:text="请假两节课"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+
+                    <include layout="@layout/layout_split" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

@@ -1,4 +1,4 @@
-package com.xiaoneng.ss.common.utils.Oss;
+package com.xiaoneng.ss.common.utils.oss;
 
 /**
  * @author Burning

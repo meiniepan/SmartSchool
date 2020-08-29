@@ -10,8 +10,8 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.GlideEngine
-import com.xiaoneng.ss.common.utils.Oss.OssListener
-import com.xiaoneng.ss.common.utils.Oss.OssUtils
+import com.xiaoneng.ss.common.utils.oss.OssListener
+import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.common.utils.displayImage
 import com.xiaoneng.ss.common.utils.mDownloadFile
 import com.xiaoneng.ss.common.utils.starPhoneNum

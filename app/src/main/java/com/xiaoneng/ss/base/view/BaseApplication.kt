@@ -3,12 +3,15 @@ package com.xiaoneng.ss.base.view
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import com.kingja.loadsir.core.LoadSir
+import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.tencent.bugly.Bugly
 import com.xiaoneng.ss.common.callback.EmptyCallBack
 import com.xiaoneng.ss.common.callback.ErrorCallBack
 import com.xiaoneng.ss.common.callback.LoadingCallBack
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.SPreference
+import com.xiaoneng.ss.common.utils.recyclerview.RefreshViewFooter
+import com.xiaoneng.ss.common.utils.recyclerview.RefreshViewHeader
 
 /**
  * Created with Android Studio.
@@ -33,7 +36,16 @@ open class BaseApplication : Application() {
             .addCallback(EmptyCallBack())
             .commit()
     }
-
+    private  fun initSmartRefreshHeaderFooter() {
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
+            RefreshViewHeader(context) //.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
+        }
+        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout ->
+            RefreshViewFooter(
+                context
+            )
+        }
+    }
     private fun initMode() {
         var isNightMode: Boolean by SPreference(Constant.NIGHT_MODE, false)
         AppCompatDelegate.setDefaultNightMode(if (isNightMode) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO)

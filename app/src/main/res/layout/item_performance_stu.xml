@@ -18,7 +18,7 @@
             android:id="@+id/tvSubjectPerformance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="科目"
+            android:text=""
             
              />
 
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="42dp"
             android:layout_weight="1"
-            android:text="分数"
+            android:text=""
             
              />
 
@@ -38,7 +38,7 @@
             android:id="@+id/tvRank1Performance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="排名"
+            android:text=""
             
              />
 

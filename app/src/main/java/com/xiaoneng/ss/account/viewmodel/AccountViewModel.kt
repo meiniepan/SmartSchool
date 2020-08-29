@@ -55,4 +55,10 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
             mRegisterData.value = mRepository.registerCo(requestBody)
         }, loadState)
     }
+
+    fun getAuthority() {
+        initiateRequest({
+            mRegisterData.value = mRepository.getAuthority()
+        }, loadState)
+    }
 }

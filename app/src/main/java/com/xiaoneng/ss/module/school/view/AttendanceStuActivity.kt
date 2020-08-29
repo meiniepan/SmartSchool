@@ -12,6 +12,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.RecycleViewDivider
 import com.xiaoneng.ss.common.utils.dp2px
+import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.custom.popup.StringPopupWindow
 import com.xiaoneng.ss.module.school.adapter.AttendanceStuAdapter
 import com.xiaoneng.ss.module.school.adapter.DialogListAdapter
@@ -40,11 +41,15 @@ class AttendanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initView() {
         super.initView()
         initTitle()
+        initAdapter()
+        tvApplyLeave.setOnClickListener {
+            mStartActivity<ApplyLeaveActivity>(this)
+        }
     }
 
     private fun initTitle() {
 
-        tvTitleAttendanceStu.text = "今日考勤"
+        tvTitleAttendanceStu.text = "我的考勤"
         tvTitleAttendanceStu.setOnClickListener {
 //            if (stringPopupWindow == null) {
 //                initPopWindow()
@@ -60,9 +65,21 @@ class AttendanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initData() {
         super.initData()
-        mViewModel.getAttendance("")
+        mData.add(AttendanceBean())
+        mData.add(AttendanceBean())
+//        mViewModel.getAttendance("")
     }
 
+    private fun initAdapter() {
+        mAdapter = AttendanceStuAdapter(R.layout.item_attendance_my, mData)
+        rvAttendance.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = mAdapter
+        }
+        mAdapter.setOnItemClickListener { _, view, position ->
+            mStartActivity<AddStudentActivity>(this)
+        }
+    }
 
     override fun initDataObserver() {
         mViewModel.mAttendanceData.observe(this, Observer { response ->

@@ -2,7 +2,7 @@ package com.xiaoneng.ss.module.school.adapter
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.xiaoneng.ss.module.school.model.PerformanceBean
+import com.xiaoneng.ss.module.school.model.AttendanceBean
 
 
 /**
@@ -12,10 +12,10 @@ import com.xiaoneng.ss.module.school.model.PerformanceBean
  * @date: 2020/02/27
  * Time: 17:32
  */
-class AttendanceStuAdapter(layoutId: Int, listData: MutableList<PerformanceBean>) :
-    BaseQuickAdapter<PerformanceBean, BaseViewHolder>(layoutId, listData) {
+class AttendanceStuAdapter(layoutId: Int, listData: MutableList<AttendanceBean>) :
+    BaseQuickAdapter<AttendanceBean, BaseViewHolder>(layoutId, listData) {
 
-    override fun convert(viewHolder: BaseViewHolder?, item: PerformanceBean) {
+    override fun convert(viewHolder: BaseViewHolder?, item: AttendanceBean) {
         viewHolder?.let { holder ->
 //            holder.setText(R.id.tvTitle3, item?.title)
 //                .setText(R.id.tvTime3,item?.noticetime)

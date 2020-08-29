@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="100dp"
+    android:background="@color/tintBac" >
+
+    <RelativeLayout
+        android:id="@+id/pull_to_refresh_header"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="10dip" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal" >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                >
+
+                <ProgressBar
+                    android:id="@+id/pull_to_load_progress"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
+                    android:layout_gravity="center"
+                    android:indeterminate="false"
+                    android:indeterminateDrawable="@drawable/ic_edit"
+                    android:visibility="gone" />
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:visibility="gone"
+                        android:id="@+id/iv_zhen_footer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:background="@drawable/ic_edit" />
+                <ImageView
+                    android:id="@+id/pull_to_load_image"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/ic_edit"
+                    android:visibility="visible" />
+                    <TextView
+                        android:id="@+id/tv_mtmy"
+                        android:layout_marginLeft="15dp"
+                        android:textColor="#666666"
+                        android:textSize="12sp"
+                        android:text="aa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+            </FrameLayout>
+
+            <FrameLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+            </FrameLayout>
+        </LinearLayout>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/pull_to_load_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#999999"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</RelativeLayout>

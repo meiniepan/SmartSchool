@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+            style="@style/title_style"
+            app:title="添加学生" />
+
+        <TextView
+            android:layout_width="57dp"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:background="@drawable/bac_blue_bac_5"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/contentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/tintBac"
+            android:paddingStart="@dimen/title_padding"
+            android:paddingTop="10dp"
+            android:paddingEnd="@dimen/title_padding"
+            android:paddingBottom="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bac_white_bac_20"
+                android:paddingStart="17dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="17dp"
+                android:paddingBottom="8dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableStart="@drawable/ic_edit"
+                    android:drawablePadding="5dp"
+                    android:hint="搜索姓名、学号、班级查找学生信息" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAddStu"
+            style="@style/recycler_style" />
+    </LinearLayout>
+</LinearLayout>
