@@ -30,7 +30,6 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/contentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -54,6 +53,7 @@
                 android:paddingBottom="8dp">
 
                 <EditText
+                    android:id="@+id/etSearch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -64,7 +64,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvAddStu"
+            android:id="@+id/contentLayout"
             style="@style/recycler_style" />
     </LinearLayout>
 </LinearLayout>

@@ -103,6 +103,7 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
     override fun initDataObserver() {
         mViewModel.mNoticeData.observe(this, Observer { response ->
             response?.let {
+                showSuccess()
                 mData.clear()
                 for (i in it.data){
                     if (i.type == "system")

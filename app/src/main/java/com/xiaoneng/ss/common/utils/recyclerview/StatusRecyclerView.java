@@ -72,6 +72,7 @@ public class StatusRecyclerView<T> extends RecyclerView implements StatusChangeI
     }
 
     private void init(Context context, AttributeSet attrs) {
+        setOverScrollMode(OVER_SCROLL_NEVER);
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.StatusRecyclerView, 0, 0);
         try {
             emptyLayoutRes = a.getResourceId(R.styleable.StatusRecyclerView_emptyLayout,0);

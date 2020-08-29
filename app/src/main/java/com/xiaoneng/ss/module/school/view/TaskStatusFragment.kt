@@ -3,6 +3,8 @@ package com.xiaoneng.ss.module.school.view
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.scwang.smartrefresh.layout.api.RefreshLayout
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.utils.Constant
@@ -41,8 +43,17 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     }
 
     private fun initAdapter() {
+        rvTaskStatus.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+            override fun onLoadMore(refreshLayout: RefreshLayout) {
+                rvTaskStatus.finishRefreshLoadMore()
+            }
+
+            override fun onRefresh(refreshLayout: RefreshLayout) {
+                getData()
+            }
+        })
         mAdapter = TaskStatusAdapter(R.layout.item_task_status, mData)
-        rvTaskStatus.apply {
+        rvTaskStatus.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(RecycleViewDivider(context, dp2px(context, 10f).toInt()))
             adapter = mAdapter
@@ -59,6 +70,10 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
 
     override fun initData() {
         super.initData()
+        getData()
+    }
+
+    private fun getData() {
         mViewModel.getTaskList()
     }
 
@@ -66,6 +81,7 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mTaskListData.observe(this, Observer { response ->
             response?.let {
+                rvTaskStatus.finishRefreshLoadMore()
                 mData.clear()
                 mData.addAll(it.data)
                 if (mData.size > 0) {

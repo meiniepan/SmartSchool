@@ -4,14 +4,14 @@ import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import com.kingja.loadsir.core.LoadSir
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter
+import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.tencent.bugly.Bugly
 import com.xiaoneng.ss.common.callback.EmptyCallBack
 import com.xiaoneng.ss.common.callback.ErrorCallBack
 import com.xiaoneng.ss.common.callback.LoadingCallBack
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.SPreference
-import com.xiaoneng.ss.common.utils.recyclerview.RefreshViewFooter
-import com.xiaoneng.ss.common.utils.recyclerview.RefreshViewHeader
 
 /**
  * Created with Android Studio.
@@ -35,15 +35,16 @@ open class BaseApplication : Application() {
             .addCallback(LoadingCallBack())
             .addCallback(EmptyCallBack())
             .commit()
+        initSmartRefreshHeaderFooter()
     }
     private  fun initSmartRefreshHeaderFooter() {
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
-            RefreshViewHeader(context) //.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
+//            RefreshViewHeader(context) //.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
+            ClassicsHeader(context)
         }
         SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout ->
-            RefreshViewFooter(
-                context
-            )
+//            RefreshViewFooter(context)
+            ClassicsFooter(context)
         }
     }
     private fun initMode() {

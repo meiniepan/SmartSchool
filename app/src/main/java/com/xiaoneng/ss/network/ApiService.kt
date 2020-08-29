@@ -2,6 +2,7 @@ package com.xiaoneng.ss.network
 
 import com.xiaoneng.ss.account.model.*
 import com.xiaoneng.ss.model.StsTokenResp
+import com.xiaoneng.ss.model.StudentResp
 import com.xiaoneng.ss.module.circular.model.NoticeDetailBean
 import com.xiaoneng.ss.module.circular.model.NoticeResponse
 import com.xiaoneng.ss.module.school.model.AttendanceResponse
@@ -351,4 +352,14 @@ interface ApiService {
         @Field("token") token: String,
         @Field("roleid") roleid: String
     ): BaseResponse<RegisterResponse>
+
+    /**
+     *管理查询所有学生
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/student/listAll")
+    suspend fun queryStudent(
+        @Field("token") token: String,
+        @Field("key") key: String = ""
+    ): BaseResponse<StudentResp>
 }

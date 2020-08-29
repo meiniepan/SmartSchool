@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.base.repository.ApiRepository
 import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.model.StudentResp
 import com.xiaoneng.ss.module.school.model.AttendanceResponse
 import com.xiaoneng.ss.module.school.model.PerformanceResponse
 import com.xiaoneng.ss.module.school.model.TaskResponse
@@ -113,6 +114,11 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                     .dataConvert(loadState)
             }
         }
+    }
+
+    suspend fun queryStudent(key: String): StudentResp {
+           return apiService.queryStudent(UserInfo.getUserBean().token, key)
+                .dataConvert(loadState)
     }
 
 }

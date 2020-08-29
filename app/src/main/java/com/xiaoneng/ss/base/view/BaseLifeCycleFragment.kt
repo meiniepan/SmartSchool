@@ -32,14 +32,13 @@ abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
 
     override fun initView() {
 
-        showSuccess()
-
         mViewModel = ViewModelProvider(this).get(CommonUtil.getClass(this))
 
         mViewModel.loadState.observe(this, observer)
 
         initDataObserver()
     }
+
 
     abstract fun initDataObserver()
 
@@ -83,7 +82,7 @@ abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
         Observer<State> {
             it?.let {
                 when (it.code) {
-                    StateType.SUCCESS -> showSuccess()
+                    StateType.SUCCESS -> {}
                     StateType.LOADING -> showLoading()
                     StateType.ERROR -> showTip(it.message)
                     StateType.NETWORK_ERROR -> showError("网络异常")

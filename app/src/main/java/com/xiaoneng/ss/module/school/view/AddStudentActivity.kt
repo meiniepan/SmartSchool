@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.dp2px
-import com.xiaoneng.ss.module.circular.model.NoticeBean
-import com.xiaoneng.ss.module.mine.adapter.InviteCodeAdapter
+import com.xiaoneng.ss.model.StudentBean
+import com.xiaoneng.ss.module.school.adapter.QueryStudentAdapter
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_add_student.*
 
@@ -23,8 +25,8 @@ import kotlinx.android.synthetic.main.activity_add_student.*
  * Time: 17:01
  */
 class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    private lateinit var mAdapter: InviteCodeAdapter
-    var mData = ArrayList<NoticeBean>()
+    private lateinit var mAdapter: QueryStudentAdapter
+    var mData = ArrayList<StudentBean>()
 
 
     override fun getLayoutId(): Int = R.layout.activity_add_student
@@ -33,47 +35,53 @@ class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initView() {
         super.initView()
         initAdapter()
+        etSearch.addTextChangedListener {
+            if (it!!.trim().length > 1) {
+                mViewModel.queryStudent(it.toString())
+            }
+        }
 
     }
 
 
     private fun initAdapter() {
-        mAdapter = InviteCodeAdapter(R.layout.item_invite_code, mData)
-        rvAddStu.apply {
+        mAdapter = QueryStudentAdapter(R.layout.item_query_student, mData)
+        contentLayout.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = mAdapter
         }
         mAdapter.setOnItemClickListener { _, view, position ->
-            showDialog()
+            mShowDialog(position)
         }
     }
 
 
     override fun initData() {
         super.initData()
-        mData.add(NoticeBean(""))
-        mData.add(NoticeBean(""))
-        mData.add(NoticeBean(""))
+//        mData.add(NoticeBean(""))
+//        mData.add(NoticeBean(""))
+//        mData.add(NoticeBean(""))
 //        mViewModel.getTimetable()
     }
 
 
     override fun initDataObserver() {
-//        mViewModel.mNoticeData.observe(this, Observer { response ->
-//            response?.let {
-//                mData.clear()
-//                mData.addAll(it.data)
-//                if (mData.size > 0) {
-//                    mAdapter.notifyDataSetChanged()
-//                } else {
-//                    showEmpty()
-//                }
-//            }
-//        })
+        mViewModel.mStudentData.observe(this, Observer { response ->
+            response?.let {
+                showSuccess()
+                mData.clear()
+                mData.addAll(it.data)
+                if (mData.size > 0) {
+                    mAdapter.notifyDataSetChanged()
+                } else {
+                    showEmpty()
+                }
+            }
+        })
 
     }
 
-    private fun showDialog() {
+    private fun mShowDialog(position: Int) {
         // 弹出对话框
         val bottomDialog =
             Dialog(this, R.style.BottomDialog)
@@ -82,7 +90,7 @@ class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         bottomDialog.setContentView(contentView)
         val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
         params.width =
-            resources.displayMetrics.widthPixels- dp2px(this,53f*2).toInt()
+            resources.displayMetrics.widthPixels - dp2px(this, 53f * 2).toInt()
         params.marginEnd = dp2px(this, 0f).toInt()
         contentView.layoutParams = params
         bottomDialog.window!!.setGravity(Gravity.CENTER)
@@ -96,7 +104,7 @@ class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 bottomDialog.dismiss()
             }
         contentView.findViewById<TextView>(R.id.tvNameAddStuDialog)
-            .text = "haha"
+            .text = mData[position].realname+"-"+mData[position].classname
     }
 
 }

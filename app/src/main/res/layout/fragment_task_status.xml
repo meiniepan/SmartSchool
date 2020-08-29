@@ -7,9 +7,11 @@
     android:orientation="vertical">
 
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
         android:id="@+id/rvTaskStatus"
-        style="@style/recycler_margin_style"
+        style="@style/recycler_style"
+        android:paddingStart="@dimen/title_padding"
+        android:paddingEnd="@dimen/title_padding"
         android:layout_marginTop="10dp"
        />
 
