@@ -1,8 +1,6 @@
 package com.xiaoneng.ss.module.mine.view
 
-import android.os.Handler
-import android.util.Log
-import android.widget.ImageView
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
@@ -15,7 +13,9 @@ import com.xiaoneng.ss.common.utils.GlideEngine
 import com.xiaoneng.ss.common.utils.Oss.OssListener
 import com.xiaoneng.ss.common.utils.Oss.OssUtils
 import com.xiaoneng.ss.common.utils.displayImage
+import com.xiaoneng.ss.common.utils.mDownloadFile
 import com.xiaoneng.ss.common.utils.starPhoneNum
+import com.xiaoneng.ss.model.StsTokenResp
 import com.xiaoneng.ss.module.mine.viewmodel.MineViewModel
 import kotlinx.android.synthetic.main.activity_mine_info.*
 import org.jetbrains.anko.toast
@@ -30,7 +30,9 @@ import org.jetbrains.anko.toast
 class MineInfoActivity : BaseLifeCycleActivity<MineViewModel>() {
 
     private var avatarPath: String? = ""
-
+    val mDownloadData: MutableLiveData<Boolean> = MutableLiveData()
+    var isDownLoad: Boolean = false
+    private val OBJECT_KEY = "avatar/student/id/avatar"
     override fun getLayoutId(): Int = R.layout.activity_mine_info
 
 
@@ -47,13 +49,25 @@ class MineInfoActivity : BaseLifeCycleActivity<MineViewModel>() {
 
     }
 
+    override fun initData() {
+        super.initData()
+        initAvatar()
+
+    }
+
+    private fun initAvatar() {
+        isDownLoad = true
+        mViewModel.getSts()
+    }
+
     private fun choosePic() {
         PictureSelector.create(this)
             .openGallery(PictureMimeType.ofImage())
             .maxSelectNum(1)
             .loadImageEngine(GlideEngine.createGlideEngine()) // Please refer to the Demo GlideEngine.java
-            .forResult(object: OnResultCallbackListener<LocalMedia> {
+            .forResult(object : OnResultCallbackListener<LocalMedia> {
                 override fun onResult(result: MutableList<LocalMedia>?) {
+                    isDownLoad = false
                     avatarPath = result!![0].realPath
                     mViewModel.getSts()
 
@@ -69,20 +83,77 @@ class MineInfoActivity : BaseLifeCycleActivity<MineViewModel>() {
     override fun initDataObserver() {
         mViewModel.mStsData.observe(this, Observer { response ->
             response?.let {
-                OssUtils.asyncUploadFile(this@MineInfoActivity, it.Credentials, avatarPath,object:OssListener{
-                    override fun onSuccess(filePath: String) {
-                            Log.e("=====",Thread.currentThread().toString())
-                            displayImage(this@MineInfoActivity, avatarPath,
-                                this@MineInfoActivity.findViewById<ImageView>(R.id.ivAvatarMineInfo))
-
-                    }
-
-                    override fun onFail() {
-                        toast("头像上传错误")
-                    }
-                })
+                if (isDownLoad) {
+                    doDownload(it)
+                } else {
+                    doUpload(it)
+                }
             }
         })
+
+    }
+
+    private fun doUpload(it: StsTokenResp) {
+        showLoading()
+        OssUtils.asyncUploadFile(
+            this@MineInfoActivity,
+            it.Credentials,
+            OBJECT_KEY,
+            avatarPath,
+            object : OssListener {
+                override fun onSuccess(filePath: String) {
+                    mRootView.post {
+                        showSuccess()
+                        toast("头像上传成功")
+                        displayImage(
+                            this@MineInfoActivity, avatarPath,
+                            ivAvatarMineInfo
+                        )
+                    }
+
+                }
+
+                override fun onFail() {
+                    mRootView.post {
+                        toast("头像上传失败")
+                    }
+                }
+
+                override fun onSuccess2(filePath: ByteArray?) {
+
+                }
+            })
+    }
+
+    private fun doDownload(it: StsTokenResp) {
+        showLoading()
+        OssUtils.downloadFile(
+            this@MineInfoActivity,
+            it.Credentials,
+            OBJECT_KEY,
+            mDownloadFile(this),
+            object : OssListener {
+                override fun onSuccess(filePath: String) {
+
+
+                }
+
+                override fun onFail() {
+                    mRootView.post {
+                        toast("头像下载失败")
+                    }
+                }
+
+                override fun onSuccess2(filePath: ByteArray?) {
+                    mRootView.post {
+                        showSuccess()
+                        displayImage(
+                            this@MineInfoActivity, filePath,
+                            ivAvatarMineInfo
+                        )
+                    }
+                }
+            })
     }
 
 

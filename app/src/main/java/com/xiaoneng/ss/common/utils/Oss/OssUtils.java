@@ -30,7 +30,7 @@ import java.io.FileOutputStream;
 public class OssUtils {
     static String END_POINT = "oss-cn-beijing.aliyuncs.com";
     static String BUCKET = "xiaoneng";
-    private static String OBJECT_KEY = "student/id/fileName";
+    private static String OBJECT_KEY = "avatar/student/id/avatar";
     private static String FILE_PATH = "student/id/fileName";
 
     //同步上传文件方法
@@ -74,7 +74,7 @@ public class OssUtils {
 
     //异步上传文件方法
 
-    public static void asyncUploadFile(Context context, StsTokenBean stsTokenBean, String filePath,OssListener listener) {
+    public static void asyncUploadFile(Context context, StsTokenBean stsTokenBean, String objectKey, String filePath,OssListener listener) {
 
         String endpoint = END_POINT;
 
@@ -93,7 +93,7 @@ public class OssUtils {
         //但这里只是实现功能，若时间紧，你仍然可以按照本文方式先将功能实现，然后优化
         OSS oss = new OSSClient(context, endpoint, credentialProvider, conf);
         // 构造上传请求。
-        PutObjectRequest put = new PutObjectRequest(BUCKET, OBJECT_KEY, filePath);
+        PutObjectRequest put = new PutObjectRequest(BUCKET, objectKey, filePath);
 
 // 异步上传时可以设置进度回调。
         put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
@@ -174,7 +174,7 @@ public class OssUtils {
                     FileOutputStream fout = new FileOutputStream(filePath);
                     fout.write(buffer);
                     fout.close();
-                    listener.onSuccess(filePath);
+                    listener.onSuccess2(buffer);
                 } catch (Exception e) {
                     OSSLog.logInfo(e.toString());
                 }

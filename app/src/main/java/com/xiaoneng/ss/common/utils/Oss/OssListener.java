@@ -7,6 +7,7 @@ package com.xiaoneng.ss.common.utils.Oss;
  */
 public interface OssListener {
     void onSuccess(String filePath);
+    void onSuccess2(byte[] filePath);
 
     void onFail();
 }

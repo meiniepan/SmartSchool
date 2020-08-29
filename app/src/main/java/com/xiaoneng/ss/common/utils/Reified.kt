@@ -84,7 +84,12 @@ fun mReadTxtFile(context: Context): String? {
 }
 
 fun mDownloadFile(context: Context): String? {
+var filePath = context.getExternalFilesDir(null)?.absolutePath +File.separator + "avatar2.jpg"
+    var filename = File(filePath)
+    if (!filename.exists()) {
+        filename.createNewFile()
+    }
 
-    return context.getExternalFilesDir(null)?.absolutePath + File.separator + "ss.txt"
+    return filePath
 
 }
