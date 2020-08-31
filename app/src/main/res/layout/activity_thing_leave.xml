@@ -118,6 +118,8 @@
                             android:layout_height="22dp"
                             android:layout_marginEnd="24dp"
                             android:background="@drawable/bac_blue_bac_11"
+                            android:drawableRight="@drawable/ic_next_white_triangle"
+                            android:drawablePadding="5dp"
                             android:gravity="center"
                             android:paddingStart="13dp"
                             android:paddingEnd="13dp"

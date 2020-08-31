@@ -223,7 +223,8 @@ interface ApiService {
         @Field("token") token: String,
         @Field("id") id: String = "",
         @Field("pagenum") pagenum: String = "",
-        @Field("type") type: String = ""
+        @Field("type") type: String = "",
+        @Field("status") status: String = ""
     ): BaseResponse<TaskResponse>
 
     /**
@@ -235,7 +236,8 @@ interface ApiService {
         @Field("token") token: String,
         @Field("id") id: String = "",
         @Field("pagenum") pagenum: String = "",
-        @Field("type") type: String = ""
+        @Field("type") type: String = "",
+        @Field("status") status: String = ""
     ): BaseResponse<TaskResponse>
 
     /**

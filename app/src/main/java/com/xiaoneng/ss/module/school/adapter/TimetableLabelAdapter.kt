@@ -19,7 +19,7 @@ class TimetableLabelAdapter(layoutId: Int, listData: MutableList<TimetableLabelB
 
     override fun convert(viewHolder: BaseViewHolder, item: TimetableLabelBean) {
         viewHolder?.let { holder ->
-            holder.setText(R.id.tvLabelTimetable, item.label)
+            holder.setText(R.id.tvLabelTimetable, item.hi)
 //                .setText(R.id.tvTime3,item?.noticetime)
 //
 //            holder.setText(R.id.tvAction, item?.title)

@@ -4,11 +4,11 @@ import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.oss.OssListener
-import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.common.utils.displayImage
 import com.xiaoneng.ss.common.utils.mDownloadFile
 import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.common.utils.oss.OssListener
+import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.model.StsTokenResp
 import com.xiaoneng.ss.module.mine.adapter.MineAdapter
 import com.xiaoneng.ss.module.mine.viewmodel.MineViewModel
@@ -80,9 +80,10 @@ class MineFragment : BaseLifeCycleFragment<MineViewModel>() {
 //                )
 //            )
         }
-initAvatar()
+        initAvatar()
 
     }
+
     private fun initAvatar() {
         mViewModel.getSts()
     }
@@ -90,7 +91,7 @@ initAvatar()
     override fun initDataObserver() {
         mViewModel.mStsData.observe(this, Observer { response ->
             response?.let {
-                    doDownload(it)
+                doDownload(it)
             }
         })
     }

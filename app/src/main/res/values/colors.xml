@@ -13,7 +13,7 @@
 
 
     <color name="titleBlack">#212121</color>
-    <color name="common_hint">#999999</color>
+    <color name="commonHint">#999999</color>
     <color name="splitColor">#EDEFF1</color>
     <color name="commonBlue">#5E37FF</color>
     <color name="splitGray">#D3D9DF</color>

@@ -253,8 +253,11 @@ public class Lunar {
         }
     }
 
-    public static String getWhichWeek() {
+    public static String getWhichWeek(Long chosenDay) {
         Calendar cal = Calendar.getInstance();
+        if (chosenDay != 0){
+            cal.setTimeInMillis(chosenDay);
+        }
         int i = cal.get(Calendar.WEEK_OF_YEAR);
         return "第" + i + "周";
     }
@@ -279,9 +282,13 @@ public class Lunar {
 
     }
 
-    public static ArrayList<DayBean> getCurrentDaysOfWeek() {
+    public static ArrayList<DayBean> getCurrentDaysOfWeek(Long chosenDay) {
         Calendar cal = Calendar.getInstance();
         Calendar calToday = Calendar.getInstance();
+        if (chosenDay != 0){
+            cal.setTimeInMillis(chosenDay);
+            calToday.setTimeInMillis(chosenDay);
+        }
         int d = 0;
         if (cal.get(Calendar.DAY_OF_WEEK) == 1) {
             d = -7;
@@ -299,6 +306,7 @@ public class Lunar {
                 isToday = false;
             }
             DayBean bean = new DayBean(
+                    cal.getTimeInMillis(),
                     cal.get(Calendar.DAY_OF_MONTH) + "",
                     new Lunar(cal).getChinaDayString(),
                     isToday,
@@ -340,6 +348,7 @@ public class Lunar {
             }
 
                  bean = new DayBean(
+                         cal.getTimeInMillis(),
                         cal.get(Calendar.DAY_OF_MONTH) + "",
                         new Lunar(cal).getChinaDayString(),
                         isToday,

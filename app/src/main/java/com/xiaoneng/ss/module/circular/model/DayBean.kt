@@ -8,6 +8,7 @@ package com.xiaoneng.ss.module.circular.model
  * Time: 17:06
  */
 data class DayBean(
+    var day: Long? = 0L,
     var dayOfSun: String? = "",
     var dayOfLunar: String?= "",
     var isCheck: Boolean= false,

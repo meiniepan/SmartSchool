@@ -8,7 +8,8 @@ package com.xiaoneng.ss.module.school.model
  * Time: 17:06
  */
 data class TimetableLabelBean(
-    var label: String = ""
+    var hi: String = "",
+    var w: String = ""
 
 
 )

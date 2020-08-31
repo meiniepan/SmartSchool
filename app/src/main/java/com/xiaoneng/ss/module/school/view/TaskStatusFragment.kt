@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.fragment_task_status.*
  * Time: 17:01
  */
 class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
+    private var status: String? = ""
     lateinit var mAdapter: TaskStatusAdapter
     var mData = ArrayList<TaskBean>()
 
@@ -37,9 +38,9 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     }
 
     override fun initView() {
+        status = arguments?.getString(Constant.TASK_STATUS)
         super.initView()
         initAdapter()
-
     }
 
     private fun initAdapter() {
@@ -74,7 +75,11 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     }
 
     private fun getData() {
-        mViewModel.getTaskList()
+        if (status != "-1") {
+            mViewModel.getTaskList(status = status!!)
+        }else {
+            mViewModel.getTaskList()
+        }
     }
 
 

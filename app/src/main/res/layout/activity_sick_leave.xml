@@ -378,6 +378,8 @@
                             android:layout_marginEnd="24dp"
                             android:background="@drawable/bac_blue_bac_11"
                             android:gravity="center"
+                            android:drawablePadding="5dp"
+                            android:drawableRight="@drawable/ic_next_white_triangle"
                             android:paddingStart="13dp"
                             android:paddingEnd="13dp"
                             android:text="请假两节课"

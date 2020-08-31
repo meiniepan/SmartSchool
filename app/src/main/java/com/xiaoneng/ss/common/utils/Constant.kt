@@ -14,6 +14,7 @@ object Constant {
 
     const val USERNAME_KEY = "username"
     const val USERID_KEY = "userid"
+    const val TASK_STATUS = "task_status"
     const val LOGIN_KEY = "login"
     const val TOKEN = "token"
     const val USER_TYPE = "user_type"

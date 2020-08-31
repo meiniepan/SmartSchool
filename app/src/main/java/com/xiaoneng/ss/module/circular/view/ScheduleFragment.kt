@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.utils.*
+import com.xiaoneng.ss.module.circular.adapter.DaysOfMonthAdapter
 import com.xiaoneng.ss.module.circular.adapter.DaysOfWeekAdapter
 import com.xiaoneng.ss.module.circular.adapter.EventAdapter
 import com.xiaoneng.ss.module.circular.model.DayBean
@@ -23,7 +24,9 @@ import kotlinx.android.synthetic.main.fragment_schedule.*
  * Time: 17:01
  */
 class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
-    lateinit var mAdapter: DaysOfWeekAdapter
+    private var chosenDay: Long? = 0L
+    lateinit var mAdapterWeek: DaysOfWeekAdapter
+    lateinit var mAdapterMonth: DaysOfMonthAdapter
     lateinit var mAdapterEvent: EventAdapter
     var isDayOfWeek = true
     var mDataWeek = ArrayList<DayBean>()
@@ -43,7 +46,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
         ivSwitchSchedule.setOnClickListener {
             switch()
         }
-        tvWeekSchedule.text = Lunar.getWhichWeek()
+        tvWeekSchedule.text = Lunar.getWhichWeek(chosenDay)
         ivAddEvent.setOnClickListener {
             addEvent()
         }
@@ -67,8 +70,8 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
         view?.post {
 
             mDataWeek.clear()
-            mDataWeek = Lunar.getCurrentDaysOfWeek()
-            mAdapter = DaysOfWeekAdapter(R.layout.item_days_week, mDataWeek)
+            mDataWeek = Lunar.getCurrentDaysOfWeek(chosenDay)
+            mAdapterWeek = DaysOfWeekAdapter(R.layout.item_days_week, mDataWeek)
             var space = spaceView.width
             rvWeek.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -78,9 +81,9 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
                         context.resources.getColor(R.color.transparent)
                     )
                 )
-                adapter = mAdapter
+                adapter = mAdapterWeek
             }
-            mAdapter.setOnItemClickListener { adapter, view, position ->
+            mAdapterWeek.setOnItemClickListener { adapter, view, position ->
                 for (i in 0 until mDataWeek.size) {
                     mDataWeek[i].isCheck = i == position
                 }
@@ -93,7 +96,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
         view?.post {
             mDataMonth.clear()
             mDataMonth = Lunar.getCurrentDaysOfMonth()
-            mAdapter = DaysOfWeekAdapter(R.layout.item_days_week, mDataMonth)
+            mAdapterMonth = DaysOfMonthAdapter(R.layout.item_days_week, mDataMonth)
             var spaceH = spaceView.width
             var params = rvMonth.layoutParams as ViewGroup.MarginLayoutParams
             params.marginEnd = -spaceH
@@ -107,14 +110,20 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
                         0
                     )
                 )
-                adapter = mAdapter
+                adapter = mAdapterMonth
             }
-            mAdapter.setOnItemClickListener { adapter, view, position ->
+            mAdapterMonth.setOnItemClickListener { adapter, view, position ->
                 if (mDataMonth[position].inMonth) {
-                    for (i in 0 until mDataMonth.size) {
-                        mDataMonth[i].isCheck = i == position
-                    }
-                    adapter.notifyDataSetChanged()
+//                    for (i in 0 until mDataMonth.size) {
+//                        mDataMonth[i].isCheck = i == position
+//                    }
+//                    adapter.notifyDataSetChanged()
+                    chosenDay = mDataMonth[position].day
+                    mDataWeek.clear()
+                    mDataWeek = Lunar.getCurrentDaysOfWeek(chosenDay)
+                    mAdapterWeek.notifyDataSetChanged()
+                    tvWeekSchedule.text = Lunar.getWhichWeek(chosenDay)
+                    switch()
                 }
             }
         }
@@ -150,7 +159,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
         } else {
             rvWeek.visibility = View.VISIBLE
             rvMonth.visibility = View.GONE
-            tvWeekSchedule.text = Lunar.getWhichWeek()
+            tvWeekSchedule.text = Lunar.getWhichWeek(chosenDay)
             true
         }
 

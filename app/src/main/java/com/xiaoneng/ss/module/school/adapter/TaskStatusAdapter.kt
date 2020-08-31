@@ -23,13 +23,13 @@ class TaskStatusAdapter(layoutId: Int, listData: MutableList<TaskBean>?) :
             var line4Str = "参与人："
 
             when (item?.status) {
-                "0" -> {
+                "1" -> {
                     statusStr = "进行中"
                 }
-                "1" -> {
+                "0" -> {
                     statusStr = "未发布"
                 }
-                "2" -> {
+                "3" -> {
                     statusStr = "已关闭"
                 }
             }

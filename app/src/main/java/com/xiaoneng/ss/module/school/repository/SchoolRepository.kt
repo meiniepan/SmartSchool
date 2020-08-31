@@ -20,24 +20,24 @@ import com.xiaoneng.ss.network.dataConvert
  */
 class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() {
 
-    suspend fun getTaskList(pagenum: String): TaskResponse {
+    suspend fun getTaskList(pagenum: String,status: String): TaskResponse {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.getTaskList(UserInfo.getUserBean().token, pagenum = pagenum)
+                apiService.getTaskList(UserInfo.getUserBean().token, pagenum = pagenum,status = status)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getTaskList2(UserInfo.getUserBean().token, pagenum = pagenum)
+                apiService.getTaskList2(UserInfo.getUserBean().token, pagenum = pagenum,status = status)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.getTaskList2(UserInfo.getUserBean().token, pagenum = pagenum)
+                apiService.getTaskList2(UserInfo.getUserBean().token, pagenum = pagenum,status = status)
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.getTaskList(UserInfo.getUserBean().token, pagenum = pagenum)
+                apiService.getTaskList(UserInfo.getUserBean().token, pagenum = pagenum,status = status)
                     .dataConvert(loadState)
 
             }

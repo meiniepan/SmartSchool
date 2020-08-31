@@ -1,5 +1,7 @@
 package com.xiaoneng.ss.module.school.adapter
 
+import android.text.TextUtils
+import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
@@ -20,15 +22,22 @@ class LessonAdapter(layoutId: Int, listData: MutableList<LessonBean>) :
 
     override fun convert(viewHolder: BaseViewHolder, item: LessonBean) {
         viewHolder?.let { holder ->
-            holder.setText(R.id.tvNameCourse, item?.coursename)
-                .setText(R.id.tvNameTeacherCourse,item?.teachername)
-
-            holder.setText(R.id.tvNameRoomCourse, item?.classroomname)
-            if (hasColor){
-                holder.setBackgroundRes(R.id.llCourse,R.drawable.bac_blue_bac_5)
+            var ll = holder.getView<View>(R.id.llCourse)
+            if (TextUtils.isEmpty(item.coursename)){
+                ll.visibility = View.INVISIBLE
             }else{
-                holder.setBackgroundRes(R.id.llCourse,R.drawable.bac_gray_bac_5)
+                ll.visibility = View.VISIBLE
+                holder.setText(R.id.tvNameCourse, item?.coursename)
+                    .setText(R.id.tvNameTeacherCourse,item?.teachername)
+
+                holder.setText(R.id.tvNameRoomCourse, item?.classroomname)
+                if (hasColor){
+                    holder.setBackgroundRes(R.id.llCourse,R.drawable.bac_blue_bac_5)
+                }else{
+                    holder.setBackgroundRes(R.id.llCourse,R.drawable.bac_gray_bac_5)
+                }
             }
+
         }
     }
 

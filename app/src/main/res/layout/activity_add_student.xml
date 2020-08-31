@@ -57,7 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:drawableStart="@drawable/ic_edit"
+                    android:drawableStart="@drawable/ic_search"
                     android:drawablePadding="5dp"
                     android:hint="搜索姓名、学号、班级查找学生信息" />
             </LinearLayout>

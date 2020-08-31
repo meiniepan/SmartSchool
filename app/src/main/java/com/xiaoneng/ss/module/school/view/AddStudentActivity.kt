@@ -36,7 +36,8 @@ class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.initView()
         initAdapter()
         etSearch.addTextChangedListener {
-            if (it!!.trim().length > 1) {
+            if (it!!.trim().length > 0) {
+                showLoading()
                 mViewModel.queryStudent(it.toString())
             }
         }

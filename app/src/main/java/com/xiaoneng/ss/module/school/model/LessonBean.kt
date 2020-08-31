@@ -38,6 +38,7 @@ data class LessonBean(
     var issingle: String = "",
     var createtime: String = "",
     var updatetime: String = "",
+    var position: String = "",
     var showhim: String = ""
 
 

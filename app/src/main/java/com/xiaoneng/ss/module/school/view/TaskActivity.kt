@@ -1,9 +1,11 @@
 package com.xiaoneng.ss.module.school.view
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.circular.adapter.FragmentCircularAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
@@ -94,10 +96,18 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initViewPager() {
-        fragmentList.add(TaskStatusFragment.getInstance())
-        fragmentList.add(TaskStatusFragment.getInstance())
-        fragmentList.add(TaskStatusFragment.getInstance())
-        fragmentList.add(TaskStatusFragment.getInstance())
+        fragmentList.add(TaskStatusFragment.getInstance().apply {
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS,"-1") }
+        })
+        fragmentList.add(TaskStatusFragment.getInstance().apply {
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS,"1") }
+        })
+        fragmentList.add(TaskStatusFragment.getInstance().apply {
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS,"0") }
+        })
+        fragmentList.add(TaskStatusFragment.getInstance().apply {
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS,"3") }
+        })
         fragmentAdapter = FragmentCircularAdapter(supportFragmentManager, fragmentList)
         vpCircular.adapter = fragmentAdapter
         vpCircular.addOnPageChangeListener(object : OnPageChangeListener {

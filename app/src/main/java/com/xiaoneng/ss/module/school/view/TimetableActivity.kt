@@ -1,17 +1,16 @@
 package com.xiaoneng.ss.module.school.view
 
 import android.app.Dialog
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.module.school.adapter.TimetableAdapter
 import com.xiaoneng.ss.module.school.adapter.TimetableLabelAdapter
+import com.xiaoneng.ss.module.school.adapter.TitleTimetableAdapter
 import com.xiaoneng.ss.module.school.model.TimetableBean
 import com.xiaoneng.ss.module.school.model.TimetableLabelBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
@@ -26,8 +25,10 @@ import kotlinx.android.synthetic.main.activity_timetable.*
  */
 class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapter: TimetableAdapter
+    lateinit var mAdapterTitle: TitleTimetableAdapter
     lateinit var mAdapterLabel: TimetableLabelAdapter
     var mData = ArrayList<TimetableBean>()
+    var mDataTitle = ArrayList<TimetableBean>()
     var mLabelData = ArrayList<TimetableLabelBean>()
 
     override fun getLayoutId(): Int = R.layout.activity_timetable
@@ -35,55 +36,55 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
-        initAdapter()
         initAdapterLabel()
     }
 
     override fun initData() {
         super.initData()
-        mLabelData.add(TimetableLabelBean("06:00-06:45"))
-        mLabelData.add(TimetableLabelBean("06:00-06:45"))
-        mLabelData.add(TimetableLabelBean("06:00-06:45"))
-        mLabelData.add(TimetableLabelBean("06:00-06:45"))
-        mLabelData.add(TimetableLabelBean("06:00-06:45"))
-        mLabelData.add(TimetableLabelBean("06:00-06:45"))
-        mLabelData.add(TimetableLabelBean("06:00-06:45"))
-        mLabelData.add(TimetableLabelBean("06:00-06:45"))
-        mLabelData.add(TimetableLabelBean("06:00-06:45"))
-        mLabelData.add(TimetableLabelBean("06:00-06:45"))
-        mLabelData.add(TimetableLabelBean("06:00-06:45"))
+
         mViewModel.getTimetable()
-//        var lessonBean = ArrayList<LessonBean>().apply {
-//            add(LessonBean())
-//            add(LessonBean())
-//            add(LessonBean())
-//            add(LessonBean())
-//            add(LessonBean())
-//            add(LessonBean())
-//            add(LessonBean())
-//            add(LessonBean())
-//            add(LessonBean())
-//            add(LessonBean())
-//            add(LessonBean())
-//        }
-//        mData.add(TimetableBean(lessons = lessonBean))
-//        mData.add(TimetableBean(lessons = lessonBean))
-//        mData.add(TimetableBean(lessons = lessonBean))
-//        mData.add(TimetableBean(lessons = lessonBean))
-//        mData.add(TimetableBean(lessons = lessonBean))
-//        mData.add(TimetableBean(lessons = lessonBean))
-//        mData.add(TimetableBean(lessons = lessonBean))
-//        mAdapter.notifyDataSetChanged()
-//        mAdapterLabel.notifyDataSetChanged()
+
     }
 
     private fun initAdapter() {
-        mAdapter = TimetableAdapter(R.layout.item_timetable, mData)
+        mAdapter = TimetableAdapter(R.layout.item_timetable, mData, mLabelData.size)
         rvTimetable.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = mAdapter
         }
         mAdapter.setOnItemClickListener { _, view, position ->
+
+        }
+        rvTimetable.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                rvTitleTimetable.scrollBy(dx, dy)
+            }
+        })
+    }
+
+    private fun initAdapterTitle() {
+        mAdapterTitle = TitleTimetableAdapter(R.layout.item_timetable, mData)
+        rvTitleTimetable.addOnItemTouchListener(object:RecyclerView.OnItemTouchListener{
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+
+            }
+
+            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                return true
+            }
+
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+
+            }
+        })
+        rvTitleTimetable.apply {
+            layoutManager = object:LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false) {
+
+            }
+            adapter = mAdapterTitle
+        }
+        mAdapterTitle.setOnItemClickListener { _, view, position ->
 
         }
     }
@@ -104,13 +105,22 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mTimetableData.observe(this, Observer { response ->
             response?.let {
+                //初始化时间段数据
+                mLabelData.clear()
+                mLabelData.addAll(it.positions)
+                mAdapterLabel.notifyDataSetChanged()
+
+                //填充课表
                 mData.clear()
+
                 mData.addAll(it.list)
                 if (mData.size > 0) {
-                    mAdapter.notifyDataSetChanged()
+                    initAdapter()
+                    initAdapterTitle()
                 } else {
                     showEmpty()
                 }
+
             }
         })
 

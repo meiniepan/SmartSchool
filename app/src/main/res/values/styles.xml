@@ -14,10 +14,16 @@
         <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:textColor">@color/titleBlack</item>
         <item name="android:editTextColor">@color/titleBlack</item>
-        <item name="android:textColorHint">@color/common_hint</item>
+        <item name="android:textColorHint">@color/commonHint</item>
         <item name="android:screenOrientation">portrait</item>
         <item name="android:windowAnimationStyle">@style/anim_fade</item>
         <item name="android:windowSoftInputMode">adjustPan</item>
+    </style>
+
+    <style name="SingleTouchActivity" parent="AnimActivity">
+        <item name="android:windowEnableSplitTouch">false</item>
+        <item name="android:splitMotionEvents">false</item>
+
     </style>
 
     <style name="anim_fade" parent="@android:style/Animation.Activity">
@@ -55,6 +61,16 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:overScrollMode">never</item>
+    </style>
+
+    <style name="marquee_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
     </style>
 
     <style name="recycler_horiz_style">

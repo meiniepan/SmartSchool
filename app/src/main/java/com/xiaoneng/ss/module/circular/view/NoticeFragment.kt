@@ -72,6 +72,7 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
     override fun initDataObserver() {
         mViewModel.mNoticeData.observe(this, Observer { response ->
             response?.let {
+                showSuccess()
                 mData.clear()
                 mData.addAll(it.data)
                 if (mData.size > 0) {

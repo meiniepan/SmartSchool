@@ -25,9 +25,9 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mAttendanceData: MutableLiveData<AttendanceResponse> = MutableLiveData()
     val mStudentData: MutableLiveData<StudentResp> = MutableLiveData()
 
-    fun getTaskList(pagenum:String = "") {
+    fun getTaskList(pagenum:String = "",status:String = "") {
         initiateRequest(
-            { mTaskListData.value = mRepository.getTaskList( pagenum) },
+            { mTaskListData.value = mRepository.getTaskList( pagenum,status) },
             loadState
         )
     }

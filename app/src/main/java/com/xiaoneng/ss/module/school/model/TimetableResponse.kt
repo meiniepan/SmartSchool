@@ -8,5 +8,6 @@ package com.xiaoneng.ss.module.school.model
  * Time: 17:06
  */
 data class TimetableResponse(
-    var list : MutableList<TimetableBean>
+    var list : MutableList<TimetableBean>,
+    var positions : MutableList<TimetableLabelBean>
 )
