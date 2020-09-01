@@ -20,6 +20,7 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.xiaoneng.ss.model.StsTokenBean;
 
+import java.io.File;
 import java.io.FileOutputStream;
 
 /**
@@ -109,7 +110,7 @@ public class OssUtils {
                 Log.d("PutObject", "UploadSuccess");
                 Log.d("ETag", result.getETag());
                 Log.d("RequestId", result.getRequestId());
-                listener.onSuccess(filePath);
+                listener.onSuccess();
             }
 
             @Override
@@ -171,10 +172,14 @@ public class OssUtils {
                 }
 //将下载后的文件存放在指定的本地路径。
                 try {
+                    File filename = new File(filePath);
+                    if (!filename.exists()) {
+                        filename.createNewFile();
+                    }
                     FileOutputStream fout = new FileOutputStream(filePath);
                     fout.write(buffer);
                     fout.close();
-                    listener.onSuccess2(buffer);
+                    listener.onSuccess();
                 } catch (Exception e) {
                     OSSLog.logInfo(e.toString());
                 }

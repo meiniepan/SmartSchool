@@ -8,6 +8,7 @@ package com.xiaoneng.ss.account.model
  * Time: 19:54
  */
 data class LoginResponse(
+    var token: String,
     var icon: String = "",
     var uid: String= "",
     var sno: String= "",
@@ -30,6 +31,5 @@ data class LoginResponse(
     var roleid: String= "",
     var usertype: String= "",//学生1  老师2  家长3
     var parents: ArrayList<ParentBean> = ArrayList(),
-    var token: String= "",
     var domain: String= ""
 )

@@ -29,14 +29,16 @@ inline fun <reified T> mStartActivity(context: Context?, block: Intent.() -> Uni
     intent.block()
     context?.startActivity(intent)
 }
-inline fun starPhoneNum(phone:String):String {
+
+inline fun starPhoneNum(phone: String): String {
     return if (RegexUtils.isMobileSimple(phone)) {
-        phone.substring(0,3)+"****"+phone.substring(7,11)
-    }else{
+        phone.substring(0, 3) + "****" + phone.substring(7, 11)
+    } else {
         phone
     }
 }
-inline fun getDatePick(context: Activity):DateTimePicker{
+
+inline fun getDatePick(context: Activity): DateTimePicker {
     return DateTimePicker(context, DateTimePicker.HOUR_24).apply {
 //            setActionButtonTop(false)
         setDateRangeStart(2020, 1, 1)
@@ -52,7 +54,7 @@ inline fun getDatePick(context: Activity):DateTimePicker{
     }
 }
 
-inline fun mainLogin(context: Context){
+inline fun mainLogin(context: Context) {
     UserInfo.logoutSuccess()
     when (UserInfo.getUserBean().usertype) {
         "1" -> {
@@ -72,23 +74,9 @@ inline fun mainLogin(context: Context){
 
 }
 
-fun mReadTxtFile(context: Context): String? {
 
-
-
-    val filePath = context.getExternalFilesDir(null)?.absolutePath + File.separator + "a.txt"
-
-    File(filePath).appendText("Burning ")
-            return filePath
-
-}
-
-fun mDownloadFile(context: Context): String? {
-var filePath = context.getExternalFilesDir(null)?.absolutePath +File.separator + "avatar2.jpg"
-    var filename = File(filePath)
-    if (!filename.exists()) {
-        filename.createNewFile()
-    }
+inline fun mDownloadFile(context: Context, name: String): String? {
+    var filePath = context.getExternalFilesDir(null)?.absolutePath + File.separator + name
 
     return filePath
 

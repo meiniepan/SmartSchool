@@ -1,5 +1,6 @@
 package com.xiaoneng.ss.module.mine.view
 
+import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.luck.picture.lib.PictureSelector
@@ -7,18 +8,17 @@ import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.account.model.LoginResponse
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.GlideEngine
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.common.utils.oss.OssListener
 import com.xiaoneng.ss.common.utils.oss.OssUtils
-import com.xiaoneng.ss.common.utils.displayImage
-import com.xiaoneng.ss.common.utils.mDownloadFile
-import com.xiaoneng.ss.common.utils.starPhoneNum
 import com.xiaoneng.ss.model.StsTokenResp
 import com.xiaoneng.ss.module.mine.viewmodel.MineViewModel
 import kotlinx.android.synthetic.main.activity_mine_info.*
 import org.jetbrains.anko.toast
+import java.io.File
 
 /**
  * Created with Android Studio.
@@ -32,13 +32,13 @@ class MineInfoActivity : BaseLifeCycleActivity<MineViewModel>() {
     private var avatarPath: String? = ""
     val mDownloadData: MutableLiveData<Boolean> = MutableLiveData()
     var isDownLoad: Boolean = false
-    private val OBJECT_KEY = "avatar/student/id/avatar"
+
+    //    private val OBJECT_KEY = "avatar/"
     override fun getLayoutId(): Int = R.layout.activity_mine_info
 
 
     override fun initView() {
         super.initView()
-        displayImage(this, UserInfo.getUserBean().portrait, ivAvatarMineInfo)
         tvNameMineInfo.text = UserInfo.getUserBean().realname
         tvMineItem1.text = UserInfo.getUserBean().realname
         tvMineItem4.text = starPhoneNum(UserInfo.getUserBean().phone)
@@ -56,8 +56,21 @@ class MineInfoActivity : BaseLifeCycleActivity<MineViewModel>() {
     }
 
     private fun initAvatar() {
-        isDownLoad = true
-        mViewModel.getSts()
+        if (!TextUtils.isEmpty(UserInfo.getUserBean().portrait)) {
+            if (File(mDownloadFile(this, UserInfo.getUserBean().portrait)).exists()) {
+                displayImage(
+                    this@MineInfoActivity,
+                    mDownloadFile(
+                        this@MineInfoActivity,
+                        UserInfo.getUserBean().portrait
+                    ),
+                    ivAvatarMineInfo
+                )
+            } else {
+                isDownLoad = true
+                mViewModel.getSts()
+            }
+        }
     }
 
     private fun choosePic() {
@@ -91,24 +104,38 @@ class MineInfoActivity : BaseLifeCycleActivity<MineViewModel>() {
             }
         })
 
+        mViewModel.mUserInfoData.observe(this, Observer { response ->
+            response?.let {
+                showSuccess()
+                UserInfo.modifyAvatar(response.portrait)
+                toast("头像上传成功")
+                displayImage(
+                    this@MineInfoActivity, avatarPath,
+                    ivAvatarMineInfo
+                )
+            }
+        })
+
     }
 
     private fun doUpload(it: StsTokenResp) {
         showLoading()
+        var mId: String = System.currentTimeMillis().toString()
         OssUtils.asyncUploadFile(
             this@MineInfoActivity,
             it.Credentials,
-            OBJECT_KEY,
+            Constant.OBJECT_KEY + mId,
             avatarPath,
             object : OssListener {
-                override fun onSuccess(filePath: String) {
+                override fun onSuccess() {
                     mRootView.post {
-                        showSuccess()
-                        toast("头像上传成功")
-                        displayImage(
-                            this@MineInfoActivity, avatarPath,
-                            ivAvatarMineInfo
+                        mViewModel.modifyUserInfo(
+                            LoginResponse(
+                                UserInfo.getUserBean().token,
+                                portrait = mId
+                            )
                         )
+
                     }
 
                 }
@@ -119,41 +146,42 @@ class MineInfoActivity : BaseLifeCycleActivity<MineViewModel>() {
                     }
                 }
 
-                override fun onSuccess2(filePath: ByteArray?) {
-
-                }
             })
     }
 
     private fun doDownload(it: StsTokenResp) {
+
         showLoading()
         OssUtils.downloadFile(
             this@MineInfoActivity,
             it.Credentials,
-            OBJECT_KEY,
-            mDownloadFile(this),
+            Constant.OBJECT_KEY + UserInfo.getUserBean().portrait,
+            mDownloadFile(this, UserInfo.getUserBean().portrait),
             object : OssListener {
-                override fun onSuccess(filePath: String) {
-
-
-                }
 
                 override fun onFail() {
+                    showSuccess()
                     mRootView.post {
                         toast("头像下载失败")
                     }
                 }
 
-                override fun onSuccess2(filePath: ByteArray?) {
+                override fun onSuccess() {
                     mRootView.post {
                         showSuccess()
+
                         displayImage(
-                            this@MineInfoActivity, filePath,
+                            this@MineInfoActivity,
+                            mDownloadFile(
+                                this@MineInfoActivity,
+                                UserInfo.getUserBean().portrait
+                            ),
                             ivAvatarMineInfo
                         )
                     }
                 }
             })
+
     }
 
 

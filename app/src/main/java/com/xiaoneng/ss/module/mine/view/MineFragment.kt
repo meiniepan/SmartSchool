@@ -1,9 +1,11 @@
 package com.xiaoneng.ss.module.mine.view
 
+import android.text.TextUtils
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.displayImage
 import com.xiaoneng.ss.common.utils.mDownloadFile
 import com.xiaoneng.ss.common.utils.mStartActivity
@@ -14,6 +16,7 @@ import com.xiaoneng.ss.module.mine.adapter.MineAdapter
 import com.xiaoneng.ss.module.mine.viewmodel.MineViewModel
 import kotlinx.android.synthetic.main.fragment_mine.*
 import org.jetbrains.anko.toast
+import java.io.File
 
 /**
  * Created with Android Studio.
@@ -22,9 +25,9 @@ import org.jetbrains.anko.toast
  * @date: 2020/02/27
  * Time: 17:01
  */
-class MineFragment : BaseLifeCycleFragment<MineViewModel>() {
+class
+MineFragment : BaseLifeCycleFragment<MineViewModel>() {
     protected lateinit var mAdapter: MineAdapter
-    private val OBJECT_KEY = "avatar/student/id/avatar"
 
     override fun getLayoutId(): Int = R.layout.fragment_mine
 
@@ -37,7 +40,6 @@ class MineFragment : BaseLifeCycleFragment<MineViewModel>() {
 
     override fun initView() {
         super.initView()
-        displayImage(requireContext(), UserInfo.getUserBean().portrait, ivAvatarMine)
         tvNameMine.text = UserInfo.getUserBean().realname
 
         llItem1.setOnClickListener {
@@ -80,12 +82,28 @@ class MineFragment : BaseLifeCycleFragment<MineViewModel>() {
 //                )
 //            )
         }
-        initAvatar()
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        initAvatar()
+    }
     private fun initAvatar() {
-        mViewModel.getSts()
+        if (!TextUtils.isEmpty(UserInfo.getUserBean().portrait)) {
+            if (File(mDownloadFile(requireContext(), UserInfo.getUserBean().portrait)).exists()) {
+                displayImage(
+                    requireContext(),
+                    mDownloadFile(
+                        requireContext(),
+                        UserInfo.getUserBean().portrait
+                    ),
+                    ivAvatarMine
+                )
+            } else {
+                mViewModel.getSts()
+            }
+        }
     }
 
     override fun initDataObserver() {
@@ -97,29 +115,28 @@ class MineFragment : BaseLifeCycleFragment<MineViewModel>() {
     }
 
     private fun doDownload(it: StsTokenResp) {
+
         showLoading()
         OssUtils.downloadFile(
             requireContext(),
             it.Credentials,
-            OBJECT_KEY,
-            mDownloadFile(requireContext()),
+            Constant.OBJECT_KEY + UserInfo.getUserBean().portrait,
+            mDownloadFile(requireContext(), UserInfo.getUserBean().portrait),
             object : OssListener {
-                override fun onSuccess(filePath: String) {
-
-
-                }
 
                 override fun onFail() {
+                    showSuccess()
                     view?.post {
                         requireContext().toast("头像下载失败")
                     }
                 }
 
-                override fun onSuccess2(filePath: ByteArray?) {
+                override fun onSuccess() {
                     view?.post {
                         showSuccess()
                         displayImage(
-                            requireContext(), filePath,
+                            requireContext(),
+                            mDownloadFile(requireContext(), UserInfo.getUserBean().portrait),
                             ivAvatarMine
                         )
                     }

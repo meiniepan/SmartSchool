@@ -10,7 +10,10 @@ import com.xiaoneng.ss.module.school.model.PerformanceResponse
 import com.xiaoneng.ss.module.school.model.TaskResponse
 import com.xiaoneng.ss.module.school.model.TimetableResponse
 import com.xiaoneng.ss.network.response.BaseResponse
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
 
 /**
  * Created with Android Studio.
@@ -63,10 +66,16 @@ interface ApiService {
      * 学生信息修改接口
      */
     @POST("/api/v1/user/student/modify")
-    suspend fun onStuModifyInfo(
-        @Body requestBody: StudentInfoReq
+    suspend fun modifyInfoStu(
+        @Body requestBody: LoginResponse
     ): BaseResponse<LoginResponse>
-
+    /**
+     * 教师信息修改接口
+     */
+    @POST("/api/v1/user/teachers/modify")
+    suspend fun modifyInfoTea(
+        @Body requestBody: LoginResponse
+    ): BaseResponse<LoginResponse>
 
     /**
      *学生获取授权应用列表
@@ -106,14 +115,6 @@ interface ApiService {
         @Field("token") token: String
     ): BaseResponse<LoginResponse>
 
-    /**
-     * 教师信息修改接口
-     */
-    @POST("/api/v1/user/teachers/modify")
-    @FormUrlEncoded
-    suspend fun onTeaModifyInfo(
-        @FieldMap requestBody: HashMap<String, String>
-    ): BaseResponse<LoginResponse>
 
 
     /**

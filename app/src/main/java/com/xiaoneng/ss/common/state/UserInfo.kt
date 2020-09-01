@@ -20,9 +20,9 @@ import com.xiaoneng.ss.common.utils.SPreference
 object UserInfo {
 
     private var isLogin: Boolean by SPreference(Constant.LOGIN_KEY, false)
-    var emptyJson = Gson().toJson(LoginResponse())
+    var emptyJson = Gson().toJson(LoginResponse(""))
     var userInfoJson: String by SPreference(Constant.USER_INFO, emptyJson)
-    lateinit var userInfo: LoginResponse
+
 //    var token: String  = "683fa08d7b0e133c3a96859b04cc1fea"
 
     // 设置默认状态
@@ -48,11 +48,17 @@ object UserInfo {
 
     }
 
+    fun modifyAvatar(avatar: String) {
+        // 改变 sharedPreferences   isLogin值
+        var bean = getUserBean()
+        bean.portrait = avatar
+        userInfoJson = Gson().toJson(bean)
+    }
+
     fun getUserBean(): LoginResponse {
         val resultType = object : TypeToken<LoginResponse>() {}.type
         val gson = Gson()
         return gson.fromJson<LoginResponse>(userInfoJson, resultType)
-
     }
 
     fun logoutSuccess() {

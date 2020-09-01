@@ -2,6 +2,7 @@ package com.xiaoneng.ss.module.mine.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import com.xiaoneng.ss.account.model.LoginResponse
 import com.xiaoneng.ss.base.viewmodel.BaseViewModel
 import com.xiaoneng.ss.model.StsTokenBean
 import com.xiaoneng.ss.model.StsTokenResp
@@ -19,6 +20,7 @@ class MineViewModel : BaseViewModel<MineRepository>() {
     val mLogoutData: MutableLiveData<Any> = MutableLiveData()
     val mAvatarData: MutableLiveData<String> = MutableLiveData()
     val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
+    val mUserInfoData: MutableLiveData<LoginResponse> = MutableLiveData()
     fun logout() {
         initiateRequest(
             { mLogoutData.value = mRepository.logout() },
@@ -29,6 +31,13 @@ class MineViewModel : BaseViewModel<MineRepository>() {
     fun getSts() {
         initiateRequest(
             { mStsData.value = mRepository.getSts() },
+            loadState
+        )
+    }
+
+    fun modifyUserInfo(bean:LoginResponse) {
+        initiateRequest(
+            { mUserInfoData.value = mRepository.modifyUserInfo(bean) },
             loadState
         )
     }

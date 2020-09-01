@@ -12,12 +12,10 @@ object Constant {
     const val BASE_URL = " http://api.huiwencloud.com:81"
 //    const val BASE_URL = "https://www.sojson.com"
 
+    const val OBJECT_KEY = "avatar/student/id/avatar/"
     const val USERNAME_KEY = "username"
-    const val USERID_KEY = "userid"
     const val TASK_STATUS = "task_status"
     const val LOGIN_KEY = "login"
-    const val TOKEN = "token"
-    const val USER_TYPE = "user_type"
     const val USER_INFO = "user_info"
     const val TITLE = "title"
     const val ID = "id"
