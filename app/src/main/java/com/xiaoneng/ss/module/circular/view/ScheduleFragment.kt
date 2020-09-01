@@ -70,7 +70,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
         view?.post {
 
             mDataWeek.clear()
-            mDataWeek = Lunar.getCurrentDaysOfWeek(chosenDay)
+            mDataWeek.addAll(Lunar.getCurrentDaysOfWeek(chosenDay))
             mAdapterWeek = DaysOfWeekAdapter(R.layout.item_days_week, mDataWeek)
             var space = spaceView.width
             rvWeek.apply {
@@ -120,9 +120,8 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
 //                    adapter.notifyDataSetChanged()
                     chosenDay = mDataMonth[position].day
                     mDataWeek.clear()
-                    mDataWeek = Lunar.getCurrentDaysOfWeek(chosenDay)
+                    mDataWeek.addAll(Lunar.getCurrentDaysOfWeek(chosenDay))
                     mAdapterWeek.notifyDataSetChanged()
-                    tvWeekSchedule.text = Lunar.getWhichWeek(chosenDay)
                     switch()
                 }
             }

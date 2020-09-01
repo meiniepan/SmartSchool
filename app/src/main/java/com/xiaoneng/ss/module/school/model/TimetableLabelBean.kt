@@ -9,6 +9,9 @@ package com.xiaoneng.ss.module.school.model
  */
 data class TimetableLabelBean(
     var hi: String = "",
+    var name: String = "",
+    var s: String = "",
+    var e: String = "",
     var w: String = ""
 
 

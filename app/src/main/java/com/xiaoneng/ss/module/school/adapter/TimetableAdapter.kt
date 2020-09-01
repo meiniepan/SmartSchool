@@ -21,12 +21,10 @@ class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>, val 
     BaseQuickAdapter<TimetableBean, BaseViewHolder>(layoutId, listData) {
     private lateinit var mAdapter: LessonAdapter
     private lateinit var mRecycler: RecyclerView
-    var mLessonData: ArrayList<LessonBean> = ArrayList()
-    var mRealLessonData: ArrayList<LessonBean> = ArrayList()
+
 
     override fun convert(viewHolder: BaseViewHolder, item: TimetableBean) {
         viewHolder?.let { holder ->
-            holder.setText(R.id.tvNameWeek, item?.week)
 //                .setText(R.id.tvTime3,item?.noticetime)
 //
 //            holder.setText(R.id.tvAction, item?.title)
@@ -34,13 +32,15 @@ class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>, val 
             mRecycler = holder.getView(R.id.rvLesson)
             mRecycler.isNestedScrollingEnabled = false
             holder.adapterPosition
-            mRealLessonData.clear()
-            mLessonData = item.list
+
             initAdapter(item)
         }
     }
 
     private fun initAdapter(item: TimetableBean) {
+        var mLessonData: ArrayList<LessonBean> = ArrayList()
+        var mRealLessonData: ArrayList<LessonBean> = ArrayList()
+        mLessonData.addAll(item.list)
         if (total > 0 && mLessonData.size > 0) {
             var ii = 0
             for (i in 1 until total + 1) {

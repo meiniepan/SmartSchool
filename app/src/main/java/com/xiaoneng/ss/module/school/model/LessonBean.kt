@@ -23,7 +23,7 @@ data class LessonBean(
     var groupid: String = "",
     var semester: String = "",
     var campusid: String = "",
-    var campus: String = "",
+    var campus: String = "",//校区
     var level: String = "",
     var weekday: String = "",
     var weeks: String = "",

@@ -32,9 +32,9 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getTimetable(pagenum:String = "") {
+    fun getTimetable(classid:String = "") {
         initiateRequest(
-            { mTimetableData.value = mRepository.getTimetable( pagenum) },
+            { mTimetableData.value = mRepository.getTimetable( classid) },
             loadState
         )
     }

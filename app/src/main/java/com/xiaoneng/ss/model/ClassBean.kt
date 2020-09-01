@@ -11,5 +11,6 @@ data class ClassBean(
     var classid: String,
     var classname: String,
     var level: String,
+    var isChecked: Boolean = false,
     var levelname: String
 )

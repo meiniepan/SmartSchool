@@ -11,7 +11,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.base.view.BaseActivity
+import com.xiaoneng.ss.account.viewmodel.AccountViewModel
+import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.permission.PermissionResult
 import com.xiaoneng.ss.common.permission.Permissions
 import com.xiaoneng.ss.common.utils.*
@@ -23,7 +24,7 @@ import org.jetbrains.anko.toast
 import pub.devrel.easypermissions.AppSettingsDialog
 
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
     private var mExitTime: Long = 0
 
     // 委托属性   将实现委托给了 -> Preference
@@ -51,6 +52,10 @@ class MainActivity : BaseActivity() {
         initBottomNavigation()
     }
 
+    override fun initData() {
+        super.initData()
+        //        mViewModel.getAuthority()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(null)
         // 判断当前是recreate还是新启动
@@ -215,6 +220,10 @@ class MainActivity : BaseActivity() {
                 }
             }
         )
+    }
+
+    override fun initDataObserver() {
+
     }
 
 }

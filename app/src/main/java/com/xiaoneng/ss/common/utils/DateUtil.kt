@@ -79,4 +79,30 @@ object DateUtil {
                 cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
 
     }
+
+    fun getWeek(day: Int): String? {
+        return when (day) {
+            1 -> "周日"
+            2 -> "周一"
+            3 -> "周二"
+            4 -> "周三"
+            5 -> "周四"
+            6 -> "周五"
+            7 -> "周六"
+            else -> ""
+        }
+    }
+
+    fun getWeekPosition(day: Int): Int {
+        return when (day) {
+            1 -> 6
+            2 -> 0
+            3 -> 1
+            4 -> 2
+            5 -> 3
+            6 -> 4
+            7 -> 5
+            else -> 0
+        }
+    }
 }

@@ -41,7 +41,7 @@ class SplashActivity  : BaseLifeCycleActivity<AccountViewModel>() {
 
     override fun initData() {
         super.initData()
-//        mViewModel.getAuthority()
+
     }
 
     /**
@@ -59,7 +59,6 @@ class SplashActivity  : BaseLifeCycleActivity<AccountViewModel>() {
         } else {
             mStartActivity<MainActivity>(this)
         }
-        overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out)
     }
 
     override fun onStop() {

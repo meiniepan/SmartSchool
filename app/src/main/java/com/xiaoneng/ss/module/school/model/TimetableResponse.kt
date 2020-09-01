@@ -1,5 +1,8 @@
 package com.xiaoneng.ss.module.school.model
 
+import com.xiaoneng.ss.model.ClassBean
+import com.xiaoneng.ss.model.GroupBean
+
 /**
  * Created with Android Studio.
  * Description:
@@ -9,5 +12,7 @@ package com.xiaoneng.ss.module.school.model
  */
 data class TimetableResponse(
     var list : MutableList<TimetableBean>,
+    var classs : MutableList<ClassBean>,
+    var groups : MutableList<GroupBean>,
     var positions : MutableList<TimetableLabelBean>
 )

@@ -28,7 +28,7 @@ class LessonAdapter(layoutId: Int, listData: MutableList<LessonBean>) :
             }else{
                 ll.visibility = View.VISIBLE
                 holder.setText(R.id.tvNameCourse, item?.coursename)
-                    .setText(R.id.tvNameTeacherCourse,item?.teachername)
+                    .setText(R.id.tvNameTeacherCourse,item?.campus)
 
                 holder.setText(R.id.tvNameRoomCourse, item?.classroomname)
                 if (hasColor){

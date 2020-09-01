@@ -6,9 +6,38 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <com.xiaoneng.ss.custom.widgets.CustomTitleBar
-        style="@style/title_style"
-        app:title="课表" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+            style="@style/title_style"
+            />
+
+        <TextView
+            android:id="@+id/tvTitleTimetable"
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/sp_20"
+            android:textColor="@color/commonBlue"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/ic_bule_triangle"
+            android:drawablePadding="10dp"
+            android:text="班级课表"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvClassTimetable"
+        style="@style/recycler_style"
+        android:layout_width="match_parent"
+        android:background="@color/tintBac"
+        android:layout_height="50dp"
+        android:layout_marginStart="50dp"
+         />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTitleTimetable"

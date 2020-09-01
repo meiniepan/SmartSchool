@@ -1,19 +1,26 @@
 package com.xiaoneng.ss.module.school.view
 
-import android.view.MotionEvent
+import android.app.Dialog
+import android.view.*
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.DateUtil
+import com.xiaoneng.ss.common.utils.dp2px
+import com.xiaoneng.ss.model.ClassBean
 import com.xiaoneng.ss.module.school.adapter.TimetableAdapter
+import com.xiaoneng.ss.module.school.adapter.TimetableClassAdapter
 import com.xiaoneng.ss.module.school.adapter.TimetableLabelAdapter
 import com.xiaoneng.ss.module.school.adapter.TitleTimetableAdapter
 import com.xiaoneng.ss.module.school.model.TimetableBean
 import com.xiaoneng.ss.module.school.model.TimetableLabelBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import kotlinx.android.synthetic.main.activity_timetable.*
+import kotlinx.android.synthetic.main.activity_timetable.rvLabelTimetable
+import kotlinx.android.synthetic.main.activity_timetable.rvTimetable
+import kotlinx.android.synthetic.main.activity_timetable.rvTitleTimetable
+import kotlinx.android.synthetic.main.activity_timetable_master.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -24,19 +31,25 @@ import kotlin.collections.ArrayList
  * @date: 2020/02/27
  * Time: 17:01
  */
-class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+class TimetableMasterActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+    private var hasInitClass: Boolean = false
+    private var mClassPosition = 0
     lateinit var mAdapter: TimetableAdapter
+    lateinit var mAdapterClass: TimetableClassAdapter
     lateinit var mAdapterTitle: TitleTimetableAdapter
     lateinit var mAdapterLabel: TimetableLabelAdapter
     var mData = ArrayList<TimetableBean>()
-    var mDataTitle = ArrayList<TimetableBean>()
+    var mDataClass = ArrayList<ClassBean>()
     var mLabelData = ArrayList<TimetableLabelBean>()
 
-    override fun getLayoutId(): Int = R.layout.activity_timetable
+    override fun getLayoutId(): Int = R.layout.activity_timetable_master
 
 
     override fun initView() {
         super.initView()
+        tvTitleTimetable.setOnClickListener {
+            showDialog()
+        }
         initAdapterLabel()
     }
 
@@ -45,6 +58,30 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         mViewModel.getTimetable()
 
+    }
+
+    private fun initAdapterClass() {
+        mDataClass[0].isChecked = true
+        mAdapterClass = TimetableClassAdapter(R.layout.item_timetable_class, mDataClass)
+        rvClassTimetable.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = mAdapterClass
+        }
+        mAdapterClass.setOnItemClickListener { _, view, position ->
+            initClassItem(position)
+        }
+
+    }
+
+    private fun initClassItem(position: Int) {
+        if (mClassPosition != position) {
+            mClassPosition = position
+            mViewModel.getTimetable(mDataClass[position].classid)
+            for (i in mDataClass) {
+                i.isChecked = i == mDataClass[position]
+            }
+            mAdapterClass.notifyDataSetChanged()
+        }
     }
 
     private fun initAdapter() {
@@ -114,9 +151,13 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 mLabelData.addAll(it.positions)
                 mAdapterLabel.notifyDataSetChanged()
 
+                if (!hasInitClass){
+                    hasInitClass = true
+                    mDataClass.addAll(it.classs)
+                    mAdapterClass.notifyDataSetChanged()
+                }
                 //填充课表
                 mData.clear()
-
                 mData.addAll(it.list)
                 if (mData.size > 0) {
                     var i = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
@@ -131,6 +172,38 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
         })
 
+    }
+
+
+    private fun showDialog() {
+        // 底部弹出对话框
+        val bottomDialog =
+            Dialog(this, R.style.BottomDialog)
+        val contentView: View =
+            LayoutInflater.from(this).inflate(R.layout.dialog_timetable, null)
+        bottomDialog.setContentView(contentView)
+        val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
+        params.width =
+            resources.displayMetrics.widthPixels
+        params.bottomMargin = dp2px(this, 0f).toInt()
+        contentView.layoutParams = params
+        bottomDialog.window!!.setGravity(Gravity.BOTTOM)
+        bottomDialog.window!!.setWindowAnimations(R.style.BottomDialog_Animation)
+        bottomDialog.show()
+        contentView.findViewById<View>(R.id.tvAction1TimeDialog)
+            .setOnClickListener { v: View? ->
+                tvTitleTimetable.text = "班级课表"
+                bottomDialog.dismiss()
+            }
+        contentView.findViewById<View>(R.id.tvAction2TimeDialog)
+            .setOnClickListener { v: View? ->
+                tvTitleTimetable.text = "科任课表"
+                bottomDialog.dismiss()
+            }
+        contentView.findViewById<View>(R.id.tvAction3TimeDialog)
+            .setOnClickListener { v: View? ->
+                bottomDialog.dismiss()
+            }
     }
 
 }
