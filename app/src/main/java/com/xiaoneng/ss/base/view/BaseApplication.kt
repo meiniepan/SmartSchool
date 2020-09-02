@@ -1,6 +1,7 @@
 package com.xiaoneng.ss.base.view
 
 import android.app.Application
+import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import com.kingja.loadsir.core.LoadSir
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -21,6 +22,9 @@ import com.xiaoneng.ss.common.utils.SPreference
  * Time: 14:27
  */
 open class BaseApplication : Application() {
+    val context: Context by lazy {
+        instance.applicationContext
+    }
     companion object {
         lateinit var instance : BaseApplication
     }

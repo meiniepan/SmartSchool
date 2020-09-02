@@ -16,6 +16,7 @@ object Constant {
     const val USERNAME_KEY = "username"
     const val TASK_STATUS = "task_status"
     const val LOGIN_KEY = "login"
+    const val IS_MASTER = "is_master"
     const val USER_INFO = "user_info"
     const val TITLE = "title"
     const val ID = "id"

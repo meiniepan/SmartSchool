@@ -1,20 +1,26 @@
 package com.xiaoneng.ss.module.circular.view
 
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.circular.adapter.DaysOfMonthAdapter
 import com.xiaoneng.ss.module.circular.adapter.DaysOfWeekAdapter
 import com.xiaoneng.ss.module.circular.adapter.EventAdapter
+import com.xiaoneng.ss.module.circular.adapter.WeekTitleAdapter
 import com.xiaoneng.ss.module.circular.model.DayBean
-import com.xiaoneng.ss.module.circular.model.NoticeBean
+import com.xiaoneng.ss.module.circular.model.ScheduleBean
+import com.xiaoneng.ss.module.circular.model.ScheduleDayResponse
+import com.xiaoneng.ss.module.circular.model.ScheduleResponse
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import kotlinx.android.synthetic.main.fragment_schedule.*
+
 
 /**
  * Created with Android Studio.
@@ -24,14 +30,16 @@ import kotlinx.android.synthetic.main.fragment_schedule.*
  * Time: 17:01
  */
 class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
-    private var chosenDay: Long? = 0L
+    private var chosenDay: Long? = System.currentTimeMillis()
     lateinit var mAdapterWeek: DaysOfWeekAdapter
     lateinit var mAdapterMonth: DaysOfMonthAdapter
     lateinit var mAdapterEvent: EventAdapter
     var isDayOfWeek = true
+    var hasInitMonth = false
+    var mDataWeekTitle = ArrayList<String>()
     var mDataWeek = ArrayList<DayBean>()
     var mDataMonth = ArrayList<DayBean>()
-    var mDataEvent = ArrayList<NoticeBean>()
+    var mDataEvent = ArrayList<ScheduleBean>()
     override fun getLayoutId(): Int = R.layout.fragment_schedule
 
     companion object {
@@ -50,20 +58,43 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
         ivAddEvent.setOnClickListener {
             addEvent()
         }
+        initAdapterWeekTitle()
         initAdapterDayOfWeek()
         initAdapterDayOfMonth()
         initAdapterEvent()
     }
 
     private fun addEvent() {
-        mStartActivity<AddScheduleActivity>(requireContext())
+        mStartActivity<AddScheduleActivity>(requireContext()) {
+            putExtra(Constant.DATA, chosenDay)
+        }
     }
 
-    override fun initData() {
-        super.initData()
-        mDataEvent.add(NoticeBean(""))
-        mDataEvent.add(NoticeBean(""))
-        mAdapterEvent.notifyDataSetChanged()
+
+    override fun onResume() {
+        super.onResume()
+        getData()
+    }
+
+    private fun getData() {
+        showLoading()
+        mViewModel.querySchedule(DateUtil.formatDateCustomDay(chosenDay!!))
+    }
+
+    private fun initAdapterWeekTitle() {
+
+        mDataWeekTitle.add("周日")
+        mDataWeekTitle.add("周一")
+        mDataWeekTitle.add("周二")
+        mDataWeekTitle.add("周三")
+        mDataWeekTitle.add("周四")
+        mDataWeekTitle.add("周五")
+        mDataWeekTitle.add("周六")
+        rvWeekTitle.apply {
+            layoutManager = GridLayoutManager(context, 7)
+            adapter = WeekTitleAdapter(R.layout.item_week_title, mDataWeekTitle)
+        }
+
     }
 
     private fun initAdapterDayOfWeek() {
@@ -72,44 +103,30 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
             mDataWeek.clear()
             mDataWeek.addAll(Lunar.getCurrentDaysOfWeek(chosenDay))
             mAdapterWeek = DaysOfWeekAdapter(R.layout.item_days_week, mDataWeek)
-            var space = spaceView.width
             rvWeek.apply {
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                addItemDecoration(
-                    RecycleViewDivider(
-                        space.toInt(),
-                        context.resources.getColor(R.color.transparent)
-                    )
-                )
+                layoutManager = GridLayoutManager(context, 7)
                 adapter = mAdapterWeek
             }
             mAdapterWeek.setOnItemClickListener { adapter, view, position ->
+                chosenDay = mDataWeek[position].day
                 for (i in 0 until mDataWeek.size) {
                     mDataWeek[i].isCheck = i == position
                 }
                 adapter.notifyDataSetChanged()
+                getData()
             }
         }
     }
 
     private fun initAdapterDayOfMonth() {
         view?.post {
-            mDataMonth.clear()
-            mDataMonth = Lunar.getCurrentDaysOfMonth()
+
+
             mAdapterMonth = DaysOfMonthAdapter(R.layout.item_days_week, mDataMonth)
-            var spaceH = spaceView.width
-            var params = rvMonth.layoutParams as ViewGroup.MarginLayoutParams
-            params.marginEnd = -spaceH
-            rvMonth.layoutParams = params
+
             rvMonth.apply {
                 layoutManager = GridLayoutManager(context, 7)
-                addItemDecoration(
-                    RecycleViewDivider(
-                        spaceH.toInt(),
-                        context.resources.getColor(R.color.transparent),
-                        0
-                    )
-                )
+
                 adapter = mAdapterMonth
             }
             mAdapterMonth.setOnItemClickListener { adapter, view, position ->
@@ -123,6 +140,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
                     mDataWeek.addAll(Lunar.getCurrentDaysOfWeek(chosenDay))
                     mAdapterWeek.notifyDataSetChanged()
                     switch()
+                    getData()
                 }
             }
         }
@@ -143,14 +161,18 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
         }
         mAdapterEvent.setOnItemClickListener { adapter, view, position ->
             mStartActivity<ScheduleDetailActivity>(context) {
-                putExtra(Constant.TITLE, mDataEvent[position].title)
-                putExtra(Constant.ID, mDataEvent[position].id)
+                putExtra(Constant.DATA, mDataEvent[position])
             }
         }
     }
 
     private fun switch() {
         isDayOfWeek = if (isDayOfWeek) {
+            mViewModel.queryScheduleMonth(
+                DateUtil.formatDateCustomDay(chosenDay!!),
+                DateUtil.formatDateCustomMonth(chosenDay!!)
+            )
+            showLoading()
             rvWeek.visibility = View.GONE
             rvMonth.visibility = View.VISIBLE
             tvWeekSchedule.text = DateUtil.getWhichMonth()
@@ -165,11 +187,36 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
     }
 
     override fun initDataObserver() {
-//        mViewModel.mSystemTabNameData.observe(this, Observer { response ->
-//            response?.let {
-//                setSystemTabData(it)
-//            }
-//        })
+        mViewModel.mScheduleData.observe(this, Observer { response ->
+            response?.let {
+                showSuccess()
+                val gson: Gson = GsonBuilder().enableComplexMapKeySerialization().create()
+                val jsonString = gson.toJson(it)
+                gson.fromJson(jsonString, ScheduleResponse::class.java)?.let {
+
+                    mDataEvent.clear()
+                    mDataEvent.addAll(it.data)
+                        mAdapterEvent.notifyDataSetChanged()
+//                    showEmpty()
+
+                }
+            }
+        })
+        mViewModel.mScheduleMonthData.observe(this, Observer { response ->
+            response?.let {
+                showSuccess()
+                val gson: Gson = GsonBuilder().enableComplexMapKeySerialization().create()
+                val jsonString = gson.toJson(it)
+                var rep = gson.fromJson(jsonString, ScheduleDayResponse::class.java)
+                rep?.let {
+
+                    mDataMonth.clear()
+                    mDataMonth.addAll(Lunar.getCurrentDaysOfMonth(it.data))
+                    mAdapterMonth.notifyDataSetChanged()
+
+                }
+            }
+        })
     }
 
 

@@ -6,6 +6,7 @@ import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.module.circular.model.NoticeDetailBean
 import com.xiaoneng.ss.module.circular.model.NoticeResponse
+import com.xiaoneng.ss.module.circular.model.ScheduleBean
 import com.xiaoneng.ss.network.dataConvert
 
 /**
@@ -66,24 +67,96 @@ class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository(
         }
     }
 
-    suspend fun read(id: String,status:String): Any {
+    suspend fun read(id: String, status: String): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.readNotice(UserInfo.getUserBean().token, id,status = status)
+                apiService.readNotice(UserInfo.getUserBean().token, id, status = status)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.readNotice2(UserInfo.getUserBean().token, id,status = status)
+                apiService.readNotice2(UserInfo.getUserBean().token, id, status = status)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.readNotice2(UserInfo.getUserBean().token, id,status = status)
+                apiService.readNotice2(UserInfo.getUserBean().token, id, status = status)
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.readNotice(UserInfo.getUserBean().token, id,status = status)
+                apiService.readNotice(UserInfo.getUserBean().token, id, status = status)
+                    .dataConvert(loadState)
+
+            }
+        }
+    }
+
+    suspend fun querySchedule(day: String, month: String): Any {
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.querySchedule(UserInfo.getUserBean().token, day, month = month)
+                    .dataConvert(loadState)
+            }
+            "2" -> {
+                apiService.querySchedule2(UserInfo.getUserBean().token, day, month = month)
+                    .dataConvert(loadState)
+
+            }
+            "99" -> {
+                apiService.querySchedule2(UserInfo.getUserBean().token, day, month = month)
+                    .dataConvert(loadState)
+
+            }
+            else -> {
+                apiService.querySchedule(UserInfo.getUserBean().token, day, month = month)
+                    .dataConvert(loadState)
+
+            }
+        }
+    }
+
+    suspend fun addSchedule(bean: ScheduleBean): Any {
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.addSchedule(bean)
+                    .dataConvert(loadState)
+            }
+            "2" -> {
+                apiService.addSchedule2(bean)
+                    .dataConvert(loadState)
+
+            }
+            "99" -> {
+                apiService.addSchedule2(bean)
+                    .dataConvert(loadState)
+
+            }
+            else -> {
+                apiService.addSchedule(bean)
+                    .dataConvert(loadState)
+
+            }
+        }
+    }
+
+    suspend fun modifySchedule(bean: ScheduleBean): Any {
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.modifySchedule(bean)
+                    .dataConvert(loadState)
+            }
+            "2" -> {
+                apiService.modifySchedule2(bean)
+                    .dataConvert(loadState)
+
+            }
+            "99" -> {
+                apiService.modifySchedule2(bean)
+                    .dataConvert(loadState)
+
+            }
+            else -> {
+                apiService.modifySchedule(bean)
                     .dataConvert(loadState)
 
             }

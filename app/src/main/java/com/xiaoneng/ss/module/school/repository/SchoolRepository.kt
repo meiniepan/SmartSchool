@@ -20,24 +20,40 @@ import com.xiaoneng.ss.network.dataConvert
  */
 class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() {
 
-    suspend fun getTaskList(pagenum: String,status: String): TaskResponse {
+    suspend fun getTaskList(pagenum: String, status: String): TaskResponse {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.getTaskList(UserInfo.getUserBean().token, pagenum = pagenum,status = status)
+                apiService.getTaskList(
+                    UserInfo.getUserBean().token,
+                    pagenum = pagenum,
+                    status = status
+                )
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getTaskList2(UserInfo.getUserBean().token, pagenum = pagenum,status = status)
+                apiService.getTaskList2(
+                    UserInfo.getUserBean().token,
+                    pagenum = pagenum,
+                    status = status
+                )
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.getTaskList2(UserInfo.getUserBean().token, pagenum = pagenum,status = status)
+                apiService.getTaskList2(
+                    UserInfo.getUserBean().token,
+                    pagenum = pagenum,
+                    status = status
+                )
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.getTaskList(UserInfo.getUserBean().token, pagenum = pagenum,status = status)
+                apiService.getTaskList(
+                    UserInfo.getUserBean().token,
+                    pagenum = pagenum,
+                    status = status
+                )
                     .dataConvert(loadState)
 
             }
@@ -51,12 +67,12 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getTimetable2(UserInfo.getUserBean().token,classid = classid)
+                apiService.getTimetable2(UserInfo.getUserBean().token)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.getTimetable2(UserInfo.getUserBean().token)
+                apiService.getTimetableMaster(UserInfo.getUserBean().token, classid = classid)
                     .dataConvert(loadState)
 
             }
@@ -68,6 +84,11 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
         }
 
+    }
+
+    suspend fun getTimetableT(): TimetableResponse {
+        return apiService.getTimetable2(UserInfo.getUserBean().token)
+            .dataConvert(loadState)
     }
 
     suspend fun getPerformance(crid: String): PerformanceResponse {
@@ -117,8 +138,8 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
     }
 
     suspend fun queryStudent(key: String): StudentResp {
-           return apiService.queryStudent(UserInfo.getUserBean().token, key)
-                .dataConvert(loadState)
+        return apiService.queryStudent(UserInfo.getUserBean().token, key)
+            .dataConvert(loadState)
     }
 
 }

@@ -12,6 +12,7 @@
         android:gravity="center_vertical">
 
         <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+            app:title="课表"
             style="@style/title_style"
             />
 
@@ -24,6 +25,8 @@
             android:drawableRight="@drawable/ic_bule_triangle"
             android:drawablePadding="10dp"
             android:text="班级课表"
+            android:visibility="gone"
+            android:background="@color/white"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             />
@@ -36,6 +39,7 @@
         android:layout_width="match_parent"
         android:background="@color/tintBac"
         android:layout_height="50dp"
+        android:visibility="gone"
         android:layout_marginStart="50dp"
          />
 

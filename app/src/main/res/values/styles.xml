@@ -18,6 +18,8 @@
         <item name="android:screenOrientation">portrait</item>
         <item name="android:windowAnimationStyle">@style/anim_fade</item>
         <item name="android:windowSoftInputMode">adjustPan</item>
+        <item name="android:windowEnableSplitTouch">false</item>
+        <item name="android:splitMotionEvents">false</item>
     </style>
 
     <style name="SingleTouchActivity" parent="AnimActivity">

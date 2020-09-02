@@ -10,8 +10,9 @@ package com.xiaoneng.ss.module.circular.model
 data class DayBean(
     var day: Long? = 0L,
     var dayOfSun: String? = "",
-    var dayOfLunar: String?= "",
-    var isCheck: Boolean= false,
-    var inMonth: Boolean= false
+    var dayOfLunar: String? = "",
+    var isCheck: Boolean = false,
+    var inMonth: Boolean = false,
+    var eventList: MutableList<ScheduleBean> = ArrayList()
 
-)
+    )

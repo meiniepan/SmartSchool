@@ -17,12 +17,13 @@
             app:title="添加" />
 
         <TextView
+            android:id="@+id/tvActionTitle"
             android:layout_width="57dp"
             android:layout_height="28dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/title_padding"
-            android:background="@drawable/bac_blue_bac_14"
+            android:background="@drawable/bac_blue_bac_5"
             android:gravity="center"
             android:text="确定"
             android:textColor="@color/white" />
@@ -52,6 +53,7 @@
             android:paddingBottom="20dp">
 
             <EditText
+                android:id="@+id/etThemeAddSchedule"
                 style="@style/edit_style"
                 android:hint="请输入您的主题" />
 
@@ -86,7 +88,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="136dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/title_padding"
             android:layout_marginTop="14dp"
             android:layout_marginEnd="@dimen/title_padding"
@@ -95,7 +97,7 @@
             android:paddingStart="28dp"
             android:paddingTop="20dp"
             android:paddingEnd="28dp"
-            android:paddingBottom="20dp">
+            android:paddingBottom="0dp">
 
 
             <TextView
@@ -107,8 +109,11 @@
 
             <EditText
                 style="@style/edit_style"
+                android:id="@+id/etRemarkAddSchedule"
+                android:paddingTop="5dp"
+                android:paddingBottom="20dp"
+                android:hint="请输入备注"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
                 android:gravity="start" />
         </LinearLayout>
 

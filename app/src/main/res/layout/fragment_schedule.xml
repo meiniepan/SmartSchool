@@ -3,9 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/tintBac">
-<androidx.core.widget.NestedScrollView
-    style="@style/nes_scroll_style"
-    >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -51,93 +49,15 @@
                     android:src="@drawable/ic_switch" />
             </LinearLayout>
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvWeekTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:overScrollMode="never"
                 android:layout_marginTop="12dp"
-                android:orientation="horizontal">
+                />
 
-                <TextView
-                    android:layout_width="25dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:hint="周日"
-                    android:textSize="@dimen/sp_10" />
 
-                <Space
-                    android:id="@+id/spaceView"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:layout_width="25dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:hint="周一"
-                    android:textSize="@dimen/sp_10" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:layout_width="25dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:hint="周二"
-                    android:textSize="@dimen/sp_10" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:layout_width="25dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:hint="周三"
-                    android:textSize="@dimen/sp_10" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:layout_width="25dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:hint="周四"
-                    android:textSize="@dimen/sp_10" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:layout_width="25dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:hint="周五"
-                    android:textSize="@dimen/sp_10" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:layout_width="25dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:hint="周六"
-                    android:textSize="@dimen/sp_10" />
-
-            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvWeek"
@@ -163,7 +83,6 @@
 
 
     </LinearLayout>
-</androidx.core.widget.NestedScrollView>
     <ImageView
         android:id="@+id/ivAddEvent"
         android:layout_width="50dp"

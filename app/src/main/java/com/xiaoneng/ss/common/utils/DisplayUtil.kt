@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
+import com.xiaoneng.ss.base.view.BaseApplication
 
 /**
  * Created with Android Studio.
@@ -19,8 +20,13 @@ import android.widget.TextView
  * @param dp
  * @return
  */
-fun dp2px(context: Context, dp: Float): Float {
+fun dp2px(context: Context = BaseApplication.instance.context, dp: Float): Float {
     val density = context.resources.displayMetrics.density
+    return (dp * density + 0.5).toFloat()
+}
+
+fun dp2px(dp: Float): Float {
+    val density = BaseApplication.instance.context.resources.displayMetrics.density
     return (dp * density + 0.5).toFloat()
 }
 

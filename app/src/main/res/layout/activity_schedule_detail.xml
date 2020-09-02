@@ -6,42 +6,44 @@
     android:background="@color/white"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
-    <com.xiaoneng.ss.custom.widgets.CustomTitleBar
-        android:id="@+id/ctbDetailSchedule"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_centerInParent="true"
-        >
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            />
-        <ImageView
-            android:id="@+id/ivAction1Schedule"
-            android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+            android:id="@+id/ctbDetailSchedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="6dp"
-            android:src="@drawable/ic_edit"
-            />
-        <ImageView
-            android:id="@+id/ivAction2Schedule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/title_padding"
-            android:src="@drawable/ic_delete"
-            />
-    </LinearLayout>
-</RelativeLayout>
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/ivAction1Schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_edit" />
+
+            <ImageView
+                android:id="@+id/ivAction2Schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/title_padding"
+                android:src="@drawable/ic_delete" />
+        </LinearLayout>
+    </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
@@ -50,6 +52,7 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"
+        android:background="@color/tintBac"
         android:layout_height="match_parent"
         android:overScrollMode="never"
         android:scrollbars="none">
@@ -58,6 +61,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <TextView
@@ -71,8 +75,9 @@
 
             <TextView
                 android:id="@+id/tvBeginTimeSchedule"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingEnd="25dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="13dp"
                 android:drawableLeft="@drawable/ic_begin"
@@ -80,9 +85,10 @@
 
             <TextView
                 android:id="@+id/tvStopTimeSchedule"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
+                android:paddingEnd="25dp"
                 android:layout_marginTop="13dp"
                 android:layout_marginBottom="20dp"
                 android:drawableLeft="@drawable/ic_stop"
@@ -94,19 +100,16 @@
                 android:background="@color/tintBac" />
 
 
-
-
-                    <TextView
-                        android:id="@+id/tvDetailSchedule"
-                        android:layout_width="match_parent"
-                        android:paddingStart="@dimen/title_padding"
-                        android:paddingEnd="@dimen/title_padding"
-                        android:paddingTop="20dp"
-                        android:paddingBottom="20dp"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:text="添加日志"
-                         />
+            <EditText
+                android:id="@+id/etDetailSchedule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingStart="@dimen/title_padding"
+                android:paddingTop="20dp"
+                android:paddingEnd="@dimen/title_padding"
+                android:paddingBottom="20dp"
+                android:text="" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

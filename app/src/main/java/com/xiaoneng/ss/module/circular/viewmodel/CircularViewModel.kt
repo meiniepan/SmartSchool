@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.base.viewmodel.BaseViewModel
 import com.xiaoneng.ss.module.circular.model.NoticeDetailBean
 import com.xiaoneng.ss.module.circular.model.NoticeResponse
+import com.xiaoneng.ss.module.circular.model.ScheduleBean
 import com.xiaoneng.ss.module.circular.repository.CircularRepository
 import com.xiaoneng.ss.network.initiateRequest
 
@@ -19,6 +20,9 @@ class CircularViewModel : BaseViewModel<CircularRepository>() {
     val mNoticeData: MutableLiveData<NoticeResponse> = MutableLiveData()
     val mNoticeDetail: MutableLiveData<NoticeDetailBean> = MutableLiveData()
     val mReadData: MutableLiveData<Any> = MutableLiveData()
+    val mScheduleData: MutableLiveData<Any> = MutableLiveData()
+    val mScheduleMonthData: MutableLiveData<Any> = MutableLiveData()
+    val mAddScheduleData: MutableLiveData<Any> = MutableLiveData()
 
     fun getNoticeList(page: String = "", pagenum: String = "") {
         initiateRequest(
@@ -34,9 +38,37 @@ class CircularViewModel : BaseViewModel<CircularRepository>() {
         )
     }
 
-    fun read(id: String,status:String) {
+    fun read(id: String, status: String) {
         initiateRequest(
-            { mReadData.value = mRepository.read(id,status) },
+            { mReadData.value = mRepository.read(id, status) },
+            loadState
+        )
+    }
+
+    fun querySchedule(day: String, months: String = "") {
+        initiateRequest(
+            { mScheduleData.value = mRepository.querySchedule(day, months) },
+            loadState
+        )
+    }
+
+    fun queryScheduleMonth(day: String, months: String = "") {
+        initiateRequest(
+            { mScheduleMonthData.value = mRepository.querySchedule(day, months) },
+            loadState
+        )
+    }
+
+    fun addSchedule(bean: ScheduleBean) {
+        initiateRequest(
+            { mAddScheduleData.value = mRepository.addSchedule(bean) },
+            loadState
+        )
+    }
+
+    fun modifySchedule(bean: ScheduleBean) {
+        initiateRequest(
+            { mAddScheduleData.value = mRepository.modifySchedule(bean) },
             loadState
         )
     }

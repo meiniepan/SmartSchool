@@ -1,20 +1,23 @@
 package com.xiaoneng.ss.module.circular.view
 
 import android.app.Dialog
+import android.text.TextUtils
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import cn.addapp.pickers.picker.DateTimePicker
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.utils.ColorUtil
-import com.xiaoneng.ss.common.utils.dp2px
-import com.xiaoneng.ss.common.utils.getDatePick
+import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.circular.adapter.ChooseColorAdapter
+import com.xiaoneng.ss.module.circular.model.ScheduleBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import kotlinx.android.synthetic.main.activity_add_schedule.*
+import org.jetbrains.anko.toast
 
 /**
  * Created with Android Studio.
@@ -24,8 +27,11 @@ import kotlinx.android.synthetic.main.activity_add_schedule.*
  * Time: 17:01
  */
 class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
-    private  var chosenColor: String = ""
+    private var chosenColor: String = "#5E37FF"
     lateinit var mAdapter: ChooseColorAdapter
+    var time:Long = 0L
+    var beginTime:String = ""
+    var endTime:String = ""
     val mData by lazy { ColorUtil.getCustomColors() }
 
     private val pick: DateTimePicker by lazy {
@@ -37,6 +43,14 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
 
     override fun initView() {
         super.initView()
+        time = intent.getLongExtra(Constant.DATA,System.currentTimeMillis())
+        tvBeginAddSchedule.text = DateUtil.getNearTimeBegin(time)
+        tvStopAddSchedule.text = DateUtil.getNearTimeEnd(time)
+        beginTime = DateUtil.getNearTimeBeginYear(time)
+        endTime = DateUtil.getNearTimeEndYear(time)
+        tvActionTitle.setOnClickListener {
+            addSchedule()
+        }
         tvBeginAddSchedule.setOnClickListener {
             showBegin()
         }
@@ -44,6 +58,26 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
             showStop()
         }
         initAdapter()
+    }
+
+    private fun addSchedule() {
+        if (
+            TextUtils.isEmpty(etThemeAddSchedule.text.toString()) ||
+            TextUtils.isEmpty(tvBeginAddSchedule.text.toString())
+
+        ) {
+            toast("请完善信息")
+            return
+        }
+        var bean: ScheduleBean = ScheduleBean()
+        bean.token = UserInfo.getUserBean().token
+        bean.title = etThemeAddSchedule.text.toString()
+        bean.scheduletime = beginTime
+        bean.scheduleover = endTime
+        bean.remark = etRemarkAddSchedule.text.toString()
+        bean.color = chosenColor
+        showLoading()
+        mViewModel.addSchedule(bean)
     }
 
     private fun initAdapter() {
@@ -55,8 +89,8 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
             adapter = mAdapter
         }
         mAdapter.setOnItemClickListener { adapter, view, position ->
-            for (i in mData){
-                if (i.isCheck){
+            for (i in mData) {
+                if (i.isCheck) {
                     i.isCheck = false
                 }
                 mData[position].isCheck = true
@@ -75,7 +109,8 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 hour: String?,
                 minute: String?
             ) {
-                var time = "$year-$month-$day $hour:$minute"
+                var time = "${month}月${day}日 $hour:$minute"
+                beginTime = "${year}年${month}月${day}日 $hour:$minute"
                 tvBeginAddSchedule.text = time
             }
 
@@ -93,7 +128,8 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 hour: String?,
                 minute: String?
             ) {
-                var time = "$year-$month-$day $hour:$minute"
+                var time = "${month}月${day}日 $hour:$minute"
+                endTime = "${year}年${month}月${day}日 $hour:$minute"
                 tvStopAddSchedule.text = time
             }
 
@@ -110,17 +146,13 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
 
 
     override fun initDataObserver() {
-//        mViewModel.mNoticeData.observe(this, Observer { response ->
-//            response?.let {
-//                mData.clear()
-//                mData.addAll(it.data)
-//                if (mData.size > 0) {
-//                    mAdapter.notifyDataSetChanged()
-//                } else {
-//                    showEmpty()
-//                }
-//            }
-//        })
+        mViewModel.mAddScheduleData.observe(this, Observer { response ->
+            response?.let {
+                showSuccess()
+                toast("添加成功")
+                finish()
+            }
+        })
 
     }
 

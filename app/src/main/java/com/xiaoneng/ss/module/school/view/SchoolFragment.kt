@@ -31,7 +31,9 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
             mStartActivity<TaskActivity>(context)
         }
         llTimeTable.setOnClickListener {
-            mStartActivity<TimetableActivity>(context)
+
+            mStartActivity<TimetableMasterActivity>(context)
+
         }
         llAttendance.setOnClickListener {
             mStartActivity<AttendanceStuActivity>(context)

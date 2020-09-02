@@ -78,8 +78,6 @@
         <activity android:name=".module.mine.view.SwitchIdActivity" />
         <activity android:name=".module.mine.view.BindParentActivity" />
         <activity android:name=".module.mine.view.SysSettingActivity" />
-        <activity android:name=".module.school.view.TimetableActivity"
-            android:theme="@style/SingleTouchActivity"/>
         <activity android:name=".module.school.view.AddTaskActivity" />
         <activity android:name=".module.school.view.TaskDetailActivity" />
         <activity android:name=".module.school.view.RejectActivity" />

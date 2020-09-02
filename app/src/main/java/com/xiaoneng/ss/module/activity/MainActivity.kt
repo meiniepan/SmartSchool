@@ -16,6 +16,7 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.permission.PermissionResult
 import com.xiaoneng.ss.common.permission.Permissions
 import com.xiaoneng.ss.common.utils.*
+import com.xiaoneng.ss.module.circular.`interface`.HomeScrollListener
 import com.xiaoneng.ss.module.circular.view.CircularFragment
 import com.xiaoneng.ss.module.mine.view.MineFragment
 import com.xiaoneng.ss.module.school.view.SchoolFragment
@@ -145,7 +146,11 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
         var fragment: Fragment? = mFragmentSparseArray.get(index)
         if (fragment == null) {
             when (index) {
-                Constant.HOME -> fragment = CircularFragment.getInstance()
+                Constant.HOME -> fragment = CircularFragment.getInstance(object:HomeScrollListener{
+                    override fun showBottom() {
+
+                    }
+                })
                 Constant.SCHOOL -> fragment = SchoolFragment.getInstance()
                 Constant.MINE -> fragment = MineFragment.getInstance()
             }

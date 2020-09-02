@@ -81,3 +81,9 @@ inline fun mDownloadFile(context: Context, name: String): String? {
     return filePath
 
 }
+
+inline fun getCornerRadii(leftTop:Float,rightTop:Float,
+                           leftBottom:Float,rightBottom:Float):FloatArray{
+    //这里返回的一个浮点型的数组，一定要有8个元素，不然会报错
+    return floatArrayOf(dp2px(leftTop), dp2px(leftTop), dp2px(rightTop),dp2px(rightTop),dp2px(rightBottom), dp2px(rightBottom),dp2px(leftBottom),dp2px(leftBottom))
+}

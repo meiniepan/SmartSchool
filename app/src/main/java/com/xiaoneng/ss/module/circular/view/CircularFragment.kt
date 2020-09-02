@@ -7,6 +7,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.module.circular.`interface`.HomeScrollListener
 import com.xiaoneng.ss.module.circular.adapter.FragmentCircularAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
@@ -22,12 +23,13 @@ import kotlinx.android.synthetic.main.fragment_circular.*
 class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
     lateinit var fragmentAdapter: FragmentCircularAdapter
     var fragmentList = ArrayList<Fragment>()
-    var mData=ArrayList<NoticeBean>()
-
+    var mData = ArrayList<NoticeBean>()
     override fun getLayoutId(): Int = R.layout.fragment_circular
 
     companion object {
-        fun getInstance(): CircularFragment? {
+        lateinit var mListener: HomeScrollListener
+        fun getInstance(listener: HomeScrollListener): CircularFragment? {
+            mListener = listener
             return CircularFragment()
         }
 
@@ -37,9 +39,9 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
         super.initView()
         initViewPager()
         initTab()
-        flSysMsg.setOnClickListener{
-            mStartActivity<SystemMsgListActivity>(context){
-                putExtra(Constant.DATA,mData)
+        flSysMsg.setOnClickListener {
+            mStartActivity<SystemMsgListActivity>(context) {
+                putExtra(Constant.DATA, mData)
             }
         }
     }
@@ -91,6 +93,7 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
             }
 
             override fun onPageSelected(position: Int) {
+                mListener.showBottom()
                 if (position == 0) {
                     checkFirsTab()
                 } else if (position == 1) {
@@ -105,7 +108,7 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
             response?.let {
                 showSuccess()
                 mData.clear()
-                for (i in it.data){
+                for (i in it.data) {
                     if (i.type == "system")
                         mData.add(i)
                 }

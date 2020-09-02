@@ -62,6 +62,98 @@ object DateUtil {
     }
 
     @SuppressLint("SimpleDateFormat")
+    fun formatDateCustomDay(date: Long): String {
+        val sdf = SimpleDateFormat("yyyyMMdd")
+        return sdf.format(Date(date))
+
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getNearTimeBegin(date: Long = System.currentTimeMillis()): String {
+        val s1 = SimpleDateFormat("MM")
+        val s2 = SimpleDateFormat("dd")
+        var s3 = SimpleDateFormat("HH")
+        var s4 = SimpleDateFormat("mm")
+        val MM = s1.format(Date(date))
+        val dd = s2.format(Date(date))
+        var hh = s3.format(Date(date))
+        var mm = s4.format(Date(date))
+        if (mm.toInt() < 30) {
+            mm = "30"
+        } else if (mm.toInt() > 30) {
+            mm = "00"
+            hh = (hh.toInt() + 1).toString()
+        }
+        return MM + "月" + dd + "日 " + hh + ":" + mm
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getNearTimeBeginYear(date: Long = System.currentTimeMillis()): String {
+        val s1 = SimpleDateFormat("yyyy-MM")
+        val s2 = SimpleDateFormat("dd")
+        var s3 = SimpleDateFormat("HH")
+        var s4 = SimpleDateFormat("mm")
+        val MM = s1.format(Date(date))
+        val dd = s2.format(Date(date))
+        var hh = s3.format(Date(date))
+        var mm = s4.format(Date(date))
+        if (mm.toInt() < 30) {
+            mm = "30"
+        } else if (mm.toInt() > 30) {
+            mm = "00"
+            hh = (hh.toInt() + 1).toString()
+        }
+        return "$MM-$dd $hh:$mm"
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getNearTimeEnd(date: Long = System.currentTimeMillis()): String {
+        val s1 = SimpleDateFormat("MM")
+        val s2 = SimpleDateFormat("dd")
+        var s3 = SimpleDateFormat("HH")
+        var s4 = SimpleDateFormat("mm")
+        val MM = s1.format(Date(date))
+        val dd = s2.format(Date(date))
+        var hh = s3.format(Date(date))
+        var mm = s4.format(Date(date))
+        if (mm.toInt() < 30) {
+            mm = "00"
+            hh = (hh.toInt() + 1).toString()
+        } else if (mm.toInt() > 30) {
+            mm = "30"
+            hh = (hh.toInt() + 1).toString()
+        }
+        return MM + "月" + dd + "日 " + hh + ":" + mm
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getNearTimeEndYear(date: Long = System.currentTimeMillis()): String {
+        val s1 = SimpleDateFormat("yyyy-MM")
+        val s2 = SimpleDateFormat("dd")
+        var s3 = SimpleDateFormat("HH")
+        var s4 = SimpleDateFormat("mm")
+        val MM = s1.format(Date(date))
+        val dd = s2.format(Date(date))
+        var hh = s3.format(Date(date))
+        var mm = s4.format(Date(date))
+        if (mm.toInt() < 30) {
+            mm = "00"
+            hh = (hh.toInt() + 1).toString()
+        } else if (mm.toInt() > 30) {
+            mm = "30"
+            hh = (hh.toInt() + 1).toString()
+        }
+        return MM + "-" + dd + " " + hh + ":" + mm
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun formatDateCustomMonth(date: Long): String {
+        val sdf = SimpleDateFormat("yyyyMM")
+        return sdf.format(Date(date))
+
+    }
+
+    @SuppressLint("SimpleDateFormat")
     fun getWhichMonth(date: Long = Date().time): String {
         val sdf = SimpleDateFormat("yyyy年MM月")
         return sdf.format(Date(date))
@@ -69,11 +161,11 @@ object DateUtil {
     }
 
     fun isSameDay(date: Long = Date().time): Boolean {
-       var cal1 :Calendar  = Calendar.getInstance()
-       var cal2 :Calendar  = Calendar.getInstance()
+        var cal1: Calendar = Calendar.getInstance()
+        var cal2: Calendar = Calendar.getInstance()
         var date1 = Date(System.currentTimeMillis())
         var date2 = Date(date)
-        cal1.time= date1
+        cal1.time = date1
         cal2.time = date2
         return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
                 cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)

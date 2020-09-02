@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.DateUtil
+import com.xiaoneng.ss.common.utils.SPreference
 import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.model.ClassBean
 import com.xiaoneng.ss.module.school.adapter.TimetableAdapter
@@ -17,9 +20,6 @@ import com.xiaoneng.ss.module.school.adapter.TitleTimetableAdapter
 import com.xiaoneng.ss.module.school.model.TimetableBean
 import com.xiaoneng.ss.module.school.model.TimetableLabelBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import kotlinx.android.synthetic.main.activity_timetable.rvLabelTimetable
-import kotlinx.android.synthetic.main.activity_timetable.rvTimetable
-import kotlinx.android.synthetic.main.activity_timetable.rvTitleTimetable
 import kotlinx.android.synthetic.main.activity_timetable_master.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -32,6 +32,9 @@ import kotlin.collections.ArrayList
  * Time: 17:01
  */
 class TimetableMasterActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+
+    private var isMaster: Boolean by SPreference(Constant.IS_MASTER, false)
+    private var curTit: Int = 1
     private var hasInitClass: Boolean = false
     private var mClassPosition = 0
     lateinit var mAdapter: TimetableAdapter
@@ -47,9 +50,15 @@ class TimetableMasterActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
-        tvTitleTimetable.setOnClickListener {
-            showDialog()
+        isMaster = false
+        if (UserInfo.getUserBean().classmaster == "1") {
+            isMaster = true
+            tvTitleTimetable.visibility = View.VISIBLE
+            tvTitleTimetable.setOnClickListener {
+                showDialog()
+            }
         }
+
         initAdapterLabel()
     }
 
@@ -150,8 +159,38 @@ class TimetableMasterActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 mLabelData.clear()
                 mLabelData.addAll(it.positions)
                 mAdapterLabel.notifyDataSetChanged()
+                if (UserInfo.getUserBean().classmaster == "1") {
+                    rvClassTimetable.visibility = View.VISIBLE
+                    if (!hasInitClass) {
+                        hasInitClass = true
+                        mDataClass.addAll(it.classs)
+                        initAdapterClass()
+                    }
+                }
+                //填充课表
+                mData.clear()
+                mData.addAll(it.list)
+                if (mData.size > 0) {
+                    var i = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
+                    initAdapter()
+                    initAdapterTitle()
+                    rvTimetable.scrollToPosition(DateUtil.getWeekPosition(i))
+                    rvTitleTimetable.scrollToPosition(DateUtil.getWeekPosition(i))
+                } else {
+                    showEmpty()
+                }
 
-                if (!hasInitClass){
+            }
+        })
+
+        mViewModel.mTimetableDataT.observe(this, Observer { response ->
+            response?.let {
+                //初始化时间段数据
+                mLabelData.clear()
+                mLabelData.addAll(it.positions)
+                mAdapterLabel.notifyDataSetChanged()
+
+                if (!hasInitClass) {
                     hasInitClass = true
                     mDataClass.addAll(it.classs)
                     mAdapterClass.notifyDataSetChanged()
@@ -192,12 +231,27 @@ class TimetableMasterActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         bottomDialog.show()
         contentView.findViewById<View>(R.id.tvAction1TimeDialog)
             .setOnClickListener { v: View? ->
-                tvTitleTimetable.text = "班级课表"
+                if (curTit != 1) {
+                    curTit = 1
+                    tvTitleTimetable.text = "班级课表"
+                    if (mDataClass.size > 0) {
+                        mViewModel.getTimetable(mDataClass[mClassPosition].classid)
+                        rvClassTimetable.visibility = View.VISIBLE
+                    }
+                    isMaster = true
+                }
+
                 bottomDialog.dismiss()
             }
         contentView.findViewById<View>(R.id.tvAction2TimeDialog)
             .setOnClickListener { v: View? ->
-                tvTitleTimetable.text = "科任课表"
+                if (curTit != 2) {
+                    curTit = 2
+                    tvTitleTimetable.text = "科任课表"
+                    mViewModel.getTimetableT()
+                    rvClassTimetable.visibility = View.GONE
+                    isMaster = false
+                }
                 bottomDialog.dismiss()
             }
         contentView.findViewById<View>(R.id.tvAction3TimeDialog)

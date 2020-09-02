@@ -5,6 +5,7 @@ import com.xiaoneng.ss.model.StsTokenResp
 import com.xiaoneng.ss.model.StudentResp
 import com.xiaoneng.ss.module.circular.model.NoticeDetailBean
 import com.xiaoneng.ss.module.circular.model.NoticeResponse
+import com.xiaoneng.ss.module.circular.model.ScheduleBean
 import com.xiaoneng.ss.module.school.model.AttendanceResponse
 import com.xiaoneng.ss.module.school.model.PerformanceResponse
 import com.xiaoneng.ss.module.school.model.TaskResponse
@@ -263,6 +264,16 @@ interface ApiService {
         @Field("classid") classid: String = "",
         @Field("groupid") groupid: String = ""
     ): BaseResponse<TimetableResponse>
+    /**
+     *班主任课程表
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/courses/mTimeTable")
+    suspend fun getTimetableMaster(
+        @Field("token") token: String,
+        @Field("time") time: String = "",
+        @Field("classid") classid: String = ""
+    ): BaseResponse<TimetableResponse>
 
     /**
      *学生查看成绩
@@ -365,4 +376,59 @@ interface ApiService {
         @Field("token") token: String,
         @Field("key") key: String = ""
     ): BaseResponse<StudentResp>
+
+    /**
+     *学生查询日程
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/student/schedules/listDWM")
+    suspend fun querySchedule(
+        @Field("token") token: String,
+        @Field("day") day: String,
+        @Field("week_s") week_s: String = "",
+        @Field("week_e") week_e: String = "",
+        @Field("month") month: String = ""
+    ): BaseResponse<Any>
+    /**
+     *教师查询日程
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/schedules/listDWM")
+    suspend fun querySchedule2(
+        @Field("token") token: String,
+        @Field("day") day: String,
+        @Field("week_s") week_s: String = "",
+        @Field("week_e") week_e: String = "",
+        @Field("month") month: String = ""
+    ): BaseResponse<Any>
+
+    /**
+     *学生添加日程
+     */
+    @POST("/api/v1/student/schedules/add")
+    suspend fun addSchedule(
+        @Body requestBody: ScheduleBean
+    ): BaseResponse<Any>
+    /**
+     *教师添加日程
+     */
+    @POST("/api/v1/teacher/schedules/add")
+    suspend fun addSchedule2(
+        @Body requestBody: ScheduleBean
+    ): BaseResponse<Any>
+
+    /**
+     *学生修改日程
+     */
+    @POST("/api/v1/student/schedules/modify")
+    suspend fun modifySchedule(
+        @Body requestBody: ScheduleBean
+    ): BaseResponse<Any>
+    /**
+     *教师修改日程
+     */
+    @POST("/api/v1/teacher/schedules/modify")
+    suspend fun modifySchedule2(
+        @Body requestBody: ScheduleBean
+    ): BaseResponse<Any>
 }
