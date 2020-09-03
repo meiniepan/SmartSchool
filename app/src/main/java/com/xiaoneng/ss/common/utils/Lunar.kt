@@ -395,11 +395,15 @@ class Lunar(cal: Calendar) {
             for (i in 0 until maxDays) {
                 isToday = calToday[Calendar.DAY_OF_MONTH] == cal[Calendar.DAY_OF_MONTH]
                 var beanList = ArrayList<ScheduleBean>()
+                var beanRemove = ArrayList<ScheduleDayBean>()
                 for (beans in data) {
                     if (DateUtil.formatDateCustomDay(cal.timeInMillis) == beans.day){
                         beanList.addAll(beans.list)
-                        data.remove(beans)
+                        beanRemove.add(beans)
                     }
+                }
+                if (beanRemove.size>0) {
+                    data.removeAll(beanRemove)
                 }
                 bean = DayBean(
                     cal.timeInMillis, cal[Calendar.DAY_OF_MONTH].toString() + "",

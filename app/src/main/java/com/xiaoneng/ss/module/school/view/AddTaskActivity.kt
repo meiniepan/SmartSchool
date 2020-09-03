@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import cn.addapp.pickers.picker.DateTimePicker
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.common.utils.RecycleViewDivider
 import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.common.utils.getDatePick
@@ -25,6 +26,8 @@ import kotlinx.android.synthetic.main.activity_add_task.*
  * Time: 17:01
  */
 class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+    var beginTime: String? = ""
+    var endTime: String? = ""
     lateinit var mAdapter: InviteCodeAdapter
     var mData = ArrayList<NoticeBean>()
     private val pick: DateTimePicker by lazy {
@@ -44,11 +47,27 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvStopAddTask.setOnClickListener {
             showStop()
         }
+
+        tvAddParticipant.setOnClickListener {
+            doAddParticipant()
+        }
+        tvAddPrincipal.setOnClickListener {
+            doAddPrincipal()
+        }
+    }
+
+    private fun doAddPrincipal() {
+        mViewModel.queryDepartments()
+    }
+
+    private fun doAddParticipant() {
+        mViewModel.queryDepartments()
     }
 
     override fun initStatusBar() {
         initStatusColor(resources.getColor(R.color.white))
     }
+
     private fun showBegin() {
         pick.setOnDateTimePickListener(object : DateTimePicker.OnYearMonthDayTimePickListener {
             override fun onDateTimePicked(
@@ -58,7 +77,8 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 hour: String?,
                 minute: String?
             ) {
-                var time = "$year-$month-$day $hour:$minute"
+                var time = "${month}月${day}日 $hour:$minute"
+                beginTime = DateUtil.getDateString(year, month, day, hour, minute)
                 tvBeginAddTask.text = time
             }
 
@@ -76,7 +96,8 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 hour: String?,
                 minute: String?
             ) {
-                var time = "$year-$month-$day $hour:$minute"
+                var time = "${month}月${day}日 $hour:$minute"
+                endTime = DateUtil.getDateString(year, month, day, hour, minute)
                 tvStopAddTask.text = time
             }
 

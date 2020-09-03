@@ -57,7 +57,7 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         rvTaskStatus.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(RecycleViewDivider(context, dp2px(context, 10f).toInt()))
-            adapter = mAdapter
+            setAdapter(mAdapter)
         }
         mAdapter.setOnItemClickListener { _, view, position ->
 
@@ -90,9 +90,9 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                 mData.clear()
                 mData.addAll(it.data)
                 if (mData.size > 0) {
-                    mAdapter.notifyDataSetChanged()
+                    rvTaskStatus.notifyDataSetChanged()
                 } else {
-                    showEmpty()
+                    rvTaskStatus.showEmptyView()
                 }
             }
         })

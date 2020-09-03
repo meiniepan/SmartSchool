@@ -25,6 +25,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mTimetableDataT: MutableLiveData<TimetableResponse> = MutableLiveData()
     val mAttendanceData: MutableLiveData<AttendanceResponse> = MutableLiveData()
     val mStudentData: MutableLiveData<StudentResp> = MutableLiveData()
+    val mDepartmentsData: MutableLiveData<Any> = MutableLiveData()
 
     fun getTaskList(pagenum:String = "",status:String = "") {
         initiateRequest(
@@ -64,6 +65,13 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     fun queryStudent(key:String) {
         initiateRequest(
             { mStudentData.value = mRepository.queryStudent( key) },
+            loadState
+        )
+    }
+
+    fun queryDepartments() {
+        initiateRequest(
+            { mDepartmentsData.value = mRepository.queryDepartments() },
             loadState
         )
     }

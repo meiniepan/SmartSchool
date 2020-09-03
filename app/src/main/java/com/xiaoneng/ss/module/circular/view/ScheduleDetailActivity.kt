@@ -7,6 +7,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.common.utils.getDatePick
 import com.xiaoneng.ss.module.circular.model.ScheduleBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
@@ -21,9 +22,12 @@ import org.jetbrains.anko.toast
  */
 class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
     var bean: ScheduleBean = ScheduleBean()
+    var beginTime: String? = ""
+    var endTime: String? = ""
     private val pick: DateTimePicker by lazy {
         getDatePick(this)
     }
+
     override fun getLayoutId(): Int {
         return R.layout.activity_schedule_detail
     }
@@ -31,6 +35,9 @@ class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
     override fun initView() {
         super.initView()
         bean = intent.getParcelableExtra(Constant.DATA)
+        beginTime = bean.scheduletime
+        endTime = bean.scheduleover
+
         ctbDetailSchedule.setTitle(bean.title)
         tvBeginTimeSchedule.text = bean.scheduletime
         tvStopTimeSchedule.text = bean.scheduleover
@@ -64,7 +71,8 @@ class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
             return
         }
         bean.token = UserInfo.getUserBean().token
-        bean.scheduletime = tvBeginTimeSchedule.text.toString()
+        bean.scheduletime = beginTime
+        bean.scheduleover = endTime
         bean.remark = etDetailSchedule.text.toString()
         showLoading()
         mViewModel.modifySchedule(bean)
@@ -74,6 +82,7 @@ class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
     override fun initData() {
         super.initData()
     }
+
     override fun initDataObserver() {
         mViewModel.mAddScheduleData.observe(this, Observer { response ->
             response?.let {
@@ -94,6 +103,7 @@ class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 minute: String?
             ) {
                 var time = "${month}月${day}日 $hour:$minute"
+                beginTime = DateUtil.getDateString(year, month, day, hour, minute)
                 tvBeginAddSchedule.text = time
             }
 
@@ -112,6 +122,7 @@ class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 minute: String?
             ) {
                 var time = "{month}月${day}日 $hour:$minute"
+                endTime = DateUtil.getDateString(year, month, day, hour, minute)
                 tvStopAddSchedule.text = time
             }
 

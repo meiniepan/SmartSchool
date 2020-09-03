@@ -142,4 +142,9 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
+    suspend fun queryDepartments(): Any {
+        return apiService.queryDepartments(UserInfo.getUserBean().token)
+            .dataConvert(loadState)
+    }
+
 }

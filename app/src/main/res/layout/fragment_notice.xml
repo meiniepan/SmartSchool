@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
         android:id="@+id/rvNotice"
         style="@style/recycler_margin_style"
         android:layout_marginTop="14dp"

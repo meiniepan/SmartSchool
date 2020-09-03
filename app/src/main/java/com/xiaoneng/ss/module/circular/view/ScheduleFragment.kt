@@ -77,7 +77,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
     }
 
     private fun getData() {
-        showLoading()
+        rvEventSchedule.showLoadingView()
         mViewModel.querySchedule(DateUtil.formatDateCustomDay(chosenDay!!))
     }
 
@@ -149,7 +149,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
     private fun initAdapterEvent() {
         mAdapterEvent = EventAdapter(R.layout.item_event_schedule, mDataEvent)
 
-        rvEventSchedule.apply {
+        rvEventSchedule.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(
                 RecycleViewDivider(
@@ -157,7 +157,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
                     context.resources.getColor(R.color.transparent)
                 )
             )
-            adapter = mAdapterEvent
+            setAdapter(mAdapterEvent)
         }
         mAdapterEvent.setOnItemClickListener { adapter, view, position ->
             mStartActivity<ScheduleDetailActivity>(context) {
@@ -168,11 +168,11 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
 
     private fun switch() {
         isDayOfWeek = if (isDayOfWeek) {
+            showLoading()
             mViewModel.queryScheduleMonth(
                 DateUtil.formatDateCustomDay(chosenDay!!),
                 DateUtil.formatDateCustomMonth(chosenDay!!)
             )
-            showLoading()
             rvWeek.visibility = View.GONE
             rvMonth.visibility = View.VISIBLE
             tvWeekSchedule.text = DateUtil.getWhichMonth()
@@ -196,7 +196,11 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
 
                     mDataEvent.clear()
                     mDataEvent.addAll(it.data)
-                        mAdapterEvent.notifyDataSetChanged()
+                    if (mDataEvent.size > 0) {
+                        rvEventSchedule.notifyDataSetChanged()
+                    } else {
+                        rvEventSchedule.showEmptyView()
+                    }
 //                    showEmpty()
 
                 }

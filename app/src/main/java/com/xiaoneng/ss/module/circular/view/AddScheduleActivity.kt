@@ -30,8 +30,8 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
     private var chosenColor: String = "#5E37FF"
     lateinit var mAdapter: ChooseColorAdapter
     var time:Long = 0L
-    var beginTime:String = ""
-    var endTime:String = ""
+    var beginTime:String? = ""
+    var endTime:String? = ""
     val mData by lazy { ColorUtil.getCustomColors() }
 
     private val pick: DateTimePicker by lazy {
@@ -110,7 +110,7 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 minute: String?
             ) {
                 var time = "${month}月${day}日 $hour:$minute"
-                beginTime = "${year}年${month}月${day}日 $hour:$minute"
+                beginTime = DateUtil.getDateString(year,month,day,hour,minute)
                 tvBeginAddSchedule.text = time
             }
 
@@ -129,7 +129,7 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 minute: String?
             ) {
                 var time = "${month}月${day}日 $hour:$minute"
-                endTime = "${year}年${month}月${day}日 $hour:$minute"
+                endTime = DateUtil.getDateString(year,month,day,hour,minute)
                 tvStopAddSchedule.text = time
             }
 

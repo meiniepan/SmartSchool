@@ -162,7 +162,7 @@ public class RefreshStatusRecyclerView extends SmartRefreshLayout implements Sta
     /**
      * 列表数据刷新，自动判断是否是空集合加载空view
      */
-    public void notifyDataSetChange(){
+    public void notifyDataSetChanged(){
         finishRefreshLoadMore();
         mRecyclerView.notifyDataSetChange(this);
 
@@ -178,9 +178,9 @@ public class RefreshStatusRecyclerView extends SmartRefreshLayout implements Sta
     /**
      * @param onShowContentListener 刷新，添加内容展示监听（是否是空布局）
      */
-    public void notifyDataSetChange(OnShowContentListener onShowContentListener){
+    public void notifyDataSetChanged(OnShowContentListener onShowContentListener){
         setOnShowContentListener(onShowContentListener);
-        notifyDataSetChange();
+        notifyDataSetChanged();
     }
 
     /**

@@ -197,4 +197,8 @@ object DateUtil {
             else -> 0
         }
     }
+
+    fun getDateString(yy: String? = "",m1: String? = "",dd: String? = "",hh: String? = "",m2: String? = ""): String {
+        return "${yy}-${m1}-${dd} $hh:$m2"
+    }
 }

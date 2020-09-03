@@ -70,6 +70,7 @@ interface ApiService {
     suspend fun modifyInfoStu(
         @Body requestBody: LoginResponse
     ): BaseResponse<LoginResponse>
+
     /**
      * 教师信息修改接口
      */
@@ -115,7 +116,6 @@ interface ApiService {
     suspend fun onTeaInfo(
         @Field("token") token: String
     ): BaseResponse<LoginResponse>
-
 
 
     /**
@@ -199,7 +199,7 @@ interface ApiService {
     @POST("/api/v1/student/notices/modify")
     suspend fun readNotice(
         @Field("token") token: String,
-        @Field("id") id: String ,
+        @Field("id") id: String,
         @Field("status") status: String = "",
         @Field("received") received: String = ""
     ): BaseResponse<Any>
@@ -264,6 +264,7 @@ interface ApiService {
         @Field("classid") classid: String = "",
         @Field("groupid") groupid: String = ""
     ): BaseResponse<TimetableResponse>
+
     /**
      *班主任课程表
      */
@@ -327,6 +328,7 @@ interface ApiService {
         @Field("teacheruid") teacheruid: String = "",
         @Field("atttime") atttime: String = ""
     ): BaseResponse<AttendanceResponse>
+
     /**
      *教师查看考勤
      */
@@ -348,6 +350,7 @@ interface ApiService {
     suspend fun getSts(
         @Field("token") token: String
     ): BaseResponse<StsTokenResp>
+
     /**
      *教师上传文件oss签名接口
      */
@@ -389,6 +392,7 @@ interface ApiService {
         @Field("week_e") week_e: String = "",
         @Field("month") month: String = ""
     ): BaseResponse<Any>
+
     /**
      *教师查询日程
      */
@@ -409,6 +413,7 @@ interface ApiService {
     suspend fun addSchedule(
         @Body requestBody: ScheduleBean
     ): BaseResponse<Any>
+
     /**
      *教师添加日程
      */
@@ -424,11 +429,45 @@ interface ApiService {
     suspend fun modifySchedule(
         @Body requestBody: ScheduleBean
     ): BaseResponse<Any>
+
     /**
      *教师修改日程
      */
     @POST("/api/v1/teacher/schedules/modify")
     suspend fun modifySchedule2(
         @Body requestBody: ScheduleBean
+    ): BaseResponse<Any>
+
+    /**
+     *教师修改日程
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/departments/treeDep")
+    suspend fun queryDepartments(
+        @Field("token") token: String
+    ): BaseResponse<Any>
+
+    /**
+     *学生发布任务审批
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/student/tasks/examine")
+    suspend fun queryDepartments(
+        @Field("token") token: String,
+        @Field("id") id: String = "",
+        @Field("examine") examine: String= "",
+        @Field("examinestatus") examinestatus: String= ""
+    ): BaseResponse<Any>
+
+    /**
+     *教师发布任务审批
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/tasks/examine")
+    suspend fun examineTask2(
+        @Field("token") token: String,
+        @Field("id") id: String = "",
+        @Field("examine") examine: String= "",
+        @Field("examinestatus") examinestatus: String= ""
     ): BaseResponse<Any>
 }

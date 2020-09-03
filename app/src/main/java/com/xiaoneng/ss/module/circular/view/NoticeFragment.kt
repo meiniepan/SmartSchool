@@ -3,6 +3,8 @@ package com.xiaoneng.ss.module.circular.view
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.scwang.smartrefresh.layout.api.RefreshLayout
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.utils.Constant
@@ -38,15 +40,23 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
     override fun initView() {
         super.initView()
         initAdapter()
-
     }
 
     private fun initAdapter() {
+        rvNotice.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+            override fun onLoadMore(refreshLayout: RefreshLayout) {
+                rvNotice.finishRefreshLoadMore()
+            }
+
+            override fun onRefresh(refreshLayout: RefreshLayout) {
+                initData()
+            }
+        })
         mAdapter = NoticeAdapter(R.layout.item_notice, mData)
-        rvNotice.apply {
+        rvNotice.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(RecycleViewDivider(dp2px(context, 10f).toInt(),context.resources.getColor(R.color.transparent) ))
-            adapter = mAdapter
+            setAdapter(mAdapter)
         }
         mAdapter.setOnItemClickListener { _, view, position ->
             //"status": "0",   0未读 1已读
@@ -64,7 +74,7 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
 
     override fun initData() {
         super.initData()
-        showLoading()
+        rvNotice.showLoadingView()
         mViewModel.getNoticeList()
     }
 
@@ -72,13 +82,13 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
     override fun initDataObserver() {
         mViewModel.mNoticeData.observe(this, Observer { response ->
             response?.let {
-                showSuccess()
+                rvNotice.finishRefreshLoadMore()
                 mData.clear()
                 mData.addAll(it.data)
                 if (mData.size > 0) {
-                    mAdapter.notifyDataSetChanged()
+                    rvNotice.notifyDataSetChanged()
                 } else {
-                    showEmpty()
+                    rvNotice.showEmptyView()
                 }
             }
         })
@@ -86,7 +96,7 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
         mViewModel.mReadData.observe(this, Observer { response ->
             response?.let {
                 mData[readPosition].status = "1"
-                mAdapter.notifyDataSetChanged()
+                rvNotice.notifyDataSetChanged()
             }
         })
     }

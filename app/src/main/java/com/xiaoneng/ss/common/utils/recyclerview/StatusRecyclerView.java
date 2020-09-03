@@ -136,15 +136,7 @@ public class StatusRecyclerView<T> extends RecyclerView implements StatusChangeI
         this.mLayoutManager = layout;
     }
 
-    /**
-     * 已废弃，请使用传数据源的方法
-     * @param adapter
-     */
-    @Deprecated
-    @Override
-    public void setAdapter(@Nullable Adapter adapter) {
-        setAdapter(adapter,null,true);
-    }
+
 
     public void setAdapter(@Nullable BaseQuickAdapter adapter) {
         setAdapter(adapter,adapter.getData(),true);
@@ -295,7 +287,7 @@ public class StatusRecyclerView<T> extends RecyclerView implements StatusChangeI
             List<StatusRvEntity> emptyList = new ArrayList<>();
             StatusRvEntity statusRvEntity = new StatusRvEntity(emptyViewText,emptyViewDrawableRes);
             emptyList.add(statusRvEntity);
-            if(emptyLayoutRes == 0) emptyLayoutRes = R.layout.base_status_view_empty;
+            if(emptyLayoutRes == 0) emptyLayoutRes = R.layout.status_view_empty;
             emptyViewAdapter = new StatusEmptyAdapter(emptyLayoutRes, emptyList);
             emptyViewAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override

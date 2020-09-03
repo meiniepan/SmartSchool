@@ -76,7 +76,7 @@
             android:text="今日日程" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
             android:id="@+id/rvEventSchedule"
             style="@style/recycler_style"
             android:paddingBottom="20dp" />

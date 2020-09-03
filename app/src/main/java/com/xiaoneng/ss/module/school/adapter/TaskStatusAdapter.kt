@@ -25,12 +25,15 @@ class TaskStatusAdapter(layoutId: Int, listData: MutableList<TaskBean>?) :
             when (item?.status) {
                 "1" -> {
                     statusStr = "进行中"
+                    holder.setTextColor(R.id.tvTaskStatus,mContext.resources.getColor(R.color.commonBlue))
                 }
                 "0" -> {
                     statusStr = "未发布"
+                    holder.setTextColor(R.id.tvTaskStatus,mContext.resources.getColor(R.color.commonBlue))
                 }
                 "3" -> {
                     statusStr = "已关闭"
+                    holder.setTextColor(R.id.tvTaskStatus,mContext.resources.getColor(R.color.commonHint))
                 }
             }
             holder.setText(R.id.tvTaskStatus, statusStr)
