@@ -5,8 +5,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.utils.RecycleViewDivider
-import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.module.mine.adapter.InviteCodeAdapter
 import com.xiaoneng.ss.module.mine.model.InviteCodeBean
@@ -36,7 +34,6 @@ class InviteCodeActivity : BaseLifeCycleActivity<AccountViewModel>() {
         mAdapter = InviteCodeAdapter(R.layout.item_invite_code, mData)
         rvInviteCode.apply {
             layoutManager = LinearLayoutManager(context)
-            addItemDecoration(RecycleViewDivider(context, dp2px(context, 82f).toInt()))
             adapter = mAdapter
         }
         mAdapter.setOnItemClickListener { _, view, position ->

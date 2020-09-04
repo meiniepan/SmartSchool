@@ -20,6 +20,7 @@
 
         <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
             android:id="@+id/rvInviteCode"
+            android:layout_marginTop="20dp"
             style="@style/recycler_margin_style" />
     </LinearLayout>
 </LinearLayout>

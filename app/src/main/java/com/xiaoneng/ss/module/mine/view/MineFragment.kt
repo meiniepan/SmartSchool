@@ -66,6 +66,16 @@ MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
                 llItem6.visibility = View.GONE
             }
 
+            "99" -> {
+                if ((UserInfo.getUserBean().classmaster) == "1") {
+                    llItem4.visibility = View.VISIBLE
+                } else {
+                    llItem4.visibility = View.GONE
+                }
+                llItem3.visibility = View.GONE
+                llItem6.visibility = View.GONE
+            }
+
             else -> {
                 llItem3.visibility = View.GONE
                 llItem4.visibility = View.GONE
