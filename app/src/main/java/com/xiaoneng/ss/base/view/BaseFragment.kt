@@ -42,7 +42,6 @@ abstract class BaseFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setStatusBarDark()
         initView()
         initData()
     }
@@ -86,8 +85,4 @@ abstract class BaseFragment : Fragment() {
         initStatusColor(0)
     }
 
-    fun setStatusBarDark() {
-//        activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-
-    }
 }

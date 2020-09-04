@@ -67,6 +67,7 @@ class SplashActivity : BaseLifeCycleActivity<AccountViewModel>() {
         finish()
     }
 
+    override fun showCreateReveal(): Boolean = false
 
 
     override fun initDataObserver() {

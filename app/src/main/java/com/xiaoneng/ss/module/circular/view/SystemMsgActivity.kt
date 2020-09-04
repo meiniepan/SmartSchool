@@ -67,11 +67,7 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 for (i in it.data) {
                     if (i.type == "system")
                         mData.add(i)
-                    if (mData.size > 0) {
-                        rvSysMsg.notifyDataSetChanged()
-                    } else {
-                        rvSysMsg.showEmptyView()
-                    }
+                    rvSysMsg.notifyDataSetChanged()
                 }
             }
         })

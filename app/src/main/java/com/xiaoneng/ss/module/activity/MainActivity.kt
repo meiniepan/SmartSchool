@@ -56,11 +56,12 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
         super.initData()
         //        mViewModel.getAuthority()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(null)
         // 判断当前是recreate还是新启动
         if (savedInstanceState == null) {
-            contentLayout.currentItem =Constant.HOME
+            contentLayout.currentItem = Constant.HOME
             checkUpdate(this, false)
         }
         initCameraPermission()
@@ -80,7 +81,6 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
     }
 
 
-
     private fun initColor() {
         bottom_navigation.itemIconTintList = ColorUtil.getColorStateList(this)
         bottom_navigation.itemTextColor = ColorUtil.getColorStateList(this)
@@ -97,7 +97,7 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
             fragmentList
         )
         contentLayout.adapter = fragmentAdapter
-
+        contentLayout.offscreenPageLimit = 2
     }
 
     private fun initBottomNavigation() {
@@ -120,7 +120,6 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
             }
         }
     }
-
 
 
     override fun onDestroy() {

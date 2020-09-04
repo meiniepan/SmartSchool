@@ -82,7 +82,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
     }
 
     private fun initAdapterWeekTitle() {
-
+        mDataWeekTitle.clear()
         mDataWeekTitle.add("周日")
         mDataWeekTitle.add("周一")
         mDataWeekTitle.add("周二")
@@ -98,7 +98,6 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
     }
 
     private fun initAdapterDayOfWeek() {
-        view?.post {
 
             mDataWeek.clear()
             mDataWeek.addAll(Lunar.getCurrentDaysOfWeek(chosenDay))
@@ -115,12 +114,9 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
                 adapter.notifyDataSetChanged()
                 getData()
             }
-        }
     }
 
     private fun initAdapterDayOfMonth() {
-        view?.post {
-
 
             mAdapterMonth = DaysOfMonthAdapter(R.layout.item_days_week, mDataMonth)
 
@@ -131,10 +127,6 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
             }
             mAdapterMonth.setOnItemClickListener { adapter, view, position ->
                 if (mDataMonth[position].inMonth) {
-//                    for (i in 0 until mDataMonth.size) {
-//                        mDataMonth[i].isCheck = i == position
-//                    }
-//                    adapter.notifyDataSetChanged()
                     chosenDay = mDataMonth[position].day
                     mDataWeek.clear()
                     mDataWeek.addAll(Lunar.getCurrentDaysOfWeek(chosenDay))
@@ -142,7 +134,6 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
                     switch()
                     getData()
                 }
-            }
         }
     }
 
@@ -189,7 +180,6 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
     override fun initDataObserver() {
         mViewModel.mScheduleData.observe(this, Observer { response ->
             response?.let {
-                showSuccess()
                 val gson: Gson = GsonBuilder().enableComplexMapKeySerialization().create()
                 val jsonString = gson.toJson(it)
                 gson.fromJson(jsonString, ScheduleResponse::class.java)?.let {
