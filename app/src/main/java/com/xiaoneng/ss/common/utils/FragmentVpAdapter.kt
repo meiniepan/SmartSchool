@@ -1,4 +1,4 @@
-package com.xiaoneng.ss.module.circular.adapter
+package com.xiaoneng.ss.common.utils
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentPagerAdapter
  * @date: 2020/02/27
  * Time: 17:32
  */
-class FragmentCircularAdapter(
+class FragmentVpAdapter(
     fragmentManager: FragmentManager,
     val fragmentlist: ArrayList<Fragment>
 ) :

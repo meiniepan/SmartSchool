@@ -18,7 +18,7 @@ class ChooseChildAdapter(layoutId: Int, listData: MutableList<StudentBean>?) :
 
     override fun convert(viewHolder: BaseViewHolder?, item: StudentBean) {
         viewHolder?.let { holder ->
-            holder.setText(R.id.tvPhoneParent, item.phone)
+            holder.setText(R.id.tvNameChild, item.realname)
 
         }
     }

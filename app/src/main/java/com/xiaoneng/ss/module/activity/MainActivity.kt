@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.SparseArray
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -16,7 +15,6 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.permission.PermissionResult
 import com.xiaoneng.ss.common.permission.Permissions
 import com.xiaoneng.ss.common.utils.*
-import com.xiaoneng.ss.module.circular.`interface`.HomeScrollListener
 import com.xiaoneng.ss.module.circular.view.CircularFragment
 import com.xiaoneng.ss.module.mine.view.MineFragment
 import com.xiaoneng.ss.module.school.view.SchoolFragment
@@ -32,11 +30,13 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
     private var mUsername: String by SPreference(Constant.USERNAME_KEY, "未登录")
     private var isNightMode: Boolean by SPreference(Constant.NIGHT_MODE, false)
     private var mLastIndex: Int = -1
-    private val mFragmentSparseArray = SparseArray<Fragment>()
 
     // 当前显示的 fragment
     private var mCurrentFragment: Fragment? = null
     private var mLastFragment: Fragment? = null
+
+    private lateinit var fragmentAdapter: FragmentVpAdapter
+    private var fragmentList = ArrayList<Fragment>()
 
     private val mPermissions = arrayOf(
         Manifest.permission.CAMERA,
@@ -44,12 +44,11 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
 
-    private lateinit var mToolbarTitles: List<String>
-
     override fun getLayoutId(): Int = R.layout.activity_main
 
     override fun initView() {
         initColor()
+        initViewPager()
         initBottomNavigation()
     }
 
@@ -61,7 +60,7 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
         super.onCreate(null)
         // 判断当前是recreate还是新启动
         if (savedInstanceState == null) {
-            switchFragment(Constant.HOME)
+            contentLayout.currentItem =Constant.HOME
             checkUpdate(this, false)
         }
         initCameraPermission()
@@ -77,31 +76,43 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
         super.onRestoreInstanceState(savedInstanceState)
         // 恢复recreate前的页面
         mLastIndex = savedInstanceState.getInt("index")
-        switchFragment(mLastIndex)
+        contentLayout.currentItem = mLastIndex
     }
 
 
 
     private fun initColor() {
-        bottom_navigation.setItemIconTintList(ColorUtil.getColorStateList(this))
-        bottom_navigation.setItemTextColor(ColorUtil.getColorStateList(this))
+        bottom_navigation.itemIconTintList = ColorUtil.getColorStateList(this)
+        bottom_navigation.itemTextColor = ColorUtil.getColorStateList(this)
         bottom_navigation.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
     }
 
+    private fun initViewPager() {
+        fragmentList.add(CircularFragment.getInstance())
+        fragmentList.add(SchoolFragment.getInstance())
+        fragmentList.add(MineFragment.getInstance())
+
+        fragmentAdapter = FragmentVpAdapter(
+            supportFragmentManager,
+            fragmentList
+        )
+        contentLayout.adapter = fragmentAdapter
+
+    }
 
     private fun initBottomNavigation() {
         bottom_navigation.setOnNavigationItemSelectedListener { menuItem: MenuItem ->
             when (menuItem.itemId) {
                 R.id.menu_home -> {
-                    switchFragment(Constant.HOME)
+                    contentLayout.currentItem = Constant.HOME
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.menu_school -> {
-                    switchFragment(Constant.SCHOOL)
+                    contentLayout.currentItem = Constant.SCHOOL
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.menu_mine -> {
-                    switchFragment(Constant.MINE)
+                    contentLayout.currentItem = Constant.MINE
                     return@setOnNavigationItemSelectedListener true
                 }
 
@@ -110,54 +121,6 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
         }
     }
 
-    private fun switchFragment(index: Int) {
-        val fragmentManager = supportFragmentManager
-        val transaction =
-            fragmentManager.beginTransaction()
-        // 将当前显示的fragment和上一个需要隐藏的fragment分别加上tag, 并获取出来
-        // 给fragment添加tag,这样可以通过findFragmentByTag找到存在的fragment，不会出现重复添加
-        mCurrentFragment = fragmentManager.findFragmentByTag(index.toString())
-        mLastFragment = fragmentManager.findFragmentByTag(mLastIndex.toString())
-        // 如果位置不同
-        if (index != mLastIndex) {
-            if (mLastFragment != null) {
-                transaction.hide(mLastFragment!!)
-            }
-            if (mCurrentFragment == null) {
-                mCurrentFragment = getFragment(index)
-                transaction.add(R.id.contentLayout, mCurrentFragment!!, index.toString())
-            } else {
-                transaction.show(mCurrentFragment!!)
-            }
-        }
-
-        // 如果位置相同或者新启动的应用
-        if (index == mLastIndex) {
-            if (mCurrentFragment == null) {
-                mCurrentFragment = getFragment(index)
-                transaction.add(R.id.contentLayout, mCurrentFragment!!, index.toString())
-            }
-        }
-        transaction.commit()
-        mLastIndex = index
-    }
-
-    private fun getFragment(index: Int): Fragment {
-        var fragment: Fragment? = mFragmentSparseArray.get(index)
-        if (fragment == null) {
-            when (index) {
-                Constant.HOME -> fragment = CircularFragment.getInstance(object:HomeScrollListener{
-                    override fun showBottom() {
-
-                    }
-                })
-                Constant.SCHOOL -> fragment = SchoolFragment.getInstance()
-                Constant.MINE -> fragment = MineFragment.getInstance()
-            }
-            mFragmentSparseArray.put(index, fragment)
-        }
-        return fragment!!
-    }
 
 
     override fun onDestroy() {

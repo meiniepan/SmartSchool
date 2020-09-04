@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.module.circular.adapter.FragmentCircularAdapter
+import com.xiaoneng.ss.common.utils.FragmentVpAdapter
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_account_secure.*
 
@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_account_secure.*
  * Time: 17:01
  */
 class AccountSecureActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    private lateinit var fragmentAdapter: FragmentCircularAdapter
+    private lateinit var fragmentAdapter: FragmentVpAdapter
     private var fragmentList = ArrayList<Fragment>()
 
     override fun getLayoutId(): Int = R.layout.activity_account_secure
@@ -63,7 +63,10 @@ class AccountSecureActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private fun initViewPager() {
         fragmentList.add(RebindPhoneFragment.getInstance())
         fragmentList.add(ModifyPwdFragment.getInstance())
-        fragmentAdapter = FragmentCircularAdapter(supportFragmentManager, fragmentList)
+        fragmentAdapter = FragmentVpAdapter(
+            supportFragmentManager,
+            fragmentList
+        )
         vpSecurity.adapter = fragmentAdapter
         vpSecurity.addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {

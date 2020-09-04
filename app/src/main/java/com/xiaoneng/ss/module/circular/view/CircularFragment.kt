@@ -6,9 +6,8 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.FragmentVpAdapter
 import com.xiaoneng.ss.common.utils.mStartActivity
-import com.xiaoneng.ss.module.circular.`interface`.HomeScrollListener
-import com.xiaoneng.ss.module.circular.adapter.FragmentCircularAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import kotlinx.android.synthetic.main.fragment_circular.*
@@ -21,15 +20,13 @@ import kotlinx.android.synthetic.main.fragment_circular.*
  * Time: 17:01
  */
 class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
-    lateinit var fragmentAdapter: FragmentCircularAdapter
-    var fragmentList = ArrayList<Fragment>()
+    private lateinit var fragmentAdapter: FragmentVpAdapter
+    private var fragmentList = ArrayList<Fragment>()
     var mData = ArrayList<NoticeBean>()
     override fun getLayoutId(): Int = R.layout.fragment_circular
 
     companion object {
-        lateinit var mListener: HomeScrollListener
-        fun getInstance(listener: HomeScrollListener): CircularFragment? {
-            mListener = listener
+        fun getInstance() :Fragment {
             return CircularFragment()
         }
 
@@ -76,7 +73,10 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
     private fun initViewPager() {
         fragmentList.add(NoticeFragment.getInstance())
         fragmentList.add(ScheduleFragment.getInstance())
-        fragmentAdapter = FragmentCircularAdapter(childFragmentManager, fragmentList)
+        fragmentAdapter = FragmentVpAdapter(
+            childFragmentManager,
+            fragmentList
+        )
         vpCircular.adapter = fragmentAdapter
         vpCircular.addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
@@ -92,7 +92,6 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
             }
 
             override fun onPageSelected(position: Int) {
-                mListener.showBottom()
                 if (position == 0) {
                     checkFirsTab()
                 } else if (position == 1) {

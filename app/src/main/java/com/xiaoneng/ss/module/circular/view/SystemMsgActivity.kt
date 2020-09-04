@@ -7,8 +7,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.RecycleViewDivider
-import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.circular.adapter.SysMsgAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
@@ -51,7 +49,6 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
         mAdapter = SysMsgAdapter(R.layout.item_sys_msg, mData)
         rvSysMsg.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@SystemMsgActivity)
-            addItemDecoration(RecycleViewDivider(context, dp2px(context, 20f).toInt()))
             setAdapter(mAdapter)
         }
         mAdapter.setOnItemClickListener { _, view, position ->

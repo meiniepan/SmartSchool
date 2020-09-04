@@ -57,16 +57,19 @@ inline fun getDatePick(context: Activity): DateTimePicker {
 inline fun mainLogin(context: Context) {
     when (UserInfo.getUserBean().usertype) {
         "1" -> {
-            mStartActivity<LoginStuActivity>(context)
+            if (UserInfo.getUserBean().logintype == Constant.LOGIN_TYPE_STU) {
+
+                mStartActivity<LoginStuActivity>(context)
+            } else {
+                mStartActivity<LoginTeacherActivity>(context) {
+                    putExtra(Constant.FLAG, false)
+                }
+            }
         }
         "2" -> {
             mStartActivity<LoginTeacherActivity>(context)
         }
-        "3" -> {
-            mStartActivity<LoginTeacherActivity>(context){
-                putExtra(Constant.FLAG,false)
-            }
-        }
+
         "99" -> {
             mStartActivity<LoginTeacherActivity>(context)
         }
@@ -87,8 +90,19 @@ inline fun mDownloadFile(context: Context, name: String): String? {
 
 }
 
-inline fun getCornerRadii(leftTop:Float,rightTop:Float,
-                           leftBottom:Float,rightBottom:Float):FloatArray{
+inline fun getCornerRadii(
+    leftTop: Float, rightTop: Float,
+    leftBottom: Float, rightBottom: Float
+): FloatArray {
     //这里返回的一个浮点型的数组，一定要有8个元素，不然会报错
-    return floatArrayOf(dp2px(leftTop), dp2px(leftTop), dp2px(rightTop),dp2px(rightTop),dp2px(rightBottom), dp2px(rightBottom),dp2px(leftBottom),dp2px(leftBottom))
+    return floatArrayOf(
+        dp2px(leftTop),
+        dp2px(leftTop),
+        dp2px(rightTop),
+        dp2px(rightTop),
+        dp2px(rightBottom),
+        dp2px(rightBottom),
+        dp2px(leftBottom),
+        dp2px(leftBottom)
+    )
 }

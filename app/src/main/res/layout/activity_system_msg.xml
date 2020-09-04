@@ -19,7 +19,7 @@
         <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
             android:id="@+id/rvSysMsg"
             style="@style/recycler_margin_style"
-            android:layout_marginTop="20dp" />
+             />
     </LinearLayout>
 
 </LinearLayout>

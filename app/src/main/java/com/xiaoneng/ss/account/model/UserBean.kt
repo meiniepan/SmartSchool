@@ -33,6 +33,7 @@ data class UserBean(
     var classmaster: String= "",
     var roleid: String= "",
     var usertype: String= "",//学生1  老师2  家长3
+    var logintype: String= "",//学生self   家长parents
     var parents: ArrayList<ParentBean> = ArrayList(),
     var students: ArrayList<StudentBean> = ArrayList(),
     var domain: String= ""

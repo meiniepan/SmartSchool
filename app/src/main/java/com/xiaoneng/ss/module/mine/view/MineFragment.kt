@@ -2,6 +2,7 @@ package com.xiaoneng.ss.module.mine.view
 
 import android.text.TextUtils
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
@@ -28,12 +29,12 @@ import java.io.File
  */
 class
 MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
-    protected lateinit var mAdapter: MineAdapter
+    lateinit var mAdapter: MineAdapter
 
     override fun getLayoutId(): Int = R.layout.fragment_mine
 
     companion object {
-        fun getInstance(): MineFragment? {
+        fun getInstance(): Fragment {
             return MineFragment()
         }
 
@@ -43,15 +44,21 @@ MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
         super.initView()
         tvNameMine.text = UserInfo.getUserBean().realname
 
-        if (UserInfo.getUserBean().usertype == "1") {
-            llItem3.visibility = View.GONE
-            llItem6.visibility = View.VISIBLE
-        } else if (UserInfo.getUserBean().usertype == "3"){
-            llItem3.visibility = View.VISIBLE
-            llItem6.visibility = View.GONE
-        }else{
-            llItem3.visibility = View.GONE
-            llItem6.visibility = View.GONE
+        when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                if ((UserInfo.getUserBean().logintype) == Constant.LOGIN_TYPE_STU) {
+                    llItem3.visibility = View.GONE
+                    llItem6.visibility = View.VISIBLE
+                } else {
+                    llItem3.visibility = View.VISIBLE
+                    llItem6.visibility = View.GONE
+                }
+            }
+
+            else -> {
+                llItem3.visibility = View.GONE
+                llItem6.visibility = View.GONE
+            }
         }
 
         llItem1.setOnClickListener {

@@ -12,6 +12,8 @@ object Constant {
     const val OBJECT_KEY = "avatar/student/id/avatar/"
 
     //    const val BASE_URL = "https://www.sojson.com"
+    const val LOGIN_TYPE_STU = "self"
+    const val LOGIN_TYPE_PAR = "parents"
     const val DATA = "data"
     const val FLAG = "flag"
     const val BIND_PARENT_SMS = 4

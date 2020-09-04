@@ -1,5 +1,6 @@
 package com.xiaoneng.ss.module.school.view
 
+import androidx.fragment.app.Fragment
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.state.UserInfo
@@ -19,7 +20,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_school
 
     companion object {
-        fun getInstance(): SchoolFragment? {
+        fun getInstance(): Fragment {
             return SchoolFragment()
         }
 

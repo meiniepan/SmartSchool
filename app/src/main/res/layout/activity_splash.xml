@@ -48,7 +48,7 @@
         android:textColor="@color/commonBlue"
         app:timer_arcColor="@color/commonBlue"
         app:timer_arcStrokeWidth="2dp"
-        app:timer_duration="10000"
+        app:timer_duration="1000"
         app:timer_padding="10dp" />
 
 </FrameLayout>

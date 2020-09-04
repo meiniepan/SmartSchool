@@ -8,9 +8,8 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.FragmentVpAdapter
 import com.xiaoneng.ss.common.utils.mStartActivity
-import com.xiaoneng.ss.module.circular.adapter.FragmentCircularAdapter
-import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_task.*
 import kotlinx.android.synthetic.main.fragment_circular.vpCircular
@@ -23,9 +22,8 @@ import kotlinx.android.synthetic.main.fragment_circular.vpCircular
  * Time: 17:01
  */
 class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    private lateinit var fragmentAdapter: FragmentCircularAdapter
+    private lateinit var fragmentAdapter: FragmentVpAdapter
     private var fragmentList = ArrayList<Fragment>()
-    var mData = ArrayList<NoticeBean>()
 
     override fun getLayoutId(): Int = R.layout.activity_task
 
@@ -45,11 +43,6 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     }
 
-    override fun initData() {
-        super.initData()
-//        mViewModel.getNoticeList()
-
-    }
 
     private fun initTab() {
         tvTaskTab1.setOnClickListener {
@@ -111,7 +104,10 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         fragmentList.add(TaskStatusFragment.getInstance().apply {
             arguments = Bundle().apply { putString(Constant.TASK_STATUS, "3") }
         })
-        fragmentAdapter = FragmentCircularAdapter(supportFragmentManager, fragmentList)
+        fragmentAdapter = FragmentVpAdapter(
+            supportFragmentManager,
+            fragmentList
+        )
         vpCircular.adapter = fragmentAdapter
         vpCircular.addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
