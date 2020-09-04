@@ -5,8 +5,8 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.RecycleViewDivider
 import com.xiaoneng.ss.common.utils.dp2px
-import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.mine.adapter.InviteCodeAdapter
+import com.xiaoneng.ss.module.mine.model.InviteCodeBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_add_task.*
 
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_add_task.*
  */
 class ThingLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapter: InviteCodeAdapter
-    var mData = ArrayList<NoticeBean>()
+    var mData = ArrayList<InviteCodeBean>()
 
 
     override fun getLayoutId(): Int = R.layout.activity_thing_leave

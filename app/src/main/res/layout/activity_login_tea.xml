@@ -128,6 +128,8 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="验证码"
+                    android:imeActionLabel="登录"
+                    android:imeOptions="actionGo"
                     android:inputType="number"
                     android:textSize="@dimen/sp_20"
                     android:layout_marginStart="12dp"

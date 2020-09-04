@@ -53,10 +53,22 @@ MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
                     llItem3.visibility = View.VISIBLE
                     llItem6.visibility = View.GONE
                 }
+                llItem4.visibility = View.GONE
+            }
+
+            "2" -> {
+                if ((UserInfo.getUserBean().classmaster) == "1") {
+                    llItem4.visibility = View.VISIBLE
+                } else {
+                    llItem4.visibility = View.GONE
+                }
+                llItem3.visibility = View.GONE
+                llItem6.visibility = View.GONE
             }
 
             else -> {
                 llItem3.visibility = View.GONE
+                llItem4.visibility = View.GONE
                 llItem6.visibility = View.GONE
             }
         }
@@ -80,7 +92,7 @@ MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
         }
 
         llItem5.setOnClickListener {
-            mStartActivity<SwitchIdActivity>(requireContext())
+//            mStartActivity<SwitchIdActivity>(requireContext())
         }
 
         llItem6.setOnClickListener {

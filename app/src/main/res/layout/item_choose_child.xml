@@ -15,13 +15,16 @@
 
         <CheckBox
             android:id="@+id/cbChild"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/selector_check_round"
+            android:button="@null"
             android:text="" />
 
         <TextView
             android:id="@+id/tvNameChild"
             android:layout_width="wrap_content"
+            android:layout_marginStart="5dp"
             android:layout_height="wrap_content"
             android:text="" />
 

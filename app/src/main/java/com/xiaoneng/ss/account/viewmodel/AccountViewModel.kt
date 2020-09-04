@@ -27,6 +27,7 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
     val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
     val mUserInfoData: MutableLiveData<UserBean> = MutableLiveData()
     val mParentsData: MutableLiveData<Any> = MutableLiveData()
+    val mChildData: MutableLiveData<Any> = MutableLiveData()
 
     fun captcha(type:Int,phone: String) {
         initiateRequest(
@@ -96,6 +97,19 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
     fun unbindParent(phone:String) {
         initiateRequest(
             { mParentsData.value = mRepository.unbindParent(phone) },
+            loadState
+        )
+    }
+
+    fun switchChild(uid:String) {
+        initiateRequest(
+            { mChildData.value = mRepository.switchChild(uid) },
+            loadState
+        )
+    }
+    fun queryCodeList(classId:String? = null) {
+        initiateRequest(
+            { mParentsData.value = mRepository.queryCodeList(classId) },
             loadState
         )
     }

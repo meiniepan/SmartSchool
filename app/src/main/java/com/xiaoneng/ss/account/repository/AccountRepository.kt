@@ -191,4 +191,12 @@ class AccountRepository(val loadState: MutableLiveData<State>) : ApiRepository()
         return apiService.unbindParent(UserInfo.getUserBean().token, phone)
             .dataConvert(loadState)
     }
+    suspend fun switchChild(uid: String): Any {
+        return apiService.switchChild(UserInfo.getUserBean().token, uid)
+            .dataConvert(loadState)
+    }
+    suspend fun queryCodeList(classId: String?): Any {
+        return apiService.queryCodeList(UserInfo.getUserBean().token, classId)
+            .dataConvert(loadState)
+    }
 }

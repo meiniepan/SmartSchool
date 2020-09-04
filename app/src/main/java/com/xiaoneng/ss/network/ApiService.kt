@@ -68,6 +68,7 @@ interface ApiService {
     suspend fun onSmsCode2(
         @Field("phone") phone: String
     ): BaseResponse<CaptchaResponse>
+
     /**
      * 家长登录获取短信验证码
      */
@@ -76,6 +77,7 @@ interface ApiService {
     suspend fun onSmsCode3(
         @Field("phone") phone: String
     ): BaseResponse<CaptchaResponse>
+
     /**
      * 家长登录获取短信验证码
      */
@@ -110,7 +112,6 @@ interface ApiService {
     suspend fun modifyInfo2(
         @Body requestBody: UserBean
     ): BaseResponse<UserBean>
-
 
 
     /**
@@ -491,7 +492,9 @@ interface ApiService {
         @Field("token") token: String,
         @Field("phone") phone: String,
         @Field("vcode") vcode: String
-    ): BaseResponse<Any>/**
+    ): BaseResponse<Any>
+
+    /**
      *学生解除绑定家长
      */
     @FormUrlEncoded
@@ -499,5 +502,25 @@ interface ApiService {
     suspend fun unbindParent(
         @Field("token") token: String,
         @Field("phone") phone: String
+    ): BaseResponse<Any>
+
+    /**
+     *学生家长切换登录学生
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/student/modifyPS")
+    suspend fun switchChild(
+        @Field("token") token: String,
+        @Field("uid") uid: String
+    ): BaseResponse<Any>
+
+    /**
+     *教师查询班级邀请码
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/classs/codeList")
+    suspend fun queryCodeList(
+        @Field("token") token: String,
+        @Field("classid") classid: String? = null
     ): BaseResponse<Any>
 }

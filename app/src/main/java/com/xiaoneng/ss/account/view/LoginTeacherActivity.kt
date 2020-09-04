@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.CountDownTimer
 import android.text.TextUtils
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
@@ -38,10 +39,22 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
         tvSendCaptchaTeacher.setOnClickListener(this)
         tvLoginTeacher.setOnClickListener(this)
         tvSwitchIdTeacher.setOnClickListener(this)
+        UserInfo.getUserBean().phone?.let {
+            etPhoneTeacher.setText(UserInfo.getUserBean().phone)
+        }
         if (isTeacher) {
             tvType.text = "老师"
         } else {
             tvType.text = "家长"
+        }
+        etCaptchaTeacher.setOnEditorActionListener { teew, i, keyEvent ->
+            when (i) {
+                EditorInfo.IME_ACTION_GO -> {
+                    doLogin()
+                }
+
+            }
+            return@setOnEditorActionListener false
         }
     }
 
@@ -74,23 +87,29 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
                         tvSendCaptchaTeacher.text = "发送验证码 $mm"
                     }
                 }.start()
+                etCaptchaTeacher.isFocusable = true
+                etCaptchaTeacher.isFocusableInTouchMode = true
             }
 
             R.id.tvLoginTeacher -> {
-                var phoneStr = etPhoneTeacher.text.toString()
-                var vCodeStr = etCaptchaTeacher.text.toString()
-
-                if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(vCodeStr)) {
-                    showTip("请输入完整信息")
-                    return
-                }
-                if (isTeacher) {
-                    mViewModel.login(2, LoginReq(phoneStr, vCodeStr))
-                } else {
-                    mViewModel.login(3, LoginReq(phoneStr, vCodeStr))
-                }
+                doLogin()
             }
 
+        }
+    }
+
+    private fun doLogin() {
+        var phoneStr = etPhoneTeacher.text.toString()
+        var vCodeStr = etCaptchaTeacher.text.toString()
+
+        if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(vCodeStr)) {
+            showTip("请输入完整信息")
+            return
+        }
+        if (isTeacher) {
+            mViewModel.login(2, LoginReq(phoneStr, vCodeStr))
+        } else {
+            mViewModel.login(3, LoginReq(phoneStr, vCodeStr))
         }
     }
 

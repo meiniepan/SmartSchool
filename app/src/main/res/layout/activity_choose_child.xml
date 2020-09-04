@@ -29,7 +29,8 @@
             android:textColor="@color/white" />
 
     </RelativeLayout>
-
+<include layout="@layout/layout_split_tint_10"
+    />
     <LinearLayout
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"

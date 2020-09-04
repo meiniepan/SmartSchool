@@ -46,8 +46,8 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
             it?.let{
                 toast(R.string.register_success)
                 mStartActivity<LoginStuActivity>(this)
+                finish()
             }
-            finish()
         })
     }
 

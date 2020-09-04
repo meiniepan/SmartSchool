@@ -28,6 +28,7 @@ data class StudentBean(
     var device_no: String,
     var cno: String,
     var usertype: String,
+    var choice: String,
     var roleid: String,
     var parents: MutableList<ParentBean>
 )

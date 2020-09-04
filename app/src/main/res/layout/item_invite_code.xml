@@ -5,9 +5,9 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bac_invite"
     android:orientation="vertical"
-    android:paddingTop="48dp"
+    android:layout_marginTop="62dp"
     android:gravity="center_horizontal"
-    android:paddingBottom="40dp">
+    >
 
 
     <TextView

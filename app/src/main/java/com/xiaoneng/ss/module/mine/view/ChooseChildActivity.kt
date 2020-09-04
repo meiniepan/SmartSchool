@@ -2,15 +2,13 @@ package com.xiaoneng.ss.module.mine.view
 
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.account.model.UserBean
+import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.model.ParentBean
+import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.model.StudentBean
-import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import com.xiaoneng.ss.module.mine.adapter.ChooseChildAdapter
 import kotlinx.android.synthetic.main.activity_choose_child.*
 import org.jetbrains.anko.toast
@@ -22,7 +20,8 @@ import org.jetbrains.anko.toast
  * @date: 2020/02/27
  * Time: 17:01
  */
-class ChooseChildActivity : BaseLifeCycleActivity<CircularViewModel>() {
+class ChooseChildActivity : BaseLifeCycleActivity<AccountViewModel>() {
+    private var uid: String = ""
     lateinit var mAdapter: ChooseChildAdapter
     var mData = ArrayList<StudentBean>()
 
@@ -33,7 +32,7 @@ class ChooseChildActivity : BaseLifeCycleActivity<CircularViewModel>() {
         super.initView()
         initAdapter()
         tvConfirm.setOnClickListener {
-
+            mViewModel.switchChild(uid)
         }
 
     }
@@ -45,7 +44,12 @@ class ChooseChildActivity : BaseLifeCycleActivity<CircularViewModel>() {
             setAdapter(mAdapter)
         }
         mAdapter.setOnItemClickListener { _, view, position ->
-
+            uid = mData[position].uid
+            for (i in mData) {
+                i.choice = "0"
+            }
+            mData[position].choice = "1"
+            mAdapter.notifyDataSetChanged()
         }
     }
 
@@ -53,25 +57,20 @@ class ChooseChildActivity : BaseLifeCycleActivity<CircularViewModel>() {
     override fun onResume() {
         super.onResume()
         mData.clear()
-        mData.addAll(UserInfo.getUserBean().students)
-        if (mData.size > 0) {
-            rvChooseChild.notifyDataSetChanged()
-        } else {
-            rvChooseChild.showEmptyView()
+        UserInfo.getUserBean().students?.let {
+            mData.addAll(it)
         }
+            rvChooseChild.notifyDataSetChanged()
     }
 
 
     override fun initDataObserver() {
-        mViewModel.mNoticeData.observe(this, Observer { response ->
+        mViewModel.mChildData.observe(this, Observer { response ->
             response?.let {
                 showSuccess()
-                val gson: Gson = GsonBuilder().enableComplexMapKeySerialization().create()
-                val jsonString = gson.toJson(it)
-                val resultType = object : TypeToken<ArrayList<ParentBean>>() {}.type
-                gson.fromJson<ArrayList<ParentBean>>(jsonString,resultType)?.let {
-                    toast("绑定成功")
-                    UserInfo.modifyParents(it)
+                netResponseFormat<UserBean>(it)?.let {
+                    toast("切换成功")
+                    UserInfo.loginSuccess(it)
                     finish()
                 }
             }

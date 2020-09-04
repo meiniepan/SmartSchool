@@ -62,7 +62,9 @@ class BindParentActivity : BaseLifeCycleActivity<AccountViewModel>() {
     override fun onResume() {
         super.onResume()
         mData.clear()
-        mData.addAll(UserInfo.getUserBean().parents)
+        UserInfo.getUserBean().parents?.let {
+            mData.addAll(it)
+        }
         if (mData.size > 0) {
             rvParent.notifyDataSetChanged()
         } else {

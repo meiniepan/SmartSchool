@@ -1,5 +1,6 @@
 package com.xiaoneng.ss.module.mine.adapter
 
+import android.widget.CheckBox
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
@@ -19,7 +20,10 @@ class ChooseChildAdapter(layoutId: Int, listData: MutableList<StudentBean>?) :
     override fun convert(viewHolder: BaseViewHolder?, item: StudentBean) {
         viewHolder?.let { holder ->
             holder.setText(R.id.tvNameChild, item.realname)
-
+            holder.getView<CheckBox>(R.id.cbChild).apply {
+                isChecked = item.choice == "1"
+                isEnabled = false
+            }
         }
     }
 }

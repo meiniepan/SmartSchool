@@ -9,7 +9,7 @@
 
     <com.xiaoneng.ss.custom.widgets.CustomTitleBar
         style="@style/title_style"
-        app:title="绑定家长" />
+        app:title="添加家长" />
 
     <LinearLayout
         android:id="@+id/contentLayout"
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="26dp"
                 android:background="@null"
-                android:hint="请输入新手机号"
+                android:hint="请输入家长手机号"
                 android:inputType="phone"
                 android:textSize="@dimen/sp_20" />
         </LinearLayout>

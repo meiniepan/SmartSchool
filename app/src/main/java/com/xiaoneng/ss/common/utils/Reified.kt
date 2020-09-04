@@ -4,6 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import cn.addapp.pickers.picker.DateTimePicker
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import com.xiaoneng.ss.account.view.LoginStuActivity
 import com.xiaoneng.ss.account.view.LoginSwitchActivity
 import com.xiaoneng.ss.account.view.LoginTeacherActivity
@@ -84,9 +87,8 @@ inline fun mainLogin(context: Context) {
 
 
 inline fun mDownloadFile(context: Context, name: String): String? {
-    var filePath = context.getExternalFilesDir(null)?.absolutePath + File.separator + name
 
-    return filePath
+    return context.getExternalFilesDir(null)?.absolutePath + File.separator + name
 
 }
 
@@ -105,4 +107,11 @@ inline fun getCornerRadii(
         dp2px(leftBottom),
         dp2px(leftBottom)
     )
+}
+
+inline fun <reified T> netResponseFormat(response: Any): T? {
+    val gson: Gson = GsonBuilder().enableComplexMapKeySerialization().create()
+    val jsonString = gson.toJson(response)
+    val resultType = object : TypeToken<T>() {}.type
+    return gson.fromJson<T>(jsonString, resultType)
 }

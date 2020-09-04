@@ -141,12 +141,14 @@
 
 
             <EditText
-                android:id="@+id/et_pwd"
+                android:id="@+id/etPwd"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:hint="请输入您的密码"
+                android:imeActionLabel="登录"
+                android:imeOptions="actionGo"
                 android:textSize="@dimen/sp_20"
                 android:layout_marginStart="12dp"
                 android:inputType="textPassword"
@@ -185,6 +187,8 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:hint="验证码"
+                android:imeActionLabel="登录"
+                android:imeOptions="actionGo"
                 android:inputType="number"
                 android:textSize="@dimen/sp_20"
                 android:layout_marginStart="12dp"

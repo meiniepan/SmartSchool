@@ -5,8 +5,8 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.TextView
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
@@ -35,11 +35,18 @@ class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initView() {
         super.initView()
         initAdapter()
-        etSearch.addTextChangedListener {
-            if (it!!.trim().length > 0) {
-                showLoading()
-                mViewModel.queryStudent(it.toString())
+
+        etSearch.setOnEditorActionListener { teew, i, keyEvent ->
+            when (i) {
+                EditorInfo.IME_ACTION_SEARCH -> {
+                    if (etSearch.text.toString().isNotEmpty()) {
+                        showLoading()
+                        mViewModel.queryStudent(etSearch.text.toString())
+                    }
+                }
+
             }
+            return@setOnEditorActionListener false
         }
 
     }
@@ -105,7 +112,7 @@ class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 bottomDialog.dismiss()
             }
         contentView.findViewById<TextView>(R.id.tvNameAddStuDialog)
-            .text = mData[position].realname+"-"+mData[position].classname
+            .text = mData[position].realname + "-" + mData[position].classname
     }
 
 }

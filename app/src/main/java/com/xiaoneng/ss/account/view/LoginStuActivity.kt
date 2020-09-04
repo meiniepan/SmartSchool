@@ -7,6 +7,7 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.text.method.TransformationMethod
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
@@ -43,7 +44,27 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
         tvSendCaptcha.setOnClickListener(this)
         tvLogin.setOnClickListener(this)
         tvSwitchId.setOnClickListener(this)
+        UserInfo.getUserBean().phone?.let {
+            etPhone.setText(UserInfo.getUserBean().phone)
+        }
+        etCaptcha.setOnEditorActionListener { teew, i, keyEvent ->
+            when (i) {
+                EditorInfo.IME_ACTION_GO -> {
+                    doLogin()
+                }
 
+            }
+            return@setOnEditorActionListener false
+        }
+        etPwd.setOnEditorActionListener { teew, i, keyEvent ->
+            when (i) {
+                EditorInfo.IME_ACTION_GO -> {
+                    doLogin()
+                }
+
+            }
+            return@setOnEditorActionListener false
+        }
     }
 
     override fun onClick(v: View?) {
@@ -60,19 +81,19 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
                     //密文
                     var method1: HideReturnsTransformationMethod =
                         HideReturnsTransformationMethod.getInstance()
-                    et_pwd.transformationMethod = method1;
+                    etPwd.transformationMethod = method1;
                     isHideFirst = false;
                 } else {
                     iv_eye.setImageResource(R.drawable.ic_eye_no);
                     //密文
                     var method: TransformationMethod = PasswordTransformationMethod.getInstance();
-                    et_pwd.transformationMethod = method;
+                    etPwd.transformationMethod = method;
                     isHideFirst = true;
 
                 }
                 // 光标的位置
-                val index: Int = et_pwd.getText().toString().length
-                et_pwd.setSelection(index)
+                val index: Int = etPwd.getText().toString().length
+                etPwd.setSelection(index)
             }
             R.id.tvSwitchType -> {
                 if (isPwdType) {
@@ -109,25 +130,29 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
             }
 
             R.id.tvLogin -> {
-                var phoneStr = etPhone.text.toString()
-                var vCodeStr = etCaptcha.text.toString()
-                var pwdStr = et_pwd.text.toString()
-                if (isPwdType) {
-                    if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(pwdStr)) {
-                        showTip("请输入完整信息")
-                        return
-                    }
-                } else {
-                    if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(vCodeStr)) {
-                        showTip("请输入完整信息")
-                        return
-                    }
-                }
-
-                mViewModel.login(1,LoginReq(phoneStr, vCodeStr, pwdStr))
+                doLogin()
             }
 
         }
+    }
+
+    private fun doLogin() {
+        var phoneStr = etPhone.text.toString()
+        var vCodeStr = etCaptcha.text.toString()
+        var pwdStr = etPwd.text.toString()
+        if (isPwdType) {
+            if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(pwdStr)) {
+                showTip("请输入完整信息")
+                return
+            }
+        } else {
+            if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(vCodeStr)) {
+                showTip("请输入完整信息")
+                return
+            }
+        }
+
+        mViewModel.login(1, LoginReq(phoneStr, vCodeStr, pwdStr))
     }
 
     override fun onDestroy() {

@@ -76,6 +76,23 @@ abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
         loadService.showCallback(SuccessCallback::class.java)
     }
 
+    open fun showNotLoginTip(msg: String) {
+        if (!TextUtils.isEmpty(msg)) {
+            MaterialDialog(this).show {
+                title(R.string.title)
+                message(text = msg)
+                cornerRadius(8.0f)
+                positiveButton(R.string.done)
+                positiveButton {
+                    mainLogin(this@BaseLifeCycleActivity)
+                }
+                cancelOnTouchOutside(false)
+            }
+            false
+        }
+        loadService.showCallback(SuccessCallback::class.java)
+    }
+
     open fun showEmpty() {
         loadService.showCallback(EmptyCallBack::class.java)
     }
@@ -94,7 +111,7 @@ abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
                     StateType.TIP -> showTip(it.message)
                     StateType.EMPTY -> showEmpty()
                     StateType.NOT_LOGIN -> {
-                        mainLogin(this)
+                        showNotLoginTip(it.message)
                     }
                 }
             }

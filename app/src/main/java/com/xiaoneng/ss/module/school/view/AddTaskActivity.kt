@@ -13,8 +13,8 @@ import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.common.utils.RecycleViewDivider
 import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.common.utils.getDatePick
-import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.mine.adapter.InviteCodeAdapter
+import com.xiaoneng.ss.module.mine.model.InviteCodeBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_add_task.*
 
@@ -29,7 +29,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var beginTime: String? = ""
     var endTime: String? = ""
     lateinit var mAdapter: InviteCodeAdapter
-    var mData = ArrayList<NoticeBean>()
+    var mData = ArrayList<InviteCodeBean>()
     private val pick: DateTimePicker by lazy {
         getDatePick(this)
     }
