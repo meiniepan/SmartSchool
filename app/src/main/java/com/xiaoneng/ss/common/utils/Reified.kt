@@ -55,13 +55,17 @@ inline fun getDatePick(context: Activity): DateTimePicker {
 }
 
 inline fun mainLogin(context: Context) {
-    UserInfo.logoutSuccess()
     when (UserInfo.getUserBean().usertype) {
         "1" -> {
             mStartActivity<LoginStuActivity>(context)
         }
         "2" -> {
             mStartActivity<LoginTeacherActivity>(context)
+        }
+        "3" -> {
+            mStartActivity<LoginTeacherActivity>(context){
+                putExtra(Constant.FLAG,false)
+            }
         }
         "99" -> {
             mStartActivity<LoginTeacherActivity>(context)
@@ -71,6 +75,7 @@ inline fun mainLogin(context: Context) {
         }
     }
 
+    UserInfo.logoutSuccess()
 
 }
 

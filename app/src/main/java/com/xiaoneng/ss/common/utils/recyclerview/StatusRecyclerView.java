@@ -175,7 +175,7 @@ public class StatusRecyclerView<T> extends RecyclerView implements StatusChangeI
     public void setAdapterCheckEmpty(@Nullable Adapter adapter, List<T> dataList){
         setAdapter(adapter,dataList);
         if(null!=dataList&&dataList.size()==0){
-            notifyDataSetChange();
+            notifyDataSetChanged();
         }
     }
 
@@ -186,11 +186,11 @@ public class StatusRecyclerView<T> extends RecyclerView implements StatusChangeI
     /**
      * 列表数据刷新，自动判断是否是空集合加载空view
      */
-    public void notifyDataSetChange(){
-        notifyDataSetChange(this);
+    public void notifyDataSetChanged(){
+        notifyDataSetChanged(this);
     }
 
-    public void notifyDataSetChange(StatusChangeInterface statusChangeInterface){
+    public void notifyDataSetChanged(StatusChangeInterface statusChangeInterface){
         if(null==dataList || !enableAutoEmpty){
             getAdapter().notifyDataSetChanged();
         }else {
@@ -202,9 +202,9 @@ public class StatusRecyclerView<T> extends RecyclerView implements StatusChangeI
         }
     }
 
-    public void notifyDataSetChange(OnShowContentListener onShowContentListener){
+    public void notifyDataSetChanged(OnShowContentListener onShowContentListener){
         this.onShowContentListener = onShowContentListener;
-        notifyDataSetChange();
+        notifyDataSetChanged();
     }
 
     public void setOnShowContentListener(OnShowContentListener onShowContentListener){

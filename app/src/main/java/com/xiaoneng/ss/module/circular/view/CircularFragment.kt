@@ -40,17 +40,16 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
         initViewPager()
         initTab()
         flSysMsg.setOnClickListener {
-            mStartActivity<SystemMsgListActivity>(context) {
+            mStartActivity<SystemMsgActivity>(context) {
                 putExtra(Constant.DATA, mData)
             }
         }
     }
 
-    override fun initData() {
-        super.initData()
+    override fun onResume() {
+        super.onResume()
         mViewModel.getNoticeList()
     }
-
     private fun initTab() {
         tvCircular.setOnClickListener {
             checkFirsTab()

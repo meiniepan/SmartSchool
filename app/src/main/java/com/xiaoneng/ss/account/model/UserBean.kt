@@ -1,5 +1,8 @@
 package com.xiaoneng.ss.account.model
 
+import com.xiaoneng.ss.model.ParentBean
+import com.xiaoneng.ss.model.StudentBean
+
 /**
  * Created with Android Studio.
  * Description:
@@ -7,7 +10,7 @@ package com.xiaoneng.ss.account.model
  * @date: 2020/03/01
  * Time: 19:54
  */
-data class LoginResponse(
+data class UserBean(
     var token: String,
     var icon: String = "",
     var uid: String= "",
@@ -31,5 +34,6 @@ data class LoginResponse(
     var roleid: String= "",
     var usertype: String= "",//学生1  老师2  家长3
     var parents: ArrayList<ParentBean> = ArrayList(),
+    var students: ArrayList<StudentBean> = ArrayList(),
     var domain: String= ""
 )

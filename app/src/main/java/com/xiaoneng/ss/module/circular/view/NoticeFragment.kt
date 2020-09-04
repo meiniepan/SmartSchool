@@ -49,7 +49,7 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
             }
 
             override fun onRefresh(refreshLayout: RefreshLayout) {
-                initData()
+                getData()
             }
         })
         mAdapter = NoticeAdapter(R.layout.item_notice, mData)
@@ -72,12 +72,16 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
     }
 
 
-    override fun initData() {
-        super.initData()
+
+    override fun onResume() {
+        super.onResume()
+        getData()
+    }
+
+    private fun getData() {
         rvNotice.showLoadingView()
         mViewModel.getNoticeList()
     }
-
 
     override fun initDataObserver() {
         mViewModel.mNoticeData.observe(this, Observer { response ->

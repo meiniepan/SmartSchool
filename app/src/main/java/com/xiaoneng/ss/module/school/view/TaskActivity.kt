@@ -1,10 +1,12 @@
 package com.xiaoneng.ss.module.school.view
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.circular.adapter.FragmentCircularAdapter
@@ -30,6 +32,11 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
+        if (UserInfo.getUserBean().usertype == "2" || UserInfo.getUserBean().usertype == "99") {
+            ivAddTask.visibility = View.VISIBLE
+        } else {
+            ivAddTask.visibility = View.GONE
+        }
         initViewPager()
         initTab()
         ivAddTask.setOnClickListener {
@@ -65,7 +72,6 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvTaskTab3.setChecked(false)
         tvTaskTab4.setChecked(false)
         vpCircular.setCurrentItem(0, true)
-        setStatusBarDark()
     }
 
     private fun checkSecondTab() {
@@ -74,7 +80,6 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvTaskTab3.setChecked(false)
         tvTaskTab4.setChecked(false)
         vpCircular.setCurrentItem(1, true)
-        setStatusBarDark()
     }
 
     private fun checkThirdTab() {
@@ -83,7 +88,6 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvTaskTab2.setChecked(false)
         tvTaskTab4.setChecked(false)
         vpCircular.setCurrentItem(2, true)
-        setStatusBarDark()
     }
 
     private fun check4Tab() {
@@ -92,21 +96,20 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvTaskTab2.setChecked(false)
         tvTaskTab3.setChecked(false)
         vpCircular.setCurrentItem(3, true)
-        setStatusBarDark()
     }
 
     private fun initViewPager() {
         fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS,"-1") }
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "-1") }
         })
         fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS,"1") }
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "1") }
         })
         fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS,"0") }
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "0") }
         })
         fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS,"3") }
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "3") }
         })
         fragmentAdapter = FragmentCircularAdapter(supportFragmentManager, fragmentList)
         vpCircular.adapter = fragmentAdapter

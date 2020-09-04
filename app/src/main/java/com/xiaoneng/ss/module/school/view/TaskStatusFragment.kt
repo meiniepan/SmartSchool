@@ -77,7 +77,7 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     private fun getData() {
         if (status != "-1") {
             mViewModel.getTaskList(status = status!!)
-        }else {
+        } else {
             mViewModel.getTaskList()
         }
     }

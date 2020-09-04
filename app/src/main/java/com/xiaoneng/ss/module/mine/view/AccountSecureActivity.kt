@@ -50,7 +50,6 @@ class AccountSecureActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvSecurityTab2.setChecked(false)
         
         vpSecurity.setCurrentItem(0, true)
-        setStatusBarDark()
     }
 
     private fun checkSecondTab() {
@@ -58,7 +57,6 @@ class AccountSecureActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvSecurityTab1.setChecked(false)
         
         vpSecurity.setCurrentItem(1, true)
-        setStatusBarDark()
     }
     
 

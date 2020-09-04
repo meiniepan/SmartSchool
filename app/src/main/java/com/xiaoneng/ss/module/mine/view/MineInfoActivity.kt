@@ -8,14 +8,14 @@ import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.account.model.LoginResponse
+import com.xiaoneng.ss.account.model.UserBean
+import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.common.utils.oss.OssListener
 import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.model.StsTokenResp
-import com.xiaoneng.ss.module.mine.viewmodel.MineViewModel
 import kotlinx.android.synthetic.main.activity_mine_info.*
 import org.jetbrains.anko.toast
 import java.io.File
@@ -27,7 +27,7 @@ import java.io.File
  * @date: 2020/02/27
  * Time: 17:01
  */
-class MineInfoActivity : BaseLifeCycleActivity<MineViewModel>() {
+class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     private var avatarPath: String? = ""
     val mDownloadData: MutableLiveData<Boolean> = MutableLiveData()
@@ -130,7 +130,7 @@ class MineInfoActivity : BaseLifeCycleActivity<MineViewModel>() {
                 override fun onSuccess() {
                     mRootView.post {
                         mViewModel.modifyUserInfo(
-                            LoginResponse(
+                            UserBean(
                                 UserInfo.getUserBean().token,
                                 portrait = mId
                             )

@@ -8,11 +8,13 @@ package com.xiaoneng.ss.common.utils
  * Time: 17:36
  */
 object Constant {
-    const val DATA = "DATA"
     const val BASE_URL = " http://api.huiwencloud.com:81"
-//    const val BASE_URL = "https://www.sojson.com"
-
     const val OBJECT_KEY = "avatar/student/id/avatar/"
+
+    //    const val BASE_URL = "https://www.sojson.com"
+    const val DATA = "data"
+    const val FLAG = "flag"
+    const val BIND_PARENT_SMS = 4
     const val USERNAME_KEY = "username"
     const val TASK_STATUS = "task_status"
     const val LOGIN_KEY = "login"

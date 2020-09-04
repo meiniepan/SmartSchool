@@ -1,7 +1,9 @@
 package com.xiaoneng.ss.module.circular.view
 
-import android.view.View
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.scwang.smartrefresh.layout.api.RefreshLayout
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.Constant
@@ -18,36 +20,39 @@ import kotlinx.android.synthetic.main.activity_system_msg.*
  * @description:
  * @date :2020/8/20 11:32 AM
  */
-class SystemMsgListActivity : BaseLifeCycleActivity<CircularViewModel>(), View.OnClickListener {
+class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
     lateinit var mAdapter: SysMsgAdapter
-    var mData: ArrayList<NoticeBean>? = ArrayList()
+    var mData: ArrayList<NoticeBean> = ArrayList()
     override fun getLayoutId(): Int {
         return R.layout.activity_system_msg
     }
 
     override fun initView() {
         super.initView()
-        mData = intent.getParcelableArrayListExtra<NoticeBean>(Constant.DATA)
-        mData?.let {
-            if (mData!!.size > 0) {
-                initAdapter()
-            } else {
-                showEmpty()
-            }
-        }
+        initAdapter()
     }
 
     override fun initData() {
         super.initData()
+        rvSysMsg.showLoadingView()
+        mViewModel.getNoticeList()
     }
 
     private fun initAdapter() {
+        rvSysMsg.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+            override fun onLoadMore(refreshLayout: RefreshLayout) {
+                rvSysMsg.finishRefreshLoadMore()
+            }
 
+            override fun onRefresh(refreshLayout: RefreshLayout) {
+                initData()
+            }
+        })
         mAdapter = SysMsgAdapter(R.layout.item_sys_msg, mData)
-        rvSysMsg.apply {
-            layoutManager = LinearLayoutManager(this@SystemMsgListActivity)
+        rvSysMsg.recyclerView.apply {
+            layoutManager = LinearLayoutManager(this@SystemMsgActivity)
             addItemDecoration(RecycleViewDivider(context, dp2px(context, 20f).toInt()))
-            adapter = mAdapter
+            setAdapter(mAdapter)
         }
         mAdapter.setOnItemClickListener { _, view, position ->
             mStartActivity<NoticeDetailActivity>(this) {
@@ -58,17 +63,20 @@ class SystemMsgListActivity : BaseLifeCycleActivity<CircularViewModel>(), View.O
     }
 
     override fun initDataObserver() {
-
-    }
-
-    override fun onClick(v: View?) {
-//        when (v?.id) {
-//            R.id.tvSwitchId -> {
-////                mStartActivity<LoginSwitchActivity>(this){
-////                    putExtra("title",md)
-////                }
-//            }
-//
-//        }
+        mViewModel.mNoticeData.observe(this, Observer { response ->
+            response?.let {
+                rvSysMsg.finishRefreshLoadMore()
+                mData.clear()
+                for (i in it.data) {
+                    if (i.type == "system")
+                        mData.add(i)
+                    if (mData.size > 0) {
+                        rvSysMsg.notifyDataSetChanged()
+                    } else {
+                        rvSysMsg.showEmptyView()
+                    }
+                }
+            }
+        })
     }
 }

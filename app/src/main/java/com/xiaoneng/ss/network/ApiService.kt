@@ -25,24 +25,66 @@ import retrofit2.http.POST
  */
 
 interface ApiService {
-    /**
-     * 学生登录获取短信验证码
-     */
-    @FormUrlEncoded
-    @POST("/api/v1/user/login/smsCode")
-    suspend fun onStuSmsCode(
-        @Field("phone") phone: String
-    ): BaseResponse<CaptchaResponse>
 
 
     /**
      * 学生登陆接口
      */
     @POST("/api/v1/user/login/sloginin")
-    suspend fun onStuLogin(
+    suspend fun onLogin1(
         @Body requestBody: LoginReq
-    ): BaseResponse<LoginResponse>
+    ): BaseResponse<UserBean>
 
+    /**
+     *教师登录接口
+     */
+    @POST("/api/v1/user/login/eloginin")
+    suspend fun onLogin2(
+        @Body requestBody: LoginReq
+    ): BaseResponse<UserBean>
+
+    /**
+     * 家长登陆接口
+     */
+    @POST("/api/v1/user/login/ploginin")
+    suspend fun onLogin3(
+        @Body requestBody: LoginReq
+    ): BaseResponse<UserBean>
+
+    /**
+     * 学生登录获取短信验证码
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/login/smsCode")
+    suspend fun onSmsCode1(
+        @Field("phone") phone: String
+    ): BaseResponse<CaptchaResponse>
+
+    /**
+     * 教师登录获取短信验证码
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/login/esmsCode")
+    suspend fun onSmsCode2(
+        @Field("phone") phone: String
+    ): BaseResponse<CaptchaResponse>
+    /**
+     * 家长登录获取短信验证码
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/login/pSmsCode")
+    suspend fun onSmsCode3(
+        @Field("phone") phone: String
+    ): BaseResponse<CaptchaResponse>
+    /**
+     * 家长登录获取短信验证码
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/student/bindSmsCode")
+    suspend fun onSmsCode4(
+        @Field("phone") phone: String,
+        @Field("token") token: String
+    ): BaseResponse<CaptchaResponse>
 
     /**
      * 学生注册绑定接口
@@ -54,30 +96,41 @@ interface ApiService {
 
 
     /**
-     * 学生信息查询
-     */
-    @FormUrlEncoded
-    @POST("/api/v1/user/student/info")
-    suspend fun onStuInfo(
-        @Field("token") token: String
-    ): BaseResponse<LoginResponse>
-
-
-    /**
      * 学生信息修改接口
      */
     @POST("/api/v1/user/student/modify")
-    suspend fun modifyInfoStu(
-        @Body requestBody: LoginResponse
-    ): BaseResponse<LoginResponse>
+    suspend fun modifyInfo1(
+        @Body requestBody: UserBean
+    ): BaseResponse<UserBean>
 
     /**
      * 教师信息修改接口
      */
     @POST("/api/v1/user/teachers/modify")
-    suspend fun modifyInfoTea(
-        @Body requestBody: LoginResponse
-    ): BaseResponse<LoginResponse>
+    suspend fun modifyInfo2(
+        @Body requestBody: UserBean
+    ): BaseResponse<UserBean>
+
+
+
+    /**
+     * 学生信息查询
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/student/info")
+    suspend fun onQueryInfo1(
+        @Field("token") token: String
+    ): BaseResponse<UserBean>
+
+    /**
+     * 教师信息查询
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/teachers/info")
+    suspend fun onQueryInfo2(
+        @Field("token") token: String
+    ): BaseResponse<UserBean>
+
 
     /**
      *学生获取授权应用列表
@@ -86,58 +139,7 @@ interface ApiService {
     @FormUrlEncoded
     suspend fun onStuApps(
         @Field("token") token: String
-    ): BaseResponse<LoginResponse>
-
-
-    /**
-     *教师登录接口
-     */
-    @POST("/api/v1/user/login/eloginin")
-    suspend fun onTeaLogin(
-        @Body requestBody: LoginReq
-    ): BaseResponse<LoginResponse>
-
-
-    /**
-     * 教师登录获取短信验证码
-     */
-    @FormUrlEncoded
-    @POST("/api/v1/user/login/esmsCode")
-    suspend fun onTeaSmsCode(
-        @Field("phone") phone: String
-    ): BaseResponse<CaptchaResponse>
-
-
-    /**
-     * 教师信息查询
-     */
-    @FormUrlEncoded
-    @POST("/api/v1/user/teachers/info")
-    suspend fun onTeaInfo(
-        @Field("token") token: String
-    ): BaseResponse<LoginResponse>
-
-
-    /**
-     * 教师登录退出
-     */
-    @FormUrlEncoded
-    @POST("/api/v1/user/login/eloginout")
-    suspend fun onTeaLoginOut(
-        @Field("phone") phone: String,
-        @Field("token") token: String
-    ): BaseResponse<LoginResponse>
-
-    /**
-     * 学生登录退出
-     */
-    @FormUrlEncoded
-    @POST("/api/v1/user/login/loginout")
-    suspend fun onStuLoginOut(
-        @Field("phone") phone: String,
-        @Field("token") token: String
-    ): BaseResponse<LoginResponse>
-
+    ): BaseResponse<UserBean>
 
     /**
      * 教师获取授权应用列表
@@ -146,7 +148,7 @@ interface ApiService {
     @POST("/api/v1/user/teachers/apps")
     suspend fun onTeaApps(
         @Field("token") token: String
-    ): BaseResponse<LoginResponse>
+    ): BaseResponse<UserBean>
 
     /**
      *学生通知列表
@@ -455,8 +457,8 @@ interface ApiService {
     suspend fun queryDepartments(
         @Field("token") token: String,
         @Field("id") id: String = "",
-        @Field("examine") examine: String= "",
-        @Field("examinestatus") examinestatus: String= ""
+        @Field("examine") examine: String = "",
+        @Field("examinestatus") examinestatus: String = ""
     ): BaseResponse<Any>
 
     /**
@@ -467,7 +469,35 @@ interface ApiService {
     suspend fun examineTask2(
         @Field("token") token: String,
         @Field("id") id: String = "",
-        @Field("examine") examine: String= "",
-        @Field("examinestatus") examinestatus: String= ""
+        @Field("examine") examine: String = "",
+        @Field("examinestatus") examinestatus: String = ""
+    ): BaseResponse<Any>
+
+    /**
+     *学生家长信息查询
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/student/pinfo")
+    suspend fun getParents(
+        @Field("token") token: String
+    ): BaseResponse<Any>
+
+    /**
+     *学生绑定家长
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/student/pBind")
+    suspend fun bindParent(
+        @Field("token") token: String,
+        @Field("phone") phone: String,
+        @Field("vcode") vcode: String
+    ): BaseResponse<Any>/**
+     *学生解除绑定家长
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/student/pUnbind")
+    suspend fun unbindParent(
+        @Field("token") token: String,
+        @Field("phone") phone: String
     ): BaseResponse<Any>
 }

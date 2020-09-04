@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.account.model.*
 import com.xiaoneng.ss.account.repository.AccountRepository
 import com.xiaoneng.ss.base.viewmodel.BaseViewModel
+import com.xiaoneng.ss.model.StsTokenResp
 import com.xiaoneng.ss.network.initiateRequest
 
 /**
@@ -17,34 +18,28 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
 
 
     // 使用协程 + Retrofit2.6以上版本
-    val mLoginData: MutableLiveData<LoginResponse> = MutableLiveData()
+    val mLoginData: MutableLiveData<UserBean> = MutableLiveData()
     val mCaptchaData: MutableLiveData<CaptchaResponse> = MutableLiveData()
     val mRegisterData: MutableLiveData<RegisterResponse> = MutableLiveData()
 
-    fun captcha(phone: String) {
+    val mLogoutData: MutableLiveData<Any> = MutableLiveData()
+    val mAvatarData: MutableLiveData<String> = MutableLiveData()
+    val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
+    val mUserInfoData: MutableLiveData<UserBean> = MutableLiveData()
+    val mParentsData: MutableLiveData<Any> = MutableLiveData()
+
+    fun captcha(type:Int,phone: String) {
         initiateRequest(
-            { mCaptchaData.value = mRepository.captcha(phone) },
+            { mCaptchaData.value = mRepository.captcha(type,phone) },
             loadState
         )
     }
 
-    fun captchaTeacher(phone: String) {
-        initiateRequest(
-            { mCaptchaData.value = mRepository.captchaTeacher(phone) },
-            loadState
-        )
-    }
 
-    fun loginCo(requestBody: LoginReq) {
-        initiateRequest(
-            { mLoginData.value = mRepository.loginCo(requestBody) },
-            loadState
-        )
-    }
 
-    fun loginTeacher(requestBody: LoginReq) {
+    fun login(type:Int,requestBody: LoginReq) {
         initiateRequest(
-            { mLoginData.value = mRepository.loginTeacher(requestBody) },
+            { mLoginData.value = mRepository.login(type,requestBody) },
             loadState
         )
     }
@@ -60,5 +55,48 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
         initiateRequest({
             mRegisterData.value = mRepository.getAuthority()
         }, loadState)
+    }
+
+
+    fun logout() {
+        initiateRequest(
+            { mLogoutData.value = mRepository.logout() },
+            loadState
+        )
+    }
+
+    fun getSts() {
+        initiateRequest(
+            { mStsData.value = mRepository.getSts() },
+            loadState
+        )
+    }
+
+    fun modifyUserInfo(bean:UserBean) {
+        initiateRequest(
+            { mUserInfoData.value = mRepository.modifyUserInfo(bean) },
+            loadState
+        )
+    }
+
+    fun getParents() {
+        initiateRequest(
+            { mParentsData.value = mRepository.getParents() },
+            loadState
+        )
+    }
+
+    fun bindParent(phone:String,vcode:String) {
+        initiateRequest(
+            { mParentsData.value = mRepository.bindParent(phone,vcode) },
+            loadState
+        )
+    }
+
+    fun unbindParent(phone:String) {
+        initiateRequest(
+            { mParentsData.value = mRepository.unbindParent(phone) },
+            loadState
+        )
     }
 }

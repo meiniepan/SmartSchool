@@ -11,6 +11,7 @@ import com.xiaoneng.ss.account.model.LoginReq
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.module.activity.MainActivity
@@ -26,16 +27,22 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
 
 
     private var timer: CountDownTimer? = null
+    var isTeacher = true
 
     override fun getLayoutId() = R.layout.activity_login_tea
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initView() {
         super.initView()
+        isTeacher = intent.getBooleanExtra(Constant.FLAG, true)
         tvSendCaptchaTeacher.setOnClickListener(this)
         tvLoginTeacher.setOnClickListener(this)
         tvSwitchIdTeacher.setOnClickListener(this)
-
+        if (isTeacher) {
+            tvType.text = "老师"
+        } else {
+            tvType.text = "家长"
+        }
     }
 
     override fun onClick(v: View?) {
@@ -50,7 +57,11 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
                     showTip("请输入正确手机号")
                     return
                 }
-                mViewModel.captchaTeacher(phoneStr)
+                if (isTeacher) {
+                    mViewModel.captcha(2, phoneStr)
+                } else {
+                    mViewModel.captcha(3, phoneStr)
+                }
                 tvSendCaptchaTeacher.isEnabled = false
                 timer = object : CountDownTimer(60 * 1000, 1000) {
                     override fun onFinish() {
@@ -69,12 +80,15 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
                 var phoneStr = etPhoneTeacher.text.toString()
                 var vCodeStr = etCaptchaTeacher.text.toString()
 
-                    if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(vCodeStr)) {
-                        showTip("请输入完整信息")
-                        return
-                    }
-
-                mViewModel.loginTeacher(LoginReq(phoneStr, vCodeStr))
+                if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(vCodeStr)) {
+                    showTip("请输入完整信息")
+                    return
+                }
+                if (isTeacher) {
+                    mViewModel.login(2, LoginReq(phoneStr, vCodeStr))
+                } else {
+                    mViewModel.login(3, LoginReq(phoneStr, vCodeStr))
+                }
             }
 
         }

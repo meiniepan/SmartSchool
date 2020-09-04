@@ -4,11 +4,12 @@ import android.app.Activity
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.xiaoneng.ss.account.model.LoginResponse
+import com.xiaoneng.ss.account.model.UserBean
 import com.xiaoneng.ss.common.state.callback.CollectListener
 import com.xiaoneng.ss.common.utils.AppManager
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.SPreference
+import com.xiaoneng.ss.model.ParentBean
 
 /**
  * Created with Android Studio.
@@ -20,7 +21,7 @@ import com.xiaoneng.ss.common.utils.SPreference
 object UserInfo {
 
     private var isLogin: Boolean by SPreference(Constant.LOGIN_KEY, false)
-    var emptyJson = Gson().toJson(LoginResponse(""))
+    var emptyJson = Gson().toJson(UserBean(""))
     var userInfoJson: String by SPreference(Constant.USER_INFO, emptyJson)
 
 //    var token: String  = "683fa08d7b0e133c3a96859b04cc1fea"
@@ -40,7 +41,7 @@ object UserInfo {
         mState.login(context)
     }
 
-    fun loginSuccess(response: LoginResponse) {
+    fun loginSuccess(response: UserBean) {
         // 改变 sharedPreferences   isLogin值
         isLogin = true
         mState = LoginState()
@@ -55,10 +56,17 @@ object UserInfo {
         userInfoJson = Gson().toJson(bean)
     }
 
-    fun getUserBean(): LoginResponse {
-        val resultType = object : TypeToken<LoginResponse>() {}.type
+    fun modifyParents(parents: ArrayList<ParentBean>) {
+        // 改变 sharedPreferences   isLogin值
+        var bean = getUserBean()
+        bean.parents = parents
+        userInfoJson = Gson().toJson(bean)
+    }
+
+    fun getUserBean(): UserBean {
+        val resultType = object : TypeToken<UserBean>() {}.type
         val gson = Gson()
-        return gson.fromJson<LoginResponse>(userInfoJson, resultType)
+        return gson.fromJson<UserBean>(userInfoJson, resultType)
     }
 
     fun logoutSuccess() {

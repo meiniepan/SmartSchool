@@ -1,25 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:id="@+id/contentLayout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    android:background="@drawable/bac_splash">
+    android:background="@drawable/bac_splash"
+    android:orientation="vertical">
 
-<com.xiaoneng.ss.custom.widgets.SplashTimerTextView
-    android:id="@+id/stt_splash"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:timer_padding="10dp"
-    android:layout_alignParentEnd="true"
-    android:layout_marginTop="20dp"
-    android:layout_marginEnd="20dp"
-    android:text="跳过"
-    android:textColor="@color/white"
-    app:timer_duration="1000"
-    app:timer_arcColor="@color/white"
-    app:timer_arcStrokeWidth="2dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="200dp">
 
-</RelativeLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_splash_logo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="校 能 智 慧 校 园"
+            android:textSize="@dimen/sp_22"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="XIAONENG"
+            android:textColor="@color/commonHint"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <com.xiaoneng.ss.custom.widgets.SplashTimerTextView
+        android:id="@+id/stt_splash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="跳过"
+        android:textColor="@color/commonBlue"
+        app:timer_arcColor="@color/commonBlue"
+        app:timer_arcStrokeWidth="2dp"
+        app:timer_duration="10000"
+        app:timer_padding="10dp" />
+
+</FrameLayout>

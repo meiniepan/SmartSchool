@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bac_white_bac_20"
+        android:orientation="vertical">
+
+        <!--title-->
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="22dp"
+            android:textStyle="bold"
+            android:text="提示"
+            android:textSize="17sp" />
+
+        <!--内容-->
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/title_padding"
+            android:layout_marginTop="7dp"
+            android:layout_marginRight="@dimen/title_padding"
+            android:layout_marginBottom="22dp"
+            android:maxHeight="280dp"
+            android:scrollbars="vertical"
+            android:text="内容"
+            android:gravity="center"
+            android:textSize="13sp" />
+
+        <!--分割线-->
+        <include layout="@layout/layout_split"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!--按钮positiveButton-->
+            <TextView
+                android:id="@+id/negativeButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:text="取消"
+                android:textColor="@color/commonBlue"
+                android:textSize="17sp"
+                android:visibility="visible" />
+
+            <!--中间竖线-->
+            <View
+                android:id="@+id/line_middle"
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/splitColor"
+                android:visibility="visible" />
+
+            <!--按钮negativeButton-->
+            <TextView
+                android:id="@+id/positiveButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:textStyle="bold"
+                android:text="确定"
+                android:textColor="@color/commonBlue"
+                android:textSize="17sp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
+

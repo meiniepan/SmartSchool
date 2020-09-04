@@ -99,7 +99,7 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
             showTip("请输入正确手机号")
             return
         }
-        mViewModel.captcha(phoneStr)
+        mViewModel.captcha(1,phoneStr)
         tvSendCaptchaRegister.isEnabled = false
         timer = object : CountDownTimer(60 * 1000, 1000) {
             override fun onFinish() {

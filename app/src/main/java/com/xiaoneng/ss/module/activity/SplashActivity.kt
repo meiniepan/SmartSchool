@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_splash.*
  * @description:
  * @date :2020/8/10 3:02 PM
  */
-class SplashActivity  : BaseLifeCycleActivity<AccountViewModel>() {
+class SplashActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
 
     override fun getLayoutId(): Int {
@@ -25,11 +25,14 @@ class SplashActivity  : BaseLifeCycleActivity<AccountViewModel>() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
         super.onCreate(savedInstanceState)
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
-        setContentView(R.layout.activity_splash)
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+
+    }
+
+    override fun initView() {
+        super.initView()
         var handler = Handler()
         var runnable = Runnable { mInitView() }
         handler.postDelayed(runnable, stt_splash.getDurationTime())
@@ -39,6 +42,9 @@ class SplashActivity  : BaseLifeCycleActivity<AccountViewModel>() {
         }
     }
 
+    override fun initStatusBar() {
+
+    }
     override fun initData() {
         super.initData()
 
@@ -53,18 +59,14 @@ class SplashActivity  : BaseLifeCycleActivity<AccountViewModel>() {
 
 
     private fun startIntent() {
-        finish()
         if (TextUtils.isEmpty(UserInfo.getUserBean().token)) {
             mainLogin(this)
         } else {
             mStartActivity<MainActivity>(this)
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
         finish()
     }
+
 
 
     override fun initDataObserver() {

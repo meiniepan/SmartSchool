@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bac_switch"
+    android:background="@drawable/bac_splash"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -16,7 +16,9 @@
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingStart="@dimen/title_padding"
+        android:paddingEnd="@dimen/title_padding">
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,34 +26,150 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="19.5dp"
             android:text="请选择您的身份"
-            android:textColor="@color/white"
             android:textSize="@dimen/sp_20" />
 
-        <ImageView
+        <RelativeLayout
             android:id="@+id/iv_item_stu"
             android:layout_width="match_parent"
-            android:layout_height="103.5dp"
-            android:layout_marginStart="23dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:layout_marginEnd="23dp"
-            android:background="@drawable/bac_student_item" />
+            android:background="@drawable/bac_white_bac_20"
+            android:orientation="vertical"
+            android:paddingStart="25dp"
+            android:paddingTop="14dp"
+            android:paddingEnd="25dp"
+            android:paddingBottom="14dp">
 
-        <ImageView
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_stu_logo" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我 是 学 生"
+                    android:textColor="@color/commonBlue"
+                    android:textSize="@dimen/sp_15"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:hint="I'm a student"
+                    android:textSize="@dimen/sp_12" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/ivLogo"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_next_round" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/iv_item_tea"
             android:layout_width="match_parent"
-            android:layout_height="103.5dp"
-            android:layout_marginStart="23dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="23dp"
-            android:background="@drawable/bac_teacher_item" />
+            android:background="@drawable/bac_white_bac_20"
+            android:orientation="vertical"
+            android:paddingStart="25dp"
+            android:paddingTop="14dp"
+            android:paddingEnd="25dp"
+            android:paddingBottom="14dp">
 
-        <ImageView
+            <ImageView
+                android:id="@+id/ivLogo2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_tea_logo" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我 是 老 师"
+                    android:textColor="@color/commonBlue"
+                    android:textSize="@dimen/sp_15"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:hint="I'm a teacher"
+                    android:textSize="@dimen/sp_12" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/ivLogo2"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_next_round" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/iv_item_par"
             android:layout_width="match_parent"
-            android:layout_height="103.5dp"
-            android:layout_marginStart="23dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="23dp"
-            android:background="@drawable/bac_parents_item" />
+            android:background="@drawable/bac_white_bac_20"
+            android:orientation="vertical"
+            android:paddingStart="25dp"
+            android:paddingTop="14dp"
+            android:paddingEnd="25dp"
+            android:paddingBottom="14dp">
+
+            <ImageView
+                android:id="@+id/ivLogo3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_par_logo" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我 是 家 长"
+                    android:textColor="@color/commonBlue"
+                    android:textSize="@dimen/sp_15"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:hint="I'm a parent"
+                    android:textSize="@dimen/sp_12" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/ivLogo3"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_next_round" />
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

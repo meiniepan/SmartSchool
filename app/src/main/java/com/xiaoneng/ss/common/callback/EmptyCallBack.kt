@@ -12,5 +12,5 @@ import com.xiaoneng.ss.R
  */
 
 class EmptyCallBack : Callback() {
-    override fun onCreateView(): Int = R.layout.layout_empty
+    override fun onCreateView(): Int = R.layout.status_view_empty
 }

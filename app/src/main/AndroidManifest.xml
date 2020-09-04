@@ -68,7 +68,7 @@
             >
 
         </activity>
-        <activity android:name=".module.circular.view.SystemMsgListActivity"></activity>
+        <activity android:name=".module.circular.view.SystemMsgActivity"></activity>
         <activity android:name=".module.circular.view.NoticeDetailActivity" />
         <activity android:name=".module.school.view.TaskActivity" />
         <activity android:name=".module.mine.view.MineInfoActivity" />
@@ -92,6 +92,7 @@
         <activity android:name=".module.school.view.ThingLeaveActivity" />
         <activity android:name=".module.school.view.AddStudentActivity" />
         <activity android:name=".module.school.view.TimetableMasterActivity" />
+        <activity android:name=".module.mine.view.AddParentActivity" />
 
 
         <provider

@@ -4,16 +4,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
-    <com.xiaoneng.ss.custom.widgets.CustomTitleBar
-        app:title="选择孩子"
-        style="@style/title_style"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
+        <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+            style="@style/title_style"
+            app:title="选择孩子" />
+
+        <TextView
+            android:id="@+id/tvConfirm"
+            android:layout_width="57dp"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:background="@drawable/bac_blue_bac_5"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+    <LinearLayout
         android:id="@+id/contentLayout"
-        android:paddingTop="75dp"
-        style="@style/recycler_margin_style"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
+            android:id="@+id/rvChooseChild"
+            android:paddingStart="24dp"
+            style="@style/recycler_style" />
+    </LinearLayout>
 </LinearLayout>

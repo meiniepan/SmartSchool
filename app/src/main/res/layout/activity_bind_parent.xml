@@ -4,16 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <com.xiaoneng.ss.custom.widgets.CustomTitleBar
-        app:title="绑定家长"
-        style="@style/title_style"/>
+        style="@style/title_style"
+        app:title="绑定家长" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/contentLayout"
-        android:paddingTop="75dp"
-        style="@style/recycler_margin_style"/>
+        android:orientation="vertical">
 
+        <include layout="@layout/layout_split_tint_10" />
+
+        <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
+            android:id="@+id/rvParent"
+            style="@style/recycler_style"
+            android:paddingStart="24dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tvAddParent"
+            style="@style/button_bottom_blue_bac_style"
+            android:text="添加家长" />
+    </LinearLayout>
 </LinearLayout>

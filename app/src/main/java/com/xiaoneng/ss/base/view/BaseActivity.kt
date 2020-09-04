@@ -43,6 +43,8 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        initStatusBar()
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val modes = window.windowManager.defaultDisplay.supportedModes
             modes.sortBy {
@@ -91,8 +93,6 @@ abstract class BaseActivity : AppCompatActivity() {
 //            }
 //        } else {
 //        }
-        initStatusBar()
-        setStatusBarDark()
         return super.onCreateView(name, context, attrs)
     }
 
@@ -183,9 +183,4 @@ abstract class BaseActivity : AppCompatActivity() {
         initStatusColor(0)
     }
 
-    fun setStatusBarDark() {
-//        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-//        JavaUtils.setStatusBarTransparent(this)
-
-    }
 }

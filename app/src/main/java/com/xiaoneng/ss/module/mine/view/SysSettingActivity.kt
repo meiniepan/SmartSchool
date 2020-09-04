@@ -2,9 +2,9 @@ package com.xiaoneng.ss.module.mine.view
 
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.mainLogin
-import com.xiaoneng.ss.module.mine.viewmodel.MineViewModel
 import kotlinx.android.synthetic.main.activity_sys_setting.*
 
 /**
@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_sys_setting.*
  * @date: 2020/02/27
  * Time: 17:01
  */
-class SysSettingActivity : BaseLifeCycleActivity<MineViewModel>() {
+class SysSettingActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     override fun getLayoutId(): Int = R.layout.activity_sys_setting
 

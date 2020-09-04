@@ -1,8 +1,10 @@
 package com.xiaoneng.ss.module.mine.view
 
 import android.text.TextUtils
+import android.view.View
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
@@ -13,7 +15,6 @@ import com.xiaoneng.ss.common.utils.oss.OssListener
 import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.model.StsTokenResp
 import com.xiaoneng.ss.module.mine.adapter.MineAdapter
-import com.xiaoneng.ss.module.mine.viewmodel.MineViewModel
 import kotlinx.android.synthetic.main.fragment_mine.*
 import org.jetbrains.anko.toast
 import java.io.File
@@ -26,7 +27,7 @@ import java.io.File
  * Time: 17:01
  */
 class
-MineFragment : BaseLifeCycleFragment<MineViewModel>() {
+MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
     protected lateinit var mAdapter: MineAdapter
 
     override fun getLayoutId(): Int = R.layout.fragment_mine
@@ -41,6 +42,17 @@ MineFragment : BaseLifeCycleFragment<MineViewModel>() {
     override fun initView() {
         super.initView()
         tvNameMine.text = UserInfo.getUserBean().realname
+
+        if (UserInfo.getUserBean().usertype == "1") {
+            llItem3.visibility = View.GONE
+            llItem6.visibility = View.VISIBLE
+        } else if (UserInfo.getUserBean().usertype == "3"){
+            llItem3.visibility = View.VISIBLE
+            llItem6.visibility = View.GONE
+        }else{
+            llItem3.visibility = View.GONE
+            llItem6.visibility = View.GONE
+        }
 
         llItem1.setOnClickListener {
             mStartActivity<MineInfoActivity>(requireContext())
@@ -89,6 +101,7 @@ MineFragment : BaseLifeCycleFragment<MineViewModel>() {
         super.onResume()
         initAvatar()
     }
+
     private fun initAvatar() {
         if (!TextUtils.isEmpty(UserInfo.getUserBean().portrait)) {
             if (File(mDownloadFile(requireContext(), UserInfo.getUserBean().portrait)).exists()) {

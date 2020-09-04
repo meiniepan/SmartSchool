@@ -164,7 +164,7 @@ public class RefreshStatusRecyclerView extends SmartRefreshLayout implements Sta
      */
     public void notifyDataSetChanged(){
         finishRefreshLoadMore();
-        mRecyclerView.notifyDataSetChange(this);
+        mRecyclerView.notifyDataSetChanged(this);
 
         if ( startPage != -1
                 && null!=mRecyclerView.getListData()

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bac_white_bac_20">
+
+        <!--title-->
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:text="提示"
+            android:textSize="17sp" />
+
+        <!--内容-->
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="17dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginRight="17dp"
+            android:maxHeight="280dp"
+            android:scrollbars="vertical"
+            android:text=""
+            android:textSize="15sp" />
+
+        <!--分割线-->
+        <include layout="@layout/layout_split"/>
+
+        <!--按钮-->
+        <TextView
+            android:id="@+id/positiveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="13dp"
+            android:paddingBottom="15dp"
+            android:gravity="center"
+            android:text="我知道了"
+            android:textColor="@color/commonBlue"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>
+

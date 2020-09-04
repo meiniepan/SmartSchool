@@ -2,14 +2,18 @@ package com.xiaoneng.ss.module.mine.view
 
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.utils.RecycleViewDivider
-import com.xiaoneng.ss.common.utils.dp2px
-import com.xiaoneng.ss.module.circular.model.NoticeBean
+import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.model.ParentBean
+import com.xiaoneng.ss.model.StudentBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
-import com.xiaoneng.ss.module.mine.adapter.InviteCodeAdapter
-import kotlinx.android.synthetic.main.activity_my_invite.*
+import com.xiaoneng.ss.module.mine.adapter.ChooseChildAdapter
+import kotlinx.android.synthetic.main.activity_choose_child.*
+import org.jetbrains.anko.toast
 
 /**
  * Created with Android Studio.
@@ -19,8 +23,8 @@ import kotlinx.android.synthetic.main.activity_my_invite.*
  * Time: 17:01
  */
 class ChooseChildActivity : BaseLifeCycleActivity<CircularViewModel>() {
-    lateinit var mAdapter: InviteCodeAdapter
-    var mData = ArrayList<NoticeBean>()
+    lateinit var mAdapter: ChooseChildAdapter
+    var mData = ArrayList<StudentBean>()
 
     override fun getLayoutId(): Int = R.layout.activity_choose_child
 
@@ -28,15 +32,17 @@ class ChooseChildActivity : BaseLifeCycleActivity<CircularViewModel>() {
     override fun initView() {
         super.initView()
         initAdapter()
+        tvConfirm.setOnClickListener {
+
+        }
 
     }
 
     private fun initAdapter() {
-        mAdapter = InviteCodeAdapter(R.layout.item_invite_code, mData)
-        contentLayout.apply {
+        mAdapter = ChooseChildAdapter(R.layout.item_choose_child, mData)
+        rvChooseChild.apply {
             layoutManager = LinearLayoutManager(context)
-            addItemDecoration(RecycleViewDivider(context, dp2px(context, 82f).toInt()))
-            adapter = mAdapter
+            setAdapter(mAdapter)
         }
         mAdapter.setOnItemClickListener { _, view, position ->
 
@@ -44,23 +50,29 @@ class ChooseChildActivity : BaseLifeCycleActivity<CircularViewModel>() {
     }
 
 
-    override fun initData() {
-        super.initData()
-//        mViewModel.getNoticeList()
-        mData.add(NoticeBean(id =""))
-        mData.add(NoticeBean(id =""))
+    override fun onResume() {
+        super.onResume()
+        mData.clear()
+        mData.addAll(UserInfo.getUserBean().students)
+        if (mData.size > 0) {
+            rvChooseChild.notifyDataSetChanged()
+        } else {
+            rvChooseChild.showEmptyView()
+        }
     }
 
 
     override fun initDataObserver() {
         mViewModel.mNoticeData.observe(this, Observer { response ->
             response?.let {
-                mData.clear()
-                mData.addAll(it.data)
-                if (mData.size > 0) {
-                    mAdapter.notifyDataSetChanged()
-                } else {
-                    showEmpty()
+                showSuccess()
+                val gson: Gson = GsonBuilder().enableComplexMapKeySerialization().create()
+                val jsonString = gson.toJson(it)
+                val resultType = object : TypeToken<ArrayList<ParentBean>>() {}.type
+                gson.fromJson<ArrayList<ParentBean>>(jsonString,resultType)?.let {
+                    toast("绑定成功")
+                    UserInfo.modifyParents(it)
+                    finish()
                 }
             }
         })

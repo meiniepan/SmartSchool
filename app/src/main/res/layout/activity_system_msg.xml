@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/tintBac"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
             android:id="@+id/rvSysMsg"
             style="@style/recycler_margin_style"
             android:layout_marginTop="20dp" />

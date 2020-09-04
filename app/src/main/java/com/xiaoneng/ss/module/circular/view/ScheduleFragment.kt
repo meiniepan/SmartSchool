@@ -211,9 +211,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
                 showSuccess()
                 val gson: Gson = GsonBuilder().enableComplexMapKeySerialization().create()
                 val jsonString = gson.toJson(it)
-                var rep = gson.fromJson(jsonString, ScheduleDayResponse::class.java)
-                rep?.let {
-
+                gson.fromJson(jsonString, ScheduleDayResponse::class.java)?.let {
                     mDataMonth.clear()
                     mDataMonth.addAll(Lunar.getCurrentDaysOfMonth(it.data))
                     mAdapterMonth.notifyDataSetChanged()
