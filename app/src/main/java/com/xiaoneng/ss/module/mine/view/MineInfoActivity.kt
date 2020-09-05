@@ -1,7 +1,6 @@
 package com.xiaoneng.ss.module.mine.view
 
 import android.text.TextUtils
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
@@ -30,23 +29,31 @@ import java.io.File
 class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     private var avatarPath: String? = ""
-    val mDownloadData: MutableLiveData<Boolean> = MutableLiveData()
     var isDownLoad: Boolean = false
 
-    //    private val OBJECT_KEY = "avatar/"
     override fun getLayoutId(): Int = R.layout.activity_mine_info
 
 
     override fun initView() {
         super.initView()
         tvNameMineInfo.text = UserInfo.getUserBean().realname
-        tvMineItem1.text = UserInfo.getUserBean().realname
+        etMineItem1.setText(UserInfo.getUserBean().realname)
         tvMineItem4.text = starPhoneNum(UserInfo.getUserBean().phone)
 
         ivAvatarMineInfo.setOnClickListener {
             choosePic()
         }
 
+        tvConfirm.setOnClickListener {
+            doConfirm()
+        }
+    }
+
+    private fun doConfirm() {
+        var bean = UserInfo.getUserBean()
+        bean.realname = etMineItem1.text.toString()
+        showLoading()
+        mViewModel.modifyUserInfo(bean)
     }
 
     override fun initData() {
@@ -93,30 +100,6 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
             })
     }
 
-    override fun initDataObserver() {
-        mViewModel.mStsData.observe(this, Observer { response ->
-            response?.let {
-                if (isDownLoad) {
-                    doDownload(it)
-                } else {
-                    doUpload(it)
-                }
-            }
-        })
-
-        mViewModel.mUserInfoData.observe(this, Observer { response ->
-            response?.let {
-                showSuccess()
-                UserInfo.modifyAvatar(response.portrait)
-                toast("头像上传成功")
-                displayImage(
-                    this@MineInfoActivity, avatarPath,
-                    ivAvatarMineInfo
-                )
-            }
-        })
-
-    }
 
     private fun doUpload(it: StsTokenResp) {
         showLoading()
@@ -129,7 +112,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
             object : OssListener {
                 override fun onSuccess() {
                     mRootView.post {
-                        mViewModel.modifyUserInfo(
+                        mViewModel.modifyAvatar(
                             UserBean(
                                 UserInfo.getUserBean().token,
                                 portrait = mId
@@ -184,5 +167,37 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     }
 
+    override fun initDataObserver() {
+        mViewModel.mStsData.observe(this, Observer { response ->
+            response?.let {
+                if (isDownLoad) {
+                    doDownload(it)
+                } else {
+                    doUpload(it)
+                }
+            }
+        })
 
+        mViewModel.mAvatarData.observe(this, Observer { response ->
+            response?.let {
+                showSuccess()
+                UserInfo.modifyAvatar(response.portrait)
+                toast("头像上传成功")
+                displayImage(
+                    this@MineInfoActivity, avatarPath,
+                    ivAvatarMineInfo
+                )
+            }
+        })
+
+        mViewModel.mUserInfoData.observe(this, Observer { response ->
+            response?.let {
+                showSuccess()
+                UserInfo.modifyUserBean(it)
+                toast("修改成功")
+                finish()
+            }
+        })
+
+    }
 }

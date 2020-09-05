@@ -6,8 +6,27 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true">
 
-    <com.xiaoneng.ss.custom.widgets.CustomTitleBar
-        style="@style/title_style"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+            style="@style/title_style"
+            />
+
+        <TextView
+            android:id="@+id/tvConfirm"
+            android:layout_width="57dp"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:background="@drawable/bac_blue_bac_5"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/white" />
+    </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView style="@style/nes_scroll_style">
 
@@ -64,9 +83,10 @@
                             android:layout_weight="1"
                             android:text="姓名" />
 
-                        <TextView
-                            android:id="@+id/tvMineItem1"
+                        <EditText
+                            android:id="@+id/etMineItem1"
                             android:layout_width="wrap_content"
+                            android:background="@null"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="24dp" />
 

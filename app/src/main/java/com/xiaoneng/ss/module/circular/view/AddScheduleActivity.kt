@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import cn.addapp.pickers.picker.DateTimePicker
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
@@ -29,21 +28,18 @@ import org.jetbrains.anko.toast
 class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
     private var chosenColor: String = "#5E37FF"
     lateinit var mAdapter: ChooseColorAdapter
-    var time:Long = 0L
-    var beginTime:String? = ""
-    var endTime:String? = ""
+    var time: Long = 0L
+    var beginTime: String? = ""
+    var endTime: String? = ""
     val mData by lazy { ColorUtil.getCustomColors() }
 
-    private val pick: DateTimePicker by lazy {
-        getDatePick(this)
-    }
 
     override fun getLayoutId(): Int = R.layout.activity_add_schedule
 
 
     override fun initView() {
         super.initView()
-        time = intent.getLongExtra(Constant.DATA,System.currentTimeMillis())
+        time = intent.getLongExtra(Constant.DATA, System.currentTimeMillis())
         tvBeginAddSchedule.text = DateUtil.getNearTimeBegin(time)
         tvStopAddSchedule.text = DateUtil.getNearTimeEnd(time)
         beginTime = DateUtil.getNearTimeBeginYear(time)
@@ -51,11 +47,21 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
         tvActionTitle.setOnClickListener {
             addSchedule()
         }
-        tvBeginAddSchedule.setOnClickListener {
-            showBegin()
+        tvBeginAddSchedule.apply {
+            setOnClickListener {
+                showDatePick(this) {
+                    beginTime = this
+                    toast(beginTime!!)
+                }
+            }
         }
-        tvStopAddSchedule.setOnClickListener {
-            showStop()
+        tvStopAddSchedule.apply {
+            setOnClickListener {
+                showDatePick(this) {
+                    endTime = this
+                    toast(endTime!!)
+                }
+            }
         }
         initAdapter()
     }
@@ -98,44 +104,6 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 chosenColor = mData[position].color
             }
         }
-    }
-
-    private fun showBegin() {
-        pick.setOnDateTimePickListener(object : DateTimePicker.OnYearMonthDayTimePickListener {
-            override fun onDateTimePicked(
-                year: String?,
-                month: String?,
-                day: String?,
-                hour: String?,
-                minute: String?
-            ) {
-                var time = "${month}月${day}日 $hour:$minute"
-                beginTime = DateUtil.getDateString(year,month,day,hour,minute)
-                tvBeginAddSchedule.text = time
-            }
-
-        })
-        pick.show()
-
-    }
-
-    private fun showStop() {
-        pick.setOnDateTimePickListener(object : DateTimePicker.OnYearMonthDayTimePickListener {
-            override fun onDateTimePicked(
-                year: String?,
-                month: String?,
-                day: String?,
-                hour: String?,
-                minute: String?
-            ) {
-                var time = "${month}月${day}日 $hour:$minute"
-                endTime = DateUtil.getDateString(year,month,day,hour,minute)
-                tvStopAddSchedule.text = time
-            }
-
-        })
-        pick.show()
-
     }
 
 

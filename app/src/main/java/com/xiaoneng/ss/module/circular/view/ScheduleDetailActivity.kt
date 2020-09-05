@@ -1,17 +1,15 @@
 package com.xiaoneng.ss.module.circular.view
 
 import android.text.TextUtils
+import android.widget.TextView
 import androidx.lifecycle.Observer
-import cn.addapp.pickers.picker.DateTimePicker
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.DateUtil
-import com.xiaoneng.ss.common.utils.getDatePick
+import com.xiaoneng.ss.common.utils.showDatePick
 import com.xiaoneng.ss.module.circular.model.ScheduleBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
-import kotlinx.android.synthetic.main.activity_add_schedule.*
 import kotlinx.android.synthetic.main.activity_schedule_detail.*
 import org.jetbrains.anko.toast
 
@@ -24,9 +22,6 @@ class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
     var bean: ScheduleBean = ScheduleBean()
     var beginTime: String? = ""
     var endTime: String? = ""
-    private val pick: DateTimePicker by lazy {
-        getDatePick(this)
-    }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_schedule_detail
@@ -43,11 +38,19 @@ class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
         tvStopTimeSchedule.text = bean.scheduleover
         etDetailSchedule.setText(bean.remark)
 
-        tvBeginTimeSchedule.setOnClickListener {
-            showBegin()
+        tvBeginTimeSchedule.apply {
+            setOnClickListener {
+                showDatePick(this) {
+                    beginTime = this
+                }
+            }
         }
-        tvStopTimeSchedule.setOnClickListener {
-            showStop()
+        tvStopTimeSchedule.apply {
+            setOnClickListener {
+                showDatePick(this) {
+                    endTime = this
+                }
+            }
         }
         ivAction1Schedule.setOnClickListener {
             onEdit()
@@ -93,42 +96,5 @@ class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
         })
     }
 
-    private fun showBegin() {
-        pick.setOnDateTimePickListener(object : DateTimePicker.OnYearMonthDayTimePickListener {
-            override fun onDateTimePicked(
-                year: String?,
-                month: String?,
-                day: String?,
-                hour: String?,
-                minute: String?
-            ) {
-                var time = "${month}月${day}日 $hour:$minute"
-                beginTime = DateUtil.getDateString(year, month, day, hour, minute)
-                tvBeginAddSchedule.text = time
-            }
-
-        })
-        pick.show()
-
-    }
-
-    private fun showStop() {
-        pick.setOnDateTimePickListener(object : DateTimePicker.OnYearMonthDayTimePickListener {
-            override fun onDateTimePicked(
-                year: String?,
-                month: String?,
-                day: String?,
-                hour: String?,
-                minute: String?
-            ) {
-                var time = "{month}月${day}日 $hour:$minute"
-                endTime = DateUtil.getDateString(year, month, day, hour, minute)
-                tvStopAddSchedule.text = time
-            }
-
-        })
-        pick.show()
-
-    }
 
 }

@@ -27,10 +27,10 @@
             android:gravity="center"
             android:text="确定"
             android:textColor="@color/white" />
-
     </RelativeLayout>
-<include layout="@layout/layout_split_tint_10"
-    />
+
+    <include layout="@layout/layout_split_tint_10" />
+
     <LinearLayout
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
 
         <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
             android:id="@+id/rvChooseChild"
-            android:paddingStart="24dp"
-            style="@style/recycler_style" />
+            style="@style/recycler_style"
+            android:paddingStart="24dp" />
     </LinearLayout>
 </LinearLayout>

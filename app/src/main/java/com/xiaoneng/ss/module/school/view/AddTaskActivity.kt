@@ -6,13 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import cn.addapp.pickers.picker.DateTimePicker
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.common.utils.RecycleViewDivider
 import com.xiaoneng.ss.common.utils.dp2px
-import com.xiaoneng.ss.common.utils.getDatePick
+import com.xiaoneng.ss.common.utils.showDatePick
 import com.xiaoneng.ss.module.mine.adapter.InviteCodeAdapter
 import com.xiaoneng.ss.module.mine.model.InviteCodeBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
@@ -30,9 +28,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var endTime: String? = ""
     lateinit var mAdapter: InviteCodeAdapter
     var mData = ArrayList<InviteCodeBean>()
-    private val pick: DateTimePicker by lazy {
-        getDatePick(this)
-    }
+
 
     override fun getLayoutId(): Int = R.layout.activity_add_task
 
@@ -41,11 +37,19 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.initView()
 
         initAdapter()
-        tvBeginAddTask.setOnClickListener {
-            showBegin()
+        tvBeginAddTask.apply {
+            setOnClickListener {
+                showDatePick(this) {
+                    beginTime = this
+                }
+            }
         }
-        tvStopAddTask.setOnClickListener {
-            showStop()
+        tvStopAddTask.apply {
+            setOnClickListener {
+                showDatePick(this) {
+                    endTime = this
+                }
+            }
         }
 
         tvAddParticipant.setOnClickListener {
@@ -68,43 +72,6 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         initStatusColor(resources.getColor(R.color.white))
     }
 
-    private fun showBegin() {
-        pick.setOnDateTimePickListener(object : DateTimePicker.OnYearMonthDayTimePickListener {
-            override fun onDateTimePicked(
-                year: String?,
-                month: String?,
-                day: String?,
-                hour: String?,
-                minute: String?
-            ) {
-                var time = "${month}月${day}日 $hour:$minute"
-                beginTime = DateUtil.getDateString(year, month, day, hour, minute)
-                tvBeginAddTask.text = time
-            }
-
-        })
-        pick.show()
-
-    }
-
-    private fun showStop() {
-        pick.setOnDateTimePickListener(object : DateTimePicker.OnYearMonthDayTimePickListener {
-            override fun onDateTimePicked(
-                year: String?,
-                month: String?,
-                day: String?,
-                hour: String?,
-                minute: String?
-            ) {
-                var time = "${month}月${day}日 $hour:$minute"
-                endTime = DateUtil.getDateString(year, month, day, hour, minute)
-                tvStopAddTask.text = time
-            }
-
-        })
-        pick.show()
-
-    }
 
     private fun initAdapter() {
         mAdapter = InviteCodeAdapter(R.layout.item_invite_code, mData)
@@ -124,21 +91,6 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 //        mViewModel.getTimetable()
     }
 
-
-    override fun initDataObserver() {
-//        mViewModel.mNoticeData.observe(this, Observer { response ->
-//            response?.let {
-//                mData.clear()
-//                mData.addAll(it.data)
-//                if (mData.size > 0) {
-//                    mAdapter.notifyDataSetChanged()
-//                } else {
-//                    showEmpty()
-//                }
-//            }
-//        })
-
-    }
 
     override fun onBackPressed() {
         showDialog()
@@ -174,6 +126,21 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
                 bottomDialog.dismiss()
             }
+    }
+
+    override fun initDataObserver() {
+//        mViewModel.mNoticeData.observe(this, Observer { response ->
+//            response?.let {
+//                mData.clear()
+//                mData.addAll(it.data)
+//                if (mData.size > 0) {
+//                    mAdapter.notifyDataSetChanged()
+//                } else {
+//                    showEmpty()
+//                }
+//            }
+//        })
+
     }
 
 }

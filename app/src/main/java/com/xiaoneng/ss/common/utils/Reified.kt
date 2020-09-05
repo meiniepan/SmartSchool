@@ -3,10 +3,13 @@ package com.xiaoneng.ss.common.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.widget.TextView
 import cn.addapp.pickers.picker.DateTimePicker
+import com.afollestad.materialdialogs.MaterialDialog
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.view.LoginStuActivity
 import com.xiaoneng.ss.account.view.LoginSwitchActivity
 import com.xiaoneng.ss.account.view.LoginTeacherActivity
@@ -41,8 +44,8 @@ inline fun starPhoneNum(phone: String): String {
     }
 }
 
-inline fun getDatePick(context: Activity): DateTimePicker {
-    return DateTimePicker(context, DateTimePicker.HOUR_24).apply {
+inline fun Activity.showDatePick(textView: TextView, crossinline block: String.() -> Unit) {
+     DateTimePicker(this, DateTimePicker.HOUR_24).apply {
 //            setActionButtonTop(false)
         setDateRangeStart(2020, 1, 1)
         setDateRangeEnd(2025, 11, 11)
@@ -54,7 +57,23 @@ inline fun getDatePick(context: Activity): DateTimePicker {
             Calendar.getInstance().get(Calendar.MINUTE)
         )
 
+        setOnDateTimePickListener(object : DateTimePicker.OnYearMonthDayTimePickListener {
+            override fun onDateTimePicked(
+                year: String?,
+                month: String?,
+                day: String?,
+                hour: String?,
+                minute: String?
+            ) {
+                var time = "${month}月${day}日 $hour:$minute"
+                DateUtil.getDateString(year,month,day,hour,minute).block()
+                textView.text = time
+            }
+
+        })
+        show()
     }
+
 }
 
 inline fun mainLogin(context: Context) {
@@ -114,4 +133,17 @@ inline fun <reified T> netResponseFormat(response: Any): T? {
     val jsonString = gson.toJson(response)
     val resultType = object : TypeToken<T>() {}.type
     return gson.fromJson<T>(jsonString, resultType)
+}
+
+
+fun Context.alert(message: String, confirmText: String, cancelText: String, onConfirm: () -> Unit) {
+    MaterialDialog(this).show {
+        title(R.string.title)
+        message(text = message)
+        cornerRadius(8.0f)
+        positiveButton(R.string.done)
+        positiveButton {
+            onConfirm()
+        }
+    }
 }

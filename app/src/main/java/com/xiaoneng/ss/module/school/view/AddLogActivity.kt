@@ -1,12 +1,9 @@
 package com.xiaoneng.ss.module.school.view
 
-import cn.addapp.pickers.picker.DateTimePicker
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.utils.getDatePick
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import kotlinx.android.synthetic.main.activity_add_task.*
 
 /**
  * Created with Android Studio.
@@ -17,9 +14,7 @@ import kotlinx.android.synthetic.main.activity_add_task.*
  */
 class AddLogActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var mData = ArrayList<NoticeBean>()
-    private val pick: DateTimePicker by lazy {
-        getDatePick(this)
-    }
+
 
     override fun getLayoutId(): Int = R.layout.activity_add_log
 
@@ -30,23 +25,6 @@ class AddLogActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     }
 
-    private fun showBegin() {
-        pick.setOnDateTimePickListener(object : DateTimePicker.OnYearMonthDayTimePickListener {
-            override fun onDateTimePicked(
-                year: String?,
-                month: String?,
-                day: String?,
-                hour: String?,
-                minute: String?
-            ) {
-                var time = "$year-$month-$day $hour:$minute"
-                tvBeginAddTask.text = time
-            }
-
-        })
-        pick.show()
-
-    }
 
 
 

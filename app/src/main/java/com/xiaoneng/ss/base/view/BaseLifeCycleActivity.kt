@@ -71,7 +71,6 @@ abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
                 cornerRadius(8.0f)
                 negativeButton(R.string.done)
             }
-            false
         }
         loadService.showCallback(SuccessCallback::class.java)
     }
@@ -88,7 +87,6 @@ abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
                 }
                 cancelOnTouchOutside(false)
             }
-            false
         }
         loadService.showCallback(SuccessCallback::class.java)
     }

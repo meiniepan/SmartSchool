@@ -23,24 +23,23 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
     val mRegisterData: MutableLiveData<RegisterResponse> = MutableLiveData()
 
     val mLogoutData: MutableLiveData<Any> = MutableLiveData()
-    val mAvatarData: MutableLiveData<String> = MutableLiveData()
+    val mAvatarData: MutableLiveData<UserBean> = MutableLiveData()
     val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
     val mUserInfoData: MutableLiveData<UserBean> = MutableLiveData()
     val mParentsData: MutableLiveData<Any> = MutableLiveData()
     val mChildData: MutableLiveData<Any> = MutableLiveData()
 
-    fun captcha(type:Int,phone: String) {
+    fun captcha(type: Int, phone: String) {
         initiateRequest(
-            { mCaptchaData.value = mRepository.captcha(type,phone) },
+            { mCaptchaData.value = mRepository.captcha(type, phone) },
             loadState
         )
     }
 
 
-
-    fun login(type:Int,requestBody: LoginReq) {
+    fun login(type: Int, requestBody: LoginReq) {
         initiateRequest(
-            { mLoginData.value = mRepository.login(type,requestBody) },
+            { mLoginData.value = mRepository.login(type, requestBody) },
             loadState
         )
     }
@@ -73,7 +72,14 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
         )
     }
 
-    fun modifyUserInfo(bean:UserBean) {
+    fun modifyAvatar(bean: UserBean) {
+        initiateRequest(
+            { mAvatarData.value = mRepository.modifyUserInfo(bean) },
+            loadState
+        )
+    }
+
+    fun modifyUserInfo(bean: UserBean) {
         initiateRequest(
             { mUserInfoData.value = mRepository.modifyUserInfo(bean) },
             loadState
@@ -87,27 +93,28 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
         )
     }
 
-    fun bindParent(phone:String,vcode:String) {
+    fun bindParent(phone: String, vcode: String) {
         initiateRequest(
-            { mParentsData.value = mRepository.bindParent(phone,vcode) },
+            { mParentsData.value = mRepository.bindParent(phone, vcode) },
             loadState
         )
     }
 
-    fun unbindParent(phone:String) {
+    fun unbindParent(phone: String) {
         initiateRequest(
             { mParentsData.value = mRepository.unbindParent(phone) },
             loadState
         )
     }
 
-    fun switchChild(uid:String) {
+    fun switchChild(uid: String) {
         initiateRequest(
             { mChildData.value = mRepository.switchChild(uid) },
             loadState
         )
     }
-    fun queryCodeList(classId:String? = null) {
+
+    fun queryCodeList(classId: String? = null) {
         initiateRequest(
             { mParentsData.value = mRepository.queryCodeList(classId) },
             loadState

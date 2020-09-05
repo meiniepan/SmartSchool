@@ -49,6 +49,12 @@ object UserInfo {
 
     }
 
+    fun modifyUserBean(response: UserBean) {
+        // 改变 sharedPreferences   isLogin值
+        userInfoJson = Gson().toJson(response)
+
+    }
+
     fun modifyAvatar(avatar: String) {
         // 改变 sharedPreferences   isLogin值
         var bean = getUserBean()

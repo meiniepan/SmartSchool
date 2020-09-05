@@ -3,6 +3,7 @@ package com.xiaoneng.ss.module.activity
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.state.UserInfo
@@ -18,6 +19,9 @@ class SplashActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         initView()

@@ -1,11 +1,7 @@
 package com.xiaoneng.ss.module.school.view
 
-import cn.addapp.pickers.picker.DateTimePicker
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.utils.getDatePick
-import com.xiaoneng.ss.module.circular.model.NoticeBean
-import com.xiaoneng.ss.module.mine.adapter.InviteCodeAdapter
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 
 /**
@@ -16,9 +12,6 @@ import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
  * Time: 17:01
  */
 class RejectActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    private val pick: DateTimePicker by lazy {
-        getDatePick(this)
-    }
 
     override fun getLayoutId(): Int = R.layout.activity_reject
 

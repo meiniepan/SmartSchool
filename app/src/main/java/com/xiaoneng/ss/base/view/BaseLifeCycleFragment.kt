@@ -69,7 +69,6 @@ abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
                 cornerRadius(8.0f)
                 negativeButton(R.string.done)
             }
-            false
         }
         loadService.showCallback(SuccessCallback::class.java)
     }
@@ -85,7 +84,6 @@ abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
                 }
                 cancelOnTouchOutside(false)
             }
-            false
         }
         loadService.showCallback(SuccessCallback::class.java)
     }
