@@ -48,6 +48,7 @@
                 <View
                     android:layout_width="8dp"
                     android:layout_height="8dp"
+                    android:visibility="gone"
                     android:layout_gravity="right"
                     android:background="@drawable/shape_orange_oval" />
 

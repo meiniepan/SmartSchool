@@ -27,8 +27,9 @@ class PerformanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initView() {
         super.initView()
         tvAction1.setOnClickListener {
-        }
+    }
         initAdapter()
+        showEmpty()
     }
 
     private fun initAdapter() {
@@ -50,7 +51,7 @@ class PerformanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initData() {
         super.initData()
-        mViewModel.getPerformance()
+        mViewModel.getPerformance("测试名字")
     }
     override fun initDataObserver() {
         mViewModel.mPerformanceData.observe(this, Observer { response ->

@@ -27,6 +27,7 @@ import org.jetbrains.anko.toast
  */
 class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
     private var chosenColor: String = "#5E37FF"
+    var beanJson: String by SPreference(Constant.USER_INFO, UserInfo.emptyJson)
     lateinit var mAdapter: ChooseColorAdapter
     var time: Long = 0L
     var beginTime: String? = ""

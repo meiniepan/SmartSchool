@@ -13,7 +13,6 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.RecycleViewDivider
 import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.common.utils.mStartActivity
-import com.xiaoneng.ss.custom.popup.StringPopupWindow
 import com.xiaoneng.ss.module.school.adapter.AttendanceStuAdapter
 import com.xiaoneng.ss.module.school.adapter.DialogListAdapter
 import com.xiaoneng.ss.module.school.model.AttendanceBean
@@ -33,7 +32,6 @@ class AttendanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private val bottomDialog: Dialog by lazy {
         initDialog()
     }
-    private var stringPopupWindow: StringPopupWindow? = null
 
     override fun getLayoutId(): Int = R.layout.activity_attendance_stu
 
@@ -65,9 +63,9 @@ class AttendanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initData() {
         super.initData()
-        mData.add(AttendanceBean())
-        mData.add(AttendanceBean())
-//        mViewModel.getAttendance("")
+//        mData.add(AttendanceBean())
+//        mData.add(AttendanceBean())
+        mViewModel.getAttendance("")
     }
 
     private fun initAdapter() {

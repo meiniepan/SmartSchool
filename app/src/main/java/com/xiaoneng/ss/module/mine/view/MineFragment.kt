@@ -5,13 +5,11 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.account.view.LoginSwitchActivity
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.displayImage
-import com.xiaoneng.ss.common.utils.mDownloadFile
-import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.common.utils.oss.OssListener
 import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.model.StsTokenResp
@@ -102,7 +100,10 @@ MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
         }
 
         llItem5.setOnClickListener {
-//            mStartActivity<SwitchIdActivity>(requireContext())
+            requireActivity().mAlert("确定退出登录切换身份？") {
+                mStartActivity<LoginSwitchActivity>(requireContext())
+                AppManager.finishAllActivity()
+            }
         }
 
         llItem6.setOnClickListener {

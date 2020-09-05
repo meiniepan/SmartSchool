@@ -91,30 +91,30 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
-    suspend fun getPerformance(crid: String): PerformanceResponse {
+    suspend fun getPerformance(testname:String,crid: String): PerformanceResponse {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.getPerformance(UserInfo.getUserBean().token)
+                apiService.getPerformance(UserInfo.getUserBean().token,testname)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getPerformance2(UserInfo.getUserBean().token, crid)
+                apiService.getPerformance2(UserInfo.getUserBean().token,testname, crid)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.getPerformance2(UserInfo.getUserBean().token, crid)
+                apiService.getPerformance2(UserInfo.getUserBean().token, testname,crid)
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.getPerformance(UserInfo.getUserBean().token)
+                apiService.getPerformance(UserInfo.getUserBean().token,testname)
                     .dataConvert(loadState)
             }
         }
     }
 
-    suspend fun getAttendance(classid: String): AttendanceResponse {
+    suspend fun getAttendance(classid: String = ""): AttendanceResponse {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
                 apiService.getAttendance(UserInfo.getUserBean().token, classid)

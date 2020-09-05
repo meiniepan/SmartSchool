@@ -48,14 +48,14 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getPerformance(crid:String = "") {
+    fun getPerformance(testname:String,crid:String = "") {
         initiateRequest(
-            { mPerformanceData.value = mRepository.getPerformance( crid) },
+            { mPerformanceData.value = mRepository.getPerformance(testname, crid) },
             loadState
         )
     }
 
-    fun getAttendance(classid:String) {
+    fun getAttendance(classid:String = "") {
         initiateRequest(
             { mAttendanceData.value = mRepository.getAttendance( classid) },
             loadState

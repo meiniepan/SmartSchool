@@ -5,7 +5,7 @@ import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.utils.alert
+import com.xiaoneng.ss.common.utils.mAlert
 import com.xiaoneng.ss.common.utils.mainLogin
 import kotlinx.android.synthetic.main.activity_sys_setting.*
 import org.jetbrains.anko.toast
@@ -30,6 +30,10 @@ class SysSettingActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
         llItem1Setting.setOnClickListener {
             toast( "当前已是最新版本")
+        }
+
+        llItem1Setting.setOnClickListener {
+            toast( R.string.not_open)
         }
 
         llItem3Setting.setOnClickListener {
@@ -58,7 +62,7 @@ class SysSettingActivity : BaseLifeCycleActivity<AccountViewModel>() {
     fun clearCache(context: Context) {
         val cacheSize = getCacheSize(context)
         if (cacheSize > 0) {
-            context.alert("清除所有缓存？", "清除", "取消") {
+            context.mAlert("清除所有缓存？") {
                 context.cacheDir.suicide()
                 context.filesDir.suicide()
                 toast("成功清除${cacheSize.formatMemorySize()}缓存")

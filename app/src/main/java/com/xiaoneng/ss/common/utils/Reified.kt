@@ -136,7 +136,7 @@ inline fun <reified T> netResponseFormat(response: Any): T? {
 }
 
 
-fun Context.alert(message: String, confirmText: String, cancelText: String, onConfirm: () -> Unit) {
+fun Context.mAlert(message: String, confirmText: String? = null, cancelText: String? = null, onConfirm: () -> Unit) {
     MaterialDialog(this).show {
         title(R.string.title)
         message(text = message)

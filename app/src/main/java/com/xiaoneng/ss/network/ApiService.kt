@@ -286,6 +286,7 @@ interface ApiService {
     @POST("/api/v1/student/achievements/lists")
     suspend fun getPerformance(
         @Field("token") token: String,
+        @Field("testname") testname: String ,
         @Field("crid") crid: String = ""
     ): BaseResponse<PerformanceResponse>
 
@@ -296,6 +297,7 @@ interface ApiService {
     @POST("/api/v1/teacher/achievements/lists")
     suspend fun getPerformance2(
         @Field("token") token: String,
+        @Field("testname") testname: String ,
         @Field("crid") crid: String = ""
     ): BaseResponse<PerformanceResponse>
 
