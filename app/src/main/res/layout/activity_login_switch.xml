@@ -10,6 +10,7 @@
     <com.xiaoneng.ss.custom.widgets.CustomTitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:is_white_icon="true" />
 
     <LinearLayout
@@ -24,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="19.5dp"
+            android:layout_marginTop="100dp"
             android:text="请选择您的身份"
             android:textSize="@dimen/sp_20" />
 

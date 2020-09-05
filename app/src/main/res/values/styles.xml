@@ -35,9 +35,11 @@
         <item name="android:activityCloseExitAnimation">@anim/alpha_out</item>
     </style>
 
-    <style name="App.Theme.Launch" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
+    <style name="App.Theme.Launch" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
     </style>
 
     <style name="title_style">

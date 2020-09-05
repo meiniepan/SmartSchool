@@ -97,7 +97,7 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
             fragmentList
         )
         contentLayout.adapter = fragmentAdapter
-        contentLayout.offscreenPageLimit = 1
+        contentLayout.offscreenPageLimit = 2
     }
 
     private fun initBottomNavigation() {

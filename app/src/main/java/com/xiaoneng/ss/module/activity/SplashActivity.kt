@@ -3,58 +3,31 @@ package com.xiaoneng.ss.module.activity
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
-import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.account.viewmodel.AccountViewModel
-import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.mainLogin
-import kotlinx.android.synthetic.main.activity_splash.*
 
 /**
  * @author Burning
  * @description:
  * @date :2020/8/10 3:02 PM
  */
-class SplashActivity : BaseLifeCycleActivity<AccountViewModel>() {
+class SplashActivity : AppCompatActivity() {
 
-
-    override fun getLayoutId(): Int {
-        return R.layout.activity_splash
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
         super.onCreate(savedInstanceState)
-
+        setContentView(R.layout.activity_splash)
+        initView()
     }
 
-    override fun initView() {
-        super.initView()
+    fun initView() {
         var handler = Handler()
-        var runnable = Runnable { mInitView() }
-        handler.postDelayed(runnable, stt_splash.getDurationTime())
-        stt_splash.setOnClickListener {
-            handler.removeCallbacks(runnable)
-            mInitView()
-        }
-    }
+        var runnable = Runnable { startIntent() }
+        handler.postDelayed(runnable, 1000)
 
-    override fun initStatusBar() {
-
-    }
-    override fun initData() {
-        super.initData()
-
-    }
-
-    /**
-     * 初始化进场动画
-     */
-    private fun mInitView() {
-        startIntent()
     }
 
 
@@ -67,10 +40,4 @@ class SplashActivity : BaseLifeCycleActivity<AccountViewModel>() {
         finish()
     }
 
-    override fun showCreateReveal(): Boolean = false
-
-
-    override fun initDataObserver() {
-
-    }
 }

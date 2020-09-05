@@ -17,8 +17,7 @@ import kotlinx.android.synthetic.main.activity_login_switch.*
 class LoginSwitchActivity :BaseActivity() ,View.OnClickListener{
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         super.onCreate(savedInstanceState)
     }
 
