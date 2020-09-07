@@ -60,6 +60,9 @@ class TimetableMasterActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         initAdapterLabel()
+        initAdapterClass()
+        initAdapter()
+        initAdapterTitle()
     }
 
     override fun initData() {
@@ -70,7 +73,6 @@ class TimetableMasterActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAdapterClass() {
-        mDataClass[0].isChecked = true
         mAdapterClass = TimetableClassAdapter(R.layout.item_timetable_class, mDataClass)
         rvClassTimetable.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -94,7 +96,7 @@ class TimetableMasterActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAdapter() {
-        mAdapter = TimetableAdapter(R.layout.item_timetable, mData, mLabelData.size)
+        mAdapter = TimetableAdapter(R.layout.item_timetable, mData)
         rvTimetable.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = mAdapter
@@ -163,17 +165,22 @@ class TimetableMasterActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     rvClassTimetable.visibility = View.VISIBLE
                     if (!hasInitClass) {
                         hasInitClass = true
+                        mDataClass.clear()
                         mDataClass.addAll(it.classs)
-                        initAdapterClass()
+                        if (mDataClass.size > 0) {
+                            mDataClass[0].isChecked = true
+                        }
+                        mAdapterClass.notifyDataSetChanged()
                     }
                 }
                 //填充课表
                 mData.clear()
                 mData.addAll(it.list)
+                mAdapter.setTotalSize(mLabelData.size)
                 if (mData.size > 0) {
                     var i = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
-                    initAdapter()
-                    initAdapterTitle()
+                    mAdapter.notifyDataSetChanged()
+                    mAdapterTitle.notifyDataSetChanged()
                     rvTimetable.scrollToPosition(DateUtil.getWeekPosition(i))
                     rvTitleTimetable.scrollToPosition(DateUtil.getWeekPosition(i))
                 } else {
@@ -190,18 +197,14 @@ class TimetableMasterActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 mLabelData.addAll(it.positions)
                 mAdapterLabel.notifyDataSetChanged()
 
-                if (!hasInitClass) {
-                    hasInitClass = true
-                    mDataClass.addAll(it.classs)
-                    mAdapterClass.notifyDataSetChanged()
-                }
                 //填充课表
                 mData.clear()
                 mData.addAll(it.list)
+                mAdapter.setTotalSize(mLabelData.size)
                 if (mData.size > 0) {
                     var i = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
-                    initAdapter()
-                    initAdapterTitle()
+                    mAdapter.notifyDataSetChanged()
+                    mAdapterTitle.notifyDataSetChanged()
                     rvTimetable.scrollToPosition(DateUtil.getWeekPosition(i))
                     rvTitleTimetable.scrollToPosition(DateUtil.getWeekPosition(i))
                 } else {

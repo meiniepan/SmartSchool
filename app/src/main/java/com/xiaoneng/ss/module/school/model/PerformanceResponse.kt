@@ -10,7 +10,7 @@ import com.xiaoneng.ss.model.CourseBean
  * Time: 17:06
  */
 data class PerformanceResponse(
-    var data : MutableList<PerformanceBean>,
+    var list : MutableList<PerformanceBean>,
     var totle : String,
     var course : MutableList<CourseBean>,
     var classs : String,

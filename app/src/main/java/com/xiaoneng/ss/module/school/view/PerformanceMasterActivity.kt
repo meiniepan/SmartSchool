@@ -61,7 +61,7 @@ class PerformanceMasterActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mViewModel.mPerformanceData.observe(this, Observer { response ->
             response?.let {
                 mData.clear()
-                mData.addAll(it.data)
+                mData.addAll(it.list)
                 if (mData.size > 0) {
                     mAdapter.notifyDataSetChanged()
                 } else {

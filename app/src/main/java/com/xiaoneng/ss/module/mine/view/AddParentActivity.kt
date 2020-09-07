@@ -2,6 +2,7 @@ package com.xiaoneng.ss.module.mine.view
 
 import android.os.CountDownTimer
 import android.text.TextUtils
+import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -35,6 +36,15 @@ class AddParentActivity : BaseLifeCycleActivity<AccountViewModel>() {
         }
         tvSendCaptchaBindParent.setOnClickListener {
             doCaptcha()
+        }
+        etPhoneBindParent.setOnEditorActionListener { teew, i, keyEvent ->
+            when (i) {
+                EditorInfo.IME_ACTION_GO -> {
+                    doBind()
+                }
+
+            }
+            return@setOnEditorActionListener false
         }
     }
 

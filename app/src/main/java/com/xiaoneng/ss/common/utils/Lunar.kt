@@ -349,11 +349,11 @@ class Lunar(cal: Calendar) {
                 calToday.timeInMillis = chosenDay
             }
             var d = 0
-            d = if (cal[Calendar.DAY_OF_WEEK] == 1) {
-                -7
-            } else {
-                1 - cal[Calendar.DAY_OF_WEEK]
-            }
+//            d = if (cal[Calendar.DAY_OF_WEEK] == 1) {
+//                -7
+//            } else {
+               d= 1 - cal[Calendar.DAY_OF_WEEK]
+//            }
             cal.add(Calendar.DAY_OF_WEEK, d)
             // 所在周开始日期
             val list = ArrayList<DayBean>()
@@ -397,12 +397,12 @@ class Lunar(cal: Calendar) {
                 var beanList = ArrayList<ScheduleBean>()
                 var beanRemove = ArrayList<ScheduleDayBean>()
                 for (beans in data) {
-                    if (DateUtil.formatDateCustomDay(cal.timeInMillis) == beans.day){
+                    if (DateUtil.formatDateCustomDay(cal.timeInMillis) == beans.day) {
                         beanList.addAll(beans.list)
                         beanRemove.add(beans)
                     }
                 }
-                if (beanRemove.size>0) {
+                if (beanRemove.size > 0) {
                     data.removeAll(beanRemove)
                 }
                 bean = DayBean(

@@ -141,7 +141,7 @@ fun Context.mAlert(message: String, confirmText: String? = null, cancelText: Str
         title(R.string.title)
         message(text = message)
         cornerRadius(8.0f)
-        positiveButton(R.string.done)
+        positiveButton(text = getString(R.string.done))
         positiveButton {
             onConfirm()
         }

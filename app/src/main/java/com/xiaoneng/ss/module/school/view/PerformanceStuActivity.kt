@@ -29,7 +29,6 @@ class PerformanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvAction1.setOnClickListener {
     }
         initAdapter()
-        showEmpty()
     }
 
     private fun initAdapter() {
@@ -57,12 +56,8 @@ class PerformanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mViewModel.mPerformanceData.observe(this, Observer { response ->
             response?.let {
                 mData.clear()
-                mData.addAll(it.data)
-                if (mData.size > 0) {
-                    mAdapter.notifyDataSetChanged()
-                } else {
-                    showEmpty()
-                }
+                mData.addAll(it.list)
+                    rvPerformance.notifyDataSetChanged()
             }
         })
     }

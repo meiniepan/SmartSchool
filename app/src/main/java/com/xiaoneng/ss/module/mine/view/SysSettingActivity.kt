@@ -29,11 +29,11 @@ class SysSettingActivity : BaseLifeCycleActivity<AccountViewModel>() {
         tvSettingItem3.text = getCacheSize(this).formatMemorySize()
 
         llItem1Setting.setOnClickListener {
-            toast( "当前已是最新版本")
+            toast("当前已是最新版本")
         }
 
-        llItem1Setting.setOnClickListener {
-            toast( R.string.not_open)
+        llItem2Setting.setOnClickListener {
+            toast(R.string.not_open)
         }
 
         llItem3Setting.setOnClickListener {

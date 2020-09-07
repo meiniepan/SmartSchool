@@ -17,10 +17,11 @@ import com.xiaoneng.ss.module.school.model.TimetableBean
  * @date: 2020/02/27
  * Time: 17:32
  */
-class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>, val total: Int) :
+class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>) :
     BaseQuickAdapter<TimetableBean, BaseViewHolder>(layoutId, listData) {
     private lateinit var mAdapter: LessonAdapter
     private lateinit var mRecycler: RecyclerView
+    private  var total: Int = 0
 
 
     override fun convert(viewHolder: BaseViewHolder, item: TimetableBean) {
@@ -69,4 +70,7 @@ class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>, val 
 
         }
     }
+   fun setTotalSize(total: Int){
+       this.total = total
+   }
 }

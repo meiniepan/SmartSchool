@@ -65,7 +65,7 @@
             android:paddingEnd="32dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="科目"
                 android:textSize="@dimen/sp_16"
@@ -99,7 +99,7 @@
             android:layout_height="1dp"
             android:layout_marginStart="@dimen/title_padding" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
             android:id="@+id/rvPerformance"
             style="@style/recycler_style"
              />

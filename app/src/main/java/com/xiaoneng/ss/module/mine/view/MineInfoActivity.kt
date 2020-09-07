@@ -125,6 +125,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
                 override fun onFail() {
                     mRootView.post {
+                        showSuccess()
                         toast("头像上传失败")
                     }
                 }
@@ -143,8 +144,8 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
             object : OssListener {
 
                 override fun onFail() {
-                    showSuccess()
                     mRootView.post {
+                        showSuccess()
                         toast("头像下载失败")
                     }
                 }
