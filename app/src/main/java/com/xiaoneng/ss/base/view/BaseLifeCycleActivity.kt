@@ -102,7 +102,7 @@ abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
         Observer<State> {
             it?.let {
                 when (it.code) {
-                    StateType.SUCCESS -> {}
+                    StateType.SUCCESS -> {showSuccess()}
                     StateType.LOADING -> showLoading()
                     StateType.ERROR -> showTip(it.message)
                     StateType.NETWORK_ERROR -> showError("网络出现问题啦")

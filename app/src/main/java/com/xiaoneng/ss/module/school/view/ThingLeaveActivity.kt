@@ -1,25 +1,19 @@
 package com.xiaoneng.ss.module.school.view
 
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.utils.RecycleViewDivider
-import com.xiaoneng.ss.common.utils.dp2px
-import com.xiaoneng.ss.module.mine.adapter.InviteCodeAdapter
-import com.xiaoneng.ss.module.mine.model.InviteCodeBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import kotlinx.android.synthetic.main.activity_add_task.*
+import kotlinx.android.synthetic.main.activity_thing_leave.*
 
 /**
  * Created with Android Studio.
  * Description:
  * @author: Burning
- * @date: 2020/02/27
+ * @date: 2020/08/27
  * Time: 17:01
  */
 class ThingLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    lateinit var mAdapter: InviteCodeAdapter
-    var mData = ArrayList<InviteCodeBean>()
+    var mTime = 2
 
 
     override fun getLayoutId(): Int = R.layout.activity_thing_leave
@@ -27,22 +21,25 @@ class ThingLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
-
+        tvItem8ApplyLeave.text = mTime.toString()
+        tvLeftItem8ApplyLeave.setOnClickListener {
+            doMinus()
+        }
+        tvRightItem8ApplyLeave.setOnClickListener {
+            doPlus()
+        }
 
     }
 
+    private fun doPlus() {
+        mTime += 1
+        tvItem8ApplyLeave.text = mTime.toString()
+    }
 
-
-
-    private fun initAdapter() {
-        mAdapter = InviteCodeAdapter(R.layout.item_invite_code, mData)
-        rvParticipant.apply {
-            layoutManager = LinearLayoutManager(context)
-            addItemDecoration(RecycleViewDivider(context, dp2px(context, 82f).toInt()))
-            adapter = mAdapter
-        }
-        mAdapter.setOnItemClickListener { _, view, position ->
-
+    private fun doMinus() {
+        if (mTime > 0) {
+            mTime -= 1
+            tvItem8ApplyLeave.text = mTime.toString()
         }
     }
 

@@ -22,7 +22,7 @@ import org.jetbrains.anko.toast
  * Created with Android Studio.
  * Description:
  * @author: Burning
- * @date: 2020/02/27
+ * @date: 2020/08/27
  * Time: 17:01
  */
 class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
@@ -41,26 +41,24 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
     override fun initView() {
         super.initView()
         time = intent.getLongExtra(Constant.DATA, System.currentTimeMillis())
-        tvBeginAddSchedule.text = DateUtil.getNearTimeBegin(time)
-        tvStopAddSchedule.text = DateUtil.getNearTimeEnd(time)
         beginTime = DateUtil.getNearTimeBeginYear(time)
         endTime = DateUtil.getNearTimeEndYear(time)
         tvActionTitle.setOnClickListener {
             addSchedule()
         }
-        tvBeginAddSchedule.apply {
+        DateUtil.showTimeFromNet(DateUtil.getNearTimeBeginYear(time),tvBeginDate,tvBeginTime)
+        DateUtil.showTimeFromNet(DateUtil.getNearTimeEndYear(time),tvEndDate,tvEndTime)
+        llBeginTime.apply {
             setOnClickListener {
-                showDatePick(this) {
+                showDatePick(tvBeginDate,tvBeginTime) {
                     beginTime = this
-                    toast(beginTime!!)
                 }
             }
         }
-        tvStopAddSchedule.apply {
+        llEndTime.apply {
             setOnClickListener {
-                showDatePick(this) {
+                showDatePick(tvEndDate,tvEndTime) {
                     endTime = this
-                    toast(endTime!!)
                 }
             }
         }
@@ -70,7 +68,7 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
     private fun addSchedule() {
         if (
             TextUtils.isEmpty(etThemeAddSchedule.text.toString()) ||
-            TextUtils.isEmpty(tvBeginAddSchedule.text.toString())
+            TextUtils.isEmpty(tvBeginDate.text.toString())
 
         ) {
             toast("请完善信息")

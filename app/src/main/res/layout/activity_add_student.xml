@@ -61,7 +61,7 @@
                     android:drawablePadding="5dp"
                     android:singleLine="true"
                     android:imeOptions="actionSearch"
-                    android:hint="搜索姓名、学号、班级查找学生信息" />
+                    android:hint="@string/search_student" />
             </LinearLayout>
         </LinearLayout>
 

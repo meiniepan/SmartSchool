@@ -5,27 +5,32 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.common.utils.RecycleViewDivider
 import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.common.utils.showDatePick
 import com.xiaoneng.ss.module.mine.adapter.InviteCodeAdapter
 import com.xiaoneng.ss.module.mine.model.InviteCodeBean
+import com.xiaoneng.ss.module.school.model.TaskBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_add_task.*
+import org.jetbrains.anko.toast
 
 /**
  * Created with Android Studio.
  * Description:
  * @author: Burning
- * @date: 2020/02/27
+ * @date: 2020/08/27
  * Time: 17:01
  */
 class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    var beginTime: String? = ""
-    var endTime: String? = ""
+    var beginTime: String = System.currentTimeMillis().toString()
+    var endTime: String = ""
     lateinit var mAdapter: InviteCodeAdapter
     var mData = ArrayList<InviteCodeBean>()
 
@@ -37,16 +42,18 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.initView()
 
         initAdapter()
-        tvBeginAddTask.apply {
+        DateUtil.showTimeFromNet(DateUtil.getNearTimeBeginYear(),tvBeginDate,tvBeginTime)
+        DateUtil.showTimeFromNet(DateUtil.getNearTimeEndYear(),tvEndDate,tvEndTime)
+        llBeginTime.apply {
             setOnClickListener {
-                showDatePick(this) {
+                showDatePick(tvBeginDate,tvBeginTime) {
                     beginTime = this
                 }
             }
         }
-        tvStopAddTask.apply {
+        llEndTime.apply {
             setOnClickListener {
-                showDatePick(this) {
+                showDatePick(tvEndDate,tvEndTime) {
                     endTime = this
                 }
             }
@@ -58,6 +65,24 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvAddPrincipal.setOnClickListener {
             doAddPrincipal()
         }
+        tvConfirmAddTask.setOnClickListener {
+            addTask()
+        }
+    }
+
+    private fun addTask() {
+        if (tvTitleAddTask.text.isEmpty()){
+            toast(R.string.lack_info)
+            return
+        }
+        mViewModel.addTask(
+            TaskBean(
+                UserInfo.getUserBean().token,
+                tvTitleAddTask.text.toString(),
+                DateUtil.formatDate(),
+                10.toString()
+            )
+        )
     }
 
     private fun doAddPrincipal() {
@@ -129,17 +154,11 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     override fun initDataObserver() {
-//        mViewModel.mNoticeData.observe(this, Observer { response ->
-//            response?.let {
-//                mData.clear()
-//                mData.addAll(it.data)
-//                if (mData.size > 0) {
-//                    mAdapter.notifyDataSetChanged()
-//                } else {
-//                    showEmpty()
-//                }
-//            }
-//        })
+        mViewModel.mAddTaskData.observe(this, Observer { response ->
+            response?.let {
+                toast("发布成功")
+            }
+        })
 
     }
 

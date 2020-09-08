@@ -1,5 +1,6 @@
 package com.xiaoneng.ss.common.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -16,6 +17,7 @@ import com.xiaoneng.ss.account.view.LoginTeacherActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import java.io.File
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -44,11 +46,48 @@ inline fun starPhoneNum(phone: String): String {
     }
 }
 
-inline fun Activity.showDatePick(textView: TextView, crossinline block: String.() -> Unit) {
+inline fun Activity.showDatePick(textView1: TextView,textView2: TextView, crossinline block: String.() -> Unit) {
      DateTimePicker(this, DateTimePicker.HOUR_24).apply {
 //            setActionButtonTop(false)
-        setDateRangeStart(2020, 1, 1)
-        setDateRangeEnd(2025, 11, 11)
+        setDateRangeStart(Constant.THIS_YEAR, 1, 1)
+        setDateRangeEnd(Constant.THIS_YEAR+5, 11, 11)
+        setSelectedItem(
+            Calendar.getInstance().get(Calendar.YEAR),
+            Calendar.getInstance().get(Calendar.MONTH) + 1,
+            Calendar.getInstance().get(Calendar.DAY_OF_MONTH),
+            Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
+            Calendar.getInstance().get(Calendar.MINUTE)
+        )
+
+        setOnDateTimePickListener(object : DateTimePicker.OnYearMonthDayTimePickListener {
+            @SuppressLint("SimpleDateFormat")
+            override fun onDateTimePicked(
+                year: String?,
+                month: String?,
+                day: String?,
+                hour: String?,
+                minute: String?
+            ) {
+                val sdf = SimpleDateFormat("yyyyMMdd")
+               var week = DateUtil.getWeek(sdf.parse("${year}${month}${day}"))
+                var time1 = "${month}月${day}日 $week"
+                var time2 = "${hour}:${minute}"
+                DateUtil.getDateString(year,month,day,hour,minute).block()
+                textView1.text = time1
+                textView2.text = time2
+            }
+
+        })
+        show()
+    }
+
+}
+
+inline fun Activity.showDateDayPick(textView: TextView, crossinline block: String.() -> Unit) {
+    DateTimePicker(this, DateTimePicker.NONE).apply {
+//            setActionButtonTop(false)
+        setDateRangeStart(Constant.THIS_YEAR, 1, 1)
+        setDateRangeEnd(Constant.THIS_YEAR+5, 11, 11)
         setSelectedItem(
             Calendar.getInstance().get(Calendar.YEAR),
             Calendar.getInstance().get(Calendar.MONTH) + 1,

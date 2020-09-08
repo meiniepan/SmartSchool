@@ -13,30 +13,30 @@ import com.xiaoneng.ss.network.dataConvert
  * Created with Android Studio.
  * Description:
  * @author: Burning
- * @date: 2020/02/27
+ * @date: 2020/08/27
  * Time: 17:09
  */
 class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository() {
 
 
-    suspend fun getNoticeList(page: String, pagenum: String): NoticeResponse {
+    suspend fun getNoticeList(page: String, pagenum: String,type:String): NoticeResponse {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.getNoticeList(UserInfo.getUserBean().token, page, pagenum)
+                apiService.getNoticeList(UserInfo.getUserBean().token, page, pagenum,type)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getNoticeList2(UserInfo.getUserBean().token, page, pagenum)
+                apiService.getNoticeList2(UserInfo.getUserBean().token, page, pagenum,type)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.getNoticeList2(UserInfo.getUserBean().token, page, pagenum)
+                apiService.getNoticeList2(UserInfo.getUserBean().token, page, pagenum,type)
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.getNoticeList(UserInfo.getUserBean().token, page, pagenum)
+                apiService.getNoticeList(UserInfo.getUserBean().token, page, pagenum,type)
                     .dataConvert(loadState)
 
             }
@@ -67,24 +67,24 @@ class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository(
         }
     }
 
-    suspend fun read(id: String, status: String): Any {
+    suspend fun read(id: String, status: String = "",received:String = ""): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.readNotice(UserInfo.getUserBean().token, id, status = status)
+                apiService.readNotice(UserInfo.getUserBean().token, id, status,received)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.readNotice2(UserInfo.getUserBean().token, id, status = status)
+                apiService.readNotice2(UserInfo.getUserBean().token, id, status,received)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.readNotice2(UserInfo.getUserBean().token, id, status = status)
+                apiService.readNotice2(UserInfo.getUserBean().token, id, status,received)
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.readNotice(UserInfo.getUserBean().token, id, status = status)
+                apiService.readNotice(UserInfo.getUserBean().token, id, status,received)
                     .dataConvert(loadState)
 
             }

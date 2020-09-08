@@ -1,5 +1,7 @@
 package com.xiaoneng.ss.common.utils
 
+import java.util.*
+
 /**
  * Created with Android Studio.
  * Description:
@@ -24,6 +26,7 @@ object Constant {
     const val USER_INFO = "user_info"
     const val TITLE = "title"
     const val ID = "id"
+    val THIS_YEAR = Calendar.getInstance().get(Calendar.YEAR)
 
     const val SAVE_USER_LOGIN_KEY = "user/login"
     const val SAVE_USER_REGISTER_KEY = "user/register"

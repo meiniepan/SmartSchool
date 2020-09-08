@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_bind_parent.*
  * Created with Android Studio.
  * Description:
  * @author: Burning
- * @date: 2020/02/27
+ * @date: 2020/08/27
  * Time: 17:01
  */
 class BindParentActivity : BaseLifeCycleActivity<AccountViewModel>() {

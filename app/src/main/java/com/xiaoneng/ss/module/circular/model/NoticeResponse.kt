@@ -4,7 +4,7 @@ package com.xiaoneng.ss.module.circular.model
  * Created with Android Studio.
  * Description:
  * @author: Burning
- * @date: 2020/02/27
+ * @date: 2020/08/27
  * Time: 17:06
  */
 data class NoticeResponse(
@@ -13,5 +13,6 @@ data class NoticeResponse(
     var read : String,
     var retotle : String,
     var feedback : String,
+    var unread : String,
     var lastid : String
 )

@@ -4,13 +4,14 @@ package com.xiaoneng.ss.module.school.model
  * Created with Android Studio.
  * Description:
  * @author: Burning
- * @date: 2020/02/27
+ * @date: 2020/08/27
  * Time: 17:06
  */
 data class AttendanceBean(
     var id: String = "",
     var cno: String = "",
     var coursename: String = "",
+    var realname: String = "",
     var type: String = "",
     var total: String = "",
     var remark: String = "",

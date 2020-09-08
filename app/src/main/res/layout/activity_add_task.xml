@@ -14,9 +14,10 @@
 
         <com.xiaoneng.ss.custom.widgets.CustomTitleBar
             style="@style/title_style"
-            app:title="添加" />
+            app:title="任务" />
 
         <TextView
+            android:id="@+id/tvConfirmAddTask"
             android:layout_width="57dp"
             android:layout_height="28dp"
             android:layout_alignParentEnd="true"
@@ -29,7 +30,7 @@
 
     </RelativeLayout>
 
-    <include layout="@layout/layout_split" />
+    <include layout="@layout/layout_split_tint_10" />
 
     <LinearLayout
         android:id="@+id/contentLayout"
@@ -37,40 +38,124 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/title_padding">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp">
+
+                <EditText
+                    android:id="@+id/tvTitleAddTask"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="请输入您的主题"
+                    android:text="" />
+            </LinearLayout>
+
+            <include layout="@layout/layout_split" />
+        </LinearLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/title_padding"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="8dp"
             android:drawableLeft="@drawable/ic_time"
             android:drawablePadding="2dp"
             android:hint="时间" />
 
-        <TextView
-            android:id="@+id/tvBeginAddTask"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="13dp"
-            android:drawableLeft="@drawable/ic_begin"
-            android:drawablePadding="2dp"
-            android:hint="点击添加开始时间" />
-
-        <TextView
-            android:id="@+id/tvStopAddTask"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="13dp"
-            android:layout_marginBottom="20dp"
-            android:drawableLeft="@drawable/ic_stop"
-            android:drawablePadding="2dp"
-            android:hint="点击添加结束时间" />
-
-        <View
+        <LinearLayout
+            android:id="@+id/llBeginTime"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="@color/tintBac" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/title_padding"
+            android:paddingEnd="@dimen/title_padding">
+
+            <TextView
+                android:id="@+id/tvBeginDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_begin"
+                android:drawablePadding="2dp"
+                android:hint="点击添加开始时间" />
+
+            <TextView
+                android:id="@+id/tvBeginTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llEndTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp"
+            android:paddingStart="@dimen/title_padding"
+            android:paddingEnd="@dimen/title_padding">
+
+            <TextView
+                android:id="@+id/tvEndDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_begin"
+                android:drawablePadding="2dp"
+                android:hint="点击添加结束时间" />
+
+            <TextView
+                android:id="@+id/tvEndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <include layout="@layout/layout_split_tint_10" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/title_padding"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:background="@drawable/bac_white_bac_20"
+            android:orientation="vertical"
+            android:paddingTop="20dp"
+            android:paddingBottom="0dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_remark"
+                android:drawablePadding="2dp"
+                android:hint="备注" />
+
+            <EditText
+                android:id="@+id/etRemarkAddTask"
+                style="@style/edit_style"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:hint="请输入备注"
+                android:paddingTop="5dp"
+                android:paddingBottom="20dp" />
+        </LinearLayout>
+
+        <include layout="@layout/layout_split_tint_10" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,17 +184,18 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvParticipant"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="29dp"
+                    android:layout_weight="1"
                     android:overScrollMode="never" />
+
                 <TextView
                     android:id="@+id/tvAddParticipant"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_add"
                     android:drawablePadding="2dp"
-                    android:hint="添加负责人"
-                    android:drawableTop="@drawable/ic_add" />
+                    android:hint="添加负责人" />
             </LinearLayout>
         </LinearLayout>
 
@@ -140,18 +226,18 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvPrincipal"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="29dp"
+                    android:layout_weight="1"
                     android:overScrollMode="never" />
 
                 <TextView
                     android:id="@+id/tvAddPrincipal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_add"
                     android:drawablePadding="2dp"
-                    android:hint="添加负责人"
-                    android:drawableTop="@drawable/ic_add" />
+                    android:hint="添加负责人" />
             </LinearLayout>
         </LinearLayout>
 
@@ -178,9 +264,9 @@
 
             <EditText
                 android:id="@+id/addIntro"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/edit_height"
+                android:layout_marginTop="10dp"
                 android:background="@null"
                 android:hint="请填写相关任务简介" />
         </LinearLayout>

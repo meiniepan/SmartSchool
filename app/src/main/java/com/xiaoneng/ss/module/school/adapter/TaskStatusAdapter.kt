@@ -10,7 +10,7 @@ import com.xiaoneng.ss.module.school.model.TaskBean
  * Created with Android Studio.
  * Description:
  * @author: Burning
- * @date: 2020/02/27
+ * @date: 2020/08/27
  * Time: 17:32
  */
 class TaskStatusAdapter(layoutId: Int, listData: MutableList<TaskBean>?) :

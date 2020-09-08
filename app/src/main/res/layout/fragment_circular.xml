@@ -46,6 +46,7 @@
                     android:src="@drawable/ic_notice" />
 
                 <View
+                    android:id="@+id/vBadge"
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:visibility="gone"

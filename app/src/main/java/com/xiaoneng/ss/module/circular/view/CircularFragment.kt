@@ -1,5 +1,6 @@
 package com.xiaoneng.ss.module.circular.view
 
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
@@ -16,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_circular.*
  * Created with Android Studio.
  * Description:
  * @author: Burning
- * @date: 2020/02/27
+ * @date: 2020/08/27
  * Time: 17:01
  */
 class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
@@ -26,7 +27,7 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_circular
 
     companion object {
-        fun getInstance() :Fragment {
+        fun getInstance(): Fragment {
             return CircularFragment()
         }
 
@@ -45,8 +46,14 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        mViewModel.getNoticeList()
+        getData()
     }
+
+    override fun getData() {
+        super.getData()
+        mViewModel.getNoticeList(type = "system")
+    }
+
     private fun initTab() {
         tvCircular.setOnClickListener {
             checkFirsTab()
@@ -104,9 +111,11 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
             response?.let {
                 showSuccess()
                 mData.clear()
-                for (i in it.data) {
-                    if (i.type == "system")
-                        mData.add(i)
+                mData.addAll(it.data)
+                if (it.unread == "1") {
+                    vBadge.visibility = View.VISIBLE
+                } else {
+                    vBadge.visibility = View.GONE
                 }
             }
         })

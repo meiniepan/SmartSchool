@@ -9,7 +9,7 @@ import com.xiaoneng.ss.R
  * Created with Android Studio.
  * Description:
  * @author: Burning
- * @date: 2020/02/27
+ * @date: 2020/08/27
  * Time: 17:32
  */
 class WeekTitleAdapter(layoutId: Int, listData: MutableList<String>?) :

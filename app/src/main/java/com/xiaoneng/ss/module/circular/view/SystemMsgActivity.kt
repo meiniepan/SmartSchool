@@ -27,13 +27,17 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
 
     override fun initView() {
         super.initView()
+        mData = intent.getParcelableArrayListExtra(Constant.DATA)
         initAdapter()
     }
 
     override fun initData() {
         super.initData()
-        rvSysMsg.showLoadingView()
-        mViewModel.getNoticeList()
+    }
+
+    override fun getData() {
+        super.getData()
+        mViewModel.getNoticeList(type = "system")
     }
 
     private fun initAdapter() {
@@ -43,7 +47,7 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
             }
 
             override fun onRefresh(refreshLayout: RefreshLayout) {
-                initData()
+                getData()
             }
         })
         mAdapter = SysMsgAdapter(R.layout.item_sys_msg, mData)
@@ -64,11 +68,8 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
             response?.let {
                 rvSysMsg.finishRefreshLoadMore()
                 mData.clear()
-                for (i in it.data) {
-                    if (i.type == "system")
-                        mData.add(i)
-                    rvSysMsg.notifyDataSetChanged()
-                }
+                mData.addAll(it.data)
+                rvSysMsg.notifyDataSetChanged()
             }
         })
     }

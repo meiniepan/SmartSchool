@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_schedule.*
  * Created with Android Studio.
  * Description:
  * @author: Burning
- * @date: 2020/02/27
+ * @date: 2020/08/27
  * Time: 17:01
  */
 class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
@@ -76,7 +76,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
         getData()
     }
 
-    private fun getData() {
+    override fun getData() {
         rvEventSchedule.showLoadingView()
         mViewModel.querySchedule(DateUtil.formatDateCustomDay(chosenDay!!))
     }

@@ -2,6 +2,8 @@
     <string name="app_name">智慧校园</string>
     <string name="exit_app">再按一次退出程序</string>
     <string name="empty_message">没有数据哎~</string>
+    <string name="lack_info">请完善数据</string>
+    <string name="deal_done">处理成功</string>
     <string name="error_message">发生了一些错误</string>
     <string name="title">温馨提示</string>
     <string name="done">确定</string>
@@ -9,6 +11,7 @@
     <string name="login">登录</string>
     <string name="login_success">登录成功</string>
     <string name="register">注册</string>
+    <string name="search_student">搜索姓名、学号查找学生信息</string>
     <string name="register_success">注册成功</string>
     <string name="logout">未登录</string>
     <string name="account">账户</string>
@@ -47,5 +50,5 @@
     <string name="navigation_3">我的</string>
     <string name="navigation_4">4</string>
     <string name="not_open">暂未开通</string>
-    <string name="at_u">\@了你</string>
+    <string name="at_u">\@我</string>
 </resources>

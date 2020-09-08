@@ -29,8 +29,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:supportsRtl="true"
         android:requestLegacyExternalStorage="true"
+        android:supportsRtl="true"
         android:theme="@style/MainTheme">
 
         <activity
@@ -41,6 +41,7 @@
         <activity
             android:name=".module.activity.SplashActivity"
             android:configChanges="orientation|keyboardHidden|navigation|locale"
+            android:screenOrientation="portrait"
             android:theme="@style/App.Theme.Launch">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,37 +62,93 @@
         <activity
             android:name=".account.view.LoginSwitchActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".account.view.LoginStuActivity">
+        <activity
+            android:name=".account.view.LoginStuActivity"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".account.view.RegisterActivity" />
-        <activity android:name=".account.view.LoginTeacherActivity">
+        <activity
+            android:name=".account.view.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".account.view.LoginTeacherActivity"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".module.circular.view.SystemMsgActivity"></activity>
-        <activity android:name=".module.circular.view.NoticeDetailActivity" />
-        <activity android:name=".module.school.view.TaskActivity" />
-        <activity android:name=".module.mine.view.MineInfoActivity" />
-        <activity android:name=".module.mine.view.AccountSecureActivity" />
-        <activity android:name=".module.mine.view.InviteCodeActivity" />
-        <activity android:name=".module.mine.view.ChooseChildActivity" />
-        <activity android:name=".module.mine.view.BindParentActivity" />
-        <activity android:name=".module.mine.view.SysSettingActivity" />
-        <activity android:name=".module.school.view.AddTaskActivity" />
-        <activity android:name=".module.school.view.TaskDetailActivity" />
-        <activity android:name=".module.school.view.RejectActivity" />
-        <activity android:name=".module.school.view.AddLogActivity" />
-        <activity android:name=".module.school.view.AttendanceStuActivity" />
-        <activity android:name=".module.circular.view.ScheduleDetailActivity" />
-        <activity android:name=".module.circular.view.AddScheduleActivity" />
-        <activity android:name=".module.school.view.PerformanceMasterActivity" />
-        <activity android:name=".module.school.view.PerformanceStuActivity" />
-        <activity android:name=".module.school.view.ApplyLeaveActivity" />
-        <activity android:name=".module.school.view.SickLeaveActivity" />
-        <activity android:name=".module.school.view.ThingLeaveActivity" />
-        <activity android:name=".module.school.view.AddStudentActivity" />
-        <activity android:name=".module.school.view.TimetableMasterActivity" />
-        <activity android:name=".module.mine.view.AddParentActivity" />
+        <activity
+            android:name=".module.circular.view.SystemMsgActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.circular.view.NoticeDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.TaskActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.mine.view.MineInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.mine.view.AccountSecureActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.mine.view.InviteCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.mine.view.ChooseChildActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.mine.view.BindParentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.mine.view.SysSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.AddTaskActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.TaskDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.RejectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.AddLogActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.AttendanceStuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.circular.view.ScheduleDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.circular.view.AddScheduleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.PerformanceMasterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.PerformanceStuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.ApplyLeaveActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.SickLeaveActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.ThingLeaveActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.AddStudentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.TimetableMasterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.mine.view.AddParentActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".module.school.view.AddClassAttendanceType" />
+        <activity android:name=".module.school.view.ChooseCourseToLeaveActivity" />
 
 
         <provider

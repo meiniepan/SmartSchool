@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_notice.*
  * Created with Android Studio.
  * Description:
  * @author: Burning
- * @date: 2020/02/27
+ * @date: 2020/08/27
  * Time: 17:01
  */
 class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
@@ -65,8 +65,7 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
                 readPosition = position
             }
             mStartActivity<NoticeDetailActivity>(context) {
-                putExtra(Constant.TITLE, mData[position].title)
-                putExtra(Constant.ID, mData[position].id)
+                putExtra(Constant.DATA, mData[position])
             }
         }
     }
@@ -78,7 +77,7 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
         getData()
     }
 
-    private fun getData() {
+    override fun getData() {
         rvNotice.showLoadingView()
         mViewModel.getNoticeList()
     }

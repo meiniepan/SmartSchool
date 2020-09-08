@@ -4,27 +4,30 @@ package com.xiaoneng.ss.module.school.model
  * Created with Android Studio.
  * Description:
  * @author: Burning
- * @date: 2020/02/27
+ * @date: 2020/08/27
  * Time: 17:06
  */
 data class TaskBean(
-    var id: String,
-    var taskid: String,
+    var token: String,
     var taskname: String,
-    var uid: String,
-    var usertype: String,
-    var fileinfo: String,
-    var feedback: String,
-    var examine: String,
-    var examinestatus: String,
     var plantime: String,
-    var tasktime: String,
-    var remark: String,
-    var type: String,
-    var status: String,
-    var schoolname: String,
-    var schoolid: String,
-    var operatorname: String,
-    var operatortype: String,
-    var operatorid: String
+    var plantotal: String,
+    var involve: MutableList<UserBeanSimple> = ArrayList(),
+    var id: String = "",
+    var taskid: String = "",
+    var uid: String = "",
+    var usertype: String = "",
+    var fileinfo: String = "",
+    var feedback: String = "",
+    var examine: String = "",
+    var examinestatus: String = "",
+    var tasktime: String = "",
+    var remark: String = "",
+    var type: String = "",
+    var status: String = "",
+    var schoolname: String = "",
+    var schoolid: String = "",
+    var operatorname: String = "",
+    var operatortype: String = "",
+    var operatorid: String = ""
 )

@@ -112,7 +112,7 @@ abstract class BaseActivity : AppCompatActivity() {
         getData()
     }
 
-    private fun getData() {
+    open fun getData() {
 
     }
 

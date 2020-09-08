@@ -7,7 +7,7 @@ import android.os.Parcelable
  * Created with Android Studio.
  * Description:
  * @author: Burning
- * @date: 2020/02/27
+ * @date: 2020/08/27
  * Time: 17:06
  */
 data class NoticeBean(
@@ -23,11 +23,15 @@ data class NoticeBean(
     var noticetime: String?= "",
     var remark: String?= "",
     var type: String?= "",
+    var send_uid: String?= "",
+    var send_username: String?= "",
     var schoolname: String?= "",
     var schoolid: String?= "",
     var operatorname: String?= ""
 ):Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -59,6 +63,8 @@ data class NoticeBean(
         parcel.writeString(noticetime)
         parcel.writeString(remark)
         parcel.writeString(type)
+        parcel.writeString(send_uid)
+        parcel.writeString(send_username)
         parcel.writeString(schoolname)
         parcel.writeString(schoolid)
         parcel.writeString(operatorname)
@@ -77,4 +83,5 @@ data class NoticeBean(
             return arrayOfNulls(size)
         }
     }
+
 }

@@ -29,11 +29,7 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
     // 委托属性   将实现委托给了 -> Preference
     private var mUsername: String by SPreference(Constant.USERNAME_KEY, "未登录")
     private var isNightMode: Boolean by SPreference(Constant.NIGHT_MODE, false)
-    private var mLastIndex: Int = -1
-
-    // 当前显示的 fragment
-    private var mCurrentFragment: Fragment? = null
-    private var mLastFragment: Fragment? = null
+    private var mLastIndex: Int = Constant.HOME
 
     private lateinit var fragmentAdapter: FragmentVpAdapter
     private var fragmentList = ArrayList<Fragment>()
@@ -102,16 +98,20 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     private fun initBottomNavigation() {
         bottom_navigation.setOnNavigationItemSelectedListener { menuItem: MenuItem ->
+
             when (menuItem.itemId) {
                 R.id.menu_home -> {
+                    mLastIndex = Constant.HOME
                     contentLayout.currentItem = Constant.HOME
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.menu_school -> {
+                    mLastIndex = Constant.SCHOOL
                     contentLayout.currentItem = Constant.SCHOOL
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.menu_mine -> {
+                    mLastIndex = Constant.MINE
                     contentLayout.currentItem = Constant.MINE
                     return@setOnNavigationItemSelectedListener true
                 }

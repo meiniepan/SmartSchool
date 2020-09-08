@@ -1,6 +1,7 @@
 package com.xiaoneng.ss.common.utils
 
 import android.annotation.SuppressLint
+import android.widget.TextView
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -55,14 +56,56 @@ object DateUtil {
      * @return
      */
     @SuppressLint("SimpleDateFormat")
-    fun formatDate(date: Long): String {
+    fun formatDate(date: Long = System.currentTimeMillis()): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         return sdf.format(Date(date))
 
     }
 
     @SuppressLint("SimpleDateFormat")
-    fun formatDateCustomDay(date: Long): String {
+    fun formatShowTime(date: String): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
+        var result = ""
+        if (date.length >= 10) {
+            if (isSameDay(date)) {
+                result = date.substring(
+                    date.length - 5,
+                    date.length
+                )
+            } else {
+                result = date.substring(
+                    5,
+                    10
+                )
+            }
+
+        }
+        return result
+
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun showTimeFromNet(date: String, textView1: TextView, textView2: TextView) {
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
+        if (date.length >= 15) {
+            var time1 = date.substring(
+                5, 7
+            ) + "月" +
+                    date.substring(
+                        8, 10
+                    ) + "日 " + getWeek(sdf.parse(date))
+            var time2 = date.substring(
+                date.length - 5,
+                date.length
+            )
+            textView1.text = time1
+            textView2.text = time2
+        }
+
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun formatDateCustomDay(date: Long = System.currentTimeMillis()): String {
         val sdf = SimpleDateFormat("yyyyMMdd")
         return sdf.format(Date(date))
 
@@ -147,8 +190,15 @@ object DateUtil {
     }
 
     @SuppressLint("SimpleDateFormat")
-    fun formatDateCustomMonth(date: Long): String {
+    fun formatDateCustomMonth(date: Long = System.currentTimeMillis()): String {
         val sdf = SimpleDateFormat("yyyyMM")
+        return sdf.format(Date(date))
+
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun formatDateCustomMmDay(date: Long = System.currentTimeMillis()): String {
+        val sdf = SimpleDateFormat("MM月dd日")
         return sdf.format(Date(date))
 
     }
@@ -172,8 +222,38 @@ object DateUtil {
 
     }
 
+    fun isSameDay(date: String): Boolean {
+        return if (date.length >= 10) {
+            var cal1: Calendar = Calendar.getInstance()
+            var date1 = Date(System.currentTimeMillis())
+            cal1.time = date1
+            cal1.get(Calendar.YEAR).toString() == date.substring(0, 4) &&
+                    (cal1.get(Calendar.MONTH) + 1).toString() == date.substring(5, 7) &&
+                    cal1.get(Calendar.DAY_OF_MONTH).toString() == date.substring(8, 10)
+        } else {
+            false
+        }
+
+    }
+
     fun getWeek(day: Int): String? {
         return when (day) {
+            1 -> "周日"
+            2 -> "周一"
+            3 -> "周二"
+            4 -> "周三"
+            5 -> "周四"
+            6 -> "周五"
+            7 -> "周六"
+            else -> ""
+        }
+    }
+
+    fun getWeek(day: Date): String? {
+        var cal = Calendar.getInstance()
+        cal.time = day
+
+        return when (cal.get(Calendar.DAY_OF_WEEK)) {
             1 -> "周日"
             2 -> "周一"
             3 -> "周二"
@@ -198,7 +278,14 @@ object DateUtil {
         }
     }
 
-    fun getDateString(yy: String? = "",m1: String? = "",dd: String? = "",hh: String? = "",m2: String? = ""): String {
+    fun getDateString(
+        yy: String? = "",
+        m1: String? = "",
+        dd: String? = "",
+        hh: String? = "",
+        m2: String? = ""
+    ): String {
         return "${yy}-${m1}-${dd} $hh:$m2"
     }
+
 }

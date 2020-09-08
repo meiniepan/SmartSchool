@@ -14,22 +14,6 @@
         android:layout_marginTop="235dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_splash_logo" />
+        android:src="@drawable/ic_splash_logo_text" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="校 能 智 慧 校 园"
-        android:textSize="@dimen/sp_22"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="XIAONENG"
-        android:textColor="@color/commonHint"
-        android:textSize="@dimen/sp_16"
-        android:textStyle="bold" />
 </LinearLayout>

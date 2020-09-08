@@ -10,7 +10,6 @@ import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.school.adapter.TaskLogAdapter
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import kotlinx.android.synthetic.main.activity_notice_detail.ctbNoticeDetail
 import kotlinx.android.synthetic.main.activity_task_detail.*
 
 /**

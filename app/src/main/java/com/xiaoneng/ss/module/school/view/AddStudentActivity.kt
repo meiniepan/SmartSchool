@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_add_student.*
  * Created with Android Studio.
  * Description:
  * @author: Burning
- * @date: 2020/02/27
+ * @date: 2020/08/27
  * Time: 17:01
  */
 class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {

@@ -12,7 +12,6 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.RecycleViewDivider
 import com.xiaoneng.ss.common.utils.dp2px
-import com.xiaoneng.ss.custom.popup.StringPopupWindow
 import com.xiaoneng.ss.module.school.adapter.AttendanceStuAdapter
 import com.xiaoneng.ss.module.school.adapter.DialogListAdapter
 import com.xiaoneng.ss.module.school.model.AttendanceBean
@@ -23,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_attendance_stu.*
  * Created with Android Studio.
  * Description:
  * @author: Burning
- * @date: 2020/02/27
+ * @date: 2020/08/27
  * Time: 17:01
  */
 class AttendanceTeacherActivity : BaseLifeCycleActivity<SchoolViewModel>() {
@@ -32,7 +31,6 @@ class AttendanceTeacherActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private val bottomDialog: Dialog by lazy {
         initDialog()
     }
-    private var stringPopupWindow: StringPopupWindow? = null
 
     override fun getLayoutId(): Int = R.layout.activity_attendance_stu
 
@@ -44,15 +42,6 @@ class AttendanceTeacherActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun initTitle() {
 
-        tvTitleAttendanceStu.text = "今日考勤"
-        tvTitleAttendanceStu.setOnClickListener {
-//            if (stringPopupWindow == null) {
-//                initPopWindow()
-//            }
-//            stringPopupWindow?.showPopupWindow(tvTitleAttendanceStu)
-
-            bottomDialog.show()
-        }
 
 
     }
@@ -60,12 +49,12 @@ class AttendanceTeacherActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initData() {
         super.initData()
-        mViewModel.getAttendance("")
+        mViewModel.getAttendanceMaster("")
     }
 
 
     override fun initDataObserver() {
-        mViewModel.mAttendanceData.observe(this, Observer { response ->
+        mViewModel.mAttendanceMasterData.observe(this, Observer { response ->
             response?.let {
                 mData.clear()
                 mData.addAll(it.data)
@@ -125,7 +114,7 @@ class AttendanceTeacherActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             adapter = dialogAdapter
         }
         dialogAdapter.setOnItemClickListener { adapter, view, position ->
-            tvTitleAttendanceStu.text = titles[position]
+            tvLabel1Attendance.text = titles[position]
             bottomDialog.dismiss()
         }
 

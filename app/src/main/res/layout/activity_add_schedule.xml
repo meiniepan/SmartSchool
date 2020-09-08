@@ -14,7 +14,7 @@
 
         <com.xiaoneng.ss.custom.widgets.CustomTitleBar
             style="@style/title_style"
-            app:title="添加" />
+            app:title="日程" />
 
         <TextView
             android:id="@+id/tvActionTitle"
@@ -52,38 +52,87 @@
             android:paddingEnd="28dp"
             android:paddingBottom="20dp">
 
-            <EditText
-                android:id="@+id/etThemeAddSchedule"
-                style="@style/edit_style"
-                android:hint="请输入您的主题" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp">
+
+                    <EditText
+                        android:id="@+id/etThemeAddSchedule"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="请输入您的主题" />
+                </LinearLayout>
+
+                <include layout="@layout/layout_split" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="8dp"
                 android:drawableLeft="@drawable/ic_time"
                 android:drawablePadding="2dp"
                 android:hint="时间" />
 
-            <TextView
-                android:id="@+id/tvBeginAddSchedule"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/llBeginTime"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="42dp"
                 android:layout_marginTop="13dp"
-                android:drawableLeft="@drawable/ic_begin"
-                android:drawablePadding="2dp"
-                android:hint="点击添加开始时间" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                >
 
-            <TextView
-                android:id="@+id/tvStopAddSchedule"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tvBeginDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_begin"
+                    android:drawablePadding="2dp"
+                    android:hint="点击添加开始时间" />
+
+                <TextView
+                    android:id="@+id/tvBeginTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/llEndTime"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="42dp"
                 android:layout_marginTop="13dp"
-                android:drawableLeft="@drawable/ic_stop"
-                android:drawablePadding="2dp"
-                android:hint="点击添加结束时间" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/tvEndDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_begin"
+                    android:drawablePadding="2dp"
+                    android:hint="点击添加结束时间" />
+
+                <TextView
+                    android:id="@+id/tvEndTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout

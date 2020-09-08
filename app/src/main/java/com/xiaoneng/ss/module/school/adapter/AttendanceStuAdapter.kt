@@ -2,25 +2,24 @@ package com.xiaoneng.ss.module.school.adapter
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.xiaoneng.ss.module.school.model.AttendanceBean
+import com.xiaoneng.ss.R
+import com.xiaoneng.ss.module.school.model.AttendanceStuBean
 
 
 /**
  * Created with Android Studio.
  * Description:
  * @author: Burning
- * @date: 2020/02/27
+ * @date: 2020/08/27
  * Time: 17:32
  */
-class AttendanceStuAdapter(layoutId: Int, listData: MutableList<AttendanceBean>) :
-    BaseQuickAdapter<AttendanceBean, BaseViewHolder>(layoutId, listData) {
+class AttendanceStuAdapter(layoutId: Int, listData: MutableList<AttendanceStuBean>) :
+    BaseQuickAdapter<AttendanceStuBean, BaseViewHolder>(layoutId, listData) {
 
-    override fun convert(viewHolder: BaseViewHolder?, item: AttendanceBean) {
+    override fun convert(viewHolder: BaseViewHolder?, item: AttendanceStuBean) {
         viewHolder?.let { holder ->
-//            holder.setText(R.id.tvTitle3, item?.title)
-//                .setText(R.id.tvTime3,item?.noticetime)
-//
-//            holder.setText(R.id.tvAction, item?.title)
+            holder.setText(R.id.tvStudentAttName, item?.name)
+                .setText(R.id.tvStudentAttInfo, item?.total + item?.unit)
         }
     }
 }

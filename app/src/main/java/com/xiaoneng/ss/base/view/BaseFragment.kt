@@ -51,9 +51,12 @@ abstract class BaseFragment : Fragment() {
     open fun initData() {
 
     }
+    open fun getData() {
+
+    }
 
     // 重新加载
-    open fun reLoad() = initData()
+    open fun reLoad() = getData()
 
 
     abstract fun getLayoutId(): Int

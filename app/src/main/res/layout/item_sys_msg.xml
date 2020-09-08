@@ -1,60 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
-    xmlns:tool="http://schemas.android.com/tools"
-    android:orientation="vertical">
+    android:layout_marginTop="10dp"
+    android:gravity="center_vertical"
+    android:background="@drawable/bac_white_bac_20"
+    android:orientation="vertical"
+    android:paddingStart="14dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="14dp"
+    android:paddingBottom="20dp">
 
-    <TextView
-        android:id="@+id/tvTime3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        tool:text="haha"
-        android:textColor="@color/colorGray999"
-        android:textSize="@dimen/sp_12" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/bac_white_bac_20"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:paddingStart="30dp"
-        android:paddingTop="20dp"
-        android:paddingEnd="30dp"
-        android:paddingBottom="20dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:gravity="center_vertical"
-            android:layout_height="wrap_content" >
+        android:gravity="center_vertical">
 
         <View
             android:id="@+id/vOval3"
             android:layout_width="10dp"
             android:layout_height="10dp"
             android:layout_marginEnd="5dp"
-            android:background="@drawable/shape_blue_oval" />
+            android:background="@drawable/shape_blue_oval"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tvTitle3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/colorGray777"
+            tool:text="hahah" />
+
+        <TextView
+            android:id="@+id/tvTime3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tool:text="hahah"
-            android:textColor="@color/colorGray777" />
+            android:gravity="center"
+            android:textColor="@color/colorGray999"
+            android:textSize="@dimen/sp_12"
+            tool:text="haha" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/tvAction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tool:text="haha"
         android:layout_marginTop="8dp"
-        android:textColor="@color/commonBlue" />
-</LinearLayout>
+        android:text="查看详情"
+        android:textColor="@color/commonBlue"
+        tool:text="haha" />
 </LinearLayout>
 

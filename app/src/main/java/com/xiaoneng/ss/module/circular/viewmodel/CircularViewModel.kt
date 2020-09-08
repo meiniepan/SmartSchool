@@ -12,7 +12,7 @@ import com.xiaoneng.ss.network.initiateRequest
  * Created with Android Studio.
  * Description:
  * @author: Burning
- * @date: 2020/02/27
+ * @date: 2020/08/27
  * Time: 17:09
  */
 class CircularViewModel : BaseViewModel<CircularRepository>() {
@@ -24,9 +24,9 @@ class CircularViewModel : BaseViewModel<CircularRepository>() {
     val mScheduleMonthData: MutableLiveData<Any> = MutableLiveData()
     val mAddScheduleData: MutableLiveData<Any> = MutableLiveData()
 
-    fun getNoticeList(page: String = "", pagenum: String = "") {
+    fun getNoticeList(page: String = "", pagenum: String = "",type:String = "") {
         initiateRequest(
-            { mNoticeData.value = mRepository.getNoticeList(page, pagenum) },
+            { mNoticeData.value = mRepository.getNoticeList(page, pagenum,type) },
             loadState
         )
     }
@@ -38,9 +38,9 @@ class CircularViewModel : BaseViewModel<CircularRepository>() {
         )
     }
 
-    fun read(id: String, status: String) {
+    fun read(id: String, status: String = "",received:String = "") {
         initiateRequest(
-            { mReadData.value = mRepository.read(id, status) },
+            { mReadData.value = mRepository.read(id, status,received) },
             loadState
         )
     }

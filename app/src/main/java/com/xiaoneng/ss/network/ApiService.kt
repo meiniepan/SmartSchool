@@ -6,10 +6,7 @@ import com.xiaoneng.ss.model.StudentResp
 import com.xiaoneng.ss.module.circular.model.NoticeDetailBean
 import com.xiaoneng.ss.module.circular.model.NoticeResponse
 import com.xiaoneng.ss.module.circular.model.ScheduleBean
-import com.xiaoneng.ss.module.school.model.AttendanceResponse
-import com.xiaoneng.ss.module.school.model.PerformanceResponse
-import com.xiaoneng.ss.module.school.model.TaskResponse
-import com.xiaoneng.ss.module.school.model.TimetableResponse
+import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.network.response.BaseResponse
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -524,5 +521,13 @@ interface ApiService {
     suspend fun queryCodeList(
         @Field("token") token: String,
         @Field("classid") classid: String? = null
+    ): BaseResponse<Any>
+
+    /**
+     *教师发布任务
+     */
+    @POST("/api/v1/teacher/tasks/add")
+    suspend fun addTask(
+        @Body requestBody: TaskBean
     ): BaseResponse<Any>
 }

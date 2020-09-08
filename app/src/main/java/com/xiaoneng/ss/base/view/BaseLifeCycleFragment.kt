@@ -96,6 +96,7 @@ abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
             it?.let {
                 when (it.code) {
                     StateType.SUCCESS -> {
+                        showSuccess()
                     }
                     StateType.LOADING -> showLoading()
                     StateType.ERROR -> showTip(it.message)

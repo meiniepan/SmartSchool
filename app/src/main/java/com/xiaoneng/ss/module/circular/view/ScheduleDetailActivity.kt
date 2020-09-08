@@ -1,12 +1,12 @@
 package com.xiaoneng.ss.module.circular.view
 
 import android.text.TextUtils
-import android.widget.TextView
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.common.utils.showDatePick
 import com.xiaoneng.ss.module.circular.model.ScheduleBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
@@ -33,21 +33,20 @@ class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
         beginTime = bean.scheduletime
         endTime = bean.scheduleover
 
-        ctbDetailSchedule.setTitle(bean.title)
-        tvBeginTimeSchedule.text = bean.scheduletime
-        tvStopTimeSchedule.text = bean.scheduleover
         etDetailSchedule.setText(bean.remark)
-
-        tvBeginTimeSchedule.apply {
+        tvTitleScheduleDetail.text = bean.title
+        DateUtil.showTimeFromNet(bean.scheduletime!!,tvBeginDate,tvBeginTime)
+        DateUtil.showTimeFromNet(bean.scheduleover!!,tvEndDate,tvEndTime)
+        llBeginTime.apply {
             setOnClickListener {
-                showDatePick(this) {
+                showDatePick(tvBeginDate,tvBeginTime) {
                     beginTime = this
                 }
             }
         }
-        tvStopTimeSchedule.apply {
+        llEndTime.apply {
             setOnClickListener {
-                showDatePick(this) {
+                showDatePick(tvEndDate,tvEndTime) {
                     endTime = this
                 }
             }
@@ -67,7 +66,7 @@ class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
 
     private fun onEdit() {
         if (
-            TextUtils.isEmpty(tvBeginTimeSchedule.text.toString())
+            TextUtils.isEmpty(tvBeginDate.text.toString())
 
         ) {
             toast("请完善信息")

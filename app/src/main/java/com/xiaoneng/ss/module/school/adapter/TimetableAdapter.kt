@@ -14,7 +14,7 @@ import com.xiaoneng.ss.module.school.model.TimetableBean
  * Created with Android Studio.
  * Description:
  * @author: Burning
- * @date: 2020/02/27
+ * @date: 2020/08/27
  * Time: 17:32
  */
 class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>) :

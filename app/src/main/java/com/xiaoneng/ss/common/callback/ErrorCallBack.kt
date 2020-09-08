@@ -11,5 +11,5 @@ import com.xiaoneng.ss.R
  * Time: 14:29
  */
 class ErrorCallBack : Callback() {
-    override fun onCreateView(): Int = R.layout.layout_error
+    override fun onCreateView(): Int = R.layout.status_view_error
 }

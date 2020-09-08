@@ -14,6 +14,7 @@
     <LinearLayout
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"
+        android:background="@color/tintBac"
         android:layout_height="match_parent">
 
         <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView

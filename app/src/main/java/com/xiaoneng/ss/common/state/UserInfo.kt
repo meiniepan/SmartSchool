@@ -51,6 +51,7 @@ object UserInfo {
 
     fun modifyUserBean(response: UserBean) {
         // 改变 sharedPreferences   isLogin值
+        response.token = getUserBean().token
         userInfoJson = Gson().toJson(response)
 
     }
