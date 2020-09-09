@@ -47,10 +47,18 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
+        tvTimeToday.text = "今天是" + DateUtil.formatTitleToday()
         initTitle()
         initAdapter()
-        tvApplyLeave.setOnClickListener {
-            mStartActivity<ApplyLeaveActivity>(this)
+        tvApplyLeave.apply {
+            visibility = if (UserInfo.getUserBean().usertype == "1") {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+            setOnClickListener {
+                mStartActivity<ApplyLeaveActivity>(this@AttendanceActivity)
+            }
         }
     }
 

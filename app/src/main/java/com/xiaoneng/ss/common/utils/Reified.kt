@@ -37,11 +37,6 @@ inline fun <reified T> mStartForResult(context: Activity?,code:Int) {
     context?.startActivityForResult(intent,code)
 }
 
-inline fun <reified T> mSetResult(context: Activity?,code:Int, block: Intent.() -> Unit) {
-    val intent = Intent(context, T::class.java)
-    intent.block()
-    context?.setResult(code,intent)
-}
 
 inline fun <reified T> mStartActivity(context: Context?, block: Intent.() -> Unit) {
     val intent = Intent(context, T::class.java)

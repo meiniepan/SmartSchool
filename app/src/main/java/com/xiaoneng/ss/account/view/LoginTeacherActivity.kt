@@ -40,7 +40,11 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
         tvLoginTeacher.setOnClickListener(this)
         tvSwitchIdTeacher.setOnClickListener(this)
         UserInfo.getUserBean().phone?.let {
-            etPhoneTeacher.setText(UserInfo.getUserBean().phone)
+            if (isTeacher) {
+                etPhoneTeacher.setText(UserInfo.getUserBean().phone)
+            } else {
+                etPhoneTeacher.setText(UserInfo.getUserBean().parentphone)
+            }
         }
         if (isTeacher) {
             tvType.text = "老师"

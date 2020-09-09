@@ -7,7 +7,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.circular.adapter.SysMsgAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
@@ -56,10 +55,11 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
             setAdapter(mAdapter)
         }
         mAdapter.setOnItemClickListener { _, view, position ->
-            mStartActivity<NoticeDetailActivity>(this) {
-                putExtra(Constant.TITLE, mData!![position].title)
-                putExtra(Constant.ID, mData!![position].id)
-            }
+            mViewModel.read(mData[position].id!!,status = "1")
+//            mStartActivity<NoticeDetailActivity>(this) {
+//                putExtra(Constant.TITLE, mData!![position].title)
+//                putExtra(Constant.ID, mData!![position].id)
+//            }
         }
     }
 

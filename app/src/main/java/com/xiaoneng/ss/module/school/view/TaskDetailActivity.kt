@@ -1,5 +1,6 @@
 package com.xiaoneng.ss.module.school.view
 
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
@@ -18,9 +19,9 @@ import kotlinx.android.synthetic.main.activity_task_detail.*
  * @date :2020/8/20 11:32 AM
  */
 class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    var id:String = ""
+    var id: String = ""
     lateinit var mAdapter: TaskLogAdapter
-    var mData: ArrayList<NoticeBean>? = ArrayList()
+    var mData: ArrayList<NoticeBean> = ArrayList()
     override fun getLayoutId(): Int {
         return R.layout.activity_task_detail
     }
@@ -28,7 +29,6 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initView() {
         super.initView()
         id = intent.getStringExtra(Constant.ID)
-        ctbNoticeDetail.setTitle(intent.getStringExtra("title"))
         tvAddLogTaskDetail.setOnClickListener {
             mStartActivity<AddLogActivity>(this)
         }
@@ -44,8 +44,8 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         mAdapter.setOnItemChildClickListener { adapter, view, position ->
-            when(view.id){
-                R.id.tvAction1 ->{
+            when (view.id) {
+                R.id.tvAction1 -> {
                     mStartActivity<RejectActivity>(this)
                 }
             }
@@ -54,9 +54,15 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initData() {
         super.initData()
-        mData?.add(NoticeBean("2"))
-        mData?.add(NoticeBean("2"))
+        mData.add(NoticeBean("2"))
+        mData.add(NoticeBean("2"))
+        if (mData.size > 0) {
+            llLogEmpty.visibility = View.GONE
+        } else {
+            llLogEmpty.visibility = View.VISIBLE
+        }
     }
+
     override fun initDataObserver() {
 //        mViewModel.mNoticeDetail.observe(this, Observer { response ->
 //            response?.let {

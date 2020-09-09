@@ -63,6 +63,13 @@ object DateUtil {
     }
 
     @SuppressLint("SimpleDateFormat")
+    fun formatTitleToday(date: Long = System.currentTimeMillis()): String {
+        val sdf = SimpleDateFormat("yyyy年MM月dd日 ")
+        return sdf.format(Date(date))+ getWeek()
+
+    }
+
+    @SuppressLint("SimpleDateFormat")
     fun formatShowTime(date: String): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
         var result = ""
@@ -249,7 +256,7 @@ object DateUtil {
         }
     }
 
-    fun getWeek(day: Date): String? {
+    fun getWeek(day: Date = Date()): String? {
         var cal = Calendar.getInstance()
         cal.time = day
 

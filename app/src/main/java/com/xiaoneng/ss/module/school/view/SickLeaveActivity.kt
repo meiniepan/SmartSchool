@@ -10,16 +10,11 @@ import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.GlideEngine
-import com.xiaoneng.ss.common.utils.displayImage
-import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.school.adapter.AttLessonAdapter
 import com.xiaoneng.ss.module.school.model.LessonBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_sick_leave.*
-import kotlinx.android.synthetic.main.activity_sick_leave.llItem8ApplyLeave
-import kotlinx.android.synthetic.main.activity_thing_leave.*
 
 /**
  * Created with Android Studio.
@@ -37,6 +32,7 @@ class SickLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
+        tvTimeToday.text  = "您的请假时间是"+DateUtil.formatTitleToday()
         llItem8ApplyLeave.setOnClickListener {
             mStartActivity<ChooseCourseToLeaveActivity>(this)
         }

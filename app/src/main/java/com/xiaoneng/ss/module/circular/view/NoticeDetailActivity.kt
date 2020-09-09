@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import kotlinx.android.synthetic.main.activity_notice_detail.*
@@ -30,6 +31,7 @@ class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
         }
         tvNoticeTitle.text = bean?.title
         tvNoticeInfo.text = bean?.remark
+        tvTime1.text = DateUtil.formatShowTime(bean?.noticetime!!)
         initReceivedUI()
     }
 

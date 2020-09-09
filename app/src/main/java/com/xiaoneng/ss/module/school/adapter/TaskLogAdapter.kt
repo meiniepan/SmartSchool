@@ -18,9 +18,10 @@ class TaskLogAdapter(layoutId: Int, listData: MutableList<NoticeBean>?) :
 
     override fun convert(viewHolder: BaseViewHolder?, item: NoticeBean?) {
         viewHolder?.let { holder ->
-            holder.addOnClickListener(R.id.tvAction1)
-//            holder.setText(R.id.tvTitle3, item?.title)
-//                .setText(R.id.tvTime3,item?.noticetime)
+            holder.addOnClickListener(R.id.tvAction1Log)
+            holder.addOnClickListener(R.id.tvAction2Log)
+            holder.setText(R.id.tvName4, item?.title)
+                .setText(R.id.tvIntro4,item?.noticetime)
 //
 //            holder.setText(R.id.tvAction, item?.title)
         }

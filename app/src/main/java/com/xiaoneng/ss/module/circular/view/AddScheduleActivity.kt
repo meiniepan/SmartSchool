@@ -1,6 +1,11 @@
 package com.xiaoneng.ss.module.circular.view
 
+import android.app.Dialog
 import android.text.TextUtils
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.xiaoneng.ss.R
@@ -117,6 +122,7 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
         })
 
     }
+
 
 
 }

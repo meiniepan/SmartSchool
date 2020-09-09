@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.common.utils.mStartForResult
 import com.xiaoneng.ss.module.school.adapter.AttLessonAdapter
 import com.xiaoneng.ss.module.school.model.LessonBean
@@ -29,6 +30,7 @@ class ThingLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
+        tvTimeToday.text  = "今天是"+ DateUtil.formatTitleToday()
         llItem8ApplyLeave.setOnClickListener {
             mStartForResult<ChooseCourseToLeaveActivity>(this, Constant.REQUEST_CODE_LESSON)
         }

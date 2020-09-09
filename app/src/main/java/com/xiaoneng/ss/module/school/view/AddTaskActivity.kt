@@ -153,6 +153,8 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
     }
 
+
+
     override fun initDataObserver() {
         mViewModel.mAddTaskData.observe(this, Observer { response ->
             response?.let {
