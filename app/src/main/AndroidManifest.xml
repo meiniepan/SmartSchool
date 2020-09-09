@@ -115,7 +115,7 @@
             android:name=".module.school.view.AddLogActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.school.view.AttendanceStuActivity"
+            android:name=".module.school.view.AttendanceActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.circular.view.ScheduleDetailActivity"
@@ -142,7 +142,7 @@
             android:name=".module.school.view.AddStudentActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.school.view.TimetableMasterActivity"
+            android:name=".module.school.view.TimetableActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.mine.view.AddParentActivity"

@@ -1,7 +1,15 @@
 package com.xiaoneng.ss.module.school.view
 
+import android.app.Activity
+import android.content.Intent
+import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.mStartForResult
+import com.xiaoneng.ss.module.school.adapter.AttLessonAdapter
+import com.xiaoneng.ss.module.school.model.LessonBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_thing_leave.*
 
@@ -13,34 +21,19 @@ import kotlinx.android.synthetic.main.activity_thing_leave.*
  * Time: 17:01
  */
 class ThingLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    var mTime = 2
-
+    lateinit var mAdapter: AttLessonAdapter
+    var mData: ArrayList<LessonBean> = ArrayList()
 
     override fun getLayoutId(): Int = R.layout.activity_thing_leave
 
 
     override fun initView() {
         super.initView()
-        tvItem8ApplyLeave.text = mTime.toString()
-        tvLeftItem8ApplyLeave.setOnClickListener {
-            doMinus()
+        llItem8ApplyLeave.setOnClickListener {
+            mStartForResult<ChooseCourseToLeaveActivity>(this, Constant.REQUEST_CODE_LESSON)
         }
-        tvRightItem8ApplyLeave.setOnClickListener {
-            doPlus()
-        }
-
-    }
-
-    private fun doPlus() {
-        mTime += 1
-        tvItem8ApplyLeave.text = mTime.toString()
-    }
-
-    private fun doMinus() {
-        if (mTime > 0) {
-            mTime -= 1
-            tvItem8ApplyLeave.text = mTime.toString()
-        }
+        llAttLesson.visibility = View.GONE
+        initAdapter()
     }
 
 
@@ -49,6 +42,40 @@ class ThingLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 //        mViewModel.getTimetable()
     }
 
+    private fun initAdapter() {
+        mAdapter = AttLessonAdapter(R.layout.item_timetable_title, mData)
+
+        rvAttLesson.apply {
+            layoutManager =
+                object : LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false) {
+
+                }
+            setAdapter(mAdapter)
+        }
+        mAdapter.setOnItemClickListener { _, view, position ->
+
+        }
+    }
+
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Constant.REQUEST_CODE_LESSON && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                mData.clear()
+                mData.addAll(data.getParcelableArrayListExtra<LessonBean>(Constant.DATA))
+                if (mData.size > 0) {
+                    rvAttLesson.notifyDataSetChanged()
+                    llAttLesson.visibility = View.VISIBLE
+                } else {
+                    llAttLesson.visibility = View.GONE
+                }
+            }
+        }
+    }
 
     override fun initDataObserver() {
 //        mViewModel.mNoticeData.observe(this, Observer { response ->

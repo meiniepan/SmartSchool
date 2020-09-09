@@ -22,17 +22,22 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapter: ChooseCourseAdapter
     var mData: ArrayList<LessonBean> = ArrayList()
     var chosenDay = DateUtil.formatDateCustomMmDay()
+    var chosenDayNet = DateUtil.formatDateCustomDay()
 
     override fun getLayoutId(): Int = R.layout.activity_choose_course_leave
 
 
     override fun initView() {
         super.initView()
+        tvConfirm.setOnClickListener {
+            doConfirm()
+        }
         tvChooseDay.apply {
             text = chosenDay
             setOnClickListener {
                 showDateDayPick(this){
-                    chosenDay = this
+                    chosenDayNet = this
+                    getData()
                 }
             }
 
@@ -42,10 +47,22 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     }
 
+    private fun doConfirm() {
+        //                setResult(Constant.REQUEST_CODE_LESSON,
+//                    intent.putCharSequenceArrayListExtra(Constant.DATA,it.list)
+//                )
+//                finish()
+    }
+
 
     override fun initData() {
         super.initData()
-        mViewModel.getTimetable(time = chosenDay)
+        getData()
+    }
+
+    override fun getData() {
+        super.getData()
+        mViewModel.getTimetable(time = chosenDayNet)
     }
 
     private fun initAdapter() {
@@ -68,6 +85,7 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 //                } else {
 //                    showEmpty()
 //                }
+
             }
         })
 

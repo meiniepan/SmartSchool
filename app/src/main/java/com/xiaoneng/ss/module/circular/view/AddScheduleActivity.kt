@@ -1,11 +1,6 @@
 package com.xiaoneng.ss.module.circular.view
 
-import android.app.Dialog
 import android.text.TextUtils
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.xiaoneng.ss.R
@@ -123,40 +118,5 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
 
     }
 
-    override fun onBackPressed() {
-        showDialog()
-    }
-
-    private fun showDialog() {
-        // 底部弹出对话框
-        val bottomDialog =
-            Dialog(this, R.style.BottomDialog)
-        val contentView: View =
-            LayoutInflater.from(this).inflate(R.layout.dialog_save_draft, null)
-        bottomDialog.setContentView(contentView)
-        val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
-        params.width =
-            resources.displayMetrics.widthPixels
-        params.bottomMargin = dp2px(this, 0f).toInt()
-        contentView.layoutParams = params
-        bottomDialog.window!!.setGravity(Gravity.BOTTOM)
-        bottomDialog.window!!.setWindowAnimations(R.style.BottomDialog_Animation)
-        bottomDialog.show()
-        contentView.findViewById<View>(R.id.tvSaveDraft)
-            .setOnClickListener { v: View? ->
-                finish()
-                bottomDialog.dismiss()
-            }
-        contentView.findViewById<View>(R.id.tvNoSaveDraft)
-            .setOnClickListener { v: View? ->
-                finish()
-                bottomDialog.dismiss()
-            }
-        contentView.findViewById<View>(R.id.tvCancelDraft)
-            .setOnClickListener { v: View? ->
-
-                bottomDialog.dismiss()
-            }
-    }
 
 }

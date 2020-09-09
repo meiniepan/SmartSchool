@@ -5,7 +5,10 @@ import com.xiaoneng.ss.base.repository.ApiRepository
 import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.model.StudentResp
-import com.xiaoneng.ss.module.school.model.*
+import com.xiaoneng.ss.module.school.model.PerformanceResponse
+import com.xiaoneng.ss.module.school.model.TaskBean
+import com.xiaoneng.ss.module.school.model.TaskResponse
+import com.xiaoneng.ss.module.school.model.TimetableResponse
 import com.xiaoneng.ss.network.dataConvert
 
 /**
@@ -111,7 +114,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         }
     }
 
-    suspend fun getAttendance(classid: String = "",atttime:String = ""): AttendanceResponse {
+    suspend fun getAttendance(classid: String = "",atttime:String = ""): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
                 apiService.getAttendance(UserInfo.getUserBean().token, classid,atttime = atttime)

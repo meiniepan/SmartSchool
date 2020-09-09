@@ -61,11 +61,11 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvWeek"
-                style="@style/recycler_horiz_style" />
+                style="@style/recycler_horizontal_style" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvMonth"
                 android:visibility="gone"
-                style="@style/recycler_horiz_style" />
+                style="@style/recycler_horizontal_style" />
         </LinearLayout>
 
         <TextView

@@ -6,50 +6,53 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+        style="@style/title_style"
+        app:title="课表" />
+
+    <LinearLayout
+        android:id="@+id/llClassTimetable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical">
-
-        <com.xiaoneng.ss.custom.widgets.CustomTitleBar
-            app:title="课表"
-            style="@style/title_style"
-            />
-
-        <TextView
-            android:id="@+id/tvTitleTimetable"
-            android:layout_width="wrap_content"
-            android:textSize="@dimen/sp_20"
-            android:textColor="@color/commonBlue"
-            android:layout_height="wrap_content"
-            android:drawableRight="@drawable/ic_bule_triangle"
-            android:drawablePadding="10dp"
-            android:text="班级课表"
-            android:visibility="gone"
-            android:background="@color/white"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            />
-
-    </RelativeLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvClassTimetable"
-        style="@style/recycler_style"
-        android:layout_width="match_parent"
-        android:background="@color/tintBac"
-        android:layout_height="50dp"
-        android:visibility="gone"
         android:layout_marginStart="50dp"
-         />
+        android:background="@color/tintBac"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tvTab1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/ic_gray_triangle"
+                android:drawablePadding="5dp"
+                android:text="班级课表" />
+
+            <TextView
+                android:id="@+id/tvTab2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:drawableRight="@drawable/ic_gray_triangle"
+                android:drawablePadding="5dp"
+                android:text="" />
+        </LinearLayout>
+
+        <include layout="@layout/layout_split_h1" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTitleTimetable"
         style="@style/recycler_style"
         android:layout_width="match_parent"
-        android:background="@color/tintBac"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
+        android:background="@color/tintBac"
         android:paddingStart="10dp"
         android:paddingTop="10dp" />
 
@@ -67,11 +70,10 @@
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:background="@color/white"
-                android:paddingTop="10dp"
                 android:overScrollMode="never"
-                 />
+                android:paddingTop="10dp" />
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
                 android:id="@+id/rvTimetable"
                 style="@style/recycler_style"
                 android:paddingStart="10dp"

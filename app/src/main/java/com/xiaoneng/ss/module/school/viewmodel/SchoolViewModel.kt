@@ -3,7 +3,10 @@ package com.xiaoneng.ss.module.school.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.base.viewmodel.BaseViewModel
 import com.xiaoneng.ss.model.StudentResp
-import com.xiaoneng.ss.module.school.model.*
+import com.xiaoneng.ss.module.school.model.PerformanceResponse
+import com.xiaoneng.ss.module.school.model.TaskBean
+import com.xiaoneng.ss.module.school.model.TaskResponse
+import com.xiaoneng.ss.module.school.model.TimetableResponse
 import com.xiaoneng.ss.module.school.repository.SchoolRepository
 import com.xiaoneng.ss.network.initiateRequest
 
@@ -20,8 +23,9 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mPerformanceData: MutableLiveData<PerformanceResponse> = MutableLiveData()
     val mTimetableData: MutableLiveData<TimetableResponse> = MutableLiveData()
     val mTimetableDataT: MutableLiveData<TimetableResponse> = MutableLiveData()
-    val mAttendanceMasterData: MutableLiveData<AttendanceResponse> = MutableLiveData()
-    val mAttendanceStuData: MutableLiveData<AttendanceResponse> = MutableLiveData()
+    val mAttendanceMasterData: MutableLiveData<Any> = MutableLiveData()
+    val mAttendanceStuData: MutableLiveData<Any> = MutableLiveData()
+    val mAttendanceTeaData: MutableLiveData<Any> = MutableLiveData()
     val mStudentData: MutableLiveData<StudentResp> = MutableLiveData()
     val mDepartmentsData: MutableLiveData<Any> = MutableLiveData()
     val mAddAttendanceData: MutableLiveData<Any> = MutableLiveData()
@@ -65,6 +69,13 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     fun getAttendanceStu(classid: String = "", atttime: String = "") {
         initiateRequest(
             { mAttendanceStuData.value = mRepository.getAttendance(classid, atttime) },
+            loadState
+        )
+    }
+
+    fun getAttendanceTea(classid: String = "", atttime: String = "") {
+        initiateRequest(
+            { mAttendanceTeaData.value = mRepository.getAttendance(classid, atttime) },
             loadState
         )
     }

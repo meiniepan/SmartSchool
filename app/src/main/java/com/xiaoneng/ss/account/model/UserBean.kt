@@ -30,6 +30,9 @@ data class UserBean(
     var isactive: String= "",
     var device_no: String= "",
     var cno: String= "",
+    var parentphone: String= "",
+    var parentuid: String= "",
+    var parentname: String= "",
     var classmaster: String= "",
     var roleid: String= "",
     var usertype: String= "",//学生1  老师2  家长3

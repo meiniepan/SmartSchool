@@ -6,7 +6,10 @@ import com.xiaoneng.ss.model.StudentResp
 import com.xiaoneng.ss.module.circular.model.NoticeDetailBean
 import com.xiaoneng.ss.module.circular.model.NoticeResponse
 import com.xiaoneng.ss.module.circular.model.ScheduleBean
-import com.xiaoneng.ss.module.school.model.*
+import com.xiaoneng.ss.module.school.model.PerformanceResponse
+import com.xiaoneng.ss.module.school.model.TaskBean
+import com.xiaoneng.ss.module.school.model.TaskResponse
+import com.xiaoneng.ss.module.school.model.TimetableResponse
 import com.xiaoneng.ss.network.response.BaseResponse
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -329,7 +332,7 @@ interface ApiService {
         @Field("groupid") groupid: String = "",
         @Field("teacheruid") teacheruid: String = "",
         @Field("atttime") atttime: String = ""
-    ): BaseResponse<AttendanceResponse>
+    ): BaseResponse<Any>
 
     /**
      *教师查看考勤
@@ -342,7 +345,7 @@ interface ApiService {
         @Field("groupid") groupid: String = "",
         @Field("teacheruid") teacheruid: String = "",
         @Field("atttime") atttime: String = ""
-    ): BaseResponse<AttendanceResponse>
+    ): BaseResponse<Any>
 
     /**
      *学生上传文件oss签名接口

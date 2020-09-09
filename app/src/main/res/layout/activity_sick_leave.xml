@@ -60,6 +60,8 @@
 
                     <TextView
                         android:layout_width="match_parent"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
                         android:layout_height="wrap_content"
                         android:drawableRight="@drawable/ic_next"
                         android:text="请假时长（必填）" />
@@ -73,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:paddingStart="24dp"
+                android:paddingStart="@dimen/title_padding"
 
                 >
 
@@ -101,7 +103,7 @@
                             android:id="@+id/cbItem1ApplyLeave"
                             android:layout_width="35dp"
                             android:layout_height="22dp"
-                            android:layout_marginEnd="24dp"
+                            android:layout_marginEnd="@dimen/title_padding"
                             android:background="@drawable/selector_switch"
                             android:button="@null"
                             android:checked="false" />
@@ -117,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:paddingStart="24dp">
+                android:paddingStart="@dimen/title_padding">
 
                 <LinearLayout
                     android:id="@+id/llItem2ApplyLeave"
@@ -143,7 +145,7 @@
                             android:id="@+id/cbItem2ApplyLeave"
                             android:layout_width="35dp"
                             android:layout_height="22dp"
-                            android:layout_marginEnd="24dp"
+                            android:layout_marginEnd="@dimen/title_padding"
                             android:background="@drawable/selector_switch"
                             android:button="@null"
                             android:checked="false" />
@@ -159,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:paddingStart="24dp"
+                android:paddingStart="@dimen/title_padding"
 
                 >
 
@@ -187,7 +189,7 @@
                             android:id="@+id/cbItem3ApplyLeave"
                             android:layout_width="35dp"
                             android:layout_height="22dp"
-                            android:layout_marginEnd="24dp"
+                            android:layout_marginEnd="@dimen/title_padding"
                             android:background="@drawable/selector_switch"
                             android:button="@null"
                             android:checked="false" />
@@ -203,7 +205,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:paddingStart="24dp">
+                android:paddingStart="@dimen/title_padding">
 
                 <LinearLayout
                     android:id="@+id/llItem4ApplyLeave"
@@ -229,7 +231,7 @@
                             android:id="@+id/etItem4ApplyLeave"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="24dp"
+                            android:layout_marginEnd="@dimen/title_padding"
                             android:background="@null"
                             android:hint="请填体温" />
 
@@ -244,7 +246,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:paddingStart="24dp"
+                android:paddingStart="@dimen/title_padding"
 
                 >
 
@@ -272,7 +274,7 @@
                             android:id="@+id/cbItem5ApplyLeave"
                             android:layout_width="35dp"
                             android:layout_height="22dp"
-                            android:layout_marginEnd="24dp"
+                            android:layout_marginEnd="@dimen/title_padding"
                             android:background="@drawable/selector_switch"
                             android:button="@null"
                             android:checked="true" />
@@ -288,7 +290,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:paddingStart="24dp">
+                android:paddingStart="@dimen/title_padding">
 
                 <LinearLayout
                     android:id="@+id/llItem6ApplyLeave"
@@ -314,7 +316,7 @@
                             android:id="@+id/etItem6ApplyLeave"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="24dp"
+                            android:layout_marginEnd="@dimen/title_padding"
                             android:background="@null"
                             android:hint="请填写医院名称" />
 
@@ -330,7 +332,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:paddingStart="24dp"
+                android:paddingStart="@dimen/title_padding"
 
                 >
 
@@ -358,7 +360,7 @@
                             android:id="@+id/etItem7ApplyLeave"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="24dp"
+                            android:layout_marginEnd="@dimen/title_padding"
                             android:background="@null"
                             android:hint="请填写具体名称" />
 
@@ -377,6 +379,7 @@
                 android:text="上传假条" />
 
             <ImageView
+                android:id="@+id/ivAddPic"
                 android:layout_width="match_parent"
                 android:layout_height="185dp"
                 android:layout_marginStart="@dimen/title_padding"

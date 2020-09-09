@@ -17,9 +17,11 @@ import com.xiaoneng.ss.module.school.adapter.AttendanceStuAdapter
 import com.xiaoneng.ss.module.school.adapter.AttendanceTeacherAdapter
 import com.xiaoneng.ss.module.school.adapter.DialogListAdapter
 import com.xiaoneng.ss.module.school.model.AttendanceBean
+import com.xiaoneng.ss.module.school.model.AttendanceResponse
+import com.xiaoneng.ss.module.school.model.AttendanceResponse2
 import com.xiaoneng.ss.module.school.model.AttendanceStuBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import kotlinx.android.synthetic.main.activity_attendance_stu.*
+import kotlinx.android.synthetic.main.activity_attendance.*
 
 /**
  * Created with Android Studio.
@@ -28,18 +30,19 @@ import kotlinx.android.synthetic.main.activity_attendance_stu.*
  * @date: 2020/08/27
  * Time: 17:01
  */
-class AttendanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapterMaster: AttendanceMasterAdapter
     lateinit var mAdapterTeacher: AttendanceTeacherAdapter
     lateinit var mAdapterStudent: AttendanceStuAdapter
     var mMasterData: ArrayList<AttendanceBean> = ArrayList()
     var mTeacherData: ArrayList<AttendanceBean> = ArrayList()
     var mStudentData: ArrayList<AttendanceStuBean> = ArrayList()
+    var chosenDay = DateUtil.formatDateCustomMmDay()
     private val bottomDialog: Dialog by lazy {
         initDialog()
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_attendance_stu
+    override fun getLayoutId(): Int = R.layout.activity_attendance
 
 
     override fun initView() {
@@ -75,10 +78,11 @@ class AttendanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             bottomDialog.show()
         }
         tvLabel3Attendance.apply {
-            text = DateUtil.formatDateCustomMmDay()
+            text = chosenDay
             setOnClickListener {
-
-                showDateDayPick(this) {}
+                showDateDayPick(this) {
+                    chosenDay = this
+                }
             }
         }
 
@@ -91,16 +95,17 @@ class AttendanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 //        mMasterData.add(AttendanceBean(realname = "hsjdf"))
 //        mMasterData.add(AttendanceBean(realname = "hsjdf"))
 //        mMasterData.add(AttendanceBean(realname = "hsjdf"))
+        rvAttendance.showLoadingView()
         if (UserInfo.getUserBean().usertype == "1") {
             mViewModel.getAttendanceStu(atttime = "20200814")
         } else if (UserInfo.getUserBean().usertype == "2") {
             if (UserInfo.getUserBean().classmaster == "1") {
-
+                mViewModel.getAttendanceMaster(atttime = "20200814")
             } else {
-
+                mViewModel.getAttendanceTea(atttime = "20200814")
             }
         } else if (UserInfo.getUserBean().usertype == "99") {
-
+            mViewModel.getAttendanceMaster(atttime = "20200814")
         } else {
             mViewModel.getAttendanceStu()
         }
@@ -160,7 +165,7 @@ class AttendanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         bottomDialog.window!!.setWindowAnimations(R.style.BottomDialog_Animation)
         var dialogAdapter = DialogListAdapter(R.layout.item_dialog_list, titles)
         var recyclerView = contentView.findViewById<RecyclerView>(R.id.rvDialogList).apply {
-            layoutManager = LinearLayoutManager(this@AttendanceStuActivity)
+            layoutManager = LinearLayoutManager(this@AttendanceActivity)
             addItemDecoration(
                 RecycleViewDivider(
                     dp2px(context, 1f).toInt(),
@@ -180,21 +185,32 @@ class AttendanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mAttendanceMasterData.observe(this, Observer { response ->
             response?.let {
-                mMasterData.clear()
-                mMasterData.addAll(it.data)
-                if (mMasterData.size > 0) {
-                    mAdapterMaster.notifyDataSetChanged()
-                } else {
-                    showEmpty()
+                netResponseFormat<AttendanceResponse2>(it)?.let {
+                    mMasterData.clear()
+//                    mMasterData.addAll(it.data)
+                    rvAttendance.notifyDataSetChanged()
                 }
             }
         })
 
         mViewModel.mAttendanceStuData.observe(this, Observer { response ->
             response?.let {
-                mStudentData.clear()
-                mStudentData.addAll(it.attendances)
-                rvAttendance.recyclerView.notifyDataSetChanged()
+                netResponseFormat<AttendanceResponse>(it)?.let {
+
+                    mStudentData.clear()
+                    mStudentData.addAll(it.attendances)
+                    rvAttendance.recyclerView.notifyDataSetChanged()
+                }
+            }
+        })
+
+        mViewModel.mAttendanceTeaData.observe(this, Observer { response ->
+            response?.let {
+                netResponseFormat<AttendanceResponse>(it)?.let {
+                    mTeacherData.clear()
+                    mTeacherData.addAll(it.data)
+                    rvAttendance.recyclerView.notifyDataSetChanged()
+                }
             }
         })
 

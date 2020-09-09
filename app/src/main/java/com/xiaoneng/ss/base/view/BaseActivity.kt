@@ -15,10 +15,10 @@ import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.utils.AppManager
-import com.xiaoneng.ss.common.utils.ChangeThemeEvent
 import com.xiaoneng.ss.common.utils.ColorUtil
 import com.xiaoneng.ss.common.utils.RevealUtil.circularFinishReveal
 import com.xiaoneng.ss.common.utils.RevealUtil.setReveal
+import com.xiaoneng.ss.common.utils.eventBus.ChangeThemeEvent
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 

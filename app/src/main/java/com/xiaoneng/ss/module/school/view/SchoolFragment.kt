@@ -33,11 +33,11 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         }
         llTimeTable.setOnClickListener {
 
-            mStartActivity<TimetableMasterActivity>(context)
+            mStartActivity<TimetableActivity>(context)
 
         }
         llAttendance.setOnClickListener {
-            mStartActivity<AttendanceStuActivity>(context)
+            mStartActivity<AttendanceActivity>(context)
         }
         llPerformance.setOnClickListener {
             when (UserInfo.getUserBean().usertype) {

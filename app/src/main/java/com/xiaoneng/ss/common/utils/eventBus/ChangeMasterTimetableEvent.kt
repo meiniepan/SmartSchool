@@ -1,4 +1,4 @@
-package com.xiaoneng.ss.common.utils
+package com.xiaoneng.ss.common.utils.eventBus
 
 import org.greenrobot.eventbus.EventBus
 
@@ -9,7 +9,7 @@ import org.greenrobot.eventbus.EventBus
  * @date: 2020/03/27
  * Time: 18:46
  */
-class ChangeThemeEvent {
+class ChangeMasterTimetableEvent(val flag:Boolean) {
     fun post() {
         EventBus.getDefault().post(this)
     }

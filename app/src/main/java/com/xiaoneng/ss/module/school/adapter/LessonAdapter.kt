@@ -6,9 +6,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.SPreference
+import com.xiaoneng.ss.common.utils.eventBus.ChangeMasterTimetableEvent
 import com.xiaoneng.ss.module.school.model.LessonBean
+import org.greenrobot.eventbus.Subscribe
 
 
 /**
@@ -20,7 +20,7 @@ import com.xiaoneng.ss.module.school.model.LessonBean
  */
 class LessonAdapter(layoutId: Int, listData: MutableList<LessonBean>) :
     BaseQuickAdapter<LessonBean, BaseViewHolder>(layoutId, listData) {
-    private var isMaster: Boolean by SPreference(Constant.IS_MASTER, false)
+    private var isMaster: Boolean = false
     private var hasColor: Boolean = false
 
     override fun convert(viewHolder: BaseViewHolder, item: LessonBean) {
@@ -57,5 +57,8 @@ class LessonAdapter(layoutId: Int, listData: MutableList<LessonBean>) :
     fun setColor(has: Boolean) {
         hasColor = has
     }
-
+    @Subscribe
+    fun changeThemeEvent(event: ChangeMasterTimetableEvent) {
+        isMaster = event.flag
+    }
 }

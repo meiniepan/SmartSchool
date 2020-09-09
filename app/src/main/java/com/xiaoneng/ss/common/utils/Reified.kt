@@ -32,6 +32,17 @@ inline fun <reified T> mStartActivity(context: Context?) {
     context?.startActivity(intent)
 }
 
+inline fun <reified T> mStartForResult(context: Activity?,code:Int) {
+    val intent = Intent(context, T::class.java)
+    context?.startActivityForResult(intent,code)
+}
+
+inline fun <reified T> mSetResult(context: Activity?,code:Int, block: Intent.() -> Unit) {
+    val intent = Intent(context, T::class.java)
+    intent.block()
+    context?.setResult(code,intent)
+}
+
 inline fun <reified T> mStartActivity(context: Context?, block: Intent.() -> Unit) {
     val intent = Intent(context, T::class.java)
     intent.block()
@@ -104,9 +115,9 @@ inline fun Activity.showDateDayPick(textView: TextView, crossinline block: Strin
                 hour: String?,
                 minute: String?
             ) {
-                var time = "${month}月${day}日 $hour:$minute"
-                DateUtil.getDateString(year,month,day,hour,minute).block()
-                textView.text = time
+                var timess = "${month}月${day}日"
+                "${year}${month}${day}".block()
+                textView.text = timess
             }
 
         })
@@ -171,7 +182,8 @@ inline fun <reified T> netResponseFormat(response: Any): T? {
     val gson: Gson = GsonBuilder().enableComplexMapKeySerialization().create()
     val jsonString = gson.toJson(response)
     val resultType = object : TypeToken<T>() {}.type
-    return gson.fromJson<T>(jsonString, resultType)
+    var result = gson.fromJson<T>(jsonString, resultType)
+    return result
 }
 
 

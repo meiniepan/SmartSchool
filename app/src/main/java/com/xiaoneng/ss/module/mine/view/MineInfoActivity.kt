@@ -1,6 +1,7 @@
 package com.xiaoneng.ss.module.mine.view
 
 import android.text.TextUtils
+import android.view.View
 import androidx.lifecycle.Observer
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
@@ -36,9 +37,10 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     override fun initView() {
         super.initView()
-        tvNameMineInfo.text = UserInfo.getUserBean().realname
-        etMineItem1.setText(UserInfo.getUserBean().realname)
-        tvMineItem4.text = starPhoneNum(UserInfo.getUserBean().phone)
+        var bean = UserInfo.getUserBean()
+        var name = bean.realname
+        var phone = bean.phone
+
 
         ivAvatarMineInfo.setOnClickListener {
             choosePic()
@@ -47,6 +49,38 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
         tvConfirm.setOnClickListener {
             doConfirm()
         }
+
+        when (UserInfo.getUserBean().usertype) {
+
+            "1" -> {
+                if (UserInfo.getUserBean().logintype == Constant.LOGIN_TYPE_STU) {
+                    llMineItem6.visibility = View.GONE
+                } else {
+                    name = bean.parentname
+                    phone = bean.parentphone
+                    llMineItem2.visibility = View.GONE
+                    llMineItem3.visibility = View.GONE
+                    llMineItem5.visibility = View.GONE
+                    llMineItem6.visibility = View.GONE
+                    llMineItem7.visibility = View.GONE
+                    llMineItem8.visibility = View.GONE
+                    ivAvatarMineInfo.isClickable = false
+                }
+            }
+            "2" -> {
+                llMineItem5.visibility = View.GONE
+            }
+
+            "99" -> {
+                llMineItem5.visibility = View.GONE
+            }
+            else -> {
+
+            }
+        }
+        tvNameMineInfo.text = name
+        etMineItem1.setText(name)
+        tvMineItem4.text = starPhoneNum(phone)
     }
 
     private fun doConfirm() {

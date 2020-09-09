@@ -11,7 +11,7 @@ import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import com.xiaoneng.ss.common.utils.ChangeThemeEvent
+import com.xiaoneng.ss.common.utils.eventBus.ChangeThemeEvent
 import com.xiaoneng.ss.common.utils.ColorUtil
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe

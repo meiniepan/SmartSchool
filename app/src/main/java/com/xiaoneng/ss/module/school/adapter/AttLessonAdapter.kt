@@ -13,15 +13,13 @@ import com.xiaoneng.ss.module.school.model.LessonBean
  * @date: 2020/08/27
  * Time: 17:32
  */
-class ChooseCourseAdapter(layoutId: Int, listData: MutableList<LessonBean>) :
+class AttLessonAdapter(layoutId: Int, listData: MutableList<LessonBean>) :
     BaseQuickAdapter<LessonBean, BaseViewHolder>(layoutId, listData) {
 
     override fun convert(viewHolder: BaseViewHolder?, item: LessonBean) {
         viewHolder?.let { holder ->
-            holder.setText(R.id.tvCourseName, item?.coursename)
-                .setText(R.id.tvTeacherName,item?.teachername)
-                .setText(R.id.tvRoomAtt,item?.classroomname)
-                .setText(R.id.tvTimeAtt,item?.coursetime)
+            holder.setText(R.id.tvNameCourse2, item?.coursename)
+
 //
 //            holder.setText(R.id.tvAction, item?.title)
         }

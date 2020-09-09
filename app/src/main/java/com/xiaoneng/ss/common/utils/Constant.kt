@@ -46,6 +46,7 @@ object Constant {
 
     // 二维码扫描
     const val REQUEST_CODE_SCAN = 1
+    const val REQUEST_CODE_LESSON = 2
 
     const val CODED_CONTENT = "codedContent"
     const val INTENT_ZXING_CONFIG = "zxingConfig"
