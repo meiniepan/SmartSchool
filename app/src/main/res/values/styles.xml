@@ -74,6 +74,11 @@
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">1</item>
     </style>
+    <style name="next_style">
+        <item name="android:layout_width">14dp</item>
+        <item name="android:layout_height">14dp</item>
+        <item name="android:src">@drawable/ic_next</item>
+    </style>
 
 
     <style name="marquee_style">
@@ -128,6 +133,14 @@
         <item name="android:background">@drawable/bac_blue_line_21</item>
         <item name="android:textColor">@color/commonBlue</item>
         <item name="android:textSize">@dimen/sp_16</item>
+    </style>
+
+    <style name="button_blue_line_5_style">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">22dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/bac_blue_line_5</item>
+        <item name="android:textColor">@color/commonBlue</item>
     </style>
 
     <style name="BottomDialog" parent="@style/Base.V7.Theme.AppCompat.Light.Dialog">

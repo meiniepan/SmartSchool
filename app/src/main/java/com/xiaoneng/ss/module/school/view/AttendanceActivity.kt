@@ -18,7 +18,6 @@ import com.xiaoneng.ss.module.school.adapter.AttendanceTeacherAdapter
 import com.xiaoneng.ss.module.school.adapter.DialogListAdapter
 import com.xiaoneng.ss.module.school.model.AttendanceBean
 import com.xiaoneng.ss.module.school.model.AttendanceResponse
-import com.xiaoneng.ss.module.school.model.AttendanceResponse2
 import com.xiaoneng.ss.module.school.model.AttendanceStuBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_attendance.*
@@ -126,7 +125,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             setAdapter(mAdapterMaster)
         }
         mAdapterMaster.setOnItemClickListener { _, view, position ->
-            mStartActivity<AddStudentActivity>(this)
+
         }
     }
 
@@ -193,9 +192,9 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mAttendanceMasterData.observe(this, Observer { response ->
             response?.let {
-                netResponseFormat<AttendanceResponse2>(it)?.let {
+                netResponseFormat<AttendanceResponse>(it)?.let {
                     mMasterData.clear()
-//                    mMasterData.addAll(it.data)
+                    mMasterData.addAll(it.data)
                     rvAttendance.notifyDataSetChanged()
                 }
             }

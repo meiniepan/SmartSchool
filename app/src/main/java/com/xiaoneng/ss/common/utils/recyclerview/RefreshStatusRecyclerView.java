@@ -117,7 +117,7 @@ public class RefreshStatusRecyclerView extends SmartRefreshLayout implements Sta
      * @param adapter   适配器
      * @param dataList  数据源
      */
-    public <T>void setAdapter(@Nullable RecyclerView.Adapter adapter, List<T> dataList){
+    public void setAdapter(@Nullable RecyclerView.Adapter adapter, List dataList){
         mRecyclerView.setAdapter(adapter,dataList,true);
     }
 
@@ -127,7 +127,7 @@ public class RefreshStatusRecyclerView extends SmartRefreshLayout implements Sta
      * @param dataList  数据源
      * @param enableAutoEmpty   在notify列表的时候是否根据数据自动显示空布局，默认为 true
      */
-    public <T>void setAdapter(@Nullable RecyclerView.Adapter adapter, List<T> dataList, boolean enableAutoEmpty){
+    public void setAdapter(@Nullable RecyclerView.Adapter adapter, List dataList, boolean enableAutoEmpty){
         mRecyclerView.setAdapter(adapter,dataList,enableAutoEmpty);
     }
 
@@ -137,9 +137,9 @@ public class RefreshStatusRecyclerView extends SmartRefreshLayout implements Sta
      * @param dataList  数据源
      * @param startPage         开始的页码
      * @param limitCountPerPage 每页的数量
-     * @param <T>
+     * @param
      */
-    public <T>void setAdapter(@Nullable RecyclerView.Adapter adapter, List<T> dataList, int startPage, int limitCountPerPage){
+    public void setAdapter(@Nullable RecyclerView.Adapter adapter, List dataList, int startPage, int limitCountPerPage){
         mRecyclerView.setAdapter(adapter,dataList,true);
         this.startPage = startPage;
         this.limitCountPerPage = limitCountPerPage;
@@ -151,7 +151,7 @@ public class RefreshStatusRecyclerView extends SmartRefreshLayout implements Sta
      * @param adapter   适配器
      * @param dataList  数据源
      */
-    public <T>void setAdapterCheckEmpty(@Nullable RecyclerView.Adapter adapter, List<T> dataList){
+    public void setAdapterCheckEmpty(@Nullable RecyclerView.Adapter adapter, List dataList){
         mRecyclerView.setAdapterCheckEmpty(adapter,dataList);
     }
 

@@ -11,10 +11,10 @@ import com.xiaoneng.ss.model.GroupBean
  * Time: 17:06
  */
 data class AttendanceResponse(
-    var data : MutableList<AttendanceBean>,
-    var attendances : MutableList<AttendanceStuBean>,
-    var classs : MutableList<ClassBean>,
-    var groups : MutableList<GroupBean>,
+    var data : ArrayList<AttendanceBean>,
+    var attendances : ArrayList<AttendanceStuBean>,
+    var classs : ArrayList<ClassBean>,
+    var groups : ArrayList<GroupBean>,
     var lastid : String,
     var day : String,
     var total : String,

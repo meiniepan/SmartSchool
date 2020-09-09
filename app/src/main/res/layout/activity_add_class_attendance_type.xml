@@ -28,11 +28,11 @@
 
 
             <LinearLayout
+                android:id="@+id/llAddClassAttendance1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:id="@+id/llAddClassAttendance1"
                 android:paddingStart="@dimen/title_padding">
 
                 <LinearLayout
@@ -42,23 +42,39 @@
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/title_padding"
-                        android:drawableRight="@drawable/ic_next"
-                        android:text="病假" />
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginEnd="5dp"
+                            android:text="病假" />
+
+                        <View
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_gravity="end"
+                            android:background="@drawable/bac_orange_oval" />
+                    </FrameLayout>
+                    <Space style="@style/space_style" />
+
+                    <ImageView
+                        style="@style/next_style"
+                        android:layout_marginEnd="@dimen/title_padding" />
                 </LinearLayout>
 
                 <include layout="@layout/layout_split" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical"
                 android:id="@+id/llAddClassAttendance2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
                 android:paddingStart="24dp">
 
                 <LinearLayout
@@ -68,38 +84,158 @@
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/title_padding"
-                        android:drawableRight="@drawable/ic_next"
-                        android:text="事假/晚到" />
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginEnd="5dp"
+                            android:text="事假" />
+
+                        <View
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_gravity="end"
+                            android:background="@drawable/bac_orange_oval" />
+                    </FrameLayout>
+                    <Space style="@style/space_style" />
+
+                    <ImageView
+                        style="@style/next_style"
+                        android:layout_marginEnd="@dimen/title_padding" />
                 </LinearLayout>
 
                 <include layout="@layout/layout_split" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llAddClassAttendance3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:id="@+id/llAddClassAttendance3"
                 android:paddingStart="24dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/title_padding"
-                        android:drawableRight="@drawable/ic_next"
-                        android:text="迟到" />
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginEnd="5dp"
+                            android:text="课堂迟到" />
+
+                        <View
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_gravity="end"
+                            android:background="@drawable/bac_orange_oval" />
+                    </FrameLayout>
+
+                    <Space style="@style/space_style" />
+
+                    <ImageView
+                        style="@style/next_style"
+                        android:layout_marginEnd="@dimen/title_padding" />
+                </LinearLayout>
+
+                <include layout="@layout/layout_split" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/llAddClassAttendance4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingStart="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginEnd="5dp"
+                            android:text="旷课" />
+
+                        <View
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_gravity="end"
+                            android:background="@drawable/bac_orange_oval" />
+                    </FrameLayout>
+
+                    <Space style="@style/space_style" />
+
+                    <ImageView
+                        style="@style/next_style"
+                        android:layout_marginEnd="@dimen/title_padding" />
+                </LinearLayout>
+
+                <include layout="@layout/layout_split" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/llAddClassAttendance5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingStart="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginEnd="5dp"
+                            android:text="早间迟到" />
+
+                        <View
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_gravity="end"
+                            android:background="@drawable/bac_orange_oval" />
+                    </FrameLayout>
+
+                    <Space style="@style/space_style" />
+
+                    <ImageView
+                        style="@style/next_style"
+                        android:layout_marginEnd="@dimen/title_padding" />
                 </LinearLayout>
 
                 <include layout="@layout/layout_split" />

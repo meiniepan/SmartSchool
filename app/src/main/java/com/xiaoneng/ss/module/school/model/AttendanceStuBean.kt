@@ -10,7 +10,22 @@ package com.xiaoneng.ss.module.school.model
 data class AttendanceStuBean(
     var name: String = "",
     var unit: String = "",
-    var total: String = ""
+    var total: String = "",
+
+    var id: String = "",
+    var realname: String = "",
+    var uid: String = "",
+    var usertype: String = "",
+    var type: String = "",
+    var status: String = "",
+    var leavetype: String = "",
+    var remark: String = "",
+    var atttime: String = "",
+    var courseid: String = "",
+    var leaveid: String = "",
+    var stleave: String = "",
+    var etleave: String = "",
+    var attendances: String = ""
 
 
     )

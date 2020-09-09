@@ -252,7 +252,6 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         mDataClass.clear()
                         mDataClass.addAll(it.classs)
                         if (mDataClass.size > 0) {
-                            mDataClass[0].isChecked = true
                             tvTab2.text = mDataClass[0].classname
                         }
                     }

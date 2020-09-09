@@ -25,7 +25,7 @@ import java.util.List;
  * @Author: Burning
  * @CreateDate: 2019-07-06 17:27
  */
-public class StatusRecyclerView<T> extends RecyclerView implements StatusChangeInterface{
+public class StatusRecyclerView extends RecyclerView implements StatusChangeInterface{
     private StatusEmptyAdapter emptyViewAdapter;
     private StatusErrorAdapter errorViewAdapter;
     private StatusProgressAdapter progressViewAdapter;
@@ -52,7 +52,7 @@ public class StatusRecyclerView<T> extends RecyclerView implements StatusChangeI
     private int loadingLayoutRes;
     private String loadingViewText;
 
-    private List<T> dataList ;
+    private List dataList ;
     private boolean enableAutoEmpty = true;
 
     private OnShowContentListener onShowContentListener;
@@ -90,42 +90,42 @@ public class StatusRecyclerView<T> extends RecyclerView implements StatusChangeI
         }
     }
 
-    public StatusRecyclerView<T> setEmptyLayoutRes(int emptyLayoutRes) {
+    public StatusRecyclerView setEmptyLayoutRes(int emptyLayoutRes) {
         this.emptyLayoutRes = emptyLayoutRes;
         return this;
     }
 
-    public StatusRecyclerView<T> setEmptyViewDrawableRes(int emptyViewDrawableRes) {
+    public StatusRecyclerView setEmptyViewDrawableRes(int emptyViewDrawableRes) {
         this.emptyViewDrawableRes = emptyViewDrawableRes;
         return this;
     }
 
-    public StatusRecyclerView<T> setEmptyViewText(String emptyViewText) {
+    public StatusRecyclerView setEmptyViewText(String emptyViewText) {
         this.emptyViewText = emptyViewText;
         return this;
     }
 
-    public StatusRecyclerView<T> setErrorLayoutRes(int errorLayoutRes) {
+    public StatusRecyclerView setErrorLayoutRes(int errorLayoutRes) {
         this.errorLayoutRes = errorLayoutRes;
         return this;
     }
 
-    public StatusRecyclerView<T> setErrorViewDrawableRes(int errorViewDrawableRes) {
+    public StatusRecyclerView setErrorViewDrawableRes(int errorViewDrawableRes) {
         this.errorViewDrawableRes = errorViewDrawableRes;
         return this;
     }
 
-    public StatusRecyclerView<T> setErrorViewText(String errorViewText) {
+    public StatusRecyclerView setErrorViewText(String errorViewText) {
         this.errorViewText = errorViewText;
         return this;
     }
 
-    public StatusRecyclerView<T> setLoadingLayoutRes(int loadingLayoutRes) {
+    public StatusRecyclerView setLoadingLayoutRes(int loadingLayoutRes) {
         this.loadingLayoutRes = loadingLayoutRes;
         return this;
     }
 
-    public StatusRecyclerView<T> setLoadingViewText(String loadingViewText) {
+    public StatusRecyclerView setLoadingViewText(String loadingViewText) {
         this.loadingViewText = loadingViewText;
         return this;
     }
@@ -147,7 +147,7 @@ public class StatusRecyclerView<T> extends RecyclerView implements StatusChangeI
      * @param adapter   适配器
      * @param dataList  数据源
      */
-    public void setAdapter(@Nullable Adapter adapter, List<T> dataList){
+    public void setAdapter(@Nullable Adapter adapter, List dataList){
         setAdapter(adapter,dataList,true);
     }
 
@@ -157,7 +157,7 @@ public class StatusRecyclerView<T> extends RecyclerView implements StatusChangeI
      * @param dataList  数据源
      * @param enableAutoEmpty   在notify列表的时候是否根据数据自动显示空布局，默认为 true
      */
-    public void setAdapter(@Nullable Adapter adapter, List<T> dataList, boolean enableAutoEmpty){
+    public void setAdapter(@Nullable Adapter adapter, List dataList, boolean enableAutoEmpty){
         super.setAdapter(adapter);
         this.dataAdapter = adapter;
         this.dataList = dataList;
@@ -172,14 +172,14 @@ public class StatusRecyclerView<T> extends RecyclerView implements StatusChangeI
      * @param adapter   适配器
      * @param dataList  数据源
      */
-    public void setAdapterCheckEmpty(@Nullable Adapter adapter, List<T> dataList){
+    public void setAdapterCheckEmpty(@Nullable Adapter adapter, List dataList){
         setAdapter(adapter,dataList);
         if(null!=dataList&&dataList.size()==0){
             notifyDataSetChanged();
         }
     }
 
-    public List<T> getListData(){
+    public List getListData(){
         return this.dataList;
     }
 
