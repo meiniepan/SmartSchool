@@ -14,6 +14,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.view.LoginStuActivity
 import com.xiaoneng.ss.account.view.LoginSwitchActivity
 import com.xiaoneng.ss.account.view.LoginTeacherActivity
+import com.xiaoneng.ss.common.constclass.Solang
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import java.io.File
@@ -32,9 +33,9 @@ inline fun <reified T> mStartActivity(context: Context?) {
     context?.startActivity(intent)
 }
 
-inline fun <reified T> mStartForResult(context: Activity?,code:Int) {
+inline fun <reified T> mStartForResult(context: Activity?, code: Int) {
     val intent = Intent(context, T::class.java)
-    context?.startActivityForResult(intent,code)
+    context?.startActivityForResult(intent, code)
 }
 
 
@@ -52,11 +53,15 @@ inline fun starPhoneNum(phone: String): String {
     }
 }
 
-inline fun Activity.showDatePick(textView1: TextView,textView2: TextView, crossinline block: String.() -> Unit) {
-     DateTimePicker(this, DateTimePicker.HOUR_24).apply {
+inline fun Activity.showDatePick(
+    textView1: TextView,
+    textView2: TextView,
+    crossinline block: String.() -> Unit
+) {
+    DateTimePicker(this, DateTimePicker.HOUR_24).apply {
 //            setActionButtonTop(false)
         setDateRangeStart(Constant.THIS_YEAR, 1, 1)
-        setDateRangeEnd(Constant.THIS_YEAR+5, 11, 11)
+        setDateRangeEnd(Constant.THIS_YEAR + 5, 11, 11)
         setSelectedItem(
             Calendar.getInstance().get(Calendar.YEAR),
             Calendar.getInstance().get(Calendar.MONTH) + 1,
@@ -75,10 +80,10 @@ inline fun Activity.showDatePick(textView1: TextView,textView2: TextView, crossi
                 minute: String?
             ) {
                 val sdf = SimpleDateFormat("yyyyMMdd")
-               var week = DateUtil.getWeek(sdf.parse("${year}${month}${day}"))
+                var week = DateUtil.getWeek(sdf.parse("${year}${month}${day}"))
                 var time1 = "${month}月${day}日 $week"
                 var time2 = "${hour}:${minute}"
-                DateUtil.getDateString(year,month,day,hour,minute).block()
+                DateUtil.getDateString(year, month, day, hour, minute).block()
                 textView1.text = time1
                 textView2.text = time2
             }
@@ -93,7 +98,7 @@ inline fun Activity.showDateDayPick(textView: TextView, crossinline block: Strin
     DateTimePicker(this, DateTimePicker.NONE).apply {
 //            setActionButtonTop(false)
         setDateRangeStart(Constant.THIS_YEAR, 1, 1)
-        setDateRangeEnd(Constant.THIS_YEAR+5, 11, 11)
+        setDateRangeEnd(Constant.THIS_YEAR + 5, 11, 11)
         setSelectedItem(
             Calendar.getInstance().get(Calendar.YEAR),
             Calendar.getInstance().get(Calendar.MONTH) + 1,
@@ -156,6 +161,9 @@ inline fun mDownloadFile(context: Context, name: String): String? {
 
 }
 
+/**
+ * 设置drawable的corner
+ */
 inline fun getCornerRadii(
     leftTop: Float, rightTop: Float,
     leftBottom: Float, rightBottom: Float
@@ -173,6 +181,9 @@ inline fun getCornerRadii(
     )
 }
 
+/**
+ * 格式化网络请求返回的response
+ */
 inline fun <reified T> netResponseFormat(response: Any): T? {
     val gson: Gson = GsonBuilder().enableComplexMapKeySerialization().create()
     val jsonString = gson.toJson(response)
@@ -182,7 +193,12 @@ inline fun <reified T> netResponseFormat(response: Any): T? {
 }
 
 
-fun Context.mAlert(message: String, confirmText: String? = null, cancelText: String? = null, onConfirm: () -> Unit) {
+fun Context.mAlert(
+    message: String,
+    confirmText: String? = null,
+    cancelText: String? = null,
+    onConfirm: () -> Unit
+) {
     MaterialDialog(this).show {
         title(R.string.title)
         message(text = message)
@@ -192,4 +208,15 @@ fun Context.mAlert(message: String, confirmText: String? = null, cancelText: Str
             onConfirm()
         }
     }
+}
+
+inline fun getOssObjectKey(@Solang.UserType type: String, id: String, fileName: String): String {
+    var mType = ""
+    if (type == Solang.STUDENT) {
+        mType = "student/"
+    } else if (type == Solang.TEACHER||type == Solang.ADMIN) {
+        mType = "teacher/"
+    }
+    var result = "$mType$id/avatar/$fileName"
+    return result
 }

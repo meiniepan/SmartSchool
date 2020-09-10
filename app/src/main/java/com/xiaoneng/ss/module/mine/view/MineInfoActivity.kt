@@ -28,7 +28,8 @@ import java.io.File
  * Time: 17:01
  */
 class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
-
+    val mAvatarFileName:String = UserInfo.getUserBean().portrait.split("/").last()
+    private var fileName: String? = ""
     private var avatarPath: String? = ""
     var isDownLoad: Boolean = false
 
@@ -97,13 +98,13 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
     }
 
     private fun initAvatar() {
-        if (!TextUtils.isEmpty(UserInfo.getUserBean().portrait)) {
-            if (File(mDownloadFile(this, UserInfo.getUserBean().portrait)).exists()) {
+        if (!TextUtils.isEmpty(mAvatarFileName)) {
+            if (File(mDownloadFile(this, mAvatarFileName)).exists()) {
                 displayImage(
                     this@MineInfoActivity,
                     mDownloadFile(
                         this@MineInfoActivity,
-                        UserInfo.getUserBean().portrait
+                        mAvatarFileName
                     ),
                     ivAvatarMineInfo
                 )
@@ -123,6 +124,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                 override fun onResult(result: MutableList<LocalMedia>?) {
                     isDownLoad = false
                     avatarPath = result!![0].realPath
+                    fileName = result!![0].fileName
                     mViewModel.getSts()
 
                 }
@@ -137,11 +139,11 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     private fun doUpload(it: StsTokenResp) {
         showLoading()
-        var mId: String = System.currentTimeMillis().toString()
+        var mId: String = System.currentTimeMillis().toString()+"_"+fileName
         OssUtils.asyncUploadFile(
             this@MineInfoActivity,
             it.Credentials,
-            Constant.OBJECT_KEY + mId,
+            getOssObjectKey(UserInfo.getUserBean().usertype,UserInfo.getUserBean().uid,mId),
             avatarPath,
             object : OssListener {
                 override fun onSuccess() {
@@ -149,7 +151,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                         mViewModel.modifyAvatar(
                             UserBean(
                                 UserInfo.getUserBean().token,
-                                portrait = mId
+                                portrait = getOssObjectKey(UserInfo.getUserBean().usertype,UserInfo.getUserBean().uid,mId)
                             )
                         )
 
@@ -170,11 +172,12 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
     private fun doDownload(it: StsTokenResp) {
 
         showLoading()
+
         OssUtils.downloadFile(
             this@MineInfoActivity,
             it.Credentials,
-            Constant.OBJECT_KEY + UserInfo.getUserBean().portrait,
-            mDownloadFile(this, UserInfo.getUserBean().portrait),
+            UserInfo.getUserBean().portrait,
+            mDownloadFile(this, mAvatarFileName),
             object : OssListener {
 
                 override fun onFail() {
@@ -192,7 +195,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                             this@MineInfoActivity,
                             mDownloadFile(
                                 this@MineInfoActivity,
-                                UserInfo.getUserBean().portrait
+                                mAvatarFileName
                             ),
                             ivAvatarMineInfo
                         )

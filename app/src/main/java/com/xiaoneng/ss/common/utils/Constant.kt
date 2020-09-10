@@ -11,7 +11,10 @@ import java.util.*
  */
 object Constant {
     const val BASE_URL = " http://api.huiwencloud.com:81"
-    const val OBJECT_KEY = "avatar/student/id/avatar/"
+    const val OBJECT_KEY = "student/id/avatar/"
+    const val TYPE_STUDENT = "1"
+    const val TYPE_TEACHER = "2"
+    const val TYPE_ADMIN = "99"
 
     //    const val BASE_URL = "https://www.sojson.com"
     const val LOGIN_TYPE_STU = "self"
@@ -26,6 +29,7 @@ object Constant {
     const val USER_INFO = "user_info"
     const val TITLE = "title"
     const val ID = "id"
+
     val THIS_YEAR = Calendar.getInstance().get(Calendar.YEAR)
 
     const val SAVE_USER_LOGIN_KEY = "user/login"

@@ -25,6 +25,11 @@ class AddClassAttendanceTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() 
     override fun initView() {
         super.initView()
         bean = intent.getParcelableExtra(Constant.DATA)
+        if (bean.has_sickleave == "1") {
+
+        } else {
+        }
+
         llAddClassAttendance1.setOnClickListener {
 //            mViewModel.addAttendanceByMaster()
         }

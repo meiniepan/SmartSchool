@@ -49,7 +49,7 @@ class AttendanceMasterAdapter(layoutId: Int, listData: MutableList<AttendanceBea
 
         recyclerView.apply {
             layoutManager =
-                object : LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false) {
+                object : LinearLayoutManager(context, HORIZONTAL, false) {
 
                 }
             setAdapter(eAdapter)

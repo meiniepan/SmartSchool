@@ -28,7 +28,6 @@ import java.io.File
 class
 MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
     lateinit var mAdapter: MineAdapter
-
     override fun getLayoutId(): Int = R.layout.fragment_mine
 
     companion object {
@@ -133,17 +132,19 @@ MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
     }
 
     private fun initAvatar() {
-        if (!TextUtils.isEmpty(UserInfo.getUserBean().portrait)) {
-            if (File(mDownloadFile(requireContext(), UserInfo.getUserBean().portrait)).exists()) {
+        val mAvatarFileName:String = UserInfo.getUserBean().portrait.split("/").last()
+        if (!TextUtils.isEmpty(mAvatarFileName)) {
+            if (File(mDownloadFile(requireContext(), mAvatarFileName)).exists()) {
                 displayImage(
                     requireContext(),
                     mDownloadFile(
                         requireContext(),
-                        UserInfo.getUserBean().portrait
+                        mAvatarFileName
                     ),
                     ivAvatarMine
                 )
             } else {
+                showLoading()
                 mViewModel.getSts()
             }
         }
@@ -158,13 +159,13 @@ MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
     }
 
     private fun doDownload(it: StsTokenResp) {
-
+        val mAvatarFileName:String = UserInfo.getUserBean().portrait.split("/").last()
         showLoading()
         OssUtils.downloadFile(
             requireContext(),
             it.Credentials,
-            Constant.OBJECT_KEY + UserInfo.getUserBean().portrait,
-            mDownloadFile(requireContext(), UserInfo.getUserBean().portrait),
+            UserInfo.getUserBean().portrait,
+            mDownloadFile(requireContext(), mAvatarFileName),
             object : OssListener {
 
                 override fun onFail() {
@@ -179,7 +180,7 @@ MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
                         showSuccess()
                         displayImage(
                             requireContext(),
-                            mDownloadFile(requireContext(), UserInfo.getUserBean().portrait),
+                            mDownloadFile(requireContext(), mAvatarFileName),
                             ivAvatarMine
                         )
                     }
