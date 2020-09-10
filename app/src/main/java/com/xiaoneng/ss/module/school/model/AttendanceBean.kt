@@ -1,7 +1,7 @@
 package com.xiaoneng.ss.module.school.model
 
-import android.os.Parcel
 import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
 /**
  * Created with Android Studio.
@@ -10,6 +10,7 @@ import android.os.Parcelable
  * @date: 2020/08/27
  * Time: 17:06
  */
+@Parcelize
 data class AttendanceBean(
     var id: String? = "",
     var cno: String? = "",
@@ -47,105 +48,8 @@ data class AttendanceBean(
     var has_courselate: String? = "",
     var has_truant: String? = "",
     var has_morninglate: String? = "",
-    var attlists: MutableList<AttendanceStuBean>?,
-    var tags: MutableList<String>? =ArrayList(),
+    var attlists: ArrayList<AttendanceStuBean>?,
+    var tags: ArrayList<String>? = ArrayList(),
     var showhim: String? = ""
 
-    ):Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        TODO("attlists"),
-        TODO("tags"),
-        parcel.readString()
-    ) {
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(id)
-        parcel.writeString(cno)
-        parcel.writeString(coursename)
-        parcel.writeString(realname)
-        parcel.writeString(type)
-        parcel.writeString(total)
-        parcel.writeString(remark)
-        parcel.writeString(classroomid)
-        parcel.writeString(classroomname)
-        parcel.writeString(teacheruid)
-        parcel.writeString(teachername)
-        parcel.writeString(semesterid)
-        parcel.writeString(classid)
-        parcel.writeString(groupid)
-        parcel.writeString(semester)
-        parcel.writeString(campusid)
-        parcel.writeString(campus)
-        parcel.writeString(level)
-        parcel.writeString(weekday)
-        parcel.writeString(weeks)
-        parcel.writeString(hour)
-        parcel.writeString(minute)
-        parcel.writeString(hmin)
-        parcel.writeString(coursetime)
-        parcel.writeString(schoolid)
-        parcel.writeString(schoolname)
-        parcel.writeString(muser_id)
-        parcel.writeString(cuser_id)
-        parcel.writeString(issingle)
-        parcel.writeString(createtime)
-        parcel.writeString(updatetime)
-        parcel.writeString(has_sickleave)
-        parcel.writeString(has_thingleave)
-        parcel.writeString(has_courselate)
-        parcel.writeString(has_truant)
-        parcel.writeString(has_morninglate)
-        parcel.writeString(showhim)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<AttendanceBean> {
-        override fun createFromParcel(parcel: Parcel): AttendanceBean {
-            return AttendanceBean(parcel)
-        }
-
-        override fun newArray(size: Int): Array<AttendanceBean?> {
-            return arrayOfNulls(size)
-        }
-    }
-}
+) : Parcelable

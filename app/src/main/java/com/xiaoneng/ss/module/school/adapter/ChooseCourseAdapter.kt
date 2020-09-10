@@ -1,9 +1,11 @@
 package com.xiaoneng.ss.module.school.adapter
 
+import android.view.View
+import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.module.school.model.LessonBean
+import com.xiaoneng.ss.module.school.model.AttCourseBean
 
 
 /**
@@ -13,15 +15,35 @@ import com.xiaoneng.ss.module.school.model.LessonBean
  * @date: 2020/08/27
  * Time: 17:32
  */
-class ChooseCourseAdapter(layoutId: Int, listData: MutableList<LessonBean>) :
-    BaseQuickAdapter<LessonBean, BaseViewHolder>(layoutId, listData) {
+class ChooseCourseAdapter(layoutId: Int, listData: MutableList<AttCourseBean>) :
+    BaseQuickAdapter<AttCourseBean, BaseViewHolder>(layoutId, listData) {
 
-    override fun convert(viewHolder: BaseViewHolder?, item: LessonBean) {
+    override fun convert(viewHolder: BaseViewHolder?, item: AttCourseBean) {
         viewHolder?.let { holder ->
-            holder.setText(R.id.tvCourseName, item?.coursename)
-                .setText(R.id.tvTeacherName,item?.teachername)
-                .setText(R.id.tvRoomAtt,item?.classroomname)
-                .setText(R.id.tvTimeAtt,item?.coursetime)
+            var llbac = holder.getView<View>(R.id.llChooseCourse)
+            var tvCourseName = holder.getView<TextView>(R.id.tvCourseName2)
+            var tvTeacherName = holder.getView<TextView>(R.id.tvTeacherName2)
+            var tvRoomName = holder.getView<TextView>(R.id.tvRoomAtt2)
+            var tvAttTime = holder.getView<TextView>(R.id.tvTimeAtt2)
+            holder.setText(R.id.tvCourseName2, item?.coursename)
+                .setText(R.id.tvTeacherName2, item?.teachername)
+                .setText(R.id.tvRoomAtt2, item?.classroomname)
+                .setText(R.id.tvTimeAtt2, item?.coursetime)
+
+            if (item.checked) {
+                llbac.setBackgroundResource(R.drawable.bac_blue_bac_5)
+                tvCourseName.setTextColor(mContext.resources.getColor(R.color.white))
+                tvTeacherName.setTextColor(mContext.resources.getColor(R.color.white))
+                tvRoomName.setTextColor(mContext.resources.getColor(R.color.white))
+                tvAttTime.setTextColor(mContext.resources.getColor(R.color.white))
+
+            } else {
+                llbac.setBackgroundResource(R.drawable.bac_blue_line_5)
+                tvCourseName.setTextColor(mContext.resources.getColor(R.color.commonBlue))
+                tvTeacherName.setTextColor(mContext.resources.getColor(R.color.commonBlue))
+                tvRoomName.setTextColor(mContext.resources.getColor(R.color.commonBlue))
+                tvAttTime.setTextColor(mContext.resources.getColor(R.color.commonBlue))
+            }
 //
 //            holder.setText(R.id.tvAction, item?.title)
         }

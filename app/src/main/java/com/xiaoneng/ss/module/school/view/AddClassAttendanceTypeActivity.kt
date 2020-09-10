@@ -4,6 +4,8 @@ import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.mAlert
+import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.school.model.AttendanceBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_add_class_attendance_type.*
@@ -26,12 +28,26 @@ class AddClassAttendanceTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() 
         super.initView()
         bean = intent.getParcelableExtra(Constant.DATA)
         if (bean.has_sickleave == "1") {
+            tvAddClassAttendance1.show(true)
+        }
+        if (bean.has_thingleave == "1") {
+            tvAddClassAttendance2.show(true)
+        }
+        if (bean.has_courselate == "1") {
+            tvAddClassAttendance3.show(true)
+        }
+        if (bean.has_truant == "1") {
+            tvAddClassAttendance4.show(true)
+        }
+        if (bean.has_morninglate == "1") {
+            doMorningLate()
 
-        } else {
         }
 
         llAddClassAttendance1.setOnClickListener {
-//            mViewModel.addAttendanceByMaster()
+            mStartActivity<SickLeaveActivity>(this) {
+
+            }
         }
         llAddClassAttendance2.setOnClickListener {
         }
@@ -39,9 +55,23 @@ class AddClassAttendanceTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() 
         }
         llAddClassAttendance4.setOnClickListener {
         }
-        llAddClassAttendance5.setOnClickListener {
-        }
 
+    }
+
+    private fun doMorningLate() {
+        tvAddClassAttendance5.show(true)
+        llAddClassAttendance5.setOnClickListener {
+            mAlert(
+                "点击该项，早间迟到将会直接被删除",
+                "是否删除早间迟到"
+            ) {
+                for (i in bean.attlists!!){
+                    if (i.type == "1"){
+                        mViewModel.deleteAttendance(i.id?:"")
+                    }
+                }
+            }
+        }
     }
 
 
@@ -52,7 +82,7 @@ class AddClassAttendanceTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() 
 
 
     override fun initDataObserver() {
-        mViewModel.mAddAttendanceData.observe(this, Observer { response ->
+        mViewModel.mDeleteAttendanceData.observe(this, Observer { response ->
             response?.let {
                 toast(R.string.deal_done)
                 finish()

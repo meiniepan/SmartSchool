@@ -2,7 +2,9 @@ package com.xiaoneng.ss.module.school.view
 
 import android.app.Activity
 import android.content.Intent
+import android.text.TextUtils
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
@@ -10,11 +12,19 @@ import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
-import com.xiaoneng.ss.module.school.adapter.AttLessonAdapter
-import com.xiaoneng.ss.module.school.model.LessonBean
+import com.xiaoneng.ss.common.utils.oss.OssListener
+import com.xiaoneng.ss.common.utils.oss.OssUtils
+import com.xiaoneng.ss.model.StsTokenResp
+import com.xiaoneng.ss.module.activity.MainActivity
+import com.xiaoneng.ss.module.school.adapter.AttCourseAdapter
+import com.xiaoneng.ss.module.school.model.AttCourseBean
+import com.xiaoneng.ss.module.school.model.LeaveBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_sick_leave.*
+import org.jetbrains.anko.toast
+import java.io.File
 
 /**
  * Created with Android Studio.
@@ -24,17 +34,25 @@ import kotlinx.android.synthetic.main.activity_sick_leave.*
  * Time: 17:01
  */
 class SickLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    lateinit var mAdapter: AttLessonAdapter
-    var mData: ArrayList<LessonBean> = ArrayList()
-
+    lateinit var mAdapter: AttCourseAdapter
+    var mData: ArrayList<AttCourseBean> = ArrayList()
+    var chosenDay = DateUtil.formatDateCustomDay()
+    var chosenDayNet = DateUtil.formatDateCustomDay()
+    private var fileName: String? = ""
+    private var avatarPath: String? = ""
+    private var fileValue: String? = ""
+    var isDownLoad: Boolean = false
     override fun getLayoutId(): Int = R.layout.activity_sick_leave
 
 
     override fun initView() {
         super.initView()
-        tvTimeToday.text  = "您的请假时间是"+DateUtil.formatTitleToday()
+        tvTimeToday.text = "您的请假时间是" + DateUtil.formatTitleToday()
+        tvConfirm.setOnClickListener {
+            doConfirm()
+        }
         llItem8ApplyLeave.setOnClickListener {
-            mStartActivity<ChooseCourseToLeaveActivity>(this)
+            mStartForResult<ChooseCourseToLeaveActivity>(this, Constant.REQUEST_CODE_COURSE)
         }
         ivAddPic.apply {
             setOnClickListener {
@@ -44,6 +62,35 @@ class SickLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         initAdapter()
     }
 
+    private fun doConfirm() {
+
+        if (mData.size > 0) {
+            mData.forEach {
+                mViewModel.addAttendance(
+                    LeaveBean(
+                        UserInfo.getUserBean().token,
+                        UserInfo.getUserBean().uid,
+                        usertype = UserInfo.getUserBean().usertype,
+                        atttime = chosenDayNet,
+                        leavetype = "2",
+                        crsid = it.id ?: "",
+                        isfever = getBooleanString(cbItem1ApplyLeave.isChecked),
+                        isdiarrhea = getBooleanString(cbItem2ApplyLeave.isChecked),
+                        isvomit = getBooleanString(cbItem3ApplyLeave.isChecked),
+                        ismedical = getBooleanString(cbItem4ApplyLeave.isChecked),
+                        temperature = etItem4ApplyLeave.text.toString(),
+                        hospital = etItem6ApplyLeave.text.toString(),
+                        diseasename = etItem7ApplyLeave.text.toString(),
+                        fileinfo = fileValue ?: ""
+                    )
+                )
+            }
+        } else {
+            toast(R.string.lack_info)
+            return
+        }
+    }
+
 
     override fun initData() {
         super.initData()
@@ -51,7 +98,7 @@ class SickLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAdapter() {
-        mAdapter = AttLessonAdapter(R.layout.item_timetable_title, mData)
+        mAdapter = AttCourseAdapter(R.layout.item_att_course, mData)
 
         rvAttLesson.apply {
             layoutManager =
@@ -72,7 +119,11 @@ class SickLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             .loadImageEngine(GlideEngine.createGlideEngine()) // Please refer to the Demo GlideEngine.java
             .forResult(object : OnResultCallbackListener<LocalMedia> {
                 override fun onResult(result: MutableList<LocalMedia>?) {
-                    displayImage(this@SickLeaveActivity, result!![0].realPath, ivAddPic)
+                    isDownLoad = false
+                    avatarPath = result!![0].realPath
+                    fileName = result!![0].fileName
+                    mViewModel.getSts()
+                    showLoading()
                 }
 
                 override fun onCancel() {
@@ -88,11 +139,14 @@ class SickLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         data: Intent?
     ) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == Constant.REQUEST_CODE_LESSON && resultCode == Activity.RESULT_OK) {
+        if (requestCode == Constant.REQUEST_CODE_COURSE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 mData.clear()
-                mData.addAll(data.getParcelableArrayListExtra<LessonBean>(Constant.DATA))
+                mData.addAll(data.getParcelableArrayListExtra(Constant.DATA))
                 if (mData.size > 0) {
+                    chosenDay = data.getStringExtra(Constant.TITLE)
+                    chosenDayNet = data.getStringExtra(Constant.TITLE_2)
+                    tvTimeToday.text = "您的请假时间是" + chosenDay
                     rvAttLesson.notifyDataSetChanged()
                     llAttLesson.visibility = View.VISIBLE
                 } else {
@@ -102,18 +156,107 @@ class SickLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
     }
 
+    private fun doUpload(it: StsTokenResp) {
+        showLoading()
+        var mId: String = System.currentTimeMillis().toString() + "_" + fileName
+        OssUtils.asyncUploadFile(
+            this@SickLeaveActivity,
+            it.Credentials,
+            getOssObjectKey(UserInfo.getUserBean().usertype, UserInfo.getUserBean().uid, mId),
+            avatarPath,
+            object : OssListener {
+                override fun onSuccess() {
+                    mRootView.post {
+                        fileValue = getOssObjectKey(
+                            UserInfo.getUserBean().usertype,
+                            UserInfo.getUserBean().uid,
+                            mId
+                        )
+                        displayImage(this@SickLeaveActivity, avatarPath, ivAddPic)
+                    }
+                }
+
+                override fun onFail() {
+                    mRootView.post {
+                        showSuccess()
+                        toast("上传失败")
+                    }
+                }
+
+            })
+    }
+
+    private fun initAvatar() {
+        if (!TextUtils.isEmpty(fileValue!!)) {
+            if (File(mDownloadFile(this, fileValue!!)).exists()) {
+                displayImage(
+                    this,
+                    mDownloadFile(
+                        this,
+                        fileValue!!
+                    ),
+                    ivAddPic
+                )
+            } else {
+                isDownLoad = true
+                mViewModel.getSts()
+            }
+        }
+    }
+
+    private fun doDownload(it: StsTokenResp) {
+
+        showLoading()
+
+        OssUtils.downloadFile(
+            this@SickLeaveActivity,
+            it.Credentials,
+            UserInfo.getUserBean().portrait,
+            mDownloadFile(this, fileValue!!),
+            object : OssListener {
+
+                override fun onFail() {
+                    mRootView.post {
+                        showSuccess()
+                        toast("头像下载失败")
+                    }
+                }
+
+                override fun onSuccess() {
+                    mRootView.post {
+                        showSuccess()
+
+                        displayImage(
+                            this@SickLeaveActivity,
+                            mDownloadFile(
+                                this@SickLeaveActivity,
+                                fileValue!!
+                            ),
+                            ivAddPic
+                        )
+                    }
+                }
+            })
+
+    }
+
     override fun initDataObserver() {
-//        mViewModel.mNoticeData.observe(this, Observer { response ->
-//            response?.let {
-//                mData.clear()
-//                mData.addAll(it.data)
-//                if (mData.size > 0) {
-//                    mAdapter.notifyDataSetChanged()
-//                } else {
-//                    showEmpty()
-//                }
-//            }
-//        })
+        mViewModel.mAddAttendanceData2.observe(this, Observer { response ->
+            response?.let {
+                toast(R.string.deal_done)
+                mStartActivity<MainActivity>(this)
+            }
+        })
+
+        mViewModel.mStsData.observe(this, Observer { response ->
+            response?.let {
+                if (isDownLoad) {
+                    doDownload(it)
+                } else {
+                    doUpload(it)
+                }
+            }
+        })
 
     }
 

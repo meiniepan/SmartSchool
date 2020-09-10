@@ -3,7 +3,7 @@ package com.xiaoneng.ss.module.school.adapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.module.school.model.LessonBean
+import com.xiaoneng.ss.module.school.model.AttCourseBean
 
 
 /**
@@ -13,10 +13,10 @@ import com.xiaoneng.ss.module.school.model.LessonBean
  * @date: 2020/08/27
  * Time: 17:32
  */
-class AttLessonAdapter(layoutId: Int, listData: MutableList<LessonBean>) :
-    BaseQuickAdapter<LessonBean, BaseViewHolder>(layoutId, listData) {
+class AttCourseAdapter(layoutId: Int, listData: MutableList<AttCourseBean>) :
+    BaseQuickAdapter<AttCourseBean, BaseViewHolder>(layoutId, listData) {
 
-    override fun convert(viewHolder: BaseViewHolder?, item: LessonBean) {
+    override fun convert(viewHolder: BaseViewHolder?, item: AttCourseBean) {
         viewHolder?.let { holder ->
             holder.setText(R.id.tvNameCourse2, item?.coursename)
 

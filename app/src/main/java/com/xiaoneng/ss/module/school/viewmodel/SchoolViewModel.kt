@@ -2,11 +2,9 @@ package com.xiaoneng.ss.module.school.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.base.viewmodel.BaseViewModel
+import com.xiaoneng.ss.model.StsTokenResp
 import com.xiaoneng.ss.model.StudentResp
-import com.xiaoneng.ss.module.school.model.PerformanceResponse
-import com.xiaoneng.ss.module.school.model.TaskBean
-import com.xiaoneng.ss.module.school.model.TaskResponse
-import com.xiaoneng.ss.module.school.model.TimetableResponse
+import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.repository.SchoolRepository
 import com.xiaoneng.ss.network.initiateRequest
 
@@ -19,9 +17,11 @@ import com.xiaoneng.ss.network.initiateRequest
  */
 class SchoolViewModel : BaseViewModel<SchoolRepository>() {
 
+    val mAddAttendanceData2: MutableLiveData<Any> = MutableLiveData()
     val mTaskListData: MutableLiveData<TaskResponse> = MutableLiveData()
     val mPerformanceData: MutableLiveData<PerformanceResponse> = MutableLiveData()
     val mTimetableData: MutableLiveData<TimetableResponse> = MutableLiveData()
+    val mAttTimetableData: MutableLiveData<Any> = MutableLiveData()
     val mTimetableDataT: MutableLiveData<TimetableResponse> = MutableLiveData()
     val mAttendanceMasterData: MutableLiveData<Any> = MutableLiveData()
     val mAttendanceStuData: MutableLiveData<Any> = MutableLiveData()
@@ -30,6 +30,8 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mDepartmentsData: MutableLiveData<Any> = MutableLiveData()
     val mAddAttendanceData: MutableLiveData<Any> = MutableLiveData()
     val mAddTaskData: MutableLiveData<Any> = MutableLiveData()
+    val mDeleteAttendanceData: MutableLiveData<Any> = MutableLiveData()
+    val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
 
     fun getTaskList(pagenum: String = "", status: String = "") {
         initiateRequest(
@@ -41,6 +43,13 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     fun getTimetable(classid: String = "",time: String = "") {
         initiateRequest(
             { mTimetableData.value = mRepository.getTimetable(classid,time) },
+            loadState
+        )
+    }
+
+    fun getAttTimetable(time: String = "") {
+        initiateRequest(
+            { mAttTimetableData.value = mRepository.getAttTimetable(time) },
             loadState
         )
     }
@@ -104,6 +113,25 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     fun addTask(bean: TaskBean) {
         initiateRequest(
             { mAddTaskData.value = mRepository.addTask(bean) },
+            loadState
+        )
+    }fun addAttendance(bean: LeaveBean) {
+        initiateRequest(
+            { mAddAttendanceData2.value = mRepository.addAttendance(bean) },
+            loadState
+        )
+    }
+
+    fun deleteAttendance(id: String) {
+        initiateRequest(
+            { mDeleteAttendanceData.value = mRepository.deleteAttendance(id) },
+            loadState
+        )
+    }
+
+    fun getSts() {
+        initiateRequest(
+            { mStsData.value = mRepository.getSts() },
             loadState
         )
     }

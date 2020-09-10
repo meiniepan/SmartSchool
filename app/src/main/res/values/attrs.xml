@@ -12,6 +12,11 @@
         <attr name="icon" format="reference"/>
     </declare-styleable>
 
+    <declare-styleable name="CustomBadgeTextView">
+        <attr name="text_badge" format="string"/>
+        <attr name="show_badge" format="boolean"/>
+    </declare-styleable>
+
     <declare-styleable name="CustomTabView">
         <attr name="text" format="string"/>
         <attr name="check" format="boolean"/>

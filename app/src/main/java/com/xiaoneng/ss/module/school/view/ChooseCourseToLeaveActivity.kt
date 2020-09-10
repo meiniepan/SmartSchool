@@ -1,15 +1,20 @@
 package com.xiaoneng.ss.module.school.view
 
+import android.app.Activity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.DateUtil
+import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.common.utils.showDateDayPick
 import com.xiaoneng.ss.module.school.adapter.ChooseCourseAdapter
-import com.xiaoneng.ss.module.school.model.LessonBean
+import com.xiaoneng.ss.module.school.model.AttCourseBean
+import com.xiaoneng.ss.module.school.model.AttCourseResponse
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_choose_course_leave.*
+import java.util.*
 
 /**
  * Created with Android Studio.
@@ -20,7 +25,8 @@ import kotlinx.android.synthetic.main.activity_choose_course_leave.*
  */
 class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapter: ChooseCourseAdapter
-    var mData: ArrayList<LessonBean> = ArrayList()
+    var mData: ArrayList<AttCourseBean> = ArrayList()
+    var mDataChosen: ArrayList<AttCourseBean> = ArrayList()
     var chosenDay = DateUtil.formatDateCustomMmDay()
     var chosenDayNet = DateUtil.formatDateCustomDay()
 
@@ -29,13 +35,14 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
+        tvTimeToday.text = "今天是" + DateUtil.formatTitleToday()
         tvConfirm.setOnClickListener {
             doConfirm()
         }
         tvChooseDay.apply {
             text = chosenDay
             setOnClickListener {
-                showDateDayPick(this){
+                showDateDayPick(this) {
                     chosenDayNet = this
                     getData()
                 }
@@ -48,10 +55,20 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun doConfirm() {
-        //                setResult(Constant.REQUEST_CODE_LESSON,
-//                    intent.putCharSequenceArrayListExtra(Constant.DATA,it.list)
-//                )
-//                finish()
+        mDataChosen.clear()
+        mData.forEach {
+            if (it.checked) {
+                mDataChosen.add(it)
+            }
+        }
+
+        setResult(
+            Activity.RESULT_OK,
+            intent.putParcelableArrayListExtra(Constant.DATA, mDataChosen)
+                .putExtra(Constant.TITLE,DateUtil.formatTitleToday(chosenDayNet))
+                .putExtra(Constant.TITLE_2,chosenDayNet)
+        )
+        finish()
     }
 
 
@@ -62,7 +79,7 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
-        mViewModel.getTimetable(time = chosenDayNet)
+        mViewModel.getAttTimetable(time = chosenDayNet)
     }
 
     private fun initAdapter() {
@@ -72,19 +89,19 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             setAdapter(mAdapter)
         }
         mAdapter.setOnItemClickListener { _, view, position ->
-
+            mData[position].checked = !mData[position].checked
+            mAdapter.notifyDataSetChanged()
         }
     }
+
     override fun initDataObserver() {
-        mViewModel.mTimetableData.observe(this, Observer { response ->
+        mViewModel.mAttTimetableData.observe(this, Observer { response ->
             response?.let {
-//                mData.clear()
-//                mData.addAll(it.list.)
-//                if (mData.size > 0) {
-//                    mAdapter.notifyDataSetChanged()
-//                } else {
-//                    showEmpty()
-//                }
+                netResponseFormat<AttCourseResponse>(it)?.let {
+                    mData.clear()
+                    mData.addAll(it.list)
+                    rvChooseCourse.notifyDataSetChanged()
+                }
 
             }
         })

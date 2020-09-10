@@ -195,12 +195,13 @@ inline fun <reified T> netResponseFormat(response: Any): T? {
 
 fun Context.mAlert(
     message: String,
+    title: String? = null,
     confirmText: String? = null,
     cancelText: String? = null,
     onConfirm: () -> Unit
 ) {
     MaterialDialog(this).show {
-        title(R.string.title)
+        title(text = title ?: "温馨提示")
         message(text = message)
         cornerRadius(8.0f)
         positiveButton(text = getString(R.string.done))
@@ -214,9 +215,17 @@ inline fun getOssObjectKey(@Solang.UserType type: String, id: String, fileName: 
     var mType = ""
     if (type == Solang.STUDENT) {
         mType = "student/"
-    } else if (type == Solang.TEACHER||type == Solang.ADMIN) {
+    } else if (type == Solang.TEACHER || type == Solang.ADMIN) {
         mType = "teacher/"
     }
     var result = "$mType$id/avatar/$fileName"
     return result
+}
+
+fun getBooleanString(bool: Boolean): String {
+    return if (bool) {
+        "1"
+    } else {
+        "0"
+    }
 }

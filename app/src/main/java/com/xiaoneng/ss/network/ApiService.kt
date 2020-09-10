@@ -6,10 +6,7 @@ import com.xiaoneng.ss.model.StudentResp
 import com.xiaoneng.ss.module.circular.model.NoticeDetailBean
 import com.xiaoneng.ss.module.circular.model.NoticeResponse
 import com.xiaoneng.ss.module.circular.model.ScheduleBean
-import com.xiaoneng.ss.module.school.model.PerformanceResponse
-import com.xiaoneng.ss.module.school.model.TaskBean
-import com.xiaoneng.ss.module.school.model.TaskResponse
-import com.xiaoneng.ss.module.school.model.TimetableResponse
+import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.network.response.BaseResponse
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -246,6 +243,17 @@ interface ApiService {
     ): BaseResponse<TaskResponse>
 
     /**
+     *学生添加考勤-查看课程表
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/student/attendances/timeTable")
+    suspend fun getAttTimetable(
+        @Field("token") token: String,
+        @Field("time") time: String = "",
+        @Field("uid") uid: String = ""
+    ): BaseResponse<Any>
+
+    /**
      *学生课程表
      */
     @FormUrlEncoded
@@ -325,7 +333,7 @@ interface ApiService {
      *学生查看考勤
      */
     @FormUrlEncoded
-    @POST("/api/v1/student/attendances/lists")
+    @POST("/api/v1/student/attendances/privateAtts")
     suspend fun getAttendance(
         @Field("token") token: String,
         @Field("classid") classid: String,
@@ -532,5 +540,23 @@ interface ApiService {
     @POST("/api/v1/teacher/tasks/add")
     suspend fun addTask(
         @Body requestBody: TaskBean
+    ): BaseResponse<Any>
+
+    /**
+     *教师删除考勤
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/attendances/del")
+    suspend fun deleteAttendance(
+        @Field("token") token: String,
+        @Field("id") id: String
+    ): BaseResponse<Any>
+
+    /**
+     *学生提交请假申请
+     */
+    @POST("/api/v1/student/attendances/add")
+    suspend fun addAttendance(
+        @Body requestBody: LeaveBean
     ): BaseResponse<Any>
 }

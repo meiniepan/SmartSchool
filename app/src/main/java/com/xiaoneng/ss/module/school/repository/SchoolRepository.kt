@@ -4,11 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.base.repository.ApiRepository
 import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.model.StsTokenResp
 import com.xiaoneng.ss.model.StudentResp
-import com.xiaoneng.ss.module.school.model.PerformanceResponse
-import com.xiaoneng.ss.module.school.model.TaskBean
-import com.xiaoneng.ss.module.school.model.TaskResponse
-import com.xiaoneng.ss.module.school.model.TimetableResponse
+import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.network.dataConvert
 
 /**
@@ -86,6 +84,12 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
     }
 
+    suspend fun getAttTimetable(time: String = ""): Any {
+        return apiService.getAttTimetable(UserInfo.getUserBean().token,time = time)
+                    .dataConvert(loadState)
+
+    }
+
     suspend fun getTimetableT(): TimetableResponse {
         return apiService.getTimetable2(UserInfo.getUserBean().token)
             .dataConvert(loadState)
@@ -137,6 +141,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         }
     }
 
+
     suspend fun queryStudent(key: String): StudentResp {
         return apiService.queryStudent(UserInfo.getUserBean().token, key)
             .dataConvert(loadState)
@@ -155,6 +160,40 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
     suspend fun addTask(bean:TaskBean): Any {
         return apiService.addTask(bean)
             .dataConvert(loadState)
+    }
+
+    suspend fun deleteAttendance(id: String): Any {
+        return apiService.deleteAttendance(UserInfo.getUserBean().token,id)
+            .dataConvert(loadState)
+    }
+
+    suspend fun addAttendance(bean:LeaveBean): Any {
+        return apiService.addAttendance(bean)
+            .dataConvert(loadState)
+    }
+
+    suspend fun getSts(): StsTokenResp {
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.getSts(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+            }
+            "2" -> {
+                apiService.getSts2(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+
+            }
+            "99" -> {
+                apiService.getSts2(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+
+            }
+            else -> {
+                apiService.getSts(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+
+            }
+        }
     }
 
 }

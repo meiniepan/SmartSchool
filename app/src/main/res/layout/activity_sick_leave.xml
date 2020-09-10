@@ -17,6 +17,7 @@
             app:title="考勤" />
 
         <TextView
+            android:id="@+id/tvConfirm"
             android:layout_width="57dp"
             android:layout_height="28dp"
             android:layout_alignParentEnd="true"
@@ -48,7 +49,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/tintBac"
-                android:orientation="horizontal"
+                android:visibility="gone"
+                android:orientation="vertical"
                 android:paddingStart="@dimen/title_padding"
                 android:paddingEnd="@dimen/title_padding"
                 android:paddingBottom="10dp">
@@ -254,6 +256,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/title_padding"
+                            android:inputType="number"
                             android:background="@null"
                             android:hint="请填体温" />
 
@@ -293,7 +296,7 @@
                             android:text="是否就医" />
 
                         <CheckBox
-                            android:id="@+id/cbItem5ApplyLeave"
+                            android:id="@+id/cbItem4ApplyLeave"
                             android:layout_width="35dp"
                             android:layout_height="22dp"
                             android:layout_marginEnd="@dimen/title_padding"

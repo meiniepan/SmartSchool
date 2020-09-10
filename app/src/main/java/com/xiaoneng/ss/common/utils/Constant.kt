@@ -11,7 +11,7 @@ import java.util.*
  */
 object Constant {
     const val BASE_URL = " http://api.huiwencloud.com:81"
-    const val OBJECT_KEY = "student/id/avatar/"
+    const val TO_DO = "20200814"
     const val TYPE_STUDENT = "1"
     const val TYPE_TEACHER = "2"
     const val TYPE_ADMIN = "99"
@@ -28,6 +28,7 @@ object Constant {
     const val IS_MASTER = "is_master"
     const val USER_INFO = "user_info"
     const val TITLE = "title"
+    const val TITLE_2 = "title_2"
     const val ID = "id"
 
     val THIS_YEAR = Calendar.getInstance().get(Calendar.YEAR)
@@ -50,7 +51,7 @@ object Constant {
 
     // 二维码扫描
     const val REQUEST_CODE_SCAN = 1
-    const val REQUEST_CODE_LESSON = 2
+    const val REQUEST_CODE_COURSE = 2
 
     const val CODED_CONTENT = "codedContent"
     const val INTENT_ZXING_CONFIG = "zxingConfig"

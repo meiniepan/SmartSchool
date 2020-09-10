@@ -9,8 +9,8 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.common.utils.mStartForResult
-import com.xiaoneng.ss.module.school.adapter.AttLessonAdapter
-import com.xiaoneng.ss.module.school.model.LessonBean
+import com.xiaoneng.ss.module.school.adapter.AttCourseAdapter
+import com.xiaoneng.ss.module.school.model.AttCourseBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_thing_leave.*
 
@@ -22,8 +22,8 @@ import kotlinx.android.synthetic.main.activity_thing_leave.*
  * Time: 17:01
  */
 class ThingLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    lateinit var mAdapter: AttLessonAdapter
-    var mData: ArrayList<LessonBean> = ArrayList()
+    lateinit var mAdapter: AttCourseAdapter
+    var mData: ArrayList<AttCourseBean> = ArrayList()
 
     override fun getLayoutId(): Int = R.layout.activity_thing_leave
 
@@ -32,7 +32,7 @@ class ThingLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.initView()
         tvTimeToday.text  = "今天是"+ DateUtil.formatTitleToday()
         llItem8ApplyLeave.setOnClickListener {
-            mStartForResult<ChooseCourseToLeaveActivity>(this, Constant.REQUEST_CODE_LESSON)
+            mStartForResult<ChooseCourseToLeaveActivity>(this, Constant.REQUEST_CODE_COURSE)
         }
         llAttLesson.visibility = View.GONE
         initAdapter()
@@ -45,7 +45,7 @@ class ThingLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAdapter() {
-        mAdapter = AttLessonAdapter(R.layout.item_timetable_title, mData)
+        mAdapter = AttCourseAdapter(R.layout.item_timetable_title, mData)
 
         rvAttLesson.apply {
             layoutManager =
@@ -65,10 +65,10 @@ class ThingLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         data: Intent?
     ) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == Constant.REQUEST_CODE_LESSON && resultCode == Activity.RESULT_OK) {
+        if (requestCode == Constant.REQUEST_CODE_COURSE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 mData.clear()
-                mData.addAll(data.getParcelableArrayListExtra<LessonBean>(Constant.DATA))
+                mData.addAll(data.getParcelableArrayListExtra(Constant.DATA))
                 if (mData.size > 0) {
                     rvAttLesson.notifyDataSetChanged()
                     llAttLesson.visibility = View.VISIBLE

@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
  * Time: 17:06
  */
 @Parcelize
-data class LessonBean(
+data class AttCourseBean(
     var id: String? = "",
     var cno: String? = "",
     var coursename: String? = "",
@@ -44,8 +44,8 @@ data class LessonBean(
     var createtime: String? = "",
     var updatetime: String? = "",
     var position: String? = "",
-    var checked: Boolean = false,
-    var showhim: String? = ""
+    var attlists: MutableList<AttendanceStuBean>? = ArrayList(),
+    var checked: Boolean = false
 
 
     ):Parcelable

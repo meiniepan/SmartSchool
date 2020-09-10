@@ -104,15 +104,15 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 //        mMasterData.add(AttendanceBean(realname = "hsjdf"))
         rvAttendance.showLoadingView()
         if (UserInfo.getUserBean().usertype == "1") {
-            mViewModel.getAttendanceStu(atttime = "20200814")
+            mViewModel.getAttendanceStu(atttime = Constant.TO_DO)
         } else if (UserInfo.getUserBean().usertype == "2") {
             if (UserInfo.getUserBean().classmaster == "1") {
-                mViewModel.getAttendanceMaster(atttime = "20200814")
+                mViewModel.getAttendanceMaster(atttime = Constant.TO_DO)
             } else {
-                mViewModel.getAttendanceTea(atttime = "20200814")
+                mViewModel.getAttendanceTea(atttime = Constant.TO_DO)
             }
         } else if (UserInfo.getUserBean().usertype == "99") {
-            mViewModel.getAttendanceMaster(atttime = "20200814")
+            mViewModel.getAttendanceMaster(atttime = Constant.TO_DO)
         } else {
             mViewModel.getAttendanceStu()
         }
