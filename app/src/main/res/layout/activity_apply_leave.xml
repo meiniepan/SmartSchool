@@ -8,7 +8,7 @@
 
     <com.xiaoneng.ss.custom.widgets.CustomTitleBar
         style="@style/title_style"
-        app:title="请假类型" />
+        app:title="考勤" />
 
     <View
         android:layout_width="match_parent"

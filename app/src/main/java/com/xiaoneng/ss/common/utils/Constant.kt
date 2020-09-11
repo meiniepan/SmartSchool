@@ -29,6 +29,7 @@ object Constant {
     const val USER_INFO = "user_info"
     const val TITLE = "title"
     const val TITLE_2 = "title_2"
+    const val LEAVE_TYPE = "leave_type"
     const val ID = "id"
 
     val THIS_YEAR = Calendar.getInstance().get(Calendar.YEAR)

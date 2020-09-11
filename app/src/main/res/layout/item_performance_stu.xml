@@ -15,32 +15,35 @@
         android:paddingEnd="32dp">
 
         <TextView
-            android:id="@+id/tvSubjectPerformance"
-            android:layout_width="100dp"
+            android:id="@+id/tvTimePerformance"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text=""
-            
-             />
+
+            />
 
 
         <TextView
             android:id="@+id/tvScore1Performance"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
             android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="wrap_content"
             android:text=""
-            
-             />
+
+            />
 
 
         <TextView
             android:id="@+id/tvRank1Performance"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="end"
             android:layout_height="wrap_content"
             android:text=""
-            
-             />
+
+            />
 
     </LinearLayout>
 

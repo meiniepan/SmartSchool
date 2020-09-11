@@ -1,7 +1,5 @@
 package com.xiaoneng.ss.module.school.model
 
-import com.xiaoneng.ss.model.CourseBean
-
 /**
  * Created with Android Studio.
  * Description:

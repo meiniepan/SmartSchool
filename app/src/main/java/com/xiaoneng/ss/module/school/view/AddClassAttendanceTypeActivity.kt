@@ -45,7 +45,7 @@ class AddClassAttendanceTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() 
         }
 
         llAddClassAttendance1.setOnClickListener {
-            mStartActivity<SickLeaveActivity>(this) {
+            mStartActivity<LeaveTypeActivity>(this) {
 
             }
         }

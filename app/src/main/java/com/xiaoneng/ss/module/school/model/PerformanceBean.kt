@@ -31,6 +31,7 @@ data class PerformanceBean(
     var coursename: String= "",
     var achievement2: String= "",
     var schoolid: String= "",
+    var rank: String= "",
 
     var schoolname: String= ""
 )

@@ -11,8 +11,9 @@ import kotlinx.android.parcel.Parcelize
  * Time: 17:06
  */
 @Parcelize
-data class LessonBean(
+data class CourseBean(
     var id: String? = "",
+    var crsid: String? = "",
     var cno: String? = "",
     var coursename: String? = "",
     var type: String? = "",

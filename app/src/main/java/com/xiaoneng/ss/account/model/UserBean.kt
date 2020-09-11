@@ -12,9 +12,10 @@ import com.xiaoneng.ss.model.StudentBean
  */
 data class UserBean(
     var token: String,
-    var icon: String = "",
     var uid: String= "",
-    var sno: String= "",
+    var icon: String = "",
+    var cno: String= "",//学号
+    var sno: String= "",//教育局编号
     var realname: String= "",
     var sex: String= "",
     var phone: String= "",
@@ -29,11 +30,11 @@ data class UserBean(
     var remark: String= "",
     var isactive: String= "",
     var device_no: String= "",
-    var cno: String= "",
     var parentphone: String= "",
     var parentuid: String= "",
     var parentname: String= "",
-    var classmaster: String= "",
+    var classmaster: String= "",//是否班主任
+    var isad: String= "",//学生是否是考勤员
     var roleid: String= "",
     var usertype: String= "",//学生1  老师2  家长3
     var logintype: String= "",//学生self   家长parents

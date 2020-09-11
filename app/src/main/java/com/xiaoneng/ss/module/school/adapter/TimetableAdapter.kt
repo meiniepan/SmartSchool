@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.utils.DateUtil
-import com.xiaoneng.ss.module.school.model.LessonBean
+import com.xiaoneng.ss.module.school.model.CourseBean
 import com.xiaoneng.ss.module.school.model.TimetableBean
 
 
@@ -39,8 +39,8 @@ class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>) :
     }
 
     private fun initAdapter(item: TimetableBean) {
-        var mLessonData: ArrayList<LessonBean> = ArrayList()
-        var mRealLessonData: ArrayList<LessonBean> = ArrayList()
+        var mLessonData: ArrayList<CourseBean> = ArrayList()
+        var mRealLessonData: ArrayList<CourseBean> = ArrayList()
         mLessonData.addAll(item.list)
         if (total > 0 && mLessonData.size > 0) {
             var ii = 0
@@ -52,7 +52,7 @@ class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>) :
                     mRealLessonData.add(mLessonData[ii])
                     ii += 1
                 } else {
-                    mRealLessonData.add(LessonBean())
+                    mRealLessonData.add(CourseBean())
                 }
             }
         }

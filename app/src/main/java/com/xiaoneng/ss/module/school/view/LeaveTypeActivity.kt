@@ -33,7 +33,7 @@ import java.io.File
  * @date: 2020/08/27
  * Time: 17:01
  */
-class SickLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapter: AttCourseAdapter
     var mData: ArrayList<AttCourseBean> = ArrayList()
     var chosenDay = DateUtil.formatDateCustomDay()
@@ -42,12 +42,21 @@ class SickLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private var avatarPath: String? = ""
     private var fileValue: String? = ""
     var isDownLoad: Boolean = false
+    var leaveType: String = "0"
     override fun getLayoutId(): Int = R.layout.activity_sick_leave
 
 
     override fun initView() {
         super.initView()
         tvTimeToday.text = "您的请假时间是" + DateUtil.formatTitleToday()
+        leaveType = intent.getStringExtra(Constant.LEAVE_TYPE)
+        if (leaveType == "1") {
+            llRemarkLeave.visibility = View.VISIBLE
+            llSick.visibility = View.GONE
+        } else if (leaveType == "2") {
+            llRemarkLeave.visibility = View.GONE
+            llSick.visibility = View.VISIBLE
+        }
         tvConfirm.setOnClickListener {
             doConfirm()
         }
@@ -72,7 +81,8 @@ class SickLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         UserInfo.getUserBean().uid,
                         usertype = UserInfo.getUserBean().usertype,
                         atttime = chosenDayNet,
-                        leavetype = "2",
+                        leavetype = leaveType,
+                        remark =  etLeaveRemark.text.toString(),
                         crsid = it.id ?: "",
                         isfever = getBooleanString(cbItem1ApplyLeave.isChecked),
                         isdiarrhea = getBooleanString(cbItem2ApplyLeave.isChecked),
@@ -160,7 +170,7 @@ class SickLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         showLoading()
         var mId: String = System.currentTimeMillis().toString() + "_" + fileName
         OssUtils.asyncUploadFile(
-            this@SickLeaveActivity,
+            this@LeaveTypeActivity,
             it.Credentials,
             getOssObjectKey(UserInfo.getUserBean().usertype, UserInfo.getUserBean().uid, mId),
             avatarPath,
@@ -172,7 +182,7 @@ class SickLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                             UserInfo.getUserBean().uid,
                             mId
                         )
-                        displayImage(this@SickLeaveActivity, avatarPath, ivAddPic)
+                        displayImage(this@LeaveTypeActivity, avatarPath, ivAddPic)
                     }
                 }
 
@@ -209,7 +219,7 @@ class SickLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         showLoading()
 
         OssUtils.downloadFile(
-            this@SickLeaveActivity,
+            this@LeaveTypeActivity,
             it.Credentials,
             UserInfo.getUserBean().portrait,
             mDownloadFile(this, fileValue!!),
@@ -227,9 +237,9 @@ class SickLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         showSuccess()
 
                         displayImage(
-                            this@SickLeaveActivity,
+                            this@LeaveTypeActivity,
                             mDownloadFile(
-                                this@SickLeaveActivity,
+                                this@LeaveTypeActivity,
                                 fileValue!!
                             ),
                             ivAddPic

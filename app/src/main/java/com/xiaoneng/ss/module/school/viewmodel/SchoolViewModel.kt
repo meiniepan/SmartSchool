@@ -20,9 +20,11 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mAddAttendanceData2: MutableLiveData<Any> = MutableLiveData()
     val mTaskListData: MutableLiveData<TaskResponse> = MutableLiveData()
     val mPerformanceData: MutableLiveData<PerformanceResponse> = MutableLiveData()
+    val mTestCourseData: MutableLiveData<Any> = MutableLiveData()
     val mTimetableData: MutableLiveData<TimetableResponse> = MutableLiveData()
     val mAttTimetableData: MutableLiveData<Any> = MutableLiveData()
     val mTimetableDataT: MutableLiveData<TimetableResponse> = MutableLiveData()
+    val mAttendanceSchoolData: MutableLiveData<Any> = MutableLiveData()
     val mAttendanceMasterData: MutableLiveData<Any> = MutableLiveData()
     val mAttendanceStuData: MutableLiveData<Any> = MutableLiveData()
     val mAttendanceTeaData: MutableLiveData<Any> = MutableLiveData()
@@ -56,35 +58,47 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
 
     fun getTimetableT() {
         initiateRequest(
-            { mTimetableDataT.value = mRepository.getTimetableT() },
+            { mTimetableDataT.value = mRepository.getTimetable() },
             loadState
         )
     }
 
-    fun getPerformance(testname: String, crid: String = "") {
+    fun getPerformance(testname: String = "", crid: String = "", classid: String = "") {
         initiateRequest(
-            { mPerformanceData.value = mRepository.getPerformance(testname, crid) },
+            { mPerformanceData.value = mRepository.getPerformance(testname, crid,classid) },
+            loadState
+        )
+    }
+    fun getTestCourse() {
+        initiateRequest(
+            { mTestCourseData.value = mRepository.getTestCourse() },
+            loadState
+        )
+    }
+    fun getAttendanceSchool(classid: String = "", time: String = "") {
+        initiateRequest(
+            { mAttendanceSchoolData.value = mRepository.getAttendance(classid, time) },
             loadState
         )
     }
 
-    fun getAttendanceMaster(classid: String = "", atttime: String = "") {
+    fun getAttendanceMaster(classid: String = "", time: String = "") {
         initiateRequest(
-            { mAttendanceMasterData.value = mRepository.getAttendance(classid, atttime) },
+            { mAttendanceMasterData.value = mRepository.getAttendance(classid, time) },
             loadState
         )
     }
 
-    fun getAttendanceStu(classid: String = "", atttime: String = "") {
+    fun getAttendanceStu(classid: String = "", time: String = "") {
         initiateRequest(
-            { mAttendanceStuData.value = mRepository.getAttendance(classid, atttime) },
+            { mAttendanceStuData.value = mRepository.getAttendance(classid, time) },
             loadState
         )
     }
 
-    fun getAttendanceTea(classid: String = "", atttime: String = "") {
+    fun getAttendanceTea(classid: String = "", time: String = "") {
         initiateRequest(
-            { mAttendanceTeaData.value = mRepository.getAttendance(classid, atttime) },
+            { mAttendanceTeaData.value = mRepository.getAttendance(classid, time) },
             loadState
         )
     }

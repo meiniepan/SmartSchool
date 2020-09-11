@@ -254,6 +254,24 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
+     *学生查看成绩-考试/班级/群组/课程信息
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/student/achievements/testCourse")
+    suspend fun getTestCourseStu(
+        @Field("token") token: String
+    ): BaseResponse<Any>
+
+    /**
+     *教师查看成绩-考试/班级/群组/课程信息
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/achievements/testCourse")
+    suspend fun getTestCourseTea(
+        @Field("token") token: String
+    ): BaseResponse<Any>
+
+    /**
      *学生课程表
      */
     @FormUrlEncoded
@@ -305,8 +323,9 @@ interface ApiService {
     @POST("/api/v1/teacher/achievements/lists")
     suspend fun getPerformance2(
         @Field("token") token: String,
-        @Field("testname") testname: String ,
-        @Field("crid") crid: String = ""
+        @Field("testname") testname: String,
+        @Field("crid") crid: String = "",
+        @Field("classid") classid: String
     ): BaseResponse<PerformanceResponse>
 
     /**
@@ -346,13 +365,26 @@ interface ApiService {
      *教师查看考勤
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/attendances/lists")
+    @POST("/api/v1/teacher/attendances/classDetails")
     suspend fun getAttendance2(
         @Field("token") token: String,
         @Field("classid") classid: String,
         @Field("groupid") groupid: String = "",
         @Field("teacheruid") teacheruid: String = "",
-        @Field("atttime") atttime: String = ""
+        @Field("time") time: String = ""
+    ): BaseResponse<Any>
+
+    /**
+     *管理员校级考勤
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/attendances/sclists")
+    suspend fun getAttendanceSchool(
+        @Field("token") token: String,
+        @Field("classid") classid: String = "",
+        @Field("level") level: String = "",
+        @Field("type") type: String = "",//0按日统计1按学年统计
+        @Field("time") time: String = ""
     ): BaseResponse<Any>
 
     /**

@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.eventBus.ChangeMasterTimetableEvent
-import com.xiaoneng.ss.module.school.model.LessonBean
+import com.xiaoneng.ss.module.school.model.CourseBean
 import org.greenrobot.eventbus.Subscribe
 
 
@@ -18,12 +18,12 @@ import org.greenrobot.eventbus.Subscribe
  * @date: 2020/08/27
  * Time: 17:32
  */
-class LessonAdapter(layoutId: Int, listData: MutableList<LessonBean>) :
-    BaseQuickAdapter<LessonBean, BaseViewHolder>(layoutId, listData) {
+class LessonAdapter(layoutId: Int, listData: MutableList<CourseBean>) :
+    BaseQuickAdapter<CourseBean, BaseViewHolder>(layoutId, listData) {
     private var isMaster: Boolean = false
     private var hasColor: Boolean = false
 
-    override fun convert(viewHolder: BaseViewHolder, item: LessonBean) {
+    override fun convert(viewHolder: BaseViewHolder, item: CourseBean) {
         viewHolder?.let { holder ->
             var ll = holder.getView<View>(R.id.llCourse)
             if (TextUtils.isEmpty(item.coursename)) {

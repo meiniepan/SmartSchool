@@ -2,6 +2,7 @@ package com.xiaoneng.ss.module.school.view
 
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_apply_leave.*
@@ -21,10 +22,16 @@ class ApplyLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initView() {
         super.initView()
         llItem1ApplyLeave.setOnClickListener {
-            mStartActivity<SickLeaveActivity>(this)
+            //病假
+            mStartActivity<LeaveTypeActivity>(this) {
+                putExtra(Constant.LEAVE_TYPE, "2")
+            }
         }
         llItem2ApplyLeave.setOnClickListener {
-            mStartActivity<ThingLeaveActivity>(this)
+            //事假
+            mStartActivity<LeaveTypeActivity>(this) {
+                putExtra(Constant.LEAVE_TYPE, "1")
+            }
         }
     }
 

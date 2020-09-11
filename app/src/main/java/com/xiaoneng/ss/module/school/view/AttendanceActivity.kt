@@ -30,9 +30,11 @@ import kotlinx.android.synthetic.main.activity_attendance.*
  * Time: 17:01
  */
 class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+    lateinit var mAdapterSchool: AttendanceMasterAdapter
     lateinit var mAdapterMaster: AttendanceMasterAdapter
     lateinit var mAdapterTeacher: AttendanceTeacherAdapter
     lateinit var mAdapterStudent: AttendanceStuAdapter
+    var mMasterSchool: ArrayList<AttendanceBean> = ArrayList()
     var mMasterData: ArrayList<AttendanceBean> = ArrayList()
     var mTeacherData: ArrayList<AttendanceBean> = ArrayList()
     var mStudentData: ArrayList<AttendanceStuBean> = ArrayList()
@@ -40,6 +42,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private val bottomDialog: Dialog by lazy {
         initDialog()
     }
+    var titles = ArrayList<String>()
 
     override fun getLayoutId(): Int = R.layout.activity_attendance
 
@@ -49,6 +52,66 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvTimeToday.text = "今天是" + DateUtil.formatTitleToday()
         initTitle()
         initAdapter()
+
+    }
+
+    private fun initAdapter() {
+        if (UserInfo.getUserBean().usertype == "1") {
+            titles.add("个人考勤")
+            if (UserInfo.getUserBean().isad == "1") {
+                titles.add("课堂考勤")
+                initAdapterTeacher()
+            } else {
+                initAdapterStu()
+                initStudentApplyLeave()
+            }
+
+        } else if (UserInfo.getUserBean().usertype == "2") {
+
+            titles.add("课堂考勤")
+            if (UserInfo.getUserBean().classmaster == "1") {
+                titles.add("班级考勤")
+                initAdapterMaster()
+                llSearch.visibility = View.VISIBLE
+            } else {
+                initAdapterTeacher()
+            }
+        } else if (UserInfo.getUserBean().usertype == "99") {
+            titles.add("校级考勤")
+            initAdapterMaster()
+        } else {
+            initAdapterStu()
+        }
+
+    }
+
+    override fun initData() {
+        super.initData()
+//        mMasterData.add(AttendanceBean(realname = "hsjdf"))
+//        mMasterData.add(AttendanceBean(realname = "hsjdf"))
+//        mMasterData.add(AttendanceBean(realname = "hsjdf"))
+        rvAttendance.showLoadingView()
+        if (UserInfo.getUserBean().usertype == "1") {
+            if (UserInfo.getUserBean().isad == "1") {
+                mViewModel.getAttendanceTea(time = Constant.TO_DO)
+            } else {
+                mViewModel.getAttendanceStu(time = Constant.TO_DO)
+            }
+
+        } else if (UserInfo.getUserBean().usertype == "2") {
+            if (UserInfo.getUserBean().classmaster == "1") {
+                mViewModel.getAttendanceMaster(time = Constant.TO_DO)
+            } else {
+                mViewModel.getAttendanceTea(time = Constant.TO_DO)
+            }
+        } else if (UserInfo.getUserBean().usertype == "99") {
+            mViewModel.getAttendanceSchool(time = Constant.TO_DO)
+        } else {
+            mViewModel.getAttendanceStu()
+        }
+    }
+
+    private fun initStudentApplyLeave() {
         tvApplyLeave.apply {
             visibility = if (UserInfo.getUserBean().usertype == "1") {
                 View.VISIBLE
@@ -59,23 +122,6 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 mStartActivity<ApplyLeaveActivity>(this@AttendanceActivity)
             }
         }
-    }
-
-    private fun initAdapter() {
-        if (UserInfo.getUserBean().usertype == "1") {
-            initAdapterStu()
-        } else if (UserInfo.getUserBean().usertype == "2") {
-            if (UserInfo.getUserBean().classmaster == "1") {
-                initAdapterMaster()
-            } else {
-                initAdapterTeacher()
-            }
-        } else if (UserInfo.getUserBean().usertype == "99") {
-            initAdapterMaster()
-        } else {
-            initAdapterStu()
-        }
-
     }
 
     private fun initTitle() {
@@ -97,26 +143,6 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
 
-    override fun initData() {
-        super.initData()
-//        mMasterData.add(AttendanceBean(realname = "hsjdf"))
-//        mMasterData.add(AttendanceBean(realname = "hsjdf"))
-//        mMasterData.add(AttendanceBean(realname = "hsjdf"))
-        rvAttendance.showLoadingView()
-        if (UserInfo.getUserBean().usertype == "1") {
-            mViewModel.getAttendanceStu(atttime = Constant.TO_DO)
-        } else if (UserInfo.getUserBean().usertype == "2") {
-            if (UserInfo.getUserBean().classmaster == "1") {
-                mViewModel.getAttendanceMaster(atttime = Constant.TO_DO)
-            } else {
-                mViewModel.getAttendanceTea(atttime = Constant.TO_DO)
-            }
-        } else if (UserInfo.getUserBean().usertype == "99") {
-            mViewModel.getAttendanceMaster(atttime = Constant.TO_DO)
-        } else {
-            mViewModel.getAttendanceStu()
-        }
-    }
 
     private fun initAdapterMaster() {
         mAdapterMaster = AttendanceMasterAdapter(R.layout.item_attendance_master, mMasterData)
@@ -152,11 +178,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initDialog(): Dialog {
-        var titles = ArrayList<String>().apply {
-            add("校级考勤")
-            add("班级考勤")
-            add("课堂考勤")
-        }
+
         // 底部弹出对话框
         var bottomDialog =
             Dialog(this, R.style.BottomDialog)
@@ -183,6 +205,11 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
         dialogAdapter.setOnItemClickListener { adapter, view, position ->
             tvLabel1Attendance.text = titles[position]
+            if (titles[position] == "班级考勤") {
+                llSearch.visibility = View.VISIBLE
+            } else if (titles[position] == "课堂考勤") {
+                llSearch.visibility = View.GONE
+            }
             bottomDialog.dismiss()
         }
 
@@ -212,6 +239,16 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         })
 
         mViewModel.mAttendanceTeaData.observe(this, Observer { response ->
+            response?.let {
+                netResponseFormat<AttendanceResponse>(it)?.let {
+                    mTeacherData.clear()
+                    mTeacherData.addAll(it.data)
+                    rvAttendance.recyclerView.notifyDataSetChanged()
+                }
+            }
+        })
+
+        mViewModel.mAttendanceSchoolData.observe(this, Observer { response ->
             response?.let {
                 netResponseFormat<AttendanceResponse>(it)?.let {
                     mTeacherData.clear()

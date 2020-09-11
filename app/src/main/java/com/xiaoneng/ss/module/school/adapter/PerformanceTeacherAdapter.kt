@@ -2,6 +2,7 @@ package com.xiaoneng.ss.module.school.adapter
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.xiaoneng.ss.R
 import com.xiaoneng.ss.module.school.model.PerformanceBean
 
 
@@ -12,15 +13,16 @@ import com.xiaoneng.ss.module.school.model.PerformanceBean
  * @date: 2020/08/27
  * Time: 17:32
  */
-class PerformanceMasterAdapter(layoutId: Int, listData: MutableList<PerformanceBean>) :
+class PerformanceTeacherAdapter(layoutId: Int, listData: MutableList<PerformanceBean>) :
     BaseQuickAdapter<PerformanceBean, BaseViewHolder>(layoutId, listData) {
 
     override fun convert(viewHolder: BaseViewHolder?, item: PerformanceBean) {
         viewHolder?.let { holder ->
-//            holder.setText(R.id.tvTitle3, item?.title)
-//                .setText(R.id.tvTime3,item?.noticetime)
-//
-//            holder.setText(R.id.tvAction, item?.title)
+            holder.setText(R.id.tvTime3Performance, item.testtime)
+                .setText(R.id.tvRank3Performance,item.rank)
+                .setText(R.id.tvCno3Performance,item.cno)
+                .setText(R.id.tvName3Performance,item.realname)
+            .setText(R.id.tvScore3Performance, item.achievement)
         }
     }
 }

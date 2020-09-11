@@ -133,11 +133,9 @@
             android:name=".module.school.view.ApplyLeaveActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.school.view.SickLeaveActivity"
+            android:name=".module.school.view.LeaveTypeActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".module.school.view.ThingLeaveActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".module.school.view.AddStudentActivity"
             android:screenOrientation="portrait" />
@@ -147,8 +145,12 @@
         <activity
             android:name=".module.mine.view.AddParentActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".module.school.view.AddClassAttendanceTypeActivity" />
-        <activity android:name=".module.school.view.ChooseCourseToLeaveActivity" />
+        <activity
+            android:name=".module.school.view.AddClassAttendanceTypeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.ChooseCourseToLeaveActivity"
+            android:screenOrientation="portrait" />
 
 
         <provider

@@ -90,24 +90,43 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
     }
 
-    suspend fun getTimetableT(): TimetableResponse {
-        return apiService.getTimetable2(UserInfo.getUserBean().token)
-            .dataConvert(loadState)
+
+    suspend fun getTestCourse(): Any {
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.getTestCourseStu(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+            }
+            "2" -> {
+                apiService.getTestCourseTea(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+
+            }
+            "99" -> {
+                apiService.getTestCourseTea(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+
+            }
+            else -> {
+                apiService.getTestCourseStu(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+            }
+        }
     }
 
-    suspend fun getPerformance(testname: String, crid: String): PerformanceResponse {
+    suspend fun getPerformance(testname: String, crid: String,classid: String): PerformanceResponse {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
                 apiService.getPerformance(UserInfo.getUserBean().token, testname)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getPerformance2(UserInfo.getUserBean().token, testname, crid)
+                apiService.getPerformance2(UserInfo.getUserBean().token, testname, crid,classid)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.getPerformance2(UserInfo.getUserBean().token, testname, crid)
+                apiService.getPerformance2(UserInfo.getUserBean().token, testname, crid,classid)
                     .dataConvert(loadState)
 
             }
@@ -125,12 +144,12 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getAttendance2(UserInfo.getUserBean().token, classid,atttime = atttime)
+                apiService.getAttendance2(UserInfo.getUserBean().token, classid,time = atttime)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.getAttendance2(UserInfo.getUserBean().token, classid,atttime = atttime)
+                apiService.getAttendanceSchool(UserInfo.getUserBean().token, classid,time = atttime)
                     .dataConvert(loadState)
 
             }

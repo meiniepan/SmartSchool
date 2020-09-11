@@ -11,6 +11,6 @@ data class TimetableBean(
     var date: String = "",
     var time: String= "",
     var week: String= "",
-    var list:ArrayList<LessonBean> = ArrayList()
+    var list:ArrayList<CourseBean> = ArrayList()
 
 )
