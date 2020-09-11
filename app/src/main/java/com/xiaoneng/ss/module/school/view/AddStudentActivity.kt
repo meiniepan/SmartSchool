@@ -54,9 +54,9 @@ class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun initAdapter() {
         mAdapter = QueryStudentAdapter(R.layout.item_query_student, mData)
-        contentLayout.apply {
+        rvAddStu.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = mAdapter
+            setAdapter(mAdapter)
         }
         mAdapter.setOnItemClickListener { _, view, position ->
             mShowDialog(position)
@@ -72,22 +72,6 @@ class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 //        mViewModel.getTimetable()
     }
 
-
-    override fun initDataObserver() {
-        mViewModel.mStudentData.observe(this, Observer { response ->
-            response?.let {
-                showSuccess()
-                mData.clear()
-                mData.addAll(it.data)
-                if (mData.size > 0) {
-                    mAdapter.notifyDataSetChanged()
-                } else {
-                    showEmpty()
-                }
-            }
-        })
-
-    }
 
     private fun mShowDialog(position: Int) {
         // 弹出对话框
@@ -113,6 +97,18 @@ class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
         contentView.findViewById<TextView>(R.id.tvNameAddStuDialog)
             .text = mData[position].realname + "-" + mData[position].classname
+    }
+
+    override fun initDataObserver() {
+        mViewModel.mStudentData.observe(this, Observer { response ->
+            response?.let {
+                showSuccess()
+                mData.clear()
+                mData.addAll(it.data)
+                rvAddStu.notifyDataSetChanged()
+            }
+        })
+
     }
 
 }

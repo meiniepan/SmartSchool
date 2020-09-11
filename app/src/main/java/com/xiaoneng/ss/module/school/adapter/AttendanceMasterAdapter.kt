@@ -23,22 +23,22 @@ import com.xiaoneng.ss.module.school.view.AddClassAttendanceTypeActivity
 class AttendanceMasterAdapter(layoutId: Int, listData: MutableList<AttendanceBean>) :
     BaseQuickAdapter<AttendanceBean, BaseViewHolder>(layoutId, listData) {
     lateinit var eAdapter: AttTagsAdapter
-    var eData: ArrayList<String> = ArrayList()
+    lateinit var eData: ArrayList<String>
     override fun convert(viewHolder: BaseViewHolder?, item: AttendanceBean) {
         viewHolder?.let { holder ->
+            eData = ArrayList()
             holder.setText(R.id.tvStudentCode, item?.cno)
-                .setText(R.id.tvStudentName,item?.realname)
+                .setText(R.id.tvStudentName, item?.realname)
 //
             holder.getView<TextView>(R.id.tvLeaveType).apply {
                 setOnClickListener {
-                    mStartActivity<AddClassAttendanceTypeActivity>(mContext){
-                        putExtra(Constant.DATA,item)
+                    mStartActivity<AddClassAttendanceTypeActivity>(mContext) {
+                        putExtra(Constant.DATA, item)
                     }
                 }
             }
-            eData.clear()
             eData.addAll(item.tags!!)
-            if (eData.size>0){
+            if (eData.size > 0) {
                 initAdapter(holder.getView(R.id.rvAttTags))
             }
         }

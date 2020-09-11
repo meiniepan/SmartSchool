@@ -45,7 +45,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         mAdapter.setOnItemChildClickListener { adapter, view, position ->
             when (view.id) {
-                R.id.tvAction1 -> {
+                R.id.tvAction1Log -> {
                     mStartActivity<RejectActivity>(this)
                 }
             }

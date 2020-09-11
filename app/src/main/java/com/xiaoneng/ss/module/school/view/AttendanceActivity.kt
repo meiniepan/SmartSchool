@@ -12,12 +12,10 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
-import com.xiaoneng.ss.module.school.adapter.AttendanceMasterAdapter
-import com.xiaoneng.ss.module.school.adapter.AttendanceStuAdapter
-import com.xiaoneng.ss.module.school.adapter.AttendanceTeacherAdapter
-import com.xiaoneng.ss.module.school.adapter.DialogListAdapter
+import com.xiaoneng.ss.module.school.adapter.*
 import com.xiaoneng.ss.module.school.model.AttendanceBean
 import com.xiaoneng.ss.module.school.model.AttendanceResponse
+import com.xiaoneng.ss.module.school.model.AttendanceSchoolBean
 import com.xiaoneng.ss.module.school.model.AttendanceStuBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_attendance.*
@@ -30,11 +28,11 @@ import kotlinx.android.synthetic.main.activity_attendance.*
  * Time: 17:01
  */
 class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    lateinit var mAdapterSchool: AttendanceMasterAdapter
+    lateinit var mAdapterSchool: AttendanceSchoolAdapter
     lateinit var mAdapterMaster: AttendanceMasterAdapter
     lateinit var mAdapterTeacher: AttendanceTeacherAdapter
     lateinit var mAdapterStudent: AttendanceStuAdapter
-    var mMasterSchool: ArrayList<AttendanceBean> = ArrayList()
+    var mSchoolData: ArrayList<AttendanceSchoolBean> = ArrayList()
     var mMasterData: ArrayList<AttendanceBean> = ArrayList()
     var mTeacherData: ArrayList<AttendanceBean> = ArrayList()
     var mStudentData: ArrayList<AttendanceStuBean> = ArrayList()
@@ -78,9 +76,17 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
         } else if (UserInfo.getUserBean().usertype == "99") {
             titles.add("校级考勤")
-            initAdapterMaster()
+            ivAddAttendance.apply {
+                visibility = View.VISIBLE
+                setOnClickListener {
+                    mStartActivity<AddStudentActivity>(this@AttendanceActivity)
+                }
+            }
+            tvLabel2Attendance.visibility = View.GONE
+            tvLabel3Attendance.visibility = View.GONE
+            initAdapterSchool()
         } else {
-            initAdapterStu()
+
         }
 
     }
@@ -143,6 +149,16 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
 
+    private fun initAdapterSchool() {
+        mAdapterSchool = AttendanceSchoolAdapter(R.layout.item_attendance_school, mSchoolData)
+        rvAttendance.recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            setAdapter(mAdapterSchool)
+        }
+        mAdapterSchool.setOnItemClickListener { _, view, position ->
+
+        }
+    }
 
     private fun initAdapterMaster() {
         mAdapterMaster = AttendanceMasterAdapter(R.layout.item_attendance_master, mMasterData)
@@ -250,9 +266,13 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         mViewModel.mAttendanceSchoolData.observe(this, Observer { response ->
             response?.let {
-                netResponseFormat<AttendanceResponse>(it)?.let {
-                    mTeacherData.clear()
-                    mTeacherData.addAll(it.data)
+                netResponseFormat<AttendanceSchoolBean>(it)?.let {
+                    mSchoolData.clear()
+
+                    repeat(5) { o ->
+                        mSchoolData.add(it)
+                    }
+
                     rvAttendance.recyclerView.notifyDataSetChanged()
                 }
             }

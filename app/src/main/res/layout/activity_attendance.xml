@@ -55,7 +55,7 @@
                     android:paddingStart="@dimen/title_padding"
                     android:paddingTop="10dp"
                     android:paddingEnd="@dimen/title_padding"
-                    android:paddingBottom="10dp">
+                    >
 
                     <TextView
                         android:id="@+id/tvLabel1Attendance"
@@ -112,14 +112,27 @@
 
             <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
                 android:id="@+id/rvAttendance"
+                android:background="@color/tintBac"
                 style="@style/recycler_style" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/tvApplyLeave"
             style="@style/button_blue_bac_style"
+            android:visibility="gone"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="87dp"
             android:text="我要请假" />
+        <ImageView
+            android:id="@+id/ivAddAttendance"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="gone"
+            android:src="@drawable/ic_add_blue"
+            android:layout_marginBottom="104dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/title_padding"
+            />
     </RelativeLayout>
 </LinearLayout>

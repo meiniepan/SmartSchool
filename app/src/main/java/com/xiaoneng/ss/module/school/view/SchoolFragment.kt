@@ -42,16 +42,16 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         llPerformance.setOnClickListener {
             when (UserInfo.getUserBean().usertype) {
                 "1" -> {
-                    mStartActivity<PerformanceStuActivity>(context)
+                    mStartActivity<PerformanceActivity>(context)
                 }
                 "2" -> {
-                    mStartActivity<PerformanceStuActivity>(context)
+                    mStartActivity<PerformanceActivity>(context)
                 }
                 "99" -> {
-                    mStartActivity<PerformanceStuActivity>(context)
+                    mStartActivity<PerformanceActivity>(context)
                 }
                 else -> {
-                    mStartActivity<PerformanceStuActivity>(context)
+                    mStartActivity<PerformanceActivity>(context)
                 }
             }
 

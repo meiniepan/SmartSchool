@@ -24,14 +24,14 @@ import com.xiaoneng.ss.module.school.adapter.PerformanceTeacherAdapter
 import com.xiaoneng.ss.module.school.model.CourseBean
 import com.xiaoneng.ss.module.school.model.PerformanceBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import kotlinx.android.synthetic.main.activity_performance_stu.*
+import kotlinx.android.synthetic.main.activity_performance.*
 
 /**
  * @author Burning
  * @description:
  * @date :2020/8/20 11:32 AM
  */
-class PerformanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+class PerformanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapterStudent: PerformanceStuAdapter
     lateinit var mAdapterTea: PerformanceTeacherAdapter
     var mData: ArrayList<PerformanceBean> = ArrayList()
@@ -51,7 +51,7 @@ class PerformanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private lateinit var dialogTest: Dialog
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_performance_stu
+        return R.layout.activity_performance
     }
 
     override fun initView() {
@@ -95,7 +95,7 @@ class PerformanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private fun initAdapterStu() {
         mAdapterStudent = PerformanceStuAdapter(R.layout.item_performance_stu, mData)
         rvPerformance?.apply {
-            layoutManager = LinearLayoutManager(this@PerformanceStuActivity)
+            layoutManager = LinearLayoutManager(this@PerformanceActivity)
             addItemDecoration(RecycleViewDivider(context, dp2px(context, 20f).toInt()))
             setAdapter(mAdapterStudent)
         }
@@ -108,7 +108,7 @@ class PerformanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private fun initAdapterTeacher() {
         mAdapterTea = PerformanceTeacherAdapter(R.layout.item_performance_tea, mData)
         rvPerformance?.apply {
-            layoutManager = LinearLayoutManager(this@PerformanceStuActivity)
+            layoutManager = LinearLayoutManager(this@PerformanceActivity)
             setAdapter(mAdapterTea)
         }
 
@@ -145,7 +145,7 @@ class PerformanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         dialogClass.window!!.setWindowAnimations(R.style.BottomDialog_Animation)
         var dialogAdapter = DialogListAdapter(R.layout.item_dialog_list, titlesClass)
         var recyclerView = contentView.findViewById<RecyclerView>(R.id.rvDialogList).apply {
-            layoutManager = LinearLayoutManager(this@PerformanceStuActivity)
+            layoutManager = LinearLayoutManager(this@PerformanceActivity)
             addItemDecoration(
                 RecycleViewDivider(
                     dp2px(context, 1f).toInt(),
@@ -181,7 +181,7 @@ class PerformanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         dialogCourse.window!!.setWindowAnimations(R.style.BottomDialog_Animation)
         var dialogAdapter = DialogListAdapter(R.layout.item_dialog_list, titlesCourse)
         var recyclerView = contentView.findViewById<RecyclerView>(R.id.rvDialogList).apply {
-            layoutManager = LinearLayoutManager(this@PerformanceStuActivity)
+            layoutManager = LinearLayoutManager(this@PerformanceActivity)
             addItemDecoration(
                 RecycleViewDivider(
                     dp2px(context, 1f).toInt(),
@@ -217,7 +217,7 @@ class PerformanceStuActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         dialogTest.window!!.setWindowAnimations(R.style.BottomDialog_Animation)
         var dialogAdapter = DialogListAdapter(R.layout.item_dialog_list, titlesTest)
         var recyclerView = contentView.findViewById<RecyclerView>(R.id.rvDialogList).apply {
-            layoutManager = LinearLayoutManager(this@PerformanceStuActivity)
+            layoutManager = LinearLayoutManager(this@PerformanceActivity)
             addItemDecoration(
                 RecycleViewDivider(
                     dp2px(context, 1f).toInt(),

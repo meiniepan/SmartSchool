@@ -127,7 +127,7 @@
             android:name=".module.school.view.PerformanceMasterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.school.view.PerformanceStuActivity"
+            android:name=".module.school.view.PerformanceActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.school.view.ApplyLeaveActivity"
