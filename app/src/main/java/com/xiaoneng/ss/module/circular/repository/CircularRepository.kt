@@ -19,24 +19,24 @@ import com.xiaoneng.ss.network.dataConvert
 class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository() {
 
 
-    suspend fun getNoticeList(page: String, pagenum: String,type:String): NoticeResponse {
+    suspend fun getNoticeList(page: String, pagenum: String, type: String): NoticeResponse {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.getNoticeList(UserInfo.getUserBean().token, page, pagenum,type)
+                apiService.getNoticeList(UserInfo.getUserBean().token, page, pagenum, type)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getNoticeList2(UserInfo.getUserBean().token, page, pagenum,type)
+                apiService.getNoticeList2(UserInfo.getUserBean().token, page, pagenum, type)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.getNoticeList2(UserInfo.getUserBean().token, page, pagenum,type)
+                apiService.getNoticeList2(UserInfo.getUserBean().token, page, pagenum, type)
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.getNoticeList(UserInfo.getUserBean().token, page, pagenum,type)
+                apiService.getNoticeList(UserInfo.getUserBean().token, page, pagenum, type)
                     .dataConvert(loadState)
 
             }
@@ -67,24 +67,46 @@ class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository(
         }
     }
 
-    suspend fun read(id: String, status: String = "",received:String = ""): Any {
+    suspend fun read(id: String, status: String = "", received: String = ""): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.readNotice(UserInfo.getUserBean().token, id, status,received)
+                apiService.readNotice(UserInfo.getUserBean().token, id, status, received)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.readNotice2(UserInfo.getUserBean().token, id, status,received)
+                apiService.readNotice2(UserInfo.getUserBean().token, id, status, received)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.readNotice2(UserInfo.getUserBean().token, id, status,received)
+                apiService.readNotice2(UserInfo.getUserBean().token, id, status, received)
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.readNotice(UserInfo.getUserBean().token, id, status,received)
+                apiService.readNotice(UserInfo.getUserBean().token, id, status, received)
+                    .dataConvert(loadState)
+
+            }
+        }
+    }
+
+    suspend fun readAll(): Any {
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.readAll(UserInfo.getUserBean().token, type = "system")
+                    .dataConvert(loadState)
+            }
+            "2" -> {
+                apiService.readAllTea(UserInfo.getUserBean().token, type = "system")
+                    .dataConvert(loadState)
+            }
+            "99" -> {
+                apiService.readAllTea(UserInfo.getUserBean().token, type = "system")
+                    .dataConvert(loadState)
+            }
+            else -> {
+                apiService.readAllTea(UserInfo.getUserBean().token, type = "system")
                     .dataConvert(loadState)
 
             }

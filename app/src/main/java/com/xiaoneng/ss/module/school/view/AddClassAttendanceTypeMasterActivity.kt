@@ -18,7 +18,7 @@ import org.jetbrains.anko.toast
  * @date: 2020/08/27
  * Time: 17:01
  */
-class AddClassAttendanceTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+class AddClassAttendanceTypeMasterActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var bean: AttendanceBean
 
     override fun getLayoutId(): Int = R.layout.activity_add_class_attendance_type
@@ -46,10 +46,13 @@ class AddClassAttendanceTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() 
 
         llAddClassAttendance1.setOnClickListener {
             mStartActivity<LeaveTypeActivity>(this) {
-
+                putExtra(Constant.LEAVE_TYPE, "2")
             }
         }
         llAddClassAttendance2.setOnClickListener {
+            mStartActivity<LeaveTypeActivity>(this) {
+                putExtra(Constant.LEAVE_TYPE, "1")
+            }
         }
         llAddClassAttendance3.setOnClickListener {
         }
@@ -65,9 +68,9 @@ class AddClassAttendanceTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() 
                 "点击该项，早间迟到将会直接被删除",
                 "是否删除早间迟到"
             ) {
-                for (i in bean.attlists!!){
-                    if (i.type == "1"){
-                        mViewModel.deleteAttendance(i.id?:"")
+                for (i in bean.attlists!!) {
+                    if (i.type == "1") {
+                        mViewModel.deleteAttendance(i.id ?: "")
                     }
                 }
             }

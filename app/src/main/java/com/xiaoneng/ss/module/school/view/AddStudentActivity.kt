@@ -1,21 +1,18 @@
 package com.xiaoneng.ss.module.school.view
 
-import android.app.Dialog
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.utils.dp2px
+import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.mAlert
 import com.xiaoneng.ss.model.StudentBean
 import com.xiaoneng.ss.module.school.adapter.QueryStudentAdapter
+import com.xiaoneng.ss.module.school.model.LeaveBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_add_student.*
+import org.jetbrains.anko.toast
 
 /**
  * Created with Android Studio.
@@ -35,7 +32,6 @@ class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initView() {
         super.initView()
         initAdapter()
-
         etSearch.setOnEditorActionListener { teew, i, keyEvent ->
             when (i) {
                 EditorInfo.IME_ACTION_SEARCH -> {
@@ -75,28 +71,15 @@ class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun mShowDialog(position: Int) {
         // 弹出对话框
-        val bottomDialog =
-            Dialog(this, R.style.BottomDialog)
-        val contentView: View =
-            LayoutInflater.from(this).inflate(R.layout.dialog_add_student, null)
-        bottomDialog.setContentView(contentView)
-        val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
-        params.width =
-            resources.displayMetrics.widthPixels - dp2px(this, 53f * 2).toInt()
-        params.marginEnd = dp2px(this, 0f).toInt()
-        contentView.layoutParams = params
-        bottomDialog.window!!.setGravity(Gravity.CENTER)
-        bottomDialog.show()
-        contentView.findViewById<View>(R.id.tvAction1AddStuDialog)
-            .setOnClickListener { v: View? ->
-                bottomDialog.dismiss()
-            }
-        contentView.findViewById<View>(R.id.tvAction2AddStuDialog)
-            .setOnClickListener { v: View? ->
-                bottomDialog.dismiss()
-            }
-        contentView.findViewById<TextView>(R.id.tvNameAddStuDialog)
-            .text = mData[position].realname + "-" + mData[position].classname
+        var msg = mData[position].classname + "\n" + mData[position].realname
+        mAlert(msg, "请确认学生身份") {
+            mViewModel.addAttendance(
+                LeaveBean(
+                    UserInfo.getUserBean().token, type = "1", status = "0",
+                    uid = mData[position].uid, atttime = "", crsid = "", remark = "lai"
+                )
+            )
+        }
     }
 
     override fun initDataObserver() {
@@ -106,6 +89,13 @@ class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 mData.clear()
                 mData.addAll(it.data)
                 rvAddStu.notifyDataSetChanged()
+            }
+        })
+
+        mViewModel.mAddAttendanceData.observe(this, Observer { response ->
+            response?.let {
+                toast(R.string.deal_done)
+                finish()
             }
         })
 

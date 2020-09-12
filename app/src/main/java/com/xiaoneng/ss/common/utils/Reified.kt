@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.TextView
 import cn.addapp.pickers.picker.DateTimePicker
+import cn.addapp.pickers.picker.SinglePicker
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -45,7 +46,7 @@ inline fun <reified T> mStartActivity(context: Context?, block: Intent.() -> Uni
     context?.startActivity(intent)
 }
 
-inline fun starPhoneNum(phone: String): String {
+inline fun formatStarPhoneNum(phone: String): String {
     return if (RegexUtils.isMobileSimple(phone)) {
         phone.substring(0, 3) + "****" + phone.substring(7, 11)
     } else {
@@ -79,6 +80,7 @@ inline fun Activity.showDatePick(
                 hour: String?,
                 minute: String?
             ) {
+                setSelectedTextColor(resources.getColor(R.color.commonBlue))
                 val sdf = SimpleDateFormat("yyyyMMdd")
                 var week = DateUtil.getWeek(sdf.parse("${year}${month}${day}"))
                 var time1 = "${month}月${day}日 $week"
@@ -97,6 +99,7 @@ inline fun Activity.showDatePick(
 inline fun Activity.showDateDayPick(textView: TextView, crossinline block: String.() -> Unit) {
     DateTimePicker(this, DateTimePicker.NONE).apply {
 //            setActionButtonTop(false)
+        setSelectedTextColor(resources.getColor(R.color.commonBlue))
         setDateRangeStart(Constant.THIS_YEAR, 1, 1)
         setDateRangeEnd(Constant.THIS_YEAR + 5, 11, 11)
         setSelectedItem(
@@ -121,6 +124,21 @@ inline fun Activity.showDateDayPick(textView: TextView, crossinline block: Strin
             }
 
         })
+        show()
+    }
+
+}
+
+inline fun Activity.showSexPick(textView: TextView, crossinline block: String.() -> Unit) {
+    SinglePicker(this, arrayOf("男", "女", "未知")).apply {
+//            setActionButtonTop(false)
+        setCanLoop(false)
+        setSelectedTextColor(resources.getColor(R.color.commonBlue))
+        setOnItemPickListener { index, item ->
+            item.block()
+            textView.text = item
+        }
+
         show()
     }
 

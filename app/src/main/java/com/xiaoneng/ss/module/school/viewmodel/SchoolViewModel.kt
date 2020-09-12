@@ -17,7 +17,7 @@ import com.xiaoneng.ss.network.initiateRequest
  */
 class SchoolViewModel : BaseViewModel<SchoolRepository>() {
 
-    val mAddAttendanceData2: MutableLiveData<Any> = MutableLiveData()
+    val mAddAttendanceData: MutableLiveData<Any> = MutableLiveData()
     val mTaskListData: MutableLiveData<TaskResponse> = MutableLiveData()
     val mPerformanceData: MutableLiveData<PerformanceResponse> = MutableLiveData()
     val mTestCourseData: MutableLiveData<Any> = MutableLiveData()
@@ -30,7 +30,6 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mAttendanceTeaData: MutableLiveData<Any> = MutableLiveData()
     val mStudentData: MutableLiveData<StudentResp> = MutableLiveData()
     val mDepartmentsData: MutableLiveData<Any> = MutableLiveData()
-    val mAddAttendanceData: MutableLiveData<Any> = MutableLiveData()
     val mAddTaskData: MutableLiveData<Any> = MutableLiveData()
     val mDeleteAttendanceData: MutableLiveData<Any> = MutableLiveData()
     val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
@@ -42,9 +41,9 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getTimetable(classid: String = "",time: String = "") {
+    fun getTimetable(classid: String = "", time: String = "") {
         initiateRequest(
-            { mTimetableData.value = mRepository.getTimetable(classid,time) },
+            { mTimetableData.value = mRepository.getTimetable(classid, time) },
             loadState
         )
     }
@@ -65,16 +64,18 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
 
     fun getPerformance(testname: String = "", crid: String = "", classid: String = "") {
         initiateRequest(
-            { mPerformanceData.value = mRepository.getPerformance(testname, crid,classid) },
+            { mPerformanceData.value = mRepository.getPerformance(testname, crid, classid) },
             loadState
         )
     }
+
     fun getTestCourse() {
         initiateRequest(
             { mTestCourseData.value = mRepository.getTestCourse() },
             loadState
         )
     }
+
     fun getAttendanceSchool(classid: String = "", time: String = "") {
         initiateRequest(
             { mAttendanceSchoolData.value = mRepository.getAttendance(classid, time) },
@@ -82,9 +83,10 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getAttendanceMaster(classid: String = "", time: String = "") {
+
+    fun getAttendanceTea(classid: String = "", time: String = "", courseId: String = "") {
         initiateRequest(
-            { mAttendanceMasterData.value = mRepository.getAttendance(classid, time) },
+            { mAttendanceTeaData.value = mRepository.getAttendance(classid, time, courseId) },
             loadState
         )
     }
@@ -96,16 +98,16 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getAttendanceTea(classid: String = "", time: String = "") {
+    fun getAttendanceByStuAdmin(classid: String = "", time: String = "", courseId: String) {
         initiateRequest(
-            { mAttendanceTeaData.value = mRepository.getAttendance(classid, time) },
+            { mAttendanceStuData.value = mRepository.getAttendance(classid, time, courseId) },
             loadState
         )
     }
 
-    fun queryStudent(key: String) {
+    fun queryStudent(keyword: String) {
         initiateRequest(
-            { mStudentData.value = mRepository.queryStudent(key) },
+            { mStudentData.value = mRepository.queryStudent(keyword) },
             loadState
         )
     }
@@ -117,21 +119,17 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun addAttendanceByMaster() {
-        initiateRequest(
-            { mAddAttendanceData.value = mRepository.addAttendanceByMaster() },
-            loadState
-        )
-    }
 
     fun addTask(bean: TaskBean) {
         initiateRequest(
             { mAddTaskData.value = mRepository.addTask(bean) },
             loadState
         )
-    }fun addAttendance(bean: LeaveBean) {
+    }
+
+    fun addAttendance(bean: LeaveBean) {
         initiateRequest(
-            { mAddAttendanceData2.value = mRepository.addAttendance(bean) },
+            { mAddAttendanceData.value = mRepository.addAttendance(bean) },
             loadState
         )
     }

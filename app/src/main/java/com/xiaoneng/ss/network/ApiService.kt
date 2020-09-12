@@ -204,6 +204,8 @@ interface ApiService {
         @Field("received") received: String = ""
     ): BaseResponse<Any>
 
+
+
     /**
      *教师通知状态变更
      */
@@ -216,6 +218,29 @@ interface ApiService {
         @Field("received") received: String = ""
     ): BaseResponse<Any>
 
+    /**
+     *学生通知全部已读
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/student/notices/modifyAll")
+    suspend fun readAll(
+        @Field("token") token: String,
+        @Field("status") status: String = "1",
+        @Field("received") received: String = "",
+        @Field("type") type: String
+    ): BaseResponse<Any>
+
+    /**
+     *教师通知全部已读
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/notices/modifyAll")
+    suspend fun readAllTea(
+        @Field("token") token: String,
+        @Field("status") status: String = "",
+        @Field("received") received: String = "",
+        @Field("type") type: String
+    ): BaseResponse<Any>
     /**
      *学生任务接口
      */
@@ -247,8 +272,20 @@ interface ApiService {
      */
     @FormUrlEncoded
     @POST("/api/v1/student/attendances/timeTable")
-    suspend fun getAttTimetable(
+    suspend fun getAttTimetableStu(
         @Field("token") token: String,
+        @Field("time") time: String = "",
+        @Field("uid") uid: String = ""
+    ): BaseResponse<Any>
+
+    /**
+     *班主任/任课教师添加考勤-查看课程表
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/attendances/timeTable")
+    suspend fun getAttTimetableTea(
+        @Field("token") token: String,
+        @Field("classid") classid: String = "",
         @Field("time") time: String = "",
         @Field("uid") uid: String = ""
     ): BaseResponse<Any>
@@ -362,13 +399,25 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
+     *学生考勤员查看考勤
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/student/attendances/lists")
+    suspend fun getAttendanceStuAdmin(
+        @Field("token") token: String,
+        @Field("classid") courseId: String,
+        @Field("atttime") atttime: String = ""
+    ): BaseResponse<Any>
+
+    /**
      *教师查看考勤
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/attendances/classDetails")
-    suspend fun getAttendance2(
+    @POST("/api/v1/teacher/attendances/lists")
+    suspend fun getAttendanceTea(
         @Field("token") token: String,
         @Field("classid") classid: String,
+        @Field("classid") courseId: String,
         @Field("groupid") groupid: String = "",
         @Field("teacheruid") teacheruid: String = "",
         @Field("time") time: String = ""
@@ -422,7 +471,7 @@ interface ApiService {
     @POST("/api/v1/teacher/student/listAll")
     suspend fun queryStudent(
         @Field("token") token: String,
-        @Field("key") key: String = ""
+        @Field("keyword") keyword: String = ""
     ): BaseResponse<StudentResp>
 
     /**
@@ -575,11 +624,20 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
+     *学生考勤员删除考勤
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/student/attendances/del")
+    suspend fun deleteAttendanceByStu(
+        @Field("token") token: String,
+        @Field("id") id: String
+    ): BaseResponse<Any>
+    /**
      *教师删除考勤
      */
     @FormUrlEncoded
     @POST("/api/v1/teacher/attendances/del")
-    suspend fun deleteAttendance(
+    suspend fun deleteAttendanceByTea(
         @Field("token") token: String,
         @Field("id") id: String
     ): BaseResponse<Any>
@@ -589,6 +647,22 @@ interface ApiService {
      */
     @POST("/api/v1/student/attendances/add")
     suspend fun addAttendance(
+        @Body requestBody: LeaveBean
+    ): BaseResponse<Any>
+
+    /**
+     *学生考勤员添加考勤
+     */
+    @POST("/api/v1/student/attendances/mAdd")
+    suspend fun addAttendanceByStu(
+        @Body requestBody: LeaveBean
+    ): BaseResponse<Any>
+
+    /**
+     *老师考勤员添加考勤
+     */
+    @POST("/api/v1/teacher/attendances/add")
+    suspend fun addAttendanceByTea(
         @Body requestBody: LeaveBean
     ): BaseResponse<Any>
 }

@@ -13,6 +13,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class AttendanceBean(
     var id: String? = "",
+    var uid: String? = "",
     var cno: String? = "",
     var coursename: String? = "",
     var realname: String? = "",

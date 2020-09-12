@@ -20,7 +20,7 @@ class PerformanceStuAdapter(layoutId: Int, listData: MutableList<PerformanceBean
         viewHolder?.let { holder ->
             holder.setText(R.id.tvTimePerformance, item?.testtime)
                 .setText(R.id.tvScore1Performance,item?.achievement)
-            holder.setText(R.id.tvRank1Performance, item?.rank)
+            holder.setText(R.id.tvRank1Performance, item?.ranking)
         }
     }
 }

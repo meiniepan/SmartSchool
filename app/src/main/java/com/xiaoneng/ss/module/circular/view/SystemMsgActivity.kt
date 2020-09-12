@@ -11,6 +11,7 @@ import com.xiaoneng.ss.module.circular.adapter.SysMsgAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import kotlinx.android.synthetic.main.activity_system_msg.*
+import org.jetbrains.anko.toast
 
 /**
  * @author Burning
@@ -28,6 +29,10 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
         super.initView()
         mData = intent.getParcelableArrayListExtra(Constant.DATA)
         initAdapter()
+        rvSysMsg.notifyDataSetChanged()
+        tvCleanMsg.setOnClickListener {
+            mViewModel.readAll()
+        }
     }
 
     override fun initData() {
@@ -70,6 +75,12 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 mData.clear()
                 mData.addAll(it.data)
                 rvSysMsg.notifyDataSetChanged()
+            }
+        })
+
+        mViewModel.mReadData.observe(this, Observer { response ->
+            response?.let {
+                toast(R.string.deal_done)
             }
         })
     }

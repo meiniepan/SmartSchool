@@ -123,6 +123,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="24dp"
+                            android:gravity="end"
                             android:hint="请选择" />
 
                     </LinearLayout>
@@ -153,6 +154,7 @@
                         <TextView
                             android:id="@+id/tvMineItem3"
                             android:layout_width="wrap_content"
+                            android:gravity="end"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="24dp"
                             android:hint="请选择" />
@@ -279,9 +281,10 @@
                         <TextView
                             android:id="@+id/tvMineItem7"
                             android:layout_width="wrap_content"
+                            android:gravity="end"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="24dp"
-                            android:hint="请输入您的学籍号" />
+                            android:hint="" />
 
                     </LinearLayout>
 
@@ -308,9 +311,11 @@
                             android:layout_weight="1"
                             android:text="微信号" />
 
-                        <TextView
-                            android:id="@+id/tvMineItem8"
+                        <EditText
+                            android:id="@+id/etMineItem8"
                             android:layout_width="wrap_content"
+                            android:background="@null"
+                            android:gravity="end"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="24dp"
                             android:hint="请输入您的微信号" />

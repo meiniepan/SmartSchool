@@ -17,7 +17,7 @@ data class UserBean(
     var cno: String= "",//学号
     var sno: String= "",//教育局编号
     var realname: String= "",
-    var sex: String= "",
+    var sex: String= "",//性别0未知1男2女
     var phone: String= "",
     var birthday: String= "",
     var portrait: String= "",

@@ -7,20 +7,35 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <com.xiaoneng.ss.custom.widgets.CustomTitleBar
-        style="@style/title_style"
-        app:title="系统消息" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+            style="@style/title_style"
+            app:title="系统消息" />
+
+        <TextView
+            android:id="@+id/tvCleanMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:drawableLeft="@drawable/ic_brush"
+            android:drawablePadding="5dp"
+            android:text="全部已读" />
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"
-        android:background="@color/tintBac"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/tintBac">
 
         <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
             android:id="@+id/rvSysMsg"
-            style="@style/recycler_margin_style"
-             />
+            style="@style/recycler_margin_style" />
     </LinearLayout>
 
 </LinearLayout>

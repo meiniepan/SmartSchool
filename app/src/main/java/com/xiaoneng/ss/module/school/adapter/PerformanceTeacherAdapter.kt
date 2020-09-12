@@ -19,7 +19,7 @@ class PerformanceTeacherAdapter(layoutId: Int, listData: MutableList<Performance
     override fun convert(viewHolder: BaseViewHolder?, item: PerformanceBean) {
         viewHolder?.let { holder ->
             holder.setText(R.id.tvTime3Performance, item.testtime)
-                .setText(R.id.tvRank3Performance,item.rank)
+                .setText(R.id.tvRank3Performance,item.ranking)
                 .setText(R.id.tvCno3Performance,item.cno)
                 .setText(R.id.tvName3Performance,item.realname)
             .setText(R.id.tvScore3Performance, item.achievement)

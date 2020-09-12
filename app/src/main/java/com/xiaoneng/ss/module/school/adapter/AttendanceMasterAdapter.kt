@@ -10,7 +10,7 @@ import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
 import com.xiaoneng.ss.module.circular.adapter.AttTagsAdapter
 import com.xiaoneng.ss.module.school.model.AttendanceBean
-import com.xiaoneng.ss.module.school.view.AddClassAttendanceTypeActivity
+import com.xiaoneng.ss.module.school.view.AddClassAttendanceTypeMasterActivity
 
 
 /**
@@ -26,17 +26,12 @@ class AttendanceMasterAdapter(layoutId: Int, listData: MutableList<AttendanceBea
     lateinit var eData: ArrayList<String>
     override fun convert(viewHolder: BaseViewHolder?, item: AttendanceBean) {
         viewHolder?.let { holder ->
+            holder.addOnClickListener(R.id.tvLeaveType)
             eData = ArrayList()
             holder.setText(R.id.tvStudentCode, item?.cno)
                 .setText(R.id.tvStudentName, item?.realname)
 //
-            holder.getView<TextView>(R.id.tvLeaveType).apply {
-                setOnClickListener {
-                    mStartActivity<AddClassAttendanceTypeActivity>(mContext) {
-                        putExtra(Constant.DATA, item)
-                    }
-                }
-            }
+
             eData.addAll(item.tags!!)
             if (eData.size > 0) {
                 initAdapter(holder.getView(R.id.rvAttTags))

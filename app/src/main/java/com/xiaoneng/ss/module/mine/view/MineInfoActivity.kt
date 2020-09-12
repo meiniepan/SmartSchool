@@ -28,8 +28,10 @@ import java.io.File
  * Time: 17:01
  */
 class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
-    val mAvatarFileName:String = UserInfo.getUserBean().portrait.split("/").last()
+    val mAvatarFileName: String = UserInfo.getUserBean().portrait.split("/").last()
     private var fileName: String? = ""
+    private var birthday: String = UserInfo.getUserBean().birthday
+    private var sex: String = UserInfo.getUserBean().sex
     private var avatarPath: String? = ""
     var isDownLoad: Boolean = false
 
@@ -50,7 +52,16 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
         tvConfirm.setOnClickListener {
             doConfirm()
         }
-
+        tvMineItem2.apply {
+            setOnClickListener {
+                showSexPick(this){sex = this}
+            }
+        }
+        tvMineItem3.apply {
+            setOnClickListener {
+                showDateDayPick(this){birthday = this}
+            }
+        }
         when (UserInfo.getUserBean().usertype) {
 
             "1" -> {
@@ -70,23 +81,33 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
             }
             "2" -> {
                 llMineItem5.visibility = View.GONE
+                llMineItem7.visibility = View.GONE
             }
 
             "99" -> {
                 llMineItem5.visibility = View.GONE
+                llMineItem7.visibility = View.GONE
             }
             else -> {
 
             }
         }
-        tvNameMineInfo.text = name
         etMineItem1.setText(name)
-        tvMineItem4.text = starPhoneNum(phone)
+        tvMineItem2.setText(UserInfo.getUserBean().sex)
+        tvMineItem3.setText(UserInfo.getUserBean().birthday)
+        tvMineItem4.text = formatStarPhoneNum(phone)
+        tvMineItem5.text = UserInfo.getUserBean().cno
+        tvMineItem6.text = UserInfo.getUserBean().cno
+        tvMineItem7.text = UserInfo.getUserBean().sno
+        etMineItem8.setText(UserInfo.getUserBean().wxname)
     }
 
     private fun doConfirm() {
         var bean = UserInfo.getUserBean()
         bean.realname = etMineItem1.text.toString()
+        bean.sex = sex
+        bean.birthday = birthday
+        bean.wxname = etMineItem8.text.toString()
         showLoading()
         mViewModel.modifyUserInfo(bean)
     }
@@ -139,11 +160,11 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     private fun doUpload(it: StsTokenResp) {
         showLoading()
-        var mId: String = System.currentTimeMillis().toString()+"_"+fileName
+        var mId: String = System.currentTimeMillis().toString() + "_" + fileName
         OssUtils.asyncUploadFile(
             this@MineInfoActivity,
             it.Credentials,
-            getOssObjectKey(UserInfo.getUserBean().usertype,UserInfo.getUserBean().uid,mId),
+            getOssObjectKey("5", UserInfo.getUserBean().uid, mId),
             avatarPath,
             object : OssListener {
                 override fun onSuccess() {
@@ -151,7 +172,11 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                         mViewModel.modifyAvatar(
                             UserBean(
                                 UserInfo.getUserBean().token,
-                                portrait = getOssObjectKey(UserInfo.getUserBean().usertype,UserInfo.getUserBean().uid,mId)
+                                portrait = getOssObjectKey(
+                                    UserInfo.getUserBean().usertype,
+                                    UserInfo.getUserBean().uid,
+                                    mId
+                                )
                             )
                         )
 

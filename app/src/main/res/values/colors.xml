@@ -16,6 +16,7 @@
     <color name="commonHint">#999999</color>
     <color name="splitColor">#EDEFF1</color>
     <color name="commonBlue">#5E37FF</color>
+    <color name="tintBlue">#9980FF</color>
     <color name="splitGray">#D3D9DF</color>
     <color name="grayF6">#F6F6F6</color>
     <color name="grayE0">#E0E0E0</color>

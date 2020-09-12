@@ -7,32 +7,14 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical">
-
-        <com.xiaoneng.ss.custom.widgets.CustomTitleBar
-            style="@style/title_style"
-            app:title="添加学生" />
-
-        <TextView
-            android:layout_width="57dp"
-            android:layout_height="28dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/title_padding"
-            android:background="@drawable/bac_blue_bac_5"
-            android:gravity="center"
-            android:text="确定"
-            android:textColor="@color/white" />
-
-    </RelativeLayout>
+    <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+        style="@style/title_style"
+        app:title="考勤" />
 
     <LinearLayout
+        android:id="@+id/contentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/contentLayout"
         android:orientation="vertical">
 
         <LinearLayout
@@ -60,9 +42,9 @@
                     android:background="@null"
                     android:drawableStart="@drawable/ic_search"
                     android:drawablePadding="5dp"
-                    android:singleLine="true"
+                    android:hint="@string/search_student"
                     android:imeOptions="actionSearch"
-                    android:hint="@string/search_student" />
+                    android:singleLine="true" />
             </LinearLayout>
         </LinearLayout>
 

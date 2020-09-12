@@ -146,10 +146,13 @@
             android:name=".module.mine.view.AddParentActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.school.view.AddClassAttendanceTypeActivity"
+            android:name=".module.school.view.AddClassAttendanceTypeMasterActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.school.view.ChooseCourseToLeaveActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.Attendance2CourseActivity"
             android:screenOrientation="portrait" />
 
 

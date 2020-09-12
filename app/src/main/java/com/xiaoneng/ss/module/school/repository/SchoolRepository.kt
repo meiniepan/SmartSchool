@@ -58,24 +58,28 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         }
     }
 
-    suspend fun getTimetable(classid: String = "",time: String = ""): TimetableResponse {
+    suspend fun getTimetable(classid: String = "", time: String = ""): TimetableResponse {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.getTimetable(UserInfo.getUserBean().token,time = time)
+                apiService.getTimetable(UserInfo.getUserBean().token, time = time)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getTimetable2(UserInfo.getUserBean().token,time = time)
+                apiService.getTimetable2(UserInfo.getUserBean().token, time = time)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.getTimetableMaster(UserInfo.getUserBean().token, classid = classid,time = time)
+                apiService.getTimetableMaster(
+                    UserInfo.getUserBean().token,
+                    classid = classid,
+                    time = time
+                )
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.getTimetable(UserInfo.getUserBean().token,time = time)
+                apiService.getTimetable(UserInfo.getUserBean().token, time = time)
                     .dataConvert(loadState)
 
             }
@@ -85,8 +89,25 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
     }
 
     suspend fun getAttTimetable(time: String = ""): Any {
-        return apiService.getAttTimetable(UserInfo.getUserBean().token,time = time)
+
+
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.getAttTimetableStu(UserInfo.getUserBean().token, time = time)
                     .dataConvert(loadState)
+            }
+            "2" -> {
+                apiService.getAttTimetableTea(UserInfo.getUserBean().token, time = time)
+                    .dataConvert(loadState)
+
+            }
+            else -> {
+                apiService.getAttTimetableTea(UserInfo.getUserBean().token, time = time)
+                    .dataConvert(loadState)
+
+            }
+
+        }
 
     }
 
@@ -114,19 +135,23 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         }
     }
 
-    suspend fun getPerformance(testname: String, crid: String,classid: String): PerformanceResponse {
+    suspend fun getPerformance(
+        testname: String,
+        crid: String,
+        classid: String
+    ): PerformanceResponse {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
                 apiService.getPerformance(UserInfo.getUserBean().token, testname)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getPerformance2(UserInfo.getUserBean().token, testname, crid,classid)
+                apiService.getPerformance2(UserInfo.getUserBean().token, testname, crid, classid)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.getPerformance2(UserInfo.getUserBean().token, testname, crid,classid)
+                apiService.getPerformance2(UserInfo.getUserBean().token, testname, crid, classid)
                     .dataConvert(loadState)
 
             }
@@ -137,32 +162,59 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         }
     }
 
-    suspend fun getAttendance(classid: String = "",atttime:String = ""): Any {
+    suspend fun getAttendance(
+        classid: String = "",
+        atttime: String = "",
+        courseId: String = ""
+    ): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.getAttendance(UserInfo.getUserBean().token, classid,atttime = atttime)
-                    .dataConvert(loadState)
+                if (UserInfo.getUserBean().isad == "1") {
+                    apiService.getAttendanceStuAdmin(
+                        UserInfo.getUserBean().token,
+                        courseId = courseId,
+                        atttime = atttime
+                    )
+                        .dataConvert(loadState)
+                } else {
+
+                    apiService.getAttendance(
+                        UserInfo.getUserBean().token,
+                        classid,
+                        atttime = atttime
+                    )
+                        .dataConvert(loadState)
+                }
             }
             "2" -> {
-                apiService.getAttendance2(UserInfo.getUserBean().token, classid,time = atttime)
+                apiService.getAttendanceTea(
+                    UserInfo.getUserBean().token,
+                    classid,
+                    time = atttime,
+                    courseId = courseId
+                )
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.getAttendanceSchool(UserInfo.getUserBean().token, classid,time = atttime)
+                apiService.getAttendanceSchool(
+                    UserInfo.getUserBean().token,
+                    classid,
+                    time = atttime
+                )
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.getAttendance(UserInfo.getUserBean().token, classid,atttime = atttime)
+                apiService.getAttendance(UserInfo.getUserBean().token, classid, atttime = atttime)
                     .dataConvert(loadState)
             }
         }
     }
 
 
-    suspend fun queryStudent(key: String): StudentResp {
-        return apiService.queryStudent(UserInfo.getUserBean().token, key)
+    suspend fun queryStudent(keyword: String): StudentResp {
+        return apiService.queryStudent(UserInfo.getUserBean().token, keyword)
             .dataConvert(loadState)
     }
 
@@ -176,19 +228,51 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
-    suspend fun addTask(bean:TaskBean): Any {
+    suspend fun addTask(bean: TaskBean): Any {
         return apiService.addTask(bean)
             .dataConvert(loadState)
     }
 
     suspend fun deleteAttendance(id: String): Any {
-        return apiService.deleteAttendance(UserInfo.getUserBean().token,id)
-            .dataConvert(loadState)
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                if (UserInfo.getUserBean().usertype == "0") {
+
+                } else {
+                    apiService.deleteAttendanceByStu(UserInfo.getUserBean().token, id)
+                        .dataConvert(loadState)
+                }
+            }
+            "2" -> {
+                if (UserInfo.getUserBean().classmaster == "1") {
+                    apiService.deleteAttendanceByTea(UserInfo.getUserBean().token, id)
+                        .dataConvert(loadState)
+                } else {
+                }
+            }
+            else -> {
+            }
+        }
     }
 
-    suspend fun addAttendance(bean:LeaveBean): Any {
-        return apiService.addAttendance(bean)
-            .dataConvert(loadState)
+    suspend fun addAttendance(bean: LeaveBean): Any {
+
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                if (UserInfo.getUserBean().usertype == "0") {
+                    apiService.addAttendance(bean)
+                        .dataConvert(loadState)
+                } else {
+                    apiService.addAttendanceByStu(bean)
+                        .dataConvert(loadState)
+                }
+            }
+            else -> {
+                apiService.addAttendanceByTea(bean)
+                    .dataConvert(loadState)
+            }
+        }
+
     }
 
     suspend fun getSts(): StsTokenResp {

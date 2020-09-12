@@ -48,6 +48,7 @@
                 </LinearLayout>
 
                 <RelativeLayout
+                    android:id="@+id/llSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -63,7 +64,7 @@
                         android:layout_height="wrap_content"
                         android:drawableRight="@drawable/ic_gray_triangle"
                         android:drawablePadding="5dp"
-                        android:text="班级考勤" />
+                        android:text="" />
 
                     <TextView
                         android:id="@+id/tvLabel2Attendance"

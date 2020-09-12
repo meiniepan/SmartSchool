@@ -261,8 +261,11 @@ class PerformanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mDataTest.addAll(it.testcourse)
                     if (mDataTest.size > 0) {
                         currentTest = mDataTest[0].testname
-                    }else{
-                        mAlert("查询不到考试信息"){
+                    } else {
+                        mRootView.post {
+                            showEmpty()
+                        }
+                        mAlert("查询不到考试信息") {
                             finish()
                         }
                         return@Observer

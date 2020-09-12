@@ -20,6 +20,7 @@
                 android:id="@+id/tvCourseName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:text=""
                 android:textSize="@dimen/sp_18" />
 
@@ -27,6 +28,7 @@
                 android:id="@+id/tvTeacherName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:layout_marginStart="5dp"
                 android:text="" />
 
@@ -36,6 +38,7 @@
             android:id="@+id/tvTimeAtt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:text="" />
 
         <TextView

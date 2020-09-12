@@ -14,10 +14,10 @@ import kotlinx.android.parcel.Parcelize
 data class LeaveBean(
     var token: String,
     var uid: String,
-    var remark: String = "",
+    var remark: String ,
     var atttime: String,
     var status: String = "3",//状态0迟到1已完成2旷课3请假
-    var type: String = "3",
+    var type: String = "3",//考勤类型1早考勤2早到班3课堂考勤
     var crsid: String,//课程ID
     var usertype: String = "",
     var stleave: String = "",

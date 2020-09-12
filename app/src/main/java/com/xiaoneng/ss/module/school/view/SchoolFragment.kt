@@ -3,7 +3,6 @@ package com.xiaoneng.ss.module.school.view
 import androidx.fragment.app.Fragment
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
-import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.fragment_school.*
@@ -40,20 +39,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
             mStartActivity<AttendanceActivity>(context)
         }
         llPerformance.setOnClickListener {
-            when (UserInfo.getUserBean().usertype) {
-                "1" -> {
-                    mStartActivity<PerformanceActivity>(context)
-                }
-                "2" -> {
-                    mStartActivity<PerformanceActivity>(context)
-                }
-                "99" -> {
-                    mStartActivity<PerformanceActivity>(context)
-                }
-                else -> {
-                    mStartActivity<PerformanceActivity>(context)
-                }
-            }
+            mStartActivity<PerformanceActivity>(context)
 
         }
     }

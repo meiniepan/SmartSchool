@@ -251,7 +251,7 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     override fun initDataObserver() {
-        mViewModel.mAddAttendanceData2.observe(this, Observer { response ->
+        mViewModel.mAddAttendanceData.observe(this, Observer { response ->
             response?.let {
                 toast(R.string.deal_done)
                 mStartActivity<MainActivity>(this)
