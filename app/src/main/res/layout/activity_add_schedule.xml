@@ -167,7 +167,7 @@
         <LinearLayout
             android:id="@+id/llChooseColor"
             android:layout_width="match_parent"
-            android:layout_height="123dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/title_padding"
             android:layout_marginTop="14dp"
             android:layout_marginEnd="@dimen/title_padding"

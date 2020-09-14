@@ -99,7 +99,8 @@ MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
         }
 
         llItem5.setOnClickListener {
-            requireActivity().mAlert("确定退出登录切换身份？") {
+            requireActivity().mAlert("切换身份后将改变您的操作权限",
+                "是否确认切换身份") {
                 mStartActivity<LoginSwitchActivity>(requireContext())
                 AppManager.finishAllActivity()
             }

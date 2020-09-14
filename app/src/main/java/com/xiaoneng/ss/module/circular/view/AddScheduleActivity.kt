@@ -12,6 +12,7 @@ import com.xiaoneng.ss.module.circular.model.ScheduleBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import kotlinx.android.synthetic.main.activity_add_schedule.*
 import org.jetbrains.anko.toast
+import java.util.*
 
 /**
  * Created with Android Studio.
@@ -35,7 +36,7 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
 
     override fun initView() {
         super.initView()
-        time = intent.getLongExtra(Constant.DATA, System.currentTimeMillis())
+        initTime()
         beginTime = DateUtil.getNearTimeBeginYear(time)
         endTime = DateUtil.getNearTimeEndYear(time)
         tvActionTitle.setOnClickListener {
@@ -58,6 +59,20 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
             }
         }
         initAdapter()
+    }
+
+    private fun initTime() {
+        time = intent.getLongExtra(Constant.DATA, System.currentTimeMillis())
+        var calNow = Calendar.getInstance()
+        var calInput = Calendar.getInstance()
+        calInput.timeInMillis = time
+        var calNew = Calendar.getInstance()
+        calNew.set(Calendar.YEAR,calInput.get(Calendar.YEAR))
+        calNew.set(Calendar.MONTH,calInput.get(Calendar.MONTH))
+        calNew.set(Calendar.DAY_OF_MONTH,calInput.get(Calendar.DAY_OF_MONTH))
+        calNew.set(Calendar.HOUR_OF_DAY,calNow.get(Calendar.HOUR_OF_DAY))
+        calNew.set(Calendar.MINUTE,calNow.get(Calendar.MINUTE))
+        time = calNew.timeInMillis
     }
 
     private fun addSchedule() {

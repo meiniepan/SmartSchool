@@ -91,8 +91,7 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
                         tvSendCaptchaTeacher.text = "发送验证码 $mm"
                     }
                 }.start()
-                etCaptchaTeacher.isFocusable = true
-                etCaptchaTeacher.isFocusableInTouchMode = true
+
             }
 
             R.id.tvLoginTeacher -> {

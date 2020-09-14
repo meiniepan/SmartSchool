@@ -139,11 +139,13 @@
         </LinearLayout>
 
         <include layout="@layout/layout_split_margin" />
+        <Space
+            style="@style/space_style"
+            />
         <TextView
             android:id="@+id/tvConfirmSecure"
-            style="@style/button_blue_bac_style"
+            style="@style/button_bottom_blue_bac_style"
             android:text="确定"
-            android:layout_marginTop="85dp"
             />
     </LinearLayout>
 </RelativeLayout>

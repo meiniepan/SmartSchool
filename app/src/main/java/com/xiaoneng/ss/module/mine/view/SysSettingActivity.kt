@@ -2,10 +2,12 @@ package com.xiaoneng.ss.module.mine.view
 
 import android.content.Context
 import androidx.lifecycle.Observer
+import com.tencent.bugly.beta.Beta
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.mAlert
+import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.mainLogin
 import kotlinx.android.synthetic.main.activity_sys_setting.*
 import org.jetbrains.anko.toast
@@ -29,18 +31,23 @@ class SysSettingActivity : BaseLifeCycleActivity<AccountViewModel>() {
         tvSettingItem3.text = getCacheSize(this).formatMemorySize()
 
         llItem1Setting.setOnClickListener {
-            toast("当前已是最新版本")
+            Beta.checkUpgrade(true,false)
         }
 
         llItem2Setting.setOnClickListener {
-            toast(R.string.not_open)
+            mStartActivity<UserProtocolActivity>(this)
         }
 
         llItem3Setting.setOnClickListener {
             clearCache(this)
         }
         llItem4Setting.setOnClickListener {
-            logout()
+            mAlert(
+                "退出登录后将无法接收该账号信息",
+                "昰否确认退出该账号"
+            ) {
+                logout()
+            }
         }
     }
 

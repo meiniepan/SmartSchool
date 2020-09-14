@@ -62,6 +62,8 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
         initAdapterDayOfWeek()
         initAdapterDayOfMonth()
         initAdapterEvent()
+        mDataWeek.clear()
+        mDataWeek.addAll(Lunar.getCurrentDaysOfWeek(chosenDay))
     }
 
     private fun addEvent() {
@@ -73,12 +75,6 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        chosenDay = System.currentTimeMillis()
-        mDataWeek.clear()
-        mDataWeek.addAll(Lunar.getCurrentDaysOfWeek(chosenDay))
-        mAdapterWeek.notifyDataSetChanged()
-
-
         getData()
     }
 

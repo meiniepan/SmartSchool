@@ -46,9 +46,9 @@ class EventAdapter(layoutId: Int, listData: MutableList<ScheduleBean>) :
             var timeStr = timeB + "~".plus(timeE)
             var remarkStr = "" + item.remark
             if (item.remark.isNullOrEmpty()) {
-                holder.getView<TextView>(R.id.llRemarkScheduleItem).visibility = View.GONE
+                holder.getView<View>(R.id.llRemarkScheduleItem).visibility = View.GONE
             } else {
-                holder.getView<TextView>(R.id.llRemarkScheduleItem).visibility = View.VISIBLE
+                holder.getView<View>(R.id.llRemarkScheduleItem).visibility = View.VISIBLE
                 holder.getView<TextView>(R.id.tvRemark5).text = remarkStr
             }
 
