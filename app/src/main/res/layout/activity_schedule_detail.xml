@@ -7,43 +7,10 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.xiaoneng.ss.custom.widgets.CustomTitleBar
-            android:id="@+id/ctbDetailSchedule"
-            style="@style/title_style"
-            app:title="日程"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:id="@+id/ivAction1Schedule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_edit" />
-
-            <ImageView
-                android:id="@+id/ivAction2Schedule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/title_padding"
-                android:src="@drawable/ic_delete" />
-        </LinearLayout>
-    </RelativeLayout>
+    <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+        android:id="@+id/ctbDetailSchedule"
+        style="@style/title_style"
+        app:title="日程" />
 
     <View
         android:layout_width="match_parent"
@@ -53,8 +20,9 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/tintBac"
-        android:layout_height="match_parent"
         android:overScrollMode="never"
         android:scrollbars="none">
 
@@ -64,6 +32,7 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -87,6 +56,7 @@
 
                 <include layout="@layout/layout_split" />
             </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -121,14 +91,15 @@
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/llEndTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
+                android:layout_marginBottom="20dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:layout_marginBottom="20dp"
                 android:paddingStart="@dimen/title_padding"
                 android:paddingEnd="@dimen/title_padding">
 
@@ -154,7 +125,7 @@
                 android:background="@color/tintBac" />
 
 
-            <EditText
+            <TextView
                 android:id="@+id/etDetailSchedule"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -167,4 +138,34 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/colorGrayF8"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/title_padding"
+        android:paddingEnd="@dimen/title_padding">
+
+
+
+        <ImageView
+            android:id="@+id/ivAction1Schedule"
+            android:layout_width="@dimen/title_height"
+            android:layout_height="@dimen/title_height"
+            android:scaleType="center"
+            android:src="@drawable/ic_edit" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/ivAction2Schedule"
+            android:layout_width="@dimen/title_height"
+            android:layout_height="@dimen/title_height"
+            android:scaleType="center"
+            android:src="@drawable/ic_delete" />
+    </LinearLayout>
 </LinearLayout>

@@ -336,7 +336,7 @@ object ColorUtil {
         list.add(ColorBean("#42D5BB"))
         list.add(ColorBean("#41BFFD"))
         list.add(ColorBean("#4C83FD"))
-        list.add(ColorBean("#5D37FF",true))
+        list.add(ColorBean("#5E37FF",true))
         list.add(ColorBean("#915BF5"))
         list.add(ColorBean("#CF37D1"))
         list.add(ColorBean("#8F959D"))

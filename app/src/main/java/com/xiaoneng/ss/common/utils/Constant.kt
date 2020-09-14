@@ -20,6 +20,7 @@ object Constant {
     const val LOGIN_TYPE_STU = "self"
     const val LOGIN_TYPE_PAR = "parents"
     const val DATA = "data"
+    const val TIME = "time"
     const val FLAG = "flag"
     const val BIND_PARENT_SMS = 4
     const val USERNAME_KEY = "username"

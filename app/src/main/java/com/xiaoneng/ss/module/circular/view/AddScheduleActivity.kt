@@ -7,6 +7,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
+import com.xiaoneng.ss.module.activity.MainActivity
 import com.xiaoneng.ss.module.circular.adapter.ChooseColorAdapter
 import com.xiaoneng.ss.module.circular.model.ScheduleBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
@@ -23,12 +24,13 @@ import java.util.*
  */
 class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
     private var chosenColor: String = "#5E37FF"
-    var beanJson: String by SPreference(Constant.USER_INFO, UserInfo.emptyJson)
     lateinit var mAdapter: ChooseColorAdapter
     var time: Long = 0L
     var beginTime: String? = ""
     var endTime: String? = ""
     val mData by lazy { ColorUtil.getCustomColors() }
+    var bean: ScheduleBean = ScheduleBean()
+    var isModify = false
 
 
     override fun getLayoutId(): Int = R.layout.activity_add_schedule
@@ -36,6 +38,11 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
 
     override fun initView() {
         super.initView()
+        isModify = intent.getBooleanExtra(Constant.TITLE, false)
+        if (isModify) {
+            bean = intent.getParcelableExtra(Constant.DATA)
+            initUI()
+        }
         initTime()
         beginTime = DateUtil.getNearTimeBeginYear(time)
         endTime = DateUtil.getNearTimeEndYear(time)
@@ -61,17 +68,28 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
         initAdapter()
     }
 
+    private fun initUI() {
+        etThemeAddSchedule.setText(bean.title)
+        DateUtil.showTimeFromNet(bean.scheduletime!!, tvBeginDate, tvBeginTime)
+        DateUtil.showTimeFromNet(bean.scheduleover!!, tvEndDate, tvEndTime)
+        etRemarkAddSchedule.setText(bean.remark)
+        chosenColor = bean.color!!
+        mData.forEach {
+            it.isCheck = it.color == bean.color
+        }
+    }
+
     private fun initTime() {
-        time = intent.getLongExtra(Constant.DATA, System.currentTimeMillis())
+        time = intent.getLongExtra(Constant.TIME, System.currentTimeMillis())
         var calNow = Calendar.getInstance()
         var calInput = Calendar.getInstance()
         calInput.timeInMillis = time
         var calNew = Calendar.getInstance()
-        calNew.set(Calendar.YEAR,calInput.get(Calendar.YEAR))
-        calNew.set(Calendar.MONTH,calInput.get(Calendar.MONTH))
-        calNew.set(Calendar.DAY_OF_MONTH,calInput.get(Calendar.DAY_OF_MONTH))
-        calNew.set(Calendar.HOUR_OF_DAY,calNow.get(Calendar.HOUR_OF_DAY))
-        calNew.set(Calendar.MINUTE,calNow.get(Calendar.MINUTE))
+        calNew.set(Calendar.YEAR, calInput.get(Calendar.YEAR))
+        calNew.set(Calendar.MONTH, calInput.get(Calendar.MONTH))
+        calNew.set(Calendar.DAY_OF_MONTH, calInput.get(Calendar.DAY_OF_MONTH))
+        calNew.set(Calendar.HOUR_OF_DAY, calNow.get(Calendar.HOUR_OF_DAY))
+        calNew.set(Calendar.MINUTE, calNow.get(Calendar.MINUTE))
         time = calNew.timeInMillis
     }
 
@@ -84,7 +102,7 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
             toast("请完善信息")
             return
         }
-        var bean: ScheduleBean = ScheduleBean()
+
         bean.token = UserInfo.getUserBean().token
         bean.title = etThemeAddSchedule.text.toString()
         bean.scheduletime = beginTime
@@ -92,7 +110,11 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
         bean.remark = etRemarkAddSchedule.text.toString()
         bean.color = chosenColor
         showLoading()
-        mViewModel.addSchedule(bean)
+        if (isModify) {
+            mViewModel.modifySchedule(bean)
+        } else {
+            mViewModel.addSchedule(bean)
+        }
     }
 
     private fun initAdapter() {
@@ -126,8 +148,8 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
         mViewModel.mAddScheduleData.observe(this, Observer { response ->
             response?.let {
                 showSuccess()
-                toast("添加成功")
-                finish()
+                toast(R.string.deal_done)
+                mStartActivity<MainActivity>(this)
             }
         })
 

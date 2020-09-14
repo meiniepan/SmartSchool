@@ -49,17 +49,27 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
             choosePic()
         }
 
-        tvConfirm.setOnClickListener {
-            doConfirm()
-        }
+
         tvMineItem2.apply {
             setOnClickListener {
-                showSexPick(this) { sex = getSexInt(this) }
+                showSexPick(this) {
+                    sex = getSexInt(this)
+                    var bean = UserInfo.getUserBean()
+                    bean.sex = sex
+                    showLoading()
+                    mViewModel.modifyUserInfo(bean)
+                }
             }
         }
         tvMineItem3.apply {
             setOnClickListener {
-                showDateDayPick(this) { birthday = this }
+                showDateDayPick(this) {
+                    birthday = this
+                    var bean = UserInfo.getUserBean()
+                    bean.birthday = birthday
+                    showLoading()
+                    mViewModel.modifyUserInfo(bean)
+                }
             }
         }
         when (UserInfo.getUserBean().usertype) {
@@ -102,15 +112,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
         etMineItem8.setText(UserInfo.getUserBean().wxname)
     }
 
-    private fun doConfirm() {
-        var bean = UserInfo.getUserBean()
-        bean.realname = etMineItem1.text.toString()
-        bean.sex = sex
-        bean.birthday = birthday
-        bean.wxname = etMineItem8.text.toString()
-        showLoading()
-        mViewModel.modifyUserInfo(bean)
-    }
+
 
     override fun initData() {
         super.initData()

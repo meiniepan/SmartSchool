@@ -25,7 +25,7 @@
             android:layout_marginEnd="@dimen/title_padding"
             android:background="@drawable/bac_blue_bac_5"
             android:gravity="center"
-            android:text="确定"
+            android:text="保存"
             android:textColor="@color/white" />
 
     </RelativeLayout>

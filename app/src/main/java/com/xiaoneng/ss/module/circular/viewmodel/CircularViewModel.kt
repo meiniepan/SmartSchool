@@ -80,4 +80,11 @@ class CircularViewModel : BaseViewModel<CircularRepository>() {
         )
     }
 
+    fun deleteSchedule(bean: ScheduleBean) {
+        initiateRequest(
+            { mAddScheduleData.value = mRepository.deleteSchedule(bean) },
+            loadState
+        )
+    }
+
 }

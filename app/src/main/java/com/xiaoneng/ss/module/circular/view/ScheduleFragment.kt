@@ -68,7 +68,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
 
     private fun addEvent() {
         mStartActivity<AddScheduleActivity>(requireContext()) {
-            putExtra(Constant.DATA, chosenDay)
+            putExtra(Constant.TIME, chosenDay)
         }
     }
 

@@ -1,13 +1,12 @@
 package com.xiaoneng.ss.module.circular.view
 
-import android.text.TextUtils
+import android.view.View
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.DateUtil
-import com.xiaoneng.ss.common.utils.showDatePick
+import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.circular.model.ScheduleBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import kotlinx.android.synthetic.main.activity_schedule_detail.*
@@ -32,25 +31,17 @@ class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
         bean = intent.getParcelableExtra(Constant.DATA)
         beginTime = bean.scheduletime
         endTime = bean.scheduleover
-
-        etDetailSchedule.setText(bean.remark)
+        etDetailSchedule.apply {
+            if (bean.remark.isNullOrEmpty()) {
+                this.visibility = View.GONE
+            } else {
+                etDetailSchedule.setText(bean.remark)
+            }
+        }
         tvTitleScheduleDetail.text = bean.title
-        DateUtil.showTimeFromNet(bean.scheduletime!!,tvBeginDate,tvBeginTime)
-        DateUtil.showTimeFromNet(bean.scheduleover!!,tvEndDate,tvEndTime)
-        llBeginTime.apply {
-            setOnClickListener {
-                showDatePick(tvBeginDate,tvBeginTime) {
-                    beginTime = this
-                }
-            }
-        }
-        llEndTime.apply {
-            setOnClickListener {
-                showDatePick(tvEndDate,tvEndTime) {
-                    endTime = this
-                }
-            }
-        }
+        DateUtil.showTimeFromNet(bean.scheduletime!!, tvBeginDate, tvBeginTime)
+        DateUtil.showTimeFromNet(bean.scheduleover!!, tvEndDate, tvEndTime)
+
         ivAction1Schedule.setOnClickListener {
             onEdit()
         }
@@ -61,23 +52,15 @@ class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
     }
 
     private fun onDelete() {
-
+//        mViewModel.deleteSchedule(bean)
     }
 
     private fun onEdit() {
-        if (
-            TextUtils.isEmpty(tvBeginDate.text.toString())
-
-        ) {
-            toast("请完善信息")
-            return
+        mStartActivity<AddScheduleActivity>(this) {
+            putExtra(Constant.TITLE, true)
+            putExtra(Constant.DATA, bean)
         }
-        bean.token = UserInfo.getUserBean().token
-        bean.scheduletime = beginTime
-        bean.scheduleover = endTime
-        bean.remark = etDetailSchedule.text.toString()
-        showLoading()
-        mViewModel.modifySchedule(bean)
+
     }
 
 
@@ -89,7 +72,7 @@ class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
         mViewModel.mAddScheduleData.observe(this, Observer { response ->
             response?.let {
                 showSuccess()
-                toast("修改成功")
+                toast(R.string.deal_done)
                 finish()
             }
         })
