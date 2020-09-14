@@ -65,9 +65,9 @@ object DateUtil {
     @SuppressLint("SimpleDateFormat")
     fun formatTitleToday(date: String = ""): String {
         var cal = Calendar.getInstance()
-        if (date.length>=8) {
+        if (date.length >= 8) {
             cal.set(Calendar.YEAR, date.substring(0, 4).toInt())
-            cal.set(Calendar.MONTH, date.substring(4, 6).toInt()-1)
+            cal.set(Calendar.MONTH, date.substring(4, 6).toInt() - 1)
             cal.set(Calendar.DAY_OF_MONTH, date.substring(6, 8).toInt())
         }
         val sdf = SimpleDateFormat("yyyy年MM月dd日 ")
@@ -124,82 +124,68 @@ object DateUtil {
 
     }
 
-    @SuppressLint("SimpleDateFormat")
-    fun getNearTimeBegin(date: Long = System.currentTimeMillis()): String {
-        val s1 = SimpleDateFormat("MM")
-        val s2 = SimpleDateFormat("dd")
-        var s3 = SimpleDateFormat("HH")
-        var s4 = SimpleDateFormat("mm")
-        val MM = s1.format(Date(date))
-        val dd = s2.format(Date(date))
-        var hh = s3.format(Date(date))
-        var mm = s4.format(Date(date))
-        if (mm.toInt() < 30) {
-            mm = "30"
-        } else if (mm.toInt() > 30) {
-            mm = "00"
-            hh = (hh.toInt() + 1).toString()
-        }
-        return MM + "月" + dd + "日 " + hh + ":" + mm
-    }
 
     @SuppressLint("SimpleDateFormat")
     fun getNearTimeBeginYear(date: Long = System.currentTimeMillis()): String {
         val s1 = SimpleDateFormat("yyyy-MM")
         val s2 = SimpleDateFormat("dd")
-        var s3 = SimpleDateFormat("HH")
-        var s4 = SimpleDateFormat("mm")
-        val MM = s1.format(Date(date))
-        val dd = s2.format(Date(date))
+        val s3 = SimpleDateFormat("HH")
+        val s4 = SimpleDateFormat("mm")
+        var MM = s1.format(Date(date))
+        var dd = s2.format(Date(date))
         var hh = s3.format(Date(date))
         var mm = s4.format(Date(date))
         if (mm.toInt() < 30) {
             mm = "30"
         } else if (mm.toInt() > 30) {
+            //23点后进行跨天处理
+            if (hh.toInt() == 23) {
+                var date2 = date + 30 * 60 * 1000
+                MM = s1.format(Date(date2))
+                dd = s2.format(Date(date2))
+                hh = s3.format(Date(date2))
+            } else {
+                hh = (hh.toInt() + 1).toString()
+            }
             mm = "00"
-            hh = (hh.toInt() + 1).toString()
+
         }
         return "$MM-$dd $hh:$mm"
     }
 
-    @SuppressLint("SimpleDateFormat")
-    fun getNearTimeEnd(date: Long = System.currentTimeMillis()): String {
-        val s1 = SimpleDateFormat("MM")
-        val s2 = SimpleDateFormat("dd")
-        var s3 = SimpleDateFormat("HH")
-        var s4 = SimpleDateFormat("mm")
-        val MM = s1.format(Date(date))
-        val dd = s2.format(Date(date))
-        var hh = s3.format(Date(date))
-        var mm = s4.format(Date(date))
-        if (mm.toInt() < 30) {
-            mm = "00"
-            hh = (hh.toInt() + 1).toString()
-        } else if (mm.toInt() > 30) {
-            mm = "30"
-            hh = (hh.toInt() + 1).toString()
-        }
-        return MM + "月" + dd + "日 " + hh + ":" + mm
-    }
 
     @SuppressLint("SimpleDateFormat")
     fun getNearTimeEndYear(date: Long = System.currentTimeMillis()): String {
         val s1 = SimpleDateFormat("yyyy-MM")
         val s2 = SimpleDateFormat("dd")
-        var s3 = SimpleDateFormat("HH")
-        var s4 = SimpleDateFormat("mm")
-        val MM = s1.format(Date(date))
-        val dd = s2.format(Date(date))
+        val s3 = SimpleDateFormat("HH")
+        val s4 = SimpleDateFormat("mm")
+        var MM = s1.format(Date(date))
+        var dd = s2.format(Date(date))
         var hh = s3.format(Date(date))
         var mm = s4.format(Date(date))
         if (mm.toInt() < 30) {
+            if (hh.toInt() == 23) {
+                var date2 = date + 30 * 60 * 1000
+                MM = s1.format(Date(date2))
+                dd = s2.format(Date(date2))
+                hh = s3.format(Date(date2))
+            } else {
+                hh = (hh.toInt() + 1).toString()
+            }
             mm = "00"
-            hh = (hh.toInt() + 1).toString()
         } else if (mm.toInt() > 30) {
+            if (hh.toInt() == 23) {
+                var date2 = date + 30 * 60 * 1000
+                MM = s1.format(Date(date2))
+                dd = s2.format(Date(date2))
+                hh = s3.format(Date(date2))
+            } else {
+                hh = (hh.toInt() + 1).toString()
+            }
             mm = "30"
-            hh = (hh.toInt() + 1).toString()
         }
-        return MM + "-" + dd + " " + hh + ":" + mm
+        return "$MM-$dd $hh:$mm"
     }
 
     @SuppressLint("SimpleDateFormat")

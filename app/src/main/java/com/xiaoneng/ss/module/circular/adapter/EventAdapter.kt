@@ -5,6 +5,7 @@ import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
 import android.text.TextUtils
 import android.view.View
+import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
@@ -30,7 +31,7 @@ class EventAdapter(layoutId: Int, listData: MutableList<ScheduleBean>) :
                     item.scheduletime!!.length - 5,
                     item.scheduletime!!.length
                 )
-            }else{
+            } else {
                 timeB = item.scheduletime!!
             }
             if (item.scheduleover!!.length >= 5) {
@@ -38,20 +39,21 @@ class EventAdapter(layoutId: Int, listData: MutableList<ScheduleBean>) :
                     item.scheduleover!!.length - 5,
                     item.scheduleover!!.length
                 )
-            }else{
+            } else {
                 timeE = item.scheduleover!!
             }
 
-            var timeStr = timeB+"~".plus(timeE)
-            var addressStr = ""
-            var participantStr = ""
+            var timeStr = timeB + "~".plus(timeE)
             var remarkStr = "" + item.remark
+            if (item.remark.isNullOrEmpty()) {
+                holder.getView<TextView>(R.id.llRemarkScheduleItem).visibility = View.GONE
+            } else {
+                holder.getView<TextView>(R.id.llRemarkScheduleItem).visibility = View.VISIBLE
+                holder.getView<TextView>(R.id.tvRemark5).text = remarkStr
+            }
 
             holder.setText(R.id.tvTitle5, item?.title)
                 .setText(R.id.tvTime5, timeStr)
-                .setText(R.id.tvAddress5, addressStr)
-                .setText(R.id.tvParticipant5, participantStr)
-                .setText(R.id.tvRemark5, remarkStr)
 
             var shape = ShapeDrawable(OvalShape())
             if (!TextUtils.isEmpty(item.color)) {

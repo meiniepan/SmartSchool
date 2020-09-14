@@ -73,6 +73,12 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
 
     override fun onResume() {
         super.onResume()
+        chosenDay = System.currentTimeMillis()
+        mDataWeek.clear()
+        mDataWeek.addAll(Lunar.getCurrentDaysOfWeek(chosenDay))
+        mAdapterWeek.notifyDataSetChanged()
+
+
         getData()
     }
 
@@ -99,8 +105,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
 
     private fun initAdapterDayOfWeek() {
 
-            mDataWeek.clear()
-            mDataWeek.addAll(Lunar.getCurrentDaysOfWeek(chosenDay))
+
             mAdapterWeek = DaysOfWeekAdapter(R.layout.item_days_week, mDataWeek)
             rvWeek.apply {
                 layoutManager = GridLayoutManager(context, 7)
