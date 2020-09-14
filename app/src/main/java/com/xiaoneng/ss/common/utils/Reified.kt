@@ -246,4 +246,5 @@ fun getBooleanString(bool: Boolean): String {
     } else {
         "0"
     }
+
 }

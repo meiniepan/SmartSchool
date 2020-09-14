@@ -54,12 +54,12 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
         }
         tvMineItem2.apply {
             setOnClickListener {
-                showSexPick(this){sex = this}
+                showSexPick(this) { sex = getSexInt(this) }
             }
         }
         tvMineItem3.apply {
             setOnClickListener {
-                showDateDayPick(this){birthday = this}
+                showDateDayPick(this) { birthday = this }
             }
         }
         when (UserInfo.getUserBean().usertype) {
@@ -93,7 +93,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
             }
         }
         etMineItem1.setText(name)
-        tvMineItem2.setText(UserInfo.getUserBean().sex)
+        tvMineItem2.setText(getSexString(UserInfo.getUserBean().sex))
         tvMineItem3.setText(UserInfo.getUserBean().birthday)
         tvMineItem4.text = formatStarPhoneNum(phone)
         tvMineItem5.text = UserInfo.getUserBean().cno
@@ -164,11 +164,12 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
         OssUtils.asyncUploadFile(
             this@MineInfoActivity,
             it.Credentials,
-            getOssObjectKey("5", UserInfo.getUserBean().uid, mId),
+            getOssObjectKey(UserInfo.getUserBean().usertype, UserInfo.getUserBean().uid, mId),
             avatarPath,
             object : OssListener {
                 override fun onSuccess() {
                     mRootView.post {
+                        showSuccess()
                         mViewModel.modifyAvatar(
                             UserBean(
                                 UserInfo.getUserBean().token,
@@ -228,6 +229,24 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                 }
             })
 
+    }
+
+    fun getSexString(a: String): String {
+        return when (a) {
+            "0" -> "未知"
+            "1" -> "男"
+            "2" -> "女"
+            else -> "未知"
+        }
+    }
+
+    fun getSexInt(a: String): String {
+        return when (a) {
+            "未知" -> "0"
+            "男" -> "1"
+            "女" -> "2"
+            else -> "0"
+        }
     }
 
     override fun initDataObserver() {

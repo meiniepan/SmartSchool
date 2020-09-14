@@ -3,6 +3,7 @@ package com.xiaoneng.ss.module.school.view
 import androidx.fragment.app.Fragment
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
+import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.fragment_school.*
@@ -31,7 +32,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
             mStartActivity<TaskActivity>(context)
         }
         llTimeTable.setOnClickListener {
-
+            var bb = UserInfo.getUserBean()
             mStartActivity<TimetableActivity>(context)
 
         }
