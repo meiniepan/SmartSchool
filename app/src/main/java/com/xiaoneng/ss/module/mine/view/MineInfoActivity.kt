@@ -161,10 +161,11 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
     private fun doUpload(it: StsTokenResp) {
         showLoading()
         var mId: String = System.currentTimeMillis().toString() + "_" + fileName
+        var objectKey = getOssObjectKey(UserInfo.getUserBean().usertype, UserInfo.getUserBean().uid, mId)
         OssUtils.asyncUploadFile(
             this@MineInfoActivity,
             it.Credentials,
-            getOssObjectKey(UserInfo.getUserBean().usertype, UserInfo.getUserBean().uid, mId),
+            objectKey,
             avatarPath,
             object : OssListener {
                 override fun onSuccess() {
@@ -173,11 +174,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                         mViewModel.modifyAvatar(
                             UserBean(
                                 UserInfo.getUserBean().token,
-                                portrait = getOssObjectKey(
-                                    UserInfo.getUserBean().usertype,
-                                    UserInfo.getUserBean().uid,
-                                    mId
-                                )
+                                portrait = objectKey
                             )
                         )
 

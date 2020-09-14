@@ -169,19 +169,16 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private fun doUpload(it: StsTokenResp) {
         showLoading()
         var mId: String = System.currentTimeMillis().toString() + "_" + fileName
+        var objectKey = getOssObjectKey(UserInfo.getUserBean().usertype, UserInfo.getUserBean().uid, mId)
         OssUtils.asyncUploadFile(
             this@LeaveTypeActivity,
             it.Credentials,
-            getOssObjectKey(UserInfo.getUserBean().usertype, UserInfo.getUserBean().uid, mId),
+            objectKey,
             avatarPath,
             object : OssListener {
                 override fun onSuccess() {
                     mRootView.post {
-                        fileValue = getOssObjectKey(
-                            UserInfo.getUserBean().usertype,
-                            UserInfo.getUserBean().uid,
-                            mId
-                        )
+                        fileValue = objectKey
                         displayImage(this@LeaveTypeActivity, avatarPath, ivAddPic)
                     }
                 }
