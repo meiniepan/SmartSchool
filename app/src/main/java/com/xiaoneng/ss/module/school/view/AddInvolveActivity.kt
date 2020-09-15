@@ -67,6 +67,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             setOnClickListener {
                 isManage = !isManage
                 ManageInvolveEvent(isManage).post()
+                mAdapterInvolve.notifyDataSetChanged()
                 if (isManage) {
                     this.text = "完成"
                 } else {
@@ -136,10 +137,33 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initData() {
         super.initData()
-//        mData.add(NoticeBean(""))
-//        mData.add(NoticeBean(""))
-//        mData.add(NoticeBean(""))
-//        mViewModel.getTimetable()
+        mDataDepartment.add(DepartmentBean("","国际部门","5"))
+        mDataDepartment.add(DepartmentBean("","国际部门","5"))
+        mDataDepartment.add(DepartmentBean("","国际部门","5"))
+        mDataDepartment.add(DepartmentBean("","国际部门","5"))
+        mDataDepartment.add(DepartmentBean("","国际部门","5"))
+        mDataDepartment.add(DepartmentBean("","国际部门","5"))
+        mDataDepartment.add(DepartmentBean("","国际部门","5"))
+        mDataDepartment.add(DepartmentBean("","国际部门","5"))
+
+
+        mDataClasses.add(DepartmentBean("","一年级","15"))
+        mDataClasses.add(DepartmentBean("","一年级","15"))
+
+
+        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
+        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
+        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
+        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
+        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
+        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
+        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
+        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
+        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
+        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
+        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
+        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
+        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
     }
 
 

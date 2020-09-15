@@ -10,10 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.DateUtil
-import com.xiaoneng.ss.common.utils.RecycleViewDivider
-import com.xiaoneng.ss.common.utils.dp2px
-import com.xiaoneng.ss.common.utils.showDatePick
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.mine.adapter.InviteCodeAdapter
 import com.xiaoneng.ss.module.mine.model.InviteCodeBean
 import com.xiaoneng.ss.module.school.model.TaskBean
@@ -108,7 +105,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun doAddParticipant() {
-        mViewModel.queryDepartments()
+        mStartActivity<AddInvolveActivity>(this)
     }
 
     override fun initStatusBar() {

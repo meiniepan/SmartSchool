@@ -97,12 +97,12 @@
                 <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
                     android:id="@+id/rvDepartment"
                     android:layout_width="match_parent"
-                    android:layout_height="168dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@color/white"
                     android:paddingStart="@dimen/title_padding"
                     android:paddingTop="10dp"
-                    android:paddingEnd="@dimen/title_padding"
+                    android:paddingEnd="13dp"
                     android:paddingBottom="20dp" />
             </LinearLayout>
     <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
