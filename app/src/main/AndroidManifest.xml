@@ -155,6 +155,7 @@
             android:name=".module.school.view.Attendance2CourseActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".module.mine.view.UserProtocolActivity" />
+        <activity android:name=".module.school.view.AddInvolveActivity" />
 
 
         <provider

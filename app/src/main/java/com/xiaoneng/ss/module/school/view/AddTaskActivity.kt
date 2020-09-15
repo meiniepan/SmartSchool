@@ -17,6 +17,7 @@ import com.xiaoneng.ss.common.utils.showDatePick
 import com.xiaoneng.ss.module.mine.adapter.InviteCodeAdapter
 import com.xiaoneng.ss.module.mine.model.InviteCodeBean
 import com.xiaoneng.ss.module.school.model.TaskBean
+import com.xiaoneng.ss.module.school.model.UserBeanSimple
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_add_task.*
 import org.jetbrains.anko.toast
@@ -31,6 +32,7 @@ import org.jetbrains.anko.toast
 class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var beginTime: String = System.currentTimeMillis().toString()
     var endTime: String = ""
+    var orderTime: String = ""
     lateinit var mAdapter: InviteCodeAdapter
     var mData = ArrayList<InviteCodeBean>()
 
@@ -40,7 +42,8 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
-
+        beginTime = DateUtil.getNearTimeBeginYear()
+        endTime = DateUtil.getNearTimeEndYear()
         initAdapter()
         DateUtil.showTimeFromNet(DateUtil.getNearTimeBeginYear(),tvBeginDate,tvBeginTime)
         DateUtil.showTimeFromNet(DateUtil.getNearTimeEndYear(),tvEndDate,tvEndTime)
@@ -58,6 +61,16 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 }
             }
         }
+        ivTimingAddTask.apply {
+            setOnClickListener {
+                showDatePick(tvEndDate,tvEndTime) {
+                    orderTime = this
+                    this@apply.setImageResource(R.drawable.ic_timing_blue)
+                    tvConfirmAddTask.text = "定时发布"
+                }
+            }
+        }
+
 
         tvAddParticipant.setOnClickListener {
             doAddParticipant()
@@ -75,12 +88,17 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             toast(R.string.lack_info)
             return
         }
+        var pList :ArrayList<UserBeanSimple> = ArrayList()
+        pList.add(UserBeanSimple("5","2"))
         mViewModel.addTask(
             TaskBean(
                 UserInfo.getUserBean().token,
-                tvTitleAddTask.text.toString(),
-                DateUtil.formatDate(),
-                10.toString()
+               taskname =  tvTitleAddTask.text.toString(),
+               plantime =  beginTime,
+               plantotal =  10.toString(),
+                overtime = endTime,
+                involve = pList,
+                ordertime = orderTime
             )
         )
     }

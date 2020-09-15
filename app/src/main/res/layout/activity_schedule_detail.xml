@@ -147,8 +147,6 @@
         android:paddingStart="@dimen/title_padding"
         android:paddingEnd="@dimen/title_padding">
 
-
-
         <ImageView
             android:id="@+id/ivAction1Schedule"
             android:layout_width="@dimen/title_height"

@@ -25,7 +25,7 @@ import java.util.*
 class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
     private var chosenColor: String = "#5E37FF"
     lateinit var mAdapter: ChooseColorAdapter
-    var time: Long = 0L
+    var time: Long = System.currentTimeMillis()
     var beginTime: String? = ""
     var endTime: String? = ""
     val mData by lazy { ColorUtil.getCustomColors() }

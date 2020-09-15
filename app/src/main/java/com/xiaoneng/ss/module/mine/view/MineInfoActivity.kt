@@ -276,7 +276,6 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                 showSuccess()
                 UserInfo.modifyUserBean(it)
                 toast("修改成功")
-                finish()
             }
         })
 

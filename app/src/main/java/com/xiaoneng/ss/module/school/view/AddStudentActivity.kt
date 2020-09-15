@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.common.utils.mAlert
 import com.xiaoneng.ss.model.StudentBean
 import com.xiaoneng.ss.module.school.adapter.QueryStudentAdapter
@@ -24,6 +25,7 @@ import org.jetbrains.anko.toast
 class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private lateinit var mAdapter: QueryStudentAdapter
     var mData = ArrayList<StudentBean>()
+    lateinit var chosenDay :String
 
 
     override fun getLayoutId(): Int = R.layout.activity_add_student
@@ -71,12 +73,13 @@ class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun mShowDialog(position: Int) {
         // 弹出对话框
-        var msg = mData[position].classname + "\n" + mData[position].realname
+        chosenDay = DateUtil.formatDate()
+        var msg = mData[position].cno + mData[position].realname + "\n" + mData[position].levelname +mData[position].classname
         mAlert(msg, "请确认学生身份") {
             mViewModel.addAttendance(
                 LeaveBean(
                     UserInfo.getUserBean().token, type = "1", status = "0",
-                    uid = mData[position].uid, atttime = "", crsid = "", remark = "lai"
+                    uid = mData[position].uid, atttime = chosenDay, crsid = "", remark = "lai"
                 )
             )
         }

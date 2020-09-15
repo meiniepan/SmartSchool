@@ -37,6 +37,8 @@ data class AttendanceBean(
     var minute: String? = "",
     var hmin: String? = "",
     var coursetime: String? = "",
+    var levelname: String,
+    var classname: String,
     var schoolid: String? = "",
     var schoolname: String? = "",
     var muser_id: String? = "",

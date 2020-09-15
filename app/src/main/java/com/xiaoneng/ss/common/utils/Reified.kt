@@ -61,6 +61,7 @@ inline fun Activity.showDatePick(
 ) {
     DateTimePicker(this, DateTimePicker.HOUR_24).apply {
 //            setActionButtonTop(false)
+        setSelectedTextColor(resources.getColor(R.color.commonBlue))
         setDateRangeStart(Constant.THIS_YEAR, 1, 1)
         setDateRangeEnd(Constant.THIS_YEAR + 5, 11, 11)
         setSelectedItem(

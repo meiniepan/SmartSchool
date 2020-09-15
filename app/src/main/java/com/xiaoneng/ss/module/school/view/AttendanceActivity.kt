@@ -113,7 +113,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 mViewModel.getAttTimetable(time = Constant.TO_DO)
             }
         } else if (UserInfo.getUserBean().usertype == "99") {
-            mViewModel.getAttendanceSchool(time = Constant.TO_DO)
+            mViewModel.getAttendanceSchool()
         } else {
             mViewModel.getAttendanceStu()
         }

@@ -48,7 +48,7 @@ class AddClassAttendanceTypeTeacherActivity : BaseLifeCycleActivity<SchoolViewMo
     }
 
     private fun doAdd(s: String) {
-        var msg = bean.cno + " " + bean.realname
+        var msg = bean.cno + bean.realname + "\n" + bean.levelname +bean.classname
         mAlert(msg, "请确认学生身份") {
             mViewModel.addAttendance(
                 LeaveBean(
