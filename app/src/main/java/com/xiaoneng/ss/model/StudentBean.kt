@@ -1,5 +1,8 @@
 package com.xiaoneng.ss.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 /**
  * Created with Android Studio.
  * Description:
@@ -7,9 +10,11 @@ package com.xiaoneng.ss.model
  * @date: 2020/08/27
  * Time: 17:06
  */
+@Parcelize
 data class StudentBean(
     var uid: String = "",
     var sno: String = "",
+    var parentId: String = "",
     var realname: String = "",
     var sex: String = "",
     var phone: String = "",
@@ -28,7 +33,7 @@ data class StudentBean(
     var device_no: String = "",
     var cno: String = "",
     var usertype: String = "",
-    var choice: String = "",
+    var choice: String = "0",
     var roleid: String = "",
     var parents: MutableList<ParentBean> = ArrayList()
-)
+):Parcelable

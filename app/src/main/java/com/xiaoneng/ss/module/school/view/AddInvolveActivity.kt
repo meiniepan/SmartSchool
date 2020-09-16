@@ -1,5 +1,7 @@
 package com.xiaoneng.ss.module.school.view
 
+import android.app.Activity
+import android.content.Intent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.Observer
@@ -8,19 +10,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.DateUtil
-import com.xiaoneng.ss.common.utils.eventBus.ManageInvolveEvent
-import com.xiaoneng.ss.common.utils.mAlert
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.model.StudentBean
 import com.xiaoneng.ss.module.school.adapter.DepartmentAdapter
 import com.xiaoneng.ss.module.school.adapter.InvolvePersonAdapter
 import com.xiaoneng.ss.module.school.adapter.QueryStudentAdapter
+import com.xiaoneng.ss.module.school.model.ClassesResponse
 import com.xiaoneng.ss.module.school.model.DepartmentBean
 import com.xiaoneng.ss.module.school.model.LeaveBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_add_involve.*
 import kotlinx.android.synthetic.main.activity_add_student.etSearch
-import org.jetbrains.anko.toast
 
 /**
  * Created with Android Studio.
@@ -30,6 +30,8 @@ import org.jetbrains.anko.toast
  * Time: 17:01
  */
 class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+    private var currentItemId: String = ""
+    private var currentTab: String = "1"
     private lateinit var mAdapterQuery: QueryStudentAdapter
     private lateinit var mAdapterDepartment: DepartmentAdapter
     private lateinit var mAdapterInvolve: InvolvePersonAdapter
@@ -66,7 +68,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvManage.apply {
             setOnClickListener {
                 isManage = !isManage
-                ManageInvolveEvent(isManage).post()
+                mAdapterInvolve.setManage(isManage)
                 mAdapterInvolve.notifyDataSetChanged()
                 if (isManage) {
                     this.text = "完成"
@@ -74,6 +76,11 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     this.text = "管理"
                 }
             }
+        }
+
+        tvConfirm.setOnClickListener {
+            setResult(Activity.RESULT_OK,intent.putExtra(Constant.DATA,mDataInvolve))
+            finish()
         }
 
     }
@@ -89,12 +96,14 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun checkFirsTab() {
+        currentTab = "1"
         tvInvolveTab1.setChecked(true)
         tvInvolveTab2.setChecked(false)
         mAdapterDepartment.setNewData(mDataDepartment)
     }
 
     private fun checkSecondTab() {
+        currentTab = "2"
         tvInvolveTab2.setChecked(true)
         tvInvolveTab1.setChecked(false)
 
@@ -118,8 +127,17 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             layoutManager = GridLayoutManager(context, 3)
             setAdapter(mAdapterDepartment)
         }
-        mAdapterQuery.setOnItemClickListener { _, view, position ->
+        mAdapterDepartment.setOnItemClickListener { _, view, position ->
 
+            mStartForResult<InvolvePersonActivity>(this, Constant.REQUEST_CODE_COURSE) {
+                if (currentTab == "1") {
+                    putExtra(Constant.TITLE, mDataDepartment[position].id)
+                    currentItemId = currentTab + "_" + mDataDepartment[position].id
+                } else {
+                    putExtra(Constant.TITLE, mDataClasses[position].id)
+                    currentItemId = currentTab + "_" + mDataClasses[position].id ?: ""
+                }
+            }
         }
     }
 
@@ -137,33 +155,17 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initData() {
         super.initData()
-        mDataDepartment.add(DepartmentBean("","国际部门","5"))
-        mDataDepartment.add(DepartmentBean("","国际部门","5"))
-        mDataDepartment.add(DepartmentBean("","国际部门","5"))
-        mDataDepartment.add(DepartmentBean("","国际部门","5"))
-        mDataDepartment.add(DepartmentBean("","国际部门","5"))
-        mDataDepartment.add(DepartmentBean("","国际部门","5"))
-        mDataDepartment.add(DepartmentBean("","国际部门","5"))
-        mDataDepartment.add(DepartmentBean("","国际部门","5"))
+        mViewModel.getClassesByTea()
+        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
+        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
+        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
+        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
+        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
+        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
+        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
+        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
 
 
-        mDataClasses.add(DepartmentBean("","一年级","15"))
-        mDataClasses.add(DepartmentBean("","一年级","15"))
-
-
-        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
-        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
-        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
-        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
-        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
-        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
-        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
-        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
-        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
-        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
-        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
-        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
-        mDataInvolve.add(StudentBean(realname = "刘胡兰"))
     }
 
 
@@ -182,6 +184,48 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
     }
 
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Constant.REQUEST_CODE_COURSE && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                var removeList = ArrayList<StudentBean>()
+                var receiveList: ArrayList<StudentBean> =
+                    data.getParcelableArrayListExtra(Constant.DATA)
+                mDataInvolve.forEach {
+                    if (currentTab + "_" + it.parentId == currentItemId) {
+                        removeList.add(it)
+                    }
+                }
+                if (currentTab == "1") {
+                    mDataDepartment.forEach {
+                        if (it.id == currentItemId.split("_").last()){
+                            it.num = receiveList.size.toString()
+                        }
+                    }
+                } else {
+                    mDataClasses.forEach {
+                        if (it.id == currentItemId.split("_").last()){
+                            it.num = receiveList.size.toString()
+                        }
+                    }
+                }
+                mAdapterDepartment.notifyDataSetChanged()
+                mDataInvolve.removeAll(removeList)
+                mDataInvolve.addAll(receiveList)
+                rvInvolve.notifyDataSetChanged()
+                if (mDataInvolve.size>0) {
+                    tvConfirm.text = "确定（" + mDataInvolve.size + ")"
+                }else{
+                    tvConfirm.text = "确定"
+                }
+            }
+        }
+    }
+
     override fun initDataObserver() {
         mViewModel.mStudentData.observe(this, Observer { response ->
             response?.let {
@@ -193,10 +237,18 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
         })
 
-        mViewModel.mAddAttendanceData.observe(this, Observer { response ->
+        mViewModel.mBaseData.observe(this, Observer { response ->
             response?.let {
-                toast(R.string.deal_done)
-                finish()
+                netResponseFormat<ArrayList<ClassesResponse>>(it)?.let {
+                    mDataClasses.clear()
+                    it.forEach {
+                        it.list.forEach {
+
+                            mDataClasses.add(DepartmentBean(it.id, it.classname))
+                        }
+                    }
+
+                }
             }
         })
 

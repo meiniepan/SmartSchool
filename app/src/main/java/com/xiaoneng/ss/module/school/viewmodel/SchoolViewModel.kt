@@ -33,10 +33,20 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mAddTaskData: MutableLiveData<Any> = MutableLiveData()
     val mDeleteAttendanceData: MutableLiveData<Any> = MutableLiveData()
     val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
+    val mBaseData: MutableLiveData<Any> = MutableLiveData()
+    val mRefuseData: MutableLiveData<Any> = MutableLiveData()
+    val mModifyTaskStatusData: MutableLiveData<Any> = MutableLiveData()
 
     fun getTaskList(pagenum: String = "", status: String = "") {
         initiateRequest(
             { mTaskListData.value = mRepository.getTaskList(pagenum, status) },
+            loadState
+        )
+    }
+
+    fun getPublishTaskList(pagenum: String = "", status: String = "") {
+        initiateRequest(
+            { mTaskListData.value = mRepository.getPublishTaskList(pagenum, status) },
             loadState
         )
     }
@@ -144,6 +154,47 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     fun getSts() {
         initiateRequest(
             { mStsData.value = mRepository.getSts() },
+            loadState
+        )
+    }
+
+    fun getClassesByTea() {
+        initiateRequest(
+            { mBaseData.value = mRepository.getClassesByTea() },
+            loadState
+        )
+    }
+
+    fun getStudentsByClass(classId:String) {
+        initiateRequest(
+            { mBaseData.value = mRepository.getStudentsByClass(classId) },
+            loadState
+        )
+    }
+
+    fun getTaskInfo(id:String) {
+        initiateRequest(
+            { mBaseData.value = mRepository.getTaskInfo(id) },
+            loadState
+        )
+    }
+    fun modifyTaskInfo(body:TaskLogRequest) {
+        initiateRequest(
+            { mBaseData.value = mRepository.modifyTaskInfo(body) },
+            loadState
+        )
+    }
+
+    fun refuseTask(body:TaskLogRequest) {
+        initiateRequest(
+            { mRefuseData.value = mRepository.refuseTask(body) },
+            loadState
+        )
+    }
+
+    fun modifyTaskStatus(body:TaskDetailBean) {
+        initiateRequest(
+            { mModifyTaskStatusData.value = mRepository.modifyTaskStatus(body) },
             loadState
         )
     }

@@ -22,6 +22,7 @@
 
             <LinearLayout
                 style="@style/title_style"
+                android:id="@+id/llTab1"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp">
 
@@ -36,7 +37,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         app:check="true"
-                        app:text="全部任务" />
+                        app:text="全部" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -62,7 +63,7 @@
                         android:id="@+id/tvTaskTab3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:text="未发布" />
+                        app:text="草稿箱" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -76,6 +77,80 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:text="已关闭" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <com.xiaoneng.ss.custom.widgets.CustomTabView2
+                        android:id="@+id/tvTaskTab5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:text="未完成" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <com.xiaoneng.ss.custom.widgets.CustomTabView2
+                        android:id="@+id/tvTaskTab6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:text="已完成" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/title_style"
+                android:paddingStart="12dp"
+                android:id="@+id/llTab2"
+                android:paddingEnd="12dp">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.xiaoneng.ss.custom.widgets.CustomTabView2
+                        android:id="@+id/tvTaskTab21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        app:check="true"
+                        app:text="全部" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <com.xiaoneng.ss.custom.widgets.CustomTabView2
+                        android:id="@+id/tvTaskTab22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:text="未完成" />
+                </RelativeLayout>
+
+
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <com.xiaoneng.ss.custom.widgets.CustomTabView2
+                        android:id="@+id/tvTaskTab23"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:text="已完成" />
                 </RelativeLayout>
             </LinearLayout>
 

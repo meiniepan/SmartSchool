@@ -1,9 +1,15 @@
 package com.xiaoneng.ss.module.school.view
 
+import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.module.circular.model.NoticeBean
+import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.module.school.model.LogBean
+import com.xiaoneng.ss.module.school.model.TaskLogRequest
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
+import kotlinx.android.synthetic.main.activity_add_log.*
+import org.jetbrains.anko.toast
 
 /**
  * Created with Android Studio.
@@ -13,31 +19,28 @@ import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
  * Time: 17:01
  */
 class AddLogActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    var mData = ArrayList<NoticeBean>()
 
-
+    lateinit var taskBean:LogBean
     override fun getLayoutId(): Int = R.layout.activity_add_log
 
 
     override fun initView() {
         super.initView()
-        initAdapter()
+        taskBean = intent.getParcelableExtra(Constant.DATA)
+        rvConfirm.setOnClickListener {
+            if (etFeedback.text.toString().isNullOrEmpty()) {
+                toast(R.string.lack_info)
+                return@setOnClickListener
+            }
+            var bean = TaskLogRequest(
+                UserInfo.getUserBean().token,
+                taskBean.id?:"",
+                etFeedback.text.toString()
+            )
+            mViewModel.modifyTaskInfo(bean)
+        }
 
-    }
-
-
-
-
-    private fun initAdapter() {
-//        mAdapter = InviteCodeAdapter(R.layout.item_invite_code, mData)
-//        rvParticipant.apply {
-//            layoutManager = LinearLayoutManager(context)
-//            addItemDecoration(RecycleViewDivider(context, dp2px(context, 82f).toInt()))
-//            adapter = mAdapter
-//        }
-//        mAdapter.setOnItemClickListener { _, view, position ->
-//
-//        }
+        etFeedback.setText(taskBean.feedback)
     }
 
 
@@ -48,17 +51,12 @@ class AddLogActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
 
     override fun initDataObserver() {
-//        mViewModel.mNoticeData.observe(this, Observer { response ->
-//            response?.let {
-//                mData.clear()
-//                mData.addAll(it.data)
-//                if (mData.size > 0) {
-//                    mAdapter.notifyDataSetChanged()
-//                } else {
-//                    showEmpty()
-//                }
-//            }
-//        })
+        mViewModel.mBaseData.observe(this, Observer { response ->
+            response?.let {
+                toast(R.string.deal_done)
+                finish()
+            }
+        })
 
     }
 

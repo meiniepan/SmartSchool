@@ -268,6 +268,19 @@ interface ApiService {
     ): BaseResponse<TaskResponse>
 
     /**
+     *教师发布任务查询列表
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/tasks/tasklist")
+    suspend fun getPublishTaskListTea(
+        @Field("token") token: String,
+        @Field("id") id: String = "",
+        @Field("pagenum") pagenum: String = "",
+        @Field("type") type: String = "",
+        @Field("status") status: String = ""
+    ): BaseResponse<TaskResponse>
+
+    /**
      *学生添加考勤-查看课程表
      */
     @FormUrlEncoded
@@ -665,4 +678,77 @@ interface ApiService {
     suspend fun addAttendanceByTea(
         @Body requestBody: LeaveBean
     ): BaseResponse<Any>
+
+    /**
+     *教师获取班级
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/classs/treeClass")
+    suspend fun getClassesByTea(
+        @Field("token") token: String
+    ): BaseResponse<Any>
+
+    /**
+     *教师按班级获取学生列表
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/student/listByClass")
+    suspend fun getStudentsByClass(
+        @Field("token") token: String,
+        @Field("classid") classid: String
+    ): BaseResponse<Any>
+
+    /**
+     *学生任务详情
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/student/tasks/info")
+    suspend fun getTaskInfoStu(
+        @Field("token") token: String,
+        @Field("id") id: String
+    ): BaseResponse<Any>
+
+    /**
+     *教师任务详情
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/tasks/info")
+    suspend fun getTaskInfoTea(
+        @Field("token") token: String,
+        @Field("id") id: String
+    ): BaseResponse<Any>
+
+    /**
+     *学生更新接收任务状态
+     */
+    @POST("/api/v1/student/tasks/modify")
+    suspend fun modifyTaskInfoStu(
+        @Body requestBody: TaskLogRequest
+    ): BaseResponse<Any>
+
+    /**
+     *教师更新接收任务状态
+     */
+    @POST("/api/v1/teacher/tasks/modify")
+    suspend fun modifyTaskInfoTea(
+        @Body requestBody: TaskLogRequest
+    ): BaseResponse<Any>
+
+    /**
+     *教师发布任务驳回
+     */
+    @POST("/api/v1/teacher/tasks/examine")
+    suspend fun refuseTask(
+        @Body requestBody: TaskLogRequest
+    ): BaseResponse<Any>
+
+    /**
+     *教师发布任务驳回
+     */
+    @POST("/api/v1/teacher/tasks/modifyTask")
+    suspend fun modifyTaskStatus(
+        @Body requestBody: TaskDetailBean
+    ): BaseResponse<Any>
+
 }
+

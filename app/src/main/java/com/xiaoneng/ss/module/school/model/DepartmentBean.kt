@@ -14,7 +14,7 @@ import kotlinx.android.parcel.Parcelize
 data class DepartmentBean(
     var id: String? = "",
     var name: String? = "",
-    var num: String? = ""
+    var num: String? = "0"
 
 
 ) : Parcelable

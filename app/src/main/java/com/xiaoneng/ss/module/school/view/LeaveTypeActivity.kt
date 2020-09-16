@@ -61,7 +61,7 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             doConfirm()
         }
         llItem8ApplyLeave.setOnClickListener {
-            mStartForResult<ChooseCourseToLeaveActivity>(this, Constant.REQUEST_CODE_COURSE)
+            mStartForResult<ChooseCourseToLeaveActivity>(this, Constant.REQUEST_CODE_COURSE){}
         }
         ivAddPic.apply {
             setOnClickListener {

@@ -58,6 +58,16 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         }
     }
 
+    suspend fun getPublishTaskList(pagenum: String, status: String): TaskResponse {
+        return apiService.getPublishTaskListTea(
+                    UserInfo.getUserBean().token,
+                    pagenum = pagenum,
+                    status = status
+                )
+                    .dataConvert(loadState)
+
+    }
+
     suspend fun getTimetable(classid: String = "", time: String = ""): TimetableResponse {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
@@ -297,6 +307,76 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
             }
         }
+    }
+
+    suspend fun getClassesByTea(): Any {
+        return apiService.getClassesByTea(UserInfo.getUserBean().token)
+            .dataConvert(loadState)
+    }
+
+    suspend fun getStudentsByClass(classId:String): Any {
+        return apiService.getStudentsByClass(UserInfo.getUserBean().token,classId)
+            .dataConvert(loadState)
+    }
+
+    suspend fun getTaskInfo(id:String): Any {
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.getTaskInfoStu(UserInfo.getUserBean().token,id)
+                    .dataConvert(loadState)
+            }
+            "2" -> {
+                apiService.getTaskInfoTea(UserInfo.getUserBean().token,id)
+                    .dataConvert(loadState)
+
+            }
+            "99" -> {
+                apiService.getTaskInfoTea(UserInfo.getUserBean().token,id)
+                    .dataConvert(loadState)
+
+            }
+            else -> {
+                apiService.getTaskInfoTea(UserInfo.getUserBean().token,id)
+                    .dataConvert(loadState)
+
+            }
+        }
+    }
+
+    suspend fun modifyTaskInfo(body:TaskLogRequest): Any {
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.modifyTaskInfoStu(body)
+                    .dataConvert(loadState)
+            }
+            "2" -> {
+                apiService.modifyTaskInfoTea(body)
+                    .dataConvert(loadState)
+
+            }
+            "99" -> {
+                apiService.modifyTaskInfoTea(body)
+                    .dataConvert(loadState)
+
+            }
+            else -> {
+                apiService.modifyTaskInfoTea(body)
+                    .dataConvert(loadState)
+
+            }
+        }
+    }
+
+    suspend fun refuseTask(body:TaskLogRequest): Any {
+        return apiService.refuseTask(body)
+                    .dataConvert(loadState)
+
+    }
+
+    suspend fun modifyTaskStatus(body:TaskDetailBean): Any {
+        return apiService.modifyTaskStatus(body)
+                    .dataConvert(loadState)
+
     }
 
 }

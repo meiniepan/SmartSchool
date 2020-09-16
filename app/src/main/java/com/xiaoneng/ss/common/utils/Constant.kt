@@ -24,7 +24,7 @@ object Constant {
     const val FLAG = "flag"
     const val BIND_PARENT_SMS = 4
     const val USERNAME_KEY = "username"
-    const val TASK_STATUS = "task_status"
+    const val TASK_STATUS = "task_status"//0草稿箱，1进行中，2已关闭，3未完成，4已完成
     const val LOGIN_KEY = "login"
     const val IS_MASTER = "is_master"
     const val USER_INFO = "user_info"
@@ -54,6 +54,7 @@ object Constant {
     // 二维码扫描
     const val REQUEST_CODE_SCAN = 1
     const val REQUEST_CODE_COURSE = 2
+    const val REQUEST_CODE_PRINCIPAL = 3
 
     const val CODED_CONTENT = "codedContent"
     const val INTENT_ZXING_CONFIG = "zxingConfig"

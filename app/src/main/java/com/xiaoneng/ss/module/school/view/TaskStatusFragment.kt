@@ -62,15 +62,14 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         mAdapter.setOnItemClickListener { _, view, position ->
 
             mStartActivity<TaskDetailActivity>(context) {
-                putExtra(Constant.TITLE, mData[position].taskname)
                 putExtra(Constant.ID, mData[position].id)
             }
         }
     }
 
 
-    override fun initData() {
-        super.initData()
+    override fun onResume() {
+        super.onResume()
         getData()
     }
 

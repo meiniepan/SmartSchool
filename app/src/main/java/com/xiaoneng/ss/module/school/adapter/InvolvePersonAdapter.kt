@@ -1,14 +1,11 @@
 package com.xiaoneng.ss.module.school.adapter
 
 import android.view.View
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.common.utils.eventBus.ManageInvolveEvent
 import com.xiaoneng.ss.model.StudentBean
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
 
 
 /**
@@ -21,16 +18,13 @@ import org.greenrobot.eventbus.Subscribe
 class InvolvePersonAdapter(layoutId: Int, listData: MutableList<StudentBean>) :
     BaseQuickAdapter<StudentBean, BaseViewHolder>(layoutId, listData) {
 
-    private var isShow: Boolean = false
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        EventBus.getDefault().register(this)
-    }
+    var isManager: Boolean = false
+
     override fun convert(viewHolder: BaseViewHolder?, item: StudentBean) {
         viewHolder?.let { holder ->
             holder.setText(R.id.tvLabelInvolve, item.realname.last().toString())
                 .setText(R.id.tvNameInvolve, item.realname)
-            if (isShow) {
+            if (isManager) {
                 holder.getView<View>(R.id.ivNo).visibility = View.VISIBLE
                 holder.getView<View>(R.id.tvLabelInvolve).setOnClickListener {
                     mData.removeAt(holder.adapterPosition)
@@ -40,15 +34,24 @@ class InvolvePersonAdapter(layoutId: Int, listData: MutableList<StudentBean>) :
                 holder.getView<View>(R.id.ivNo).visibility = View.GONE
                 holder.getView<View>(R.id.tvLabelInvolve).isClickable = false
             }
+
+            if (item.choice == "1") {
+                holder.getView<TextView>(R.id.tvLabelInvolve).apply {
+                    setBackgroundResource(R.drawable.bac_blue_oval)
+                    setTextColor(mContext.resources.getColor(R.color.white))
+                }
+
+            } else {
+                holder.getView<TextView>(R.id.tvLabelInvolve).apply {
+                    setBackgroundResource(R.drawable.bac_blue_line_oval)
+                    setTextColor(mContext.resources.getColor(R.color.commonBlue))
+                }
+            }
         }
     }
 
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-        EventBus.getDefault().unregister(this)
-    }
-    @Subscribe
-    fun changeThemeEvent(event: ManageInvolveEvent) {
-        isShow = event.flag
+
+    fun setManage(isManager: Boolean) {
+        this.isManager = isManager
     }
 }

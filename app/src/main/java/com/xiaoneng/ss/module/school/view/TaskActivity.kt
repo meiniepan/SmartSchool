@@ -32,11 +32,17 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.initView()
         if (UserInfo.getUserBean().usertype == "2" || UserInfo.getUserBean().usertype == "99") {
             ivAddTask.visibility = View.VISIBLE
+            llTab1.visibility = View.VISIBLE
+            llTab2.visibility = View.GONE
         } else {
             ivAddTask.visibility = View.GONE
+            llTab1.visibility = View.GONE
+            llTab2.visibility = View.VISIBLE
         }
-        initViewPager()
-        initTab()
+        initViewPager1()
+        initViewPager2()
+        initTab1()
+        initTab2()
         ivAddTask.setOnClickListener {
             mStartActivity<AddTaskActivity>(this)
         }
@@ -44,7 +50,28 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
 
-    private fun initTab() {
+    private fun initTab1() {
+        tvTaskTab1.setOnClickListener {
+            checkFirsTab()
+        }
+        tvTaskTab2.setOnClickListener {
+            checkSecondTab()
+        }
+        tvTaskTab3.setOnClickListener {
+            checkThirdTab()
+        }
+        tvTaskTab4.setOnClickListener {
+            check4Tab()
+        }
+        tvTaskTab5.setOnClickListener {
+            check5Tab()
+        }
+        tvTaskTab6.setOnClickListener {
+            check6Tab()
+        }
+    }
+
+    private fun initTab2() {
         tvTaskTab1.setOnClickListener {
             checkFirsTab()
         }
@@ -64,6 +91,8 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvTaskTab2.setChecked(false)
         tvTaskTab3.setChecked(false)
         tvTaskTab4.setChecked(false)
+        tvTaskTab5.setChecked(false)
+        tvTaskTab6.setChecked(false)
         vpCircular.setCurrentItem(0, true)
     }
 
@@ -72,6 +101,8 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvTaskTab1.setChecked(false)
         tvTaskTab3.setChecked(false)
         tvTaskTab4.setChecked(false)
+        tvTaskTab5.setChecked(false)
+        tvTaskTab6.setChecked(false)
         vpCircular.setCurrentItem(1, true)
     }
 
@@ -80,6 +111,8 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvTaskTab1.setChecked(false)
         tvTaskTab2.setChecked(false)
         tvTaskTab4.setChecked(false)
+        tvTaskTab5.setChecked(false)
+        tvTaskTab6.setChecked(false)
         vpCircular.setCurrentItem(2, true)
     }
 
@@ -88,10 +121,53 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvTaskTab1.setChecked(false)
         tvTaskTab2.setChecked(false)
         tvTaskTab3.setChecked(false)
+        tvTaskTab5.setChecked(false)
+        tvTaskTab6.setChecked(false)
         vpCircular.setCurrentItem(3, true)
     }
 
-    private fun initViewPager() {
+    private fun check5Tab() {
+        tvTaskTab5.setChecked(true)
+        tvTaskTab1.setChecked(false)
+        tvTaskTab2.setChecked(false)
+        tvTaskTab3.setChecked(false)
+        tvTaskTab4.setChecked(false)
+        tvTaskTab6.setChecked(false)
+        vpCircular.setCurrentItem(4, true)
+    }
+
+    private fun check6Tab() {
+        tvTaskTab6.setChecked(true)
+        tvTaskTab1.setChecked(false)
+        tvTaskTab2.setChecked(false)
+        tvTaskTab3.setChecked(false)
+        tvTaskTab4.setChecked(false)
+        tvTaskTab5.setChecked(false)
+        vpCircular.setCurrentItem(5, true)
+    }
+
+    private fun check21Tab() {
+        tvTaskTab21.setChecked(true)
+        tvTaskTab22.setChecked(false)
+        tvTaskTab23.setChecked(false)
+        vpCircular.setCurrentItem(0, true)
+    }
+
+    private fun check22Tab() {
+        tvTaskTab21.setChecked(false)
+        tvTaskTab22.setChecked(true)
+        tvTaskTab23.setChecked(false)
+        vpCircular.setCurrentItem(1, true)
+    }
+
+    private fun check23Tab() {
+        tvTaskTab21.setChecked(false)
+        tvTaskTab22.setChecked(false)
+        tvTaskTab23.setChecked(true)
+        vpCircular.setCurrentItem(2, true)
+    }
+
+    private fun initViewPager1() {
         fragmentList.add(TaskStatusFragment.getInstance().apply {
             arguments = Bundle().apply { putString(Constant.TASK_STATUS, "-1") }
         })
@@ -102,8 +178,57 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             arguments = Bundle().apply { putString(Constant.TASK_STATUS, "0") }
         })
         fragmentList.add(TaskStatusFragment.getInstance().apply {
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "2") }
+        })
+        fragmentList.add(TaskStatusFragment.getInstance().apply {
             arguments = Bundle().apply { putString(Constant.TASK_STATUS, "3") }
         })
+        fragmentList.add(TaskStatusFragment.getInstance().apply {
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "4") }
+        })
+        fragmentAdapter = FragmentVpAdapter(
+            supportFragmentManager,
+            fragmentList
+        )
+        vpCircular.adapter = fragmentAdapter
+        vpCircular.addOnPageChangeListener(object : OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                if (position == 0) {
+                    checkFirsTab()
+                } else if (position == 1) {
+                    checkSecondTab()
+                } else if (position == 2) {
+                    checkThirdTab()
+                } else if (position == 3) {
+                    check4Tab()
+                }
+            }
+        })
+    }
+
+    private fun initViewPager2() {
+        fragmentList.add(TaskStatusFragment.getInstance().apply {
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "-1") }
+        })
+        fragmentList.add(TaskStatusFragment.getInstance().apply {
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "3") }
+        })
+        fragmentList.add(TaskStatusFragment.getInstance().apply {
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "4") }
+        })
+
         fragmentAdapter = FragmentVpAdapter(
             supportFragmentManager,
             fragmentList

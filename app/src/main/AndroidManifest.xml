@@ -156,6 +156,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".module.mine.view.UserProtocolActivity" />
         <activity android:name=".module.school.view.AddInvolveActivity" />
+        <activity android:name=".module.school.view.InvolvePersonActivity" />
 
 
         <provider
