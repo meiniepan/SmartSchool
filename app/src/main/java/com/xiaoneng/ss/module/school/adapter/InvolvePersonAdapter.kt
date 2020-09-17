@@ -1,11 +1,12 @@
 package com.xiaoneng.ss.module.school.adapter
 
-import android.view.View
-import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.model.StudentBean
+import com.xiaoneng.ss.module.school.model.DepartmentPersonBean
 
 
 /**
@@ -15,43 +16,36 @@ import com.xiaoneng.ss.model.StudentBean
  * @date: 2020/08/27
  * Time: 17:32
  */
-class InvolvePersonAdapter(layoutId: Int, listData: MutableList<StudentBean>) :
-    BaseQuickAdapter<StudentBean, BaseViewHolder>(layoutId, listData) {
+class InvolvePersonAdapter(layoutId: Int, listData: MutableList<DepartmentPersonBean>) :
+    BaseQuickAdapter<DepartmentPersonBean, BaseViewHolder>(layoutId, listData) {
 
-    var isManager: Boolean = false
 
-    override fun convert(viewHolder: BaseViewHolder?, item: StudentBean) {
+    override fun convert(viewHolder: BaseViewHolder?, item: DepartmentPersonBean) {
         viewHolder?.let { holder ->
-            holder.setText(R.id.tvLabelInvolve, item.realname.last().toString())
-                .setText(R.id.tvNameInvolve, item.realname)
-            if (isManager) {
-                holder.getView<View>(R.id.ivNo).visibility = View.VISIBLE
-                holder.getView<View>(R.id.tvLabelInvolve).setOnClickListener {
-                    mData.removeAt(holder.adapterPosition)
-                    notifyItemRemoved(holder.adapterPosition)
-                }
-            } else {
-                holder.getView<View>(R.id.ivNo).visibility = View.GONE
-                holder.getView<View>(R.id.tvLabelInvolve).isClickable = false
-            }
-
-            if (item.choice == "1") {
-                holder.getView<TextView>(R.id.tvLabelInvolve).apply {
-                    setBackgroundResource(R.drawable.bac_blue_oval)
-                    setTextColor(mContext.resources.getColor(R.color.white))
-                }
-
-            } else {
-                holder.getView<TextView>(R.id.tvLabelInvolve).apply {
-                    setBackgroundResource(R.drawable.bac_blue_line_oval)
-                    setTextColor(mContext.resources.getColor(R.color.commonBlue))
-                }
-            }
+            holder.setText(R.id.tvNameDepart, item.departmentsname)
+            initRecycler(holder, item)
         }
     }
 
+    private fun initRecycler(holder: BaseViewHolder, item: DepartmentPersonBean) {
+        var eData: MutableList<StudentBean> = ArrayList()
+        eData.clear()
+        eData.addAll(item.data)
+        var eRecyclerView = holder.getView<RecyclerView>(R.id.rvInvolvePerson2)
+        var eAdapter = InvolvePerson2Adapter(R.layout.item_involve2, eData)
+        eRecyclerView.apply {
+            layoutManager = GridLayoutManager(context, 5)
+            setAdapter(eAdapter)
+        }
 
-    fun setManage(isManager: Boolean) {
-        this.isManager = isManager
+        eAdapter.setOnItemClickListener { _, view, position ->
+            if (eData[position].choice == "0") {
+                eData[position].choice = "1"
+            } else {
+                eData[position].choice = "0"
+            }
+            eAdapter.notifyDataSetChanged()
+        }
     }
+
 }

@@ -205,7 +205,6 @@ interface ApiService {
     ): BaseResponse<Any>
 
 
-
     /**
      *教师通知状态变更
      */
@@ -241,6 +240,7 @@ interface ApiService {
         @Field("received") received: String = "",
         @Field("type") type: String
     ): BaseResponse<Any>
+
     /**
      *学生任务接口
      */
@@ -362,7 +362,7 @@ interface ApiService {
     @POST("/api/v1/student/achievements/lists")
     suspend fun getPerformance(
         @Field("token") token: String,
-        @Field("testname") testname: String ,
+        @Field("testname") testname: String,
         @Field("crid") crid: String = ""
     ): BaseResponse<PerformanceResponse>
 
@@ -546,12 +546,23 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
-     *教师修改日程
+     *教师获取组织架构
      */
     @FormUrlEncoded
     @POST("/api/v1/teacher/departments/treeDep")
     suspend fun queryDepartments(
         @Field("token") token: String
+    ): BaseResponse<Any>
+
+    /**
+     *教师按部门查询教师接口
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/teacher/listByDep")
+    suspend fun listByDepartment(
+        @Field("token") token: String,
+        @Field("depid") depid: String = "",
+        @Field("realname") realname: String = ""
     ): BaseResponse<Any>
 
     /**
@@ -645,6 +656,7 @@ interface ApiService {
         @Field("token") token: String,
         @Field("id") id: String
     ): BaseResponse<Any>
+
     /**
      *教师删除考勤
      */

@@ -107,9 +107,9 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun doAddPrincipal() {
-        mStartForResult<AddInvolveActivity>(this, Constant.REQUEST_CODE_PRINCIPAL) {
-
-        }
+//        mStartForResult<AddInvolveActivity>(this, Constant.REQUEST_CODE_PRINCIPAL) {
+//
+//        }
     }
 
     private fun doAddParticipant() {

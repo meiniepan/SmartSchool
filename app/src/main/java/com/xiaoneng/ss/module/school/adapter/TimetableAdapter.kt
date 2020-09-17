@@ -19,28 +19,23 @@ import com.xiaoneng.ss.module.school.model.TimetableBean
  */
 class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>) :
     BaseQuickAdapter<TimetableBean, BaseViewHolder>(layoutId, listData) {
-    private lateinit var mAdapter: LessonAdapter
-    private lateinit var mRecycler: RecyclerView
-    private  var total: Int = 0
+
+    private var total: Int = 0
 
 
     override fun convert(viewHolder: BaseViewHolder, item: TimetableBean) {
         viewHolder?.let { holder ->
-//                .setText(R.id.tvTime3,item?.noticetime)
-//
-//            holder.setText(R.id.tvAction, item?.title)
 
-            mRecycler = holder.getView(R.id.rvLesson)
-            mRecycler.isNestedScrollingEnabled = false
-            holder.adapterPosition
-
-            initAdapter(item)
+            initAdapter(holder, item)
         }
     }
 
-    private fun initAdapter(item: TimetableBean) {
+    private fun initAdapter(holder: BaseViewHolder, item: TimetableBean) {
+        lateinit var mAdapter: LessonAdapter
+        var mRecycler: RecyclerView = holder.getView(R.id.rvLesson)
         var mLessonData: ArrayList<CourseBean> = ArrayList()
         var mRealLessonData: ArrayList<CourseBean> = ArrayList()
+        mRecycler.isNestedScrollingEnabled = false
         mLessonData.addAll(item.list)
         if (total > 0 && mLessonData.size > 0) {
             var ii = 0
@@ -70,7 +65,8 @@ class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>) :
 
         }
     }
-   fun setTotalSize(total: Int){
-       this.total = total
-   }
+
+    fun setTotalSize(total: Int) {
+        this.total = total
+    }
 }

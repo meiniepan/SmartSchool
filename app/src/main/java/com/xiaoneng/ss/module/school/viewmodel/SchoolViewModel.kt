@@ -30,6 +30,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mAttendanceTeaData: MutableLiveData<Any> = MutableLiveData()
     val mStudentData: MutableLiveData<StudentResp> = MutableLiveData()
     val mDepartmentsData: MutableLiveData<Any> = MutableLiveData()
+    val mDepartmentPersonData: MutableLiveData<Any> = MutableLiveData()
     val mAddTaskData: MutableLiveData<Any> = MutableLiveData()
     val mDeleteAttendanceData: MutableLiveData<Any> = MutableLiveData()
     val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
@@ -125,6 +126,13 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     fun queryDepartments() {
         initiateRequest(
             { mDepartmentsData.value = mRepository.queryDepartments() },
+            loadState
+        )
+    }
+
+    fun listByDepartment(id: String = "", realName: String = "") {
+        initiateRequest(
+            { mDepartmentPersonData.value = mRepository.listByDepartment(id,realName) },
             loadState
         )
     }

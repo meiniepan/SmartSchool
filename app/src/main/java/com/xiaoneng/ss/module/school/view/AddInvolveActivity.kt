@@ -13,7 +13,7 @@ import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.model.StudentBean
 import com.xiaoneng.ss.module.school.adapter.DepartmentAdapter
-import com.xiaoneng.ss.module.school.adapter.InvolvePersonAdapter
+import com.xiaoneng.ss.module.school.adapter.InvolvePerson2Adapter
 import com.xiaoneng.ss.module.school.adapter.QueryStudentAdapter
 import com.xiaoneng.ss.module.school.model.ClassesResponse
 import com.xiaoneng.ss.module.school.model.DepartmentBean
@@ -34,7 +34,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private var currentTab: String = "1"
     private lateinit var mAdapterQuery: QueryStudentAdapter
     private lateinit var mAdapterDepartment: DepartmentAdapter
-    private lateinit var mAdapterInvolve: InvolvePersonAdapter
+    private lateinit var mAdapterInvolve: InvolvePerson2Adapter
     var mDataQuery = ArrayList<StudentBean>()
     var mDataDepartment = ArrayList<DepartmentBean>()
     var mDataClasses = ArrayList<DepartmentBean>()
@@ -79,9 +79,27 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         tvConfirm.setOnClickListener {
-            setResult(Activity.RESULT_OK,intent.putExtra(Constant.DATA,mDataInvolve))
+            setResult(Activity.RESULT_OK, intent.putExtra(Constant.DATA, mDataInvolve))
             finish()
         }
+
+    }
+
+    override fun initData() {
+        super.initData()
+        showLoading()
+        rvDepartment.showLoadingView()
+        mViewModel.getClassesByTea()
+        mViewModel.queryDepartments()
+//        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
+//        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
+//        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
+//        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
+//        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
+//        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
+//        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
+//        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
+
 
     }
 
@@ -132,17 +150,20 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             mStartForResult<InvolvePersonActivity>(this, Constant.REQUEST_CODE_COURSE) {
                 if (currentTab == "1") {
                     putExtra(Constant.TITLE, mDataDepartment[position].id)
+                    putExtra(Constant.TYPE, "1")
                     currentItemId = currentTab + "_" + mDataDepartment[position].id
                 } else {
                     putExtra(Constant.TITLE, mDataClasses[position].id)
+                    putExtra(Constant.TYPE, "2")
                     currentItemId = currentTab + "_" + mDataClasses[position].id ?: ""
                 }
             }
         }
     }
 
+
     private fun initAdapterInvolve() {
-        mAdapterInvolve = InvolvePersonAdapter(R.layout.item_involve, mDataInvolve)
+        mAdapterInvolve = InvolvePerson2Adapter(R.layout.item_involve, mDataInvolve)
         rvInvolve.apply {
             layoutManager = GridLayoutManager(context, 5)
             setAdapter(mAdapterInvolve)
@@ -150,22 +171,6 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mAdapterInvolve.setOnItemClickListener { _, view, position ->
 
         }
-    }
-
-
-    override fun initData() {
-        super.initData()
-        mViewModel.getClassesByTea()
-        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
-        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
-        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
-        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
-        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
-        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
-        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
-        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
-
-
     }
 
 
@@ -202,13 +207,13 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 }
                 if (currentTab == "1") {
                     mDataDepartment.forEach {
-                        if (it.id == currentItemId.split("_").last()){
+                        if (it.id == currentItemId.split("_").last()) {
                             it.num = receiveList.size.toString()
                         }
                     }
                 } else {
                     mDataClasses.forEach {
-                        if (it.id == currentItemId.split("_").last()){
+                        if (it.id == currentItemId.split("_").last()) {
                             it.num = receiveList.size.toString()
                         }
                     }
@@ -217,9 +222,9 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 mDataInvolve.removeAll(removeList)
                 mDataInvolve.addAll(receiveList)
                 rvInvolve.notifyDataSetChanged()
-                if (mDataInvolve.size>0) {
+                if (mDataInvolve.size > 0) {
                     tvConfirm.text = "确定（" + mDataInvolve.size + ")"
-                }else{
+                } else {
                     tvConfirm.text = "确定"
                 }
             }
@@ -248,6 +253,16 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         }
                     }
 
+                }
+            }
+        })
+
+        mViewModel.mDepartmentsData.observe(this, Observer { response ->
+            response?.let {
+                netResponseFormat<ArrayList<DepartmentBean>>(it)?.let {
+                    mDataDepartment.clear()
+                    mDataDepartment.addAll(it)
+                    rvDepartment.notifyDataSetChanged()
                 }
             }
         })

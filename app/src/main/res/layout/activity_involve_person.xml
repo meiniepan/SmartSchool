@@ -33,22 +33,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:paddingStart="@dimen/title_padding"
         android:paddingEnd="@dimen/title_padding">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="班级学生名单"
-            android:textSize="@dimen/sp_18"
-            android:textStyle="bold" />
 
         <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
             android:id="@+id/rvInvolvePerson"
             style="@style/recycler_style"
-            android:layout_marginTop="15dp"
-            android:paddingStart="9dp"
-            android:paddingEnd="9dp" />
+             />
     </LinearLayout>
 </LinearLayout>

@@ -232,6 +232,10 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         return apiService.queryDepartments(UserInfo.getUserBean().token)
             .dataConvert(loadState)
     }
+    suspend fun listByDepartment(id: String, realName: String): Any {
+        return apiService.listByDepartment(UserInfo.getUserBean().token,depid = id,realname = realName)
+            .dataConvert(loadState)
+    }
 
     suspend fun addAttendanceByMaster(): Any {
         return apiService.queryDepartments(UserInfo.getUserBean().token)
