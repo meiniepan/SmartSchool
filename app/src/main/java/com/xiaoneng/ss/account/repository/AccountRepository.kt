@@ -177,6 +177,46 @@ class AccountRepository(val loadState: MutableLiveData<State>) : ApiRepository()
         }
     }
 
+    suspend fun onSmsCodeChange(phone: String): Any {
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.onSmsCodeChangeStu(UserInfo.getUserBean().token,phone)
+                    .dataConvert(loadState)
+            }
+            "2" -> {
+                apiService.onSmsCodeChangeTea(UserInfo.getUserBean().token,phone)
+                    .dataConvert(loadState)
+            }
+            "99" -> {
+                apiService.onSmsCodeChangeTea(UserInfo.getUserBean().token,phone)
+                    .dataConvert(loadState)
+            }
+            else -> {
+
+            }
+        }
+    }
+
+    suspend fun changePhone(phone: String,vCode: String): Any {
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.changePhoneStu(UserInfo.getUserBean().token,phone,vCode)
+                    .dataConvert(loadState)
+            }
+            "2" -> {
+                apiService.changePhoneTea(UserInfo.getUserBean().token,phone,vCode)
+                    .dataConvert(loadState)
+            }
+            "99" -> {
+                apiService.changePhoneTea(UserInfo.getUserBean().token,phone,vCode)
+                    .dataConvert(loadState)
+            }
+            else -> {
+
+            }
+        }
+    }
+
     suspend fun getParents(): Any {
         return apiService.getParents(UserInfo.getUserBean().token)
             .dataConvert(loadState)

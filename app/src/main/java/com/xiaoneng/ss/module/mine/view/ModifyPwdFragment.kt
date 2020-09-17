@@ -2,12 +2,19 @@ package com.xiaoneng.ss.module.mine.view
 
 import android.os.CountDownTimer
 import android.text.TextUtils
+import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.account.model.CaptchaResponse
+import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
-import com.xiaoneng.ss.common.utils.regex.RegexUtils
-import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
+import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.formatStarPhoneNum
+import com.xiaoneng.ss.common.utils.netResponseFormat
 import kotlinx.android.synthetic.main.fragment_modify_pwd.*
+import org.jetbrains.anko.toast
 
 /**
  * Created with Android Studio.
@@ -16,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_modify_pwd.*
  * @date: 2020/08/27
  * Time: 17:01
  */
-class ModifyPwdFragment : BaseLifeCycleFragment<SchoolViewModel>() {
+class ModifyPwdFragment : BaseLifeCycleFragment<AccountViewModel>() {
     private var timer: CountDownTimer? = null
     override fun getLayoutId(): Int = R.layout.fragment_modify_pwd
 
@@ -33,19 +40,37 @@ class ModifyPwdFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         tvConfirmModifyPwd.setOnClickListener {
             doPost()
         }
+        tvConfirmModifyPwd2.setOnClickListener {
+            modifyPwd()
+        }
         tvSendCaptchaRebind.setOnClickListener {
             doCaptcha()
         }
+        etCaptchaRebind.setOnEditorActionListener { teew, i, keyEvent ->
+            when (i) {
+                EditorInfo.IME_ACTION_GO -> {
+                    doPost()
+                }
+
+            }
+            return@setOnEditorActionListener false
+        }
+        etPwdRebind.setOnEditorActionListener { teew, i, keyEvent ->
+            when (i) {
+                EditorInfo.IME_ACTION_GO -> {
+                    modifyPwd()
+                }
+
+            }
+            return@setOnEditorActionListener false
+        }
+        etPhoneRebind.setText(formatStarPhoneNum(UserInfo.getUserBean().phone))
     }
 
     private fun doCaptcha() {
-        var phoneStr = etPhoneRebind.text.toString()
-        if (!RegexUtils.isMobileSimple(phoneStr)) {
-            showTip("请输入正确手机号")
-            return
-        }
 
-//            mViewModel.captcha(3, phoneStr)
+
+        mViewModel.onSmsCodeChange(UserInfo.getUserBean().phone)
         tvSendCaptchaRebind.isEnabled = false
         timer = object : CountDownTimer(60 * 1000, 1000) {
             override fun onFinish() {
@@ -62,18 +87,52 @@ class ModifyPwdFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     }
 
     private fun doPost() {
-        var phoneStr = etPhoneRebind.text.toString()
         var vCodeStr = etCaptchaRebind.text.toString()
 
-        if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(vCodeStr)) {
+        if (TextUtils.isEmpty(vCodeStr)) {
             showTip("请输入完整信息")
             return
         }
-//            mViewModel.login(2, LoginReq(phoneStr, vCodeStr))
+        mViewModel.verifyVcode(UserInfo.getUserBean().phone,vCodeStr)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        timer?.let { it.cancel() }
+    }
+
+    private fun modifyPwd() {
+        var bean = UserInfo.getUserBean()
+        bean.password = etPwdRebind.text.toString()
+        showLoading()
+        mViewModel.modifyUserInfo(bean)
     }
 
     override fun initDataObserver() {
+        mViewModel.mBaseData.observe(this, Observer {
+            it?.let {
+                netResponseFormat<CaptchaResponse>(it)?.let {
+                    requireContext().toast(it.code)
+                }
+            }
+        })
 
+        mViewModel.mVerifyData.observe(this, Observer {
+            it?.let {
+                llNewPwd.visibility = View.VISIBLE
+                llRebind.visibility = View.GONE
+                tvConfirmModifyPwd.visibility = View.GONE
+                tvConfirmModifyPwd2.visibility = View.VISIBLE
+            }
+        })
+
+        mViewModel.mUserInfoData.observe(this, Observer {
+            it?.let {
+                UserInfo.modifyUserBean(it)
+                requireContext().toast("修改成功")
+                activity?.finish()
+            }
+        })
     }
 
 

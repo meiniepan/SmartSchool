@@ -3,13 +3,19 @@ package com.xiaoneng.ss.module.mine.view
 import android.os.CountDownTimer
 import android.text.TextUtils
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.account.model.CaptchaResponse
+import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
-import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.fragment_rebind.*
+import org.jetbrains.anko.toast
 
 /**
  * Created with Android Studio.
@@ -18,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_rebind.*
  * @date: 2020/08/27
  * Time: 17:01
  */
-class RebindPhoneFragment : BaseLifeCycleFragment<SchoolViewModel>() {
+class RebindPhoneFragment : BaseLifeCycleFragment<AccountViewModel>() {
     var showRebindLayout: Boolean = false
     private var timer: CountDownTimer? = null
 
@@ -33,7 +39,13 @@ class RebindPhoneFragment : BaseLifeCycleFragment<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
-        tvCurrentPhone.text = UserInfo.getUserBean().phone
+        if (UserInfo.getUserBean().usertype == "1" &&
+            UserInfo.getUserBean().logintype == Constant.LOGIN_TYPE_PAR
+        ) {
+            tvCurrentPhone.text = UserInfo.getUserBean().parentphone
+        } else {
+            tvCurrentPhone.text = UserInfo.getUserBean().phone
+        }
         ivNext.setOnClickListener {
             llCurrent.visibility = View.GONE
             llRebind.visibility = View.VISIBLE
@@ -44,6 +56,15 @@ class RebindPhoneFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         tvSendCaptchaRebind.setOnClickListener {
             doCaptcha()
         }
+        etCaptchaRebind.setOnEditorActionListener { teew, i, keyEvent ->
+            when (i) {
+                EditorInfo.IME_ACTION_GO -> {
+                    doPost()
+                }
+
+            }
+            return@setOnEditorActionListener false
+        }
     }
 
     private fun doCaptcha() {
@@ -53,7 +74,7 @@ class RebindPhoneFragment : BaseLifeCycleFragment<SchoolViewModel>() {
             return
         }
 
-//            mViewModel.captcha(3, phoneStr)
+        mViewModel.onSmsCodeChange(phoneStr)
         tvSendCaptchaRebind.isEnabled = false
         timer = object : CountDownTimer(60 * 1000, 1000) {
             override fun onFinish() {
@@ -77,7 +98,7 @@ class RebindPhoneFragment : BaseLifeCycleFragment<SchoolViewModel>() {
             showTip("请输入完整信息")
             return
         }
-//            mViewModel.login(2, LoginReq(phoneStr, vCodeStr))
+            mViewModel.verifyVcode(phoneStr, vCodeStr)
     }
 
 
@@ -87,19 +108,30 @@ class RebindPhoneFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     }
 
     override fun initDataObserver() {
-//        mViewModel.mCaptchaData.observe(this, Observer {
-//            it?.let {
-//                toast(it.code)
-//            }
-//        })
-//
-//        mViewModel.mLoginData.observe(this, Observer {
-//            it?.let {
-//                UserInfo.loginSuccess(it)
-//                toast(R.string.login_success)
-//                mStartActivity<MainActivity>(this)
-//            }
-//        })
+        mViewModel.mBaseData.observe(this, Observer {
+            it?.let {
+                netResponseFormat<CaptchaResponse>(it)?.let {
+                    requireContext().toast(it.code)
+                }
+            }
+        })
+
+        mViewModel.mVerifyData.observe(this, Observer {
+            it?.let {
+                var bean = UserInfo.getUserBean()
+                bean.phone = etPhoneRebind.text.toString()
+                showLoading()
+                mViewModel.modifyUserInfo(bean)
+            }
+        })
+
+        mViewModel.mUserInfoData.observe(this, Observer {
+            it?.let {
+                UserInfo.modifyUserBean(it)
+                requireContext().toast("修改成功")
+                activity?.finish()
+            }
+        })
     }
 
 

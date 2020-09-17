@@ -200,11 +200,12 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun modifyTaskStatus(body:TaskDetailBean) {
+    fun modifyTaskStatus(body:TaskBean) {
         initiateRequest(
             { mModifyTaskStatusData.value = mRepository.modifyTaskStatus(body) },
             loadState
         )
     }
+
 
 }

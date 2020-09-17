@@ -39,10 +39,13 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             llTab1.visibility = View.GONE
             llTab2.visibility = View.VISIBLE
         }
-        initViewPager1()
-        initViewPager2()
-        initTab1()
-        initTab2()
+        if (UserInfo.getUserBean().usertype == "1") {
+            initViewPager1()
+            initTab1()
+        } else {
+            initViewPager2()
+            initTab2()
+        }
         ivAddTask.setOnClickListener {
             mStartActivity<AddTaskActivity>(this)
         }
@@ -50,7 +53,7 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
 
-    private fun initTab1() {
+    private fun initTab2() {
         tvTaskTab1.setOnClickListener {
             checkFirsTab()
         }
@@ -71,7 +74,7 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
     }
 
-    private fun initTab2() {
+    private fun initTab1() {
         tvTaskTab1.setOnClickListener {
             checkFirsTab()
         }
@@ -167,68 +170,30 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         vpCircular.setCurrentItem(2, true)
     }
 
-    private fun initViewPager1() {
-        fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "-1") }
-        })
-        fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "1") }
-        })
-        fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "0") }
-        })
-        fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "2") }
-        })
-        fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "3") }
-        })
-        fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "4") }
-        })
-        fragmentAdapter = FragmentVpAdapter(
-            supportFragmentManager,
-            fragmentList
-        )
-        vpCircular.adapter = fragmentAdapter
-        vpCircular.addOnPageChangeListener(object : OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
-
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-
-            }
-
-            override fun onPageSelected(position: Int) {
-                if (position == 0) {
-                    checkFirsTab()
-                } else if (position == 1) {
-                    checkSecondTab()
-                } else if (position == 2) {
-                    checkThirdTab()
-                } else if (position == 3) {
-                    check4Tab()
-                }
-            }
-        })
-    }
-
     private fun initViewPager2() {
         fragmentList.add(TaskStatusFragment.getInstance().apply {
             arguments = Bundle().apply { putString(Constant.TASK_STATUS, "-1") }
         })
         fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "3") }
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "1")
+                putString(Constant.TYPE, "2")}
         })
         fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "4") }
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "0")
+                putString(Constant.TYPE, "2")}
         })
-
+        fragmentList.add(TaskStatusFragment.getInstance().apply {
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "3")
+                putString(Constant.TYPE, "2")}
+        })
+        fragmentList.add(TaskStatusFragment.getInstance().apply {
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "0")
+                putString(Constant.TYPE, "1")}
+        })
+        fragmentList.add(TaskStatusFragment.getInstance().apply {
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "1")
+                putString(Constant.TYPE, "1")}
+        })
         fragmentAdapter = FragmentVpAdapter(
             supportFragmentManager,
             fragmentList
@@ -256,6 +221,55 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     checkThirdTab()
                 } else if (position == 3) {
                     check4Tab()
+                } else if (position == 4) {
+                    check5Tab()
+                } else if (position == 5) {
+                    check6Tab()
+                }
+            }
+        })
+    }
+
+    private fun initViewPager1() {
+        fragmentList.add(TaskStatusFragment.getInstance().apply {
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "-1") }
+        })
+        fragmentList.add(TaskStatusFragment.getInstance().apply {
+            arguments = Bundle().apply {
+                putString(Constant.TASK_STATUS, "0")
+                putString(Constant.TYPE, "1")
+            }
+        })
+        fragmentList.add(TaskStatusFragment.getInstance().apply {
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "1")
+                putString(Constant.TYPE, "1")}
+        })
+
+        fragmentAdapter = FragmentVpAdapter(
+            supportFragmentManager,
+            fragmentList
+        )
+        vpCircular.adapter = fragmentAdapter
+        vpCircular.addOnPageChangeListener(object : OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                if (position == 0) {
+                    check21Tab()
+                } else if (position == 1) {
+                    check22Tab()
+                } else if (position == 2) {
+                    check23Tab()
                 }
             }
         })

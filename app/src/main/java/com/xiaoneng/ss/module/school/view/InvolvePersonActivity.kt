@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_involve_person.*
 class InvolvePersonActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private lateinit var mAdapterInvolve: InvolvePersonAdapter
     var mDataInvolve = ArrayList<DepartmentPersonBean>()
+    var mDataReceive: ArrayList<StudentBean>? = null
     lateinit var chosenDay: String
     var id = ""
     var type = ""
@@ -34,17 +35,18 @@ class InvolvePersonActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
-        id = intent.getStringExtra(Constant.TITLE)
+        id = intent.getStringExtra(Constant.ID)
         type = intent.getStringExtra(Constant.TYPE)
+        mDataReceive = intent.getParcelableArrayListExtra(Constant.DATA)
         initAdapterInvolve()
         tvConfirm.setOnClickListener {
             var data = ArrayList<StudentBean>()
             mDataInvolve.forEach {
-              data.forEach {
-                  if (it.choice == "1") {
-                      data.add(it)
-                  }
-              }
+                it.data.forEach {
+                    if (it.choice == "1") {
+                        data.add(it)
+                    }
+                }
             }
             setResult(Activity.RESULT_OK, intent.putExtra(Constant.DATA, data))
             finish()
@@ -57,9 +59,9 @@ class InvolvePersonActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.initData()
         rvInvolvePerson.showLoadingView()
         if (type == "1") {
-            mViewModel.listByDepartment(id)
+            mViewModel.listByDepartment(id.split("_").last())
         } else if (type == "2") {
-            mViewModel.getStudentsByClass(id)
+            mViewModel.getStudentsByClass(id.split("_").last())
         }
 
     }
@@ -86,8 +88,9 @@ class InvolvePersonActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mDataInvolve.clear()
                     it.data.forEach {
                         it.parentId = id
+                        setChoice(it)
                     }
-                    var bean:DepartmentPersonBean = DepartmentPersonBean()
+                    var bean: DepartmentPersonBean = DepartmentPersonBean()
                     bean.departmentsname = "班级学生名单"
                     bean.data = it.data
                     mDataInvolve.add(bean)
@@ -103,6 +106,7 @@ class InvolvePersonActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     it.forEach {
                         it.data.forEach {
                             it.parentId = id
+                            setChoice(it)
                         }
                     }
                     mDataInvolve.addAll(it)
@@ -111,6 +115,15 @@ class InvolvePersonActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
         })
 
+    }
+
+    private fun setChoice(it: StudentBean) {
+        mDataReceive?.forEach { receive ->
+            if (receive.uid == it.uid) {
+                it.choice = "1"
+                return
+            }
+        }
     }
 
 }

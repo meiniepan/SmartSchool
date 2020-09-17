@@ -37,6 +37,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapterPrincipal: InvolveSimpleAdapter
     var mData = ArrayList<UserBeanSimple>()
     var mDataPrincipal = ArrayList<UserBeanSimple>()
+    var taskBean = TaskBean()
 
 
     override fun getLayoutId(): Int = R.layout.activity_add_task
@@ -169,7 +170,18 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         bottomDialog.show()
         contentView.findViewById<View>(R.id.tvSaveDraft)
             .setOnClickListener { v: View? ->
-                finish()
+               taskBean = TaskBean(
+                    token = UserInfo.getUserBean().token,
+                    taskname = tvTitleAddTask.text.toString(),
+                    plantime = beginTime,
+                    plantotal = 10.toString(),
+                    overtime = endTime,
+                    involve = Gson().toJson(mData),
+                    ordertime = orderTime,
+                    remark = etRemarkAddTask.text.toString(),
+                    status =  "0"
+                )
+                mViewModel.addTask(taskBean)
                 bottomDialog.dismiss()
             }
         contentView.findViewById<View>(R.id.tvNoSaveDraft)
@@ -253,8 +265,14 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mAddTaskData.observe(this, Observer { response ->
             response?.let {
+                toast(R.string.deal_done)
+                finish()
+            }
+        })
 
-                toast("发布成功")
+        mViewModel.mModifyTaskStatusData.observe(this, Observer { response ->
+            response?.let {
+                toast(R.string.deal_done)
                 finish()
             }
         })

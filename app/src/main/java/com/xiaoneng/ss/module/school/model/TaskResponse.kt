@@ -8,7 +8,7 @@ package com.xiaoneng.ss.module.school.model
  * Time: 17:06
  */
 data class TaskResponse(
-    var data : MutableList<TaskBean>,
+    var data : MutableList<TaskDetailBean>,
     var totle : String,
     var complete : String,
     var lastid : String

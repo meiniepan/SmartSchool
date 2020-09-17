@@ -30,6 +30,8 @@ import kotlinx.android.synthetic.main.activity_add_student.etSearch
  * Time: 17:01
  */
 class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+    private val tab1 = "1"
+    private val tab2 = "2"
     private var currentItemId: String = ""
     private var currentTab: String = "1"
     private lateinit var mAdapterQuery: QueryStudentAdapter
@@ -70,6 +72,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 isManage = !isManage
                 mAdapterInvolve.setManage(isManage)
                 mAdapterInvolve.notifyDataSetChanged()
+                setAdapterItemClick()
                 if (isManage) {
                     this.text = "完成"
                 } else {
@@ -114,14 +117,14 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun checkFirsTab() {
-        currentTab = "1"
+        currentTab = tab1
         tvInvolveTab1.setChecked(true)
         tvInvolveTab2.setChecked(false)
         mAdapterDepartment.setNewData(mDataDepartment)
     }
 
     private fun checkSecondTab() {
-        currentTab = "2"
+        currentTab = tab2
         tvInvolveTab2.setChecked(true)
         tvInvolveTab1.setChecked(false)
 
@@ -148,14 +151,16 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mAdapterDepartment.setOnItemClickListener { _, view, position ->
 
             mStartForResult<InvolvePersonActivity>(this, Constant.REQUEST_CODE_COURSE) {
-                if (currentTab == "1") {
-                    putExtra(Constant.TITLE, mDataDepartment[position].id)
-                    putExtra(Constant.TYPE, "1")
-                    currentItemId = currentTab + "_" + mDataDepartment[position].id
+                if (currentTab == tab1) {
+                    putExtra(Constant.ID, mDataDepartment[position].id)
+                    putParcelableArrayListExtra(Constant.DATA, mDataDepartment[position].list)
+                    putExtra(Constant.TYPE, tab1)
+                    currentItemId = mDataDepartment[position].id ?: ""
                 } else {
-                    putExtra(Constant.TITLE, mDataClasses[position].id)
-                    putExtra(Constant.TYPE, "2")
-                    currentItemId = currentTab + "_" + mDataClasses[position].id ?: ""
+                    putExtra(Constant.ID, mDataClasses[position].id)
+                    putParcelableArrayListExtra(Constant.DATA, mDataClasses[position].list)
+                    putExtra(Constant.TYPE, tab2)
+                    currentItemId = mDataClasses[position].id ?: ""
                 }
             }
         }
@@ -163,14 +168,41 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
 
     private fun initAdapterInvolve() {
-        mAdapterInvolve = InvolvePerson2Adapter(R.layout.item_involve, mDataInvolve)
+        mAdapterInvolve = InvolvePerson2Adapter(R.layout.item_involve2, mDataInvolve)
         rvInvolve.apply {
             layoutManager = GridLayoutManager(context, 5)
             setAdapter(mAdapterInvolve)
         }
-        mAdapterInvolve.setOnItemClickListener { _, view, position ->
+    }
 
+    private fun setAdapterItemClick() {
+        if (isManage) {
+            mAdapterInvolve.setOnItemClickListener { adapter, view, position ->
+
+                mDataDepartment.forEach {
+                    if (it.id == mDataInvolve[position].parentId){
+                        if (it.num!!.toInt()>0){
+                            it.num = (it.num!!.toInt()-1).toString()
+                        }
+                    }
+                }
+                mDataClasses.forEach {
+                    if (it.id == mDataInvolve[position].parentId){
+                        if (it.num!!.toInt()>0){
+                            it.num = (it.num!!.toInt()-1).toString()
+                        }
+                    }
+                }
+                mDataInvolve.removeAt(position)
+                mAdapterInvolve.notifyItemRemoved(position)
+                mAdapterDepartment.notifyDataSetChanged()
+                setPersonNum()
+            }
+        } else {
+            mAdapterInvolve.setOnItemClickListener { _, view, position ->
+            }
         }
+        rvInvolve.setAdapter(mAdapterInvolve)
     }
 
 
@@ -201,19 +233,21 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 var receiveList: ArrayList<StudentBean> =
                     data.getParcelableArrayListExtra(Constant.DATA)
                 mDataInvolve.forEach {
-                    if (currentTab + "_" + it.parentId == currentItemId) {
+                    if (it.parentId == currentItemId) {
                         removeList.add(it)
                     }
                 }
-                if (currentTab == "1") {
+                if (currentTab == tab1) {
                     mDataDepartment.forEach {
-                        if (it.id == currentItemId.split("_").last()) {
+                        if (it.id == currentItemId) {
+                            it.list = receiveList
                             it.num = receiveList.size.toString()
                         }
                     }
                 } else {
                     mDataClasses.forEach {
-                        if (it.id == currentItemId.split("_").last()) {
+                        if (it.id == currentItemId) {
+                            it.list = receiveList
                             it.num = receiveList.size.toString()
                         }
                     }
@@ -221,13 +255,20 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 mAdapterDepartment.notifyDataSetChanged()
                 mDataInvolve.removeAll(removeList)
                 mDataInvolve.addAll(receiveList)
-                rvInvolve.notifyDataSetChanged()
-                if (mDataInvolve.size > 0) {
-                    tvConfirm.text = "确定（" + mDataInvolve.size + ")"
-                } else {
-                    tvConfirm.text = "确定"
-                }
+                mAdapterInvolve.notifyDataSetChanged()
+                setPersonNum()
             }
+        }
+    }
+
+    private fun setPersonNum() {
+
+        if (mDataInvolve.size > 0) {
+            tvConfirm.text = "确定（" + mDataInvolve.size + ")"
+            llManage.visibility = View.VISIBLE
+        } else {
+            tvConfirm.text = "确定"
+            llManage.visibility = View.GONE
         }
     }
 
@@ -248,8 +289,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mDataClasses.clear()
                     it.forEach {
                         it.list.forEach {
-
-                            mDataClasses.add(DepartmentBean(it.id, it.classname))
+                            mDataClasses.add(DepartmentBean(tab2 + "_" + it.id, it.classname))
                         }
                     }
 
@@ -262,6 +302,9 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 netResponseFormat<ArrayList<DepartmentBean>>(it)?.let {
                     mDataDepartment.clear()
                     mDataDepartment.addAll(it)
+                    mDataDepartment.forEach {
+                        it.id = tab1 + "_" + it.id
+                    }
                     rvDepartment.notifyDataSetChanged()
                 }
             }

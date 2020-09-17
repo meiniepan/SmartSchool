@@ -25,6 +25,7 @@ data class UserBean(
     var schoolid: String= "",
     var classname: String= "",
     var companyid: String= "",
+    var password: String= "",
     var openid: String= "",
     var wxname: String= "",
     var remark: String= "",

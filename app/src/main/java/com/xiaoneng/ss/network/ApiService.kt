@@ -759,8 +759,50 @@ interface ApiService {
      */
     @POST("/api/v1/teacher/tasks/modifyTask")
     suspend fun modifyTaskStatus(
-        @Body requestBody: TaskDetailBean
+        @Body requestBody: TaskBean
     ): BaseResponse<Any>
+
+    /**
+     * 学生更换手机号短信验证码
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/student/mSmsCode")
+    suspend fun onSmsCodeChangeStu(
+        @Field("token") token: String,
+        @Field("phone") phone: String
+    ): BaseResponse<CaptchaResponse>
+
+    /**
+     *  教师更换手机号短信验证码
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/teacher/mSmsCode")
+    suspend fun onSmsCodeChangeTea(
+        @Field("token") token: String,
+        @Field("phone") phone: String
+    ): BaseResponse<Any>
+
+    /**
+     * 学生更换手机号短信验证码验证
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/student/checkCode")
+    suspend fun changePhoneStu(
+        @Field("token") token: String,
+        @Field("phone") phone: String,
+        @Field("vcode") vcode: String
+    ): BaseResponse<CaptchaResponse>
+
+    /**
+     *  教师更换手机号短信验证码验证
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/teacher/checkCode")
+    suspend fun changePhoneTea(
+        @Field("token") token: String,
+        @Field("phone") phone: String,
+        @Field("vcode") vcode: String
+    ): BaseResponse<CaptchaResponse>
 
 }
 

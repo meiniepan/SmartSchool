@@ -1,6 +1,7 @@
 package com.xiaoneng.ss.module.school.model
 
 import android.os.Parcelable
+import com.xiaoneng.ss.model.StudentBean
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -14,6 +15,7 @@ import kotlinx.android.parcel.Parcelize
 data class DepartmentBean(
     var id: String? = "",
     var name: String? = "",
+    var list:ArrayList<StudentBean> = ArrayList(),
     var num: String? = "0"
 
 

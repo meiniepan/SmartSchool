@@ -22,8 +22,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/title_padding"
-            android:text="确定"
-            />
+            android:text="确定" />
     </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView style="@style/nes_scroll_style">
@@ -64,67 +63,69 @@
                         android:singleLine="true" />
                 </LinearLayout>
             </LinearLayout>
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
-            <LinearLayout
+
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/tintBac"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
-                    style="@style/title_style"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/tintBac"
+                    android:orientation="vertical">
 
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
+                    <LinearLayout
+                        style="@style/title_style"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp">
 
-                        <com.xiaoneng.ss.custom.widgets.CustomTabView2
-                            android:id="@+id/tvInvolveTab1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            app:check="true"
-                            app:text="组织架构" />
-                    </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center">
+                            <com.xiaoneng.ss.custom.widgets.CustomTabView2
+                                android:id="@+id/tvInvolveTab1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                app:check="true"
+                                app:text="组织架构" />
+                        </RelativeLayout>
 
-                        <com.xiaoneng.ss.custom.widgets.CustomTabView2
-                            android:id="@+id/tvInvolveTab2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:text="我的班级" />
-                    </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
 
+                            <com.xiaoneng.ss.custom.widgets.CustomTabView2
+                                android:id="@+id/tvInvolveTab2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:text="我的班级" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
+                        android:id="@+id/rvDepartment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:paddingStart="@dimen/title_padding"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="13dp"
+                        android:paddingBottom="20dp" />
                 </LinearLayout>
 
                 <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
-                    android:id="@+id/rvDepartment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:paddingStart="@dimen/title_padding"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="13dp"
-                    android:paddingBottom="20dp" />
-            </LinearLayout>
-    <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
-        style="@style/recycler_style"
-        android:id="@+id/rvSearchInvolve"
-        android:visibility="gone"
-        />
-</FrameLayout>
+                    android:id="@+id/rvSearchInvolve"
+                    style="@style/recycler_style"
+                    android:visibility="gone" />
+            </FrameLayout>
+
             <include layout="@layout/layout_split_tint_10" />
 
             <LinearLayout
@@ -137,8 +138,10 @@
                 android:paddingBottom="20dp">
 
                 <LinearLayout
+                    android:id="@+id/llManage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 

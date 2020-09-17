@@ -207,6 +207,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingStart="@dimen/title_padding"
+                android:visibility="gone"
                 android:paddingTop="20dp"
                 android:paddingEnd="@dimen/title_padding"
                 android:paddingBottom="20dp">

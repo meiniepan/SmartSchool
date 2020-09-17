@@ -10,10 +10,7 @@ import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.school.adapter.InvolveSimpleAdapter
 import com.xiaoneng.ss.module.school.adapter.TaskLogAdapter
-import com.xiaoneng.ss.module.school.model.LogBean
-import com.xiaoneng.ss.module.school.model.TaskDetailBean
-import com.xiaoneng.ss.module.school.model.TaskLogRequest
-import com.xiaoneng.ss.module.school.model.UserBeanSimple
+import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_task_detail.*
 import org.jetbrains.anko.toast
@@ -60,8 +57,11 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun closeTask() {
-        taskBean.status = "3"
-        mViewModel.modifyTaskStatus(taskBean)
+        var bean = TaskBean()
+        bean.id = taskBean.id
+        bean.token = UserInfo.getUserBean().token
+        bean.status = "3"
+        mViewModel.modifyTaskStatus(bean)
     }
 
 

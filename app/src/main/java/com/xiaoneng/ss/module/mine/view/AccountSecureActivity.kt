@@ -1,9 +1,11 @@
 package com.xiaoneng.ss.module.mine.view
 
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.FragmentVpAdapter
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_account_secure.*
@@ -36,29 +38,34 @@ class AccountSecureActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initTab() {
+        if (UserInfo.getUserBean().usertype == "1") {
+            llTab2.visibility = View.VISIBLE
+        } else {
+            llTab2.visibility = View.GONE
+        }
         tvSecurityTab1.setOnClickListener {
             checkFirsTab()
         }
         tvSecurityTab2.setOnClickListener {
             checkSecondTab()
         }
-        
+
     }
 
     private fun checkFirsTab() {
         tvSecurityTab1.setChecked(true)
         tvSecurityTab2.setChecked(false)
-        
+
         vpSecurity.setCurrentItem(0, true)
     }
 
     private fun checkSecondTab() {
         tvSecurityTab2.setChecked(true)
         tvSecurityTab1.setChecked(false)
-        
+
         vpSecurity.setCurrentItem(1, true)
     }
-    
+
 
     private fun initViewPager() {
         fragmentList.add(RebindPhoneFragment.getInstance())
@@ -86,7 +93,7 @@ class AccountSecureActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     checkFirsTab()
                 } else if (position == 1) {
                     checkSecondTab()
-                } 
+                }
             }
         })
     }

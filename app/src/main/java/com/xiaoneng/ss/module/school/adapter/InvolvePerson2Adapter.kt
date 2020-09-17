@@ -26,13 +26,9 @@ class InvolvePerson2Adapter(layoutId: Int, listData: MutableList<StudentBean>) :
                 .setText(R.id.tvNameInvolve, item.realname)
             if (isManager) {
                 holder.getView<View>(R.id.ivNo).visibility = View.VISIBLE
-                holder.getView<View>(R.id.tvLabelInvolve).setOnClickListener {
-                    mData.removeAt(holder.adapterPosition)
-                    notifyItemRemoved(holder.adapterPosition)
-                }
+
             } else {
                 holder.getView<View>(R.id.ivNo).visibility = View.GONE
-                holder.getView<View>(R.id.tvLabelInvolve).isClickable = false
             }
 
             if (item.choice == "1") {

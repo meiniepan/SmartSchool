@@ -18,7 +18,7 @@
 
         <TextView
             android:id="@+id/tvConfirm"
-            style="@style/button_blue_bac_5_style"
+            style="@style/button_blue_line_5_style"
             android:layout_alignParentEnd="true"
             android:visibility="gone"
             android:layout_centerVertical="true"
@@ -211,6 +211,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingStart="@dimen/title_padding"
+                android:visibility="gone"
                 android:paddingEnd="@dimen/title_padding"
                 android:paddingBottom="0dp">
 

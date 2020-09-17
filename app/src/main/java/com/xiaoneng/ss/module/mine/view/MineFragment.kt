@@ -41,6 +41,12 @@ MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
         super.initView()
         tvNameMine.text = UserInfo.getUserBean().realname
 
+        if (UserInfo.getUserBean().usertype == "1" &&
+            UserInfo.getUserBean().logintype == Constant.LOGIN_TYPE_PAR
+        ) {
+            tvNameMine.text = UserInfo.getUserBean().parentname
+        }
+
         when (UserInfo.getUserBean().usertype) {
             "1" -> {
                 if ((UserInfo.getUserBean().logintype) == Constant.LOGIN_TYPE_STU) {
@@ -49,6 +55,7 @@ MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
                 } else {
                     llItem3.visibility = View.VISIBLE
                     llItem6.visibility = View.GONE
+                    llItem2.visibility = View.GONE
                 }
                 llItem4.visibility = View.GONE
             }
@@ -99,8 +106,10 @@ MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
         }
 
         llItem5.setOnClickListener {
-            requireActivity().mAlert("切换身份后将改变您的操作权限",
-                "是否确认切换身份") {
+            requireActivity().mAlert(
+                "切换身份后将改变您的操作权限",
+                "是否确认切换身份"
+            ) {
                 mStartActivity<LoginSwitchActivity>(requireContext())
                 AppManager.finishAllActivity()
             }
@@ -129,11 +138,17 @@ MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        initAvatar()
+        if (UserInfo.getUserBean().usertype == "1" &&
+            UserInfo.getUserBean().logintype == Constant.LOGIN_TYPE_PAR
+        ) {
+
+        } else {
+            initAvatar()
+        }
     }
 
     private fun initAvatar() {
-        val mAvatarFileName:String = UserInfo.getUserBean().portrait.split("/").last()
+        val mAvatarFileName: String = UserInfo.getUserBean().portrait.split("/").last()
         if (!TextUtils.isEmpty(mAvatarFileName)) {
             if (File(mDownloadFile(requireContext(), mAvatarFileName)).exists()) {
                 displayImage(
@@ -160,7 +175,7 @@ MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
     }
 
     private fun doDownload(it: StsTokenResp) {
-        val mAvatarFileName:String = UserInfo.getUserBean().portrait.split("/").last()
+        val mAvatarFileName: String = UserInfo.getUserBean().portrait.split("/").last()
         showLoading()
         OssUtils.downloadFile(
             requireContext(),

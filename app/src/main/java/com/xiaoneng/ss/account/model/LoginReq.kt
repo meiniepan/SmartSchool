@@ -8,7 +8,7 @@ package com.xiaoneng.ss.account.model
  * Time: 19:54
  */
 data class LoginReq(
-    var phone : String,
-    var vcode : String,
-    var spassword : String = ""
+    var phone: String,
+    var vcode: String? = null,
+    var spassword: String? = null
 )

@@ -377,7 +377,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
     }
 
-    suspend fun modifyTaskStatus(body:TaskDetailBean): Any {
+    suspend fun modifyTaskStatus(body:TaskBean): Any {
         return apiService.modifyTaskStatus(body)
                     .dataConvert(loadState)
 

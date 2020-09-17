@@ -13,6 +13,7 @@ import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.school.adapter.TaskStatusAdapter
 import com.xiaoneng.ss.module.school.model.TaskBean
+import com.xiaoneng.ss.module.school.model.TaskDetailBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.fragment_task_status.*
 
@@ -24,9 +25,10 @@ import kotlinx.android.synthetic.main.fragment_task_status.*
  * Time: 17:01
  */
 class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
-    private var status: String? = ""
+    private var status: String? = null
+    private var type: String? = null
     lateinit var mAdapter: TaskStatusAdapter
-    var mData = ArrayList<TaskBean>()
+    var mData = ArrayList<TaskDetailBean>()
 
     override fun getLayoutId(): Int = R.layout.fragment_task_status
 
@@ -39,6 +41,7 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
 
     override fun initView() {
         status = arguments?.getString(Constant.TASK_STATUS)
+        type = arguments?.getString(Constant.TYPE)
         super.initView()
         initAdapter()
     }
@@ -68,17 +71,23 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     }
 
 
+    override fun getData() {
+        rvTaskStatus.showLoadingView()
+        //任务状态0待发布1进行中2完成3关闭
+        if (status == "-1") {
+            mViewModel.getTaskList()
+        } else {
+            if (type == "1") {
+                mViewModel.getTaskList(status = status ?: "")
+            } else if (type == "2"){
+                mViewModel.getPublishTaskList(status = status ?: "")
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         getData()
-    }
-
-    override fun getData() {
-        if (status != "-1") {
-            mViewModel.getTaskList(status = status!!)
-        } else {
-            mViewModel.getTaskList()
-        }
     }
 
 
@@ -88,11 +97,7 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                 rvTaskStatus.finishRefreshLoadMore()
                 mData.clear()
                 mData.addAll(it.data)
-                if (mData.size > 0) {
-                    rvTaskStatus.notifyDataSetChanged()
-                } else {
-                    rvTaskStatus.showEmptyView()
-                }
+                rvTaskStatus.notifyDataSetChanged()
             }
         })
 
