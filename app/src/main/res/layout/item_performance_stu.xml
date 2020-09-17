@@ -11,13 +11,14 @@
         android:layout_height="44dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="32dp"
-        android:paddingEnd="32dp">
+        android:paddingStart="@dimen/title_padding"
+        android:paddingEnd="@dimen/title_padding">
 
         <TextView
             android:id="@+id/tvTimePerformance"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:paddingStart="9dp"
             android:layout_height="wrap_content"
             android:text=""
 
@@ -40,9 +41,9 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="end"
+            android:paddingEnd="9dp"
             android:layout_height="wrap_content"
             android:text=""
-
             />
 
     </LinearLayout>
