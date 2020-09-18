@@ -18,5 +18,5 @@ data class TaskLogRequest(
     var fileinfo: String? = null,
     var examine: String? = null,
     var examinestatus: String? = null,
-    var status: String? = null
+    var completestatus: String? = null
 ) : Parcelable

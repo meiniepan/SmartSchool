@@ -81,6 +81,7 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
         mViewModel.mReadData.observe(this, Observer { response ->
             response?.let {
                 toast(R.string.deal_done)
+                getData()
             }
         })
     }
