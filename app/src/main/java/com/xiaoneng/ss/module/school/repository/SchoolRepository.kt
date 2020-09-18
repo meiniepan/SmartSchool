@@ -323,24 +323,24 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
-    suspend fun getTaskInfo(id:String): Any {
+    suspend fun getTaskInfo(id:String,type:String? = null): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
                 apiService.getTaskInfoStu(UserInfo.getUserBean().token,id)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getTaskInfoTea(UserInfo.getUserBean().token,id)
+                apiService.getTaskInfoTea(UserInfo.getUserBean().token,id,type)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.getTaskInfoTea(UserInfo.getUserBean().token,id)
+                apiService.getTaskInfoTea(UserInfo.getUserBean().token,id,type)
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.getTaskInfoTea(UserInfo.getUserBean().token,id)
+                apiService.getTaskInfoTea(UserInfo.getUserBean().token,id,type)
                     .dataConvert(loadState)
 
             }

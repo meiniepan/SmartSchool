@@ -172,27 +172,38 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun initViewPager2() {
         fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "-1") }
-        })
-        fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "1")
-                putString(Constant.TYPE, "2")}
-        })
-        fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "0")
-                putString(Constant.TYPE, "2")}
-        })
-        fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "3")
-                putString(Constant.TYPE, "2")}
-        })
-        fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "0")
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "-1")
                 putString(Constant.TYPE, "1")}
         })
         fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "1")
-                putString(Constant.TYPE, "1")}
+            arguments = Bundle().apply {
+                putString(Constant.TASK_STATUS, "1")
+                putString(Constant.TYPE, "2")
+            }
+        })
+        fragmentList.add(TaskStatusFragment.getInstance().apply {
+            arguments = Bundle().apply {
+                putString(Constant.TASK_STATUS, "0")
+                putString(Constant.TYPE, "2")
+            }
+        })
+        fragmentList.add(TaskStatusFragment.getInstance().apply {
+            arguments = Bundle().apply {
+                putString(Constant.TASK_STATUS, "3")
+                putString(Constant.TYPE, "2")
+            }
+        })
+        fragmentList.add(TaskStatusFragment.getInstance().apply {
+            arguments = Bundle().apply {
+                putString(Constant.TASK_STATUS, "0")
+                putString(Constant.TYPE, "1")
+            }
+        })
+        fragmentList.add(TaskStatusFragment.getInstance().apply {
+            arguments = Bundle().apply {
+                putString(Constant.TASK_STATUS, "1")
+                putString(Constant.TYPE, "1")
+            }
         })
         fragmentAdapter = FragmentVpAdapter(
             supportFragmentManager,
@@ -232,7 +243,8 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun initViewPager1() {
         fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "-1") }
+            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "-1")
+                putString(Constant.TYPE, "1")}
         })
         fragmentList.add(TaskStatusFragment.getInstance().apply {
             arguments = Bundle().apply {
@@ -241,8 +253,10 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
         })
         fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "1")
-                putString(Constant.TYPE, "1")}
+            arguments = Bundle().apply {
+                putString(Constant.TASK_STATUS, "1")
+                putString(Constant.TYPE, "1")
+            }
         })
 
         fragmentAdapter = FragmentVpAdapter(

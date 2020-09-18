@@ -12,7 +12,6 @@ import com.xiaoneng.ss.common.utils.RecycleViewDivider
 import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.school.adapter.TaskStatusAdapter
-import com.xiaoneng.ss.module.school.model.TaskBean
 import com.xiaoneng.ss.module.school.model.TaskDetailBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.fragment_task_status.*
@@ -26,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_task_status.*
  */
 class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     private var status: String? = null
-    private var type: String? = null
+    private var mType: String? = null
     lateinit var mAdapter: TaskStatusAdapter
     var mData = ArrayList<TaskDetailBean>()
 
@@ -41,7 +40,7 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
 
     override fun initView() {
         status = arguments?.getString(Constant.TASK_STATUS)
-        type = arguments?.getString(Constant.TYPE)
+        mType = arguments?.getString(Constant.TYPE)
         super.initView()
         initAdapter()
     }
@@ -57,6 +56,7 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
             }
         })
         mAdapter = TaskStatusAdapter(R.layout.item_task_status, mData)
+        mAdapter.setType(mType?:"")
         rvTaskStatus.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(RecycleViewDivider(context, dp2px(context, 10f).toInt()))
@@ -66,6 +66,7 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
 
             mStartActivity<TaskDetailActivity>(context) {
                 putExtra(Constant.ID, mData[position].id)
+                putExtra(Constant.TYPE, mType)
             }
         }
     }
@@ -77,9 +78,9 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         if (status == "-1") {
             mViewModel.getTaskList()
         } else {
-            if (type == "1") {
+            if (mType == "1") {
                 mViewModel.getTaskList(status = status ?: "")
-            } else if (type == "2"){
+            } else if (mType == "2"){
                 mViewModel.getPublishTaskList(status = status ?: "")
             }
         }

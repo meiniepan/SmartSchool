@@ -27,10 +27,13 @@ data class TaskDetailBean(
     var ordertime: String = "",
     var type: String = "",
     var status: String = "",//0待发布(草稿)1进行中2完成3关闭
+    var completestatus: String = "",//0未完成1已完成
     var schoolname: String = "",
     var schoolid: String = "",
     var operatorname: String = "",
     var operatortype: String = "",
+    var createtime: String = "",
+    var updatetime: String = "",
     var tasklist: MutableList<LogBean> = ArrayList(),
     var operatorid: String = ""
 )

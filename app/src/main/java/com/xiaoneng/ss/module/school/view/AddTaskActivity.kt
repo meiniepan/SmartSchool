@@ -121,7 +121,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
 
     private fun initAdapter() {
-        mAdapter = InvolveSimpleAdapter(R.layout.item_involve, mData)
+        mAdapter = InvolveSimpleAdapter(R.layout.item_involve2, mData)
         rvParticipant.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = mAdapter
@@ -132,14 +132,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAdapterPrincipal() {
-        mAdapterPrincipal = InvolveSimpleAdapter(R.layout.item_involve, mDataPrincipal)
-        rvPrincipal.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = mAdapterPrincipal
-        }
-        mAdapterPrincipal.setOnItemClickListener { _, view, position ->
 
-        }
     }
 
 

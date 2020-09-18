@@ -33,7 +33,8 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapterPrincipal: InvolveSimpleAdapter
     var mDataInvolve = ArrayList<UserBeanSimple>()
     var mDataPrincipal = ArrayList<UserBeanSimple>()
-    lateinit var taskBean:TaskDetailBean
+    lateinit var taskBean: TaskDetailBean
+    private var type: String? = null
     override fun getLayoutId(): Int {
         return R.layout.activity_task_detail
     }
@@ -41,13 +42,14 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initView() {
         super.initView()
         id = intent.getStringExtra(Constant.ID)
+        type = intent.getStringExtra(Constant.TYPE)
         tvAddLogTaskDetail.setOnClickListener {
             mStartActivity<AddLogActivity>(this) {
                 putExtra(Constant.DATA, myLogBean)
             }
         }
         tvConfirm.setOnClickListener {
-            mAlert("是否关闭任务"){
+            mAlert("是否关闭任务") {
                 closeTask()
             }
         }
@@ -73,7 +75,11 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun getData() {
         super.getData()
         showLoading()
-        mViewModel.getTaskInfo(id)
+        if (type == "1") {
+            mViewModel.getTaskInfo(id)
+        } else if (type == "2"){
+            mViewModel.getTaskInfo(id,"task")
+        }
     }
 
     private fun initAdapter() {
@@ -113,7 +119,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAdapterInvolve() {
-        mAdapterInvolve = InvolveSimpleAdapter(R.layout.item_involve, mDataInvolve)
+        mAdapterInvolve = InvolveSimpleAdapter(R.layout.item_involve2, mDataInvolve)
         rvParticipant.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = mAdapterInvolve
@@ -124,14 +130,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAdapterPrincipal() {
-        mAdapterPrincipal = InvolveSimpleAdapter(R.layout.item_involve, mDataPrincipal)
-        rvPrincipal.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = mAdapterPrincipal
-        }
-        mAdapterPrincipal.setOnItemClickListener { _, view, position ->
 
-        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -147,7 +146,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     DateUtil.showTimeFromNet(endTime, tvEndDate, tvEndTime)
                     tvRemark6.text = it.remark
                     tvPublishName.text = "发布人:  " + it.operatorname
-                    tvPublishTime.text = "发布时间:  " + it.operatorname
+                    tvPublishTime.text = "发布时间:  " + it.createtime
 
                     //是否是发布人
                     isOperator = it.operatorid == UserInfo.getUserBean().uid

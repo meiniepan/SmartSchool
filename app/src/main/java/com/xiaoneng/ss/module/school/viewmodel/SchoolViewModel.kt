@@ -180,9 +180,9 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getTaskInfo(id:String) {
+    fun getTaskInfo(id:String,type:String? = null) {
         initiateRequest(
-            { mBaseData.value = mRepository.getTaskInfo(id) },
+            { mBaseData.value = mRepository.getTaskInfo(id,type) },
             loadState
         )
     }

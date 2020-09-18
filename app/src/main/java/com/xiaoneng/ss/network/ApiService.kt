@@ -727,7 +727,8 @@ interface ApiService {
     @POST("/api/v1/teacher/tasks/info")
     suspend fun getTaskInfoTea(
         @Field("token") token: String,
-        @Field("id") id: String
+        @Field("id") id: String,
+        @Field("type") type: String? = null
     ): BaseResponse<Any>
 
     /**
