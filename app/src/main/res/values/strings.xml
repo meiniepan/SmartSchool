@@ -52,4 +52,5 @@
     <string name="navigation_4">4</string>
     <string name="not_open">暂未开通</string>
     <string name="at_u">\@我</string>
+    <string name="net_error_m">网络异常</string>
 </resources>

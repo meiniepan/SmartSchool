@@ -382,5 +382,10 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                     .dataConvert(loadState)
 
     }
+    suspend fun delTaskDraft(id:String): Any {
+        return apiService.delTaskDraft(UserInfo.getUserBean().token,id)
+                    .dataConvert(loadState)
+
+    }
 
 }

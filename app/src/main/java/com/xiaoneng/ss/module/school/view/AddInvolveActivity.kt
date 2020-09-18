@@ -17,6 +17,7 @@ import com.xiaoneng.ss.module.school.adapter.InvolvePerson2Adapter
 import com.xiaoneng.ss.module.school.adapter.QueryStudentAdapter
 import com.xiaoneng.ss.module.school.model.ClassesResponse
 import com.xiaoneng.ss.module.school.model.DepartmentBean
+import com.xiaoneng.ss.module.school.model.DepartmentPersonBean
 import com.xiaoneng.ss.module.school.model.LeaveBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_add_involve.*
@@ -50,6 +51,8 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
+        mDataDepartment = intent.getParcelableArrayListExtra(Constant.DATA)
+        mDataClasses = intent.getParcelableArrayListExtra(Constant.DATA2)
         initAdapterQuery()
         initTab()
         initAdapterDepart()
@@ -59,7 +62,8 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 EditorInfo.IME_ACTION_SEARCH -> {
                     if (etSearch.text.toString().isNotEmpty()) {
                         showLoading()
-                        mViewModel.queryStudent(etSearch.text.toString())
+//                        mViewModel.queryStudent(etSearch.text.toString())
+                        mViewModel.listByDepartment(realName = etSearch.text.toString())
                     }
                 }
 
@@ -82,7 +86,10 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         tvConfirm.setOnClickListener {
-            setResult(Activity.RESULT_OK, intent.putExtra(Constant.DATA, mDataInvolve))
+           var mIntent=  intent
+            mIntent.putParcelableArrayListExtra(Constant.DATA,mDataDepartment)
+            mIntent.putParcelableArrayListExtra(Constant.DATA2,mDataClasses)
+            setResult(Activity.RESULT_OK, mIntent)
             finish()
         }
 
@@ -90,10 +97,26 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initData() {
         super.initData()
-        showLoading()
-        rvDepartment.showLoadingView()
-        mViewModel.getClassesByTea()
-        mViewModel.queryDepartments()
+        if (mDataDepartment.size > 0 || mDataClasses.size > 0) {
+            mAdapterDepartment.notifyDataSetChanged()
+            mDataDepartment.forEach {
+                if (it.list.size > 0) {
+                    mDataInvolve.addAll(it.list)
+                }
+            }
+            mDataClasses.forEach {
+                if (it.list.size > 0) {
+                    mDataInvolve.addAll(it.list)
+                }
+            }
+            mAdapterInvolve.notifyDataSetChanged()
+            setPersonNum()
+        } else {
+
+            showLoading()
+            mViewModel.getClassesByTea()
+            mViewModel.queryDepartments()
+        }
 //        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
 //        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
 //        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
@@ -180,16 +203,18 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             mAdapterInvolve.setOnItemClickListener { adapter, view, position ->
 
                 mDataDepartment.forEach {
-                    if (it.id == mDataInvolve[position].parentId){
-                        if (it.num!!.toInt()>0){
-                            it.num = (it.num!!.toInt()-1).toString()
+                    if (it.id == mDataInvolve[position].parentId) {
+                        if (it.num!!.toInt() > 0) {
+                            it.list.remove(mDataInvolve[position])
+                            it.num = (it.num!!.toInt() - 1).toString()
                         }
                     }
                 }
                 mDataClasses.forEach {
-                    if (it.id == mDataInvolve[position].parentId){
-                        if (it.num!!.toInt()>0){
-                            it.num = (it.num!!.toInt()-1).toString()
+                    if (it.id == mDataInvolve[position].parentId) {
+                        if (it.num!!.toInt() > 0) {
+                            it.list.remove(mDataInvolve[position])
+                            it.num = (it.num!!.toInt() - 1).toString()
                         }
                     }
                 }
@@ -275,11 +300,18 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mStudentData.observe(this, Observer { response ->
             response?.let {
-                showSuccess()
                 rvSearchInvolve.visibility = View.VISIBLE
                 mDataQuery.clear()
                 mDataQuery.addAll(it.data)
                 rvSearchInvolve.notifyDataSetChanged()
+            }
+        })
+
+        mViewModel.mDepartmentPersonData.observe(this, Observer { response ->
+            response?.let {
+                netResponseFormat<ArrayList<DepartmentPersonBean>>(it)?.let {
+
+                }
             }
         })
 

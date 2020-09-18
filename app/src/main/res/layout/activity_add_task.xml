@@ -29,13 +29,13 @@
     <include layout="@layout/layout_split_tint_10" />
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/contentLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         >
 
         <LinearLayout
+            android:id="@+id/contentLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -270,6 +270,12 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
-
+        <ImageView
+            android:id="@+id/ivDustbin"
+            android:visibility="gone"
+            android:layout_width="@dimen/title_height"
+            android:layout_height="@dimen/title_height"
+            android:scaleType="center"
+            android:src="@drawable/ic_dustbin" />
     </LinearLayout>
 </LinearLayout>

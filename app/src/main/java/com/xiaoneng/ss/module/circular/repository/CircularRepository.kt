@@ -94,19 +94,19 @@ class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository(
     suspend fun readAll(): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.readAll(UserInfo.getUserBean().token, type = "system")
+                apiService.readAll(UserInfo.getUserBean().token, type = "system",status = "1")
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.readAllTea(UserInfo.getUserBean().token, type = "system")
+                apiService.readAllTea(UserInfo.getUserBean().token, type = "system",status = "1")
                     .dataConvert(loadState)
             }
             "99" -> {
-                apiService.readAllTea(UserInfo.getUserBean().token, type = "system")
+                apiService.readAllTea(UserInfo.getUserBean().token, type = "system",status = "1")
                     .dataConvert(loadState)
             }
             else -> {
-                apiService.readAllTea(UserInfo.getUserBean().token, type = "system")
+                apiService.readAllTea(UserInfo.getUserBean().token, type = "system",status = "1")
                     .dataConvert(loadState)
 
             }

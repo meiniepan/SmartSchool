@@ -21,8 +21,27 @@ class TaskStatusAdapter(layoutId: Int, listData: MutableList<TaskDetailBean>?) :
     override fun convert(viewHolder: BaseViewHolder?, item: TaskDetailBean?) {
         viewHolder?.let { holder ->
             var statusStr = ""
-            var line2Str = "负责人："
-            var line4Str = "参与人："
+            var line2Str = "负责人：" + item?.operatorname
+            var ss = ""
+            item?.involve?.let {
+                ss = if (it.size > 3) {
+                    it[0].name + "、" +
+                            it[1].name + "、" +
+                            it[2].name + "等" + item.involve.size + "人..."
+                } else {
+                    if (it.size > 0) {
+                        it.forEach {
+                           ss = ss + it.name + "、"
+                        }
+                        ss.substring(0,ss.length-1)
+                    } else {
+                        ss
+                    }
+
+                }
+
+            }
+            var line4Str = "参与人：$ss"
             if (type == "1") {
                 when (item?.completestatus) {//任务状态0待发布1进行中2完成3关闭
 
@@ -42,7 +61,7 @@ class TaskStatusAdapter(layoutId: Int, listData: MutableList<TaskDetailBean>?) :
                     }
 
                 }
-            } else if (type == "2"){
+            } else if (type == "2") {
                 when (item?.status) {//任务状态0待发布1进行中2完成3关闭
                     "0" -> {
                         statusStr = "草稿箱"

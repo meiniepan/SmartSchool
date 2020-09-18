@@ -56,17 +56,23 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
             }
         })
         mAdapter = TaskStatusAdapter(R.layout.item_task_status, mData)
-        mAdapter.setType(mType?:"")
+        mAdapter.setType(mType ?: "")
         rvTaskStatus.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(RecycleViewDivider(context, dp2px(context, 10f).toInt()))
             setAdapter(mAdapter)
         }
         mAdapter.setOnItemClickListener { _, view, position ->
-
-            mStartActivity<TaskDetailActivity>(context) {
-                putExtra(Constant.ID, mData[position].id)
-                putExtra(Constant.TYPE, mType)
+            if (mType == "2" && status == "0") {
+                mStartActivity<AddTaskActivity>(context) {
+                    putExtra(Constant.ID, mData[position].id)
+                    putExtra(Constant.TYPE, mType)
+                }
+            } else {
+                mStartActivity<TaskDetailActivity>(context) {
+                    putExtra(Constant.ID, mData[position].id)
+                    putExtra(Constant.TYPE, mType)
+                }
             }
         }
     }
@@ -80,7 +86,7 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         } else {
             if (mType == "1") {
                 mViewModel.getTaskList(status = status ?: "")
-            } else if (mType == "2"){
+            } else if (mType == "2") {
                 mViewModel.getPublishTaskList(status = status ?: "")
             }
         }

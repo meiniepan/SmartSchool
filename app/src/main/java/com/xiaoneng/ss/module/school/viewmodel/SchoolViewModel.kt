@@ -35,6 +35,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mDeleteAttendanceData: MutableLiveData<Any> = MutableLiveData()
     val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
     val mBaseData: MutableLiveData<Any> = MutableLiveData()
+    val mTaskDetailData: MutableLiveData<Any> = MutableLiveData()
     val mRefuseData: MutableLiveData<Any> = MutableLiveData()
     val mModifyTaskStatusData: MutableLiveData<Any> = MutableLiveData()
 
@@ -182,7 +183,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
 
     fun getTaskInfo(id:String,type:String? = null) {
         initiateRequest(
-            { mBaseData.value = mRepository.getTaskInfo(id,type) },
+            { mTaskDetailData.value = mRepository.getTaskInfo(id,type) },
             loadState
         )
     }
@@ -203,6 +204,13 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     fun modifyTaskStatus(body:TaskBean) {
         initiateRequest(
             { mModifyTaskStatusData.value = mRepository.modifyTaskStatus(body) },
+            loadState
+        )
+    }
+
+    fun delTaskDraft(id:String) {
+        initiateRequest(
+            { mBaseData.value = mRepository.delTaskDraft(id) },
             loadState
         )
     }

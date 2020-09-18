@@ -25,7 +25,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var id: String = ""
     lateinit var mAdapterLog: TaskLogAdapter
     var mData: ArrayList<LogBean> = ArrayList()
-    var beginTime: String = System.currentTimeMillis().toString()
+    var beginTime: String = ""
     var endTime: String = ""
     var orderTime: String = ""
     var myLogBean: LogBean = LogBean()
@@ -77,8 +77,8 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         showLoading()
         if (type == "1") {
             mViewModel.getTaskInfo(id)
-        } else if (type == "2"){
-            mViewModel.getTaskInfo(id,"task")
+        } else if (type == "2") {
+            mViewModel.getTaskInfo(id, "task")
         }
     }
 
@@ -120,6 +120,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun initAdapterInvolve() {
         mAdapterInvolve = InvolveSimpleAdapter(R.layout.item_involve2, mDataInvolve)
+        mAdapterInvolve.setMax(5)
         rvParticipant.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = mAdapterInvolve
@@ -135,13 +136,14 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     @SuppressLint("SetTextI18n")
     override fun initDataObserver() {
-        mViewModel.mBaseData.observe(this, Observer { response ->
+        mViewModel.mTaskDetailData.observe(this, Observer { response ->
             response?.let {
                 netResponseFormat<TaskDetailBean>(it)?.let {
                     taskBean = it
                     tvTitleAddTask.text = it.taskname
                     beginTime = it.plantime
-                    endTime = it.overtime
+
+                    it.overtime?.let { endTime = it }
                     DateUtil.showTimeFromNet(beginTime, tvBeginDate, tvBeginTime)
                     DateUtil.showTimeFromNet(endTime, tvEndDate, tvEndTime)
                     tvRemark6.text = it.remark
@@ -156,7 +158,11 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         tvConfirm.visibility = View.GONE
                     }
                     mDataInvolve.clear()
-                    mDataInvolve.addAll(it.involve)
+                    for (i in 0 until it.involve.size) {
+                        if (i < 5) {
+                            mDataInvolve.add(it.involve[i])
+                        }
+                    }
                     mAdapterInvolve.notifyDataSetChanged()
 
                     //处理参与任务列表

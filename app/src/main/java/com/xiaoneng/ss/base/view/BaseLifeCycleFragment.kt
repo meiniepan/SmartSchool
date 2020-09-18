@@ -100,7 +100,7 @@ abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
                     }
                     StateType.LOADING -> showLoading()
                     StateType.ERROR -> showTip(it.message)
-                    StateType.NETWORK_ERROR -> showError("网络异常")
+                    StateType.NETWORK_ERROR -> showError(getString(R.string.error_message))
                     StateType.TIP -> showTip(it.message)
                     StateType.EMPTY -> showEmpty()
                     StateType.NOT_LOGIN -> {

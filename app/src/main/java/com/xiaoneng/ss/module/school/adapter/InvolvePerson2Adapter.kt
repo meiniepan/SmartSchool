@@ -22,8 +22,9 @@ class InvolvePerson2Adapter(layoutId: Int, listData: MutableList<StudentBean>) :
 
     override fun convert(viewHolder: BaseViewHolder?, item: StudentBean) {
         viewHolder?.let { holder ->
+            if (item.realname.isNotEmpty()) {
             holder.setText(R.id.tvLabelInvolve, item.realname.last().toString())
-                .setText(R.id.tvNameInvolve, item.realname)
+                .setText(R.id.tvNameInvolve, item.realname)}
             if (isManager) {
                 holder.getView<View>(R.id.ivNo).visibility = View.VISIBLE
 

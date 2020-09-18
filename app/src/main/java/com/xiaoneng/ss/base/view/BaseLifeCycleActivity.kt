@@ -105,7 +105,7 @@ abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
                     StateType.SUCCESS -> {showSuccess()}
                     StateType.LOADING -> showLoading()
                     StateType.ERROR -> showTip(it.message)
-                    StateType.NETWORK_ERROR -> showError("网络出现问题啦")
+                    StateType.NETWORK_ERROR -> showError(getString(R.string.error_message))
                     StateType.TIP -> showTip(it.message)
                     StateType.EMPTY -> showEmpty()
                     StateType.NOT_LOGIN -> {

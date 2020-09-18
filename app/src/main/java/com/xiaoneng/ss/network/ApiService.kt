@@ -805,5 +805,15 @@ interface ApiService {
         @Field("vcode") vcode: String
     ): BaseResponse<CaptchaResponse>
 
+    /**
+     *  教师删除草稿任务
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/tasks/delTask")
+    suspend fun delTaskDraft(
+        @Field("token") token: String,
+        @Field("id") id: String
+    ): BaseResponse<CaptchaResponse>
+
 }
 

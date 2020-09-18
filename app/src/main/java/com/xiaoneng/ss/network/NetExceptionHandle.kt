@@ -8,7 +8,6 @@ import org.apache.http.conn.ConnectTimeoutException
 import retrofit2.HttpException
 import java.net.ConnectException
 import java.net.UnknownHostException
-import kotlin.Exception
 
 /**
  * Created with Android Studio.
@@ -34,6 +33,9 @@ object NetExceptionHandle {
                     loadState.postValue(State(StateType.NETWORK_ERROR))
                 }
                 is JsonParseException -> {
+                    loadState.postValue(State(StateType.NETWORK_ERROR))
+                }
+                else ->{
                     loadState.postValue(State(StateType.NETWORK_ERROR))
                 }
             }
