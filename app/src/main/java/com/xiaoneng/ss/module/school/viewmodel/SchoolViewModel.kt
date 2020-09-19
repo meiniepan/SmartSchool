@@ -133,7 +133,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
 
     fun listByDepartment(id: String = "", realName: String = "") {
         initiateRequest(
-            { mDepartmentPersonData.value = mRepository.listByDepartment(id,realName) },
+            { mDepartmentPersonData.value = mRepository.listByDepartment(id, realName) },
             loadState
         )
     }
@@ -174,41 +174,42 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getStudentsByClass(classId:String) {
+    fun getStudentsByClass(classId: String) {
         initiateRequest(
             { mBaseData.value = mRepository.getStudentsByClass(classId) },
             loadState
         )
     }
 
-    fun getTaskInfo(id:String,type:String? = null) {
+    fun getTaskInfo(id: String, type: String? = null) {
         initiateRequest(
-            { mTaskDetailData.value = mRepository.getTaskInfo(id,type) },
+            { mTaskDetailData.value = mRepository.getTaskInfo(id, type) },
             loadState
         )
     }
-    fun modifyTaskInfo(body:TaskLogRequest) {
+
+    fun modifyTaskInfo(body: TaskLogRequest) {
         initiateRequest(
             { mBaseData.value = mRepository.modifyTaskInfo(body) },
             loadState
         )
     }
 
-    fun refuseTask(body:TaskLogRequest) {
+    fun refuseTask(body: TaskLogRequest) {
         initiateRequest(
             { mRefuseData.value = mRepository.refuseTask(body) },
             loadState
         )
     }
 
-    fun modifyTaskStatus(body:TaskBean) {
+    fun modifyTaskStatus(body: TaskBean) {
         initiateRequest(
             { mModifyTaskStatusData.value = mRepository.modifyTaskStatus(body) },
             loadState
         )
     }
 
-    fun delTaskDraft(id:String) {
+    fun delTaskDraft(id: String) {
         initiateRequest(
             { mBaseData.value = mRepository.delTaskDraft(id) },
             loadState

@@ -60,11 +60,11 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
     suspend fun getPublishTaskList(pagenum: String, status: String): TaskResponse {
         return apiService.getPublishTaskListTea(
-                    UserInfo.getUserBean().token,
-                    pagenum = pagenum,
-                    status = status
-                )
-                    .dataConvert(loadState)
+            UserInfo.getUserBean().token,
+            pagenum = pagenum,
+            status = status
+        )
+            .dataConvert(loadState)
 
     }
 
@@ -232,8 +232,13 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         return apiService.queryDepartments(UserInfo.getUserBean().token)
             .dataConvert(loadState)
     }
+
     suspend fun listByDepartment(id: String, realName: String): Any {
-        return apiService.listByDepartment(UserInfo.getUserBean().token,depid = id,realname = realName)
+        return apiService.listByDepartment(
+            UserInfo.getUserBean().token,
+            depid = id,
+            realname = realName
+        )
             .dataConvert(loadState)
     }
 
@@ -318,36 +323,36 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
-    suspend fun getStudentsByClass(classId:String): Any {
-        return apiService.getStudentsByClass(UserInfo.getUserBean().token,classId)
+    suspend fun getStudentsByClass(classId: String): Any {
+        return apiService.getStudentsByClass(UserInfo.getUserBean().token, classId)
             .dataConvert(loadState)
     }
 
-    suspend fun getTaskInfo(id:String,type:String? = null): Any {
+    suspend fun getTaskInfo(id: String, type: String? = null): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.getTaskInfoStu(UserInfo.getUserBean().token,id)
+                apiService.getTaskInfoStu(UserInfo.getUserBean().token, id)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getTaskInfoTea(UserInfo.getUserBean().token,id,type)
+                apiService.getTaskInfoTea(UserInfo.getUserBean().token, id, type)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.getTaskInfoTea(UserInfo.getUserBean().token,id,type)
+                apiService.getTaskInfoTea(UserInfo.getUserBean().token, id, type)
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.getTaskInfoTea(UserInfo.getUserBean().token,id,type)
+                apiService.getTaskInfoTea(UserInfo.getUserBean().token, id, type)
                     .dataConvert(loadState)
 
             }
         }
     }
 
-    suspend fun modifyTaskInfo(body:TaskLogRequest): Any {
+    suspend fun modifyTaskInfo(body: TaskLogRequest): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
                 apiService.modifyTaskInfoStu(body)
@@ -371,20 +376,21 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         }
     }
 
-    suspend fun refuseTask(body:TaskLogRequest): Any {
+    suspend fun refuseTask(body: TaskLogRequest): Any {
         return apiService.refuseTask(body)
-                    .dataConvert(loadState)
+            .dataConvert(loadState)
 
     }
 
-    suspend fun modifyTaskStatus(body:TaskBean): Any {
+    suspend fun modifyTaskStatus(body: TaskBean): Any {
         return apiService.modifyTaskStatus(body)
-                    .dataConvert(loadState)
+            .dataConvert(loadState)
 
     }
-    suspend fun delTaskDraft(id:String): Any {
-        return apiService.delTaskDraft(UserInfo.getUserBean().token,id)
-                    .dataConvert(loadState)
+
+    suspend fun delTaskDraft(id: String): Any {
+        return apiService.delTaskDraft(UserInfo.getUserBean().token, id)
+            .dataConvert(loadState)
 
     }
 

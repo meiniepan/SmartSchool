@@ -86,9 +86,9 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         tvConfirm.setOnClickListener {
-           var mIntent=  intent
-            mIntent.putParcelableArrayListExtra(Constant.DATA,mDataDepartment)
-            mIntent.putParcelableArrayListExtra(Constant.DATA2,mDataClasses)
+            var mIntent = intent
+            mIntent.putParcelableArrayListExtra(Constant.DATA, mDataDepartment)
+            mIntent.putParcelableArrayListExtra(Constant.DATA2, mDataClasses)
             setResult(Activity.RESULT_OK, mIntent)
             finish()
         }
