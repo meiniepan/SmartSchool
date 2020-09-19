@@ -54,15 +54,17 @@
         android:layout_marginStart="50dp"
         android:background="@color/tintBac"
         android:paddingStart="10dp"
-        android:paddingTop="10dp" />
+        android:paddingTop="10dp"
+        android:visibility="gone" />
 
-    <androidx.core.widget.NestedScrollView style="@style/nes_scroll_style">
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/contentLayout"
+        style="@style/nes_scroll_style">
 
         <LinearLayout
-            android:id="@+id/contentLayout"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/tintBac"
             android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -76,8 +78,10 @@
             <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
                 android:id="@+id/rvTimetable"
                 style="@style/recycler_style"
+                android:background="@color/tintBac"
                 android:paddingStart="10dp"
-                android:paddingTop="10dp" />
+                android:paddingTop="10dp"
+                android:visibility="gone" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

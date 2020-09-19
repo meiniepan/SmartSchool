@@ -48,7 +48,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
         <activity
             android:name=".module.activity.MainActivity"
@@ -123,9 +125,7 @@
         <activity
             android:name=".module.circular.view.AddScheduleActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".module.school.view.PerformanceMasterActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".module.school.view.PerformanceActivity"
             android:screenOrientation="portrait" />
@@ -141,7 +141,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.school.view.TimetableActivity"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|keyboardHidden|navigation|locale"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".module.mine.view.AddParentActivity"
             android:screenOrientation="portrait" />
@@ -154,9 +158,15 @@
         <activity
             android:name=".module.school.view.Attendance2CourseActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".module.mine.view.UserProtocolActivity" />
-        <activity android:name=".module.school.view.AddInvolveActivity" />
-        <activity android:name=".module.school.view.InvolvePersonActivity" />
+        <activity
+            android:name=".module.mine.view.UserProtocolActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.AddInvolveActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.InvolvePersonActivity"
+            android:screenOrientation="portrait" />
 
 
         <provider

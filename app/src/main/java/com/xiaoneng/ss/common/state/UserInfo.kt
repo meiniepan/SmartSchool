@@ -77,6 +77,7 @@ object UserInfo {
     }
 
     fun logoutSuccess() {
+        isLogin = false
         var bean = getUserBean()
         bean.token = ""
         userInfoJson = Gson().toJson(bean)

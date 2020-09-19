@@ -220,6 +220,7 @@ fun Context.mAlert(
     title: String? = null,
     confirmText: String? = null,
     cancelText: String? = null,
+    cancelOutside: Boolean = true,
     onConfirm: () -> Unit
 ) {
     MaterialDialog(this).show {
@@ -230,6 +231,7 @@ fun Context.mAlert(
         positiveButton {
             onConfirm()
         }
+        cancelOnTouchOutside(cancelOutside)
     }
 }
 

@@ -30,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginBottom="44dp"
+        android:visibility="gone"
         android:textSize="@dimen/sp_16"
         android:text="取消"
         android:layout_marginStart="12dp"

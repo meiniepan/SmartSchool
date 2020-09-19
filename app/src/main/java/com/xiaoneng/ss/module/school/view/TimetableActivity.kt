@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.DateUtil
-import com.xiaoneng.ss.common.utils.RecycleViewDivider
-import com.xiaoneng.ss.common.utils.dp2px
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.common.utils.eventBus.ChangeMasterTimetableEvent
 import com.xiaoneng.ss.model.ClassBean
 import com.xiaoneng.ss.module.school.adapter.DialogListAdapter
@@ -32,7 +30,7 @@ import kotlin.collections.ArrayList
  * Time: 17:01
  */
 class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-
+    private var isLogin: Boolean by SPreference(Constant.LOGIN_KEY, false)
     private var curTit: Int = 1
     private var hasInitClass: Boolean = false
     private var mClassPosition = 0
@@ -57,16 +55,6 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
-        if (UserInfo.getUserBean().classmaster == "1") {
-            ChangeMasterTimetableEvent(true).post()
-            llClassTimetable.visibility = View.VISIBLE
-            tvTab1.setOnClickListener {
-                typeDialog.show()
-            }
-            tvTab2.setOnClickListener {
-                classDialog.show()
-            }
-        }
 
         initAdapterLabel()
         initAdapter()
@@ -75,7 +63,15 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initData() {
         super.initData()
-
+        if (UserInfo.getUserBean().token.isNullOrEmpty()){
+            mAlert(
+                "请先登录",cancelOutside = false
+            ) {
+                mainLogin(this)
+            }
+            return
+        }
+        showLoading()
         mViewModel.getTimetable()
 
     }
@@ -241,6 +237,18 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mTimetableData.observe(this, Observer { response ->
             response?.let {
+                if (UserInfo.getUserBean().classmaster == "1") {
+                    ChangeMasterTimetableEvent(true).post()
+                    llClassTimetable.visibility = View.VISIBLE
+                    tvTab1.setOnClickListener {
+                        typeDialog.show()
+                    }
+                    tvTab2.setOnClickListener {
+                        classDialog.show()
+                    }
+                }
+                rvTitleTimetable.visibility = View.VISIBLE
+                rvTimetable.visibility = View.VISIBLE
                 //初始化时间段数据
                 mLabelData.clear()
                 mLabelData.addAll(it.positions)

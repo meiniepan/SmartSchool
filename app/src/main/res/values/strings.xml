@@ -28,6 +28,9 @@
 
 
 
+    <string name="timetable">课表</string>
+
+
     <string name="choose_color">选择颜色</string>
     <string name="night_mode">夜间模式</string>
     <string name="clear_cache">清除缓存</string>
