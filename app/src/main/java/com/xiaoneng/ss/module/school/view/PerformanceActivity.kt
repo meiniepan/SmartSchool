@@ -70,6 +70,7 @@ class PerformanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initData() {
         super.initData()
+        showLoading()
         rvPerformance.showLoadingView()
         mViewModel.getTestCourse()
         when (UserInfo.getUserBean().usertype) {

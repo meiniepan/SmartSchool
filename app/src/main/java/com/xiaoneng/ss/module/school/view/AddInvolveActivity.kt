@@ -15,10 +15,7 @@ import com.xiaoneng.ss.model.StudentBean
 import com.xiaoneng.ss.module.school.adapter.DepartmentAdapter
 import com.xiaoneng.ss.module.school.adapter.InvolvePerson2Adapter
 import com.xiaoneng.ss.module.school.adapter.QueryStudentAdapter
-import com.xiaoneng.ss.module.school.model.ClassesResponse
-import com.xiaoneng.ss.module.school.model.DepartmentBean
-import com.xiaoneng.ss.module.school.model.DepartmentPersonBean
-import com.xiaoneng.ss.module.school.model.LeaveBean
+import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_add_involve.*
 import kotlinx.android.synthetic.main.activity_add_student.etSearch
@@ -41,7 +38,10 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var mDataQuery = ArrayList<StudentBean>()
     var mDataDepartment = ArrayList<DepartmentBean>()
     var mDataClasses = ArrayList<DepartmentBean>()
-    var mDataInvolve = ArrayList<StudentBean>()
+    var mDataDepartment2 = ArrayList<DepartmentBean>()
+    var mDataClasses2 = ArrayList<DepartmentBean>()
+    var mDataInvolve: MutableList<StudentBean> = ArrayList()
+    var mReceiveList: MutableList<UserBeanSimple>? = ArrayList()
     var isManage = false
     lateinit var chosenDay: String
 
@@ -53,6 +53,68 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.initView()
         mDataDepartment = intent.getParcelableArrayListExtra(Constant.DATA)
         mDataClasses = intent.getParcelableArrayListExtra(Constant.DATA2)
+        mReceiveList = intent.getParcelableArrayListExtra(Constant.DATA3)
+        mReceiveList?.let {
+            if (it.size > 0) {
+                it.forEach {
+                    var pId = ""
+                    if (it.topdepartid == "grade0") {
+                        pId = tab2 + "_" + it.secdepartid
+                    } else {
+                        pId = tab1 + "_" + it.topdepartid
+                    }
+                    mDataInvolve.add(
+                        StudentBean(
+                            uid = it.uid ?: "",
+                            realname = it.name ?: "",
+                            usertype = it.usertype ?: "",
+                            topdepartid = it.topdepartid ?: "",
+                            secdepartid = it.secdepartid ?: "",
+                            choice = "1",
+                            parentId = pId
+                        )
+                    )
+                }
+                var mMap1 = HashMap<String, ArrayList<StudentBean>>()
+                var mMap2 = HashMap<String, ArrayList<StudentBean>>()
+                mDataInvolve.forEach {
+                    if (it.topdepartid == "grade0") {
+                        if (mMap2.get(it.secdepartid) == null) {
+                            var mList = ArrayList<StudentBean>()
+                            mList.add(it)
+                            it.secdepartid?.let { it1 -> mMap2.put(it1, mList) }
+                        } else {
+
+                            it.secdepartid?.let { it1 ->
+                                var mList = mMap2.get(it1)
+                                mList!!.add(it)
+                                mMap2.put(it1, mList)
+                            }
+                        }
+                    } else {
+                        if (mMap1.get(it.topdepartid) == null) {
+                            var mList = ArrayList<StudentBean>()
+                            mList.add(it)
+                            it.topdepartid?.let { it1 -> mMap1.put(it1, mList) }
+                        } else {
+
+                            it.topdepartid?.let { it1 ->
+                                var mList = mMap1.get(it1)
+                                mList!!.add(it)
+                                mMap1.put(it1, mList)
+                            }
+                        }
+                    }
+                }
+                mMap1.forEach {
+                    mDataDepartment2.add(DepartmentBean(it.key, "", it.value))
+                }
+                mMap2.forEach {
+                    mDataClasses2.add(DepartmentBean(it.key, "", it.value))
+                }
+                setPersonNum()
+            }
+        }
         initAdapterQuery()
         initTab()
         initAdapterDepart()
@@ -114,7 +176,6 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         } else {
 
             showLoading()
-            mViewModel.getClassesByTea()
             mViewModel.queryDepartments()
         }
 //        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
@@ -289,7 +350,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private fun setPersonNum() {
 
         if (mDataInvolve.size > 0) {
-            tvConfirm.text = "确定（" + mDataInvolve.size + ")"
+            tvConfirm.text = "确定(" + mDataInvolve.size + ")"
             llManage.visibility = View.VISIBLE
         } else {
             tvConfirm.text = "确定"
@@ -321,8 +382,21 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mDataClasses.clear()
                     it.forEach {
                         it.list.forEach {
-                            mDataClasses.add(DepartmentBean(tab2 + "_" + it.id, it.classname))
+
+                            mDataClasses.add(DepartmentBean(it.id, it.classname))
                         }
+
+                    }
+                    mDataClasses.forEach {
+                        if (mDataClasses2.size > 0) {
+                            mDataClasses2.forEach { it2 ->
+                                if (it2.id == it.id) {
+                                    it.list = it2.list
+                                    it.num = it2.list.size.toString()
+                                }
+                            }
+                        }
+                        it.id = tab2 + "_" + it.id
                     }
 
                 }
@@ -331,12 +405,22 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         mViewModel.mDepartmentsData.observe(this, Observer { response ->
             response?.let {
+                mViewModel.getClassesByTea()
                 netResponseFormat<ArrayList<DepartmentBean>>(it)?.let {
                     mDataDepartment.clear()
                     mDataDepartment.addAll(it)
                     mDataDepartment.forEach {
+                        if (mDataDepartment2.size > 0) {
+                            mDataDepartment2.forEach { it2 ->
+                                if (it2.id == it.id) {
+                                    it.list = it2.list
+                                    it.num = it2.list.size.toString()
+                                }
+                            }
+                        }
                         it.id = tab1 + "_" + it.id
                     }
+
                     rvDepartment.notifyDataSetChanged()
                 }
             }

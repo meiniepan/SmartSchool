@@ -11,10 +11,11 @@ import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import com.xiaoneng.ss.common.utils.eventBus.ChangeThemeEvent
 import com.xiaoneng.ss.common.utils.ColorUtil
+import com.xiaoneng.ss.common.utils.eventBus.ChangeThemeEvent
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Created with Android Studio.
@@ -83,7 +84,7 @@ abstract class BaseFragment : Fragment() {
         EventBus.getDefault().unregister(this)
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun changeThemeEvent(event: ChangeThemeEvent) {
         initStatusColor(0)
     }

@@ -21,6 +21,7 @@ import com.xiaoneng.ss.common.utils.RevealUtil.setReveal
 import com.xiaoneng.ss.common.utils.eventBus.ChangeThemeEvent
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 /**
@@ -178,7 +179,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun changeThemeEvent(event: ChangeThemeEvent) {
         initStatusColor(0)
     }

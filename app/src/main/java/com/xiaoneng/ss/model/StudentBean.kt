@@ -13,6 +13,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class StudentBean(
     var uid: String = "",
+    var topdepartid: String ? = null,
+    var secdepartid: String ? = null,
     var sno: String = "",
     var parentId: String = "",
     var realname: String = "",

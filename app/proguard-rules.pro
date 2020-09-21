@@ -19,7 +19,84 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+#kotlin
+-keep class kotlin.** { *; }
+-keep class kotlin.Metadata { *; }
+-dontwarn kotlin.**
+-keepclassmembers class **$WhenMappings {
+    <fields>;
+}
+-keepclassmembers class kotlin.Metadata {
+    public <methods>;
+}
+-assumenosideeffects class kotlin.jvm.internal.Intrinsics {
+    static void checkParameterIsNotNull(java.lang.Object, java.lang.String);
+}
 
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+-keepclassmembers class * extends android.app.Activity {
+   public void *(android.view.View);
+}
+-keepclassmembers class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator *;
+}
+-keep class **.R$* {*;}
+-keepclassmembers enum * { *;}
+
+#-----------------不需要混淆系统组件等-------------------------------------------------------------------
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.app.backup.BackupAgentHelper
+-keep public class * extends android.preference.Preference
+-keep public class com.android.vending.licensing.ILicensingService
+
+# 保留我们自定义控件（继承自View）不被混淆
+-keep public class * extends android.view.View{
+    *** get*();
+    void set*(***);
+    public <init>(android.content.Context);
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+
+-keepclasseswithmembers class * {      # 保持自定义控件类不被混淆
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+-keepclasseswithmembers class * {      # 保持自定义控件类不被混淆
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+-keepclassmembers class * extends android.app.Activity { # 保持自定义控件类不被混淆
+    public void *(android.view.View);
+}
+
+# 保留在Activity中的方法参数是view的方法，
+# 这样以来我们在layout中写的onClick就不会被影响
+-keepclassmembers class * extends android.app.Activity{
+    public void *(android.view.View);
+}
+
+
+-keepattributes Signature        #不混淆泛型
+-keepclassmembers class **.R$* { #不混淆资源类
+    public static <fields>;
+}
+-keepclasseswithmembernames class * {  # 保持 native 方法不被混淆
+    native <methods>;
+}
+
+#-keep class com..**{*;}  #过滤掉自己编写的实体类
+-keep class com.xiaoneng.ss.model.**{*;}  #过滤掉自己编写的实体类
+-keep class com.xiaoneng.ss.module.circular.model.**{*;}  #过滤掉自己编写的实体类
+-keep class com.xiaoneng.ss.module.school.model.**{*;}  #过滤掉自己编写的实体类
+-keep class com.xiaoneng.ss.module.mine.model.**{*;}  #过滤掉自己编写的实体类
+
+#oss
 -keep class com.alibaba.sdk.android.oss.** { *; }
 -dontwarn okio.**
 -dontwarn org.apache.commons.codec.binary.**
@@ -38,3 +115,49 @@
 
 #Okio
 -dontwarn org.codehaus.mojo.animal_sniffer.*
+
+#eventbus
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
+
+#loadSir
+-dontwarn com.kingja.loadsir.**
+-keep class com.kingja.loadsir.** {*;}
+
+#-----------------gson----------------------------
+-keep class com.google.**{*;}
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class sun.misc.Unsafe { *; }
+
+#-----------------okhttp3----------------------------
+-dontwarn com.squareup.okhttp3.**
+-keep class com.squareup.okhttp3.** { *;}
+-dontwarn okio.**
+
+#-----------------okhttp----------------------------
+-dontwarn com.squareup.okhttp.**
+-keep class com.squareup.okhttp.** { *;}
+-dontwarn okio.**
+
+#androidx
+-keep class com.google.android.material.** {*;}
+-keep class androidx.** {*;}
+-keep public class * extends androidx.**
+-keep interface androidx.** {*;}
+-dontwarn com.google.android.material.**
+-dontnote com.google.android.material.**
+-dontwarn androidx.**
+
+
+
+
+
+

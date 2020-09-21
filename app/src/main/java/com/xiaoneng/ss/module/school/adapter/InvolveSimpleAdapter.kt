@@ -22,8 +22,8 @@ class InvolveSimpleAdapter(layoutId: Int, listData: MutableList<UserBeanSimple>)
     override fun convert(viewHolder: BaseViewHolder, item: UserBeanSimple) {
         viewHolder?.let { holder ->
             holder.setText(R.id.tvNameInvolve, item.name)
-            if (item.name.isNotEmpty()) {
-                holder.setText(R.id.tvLabelInvolve, item.name.last().toString())
+            if (item.name!!.isNotEmpty()) {
+                holder.setText(R.id.tvLabelInvolve, item.name!!.last().toString())
             }
             if (holder.adapterPosition > max-2) {
                 holder.setText(R.id.tvNameInvolve, "其他参与者")
@@ -31,8 +31,8 @@ class InvolveSimpleAdapter(layoutId: Int, listData: MutableList<UserBeanSimple>)
                 holder.getView<View>(R.id.tvLabelInvolve).setBackgroundResource(R.drawable.ic_other)
             } else {
                 holder.setText(R.id.tvNameInvolve, item.name)
-                if (item.name.isNotEmpty()) {
-                    holder.setText(R.id.tvLabelInvolve, item.name.last().toString())
+                if (item.name!!.isNotEmpty()) {
+                    holder.setText(R.id.tvLabelInvolve, item.name!!.last().toString())
                 }
                 holder.getView<View>(R.id.tvLabelInvolve)
                     .setBackgroundResource(R.drawable.bac_blue_oval)

@@ -21,6 +21,7 @@ object Constant {
     const val LOGIN_TYPE_PAR = "parents"
     const val DATA = "data"
     const val DATA2 = "data2"
+    const val DATA3 = "data3"
     const val TIME = "time"
     const val FLAG = "flag"
     const val BIND_PARENT_SMS = 4

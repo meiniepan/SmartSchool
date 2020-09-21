@@ -11,6 +11,7 @@ import com.xiaoneng.ss.common.utils.eventBus.ChangeMasterTimetableEvent
 import com.xiaoneng.ss.module.school.model.CourseBean
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 /**
@@ -65,7 +66,7 @@ class LessonAdapter(layoutId: Int, listData: MutableList<CourseBean>) :
     fun setColor(has: Boolean) {
         hasColor = has
     }
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun changeThemeEvent(event: ChangeMasterTimetableEvent) {
         isMaster = event.flag
     }

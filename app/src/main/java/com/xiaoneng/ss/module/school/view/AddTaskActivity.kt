@@ -44,6 +44,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var mDataDepartment = ArrayList<DepartmentBean>()
     var mDataClasses = ArrayList<DepartmentBean>()
     var receiveList: ArrayList<UserBeanSimple> = ArrayList()
+    var isDraftFirst: Boolean = true
 
 
     override fun getLayoutId(): Int = R.layout.activity_add_task
@@ -145,6 +146,12 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mStartForResult<AddInvolveActivity>(this, Constant.REQUEST_CODE_COURSE) {
             putExtra(Constant.DATA, mDataDepartment)
             putExtra(Constant.DATA2, mDataClasses)
+            //从草稿箱第一次选择参与人，传入原有参与人数据
+            if (isDraftFirst) {
+                if (receiveList.size > 0) {
+                    putExtra(Constant.DATA3, receiveList)
+                }
+            }
         }
     }
 
@@ -226,6 +233,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constant.REQUEST_CODE_COURSE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
+                isDraftFirst = false
                 mData.clear()
                 receiveList.clear()
                 mDataDepartment = data.getParcelableArrayListExtra(Constant.DATA)

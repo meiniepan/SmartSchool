@@ -2,7 +2,7 @@
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/ic_ziliao"
+        android:icon="@drawable/ic_timetable_sc"
         android:shortcutDisabledMessage="@string/not_open"
         android:shortcutId="timetable"
         android:shortcutShortLabel="@string/timetable">
