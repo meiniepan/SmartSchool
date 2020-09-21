@@ -102,6 +102,10 @@ class ModifyPwdFragment : BaseLifeCycleFragment<AccountViewModel>() {
     }
 
     private fun modifyPwd() {
+        if (etPwdRebind.text.toString().trim().length<8){
+            requireContext().toast(R.string.pwd_too_short)
+            return
+        }
         var bean = UserInfo.getUserBean()
         bean.password = etPwdRebind.text.toString()
         showLoading()

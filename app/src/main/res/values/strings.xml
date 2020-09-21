@@ -2,6 +2,7 @@
     <string name="app_name">智慧校园</string>
     <string name="exit_app">再按一次退出程序</string>
     <string name="empty_message">没有数据哎~</string>
+    <string name="pwd_too_short">密码不足8位</string>
     <string name="lack_info">请完善数据</string>
     <string name="deal_done">处理成功</string>
     <string name="error_message">发生了一些错误</string>

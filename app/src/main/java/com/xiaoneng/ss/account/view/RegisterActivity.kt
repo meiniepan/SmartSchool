@@ -88,6 +88,12 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
             showTip("请输入完整信息")
             return
         }
+
+        if (etPwdRegister.text.toString().trim().length<8){
+            toast(R.string.pwd_too_short)
+            return
+        }
+
         mViewModel.registerCo(
             RegisterReq(phoneStr, vCodeStr, inviteStr, nameStr, pwdStr)
         )
