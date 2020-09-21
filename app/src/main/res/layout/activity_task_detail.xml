@@ -253,6 +253,7 @@
                 android:paddingBottom="20dp">
 
                 <LinearLayout
+                    android:id="@+id/llEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/title_padding"
