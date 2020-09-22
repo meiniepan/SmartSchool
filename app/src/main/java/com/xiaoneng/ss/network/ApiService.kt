@@ -110,6 +110,16 @@ interface ApiService {
         @Body requestBody: UserBean
     ): BaseResponse<UserBean>
 
+    /**
+     * 学生家长姓名修改
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/user/student/modifyParents")
+    suspend fun modifyParentName(
+        @Field("token") token: String,
+        @Field("realname") realname: String
+    ): BaseResponse<Any>
+
 
     /**
      * 学生信息查询
@@ -251,7 +261,7 @@ interface ApiService {
         @Field("id") id: String = "",
         @Field("pagenum") pagenum: String = "",
         @Field("type") type: String = "",
-        @Field("status") status: String = ""
+        @Field("completestatus") status: String = ""
     ): BaseResponse<TaskResponse>
 
     /**
@@ -264,7 +274,7 @@ interface ApiService {
         @Field("id") id: String = "",
         @Field("pagenum") pagenum: String = "",
         @Field("type") type: String = "",
-        @Field("status") status: String = ""
+        @Field("completestatus") status: String = ""
     ): BaseResponse<TaskResponse>
 
     /**
@@ -543,6 +553,26 @@ interface ApiService {
     @POST("/api/v1/teacher/schedules/modify")
     suspend fun modifySchedule2(
         @Body requestBody: ScheduleBean
+    ): BaseResponse<Any>
+
+    /**
+     *学生删除个人日程
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/student/schedules/del")
+    suspend fun deleteScheduleStu(
+        @Field("token") token: String,
+        @Field("id") id: String = ""
+    ): BaseResponse<Any>
+
+    /**
+     *教师删除个人日程
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/schedules/del")
+    suspend fun deleteScheduleTea(
+        @Field("token") token: String,
+        @Field("id") id: String = ""
     ): BaseResponse<Any>
 
     /**

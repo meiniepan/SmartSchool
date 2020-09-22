@@ -72,20 +72,19 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvTaskTab6.setOnClickListener {
             check6Tab()
         }
+
+
     }
 
     private fun initTab1() {
-        tvTaskTab1.setOnClickListener {
-            checkFirsTab()
+        tvTaskTab21.setOnClickListener {
+            check21Tab()
         }
-        tvTaskTab2.setOnClickListener {
-            checkSecondTab()
+        tvTaskTab22.setOnClickListener {
+            check22Tab()
         }
-        tvTaskTab3.setOnClickListener {
-            checkThirdTab()
-        }
-        tvTaskTab4.setOnClickListener {
-            check4Tab()
+        tvTaskTab23.setOnClickListener {
+            check23Tab()
         }
     }
 

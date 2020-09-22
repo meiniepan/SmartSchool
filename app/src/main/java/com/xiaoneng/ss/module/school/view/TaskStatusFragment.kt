@@ -59,7 +59,6 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         mAdapter.setType(mType ?: "")
         rvTaskStatus.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            addItemDecoration(RecycleViewDivider(context, dp2px(context, 10f).toInt()))
             setAdapter(mAdapter)
         }
         mAdapter.setOnItemClickListener { _, view, position ->

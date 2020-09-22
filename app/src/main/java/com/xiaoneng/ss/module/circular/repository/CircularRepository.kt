@@ -188,21 +188,21 @@ class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository(
     suspend fun deleteSchedule(bean: ScheduleBean): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.modifySchedule(bean)
+                apiService.deleteScheduleStu(UserInfo.getUserBean().token,bean.id!!)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.modifySchedule2(bean)
+                apiService.deleteScheduleTea(UserInfo.getUserBean().token,bean.id!!)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.modifySchedule2(bean)
+                apiService.deleteScheduleTea(UserInfo.getUserBean().token,bean.id!!)
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.modifySchedule(bean)
+                apiService.deleteScheduleTea(UserInfo.getUserBean().token,bean.id!!)
                     .dataConvert(loadState)
 
             }

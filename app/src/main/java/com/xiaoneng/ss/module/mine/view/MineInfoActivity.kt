@@ -2,6 +2,7 @@ package com.xiaoneng.ss.module.mine.view
 
 import android.text.TextUtils
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.Observer
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
@@ -72,12 +73,39 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                 }
             }
         }
+        etMineItem8.setOnEditorActionListener { teew, i, keyEvent ->
+            when (i) {
+                EditorInfo.IME_ACTION_GO -> {
+                    var bean = UserInfo.getUserBean()
+                    bean.wxname = etMineItem8.text.toString()
+                    showLoading()
+                    mViewModel.modifyUserInfo(bean)
+                }
+
+            }
+            return@setOnEditorActionListener false
+        }
+
+        etMineItem1.setOnEditorActionListener { teew, i, keyEvent ->
+            when (i) {
+                EditorInfo.IME_ACTION_GO -> {
+                    if (etMineItem1.text.toString().trim().isNotEmpty()) {
+                        showLoading()
+                        mViewModel.modifyParentName(etMineItem1.text.toString())
+                    }
+                }
+
+            }
+            return@setOnEditorActionListener false
+        }
+
         when (UserInfo.getUserBean().usertype) {
 
             "1" -> {
                 if (UserInfo.getUserBean().logintype == Constant.LOGIN_TYPE_STU) {
                     llMineItem6.visibility = View.GONE
                 } else {
+                    etMineItem1.isEnabled = true
                     name = bean.parentname
                     phone = bean.parentphone
                     llMineItem2.visibility = View.GONE
@@ -110,13 +138,19 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
         tvMineItem6.text = UserInfo.getUserBean().cno
         tvMineItem7.text = UserInfo.getUserBean().sno
         etMineItem8.setText(UserInfo.getUserBean().wxname)
-    }
 
+    }
 
 
     override fun initData() {
         super.initData()
-        initAvatar()
+        if (UserInfo.getUserBean().usertype == "1" &&
+            UserInfo.getUserBean().logintype == Constant.LOGIN_TYPE_PAR
+        ) {
+
+        } else {
+            initAvatar()
+        }
 
     }
 
@@ -163,7 +197,8 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
     private fun doUpload(it: StsTokenResp) {
         showLoading()
         var mId: String = System.currentTimeMillis().toString() + "_" + fileName
-        var objectKey = getOssObjectKey(UserInfo.getUserBean().usertype, UserInfo.getUserBean().uid, mId)
+        var objectKey =
+            getOssObjectKey(UserInfo.getUserBean().usertype, UserInfo.getUserBean().uid, mId)
         OssUtils.asyncUploadFile(
             this@MineInfoActivity,
             it.Credentials,
@@ -275,6 +310,17 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
             response?.let {
                 showSuccess()
                 UserInfo.modifyUserBean(it)
+                toast("修改成功")
+            }
+        })
+
+        mViewModel.mParentNameData.observe(this, Observer { response ->
+            response?.let {
+
+                showSuccess()
+                var bean = UserInfo.getUserBean()
+                bean.parentname = etMineItem1.text.toString()
+                UserInfo.modifyUserBean(bean)
                 toast("修改成功")
             }
         })

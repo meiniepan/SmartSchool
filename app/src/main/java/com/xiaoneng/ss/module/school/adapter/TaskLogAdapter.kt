@@ -53,11 +53,16 @@ class TaskLogAdapter(layoutId: Int, listData: MutableList<LogBean>?) :
                 "2" -> {
                     ivMark.visibility = View.VISIBLE
                     ivMark.setImageResource(R.drawable.ic_refuse)
+                    textView0.visibility = View.GONE
+                    textView1.visibility = View.GONE
+                    textView2.visibility = View.GONE
                 }
                 "1" -> {
                     ivMark.visibility = View.VISIBLE
                     ivMark.setImageResource(R.drawable.ic_pass)
                     textView0.visibility = View.GONE
+                    textView1.visibility = View.GONE
+                    textView2.visibility = View.GONE
                 }
                 else -> {
                     ivMark.visibility = View.GONE

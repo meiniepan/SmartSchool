@@ -52,7 +52,7 @@ class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
     }
 
     private fun onDelete() {
-//        mViewModel.deleteSchedule(bean)
+        mViewModel.deleteSchedule(bean)
     }
 
     private fun onEdit() {

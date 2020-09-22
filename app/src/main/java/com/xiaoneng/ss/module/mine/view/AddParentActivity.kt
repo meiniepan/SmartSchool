@@ -37,7 +37,7 @@ class AddParentActivity : BaseLifeCycleActivity<AccountViewModel>() {
         tvSendCaptchaBindParent.setOnClickListener {
             doCaptcha()
         }
-        etPhoneBindParent.setOnEditorActionListener { teew, i, keyEvent ->
+        etCaptchaBindParent.setOnEditorActionListener { teew, i, keyEvent ->
             when (i) {
                 EditorInfo.IME_ACTION_GO -> {
                     doBind()

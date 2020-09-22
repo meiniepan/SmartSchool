@@ -39,7 +39,6 @@
                 android:layout_marginEnd="26dp"
                 android:background="@null"
                 android:hint="请输入家长手机号"
-                android:imeOptions="actionGo"
                 android:inputType="phone"
                 android:textSize="@dimen/sp_20" />
         </LinearLayout>
@@ -64,6 +63,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:hint="输入验证码"
+                android:imeOptions="actionGo"
                 android:inputType="number"
                 android:maxLength="8"
                 android:textSize="@dimen/sp_20" />

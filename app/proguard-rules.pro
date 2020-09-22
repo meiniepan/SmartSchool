@@ -93,6 +93,7 @@
 #-keep class com..**{*;}  #过滤掉自己编写的实体类
 -keep class com.xiaoneng.ss.model.**{*;}  #过滤掉自己编写的实体类
 -keep class com.xiaoneng.ss.module.circular.model.**{*;}  #过滤掉自己编写的实体类
+-keep class com.xiaoneng.ss.account.model.**{*;}  #过滤掉自己编写的实体类
 -keep class com.xiaoneng.ss.module.school.model.**{*;}  #过滤掉自己编写的实体类
 -keep class com.xiaoneng.ss.module.mine.model.**{*;}  #过滤掉自己编写的实体类
 
@@ -147,6 +148,12 @@
 -keep class com.squareup.okhttp.** { *;}
 -dontwarn okio.**
 
+# Retrofit
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+
 #androidx
 -keep class com.google.android.material.** {*;}
 -keep class androidx.** {*;}
@@ -155,6 +162,30 @@
 -dontwarn com.google.android.material.**
 -dontnote com.google.android.material.**
 -dontwarn androidx.**
+
+# RxJava RxAndroid
+-dontwarn sun.misc.**
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+    long producerIndex;
+    long consumerIndex;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode consumerNode;
+}
+
+
+-keep public class com.xiaoneng.ss.**{*;}
+-keep public class com.xiaoneng.ss.base.viewmodel.BaseViewModel{*;}
+-keep public class com.xiaoneng.ss.common.utils.CommonUtil
+-keep public class * extends com.xiaoneng.ss.base.repository.BaseRepository {*;}
+-keep public class com.xiaoneng.ss.base.repository.BaseRepository
+-keep public class * extends com.xiaoneng.ss.base.repository.ApiRepository{*;}
+-keep public class com.xiaoneng.ss.network.ExtKt{*;}
+-keep public class * extends com.xiaoneng.ss.base.view.BaseFragment{*;}
+-keep public class * extends com.xiaoneng.ss.base.view.BaseActivity{*;}
 
 
 

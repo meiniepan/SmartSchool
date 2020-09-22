@@ -35,6 +35,7 @@
 
         <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
             android:id="@+id/rvSysMsg"
+            android:paddingTop="10dp"
             style="@style/recycler_margin_style" />
     </LinearLayout>
 

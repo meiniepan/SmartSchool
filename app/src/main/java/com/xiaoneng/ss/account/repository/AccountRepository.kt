@@ -177,6 +177,11 @@ class AccountRepository(val loadState: MutableLiveData<State>) : ApiRepository()
         }
     }
 
+    suspend fun modifyParentName(name: String): Any {
+        return apiService.modifyParentName(UserInfo.getUserBean().token,name)
+                    .dataConvert(loadState)
+    }
+
     suspend fun onSmsCodeChange(phone: String): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {

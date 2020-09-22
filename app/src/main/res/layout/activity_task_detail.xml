@@ -23,8 +23,7 @@
             android:visibility="gone"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/title_padding"
-            android:text="关闭任务"
-            />
+            android:text="关闭任务" />
     </RelativeLayout>
 
     <View
@@ -242,7 +241,6 @@
             </LinearLayout>
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -257,6 +255,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/title_padding"
+                    android:layout_marginBottom="10dp"
                     android:paddingEnd="@dimen/title_padding"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -269,14 +268,15 @@
 
                     <TextView
                         android:id="@+id/tvAddLogTaskDetail"
+                        style="@style/button_blue_bac_5_style"
                         android:layout_gravity="end"
-                        android:text="参与任务"
-                        style="@style/button_blue_bac_5_style" />
+                        android:text="参与任务" />
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
+                <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
                     android:id="@+id/rvTaskDetail"
                     style="@style/recycler_style"
+                    android:minHeight="200dp"
                     android:layout_marginTop="10dp"
                     android:background="@color/tintBac" />
 

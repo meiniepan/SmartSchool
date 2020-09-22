@@ -35,7 +35,8 @@ class AddLogActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             var bean = TaskLogRequest(
                 UserInfo.getUserBean().token,
                 taskBean.id?:"",
-                etFeedback.text.toString()
+                etFeedback.text.toString(),
+                completestatus = "1"
             )
             mViewModel.modifyTaskInfo(bean)
         }

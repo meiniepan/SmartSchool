@@ -86,7 +86,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mAdapterLog = TaskLogAdapter(R.layout.item_task_log, mData)
         rvTaskDetail.apply {
             layoutManager = LinearLayoutManager(this@TaskDetailActivity)
-            adapter = mAdapterLog
+            setAdapter(mAdapterLog)
         }
 
         mAdapterLog.setOnItemChildClickListener { adapter, view, position ->
@@ -95,13 +95,13 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
                 R.id.tvAction0Log -> {
                     mStartActivity<AddLogActivity>(this) {
-                        putExtra(Constant.DATA, myLogBean)
+                        putExtra(Constant.DATA, mData[position])
                     }
                 }
                 R.id.tvAction1Log -> {
                     var bean = TaskLogRequest(
                         UserInfo.getUserBean().token,
-                        myLogBean.taskid ?: "",
+                        mData[position].id ?: "",
                         examinestatus = "2"
                     )
                     mViewModel.refuseTask(bean)
@@ -109,7 +109,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 R.id.tvAction2Log -> {
                     var bean = TaskLogRequest(
                         UserInfo.getUserBean().token,
-                        myLogBean.taskid ?: "",
+                        mData[position].id ?: "",
                         examinestatus = "1"
                     )
                     mViewModel.refuseTask(bean)
@@ -177,7 +177,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         }
                         if (it.uid == UserInfo.getUserBean().uid) {
                             myLogBean = it
-                            if (it.feedback.isNullOrEmpty()) {
+                            if (it.feedback.isNullOrEmpty() && type == "1") {
                                 tvAddLogTaskDetail.visibility = View.VISIBLE
                             } else {
                                 tvAddLogTaskDetail.visibility = View.GONE
@@ -185,11 +185,19 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         }
                     }
                     if (isEmpty) {
-                        llLogEmpty.visibility = View.VISIBLE
+                        if (type == "1") {
+                            rvTaskDetail.visibility = View.GONE
+                            llLogEmpty.visibility = View.VISIBLE
+                        } else if (type == "2") {
+                            llLogEmpty.visibility = View.GONE
+                            rvTaskDetail.visibility = View.VISIBLE
+                            rvTaskDetail.notifyDataSetChanged()
+                        }
                     } else {
                         llLogEmpty.visibility = View.GONE
                         mAdapterLog.setIsOperator(isOperator)
-                        mAdapterLog.notifyDataSetChanged()
+                        rvTaskDetail.visibility = View.VISIBLE
+                        rvTaskDetail.notifyDataSetChanged()
                     }
 
                 }
