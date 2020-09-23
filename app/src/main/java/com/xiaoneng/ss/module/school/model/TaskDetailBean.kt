@@ -27,6 +27,7 @@ data class TaskDetailBean(
     var ordertime: String? = null,
     var type: String? = null,
     var status: String? = null,//0待发布(草稿)1进行中2完成3关闭
+    var taskstatus: String? = null,//0待发布(草稿)1进行中2完成3关闭
     var completestatus: String? = null,//0未完成1已完成
     var schoolname: String? = null,
     var schoolid: String? = null,

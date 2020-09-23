@@ -62,7 +62,7 @@ class TaskStatusAdapter(layoutId: Int, listData: MutableList<TaskDetailBean>?) :
 
                 }
             } else if (type == "2") {
-                when (item?.status) {//任务状态0待发布1进行中2完成3关闭
+                when (item?.taskstatus) {//任务状态0待发布1进行中2完成3关闭
                     "0" -> {
                         statusStr = "草稿箱"
                         holder.setTextColor(
