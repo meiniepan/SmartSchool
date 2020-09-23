@@ -29,7 +29,8 @@ import java.io.FileOutputStream;
  * @date :2020/8/26 10:11 AM
  */
 public class OssUtils {
-    static String END_POINT = "oss-cn-beijing.aliyuncs.com";
+    static String END_POINT = "http://i.v.xiaonengtech.com";
+//    static String END_POINT = "oss-cn-beijing.aliyuncs.com";
     static String BUCKET = "xiaoneng";
     private static String OBJECT_KEY = "avatar/student/id/avatar";
     private static String FILE_PATH = "student/id/fileName";
