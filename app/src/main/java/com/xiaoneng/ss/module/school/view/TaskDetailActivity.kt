@@ -152,7 +152,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
                     //是否是发布人
                     isOperator = it.operatorid == UserInfo.getUserBean().uid
-                    if (isOperator) {
+                    if (isOperator && type == "2" && taskBean.status != "3") {
                         tvConfirm.visibility = View.VISIBLE
                     } else {
                         tvConfirm.visibility = View.GONE

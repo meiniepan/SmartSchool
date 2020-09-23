@@ -23,6 +23,8 @@ data class LogBean(
     var examine: String? = "",
     var examinestatus: String? = "",
     var plantime: String? = "",
+    var createtime: String? = "",
+    var updatetime: String? = "",
     var status: String? = "",
     var taskstatus: String? = "",
     var classroomname: String? = ""

@@ -63,6 +63,7 @@
 
         <activity
             android:name=".account.view.LoginSwitchActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".account.view.LoginStuActivity"

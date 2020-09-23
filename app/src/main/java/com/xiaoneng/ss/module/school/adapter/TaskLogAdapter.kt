@@ -31,7 +31,7 @@ class TaskLogAdapter(layoutId: Int, listData: MutableList<LogBean>?) :
             holder.addOnClickListener(R.id.tvAction2Log)
             holder.addOnClickListener(R.id.tvAction0Log)
             holder.setText(R.id.tvName4, item?.username)
-                .setText(R.id.tvTime4, item?.plantime)
+                .setText(R.id.tvTime4, item?.updatetime)
                 .setText(R.id.tvIntro4, item?.feedback)
             textView1.visibility = View.GONE
             textView2.visibility = View.GONE

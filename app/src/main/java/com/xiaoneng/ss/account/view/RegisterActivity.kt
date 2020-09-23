@@ -15,6 +15,7 @@ import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
+import com.xiaoneng.ss.module.mine.view.UserProtocolActivity
 import kotlinx.android.synthetic.main.activity_register.*
 import org.jetbrains.anko.toast
 
@@ -58,7 +59,7 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
             }
 
             R.id.tvProtocolRegister -> {
-                toast(getString(R.string.not_open))
+                mStartActivity<UserProtocolActivity>(this)
             }
 
             R.id.tvRegister -> {

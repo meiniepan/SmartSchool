@@ -27,11 +27,11 @@ class InvolveSimpleAdapter(layoutId: Int, listData: MutableList<UserBeanSimple>)
                     .setText(R.id.tvLabelInvolve, "")
                 holder.getView<View>(R.id.tvLabelInvolve).setBackgroundResource(R.drawable.ic_other)
             } else {
-                item.name?.let {
+                item.realname?.let {
 
                     holder.setText(R.id.tvNameInvolve, it)
                     if (it.isNotEmpty()) {
-                        holder.setText(R.id.tvLabelInvolve, item.name!!.last().toString())
+                        holder.setText(R.id.tvLabelInvolve, item.realname!!.last().toString())
                     }
                 }
                 holder.getView<View>(R.id.tvLabelInvolve)

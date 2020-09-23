@@ -25,13 +25,13 @@ class TaskStatusAdapter(layoutId: Int, listData: MutableList<TaskDetailBean>?) :
             var ss = ""
             item?.involve?.let {
                 ss = if (it.size > 3) {
-                    it[0].name + "、" +
-                            it[1].name + "、" +
-                            it[2].name + "等" + item.involve.size + "人..."
+                    it[0].realname + "、" +
+                            it[1].realname + "、" +
+                            it[2].realname + "等" + item.involve.size + "人..."
                 } else {
                     if (it.size > 0) {
                         it.forEach {
-                           ss = ss + it.name + "、"
+                           ss = ss + it.realname + "、"
                         }
                         ss.substring(0,ss.length-1)
                     } else {

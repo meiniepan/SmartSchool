@@ -13,7 +13,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class UserBeanSimple(
     var uid: String ? = null,
-    var name: String ? = null,
+    var realname: String ? = null,
     var usertype: String ? = null,
     var topdepartid: String ? = null,
     var secdepartid: String ? = null

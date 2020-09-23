@@ -66,7 +66,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mDataInvolve.add(
                         StudentBean(
                             uid = it.uid ?: "",
-                            realname = it.name ?: "",
+                            realname = it.realname ?: "",
                             usertype = it.usertype ?: "",
                             topdepartid = it.topdepartid ?: "",
                             secdepartid = it.secdepartid ?: "",
