@@ -18,6 +18,7 @@ import com.alibaba.sdk.android.oss.model.GetObjectRequest;
 import com.alibaba.sdk.android.oss.model.GetObjectResult;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
+import com.xiaoneng.ss.common.state.UserInfo;
 import com.xiaoneng.ss.model.StsTokenBean;
 
 import java.io.File;
@@ -29,7 +30,7 @@ import java.io.FileOutputStream;
  * @date :2020/8/26 10:11 AM
  */
 public class OssUtils {
-    static String END_POINT = "http://i.v.xiaonengtech.com";
+    static String END_POINT = UserInfo.INSTANCE.getUserBean().getDomain();
 //    static String END_POINT = "oss-cn-beijing.aliyuncs.com";
     static String BUCKET = "xiaoneng";
     private static String OBJECT_KEY = "avatar/student/id/avatar";

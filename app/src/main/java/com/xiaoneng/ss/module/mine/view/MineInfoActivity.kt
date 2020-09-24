@@ -1,5 +1,6 @@
 package com.xiaoneng.ss.module.mine.view
 
+import android.os.Handler
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -250,7 +251,6 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                 override fun onSuccess() {
                     mRootView.post {
                         showSuccess()
-
                         displayImage(
                             this@MineInfoActivity,
                             mDownloadFile(
@@ -286,11 +286,15 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
     override fun initDataObserver() {
         mViewModel.mStsData.observe(this, Observer { response ->
             response?.let {
-                if (isDownLoad) {
-                    doDownload(it)
-                } else {
-                    doUpload(it)
-                }
+                Handler().postDelayed(
+                    {
+                        if (isDownLoad) {
+                            doDownload(it)
+                        } else {
+                            doUpload(it)
+                        }
+                },100)
+
             }
         })
 

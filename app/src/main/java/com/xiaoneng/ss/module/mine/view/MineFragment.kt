@@ -1,5 +1,6 @@
 package com.xiaoneng.ss.module.mine.view
 
+import android.os.Handler
 import android.text.TextUtils
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -169,7 +170,11 @@ MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
     override fun initDataObserver() {
         mViewModel.mStsData.observe(this, Observer { response ->
             response?.let {
-                doDownload(it)
+
+                Handler().postDelayed(
+                    {
+                        doDownload(it)
+                    },100)
             }
         })
     }
