@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.os.Environment
 import android.widget.TextView
 import cn.addapp.pickers.picker.DateTimePicker
 import cn.addapp.pickers.picker.SinglePicker
@@ -19,8 +21,10 @@ import com.xiaoneng.ss.common.constclass.Solang
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import java.io.File
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 /**
  * Created with Android Studio.
@@ -181,6 +185,27 @@ inline fun mDownloadFile(context: Context, name: String): String? {
 
     return context.getExternalFilesDir(null)?.absolutePath + File.separator + name
 
+}
+
+ fun Context.mBitmap2Local(bitmap:Bitmap?,name: String): String? {
+     var path = Environment.getExternalStorageDirectory().absolutePath + File.separator + "smartschool"+ File.separator+ name
+     val filename = File(path)
+     if (!filename.exists()) {
+         filename.parentFile.mkdirs()
+         filename.createNewFile()
+     }
+     if (bitmap != null) {
+         try {
+             val out = FileOutputStream(path)
+             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+             out.flush()
+             out.close()
+             return path
+         } catch (e: Exception) {
+             e.printStackTrace()
+         }
+     }
+return ""
 }
 
 /**

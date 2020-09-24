@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
@@ -19,6 +20,9 @@ import com.xiaoneng.ss.common.utils.oss.OssListener
 import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.model.StsTokenResp
 import kotlinx.android.synthetic.main.activity_mine_info.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.toast
 import java.io.File
 
@@ -183,7 +187,9 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                     isDownLoad = false
                     avatarPath = result!![0].realPath
                     fileName = result!![0].fileName
-                    mViewModel.getSts()
+                    if(!avatarPath.isNullOrEmpty()) {
+                        mViewModel.getSts()
+                    }
 
                 }
 
@@ -198,13 +204,20 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
     private fun doUpload(it: StsTokenResp) {
         showLoading()
         var mId: String = System.currentTimeMillis().toString() + "_" + fileName
+               var bitmapPath = mBitmap2Local(
+            Glide.with(this)
+                .asBitmap()
+                .load(avatarPath)
+                .submit(200,200)
+                .get(),
+            fileName?:"")
         var objectKey =
             getOssObjectKey(UserInfo.getUserBean().usertype, UserInfo.getUserBean().uid, mId)
         OssUtils.asyncUploadFile(
             this@MineInfoActivity,
             it.Credentials,
             objectKey,
-            avatarPath,
+            bitmapPath,
             object : OssListener {
                 override fun onSuccess() {
                     mRootView.post {
@@ -291,7 +304,12 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                         if (isDownLoad) {
                             doDownload(it)
                         } else {
-                            doUpload(it)
+                            GlobalScope.launch() {
+                              async {
+
+                                  doUpload(it)
+                              }
+                            }
                         }
                 },100)
 
