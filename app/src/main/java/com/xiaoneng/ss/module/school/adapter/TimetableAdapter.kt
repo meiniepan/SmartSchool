@@ -19,7 +19,7 @@ import com.xiaoneng.ss.module.school.model.TimetableBean
  */
 class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>) :
     BaseQuickAdapter<TimetableBean, BaseViewHolder>(layoutId, listData) {
-
+    private var isMaster: Boolean = false
     private var total: Int = 0
 
 
@@ -52,6 +52,7 @@ class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>) :
             }
         }
         mAdapter = LessonAdapter(R.layout.item_lesson, mRealLessonData)
+        mAdapter.setMaster(isMaster)
         if (DateUtil.isSameDay(item.time.toLong() * 1000)) {
             mAdapter.setColor(true)
         } else {
@@ -68,5 +69,8 @@ class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>) :
 
     fun setTotalSize(total: Int) {
         this.total = total
+    }
+    fun setMaster(isMaster: Boolean) {
+        this.isMaster = isMaster
     }
 }

@@ -59,7 +59,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
-
         </activity>
 
         <activity

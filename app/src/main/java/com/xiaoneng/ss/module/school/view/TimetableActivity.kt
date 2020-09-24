@@ -9,7 +9,6 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
-import com.xiaoneng.ss.common.utils.eventBus.ChangeMasterTimetableEvent
 import com.xiaoneng.ss.model.ClassBean
 import com.xiaoneng.ss.module.school.adapter.DialogListAdapter
 import com.xiaoneng.ss.module.school.adapter.TimetableAdapter
@@ -169,7 +168,7 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         initClassItem()
                         tvTab2.visibility = View.VISIBLE
                     }
-                    ChangeMasterTimetableEvent(true).post()
+                    mAdapter.setMaster(true)
                 }
 
                 bottomDialog.dismiss()
@@ -183,7 +182,7 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mViewModel.getTimetableT()
                     rvTimetable.showLoadingView()
                     tvTab2.visibility = View.GONE
-                    ChangeMasterTimetableEvent(false).post()
+                    mAdapter.setMaster(false)
                 }
                 bottomDialog.dismiss()
             }
@@ -238,7 +237,7 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mViewModel.mTimetableData.observe(this, Observer { response ->
             response?.let {
                 if (UserInfo.getUserBean().classmaster == "1") {
-                    ChangeMasterTimetableEvent(true).post()
+                    mAdapter.setMaster(true)
                     llClassTimetable.visibility = View.VISIBLE
                     tvTab1.setOnClickListener {
                         typeDialog.show()

@@ -2,16 +2,12 @@ package com.xiaoneng.ss.module.school.adapter
 
 import android.text.TextUtils
 import android.view.View
-import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.eventBus.ChangeMasterTimetableEvent
 import com.xiaoneng.ss.module.school.model.CourseBean
 import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 
 /**
@@ -25,10 +21,7 @@ class LessonAdapter(layoutId: Int, listData: MutableList<CourseBean>) :
     BaseQuickAdapter<CourseBean, BaseViewHolder>(layoutId, listData) {
     private var isMaster: Boolean = false
     private var hasColor: Boolean = false
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        EventBus.getDefault().register(this)
-    }
+
     override fun convert(viewHolder: BaseViewHolder, item: CourseBean) {
         viewHolder?.let { holder ->
             var ll = holder.getView<View>(R.id.llCourse)
@@ -50,24 +43,22 @@ class LessonAdapter(layoutId: Int, listData: MutableList<CourseBean>) :
                 holder.setText(R.id.tvNameTeacherCourse, item?.campus)
 
                 holder.setText(R.id.tvNameRoomCourse, item?.classroomname)
-                if (hasColor) {
-                    holder.setBackgroundRes(R.id.llCourse, R.drawable.bac_blue_bac_5)
-                } else {
-                    holder.setBackgroundRes(R.id.llCourse, R.drawable.bac_gray_bac_5)
-                }
+//                if (hasColor) {
+//                    holder.setBackgroundRes(R.id.llCourse, R.drawable.bac_blue_bac_5)
+//                } else {
+//                    holder.setBackgroundRes(R.id.llCourse, R.drawable.bac_gray_bac_5)
+//                }
             }
 
         }
     }
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-        EventBus.getDefault().unregister(this)
-    }
+
     fun setColor(has: Boolean) {
         hasColor = has
     }
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun changeThemeEvent(event: ChangeMasterTimetableEvent) {
-        isMaster = event.flag
+
+    fun setMaster(isMaster: Boolean) {
+        this.isMaster = isMaster
     }
+
 }

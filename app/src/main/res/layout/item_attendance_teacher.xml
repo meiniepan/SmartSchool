@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bac_blue_bac_5"
+    android:background="@drawable/bac_white_bac_5"
     android:padding="10dp">
 
     <LinearLayout
@@ -20,7 +20,6 @@
                 android:id="@+id/tvCourseName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
                 android:text=""
                 android:textSize="@dimen/sp_18" />
 
@@ -28,7 +27,7 @@
                 android:id="@+id/tvTeacherName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="@color/commonHint"
                 android:layout_marginStart="5dp"
                 android:text="" />
 
@@ -38,7 +37,7 @@
             android:id="@+id/tvTimeAtt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/commonHint"
             android:text="" />
 
         <TextView
@@ -46,10 +45,9 @@
             android:layout_width="50dp"
             android:layout_height="22dp"
             android:layout_marginEnd="@dimen/title_padding"
-            android:background="@drawable/bac_blue_bac_5"
             android:gravity="center"
-            android:text="病假"
-            android:textColor="@color/white" />
+            android:text=""
+            android:textColor="@color/commonHint" />
     </LinearLayout>
 
     <ImageView
@@ -57,6 +55,6 @@
         android:layout_height="22dp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_next_round_white" />
+        android:src="@drawable/ic_next_round_gray" />
 
 </RelativeLayout>
