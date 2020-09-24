@@ -68,11 +68,6 @@ kapt {
     }
 }
 
-kotlin {
-    experimental {
-        coroutines 'enable'
-    }
-}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -111,6 +106,6 @@ dependencies {
     implementation 'com.tencent.bugly:crashreport_upgrade:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
     implementation 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
 
-    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.8'
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.9'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-28'
 }

@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.os.Environment
 import android.widget.TextView
 import cn.addapp.pickers.picker.DateTimePicker
 import cn.addapp.pickers.picker.SinglePicker
@@ -188,14 +187,15 @@ inline fun mDownloadFile(context: Context, name: String): String? {
 }
 
  fun Context.mBitmap2Local(bitmap:Bitmap?,name: String): String? {
-     var path = Environment.getExternalStorageDirectory().absolutePath + File.separator + "smartschool"+ File.separator+ name
+     var path = getExternalFilesDir(null)?.absolutePath+ File.separator+ name
      val filename = File(path)
-     if (!filename.exists()) {
-         filename.parentFile.mkdirs()
-         filename.createNewFile()
-     }
+
      if (bitmap != null) {
          try {
+             if (!filename.exists()) {
+                 filename.parentFile.mkdirs()
+                 filename.createNewFile()
+             }
              val out = FileOutputStream(path)
              bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
              out.flush()

@@ -7,10 +7,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="MainTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="xiaonengTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/commonBlue</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:textColor">@color/titleBlack</item>
         <item name="android:editTextColor">@color/titleBlack</item>
@@ -30,7 +30,7 @@
 
     </style>
 
-    <style name="SingleTouchActivity" parent="MainTheme">
+    <style name="SingleTouchActivity" parent="xiaonengTheme">
         <item name="android:windowEnableSplitTouch">false</item>
         <item name="android:splitMotionEvents">false</item>
 

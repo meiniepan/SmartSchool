@@ -126,7 +126,7 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         PictureSelector.create(this)
             .openGallery(PictureMimeType.ofImage())
             .maxSelectNum(1)
-            .loadImageEngine(GlideEngine.createGlideEngine()) // Please refer to the Demo GlideEngine.java
+            .imageEngine(GlideEngine.createGlideEngine()) // Please refer to the Demo GlideEngine.java
             .forResult(object : OnResultCallbackListener<LocalMedia> {
                 override fun onResult(result: MutableList<LocalMedia>?) {
                     isDownLoad = false
