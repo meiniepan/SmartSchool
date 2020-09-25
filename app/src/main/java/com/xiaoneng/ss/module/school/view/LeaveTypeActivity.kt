@@ -17,9 +17,9 @@ import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.common.utils.oss.OssListener
 import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.model.StsTokenResp
-import com.xiaoneng.ss.module.activity.MainActivity
 import com.xiaoneng.ss.module.school.adapter.AttCourseAdapter
 import com.xiaoneng.ss.module.school.model.AttCourseBean
+import com.xiaoneng.ss.module.school.model.AttendanceBean
 import com.xiaoneng.ss.module.school.model.LeaveBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_sick_leave.*
@@ -42,7 +42,13 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private var avatarPath: String? = ""
     private var fileValue: String? = ""
     var isDownLoad: Boolean = false
-    var leaveType: String = "0"
+    var uId = ""
+    var uType = ""
+    var delNum = 0
+    var resNum = 0
+    var leaveType: String = "0"//1事假  2病假
+    var leaveStr: String = "0"//1事假  2病假
+    lateinit var bean: AttendanceBean
     override fun getLayoutId(): Int = R.layout.activity_sick_leave
 
 
@@ -50,10 +56,16 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.initView()
         tvTimeToday.text = "您的请假时间是" + DateUtil.formatTitleToday()
         leaveType = intent.getStringExtra(Constant.LEAVE_TYPE)
+        bean = intent.getParcelableExtra(Constant.DATA)
+        bean?.let {
+            initUI()
+        }
         if (leaveType == "1") {
+            leaveStr = "事假"
             llRemarkLeave.visibility = View.VISIBLE
             llSick.visibility = View.GONE
         } else if (leaveType == "2") {
+            leaveStr = "病假"
             llRemarkLeave.visibility = View.GONE
             llSick.visibility = View.VISIBLE
         }
@@ -61,7 +73,11 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             doConfirm()
         }
         llItem8ApplyLeave.setOnClickListener {
-            mStartForResult<ChooseCourseToLeaveActivity>(this, Constant.REQUEST_CODE_COURSE){}
+            mStartForResult<ChooseCourseToLeaveActivity>(this, Constant.REQUEST_CODE_COURSE) {
+                bean?.let {
+                    putExtra(Constant.DATA, bean)
+                }
+            }
         }
         ivAddPic.apply {
             setOnClickListener {
@@ -71,33 +87,80 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         initAdapter()
     }
 
+    private fun initUI() {
+//        cbItem1ApplyLeave.isChecked = bean.
+    }
+
     private fun doConfirm() {
 
-        if (mData.size > 0) {
-            mData.forEach {
-                mViewModel.addAttendance(
-                    LeaveBean(
-                        UserInfo.getUserBean().token,
-                        UserInfo.getUserBean().uid,
-                        usertype = UserInfo.getUserBean().usertype,
-                        atttime = chosenDayNet,
-                        leavetype = leaveType,
-                        remark =  etLeaveRemark.text.toString(),
-                        crsid = it.id ?: "",
-                        isfever = getBooleanString(cbItem1ApplyLeave.isChecked),
-                        isdiarrhea = getBooleanString(cbItem2ApplyLeave.isChecked),
-                        isvomit = getBooleanString(cbItem3ApplyLeave.isChecked),
-                        ismedical = getBooleanString(cbItem4ApplyLeave.isChecked),
-                        temperature = etItem4ApplyLeave.text.toString(),
-                        hospital = etItem6ApplyLeave.text.toString(),
-                        diseasename = etItem7ApplyLeave.text.toString(),
-                        fileinfo = fileValue ?: ""
-                    )
-                )
+        if (bean == null) {
+            uId = UserInfo.getUserBean().uid
+            uType = UserInfo.getUserBean().usertype
+
+            if (mData.size > 0) {
+//                bean?.let {
+//                    if (!it.id.isNullOrEmpty()){
+//                        mViewModel.deleteAttendance(it.id ?: "")
+//                    }
+//
+//                }
+                doApplayLeave()
+            } else {
+                toast(R.string.lack_info)
+                return
             }
+
         } else {
-            toast(R.string.lack_info)
-            return
+            delNum = 0
+            resNum = 0
+            uId = bean.uid ?: ""
+            uType = "1"
+            if (mData.size > 0) {
+                var has = false
+                bean?.attlists?.let {
+                    it.forEach {
+                        if (it.attendances == leaveStr) {
+                            delNum++
+                        }
+                    }
+                    it.forEach {
+                        if (it.attendances == leaveStr) {
+                            mViewModel.deleteAttendance(it.id ?: "")
+                        }
+                    }
+                }
+                if (delNum == 0) {
+                    doApplayLeave()
+                }
+            } else {
+                toast(R.string.lack_info)
+                return
+            }
+        }
+
+    }
+
+    private fun doApplayLeave() {
+        mData.forEach {
+            mViewModel.addAttendance(
+                LeaveBean(
+                    UserInfo.getUserBean().token,
+                    uId,
+                    usertype = uType,
+                    atttime = chosenDayNet,
+                    leavetype = leaveType,
+                    remark = etLeaveRemark.text.toString(),
+                    crsid = it.id ?: "",
+                    isfever = getBooleanString(cbItem1ApplyLeave.isChecked),
+                    isdiarrhea = getBooleanString(cbItem2ApplyLeave.isChecked),
+                    isvomit = getBooleanString(cbItem3ApplyLeave.isChecked),
+                    ismedical = getBooleanString(cbItem4ApplyLeave.isChecked),
+                    temperature = etItem4ApplyLeave.text.toString(),
+                    hospital = etItem6ApplyLeave.text.toString(),
+                    diseasename = etItem7ApplyLeave.text.toString(),
+                    fileinfo = fileValue ?: ""
+                )
+            )
         }
     }
 
@@ -169,7 +232,8 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private fun doUpload(it: StsTokenResp) {
         showLoading()
         var mId: String = System.currentTimeMillis().toString() + "_" + fileName
-        var objectKey = getOssObjectKey(UserInfo.getUserBean().usertype, UserInfo.getUserBean().uid, mId)
+        var objectKey =
+            getOssObjectKey(UserInfo.getUserBean().usertype, UserInfo.getUserBean().uid, mId)
         OssUtils.asyncUploadFile(
             this@LeaveTypeActivity,
             it.Credentials,
@@ -251,7 +315,16 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mViewModel.mAddAttendanceData.observe(this, Observer { response ->
             response?.let {
                 toast(R.string.deal_done)
-                mStartActivity<MainActivity>(this)
+                finish()
+            }
+        })
+
+        mViewModel.mDeleteAttendanceData.observe(this, Observer { response ->
+            response?.let {
+                resNum++
+                if (resNum == delNum) {
+//                    doApplayLeave()
+                }
             }
         })
 
@@ -264,8 +337,6 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 }
             }
         })
-
     }
-
 
 }

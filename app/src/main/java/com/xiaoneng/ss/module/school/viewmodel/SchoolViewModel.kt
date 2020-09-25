@@ -60,9 +60,9 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getAttTimetable(time: String = "") {
+    fun getAttTimetable(time: String = "",uId: String = "") {
         initiateRequest(
-            { mAttTimetableData.value = mRepository.getAttTimetable(time) },
+            { mAttTimetableData.value = mRepository.getAttTimetable(time,uId) },
             loadState
         )
     }
@@ -105,12 +105,12 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
 
     fun getAttendanceStu(classid: String = "", time: String = "") {
         initiateRequest(
-            { mAttendanceStuData.value = mRepository.getAttendance(classid, time) },
+            { mAttendanceStuData.value = mRepository.getAttendanceStu(classid, time) },
             loadState
         )
     }
 
-    fun getAttendanceByStuAdmin(classid: String = "", time: String = "", courseId: String) {
+    fun getAttendanceByStuAdmin(classid: String = "", time: String = "", courseId: String = "") {
         initiateRequest(
             { mAttendanceStuData.value = mRepository.getAttendance(classid, time, courseId) },
             loadState

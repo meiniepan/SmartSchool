@@ -30,6 +30,8 @@ class ChooseCourseAdapter(layoutId: Int, listData: MutableList<AttCourseBean>) :
                 .setText(R.id.tvTeacherName2, item?.teachername)
                 .setText(R.id.tvRoomAtt2, item?.classroomname)
                 .setText(R.id.tvTimeAtt2, item?.coursetime)
+
+
             holder.getView<CheckBox>(R.id.cbChooseTimetable).apply {
                 isChecked = item.checked
                 isEnabled = false

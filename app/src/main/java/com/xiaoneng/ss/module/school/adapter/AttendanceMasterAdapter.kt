@@ -1,16 +1,12 @@
 package com.xiaoneng.ss.module.school.adapter
 
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
 import com.xiaoneng.ss.module.circular.adapter.AttTagsAdapter
 import com.xiaoneng.ss.module.school.model.AttendanceBean
-import com.xiaoneng.ss.module.school.view.AddClassAttendanceTypeMasterActivity
 
 
 /**

@@ -12,6 +12,7 @@ import com.xiaoneng.ss.common.utils.showDateDayPick
 import com.xiaoneng.ss.module.school.adapter.ChooseCourseAdapter
 import com.xiaoneng.ss.module.school.model.AttCourseBean
 import com.xiaoneng.ss.module.school.model.AttCourseResponse
+import com.xiaoneng.ss.module.school.model.AttendanceBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_choose_course_leave.*
 import java.util.*
@@ -29,6 +30,7 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var mDataChosen: ArrayList<AttCourseBean> = ArrayList()
     var chosenDay = DateUtil.formatDateCustomMmDay()
     var chosenDayNet = DateUtil.formatDateCustomDay()
+    lateinit var bean: AttendanceBean
 
     override fun getLayoutId(): Int = R.layout.activity_choose_course_leave
 
@@ -36,6 +38,10 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initView() {
         super.initView()
         tvTimeToday.text = "今天是" + DateUtil.formatTitleToday()
+        bean = intent.getParcelableExtra(Constant.DATA)
+        bean?.let {
+//            initUI()
+        }
         tvConfirm.setOnClickListener {
             doConfirm()
         }
@@ -79,7 +85,7 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
-        mViewModel.getAttTimetable(time = chosenDayNet)
+        mViewModel.getAttTimetable(time = chosenDayNet,uId = bean.uid?:"")
     }
 
     private fun initAdapter() {
@@ -100,6 +106,13 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 netResponseFormat<AttCourseResponse>(it)?.let {
                     mData.clear()
                     mData.addAll(it.list)
+                    mData.forEach {bean->
+                        bean.attlists?.let {
+                            if (it.size>0) {
+                                bean.checked = true
+                            }
+                        }
+                    }
                     rvChooseCourse.notifyDataSetChanged()
                 }
 

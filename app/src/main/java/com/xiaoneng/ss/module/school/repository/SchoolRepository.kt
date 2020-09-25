@@ -98,21 +98,21 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
     }
 
-    suspend fun getAttTimetable(time: String = ""): Any {
+    suspend fun getAttTimetable(time: String = "",uId: String = ""): Any {
 
 
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.getAttTimetableStu(UserInfo.getUserBean().token, time = time)
+                apiService.getAttTimetableStu(UserInfo.getUserBean().token, time = time,uid = uId)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getAttTimetableTea(UserInfo.getUserBean().token, time = time)
+                apiService.getAttTimetableTea(UserInfo.getUserBean().token, time = time,uid = uId)
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.getAttTimetableTea(UserInfo.getUserBean().token, time = time)
+                apiService.getAttTimetableTea(UserInfo.getUserBean().token, time = time,uid = uId)
                     .dataConvert(loadState)
 
             }
@@ -179,35 +179,15 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
     ): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                if (UserInfo.getUserBean().isad == "1") {
                     apiService.getAttendanceStuAdmin(
                         UserInfo.getUserBean().token,
-                        courseId = courseId,
+                        classid = classid,
                         atttime = atttime
                     )
                         .dataConvert(loadState)
-                } else {
-
-                    apiService.getAttendance(
-                        UserInfo.getUserBean().token,
-                        classid,
-                        atttime = atttime
-                    )
-                        .dataConvert(loadState)
-                }
             }
             "2" -> {
                 apiService.getAttendanceTea(
-                    UserInfo.getUserBean().token,
-                    classid,
-                    time = atttime,
-                    courseId = courseId
-                )
-                    .dataConvert(loadState)
-
-            }
-            "99" -> {
-                apiService.getAttendanceSchool(
                     UserInfo.getUserBean().token,
                     classid,
                     time = atttime
@@ -215,11 +195,39 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                     .dataConvert(loadState)
 
             }
+            "99" -> {
+                //todo 测试
+                apiService.getAttendanceTea(
+                    UserInfo.getUserBean().token,
+                    classid,
+                    time = atttime
+                )
+                    .dataConvert(loadState)
+//                apiService.getAttendanceSchool(
+//                    UserInfo.getUserBean().token,
+//                    classid,
+//                    time = atttime
+//                )
+//                    .dataConvert(loadState)
+
+            }
             else -> {
                 apiService.getAttendance(UserInfo.getUserBean().token, classid, atttime = atttime)
                     .dataConvert(loadState)
             }
         }
+    }
+
+    suspend fun getAttendanceStu(
+        classid: String = "",
+        atttime: String = ""
+    ): Any {
+        return apiService.getAttendance(
+            UserInfo.getUserBean().token,
+            classid,
+            atttime = atttime
+        )
+            .dataConvert(loadState)
     }
 
 
@@ -263,6 +271,13 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                 }
             }
             "2" -> {
+                if (UserInfo.getUserBean().classmaster == "1") {
+                    apiService.deleteAttendanceByTea(UserInfo.getUserBean().token, id)
+                        .dataConvert(loadState)
+                } else {
+                }
+            }
+            "99" -> {
                 if (UserInfo.getUserBean().classmaster == "1") {
                     apiService.deleteAttendanceByTea(UserInfo.getUserBean().token, id)
                         .dataConvert(loadState)

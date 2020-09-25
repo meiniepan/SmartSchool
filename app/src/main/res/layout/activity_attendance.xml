@@ -25,9 +25,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/tintBac"
+                android:paddingBottom="10dp"
                 android:orientation="vertical"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                >
 
                 <LinearLayout
                     android:id="@+id/llToday"
@@ -41,6 +41,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
                         android:text=""
                         android:textSize="@dimen/sp_12" />
 
@@ -92,6 +93,7 @@
                     android:layout_marginStart="@dimen/title_padding"
                     android:visibility="gone"
                     android:layout_marginEnd="@dimen/title_padding"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/bac_white_bac_20"
                     android:paddingStart="17dp"
                     android:paddingTop="8dp"

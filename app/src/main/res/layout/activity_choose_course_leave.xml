@@ -31,15 +31,13 @@
     </RelativeLayout>
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/tintBac" />
+
 
 
     <LinearLayout
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"
+        android:background="@color/tintBac"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
@@ -89,6 +87,6 @@
         <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
             android:id="@+id/rvChooseCourse"
             style="@style/recycler_margin_style"
-            android:paddingTop="24dp" />
+             />
     </LinearLayout>
 </LinearLayout>

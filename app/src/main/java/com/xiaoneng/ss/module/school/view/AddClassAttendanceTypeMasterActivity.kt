@@ -27,19 +27,19 @@ class AddClassAttendanceTypeMasterActivity : BaseLifeCycleActivity<SchoolViewMod
     override fun initView() {
         super.initView()
         bean = intent.getParcelableExtra(Constant.DATA)
-        if (bean.has_sickleave == "1") {
+        if (bean.has_sickleave != "0") {
             tvAddClassAttendance1.show(true)
         }
-        if (bean.has_thingleave == "1") {
+        if (bean.has_thingleave != "0") {
             tvAddClassAttendance2.show(true)
         }
-        if (bean.has_courselate == "1") {
+        if (bean.has_courselate != "0") {
             tvAddClassAttendance3.show(true)
         }
-        if (bean.has_truant == "1") {
+        if (bean.has_truant != "0") {
             tvAddClassAttendance4.show(true)
         }
-        if (bean.has_morninglate == "1") {
+        if (bean.has_morninglate != "0") {
             doMorningLate()
 
         }
@@ -47,11 +47,13 @@ class AddClassAttendanceTypeMasterActivity : BaseLifeCycleActivity<SchoolViewMod
         llAddClassAttendance1.setOnClickListener {
             mStartActivity<LeaveTypeActivity>(this) {
                 putExtra(Constant.LEAVE_TYPE, "2")
+                putExtra(Constant.DATA, bean)
             }
         }
         llAddClassAttendance2.setOnClickListener {
             mStartActivity<LeaveTypeActivity>(this) {
                 putExtra(Constant.LEAVE_TYPE, "1")
+                putExtra(Constant.DATA, bean)
             }
         }
         llAddClassAttendance3.setOnClickListener {

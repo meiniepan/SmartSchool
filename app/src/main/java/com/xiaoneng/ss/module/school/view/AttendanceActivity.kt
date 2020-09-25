@@ -12,6 +12,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
+import com.xiaoneng.ss.model.ClassBean
 import com.xiaoneng.ss.module.school.adapter.*
 import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
@@ -27,17 +28,22 @@ import kotlinx.android.synthetic.main.activity_attendance.*
 class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapterSchool: AttendanceSchoolAdapter
     lateinit var mAdapterMaster: AttendanceMasterAdapter
-    lateinit var mAdapterTeacher: AttendanceTeacherAdapter
+    var mAdapterTeacher: AttendanceTeacherAdapter? = null
     lateinit var mAdapterStudent: AttendanceStuAdapter
     var mSchoolData: ArrayList<AttendanceSchoolBean> = ArrayList()
     var mMasterData: ArrayList<AttendanceBean> = ArrayList()
     var mTeacherData: ArrayList<AttCourseBean> = ArrayList()
     var mStudentData: ArrayList<AttendanceStuBean> = ArrayList()
-    var chosenDay = DateUtil.formatDateCustomMmDay()
-    private val bottomDialog: Dialog by lazy {
-        initDialog()
+    var mClassData: ArrayList<ClassBean> = ArrayList()
+    var chosenDay = DateUtil.formatDateCustomDay()
+    private val bottomDialog1: Dialog by lazy {
+        initDialog1()
     }
-    var titles = ArrayList<String>()
+    private val bottomDialog2: Dialog by lazy {
+        initDialog2()
+    }
+    var titles1 = ArrayList<String>()
+    var titles2 = ArrayList<String>()
 
     override fun getLayoutId(): Int = R.layout.activity_attendance
 
@@ -52,29 +58,34 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun initAdapter() {
         if (UserInfo.getUserBean().usertype == "1") {
-            titles.add("个人考勤")
+            llSearch.visibility = View.GONE
+            tvLabel2Attendance.visibility = View.GONE
+            tvLabel3Attendance.visibility = View.GONE
             if (UserInfo.getUserBean().isad == "1") {
-                titles.add("课堂考勤")
+                titles1.add("课堂考勤")
                 initAdapterTeacher()
+                mAdapterTeacher?.setIsTeacher(false)
             } else {
                 initAdapterStu()
-                initStudentApplyLeave()
+                initStudentApplyLeave(true)
             }
+            titles1.add("个人考勤")
+//todo 测试
+        } else if (UserInfo.getUserBean().usertype == "2" || UserInfo.getUserBean().usertype == "99") {
 
-        } else if (UserInfo.getUserBean().usertype == "2") {
-
-            titles.add("课堂考勤")
             if (UserInfo.getUserBean().classmaster == "1") {
-                titles.add("班级考勤")
+                titles1.add("班级考勤")
                 initAdapterMaster()
                 llSearch.visibility = View.VISIBLE
             } else {
                 initAdapterTeacher()
+                mAdapterTeacher?.setIsTeacher(true)
                 tvLabel2Attendance.visibility = View.GONE
                 tvLabel3Attendance.visibility = View.GONE
             }
+            titles1.add("课堂考勤")
         } else if (UserInfo.getUserBean().usertype == "99") {
-            titles.add("校级考勤")
+            titles1.add("校级考勤")
             ivAddAttendance.apply {
                 visibility = View.VISIBLE
                 setOnClickListener {
@@ -87,12 +98,12 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         } else {
 
         }
-        tvLabel1Attendance.text = titles[0]
+        tvLabel1Attendance.text = titles1[0]
 
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun initData() {
+        super.initData()
         getData()
     }
 
@@ -101,16 +112,16 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         rvAttendance.showLoadingView()
         if (UserInfo.getUserBean().usertype == "1") {
             if (UserInfo.getUserBean().isad == "1") {
-                mViewModel.getAttTimetable(time = Constant.TO_DO)
+                getTimetable()
             } else {
-                mViewModel.getAttendanceStu(time = Constant.TO_DO)
+                getStuData()
             }
-
-        } else if (UserInfo.getUserBean().usertype == "2") {
+//todo 测试
+        } else if (UserInfo.getUserBean().usertype == "2" || UserInfo.getUserBean().usertype == "99") {
             if (UserInfo.getUserBean().classmaster == "1") {
-                mViewModel.getAttendanceTea(time = Constant.TO_DO)
+                getAttendanceMaster()
             } else {
-                mViewModel.getAttTimetable(time = Constant.TO_DO)
+                getTimetable()
             }
         } else if (UserInfo.getUserBean().usertype == "99") {
             mViewModel.getAttendanceSchool()
@@ -119,9 +130,21 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
     }
 
-    private fun initStudentApplyLeave() {
+    private fun getStuData() {
+        mViewModel.getAttendanceStu(time = "")
+    }
+
+    private fun getAttendanceMaster() {
+        mViewModel.getAttendanceTea(time = chosenDay)
+    }
+
+    private fun getTimetable() {
+        mViewModel.getAttTimetable(time = chosenDay)
+    }
+
+    private fun initStudentApplyLeave(b: Boolean) {
         tvApplyLeave.apply {
-            visibility = if (UserInfo.getUserBean().usertype == "1") {
+            visibility = if (UserInfo.getUserBean().usertype == "1" && b) {
                 View.VISIBLE
             } else {
                 View.GONE
@@ -136,13 +159,19 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
 
         tvLabel1Attendance.setOnClickListener {
-            bottomDialog.show()
+            bottomDialog1.show()
+        }
+
+        tvLabel2Attendance.setOnClickListener {
+            bottomDialog2.show()
         }
         tvLabel3Attendance.apply {
-            text = chosenDay
+            text = DateUtil.formatDateCustomMmDay()
             setOnClickListener {
                 showDateDayPick(this) {
                     chosenDay = this
+                    rvAttendance.showLoadingView()
+                    getAttendanceMaster()
                 }
             }
         }
@@ -193,14 +222,14 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             layoutManager = LinearLayoutManager(context)
             setAdapter(mAdapterTeacher)
         }
-        mAdapterTeacher.setOnItemClickListener { _, view, position ->
+        mAdapterTeacher?.setOnItemClickListener { _, view, position ->
             mStartActivity<Attendance2CourseActivity>(this) {
-                putExtra(Constant.ID, mTeacherData[position].id)
+                putExtra(Constant.DATA, mTeacherData[position])
             }
         }
     }
 
-    private fun initDialog(): Dialog {
+    private fun initDialog1(): Dialog {
 
         // 底部弹出对话框
         var bottomDialog =
@@ -215,7 +244,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         contentView.layoutParams = params
         bottomDialog.window!!.setGravity(Gravity.BOTTOM)
         bottomDialog.window!!.setWindowAnimations(R.style.BottomDialog_Animation)
-        var dialogAdapter = DialogListAdapter(R.layout.item_dialog_list, titles)
+        var dialogAdapter = DialogListAdapter(R.layout.item_dialog_list, titles1)
         var recyclerView = contentView.findViewById<RecyclerView>(R.id.rvDialogList).apply {
             layoutManager = LinearLayoutManager(this@AttendanceActivity)
             addItemDecoration(
@@ -227,12 +256,75 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             adapter = dialogAdapter
         }
         dialogAdapter.setOnItemClickListener { adapter, view, position ->
-            tvLabel1Attendance.text = titles[position]
-            if (titles[position] == "班级考勤") {
+            tvLabel1Attendance.text = titles1[position]
+            if (titles1[position] == "班级考勤") {
+                rvAttendance.showLoadingView()
                 llSearch.visibility = View.VISIBLE
-            } else if (titles[position] == "课堂考勤") {
+                tvLabel2Attendance.visibility = View.VISIBLE
+                tvLabel3Attendance.visibility = View.VISIBLE
+                initAdapterMaster()
+                getAttendanceMaster()
+            } else if (titles1[position] == "课堂考勤") {
                 llSearch.visibility = View.GONE
+                rvAttendance.showLoadingView()
+                tvLabel2Attendance.visibility = View.GONE
+                tvLabel3Attendance.visibility = View.GONE
+                initAdapterTeacher()
+                if (UserInfo.getUserBean().usertype == "1") {
+                    mAdapterTeacher?.setIsTeacher(false)
+                } else {
+                    mAdapterTeacher?.setIsTeacher(true)
+                }
+                initStudentApplyLeave(false)
+                getTimetable()
+            } else if (titles1[position] == "个人考勤") {
+                llSearch.visibility = View.GONE
+                rvAttendance.showLoadingView()
+                tvLabel2Attendance.visibility = View.GONE
+                tvLabel3Attendance.visibility = View.GONE
+                initAdapterStu()
+                getStuData()
+                initStudentApplyLeave(true)
             }
+            bottomDialog.dismiss()
+        }
+
+        return bottomDialog
+    }
+
+    private fun initDialog2(): Dialog {
+
+        // 底部弹出对话框
+        var bottomDialog =
+            Dialog(this, R.style.BottomDialog)
+        val contentView: View =
+            LayoutInflater.from(this).inflate(R.layout.dialog_list, null)
+        bottomDialog.setContentView(contentView)
+        val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
+        params.width =
+            resources.displayMetrics.widthPixels
+        params.bottomMargin = dp2px(this, 0f).toInt()
+        contentView.layoutParams = params
+        bottomDialog.window!!.setGravity(Gravity.BOTTOM)
+        bottomDialog.window!!.setWindowAnimations(R.style.BottomDialog_Animation)
+        var dialogAdapter = DialogListAdapter(R.layout.item_dialog_list, titles2)
+        var recyclerView = contentView.findViewById<RecyclerView>(R.id.rvDialogList).apply {
+            layoutManager = LinearLayoutManager(this@AttendanceActivity)
+            addItemDecoration(
+                RecycleViewDivider(
+                    dp2px(context, 1f).toInt(),
+                    context.resources.getColor(R.color.splitColor)
+                )
+            )
+            adapter = dialogAdapter
+        }
+        dialogAdapter.setOnItemClickListener { adapter, view, position ->
+            tvLabel2Attendance.text = titles2[position]
+            rvAttendance.showLoadingView()
+            mViewModel.getAttendanceTea(
+                time = Constant.TO_DO,
+                classid = mClassData[position].classid
+            )
             bottomDialog.dismiss()
         }
 
@@ -243,9 +335,22 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mViewModel.mAttendanceTeaData.observe(this, Observer { response ->
             response?.let {
                 netResponseFormat<AttendanceResponse>(it)?.let {
-                    mMasterData.clear()
-                    mMasterData.addAll(it.data)
-                    rvAttendance.notifyDataSetChanged()
+                    if (it.data.size > 0) {
+                        mMasterData.clear()
+                        mMasterData.addAll(it.data)
+                        rvAttendance.notifyDataSetChanged()
+                    }
+                    if (it.classs.size > 0) {
+                        mClassData.clear()
+                        titles2.clear()
+                        mClassData.addAll(it.classs)
+                        mClassData.forEach {
+                            titles2.add(it.classname)
+                            if (it.choice == "1") {
+                                tvLabel2Attendance.text = it.classname
+                            }
+                        }
+                    }
                 }
             }
         })

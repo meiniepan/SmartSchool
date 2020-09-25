@@ -8,6 +8,7 @@ import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.common.utils.mAlert
+import com.xiaoneng.ss.module.school.model.AttCourseBean
 import com.xiaoneng.ss.module.school.model.AttendanceBean
 import com.xiaoneng.ss.module.school.model.LeaveBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
@@ -24,18 +25,18 @@ import org.jetbrains.anko.toast
 class AddClassAttendanceTypeTeacherActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var bean: AttendanceBean
     var chosenDay = DateUtil.formatDateCustomDay()
-    var crsid = ""
+    var bean2: AttCourseBean? = null
 
     override fun getLayoutId(): Int = R.layout.activity_add_class_attendance_type
 
 
     override fun initView() {
         super.initView()
-        crsid = intent.getStringExtra(Constant.TITLE)
         bean = intent.getParcelableExtra(Constant.DATA)
-        tvAddClassAttendance1.visibility = View.GONE
-        tvAddClassAttendance2.visibility = View.GONE
-        tvAddClassAttendance5.visibility = View.GONE
+        bean2 = intent.getParcelableExtra(Constant.DATA2)
+        llAddClassAttendance1.visibility = View.GONE
+        llAddClassAttendance2.visibility = View.GONE
+        llAddClassAttendance5.visibility = View.GONE
 
 
         llAddClassAttendance3.setOnClickListener {
@@ -52,8 +53,8 @@ class AddClassAttendanceTypeTeacherActivity : BaseLifeCycleActivity<SchoolViewMo
         mAlert(msg, "请确认学生身份") {
             mViewModel.addAttendance(
                 LeaveBean(
-                    UserInfo.getUserBean().token, type = "3", status = s,
-                    uid = bean.uid!!, atttime = chosenDay, crsid = crsid, remark = "lai"
+                    UserInfo.getUserBean().token, type = "3", status = s,leavetype = "0",
+                    uid = bean.uid!!, atttime = chosenDay, crsid = bean2?.id?:"",teacheruid = bean2?.teacheruid?:"",usertype = "1", remark = "lai"
                 )
             )
             finish()

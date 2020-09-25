@@ -17,6 +17,7 @@
             android:id="@+id/cbChild"
             android:layout_width="12dp"
             android:layout_height="12dp"
+            android:clickable="false"
             android:background="@drawable/selector_check_round"
             android:button="@null"
             android:text="" />

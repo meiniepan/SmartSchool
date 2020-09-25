@@ -11,6 +11,7 @@ import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.module.school.adapter.AttendanceMasterAdapter
+import com.xiaoneng.ss.module.school.model.AttCourseBean
 import com.xiaoneng.ss.module.school.model.AttendanceBean
 import com.xiaoneng.ss.module.school.model.AttendanceResponse
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
@@ -27,7 +28,7 @@ class Attendance2CourseActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapterMaster: AttendanceMasterAdapter
     var mMasterData: ArrayList<AttendanceBean> = ArrayList()
     var chosenDay = DateUtil.formatDateCustomMmDay()
-    var courseId = ""
+    var bean:AttCourseBean? = null
 
 
     override fun getLayoutId(): Int = R.layout.activity_attendance
@@ -35,28 +36,36 @@ class Attendance2CourseActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
-        courseId = intent.getStringExtra(Constant.ID)
+        llToday.visibility = View.GONE
+        llSearch.visibility = View.VISIBLE
+        bean = intent.getParcelableExtra(Constant.DATA)
         initTitle()
         initAdapter()
 
     }
 
-    override fun initData() {
-        super.initData()
+    override fun onResume() {
+        super.onResume()
+        getData()
+    }
+    override fun getData() {
+        super.getData()
 //        mMasterData.add(AttendanceBean(realname = "hsjdf"))
 //        mMasterData.add(AttendanceBean(realname = "hsjdf"))
 //        mMasterData.add(AttendanceBean(realname = "hsjdf"))
         rvAttendance.showLoadingView()
         if (UserInfo.getUserBean().usertype == "1") {
             if (UserInfo.getUserBean().isad == "1") {
-                mViewModel.getAttendanceByStuAdmin(time = Constant.TO_DO, courseId = courseId)
+                bean?.classid?.let {
+                    mViewModel.getAttendanceByStuAdmin(time = "", classid = it)
+                }
             }
 
-        } else if (UserInfo.getUserBean().usertype == "2") {
-            if (UserInfo.getUserBean().classmaster == "1") {
+        } else if (UserInfo.getUserBean().usertype == "2"||UserInfo.getUserBean().usertype == "99") {
 
-            } else {
-                mViewModel.getAttendanceTea(time = Constant.TO_DO, courseId = courseId)
+            bean?.classid?.let {
+
+                mViewModel.getAttendanceTea(time = "", classid = it)
             }
         }
     }
@@ -83,7 +92,7 @@ class Attendance2CourseActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             if (view.id == R.id.tvLeaveType)
                 mStartActivity<AddClassAttendanceTypeTeacherActivity>(this) {
                     putExtra(Constant.DATA, mMasterData[position])
-                    putExtra(Constant.TITLE, courseId)
+                    putExtra(Constant.DATA2, bean)
                 }
         }
     }
@@ -91,6 +100,16 @@ class Attendance2CourseActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initDataObserver() {
         mViewModel.mAttendanceTeaData.observe(this, Observer { response ->
+            response?.let {
+                netResponseFormat<AttendanceResponse>(it)?.let {
+                    mMasterData.clear()
+                    mMasterData.addAll(it.data)
+                    rvAttendance.notifyDataSetChanged()
+                }
+            }
+        })
+
+        mViewModel.mAttendanceStuData.observe(this, Observer { response ->
             response?.let {
                 netResponseFormat<AttendanceResponse>(it)?.let {
                     mMasterData.clear()

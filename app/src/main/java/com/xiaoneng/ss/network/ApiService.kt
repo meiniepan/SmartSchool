@@ -428,7 +428,7 @@ interface ApiService {
     @POST("/api/v1/student/attendances/lists")
     suspend fun getAttendanceStuAdmin(
         @Field("token") token: String,
-        @Field("classid") courseId: String,
+        @Field("classid") classid: String,
         @Field("atttime") atttime: String = ""
     ): BaseResponse<Any>
 
@@ -440,10 +440,9 @@ interface ApiService {
     suspend fun getAttendanceTea(
         @Field("token") token: String,
         @Field("classid") classid: String,
-        @Field("classid") courseId: String,
         @Field("groupid") groupid: String = "",
         @Field("teacheruid") teacheruid: String = "",
-        @Field("time") time: String = ""
+        @Field("atttime") time: String = ""
     ): BaseResponse<Any>
 
     /**
