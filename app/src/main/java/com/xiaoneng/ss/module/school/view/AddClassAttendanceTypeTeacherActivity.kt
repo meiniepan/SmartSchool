@@ -57,7 +57,6 @@ class AddClassAttendanceTypeTeacherActivity : BaseLifeCycleActivity<SchoolViewMo
                     uid = bean.uid!!, atttime = chosenDay, crsid = bean2?.id?:"",teacheruid = bean2?.teacheruid?:"",usertype = "1", remark = "lai"
                 )
             )
-            finish()
         }
     }
 

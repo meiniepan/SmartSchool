@@ -203,6 +203,17 @@ object DateUtil {
     }
 
     @SuppressLint("SimpleDateFormat")
+    fun formatDateCustomMmDay(date: String): String {
+        val sdf = SimpleDateFormat("MM月dd日")
+        var str = ""
+        if (date.length>7){
+            str = date.substring(4,6)+"月"+date.substring(6,8)+"日"
+        }
+        return str
+
+    }
+
+    @SuppressLint("SimpleDateFormat")
     fun getWhichMonth(date: Long = Date().time): String {
         val sdf = SimpleDateFormat("yyyy年MM月")
         return sdf.format(Date(date))

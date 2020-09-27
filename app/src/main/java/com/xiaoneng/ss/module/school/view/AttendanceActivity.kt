@@ -200,7 +200,9 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mAdapterMaster.setOnItemChildClickListener { adapter, view, position ->
             if (view.id == R.id.tvLeaveType)
                 mStartActivity<AddClassAttendanceTypeMasterActivity>(this) {
-                    putExtra(Constant.DATA, mMasterData[position])
+                    var bean = mMasterData[position]
+                    bean.mDate = chosenDay
+                    putExtra(Constant.DATA, bean)
                 }
         }
     }

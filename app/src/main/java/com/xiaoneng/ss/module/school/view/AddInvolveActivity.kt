@@ -9,16 +9,17 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.model.StudentBean
 import com.xiaoneng.ss.module.school.adapter.DepartmentAdapter
 import com.xiaoneng.ss.module.school.adapter.InvolvePerson2Adapter
-import com.xiaoneng.ss.module.school.adapter.QueryStudentAdapter
-import com.xiaoneng.ss.module.school.model.*
+import com.xiaoneng.ss.module.school.adapter.QueryDepartAdapter
+import com.xiaoneng.ss.module.school.model.ClassesResponse
+import com.xiaoneng.ss.module.school.model.DepartmentBean
+import com.xiaoneng.ss.module.school.model.DepartmentPersonResp
+import com.xiaoneng.ss.module.school.model.UserBeanSimple
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_add_involve.*
-import kotlinx.android.synthetic.main.activity_add_student.etSearch
 
 /**
  * Created with Android Studio.
@@ -32,10 +33,10 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private val tab2 = "2"
     private var currentItemId: String = ""
     private var currentTab: String = "1"
-    private lateinit var mAdapterQuery: QueryStudentAdapter
+    private lateinit var mAdapterQuery: QueryDepartAdapter
     private lateinit var mAdapterDepartment: DepartmentAdapter
     private lateinit var mAdapterInvolve: InvolvePerson2Adapter
-    var mDataQuery = ArrayList<StudentBean>()
+    var mDataQuery = ArrayList<UserBeanSimple>()
     var mDataDepartment = ArrayList<DepartmentBean>()
     var mDataClasses = ArrayList<DepartmentBean>()
     var mDataDepartment2 = ArrayList<DepartmentBean>()
@@ -123,8 +124,10 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             when (i) {
                 EditorInfo.IME_ACTION_SEARCH -> {
                     if (etSearch.text.toString().isNotEmpty()) {
-                        showLoading()
-//                        mViewModel.queryStudent(etSearch.text.toString())
+                        rvSearchInvolve.visibility = View.VISIBLE
+                        llContent.visibility = View.GONE
+                        tvSearchClear.visibility = View.VISIBLE
+                        rvSearchInvolve.showLoadingView()
                         mViewModel.listByDepartment(realName = etSearch.text.toString())
                     }
                 }
@@ -132,7 +135,12 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
             return@setOnEditorActionListener false
         }
-
+        tvSearchClear.setOnClickListener {
+            rvSearchInvolve.visibility = View.GONE
+            llContent.visibility = View.VISIBLE
+            tvSearchClear.visibility = View.GONE
+            etSearch.setText("")
+        }
         tvManage.apply {
             setOnClickListener {
                 isManage = !isManage
@@ -162,12 +170,12 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         if (mDataDepartment.size > 0 || mDataClasses.size > 0) {
             mAdapterDepartment.notifyDataSetChanged()
             mDataDepartment.forEach {
-                if (it.list.size > 0) {
+                if (it.num!!.toInt()>0) {
                     mDataInvolve.addAll(it.list)
                 }
             }
             mDataClasses.forEach {
-                if (it.list.size > 0) {
+                if (it.num!!.toInt() > 0) {
                     mDataInvolve.addAll(it.list)
                 }
             }
@@ -216,7 +224,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAdapterQuery() {
-        mAdapterQuery = QueryStudentAdapter(R.layout.item_query_student, mDataQuery)
+        mAdapterQuery = QueryDepartAdapter(R.layout.item_query_student, mDataQuery)
         rvSearchInvolve.apply {
             layoutManager = LinearLayoutManager(context)
             setAdapter(mAdapterQuery)
@@ -294,16 +302,59 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun mShowDialog(position: Int) {
         // 弹出对话框
+
         chosenDay = DateUtil.formatDate()
-        var msg =
-            mDataQuery[position].cno + mDataQuery[position].realname + "\n" + mDataQuery[position].levelname + mDataQuery[position].classname
-        mAlert(msg, "请确认学生身份") {
-            mViewModel.addAttendance(
-                LeaveBean(
-                    UserInfo.getUserBean().token, type = "1", status = "0",
-                    uid = mDataQuery[position].uid, atttime = chosenDay, crsid = "", remark = "lai"
-                )
+        mDataQuery[position].let { bean ->
+            var pId = ""
+            var studentBean = StudentBean(
+                uid = bean.uid ?: "",
+                realname = bean.realname ?: "",
+                usertype = bean.usertype ?: "",
+                topdepartid = bean.topdepartid ?: "",
+                secdepartid = bean.secdepartid ?: "",
+                choice = "1",
+                parentId = pId
             )
+            var msg =
+                mDataQuery[position].realname + ""
+            mAlert(msg, "请确认身份") {
+                if (bean.topdepartid.isNullOrEmpty()) {
+                    //学生
+                    studentBean.parentId = tab2 + "_" + bean.classid
+                    mDataClasses.forEach {
+                        if (studentBean.parentId == it.id) {
+                            if (it.num == "0") {
+                                it.list.clear()
+                                it.list.add(studentBean)
+                            } else {
+                                it.list.add(studentBean)
+                            }
+                            it.num = ((it.num ?: "0").toInt() + 1).toString()
+                        }
+                    }
+                } else {
+                    studentBean.parentId = tab1 + "_" + bean.topdepartid
+                    mDataDepartment.forEach {
+                        if (studentBean.parentId == it.id) {
+                            if (it.num == "0") {
+                                it.list.clear()
+                                it.list.add(studentBean)
+                            } else {
+                                it.list.add(studentBean)
+                            }
+                            it.num = ((it.num ?: "0").toInt() + 1).toString()
+                        }
+                    }
+                }
+                rvDepartment.notifyDataSetChanged()
+                mDataInvolve.add(
+                    studentBean
+                )
+                rvInvolve.notifyDataSetChanged()
+                setPersonNum()
+                rvSearchInvolve.visibility = View.GONE
+                llContent.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -361,17 +412,24 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mStudentData.observe(this, Observer { response ->
             response?.let {
-                rvSearchInvolve.visibility = View.VISIBLE
-                mDataQuery.clear()
-                mDataQuery.addAll(it.data)
-                rvSearchInvolve.notifyDataSetChanged()
+                netResponseFormat<DepartmentPersonResp>(it)?.let {
+
+                    it.data?.let { it1 ->
+                        mDataQuery.addAll(it1)
+                        rvSearchInvolve.notifyDataSetChanged()
+                    }
+                }
             }
         })
 
         mViewModel.mDepartmentPersonData.observe(this, Observer { response ->
             response?.let {
-                netResponseFormat<ArrayList<DepartmentPersonBean>>(it)?.let {
-
+                netResponseFormat<DepartmentPersonResp>(it)?.let {
+                    mDataQuery.clear()
+                    it.data?.let {
+                        mDataQuery.addAll(it)
+                        mViewModel.getStudentsByClass(realName = etSearch.text.toString())
+                    }
                 }
             }
         })

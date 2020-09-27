@@ -45,7 +45,9 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var uId = ""
     var uType = ""
     var delNum = 0
-    var resNum = 0
+    var resDelNum = 0
+    var addNum = 0
+    var resAddNum = 0
     var leaveType: String = "0"//1事假  2病假
     var leaveStr: String = "0"//1事假  2病假
     lateinit var bean: AttendanceBean
@@ -104,7 +106,7 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 //                    }
 //
 //                }
-                doApplayLeave()
+                doApplyLeave()
             } else {
                 toast(R.string.lack_info)
                 return
@@ -112,7 +114,7 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         } else {
             delNum = 0
-            resNum = 0
+            resDelNum = 0
             uId = bean.uid ?: ""
             uType = "1"
             if (mData.size > 0) {
@@ -130,7 +132,7 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     }
                 }
                 if (delNum == 0) {
-                    doApplayLeave()
+                    doApplyLeave()
                 }
             } else {
                 toast(R.string.lack_info)
@@ -140,27 +142,32 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     }
 
-    private fun doApplayLeave() {
-        mData.forEach {
-            mViewModel.addAttendance(
-                LeaveBean(
-                    UserInfo.getUserBean().token,
-                    uId,
-                    usertype = uType,
-                    atttime = chosenDayNet,
-                    leavetype = leaveType,
-                    remark = etLeaveRemark.text.toString(),
-                    crsid = it.id ?: "",
-                    isfever = getBooleanString(cbItem1ApplyLeave.isChecked),
-                    isdiarrhea = getBooleanString(cbItem2ApplyLeave.isChecked),
-                    isvomit = getBooleanString(cbItem3ApplyLeave.isChecked),
-                    ismedical = getBooleanString(cbItem4ApplyLeave.isChecked),
-                    temperature = etItem4ApplyLeave.text.toString(),
-                    hospital = etItem6ApplyLeave.text.toString(),
-                    diseasename = etItem7ApplyLeave.text.toString(),
-                    fileinfo = fileValue ?: ""
+    private fun doApplyLeave() {
+        addNum = mData.size
+        resAddNum = 0
+        var msg = bean.cno + bean.realname + "\n" + bean.levelname + bean.classname
+        mAlert(msg, "请确认学生身份") {
+            mData.forEach {
+                mViewModel.addAttendance(
+                    LeaveBean(
+                        UserInfo.getUserBean().token,
+                        uId,
+                        usertype = uType,
+                        atttime = chosenDayNet,
+                        leavetype = leaveType,
+                        remark = etLeaveRemark.text.toString(),
+                        crsid = it.id ?: "",
+                        isfever = getBooleanString(cbItem1ApplyLeave.isChecked),
+                        isdiarrhea = getBooleanString(cbItem2ApplyLeave.isChecked),
+                        isvomit = getBooleanString(cbItem3ApplyLeave.isChecked),
+                        ismedical = getBooleanString(cbItem4ApplyLeave.isChecked),
+                        temperature = etItem4ApplyLeave.text.toString(),
+                        hospital = etItem6ApplyLeave.text.toString(),
+                        diseasename = etItem7ApplyLeave.text.toString(),
+                        fileinfo = fileValue ?: ""
+                    )
                 )
-            )
+            }
         }
     }
 
@@ -314,16 +321,19 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mAddAttendanceData.observe(this, Observer { response ->
             response?.let {
-                toast(R.string.deal_done)
-                finish()
+                resAddNum++
+                if (resAddNum == addNum) {
+                    toast(R.string.deal_done)
+                    finish()
+                }
             }
         })
 
         mViewModel.mDeleteAttendanceData.observe(this, Observer { response ->
             response?.let {
-                resNum++
-                if (resNum == delNum) {
-//                    doApplayLeave()
+                resDelNum++
+                if (resDelNum == delNum) {
+                    doApplyLeave()
                 }
             }
         })

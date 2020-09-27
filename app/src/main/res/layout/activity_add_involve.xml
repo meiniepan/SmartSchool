@@ -36,12 +36,12 @@
 
             <LinearLayout
                 android:id="@+id/llSearch"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/tintBac"
                 android:paddingStart="@dimen/title_padding"
                 android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:paddingEnd="@dimen/title_padding"
                 >
 
@@ -52,11 +52,14 @@
                     android:paddingStart="17dp"
                     android:paddingTop="8dp"
                     android:paddingEnd="17dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
                     android:paddingBottom="8dp">
 
                     <EditText
                         android:id="@+id/etSearch"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:drawableStart="@drawable/ic_search"
@@ -64,9 +67,28 @@
                         android:hint="@string/search_involve"
                         android:imeOptions="actionSearch"
                         android:singleLine="true" />
+                    <TextView
+                        android:id="@+id/tvSearchClear"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:visibility="gone"
+                        android:background="@drawable/ic_search_clear"
+                        />
                 </LinearLayout>
             </LinearLayout>
-
+            <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
+                android:id="@+id/rvSearchInvolve"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:minHeight="@dimen/minHeight"
+                style="@style/recycler_style"
+                android:visibility="gone" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/llContent"
+                >
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -74,7 +96,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
                     android:background="@color/tintBac"
                     android:orientation="vertical">
 
@@ -124,10 +145,7 @@
                         android:paddingBottom="20dp" />
                 </LinearLayout>
 
-                <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
-                    android:id="@+id/rvSearchInvolve"
-                    style="@style/recycler_style"
-                    android:visibility="gone" />
+
             </FrameLayout>
 
             <include layout="@layout/layout_split_tint_10" />
@@ -167,6 +185,7 @@
                     android:id="@+id/rvInvolve"
                     style="@style/recycler_style"
                     android:layout_marginTop="20dp" />
+            </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

@@ -2,7 +2,6 @@ package com.xiaoneng.ss.network
 
 import com.xiaoneng.ss.account.model.*
 import com.xiaoneng.ss.model.StsTokenResp
-import com.xiaoneng.ss.model.StudentResp
 import com.xiaoneng.ss.module.circular.model.NoticeDetailBean
 import com.xiaoneng.ss.module.circular.model.NoticeResponse
 import com.xiaoneng.ss.module.circular.model.ScheduleBean
@@ -494,7 +493,7 @@ interface ApiService {
     suspend fun queryStudent(
         @Field("token") token: String,
         @Field("keyword") keyword: String = ""
-    ): BaseResponse<StudentResp>
+    ): BaseResponse<Any>
 
     /**
      *学生查询日程
@@ -736,7 +735,8 @@ interface ApiService {
     @POST("/api/v1/teacher/student/listByClass")
     suspend fun getStudentsByClass(
         @Field("token") token: String,
-        @Field("classid") classid: String
+        @Field("classid") classid: String? = null,
+        @Field("realname") realname: String? = null
     ): BaseResponse<Any>
 
     /**

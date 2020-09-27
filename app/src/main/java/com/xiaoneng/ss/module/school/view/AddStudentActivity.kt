@@ -8,7 +8,9 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.common.utils.mAlert
+import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.model.StudentBean
+import com.xiaoneng.ss.model.StudentResp
 import com.xiaoneng.ss.module.school.adapter.QueryStudentAdapter
 import com.xiaoneng.ss.module.school.model.LeaveBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
@@ -88,10 +90,13 @@ class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mStudentData.observe(this, Observer { response ->
             response?.let {
-                showSuccess()
-                mData.clear()
-                mData.addAll(it.data)
-                rvAddStu.notifyDataSetChanged()
+                netResponseFormat<StudentResp>(it)?.let {
+                    showSuccess()
+                    mData.clear()
+                    mData.addAll(it.data)
+                    rvAddStu.notifyDataSetChanged()
+                }
+
             }
         })
 

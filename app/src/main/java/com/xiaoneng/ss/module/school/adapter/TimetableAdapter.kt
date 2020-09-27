@@ -70,6 +70,7 @@ class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>) :
     fun setTotalSize(total: Int) {
         this.total = total
     }
+
     fun setMaster(isMaster: Boolean) {
         this.isMaster = isMaster
     }

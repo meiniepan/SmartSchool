@@ -5,7 +5,6 @@ import com.xiaoneng.ss.base.repository.ApiRepository
 import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.model.StsTokenResp
-import com.xiaoneng.ss.model.StudentResp
 import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.network.dataConvert
 
@@ -231,7 +230,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
     }
 
 
-    suspend fun queryStudent(keyword: String): StudentResp {
+    suspend fun queryStudent(keyword: String): Any {
         return apiService.queryStudent(UserInfo.getUserBean().token, keyword)
             .dataConvert(loadState)
     }
@@ -338,8 +337,9 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
-    suspend fun getStudentsByClass(classId: String): Any {
-        return apiService.getStudentsByClass(UserInfo.getUserBean().token, classId)
+    suspend fun getStudentsByClass(classId: String? = null,realName: String? = null): Any {
+        return apiService.getStudentsByClass(UserInfo.getUserBean().token,
+            classid = classId,realname = realName)
             .dataConvert(loadState)
     }
 

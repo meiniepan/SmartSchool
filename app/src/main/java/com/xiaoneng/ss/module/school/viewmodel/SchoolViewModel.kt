@@ -3,7 +3,6 @@ package com.xiaoneng.ss.module.school.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.base.viewmodel.BaseViewModel
 import com.xiaoneng.ss.model.StsTokenResp
-import com.xiaoneng.ss.model.StudentResp
 import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.repository.SchoolRepository
 import com.xiaoneng.ss.network.initiateRequest
@@ -28,7 +27,8 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mAttendanceMasterData: MutableLiveData<Any> = MutableLiveData()
     val mAttendanceStuData: MutableLiveData<Any> = MutableLiveData()
     val mAttendanceTeaData: MutableLiveData<Any> = MutableLiveData()
-    val mStudentData: MutableLiveData<StudentResp> = MutableLiveData()
+    val mStudentData: MutableLiveData<Any> = MutableLiveData()
+    val mInvolveStudentData: MutableLiveData<Any> = MutableLiveData()
     val mDepartmentsData: MutableLiveData<Any> = MutableLiveData()
     val mDepartmentPersonData: MutableLiveData<Any> = MutableLiveData()
     val mAddTaskData: MutableLiveData<Any> = MutableLiveData()
@@ -124,6 +124,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
+
     fun queryDepartments() {
         initiateRequest(
             { mDepartmentsData.value = mRepository.queryDepartments() },
@@ -174,9 +175,9 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getStudentsByClass(classId: String) {
+    fun getStudentsByClass(classId: String? = null,realName: String? = null) {
         initiateRequest(
-            { mBaseData.value = mRepository.getStudentsByClass(classId) },
+            { mStudentData.value = mRepository.getStudentsByClass(classId,realName) },
             loadState
         )
     }

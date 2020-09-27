@@ -8,9 +8,9 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.model.StudentBean
+import com.xiaoneng.ss.model.StudentResp
 import com.xiaoneng.ss.module.school.adapter.InvolvePersonAdapter
 import com.xiaoneng.ss.module.school.model.DepartmentPersonBean
-import com.xiaoneng.ss.module.school.model.StudentsResponse
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_involve_person.*
 
@@ -61,7 +61,7 @@ class InvolvePersonActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         if (type == "1") {
             mViewModel.listByDepartment(id.split("_").last())
         } else if (type == "2") {
-            mViewModel.getStudentsByClass(id.split("_").last())
+            mViewModel.getStudentsByClass(classId = id.split("_").last())
         }
 
     }
@@ -78,13 +78,22 @@ class InvolvePersonActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
     }
 
+    private fun setChoice(it: StudentBean) {
+        mDataReceive?.forEach { receive ->
+            if (receive.uid == it.uid) {
+                it.choice = "1"
+                return
+            }
+        }
+    }
+
 
     override fun initDataObserver() {
 
 
-        mViewModel.mBaseData.observe(this, Observer { response ->
+        mViewModel.mStudentData.observe(this, Observer { response ->
             response?.let {
-                netResponseFormat<StudentsResponse>(it)?.let {
+                netResponseFormat<StudentResp>(it)?.let {
                     mDataInvolve.clear()
                     it.data.forEach {
                         it.parentId = id
@@ -117,13 +126,6 @@ class InvolvePersonActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     }
 
-    private fun setChoice(it: StudentBean) {
-        mDataReceive?.forEach { receive ->
-            if (receive.uid == it.uid) {
-                it.choice = "1"
-                return
-            }
-        }
-    }
+
 
 }

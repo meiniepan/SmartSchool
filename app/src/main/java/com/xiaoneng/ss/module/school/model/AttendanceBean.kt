@@ -27,6 +27,7 @@ data class AttendanceBean(
     var teacheruid: String? = "",
     var teachername: String? = "",
     var semesterid: String? = "",
+    var mDate: String? = "",
     var classid: String? = "",
     var groupid: String? = "",
     var semester: String? = "",
