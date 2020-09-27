@@ -427,8 +427,9 @@ interface ApiService {
     @POST("/api/v1/student/attendances/lists")
     suspend fun getAttendanceStuAdmin(
         @Field("token") token: String,
-        @Field("classid") classid: String,
-        @Field("atttime") atttime: String = ""
+        @Field("classid") classid: String? = null,
+        @Field("keyword") keyword: String? = null,
+        @Field("atttime") atttime: String? = null
     ): BaseResponse<Any>
 
     /**
@@ -438,10 +439,11 @@ interface ApiService {
     @POST("/api/v1/teacher/attendances/lists")
     suspend fun getAttendanceTea(
         @Field("token") token: String,
-        @Field("classid") classid: String,
-        @Field("groupid") groupid: String = "",
-        @Field("teacheruid") teacheruid: String = "",
-        @Field("atttime") time: String = ""
+        @Field("classid") classid: String? = null,
+        @Field("groupid") groupid: String? = null,
+        @Field("teacheruid") teacheruid: String? = null,
+        @Field("keyword") keyword: String? = null,
+        @Field("atttime") time: String? = null
     ): BaseResponse<Any>
 
     /**
@@ -451,10 +453,10 @@ interface ApiService {
     @POST("/api/v1/teacher/attendances/sclists")
     suspend fun getAttendanceSchool(
         @Field("token") token: String,
-        @Field("classid") classid: String = "",
-        @Field("level") level: String = "",
-        @Field("type") type: String = "",//0按日统计1按学年统计
-        @Field("time") time: String = ""
+        @Field("classid") classid: String? = null,
+        @Field("level") level: String ? = null,
+        @Field("type") type: String? = null,//0按日统计1按学年统计
+        @Field("time") time: String? = null
     ): BaseResponse<Any>
 
     /**

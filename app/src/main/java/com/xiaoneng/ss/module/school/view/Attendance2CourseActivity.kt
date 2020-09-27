@@ -1,13 +1,12 @@
 package com.xiaoneng.ss.module.school.view
 
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.module.school.adapter.AttendanceMasterAdapter
@@ -27,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_attendance.*
 class Attendance2CourseActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapterMaster: AttendanceMasterAdapter
     var mMasterData: ArrayList<AttendanceBean> = ArrayList()
-    var chosenDay = DateUtil.formatDateCustomMmDay()
+    var mQueryData: ArrayList<AttendanceBean> = ArrayList()
     var bean:AttCourseBean? = null
 
 
@@ -41,7 +40,26 @@ class Attendance2CourseActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         bean = intent.getParcelableExtra(Constant.DATA)
         initTitle()
         initAdapter()
+        etSearch.setOnEditorActionListener { teew, i, keyEvent ->
+            when (i) {
+                EditorInfo.IME_ACTION_SEARCH -> {
+                    if (etSearch.text.toString().isNotEmpty()) {
+                        tvSearchClear.visibility = View.VISIBLE
+                        rvAttendance.showLoadingView()
+                        getDataMaster(keyWord = etSearch.text.toString())
+                    }
+                }
 
+            }
+            return@setOnEditorActionListener false
+        }
+        tvSearchClear.setOnClickListener {
+            tvSearchClear.visibility = View.GONE
+            etSearch.setText("")
+            mAdapterMaster.setNewData(mMasterData)
+            rvAttendance.setAdapter(mAdapterMaster)
+            rvAttendance.notifyDataSetChanged()
+        }
     }
 
     override fun onResume() {
@@ -50,31 +68,20 @@ class Attendance2CourseActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
     override fun getData() {
         super.getData()
-//        mMasterData.add(AttendanceBean(realname = "hsjdf"))
-//        mMasterData.add(AttendanceBean(realname = "hsjdf"))
-//        mMasterData.add(AttendanceBean(realname = "hsjdf"))
         rvAttendance.showLoadingView()
-        if (UserInfo.getUserBean().usertype == "1") {
-            if (UserInfo.getUserBean().isad == "1") {
-                bean?.classid?.let {
-                    mViewModel.getAttendanceByStuAdmin(time = "", classid = it)
-                }
-            }
-
-        } else if (UserInfo.getUserBean().usertype == "2"||UserInfo.getUserBean().usertype == "99") {
-
-            bean?.classid?.let {
-
-                mViewModel.getAttendanceTea(time = "", classid = it)
-            }
-        }
+        getDataMaster()
     }
 
     private fun initAdapter() {
         initAdapterMaster()
 
     }
-
+    private fun getDataMaster(classId: String? = null, keyWord: String? = null) {
+        mViewModel.getAttendanceTea(
+            classid = classId,
+            keyword = keyWord
+        )
+    }
 
     private fun initTitle() {
         llToday.visibility = View.GONE
@@ -109,15 +116,18 @@ class Attendance2CourseActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
         })
 
-        mViewModel.mAttendanceStuData.observe(this, Observer { response ->
+        mViewModel.mAttendanceQueryData.observe(this, Observer { response ->
             response?.let {
                 netResponseFormat<AttendanceResponse>(it)?.let {
-                    mMasterData.clear()
-                    mMasterData.addAll(it.data)
+                    mQueryData.clear()
+                    mQueryData.addAll(it.data)
+                    mAdapterMaster.setNewData(mQueryData)
+                    rvAttendance.setAdapter(mAdapterMaster)
                     rvAttendance.notifyDataSetChanged()
                 }
             }
         })
+
 
     }
 }

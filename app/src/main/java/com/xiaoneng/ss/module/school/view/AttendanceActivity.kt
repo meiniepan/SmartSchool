@@ -5,6 +5,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,12 +27,15 @@ import kotlinx.android.synthetic.main.activity_attendance.*
  * Time: 17:01
  */
 class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+    private var currentClassId: String? = null
+    private var currentRole: String = "1"//1班主任  2科任老师  3学生考勤员  4
     lateinit var mAdapterSchool: AttendanceSchoolAdapter
     lateinit var mAdapterMaster: AttendanceMasterAdapter
     var mAdapterTeacher: AttendanceTeacherAdapter? = null
     lateinit var mAdapterStudent: AttendanceStuAdapter
     var mSchoolData: ArrayList<AttendanceSchoolBean> = ArrayList()
     var mMasterData: ArrayList<AttendanceBean> = ArrayList()
+    var mQueryData: ArrayList<AttendanceBean> = ArrayList()
     var mTeacherData: ArrayList<AttCourseBean> = ArrayList()
     var mStudentData: ArrayList<AttendanceStuBean> = ArrayList()
     var mClassData: ArrayList<ClassBean> = ArrayList()
@@ -53,7 +57,26 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvTimeToday.text = "今天是" + DateUtil.formatTitleToday()
         initTitle()
         initAdapter()
+        etSearch.setOnEditorActionListener { teew, i, keyEvent ->
+            when (i) {
+                EditorInfo.IME_ACTION_SEARCH -> {
+                    if (etSearch.text.toString().isNotEmpty()) {
+                        tvSearchClear.visibility = View.VISIBLE
+                        rvAttendance.showLoadingView()
+                        getDataMaster(keyWord = etSearch.text.toString())
+                    }
+                }
 
+            }
+            return@setOnEditorActionListener false
+        }
+        tvSearchClear.setOnClickListener {
+            tvSearchClear.visibility = View.GONE
+            etSearch.setText("")
+            mAdapterMaster.setNewData(mMasterData)
+            rvAttendance.setAdapter(mAdapterMaster)
+            rvAttendance.notifyDataSetChanged()
+        }
     }
 
     private fun initAdapter() {
@@ -70,8 +93,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 initStudentApplyLeave(true)
             }
             titles1.add("个人考勤")
-//todo 测试
-        } else if (UserInfo.getUserBean().usertype == "2" || UserInfo.getUserBean().usertype == "99") {
+        } else if (UserInfo.getUserBean().usertype == "2") {
 
             if (UserInfo.getUserBean().classmaster == "1") {
                 titles1.add("班级考勤")
@@ -116,10 +138,9 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             } else {
                 getStuData()
             }
-//todo 测试
-        } else if (UserInfo.getUserBean().usertype == "2" || UserInfo.getUserBean().usertype == "99") {
+        } else if (UserInfo.getUserBean().usertype == "2") {
             if (UserInfo.getUserBean().classmaster == "1") {
-                getAttendanceMaster()
+                    getDataMaster(classId = currentClassId)
             } else {
                 getTimetable()
             }
@@ -134,9 +155,6 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mViewModel.getAttendanceStu(time = "")
     }
 
-    private fun getAttendanceMaster() {
-        mViewModel.getAttendanceTea(time = chosenDay)
-    }
 
     private fun getTimetable() {
         mViewModel.getAttTimetable(time = chosenDay)
@@ -171,7 +189,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 showDateDayPick(this) {
                     chosenDay = this
                     rvAttendance.showLoadingView()
-                    getAttendanceMaster()
+                    getDataMaster()
                 }
             }
         }
@@ -265,7 +283,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 tvLabel2Attendance.visibility = View.VISIBLE
                 tvLabel3Attendance.visibility = View.VISIBLE
                 initAdapterMaster()
-                getAttendanceMaster()
+                getDataMaster()
             } else if (titles1[position] == "课堂考勤") {
                 llSearch.visibility = View.GONE
                 rvAttendance.showLoadingView()
@@ -321,27 +339,43 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             adapter = dialogAdapter
         }
         dialogAdapter.setOnItemClickListener { adapter, view, position ->
+            currentClassId = mClassData[position].classid
             tvLabel2Attendance.text = titles2[position]
             rvAttendance.showLoadingView()
-            mViewModel.getAttendanceTea(
-                time = Constant.TO_DO,
-                classid = mClassData[position].classid
-            )
+            getDataMaster(classId = currentClassId)
             bottomDialog.dismiss()
         }
 
         return bottomDialog
     }
 
+    private fun getDataMaster(classId: String? = null, keyWord: String? = null) {
+        mViewModel.getAttendanceTea(
+            time = chosenDay,
+            classid = classId,
+            keyword = keyWord
+        )
+    }
+
     override fun initDataObserver() {
+        mViewModel.mAttendanceQueryData.observe(this, Observer { response ->
+            response?.let {
+                netResponseFormat<AttendanceResponse>(it)?.let {
+                    mQueryData.clear()
+                    mQueryData.addAll(it.data)
+                    mAdapterMaster.setNewData(mQueryData)
+                    rvAttendance.setAdapter(mAdapterMaster)
+                    rvAttendance.notifyDataSetChanged()
+                }
+            }
+        })
+
         mViewModel.mAttendanceTeaData.observe(this, Observer { response ->
             response?.let {
                 netResponseFormat<AttendanceResponse>(it)?.let {
-                    if (it.data.size > 0) {
-                        mMasterData.clear()
-                        mMasterData.addAll(it.data)
-                        rvAttendance.notifyDataSetChanged()
-                    }
+                    mMasterData.clear()
+                    mMasterData.addAll(it.data)
+                    rvAttendance.notifyDataSetChanged()
                     if (it.classs.size > 0) {
                         mClassData.clear()
                         titles2.clear()
@@ -349,6 +383,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         mClassData.forEach {
                             titles2.add(it.classname)
                             if (it.choice == "1") {
+                                currentClassId = it.classid
                                 tvLabel2Attendance.text = it.classname
                             }
                         }

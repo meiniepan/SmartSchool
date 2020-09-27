@@ -31,7 +31,7 @@ class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>) :
     }
 
     private fun initAdapter(holder: BaseViewHolder, item: TimetableBean) {
-        lateinit var mAdapter: LessonAdapter
+        lateinit var mAdapter: CourseAdapter
         var mRecycler: RecyclerView = holder.getView(R.id.rvLesson)
         var mLessonData: ArrayList<CourseBean> = ArrayList()
         var mRealLessonData: ArrayList<CourseBean> = ArrayList()
@@ -39,7 +39,7 @@ class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>) :
         mLessonData.addAll(item.list)
         if (total > 0 && mLessonData.size > 0) {
             var ii = 0
-            for (i in 1 until total + 1) {
+            for (i in 0 until total) {
                 if (ii >= mLessonData.size) {
                     break
                 }
@@ -51,7 +51,7 @@ class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>) :
                 }
             }
         }
-        mAdapter = LessonAdapter(R.layout.item_lesson, mRealLessonData)
+        mAdapter = CourseAdapter(R.layout.item_lesson, mRealLessonData)
         mAdapter.setMaster(isMaster)
         if (DateUtil.isSameDay(item.time.toLong() * 1000)) {
             mAdapter.setColor(true)

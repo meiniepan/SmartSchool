@@ -97,21 +97,21 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
     }
 
-    suspend fun getAttTimetable(time: String = "",uId: String = ""): Any {
+    suspend fun getAttTimetable(time: String = "", uId: String = ""): Any {
 
 
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.getAttTimetableStu(UserInfo.getUserBean().token, time = time,uid = uId)
+                apiService.getAttTimetableStu(UserInfo.getUserBean().token, time = time, uid = uId)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getAttTimetableTea(UserInfo.getUserBean().token, time = time,uid = uId)
+                apiService.getAttTimetableTea(UserInfo.getUserBean().token, time = time, uid = uId)
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.getAttTimetableTea(UserInfo.getUserBean().token, time = time,uid = uId)
+                apiService.getAttTimetableTea(UserInfo.getUserBean().token, time = time, uid = uId)
                     .dataConvert(loadState)
 
             }
@@ -172,46 +172,46 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
     }
 
     suspend fun getAttendance(
-        classid: String = "",
-        atttime: String = "",
-        courseId: String = ""
+        classid: String? = null, atttime: String? = null,
+         keyword: String? = null
     ): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                    apiService.getAttendanceStuAdmin(
-                        UserInfo.getUserBean().token,
-                        classid = classid,
-                        atttime = atttime
-                    )
-                        .dataConvert(loadState)
+                apiService.getAttendanceStuAdmin(
+                    UserInfo.getUserBean().token,
+                    classid = classid,
+                    atttime = atttime,
+                    keyword = keyword
+                )
+                    .dataConvert(loadState)
             }
             "2" -> {
                 apiService.getAttendanceTea(
                     UserInfo.getUserBean().token,
-                    classid,
-                    time = atttime
+                    classid = classid,
+                    time = atttime,
+                    keyword = keyword
                 )
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                //todo 测试
-                apiService.getAttendanceTea(
+
+                apiService.getAttendanceSchool(
                     UserInfo.getUserBean().token,
-                    classid,
+                    classid = classid,
                     time = atttime
                 )
                     .dataConvert(loadState)
-//                apiService.getAttendanceSchool(
-//                    UserInfo.getUserBean().token,
-//                    classid,
-//                    time = atttime
-//                )
-//                    .dataConvert(loadState)
 
             }
             else -> {
-                apiService.getAttendance(UserInfo.getUserBean().token, classid, atttime = atttime)
+                apiService.getAttendanceTea(
+                    UserInfo.getUserBean().token,
+                    classid = classid,
+                    time = atttime,
+                    keyword = keyword
+                )
                     .dataConvert(loadState)
             }
         }
@@ -337,9 +337,11 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
-    suspend fun getStudentsByClass(classId: String? = null,realName: String? = null): Any {
-        return apiService.getStudentsByClass(UserInfo.getUserBean().token,
-            classid = classId,realname = realName)
+    suspend fun getStudentsByClass(classId: String? = null, realName: String? = null): Any {
+        return apiService.getStudentsByClass(
+            UserInfo.getUserBean().token,
+            classid = classId, realname = realName
+        )
             .dataConvert(loadState)
     }
 

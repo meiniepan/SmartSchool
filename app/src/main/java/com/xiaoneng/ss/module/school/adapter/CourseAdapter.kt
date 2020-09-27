@@ -7,7 +7,6 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.module.school.model.CourseBean
-import org.greenrobot.eventbus.EventBus
 
 
 /**
@@ -17,7 +16,7 @@ import org.greenrobot.eventbus.EventBus
  * @date: 2020/08/27
  * Time: 17:32
  */
-class LessonAdapter(layoutId: Int, listData: MutableList<CourseBean>) :
+class CourseAdapter(layoutId: Int, listData: MutableList<CourseBean>) :
     BaseQuickAdapter<CourseBean, BaseViewHolder>(layoutId, listData) {
     private var isMaster: Boolean = false
     private var hasColor: Boolean = false

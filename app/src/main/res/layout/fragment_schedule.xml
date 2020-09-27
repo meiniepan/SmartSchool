@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:layout_marginBottom="9dp"
-            android:text="2020～2021学年 第一学期" />
+            android:text="2020～2021学年 第二学期" />
 
         <LinearLayout
             android:layout_width="match_parent"

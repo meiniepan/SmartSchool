@@ -27,6 +27,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mAttendanceMasterData: MutableLiveData<Any> = MutableLiveData()
     val mAttendanceStuData: MutableLiveData<Any> = MutableLiveData()
     val mAttendanceTeaData: MutableLiveData<Any> = MutableLiveData()
+    val mAttendanceQueryData: MutableLiveData<Any> = MutableLiveData()
     val mStudentData: MutableLiveData<Any> = MutableLiveData()
     val mInvolveStudentData: MutableLiveData<Any> = MutableLiveData()
     val mDepartmentsData: MutableLiveData<Any> = MutableLiveData()
@@ -60,9 +61,9 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getAttTimetable(time: String = "",uId: String = "") {
+    fun getAttTimetable(time: String = "", uId: String = "") {
         initiateRequest(
-            { mAttTimetableData.value = mRepository.getAttTimetable(time,uId) },
+            { mAttTimetableData.value = mRepository.getAttTimetable(time, uId) },
             loadState
         )
     }
@@ -96,9 +97,21 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     }
 
 
-    fun getAttendanceTea(classid: String = "", time: String = "", courseId: String = "") {
+    fun getAttendanceTea(
+        classid: String? = null, time: String? = null,
+        keyword: String? = null
+    ) {
         initiateRequest(
-            { mAttendanceTeaData.value = mRepository.getAttendance(classid, time, courseId) },
+            {
+                if (keyword == null) {
+                    mAttendanceTeaData.value =
+                        mRepository.getAttendance(classid = classid, atttime = time, keyword = keyword)
+                } else {
+                    mAttendanceQueryData.value =
+                        mRepository.getAttendance(classid = classid, atttime = time, keyword = keyword)
+                }
+
+            },
             loadState
         )
     }
@@ -110,12 +123,6 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getAttendanceByStuAdmin(classid: String = "", time: String = "", courseId: String = "") {
-        initiateRequest(
-            { mAttendanceStuData.value = mRepository.getAttendance(classid, time, courseId) },
-            loadState
-        )
-    }
 
     fun queryStudent(keyword: String) {
         initiateRequest(
@@ -175,9 +182,9 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getStudentsByClass(classId: String? = null,realName: String? = null) {
+    fun getStudentsByClass(classId: String? = null, realName: String? = null) {
         initiateRequest(
-            { mStudentData.value = mRepository.getStudentsByClass(classId,realName) },
+            { mStudentData.value = mRepository.getStudentsByClass(classId, realName) },
             loadState
         )
     }

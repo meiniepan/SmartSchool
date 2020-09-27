@@ -72,6 +72,7 @@
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:visibility="gone"
+                        android:layout_marginStart="5dp"
                         android:background="@drawable/ic_search_clear"
                         />
                 </LinearLayout>
