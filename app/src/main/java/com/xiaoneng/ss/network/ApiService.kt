@@ -428,6 +428,7 @@ interface ApiService {
     suspend fun getAttendanceStuAdmin(
         @Field("token") token: String,
         @Field("classid") classid: String? = null,
+        @Field("courseid") courseid: String? = null,
         @Field("keyword") keyword: String? = null,
         @Field("atttime") atttime: String? = null
     ): BaseResponse<Any>
@@ -440,6 +441,7 @@ interface ApiService {
     suspend fun getAttendanceTea(
         @Field("token") token: String,
         @Field("classid") classid: String? = null,
+        @Field("courseid") courseid: String? = null,
         @Field("groupid") groupid: String? = null,
         @Field("teacheruid") teacheruid: String? = null,
         @Field("keyword") keyword: String? = null,

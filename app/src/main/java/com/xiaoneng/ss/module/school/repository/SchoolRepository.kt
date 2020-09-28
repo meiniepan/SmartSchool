@@ -181,7 +181,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
     }
 
     suspend fun getAttendance(
-        classid: String? = null, atttime: String? = null,
+        classid: String? = null,courseId: String? = null, atttime: String? = null,
         keyword: String? = null
     ): Any {
         return when (UserInfo.getUserBean().usertype) {
@@ -189,6 +189,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                 apiService.getAttendanceStuAdmin(
                     UserInfo.getUserBean().token,
                     classid = classid,
+                    courseid = courseId,
                     atttime = atttime,
                     keyword = keyword
                 )
@@ -198,6 +199,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                 apiService.getAttendanceTea(
                     UserInfo.getUserBean().token,
                     classid = classid,
+                    courseid = courseId,
                     time = atttime,
                     keyword = keyword
                 )
@@ -218,6 +220,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                 apiService.getAttendanceTea(
                     UserInfo.getUserBean().token,
                     classid = classid,
+                    courseid = courseId,
                     time = atttime,
                     keyword = keyword
                 )

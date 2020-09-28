@@ -98,17 +98,17 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
 
 
     fun getAttendanceTea(
-        classid: String? = null, time: String? = null,
+        classid: String? = null,courseId: String? = null, time: String? = null,
         keyword: String? = null
     ) {
         initiateRequest(
             {
                 if (keyword == null) {
                     mAttendanceTeaData.value =
-                        mRepository.getAttendance(classid = classid, atttime = time, keyword = keyword)
+                        mRepository.getAttendance(classid = classid,courseId = courseId, atttime = time, keyword = keyword)
                 } else {
                     mAttendanceQueryData.value =
-                        mRepository.getAttendance(classid = classid, atttime = time, keyword = keyword)
+                        mRepository.getAttendance(classid = classid,courseId = courseId, atttime = time, keyword = keyword)
                 }
 
             },

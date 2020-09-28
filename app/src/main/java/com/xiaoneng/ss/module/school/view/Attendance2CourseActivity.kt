@@ -76,9 +76,10 @@ class Attendance2CourseActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         initAdapterMaster()
 
     }
-    private fun getDataMaster(classId: String? = null, keyWord: String? = null) {
+    private fun getDataMaster(keyWord: String? = null) {
         mViewModel.getAttendanceTea(
-            classid = classId,
+            classid = bean?.classid,
+            courseId = bean?.id,
             keyword = keyWord
         )
     }

@@ -36,7 +36,7 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var leaveStr: String? = ""
     var delNum = 0
     var resNum = 0
-    lateinit var bean: AttendanceBean
+    var bean: AttendanceBean? = null
 
     override fun getLayoutId(): Int = R.layout.activity_choose_course_leave
 
@@ -53,7 +53,7 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             doConfirm()
         }
         tvChooseDay.apply {
-            bean.mDate?.let {
+            bean?.mDate?.let {
                 if (it.isEmpty()) {
                     text = chosenDay
                 } else {
@@ -125,7 +125,7 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private fun applyLeave() {
         delNum = 0
         resNum = 0
-        var uId = bean.uid ?: ""
+        var uId = bean?.uid ?: ""
         var uType = "1"
         if (mDataChosen.size > 0) {
             var has = false
@@ -176,7 +176,7 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun doApplyLeave() {
-        var msg = bean.cno + bean.realname + "\n" + bean.levelname + bean.classname
+        var msg = bean?.cno + bean?.realname + "\n" + bean?.levelname + bean?.classname
         mAlert(msg, "请确认学生身份") {
             var courseList = ""
             mDataChosen.forEach {
@@ -191,7 +191,7 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     type = "3",
                     status = leaveType ?: "",
                     leavetype = "0",
-                    uid = bean.uid!!,
+                    uid = bean?.uid!!,
                     atttime = chosenDayNet,
                     crsid = courseList,
                     usertype = "1",
@@ -209,7 +209,7 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun getData() {
         super.getData()
         rvChooseCourse.showLoadingView()
-        mViewModel.getAttTimetable(time = chosenDayNet, uId = bean.uid ?: "")
+        mViewModel.getAttTimetable(time = chosenDayNet, uId = bean?.uid ?: "")
     }
 
     private fun initAdapter() {
@@ -225,10 +225,10 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun checkCourse(bean: AttCourseBean) {
-        bean.attlists?.forEach {
+        bean?.attlists?.forEach {
             if (it.attendances == leaveStr) {
                 checkNum++
-                bean.checked = true
+                bean?.checked = true
                 return
             }
         }
