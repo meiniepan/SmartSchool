@@ -58,13 +58,13 @@ class AddClassAttendanceTypeMasterActivity : BaseLifeCycleActivity<SchoolViewMod
         }
         llAddClassAttendance3.setOnClickListener {
             mStartActivity<ChooseCourseToLeaveActivity>(this) {
-                putExtra(Constant.LEAVE_TYPE, "0")//状态0迟到1已完成2旷课3请假
+                putExtra(Constant.LEAVE_TYPE, "课堂考勤迟到")//状态0迟到1已完成2旷课3请假
                 putExtra(Constant.DATA, bean)
             }
         }
         llAddClassAttendance4.setOnClickListener {
             mStartActivity<ChooseCourseToLeaveActivity>(this) {
-                putExtra(Constant.LEAVE_TYPE, "2")
+                putExtra(Constant.LEAVE_TYPE, "旷课")
                 putExtra(Constant.DATA, bean)
             }
         }

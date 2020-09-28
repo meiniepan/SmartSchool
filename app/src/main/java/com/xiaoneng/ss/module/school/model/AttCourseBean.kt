@@ -44,6 +44,7 @@ data class AttCourseBean(
     var createtime: String? = "",
     var updatetime: String? = "",
     var position: String? = "",
+    var isattendances: String? = "",
     var attlists: MutableList<AttendanceStuBean>? = ArrayList(),
     var checked: Boolean = false
 

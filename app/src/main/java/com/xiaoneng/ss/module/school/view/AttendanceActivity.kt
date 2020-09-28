@@ -1,6 +1,7 @@
 package com.xiaoneng.ss.module.school.view
 
 import android.app.Dialog
+import android.content.Intent
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -40,6 +41,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var mStudentData: ArrayList<AttendanceStuBean> = ArrayList()
     var mClassData: ArrayList<ClassBean> = ArrayList()
     var chosenDay = DateUtil.formatDateCustomDay()
+    lateinit var getDataLambda:()->Unit
     private val bottomDialog1: Dialog by lazy {
         initDialog1()
     }
@@ -129,6 +131,10 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         getData()
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        getDataLambda()
+    }
 
     override fun getData() {
         rvAttendance.showLoadingView()
@@ -140,23 +146,29 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
         } else if (UserInfo.getUserBean().usertype == "2") {
             if (UserInfo.getUserBean().classmaster == "1") {
-                    getDataMaster(classId = currentClassId)
+                getDataMaster()
             } else {
                 getTimetable()
             }
         } else if (UserInfo.getUserBean().usertype == "99") {
-            mViewModel.getAttendanceSchool()
+            getSchoolData()
         } else {
-            mViewModel.getAttendanceStu()
+            getStuData()
         }
     }
 
     private fun getStuData() {
+        getDataLambda = ::getStuData
         mViewModel.getAttendanceStu(time = "")
+    }
+    private fun getSchoolData() {
+        getDataLambda = ::getSchoolData
+        mViewModel.getAttendanceSchool(time = "")
     }
 
 
     private fun getTimetable() {
+        getDataLambda = ::getTimetable
         mViewModel.getAttTimetable(time = chosenDay)
     }
 
@@ -172,7 +184,21 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
         }
     }
+    private fun getDataMaster( keyWord: String? = null) {
+        mViewModel.getAttendanceTea(
+            time = chosenDay,
+            classid = currentClassId,
+            keyword = keyWord
+        )
+    }
 
+    private fun getDataMaster() {
+        getDataLambda = ::getDataMaster
+        mViewModel.getAttendanceTea(
+            time = chosenDay,
+            classid = currentClassId
+        )
+    }
     private fun initTitle() {
 
 
@@ -314,7 +340,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun initDialog2(): Dialog {
 
-        // 底部弹出对话框
+        // 班级对话框
         var bottomDialog =
             Dialog(this, R.style.BottomDialog)
         val contentView: View =
@@ -342,20 +368,13 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             currentClassId = mClassData[position].classid
             tvLabel2Attendance.text = titles2[position]
             rvAttendance.showLoadingView()
-            getDataMaster(classId = currentClassId)
+            getDataMaster()
             bottomDialog.dismiss()
         }
 
         return bottomDialog
     }
 
-    private fun getDataMaster(classId: String? = null, keyWord: String? = null) {
-        mViewModel.getAttendanceTea(
-            time = chosenDay,
-            classid = classId,
-            keyword = keyWord
-        )
-    }
 
     override fun initDataObserver() {
         mViewModel.mAttendanceQueryData.observe(this, Observer { response ->

@@ -12,10 +12,10 @@ import com.xiaoneng.ss.R
  * @date: 2020/02/26
  * Time: 11:12
  */
-fun displayImage(context: Context, path: Any?, imageView: ImageView) {
+fun displayImage(context: Context, path: Any?, imageView: ImageView,placeholder: Int = R.drawable.ic_img_placehold) {
     Glide.with(context)
         .load(path)
-        .error(R.drawable.ic_avatar_default)
-        .placeholder(R.drawable.ic_avatar_default)
+        .error(R.drawable.ic_img_error)
+        .placeholder(placeholder)
         .into(imageView)
 }

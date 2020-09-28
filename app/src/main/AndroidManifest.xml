@@ -118,6 +118,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.school.view.AttendanceActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.circular.view.ScheduleDetailActivity"

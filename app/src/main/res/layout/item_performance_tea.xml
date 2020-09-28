@@ -16,8 +16,9 @@
 
         <TextView
             android:id="@+id/tvTime3Performance"
-            android:paddingStart="9dp"
+            android:paddingStart="5dp"
             android:layout_width="0dp"
+            android:singleLine="true"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text=""
@@ -28,6 +29,7 @@
         <TextView
             android:id="@+id/tvRank3Performance"
             android:layout_width="0dp"
+            android:singleLine="true"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -39,6 +41,7 @@
             android:id="@+id/tvCno3Performance"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:layout_weight="1"
             android:gravity="center"
             android:text=""
@@ -50,6 +53,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:singleLine="true"
             android:gravity="center"
             android:text=""
 
@@ -61,7 +65,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingEnd="9dp"
+            android:singleLine="true"
+            android:paddingEnd="5dp"
             android:gravity="end"
             android:text=""
 

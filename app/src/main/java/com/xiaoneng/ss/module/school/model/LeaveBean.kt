@@ -24,7 +24,7 @@ data class LeaveBean(
     var etleave: String = "",
     var teacheruid: String = "",
     var title: String = "",
-    var leavetype: String = "1",//请假类型1事假2病假3传染病
+    var leavetype: String? = "1",//请假类型1事假2病假3传染病
     var isfever: String = "0",//发热
     var isdiarrhea: String = "0",//腹泻
     var isvomit: String = "0",//呕吐

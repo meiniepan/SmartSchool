@@ -18,7 +18,8 @@
             android:id="@+id/tvTimePerformance"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:paddingStart="9dp"
+            android:singleLine="true"
+            android:paddingStart="5dp"
             android:layout_height="wrap_content"
             android:text=""
 
@@ -29,6 +30,7 @@
             android:id="@+id/tvScore1Performance"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:singleLine="true"
             android:gravity="center"
             android:layout_height="wrap_content"
             android:text=""
@@ -40,8 +42,9 @@
             android:id="@+id/tvRank1Performance"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:singleLine="true"
             android:gravity="end"
-            android:paddingEnd="9dp"
+            android:paddingEnd="5dp"
             android:layout_height="wrap_content"
             android:text=""
             />

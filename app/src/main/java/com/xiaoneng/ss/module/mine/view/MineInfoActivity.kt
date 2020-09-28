@@ -305,7 +305,6 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                         } else {
                             GlobalScope.launch() {
                               async {
-
                                   doUpload(it)
                               }
                             }

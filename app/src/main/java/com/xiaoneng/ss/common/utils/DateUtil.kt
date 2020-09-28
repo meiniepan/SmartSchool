@@ -85,9 +85,14 @@ object DateUtil {
                     date.length - 5,
                     date.length
                 )
-            } else {
+            } else if (isSameYear(date)) {
                 result = date.substring(
                     5,
+                    10
+                )
+            }else{
+                result = date.substring(
+                    2,
                     10
                 )
             }
@@ -232,6 +237,7 @@ object DateUtil {
 
     }
 
+
     fun isSameDay(date: String): Boolean {
         return if (date.length >= 10) {
             var cal1: Calendar = Calendar.getInstance()
@@ -240,6 +246,18 @@ object DateUtil {
             cal1.get(Calendar.YEAR).toString() == date.substring(0, 4) &&
                     (cal1.get(Calendar.MONTH) + 1).toString() == date.substring(5, 7) &&
                     cal1.get(Calendar.DAY_OF_MONTH).toString() == date.substring(8, 10)
+        } else {
+            false
+        }
+
+    }
+
+    fun isSameYear(date: String): Boolean {
+        return if (date.length >= 10) {
+            var cal1: Calendar = Calendar.getInstance()
+            var date1 = Date(System.currentTimeMillis())
+            cal1.time = date1
+            cal1.get(Calendar.YEAR).toString() == date.substring(0, 4)
         } else {
             false
         }

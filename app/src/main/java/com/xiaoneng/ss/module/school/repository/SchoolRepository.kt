@@ -74,8 +74,17 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getTimetable2(UserInfo.getUserBean().token, time = time)
-                    .dataConvert(loadState)
+                if (UserInfo.getUserBean().classmaster == "1") {
+                    apiService.getTimetableMaster(
+                        UserInfo.getUserBean().token,
+                        classid = classid,
+                        time = time
+                    )
+                        .dataConvert(loadState)
+                } else {
+                    apiService.getTimetable2(UserInfo.getUserBean().token, time = time)
+                        .dataConvert(loadState)
+                }
 
             }
             "99" -> {
@@ -173,7 +182,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
     suspend fun getAttendance(
         classid: String? = null, atttime: String? = null,
-         keyword: String? = null
+        keyword: String? = null
     ): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
@@ -225,6 +234,15 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             UserInfo.getUserBean().token,
             classid,
             atttime = atttime
+        )
+            .dataConvert(loadState)
+    }
+    suspend fun getAttendanceInfo(
+        id: String = ""
+    ): Any {
+        return apiService.getAttendanceInfo(
+            UserInfo.getUserBean().token,
+            id
         )
             .dataConvert(loadState)
     }

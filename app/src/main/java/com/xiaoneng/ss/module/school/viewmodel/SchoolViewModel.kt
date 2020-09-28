@@ -24,7 +24,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mAttTimetableData: MutableLiveData<Any> = MutableLiveData()
     val mTimetableDataT: MutableLiveData<TimetableResponse> = MutableLiveData()
     val mAttendanceSchoolData: MutableLiveData<Any> = MutableLiveData()
-    val mAttendanceMasterData: MutableLiveData<Any> = MutableLiveData()
+    val mAttendanceInfoData: MutableLiveData<Any> = MutableLiveData()
     val mAttendanceStuData: MutableLiveData<Any> = MutableLiveData()
     val mAttendanceTeaData: MutableLiveData<Any> = MutableLiveData()
     val mAttendanceQueryData: MutableLiveData<Any> = MutableLiveData()
@@ -119,6 +119,13 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     fun getAttendanceStu(classid: String = "", time: String = "") {
         initiateRequest(
             { mAttendanceStuData.value = mRepository.getAttendanceStu(classid, time) },
+            loadState
+        )
+    }
+
+    fun getAttendanceInfo(id: String) {
+        initiateRequest(
+            { mAttendanceInfoData.value = mRepository.getAttendanceInfo(id) },
             loadState
         )
     }

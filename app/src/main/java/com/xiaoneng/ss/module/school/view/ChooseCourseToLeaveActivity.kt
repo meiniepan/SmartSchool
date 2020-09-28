@@ -25,17 +25,17 @@ import java.util.*
  * Time: 17:01
  */
 class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    private var leaveStr = ""
+    private var checkNum: Int = 0
+    private var isDelete: Boolean = false
     lateinit var mAdapter: ChooseCourseAdapter
     var mData: ArrayList<AttCourseBean> = ArrayList()
     var mDataChosen: ArrayList<AttCourseBean> = ArrayList()
     var chosenDay = DateUtil.formatDateCustomMmDay()
     var chosenDayNet = DateUtil.formatDateCustomDay()
-    var leaveType :String?= ""
+    var leaveType: String? = ""
+    var leaveStr: String? = ""
     var delNum = 0
     var resNum = 0
-    var addNum = 0
-    var resAddNum = 0
     lateinit var bean: AttendanceBean
 
     override fun getLayoutId(): Int = R.layout.activity_choose_course_leave
@@ -45,7 +45,7 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.initView()
         tvTimeToday.text = "今天是" + DateUtil.formatTitleToday()
         bean = intent.getParcelableExtra(Constant.DATA)
-        leaveType = intent.getStringExtra(Constant.LEAVE_TYPE)
+        leaveStr = intent.getStringExtra(Constant.LEAVE_TYPE)
         bean?.let {
 //            initUI()
         }
@@ -82,40 +82,84 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 mDataChosen.add(it)
             }
         }
-        when {
-            leaveType.isNullOrEmpty() -> {
-
-                setResult(
-                    Activity.RESULT_OK,
-                    intent.putParcelableArrayListExtra(Constant.DATA, mDataChosen)
-                        .putExtra(Constant.TITLE, DateUtil.formatTitleToday(chosenDayNet))
-                        .putExtra(Constant.TITLE_2, chosenDayNet)
-                )
-                finish()
-            }
-            leaveType == "0" -> {
-                leaveStr = "课堂考勤迟到"
-                leaveType?.let {
-                    applyLeave(it)
-                }
+        when (leaveStr) {
+            "课堂考勤迟到" -> {
+                leaveType = "0"
+                applyLeave()
 
             }
-            leaveType == "2" -> {
-                leaveStr = "旷课"
-                leaveType?.let {
-                    applyLeave(it)
+            "旷课" -> {
+                leaveType = "2"
+                applyLeave()
+            }
+
+            else -> {
+                if (!leaveStr.isNullOrEmpty()) {
+                    delNum = 0
+                    resNum = 0
+                    if (mDataChosen.size > 0) {
+                        doSetResult()
+                    } else {
+                        if (checkNum > 0) {
+                            deleteOnly()
+                        } else {
+                            finish()
+                        }
+                    }
+                } else {
+                    doSetResult()
                 }
             }
         }
     }
 
-    private fun applyLeave(leaveType: String) {
+    private fun doSetResult() {
+        setResult(
+            Activity.RESULT_OK,
+            intent.putParcelableArrayListExtra(Constant.DATA, mDataChosen)
+                .putExtra(Constant.TITLE, chosenDayNet)
+        )
+        finish()
+    }
+
+    private fun applyLeave() {
         delNum = 0
         resNum = 0
         var uId = bean.uid ?: ""
         var uType = "1"
         if (mDataChosen.size > 0) {
             var has = false
+            bean?.attlists?.let {
+                it.forEach {
+                    if (it.attendances == leaveType) {
+                        delNum++
+                    }
+                }
+                it.forEach {
+                    if (it.attendances == leaveType) {
+                        mViewModel.deleteAttendance(it.id ?: "")
+                    }
+                }
+            }
+            if (delNum == 0) {
+                doApplyLeave()
+            }
+        } else {
+            if (checkNum > 0) {
+                deleteOnly()
+            } else {
+                finish()
+            }
+        }
+    }
+
+    private fun deleteOnly() {
+        mAlert(
+            "请确认请假时间是否正确\n" +
+                    "没有选择时间的请假记录将会被删除",
+            "本条请假信息将会被删除"
+        ) {
+            isDelete = true
             bean?.attlists?.let {
                 it.forEach {
                     if (it.attendances == leaveStr) {
@@ -128,33 +172,32 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     }
                 }
             }
-            if (delNum == 0) {
-                doApplyLeave()
-            }
         }
     }
 
     private fun doApplyLeave() {
-        addNum = mDataChosen.size
-        resAddNum = 0
         var msg = bean.cno + bean.realname + "\n" + bean.levelname + bean.classname
         mAlert(msg, "请确认学生身份") {
+            var courseList = ""
             mDataChosen.forEach {
-                mViewModel.addAttendance(
-                    LeaveBean(
-                        UserInfo.getUserBean().token,
-                        type = "3",
-                        status = leaveType?:"",
-                        leavetype = "0",
-                        uid = bean.uid!!,
-                        atttime = chosenDay,
-                        crsid = it.id ?: "",
-                        teacheruid = it.teacheruid ?: "",
-                        usertype = "1",
-                        remark = ""
-                    )
-                )
+                courseList += it.id + ","
             }
+            if (courseList.isNotEmpty()) {
+                courseList.substring(0, courseList.length - 1)
+            }
+            mViewModel.addAttendance(
+                LeaveBean(
+                    UserInfo.getUserBean().token,
+                    type = "3",
+                    status = leaveType ?: "",
+                    leavetype = "0",
+                    uid = bean.uid!!,
+                    atttime = chosenDayNet,
+                    crsid = courseList,
+                    usertype = "1",
+                    remark = ""
+                )
+            )
         }
     }
 
@@ -165,6 +208,7 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
+        rvChooseCourse.showLoadingView()
         mViewModel.getAttTimetable(time = chosenDayNet, uId = bean.uid ?: "")
     }
 
@@ -180,6 +224,16 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
     }
 
+    private fun checkCourse(bean: AttCourseBean) {
+        bean.attlists?.forEach {
+            if (it.attendances == leaveStr) {
+                checkNum++
+                bean.checked = true
+                return
+            }
+        }
+    }
+
     override fun initDataObserver() {
         mViewModel.mAttTimetableData.observe(this, Observer { response ->
             response?.let {
@@ -187,11 +241,7 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mData.clear()
                     mData.addAll(it.list)
                     mData.forEach { bean ->
-                        bean.attlists?.let {
-                            if (it.size > 0) {
-                                bean.checked = true
-                            }
-                        }
+                        checkCourse(bean)
                     }
                     rvChooseCourse.notifyDataSetChanged()
                 }
@@ -203,18 +253,20 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             response?.let {
                 resNum++
                 if (resNum == delNum) {
-                    doApplyLeave()
+                    if (isDelete) {
+                        toast(R.string.deal_done)
+                        mStartActivity<AttendanceActivity>(this)
+                    } else {
+                        doApplyLeave()
+                    }
                 }
             }
         })
 
         mViewModel.mAddAttendanceData.observe(this, Observer { response ->
             response?.let {
-                resAddNum++
-                if (resAddNum == addNum) {
-                    toast(R.string.deal_done)
-                    finish()
-                }
+                toast(R.string.deal_done)
+                mStartActivity<AttendanceActivity>(this)
             }
         })
 

@@ -8,6 +8,7 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.common.utils.mAlert
+import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.model.StudentBean
 import com.xiaoneng.ss.model.StudentResp
@@ -80,7 +81,7 @@ class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mAlert(msg, "请确认学生身份") {
             mViewModel.addAttendance(
                 LeaveBean(
-                    UserInfo.getUserBean().token, type = "1", status = "0",
+                    UserInfo.getUserBean().token, type = "1", status = "0",leavetype = null,
                     uid = mData[position].uid, atttime = chosenDay, crsid = "", remark = "lai"
                 )
             )
@@ -103,7 +104,7 @@ class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mViewModel.mAddAttendanceData.observe(this, Observer { response ->
             response?.let {
                 toast(R.string.deal_done)
-                finish()
+                mStartActivity<AttendanceActivity>(this)
             }
         })
 

@@ -447,6 +447,16 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
+     *班主任/教师查看考勤信息
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/teacher/attendances/info")
+    suspend fun getAttendanceInfo(
+        @Field("token") token: String,
+        @Field("id") id: String
+    ): BaseResponse<Any>
+
+    /**
      *管理员校级考勤
      */
     @FormUrlEncoded

@@ -44,8 +44,6 @@ inline fun <reified T> mStartForResult(context: Activity?, code: Int, block: Int
 }
 
 
-
-
 inline fun <reified T> mStartActivity(context: Context?, block: Intent.() -> Unit) {
     val intent = Intent(context, T::class.java)
     intent.block()
@@ -186,26 +184,26 @@ inline fun mDownloadFile(context: Context, name: String): String? {
 
 }
 
- fun Context.mBitmap2Local(bitmap:Bitmap?,name: String): String? {
-     var path = getExternalFilesDir(null)?.absolutePath+ File.separator+ name
-     val filename = File(path)
+fun Context.mBitmap2Local(bitmap: Bitmap?, name: String): String? {
+    var path = getExternalFilesDir(null)?.absolutePath + File.separator + name
+    val filename = File(path)
 
-     if (bitmap != null) {
-         try {
-             if (!filename.exists()) {
-                 filename.parentFile.mkdirs()
-                 filename.createNewFile()
-             }
-             val out = FileOutputStream(path)
-             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
-             out.flush()
-             out.close()
-             return path
-         } catch (e: Exception) {
-             e.printStackTrace()
-         }
-     }
-return ""
+    if (bitmap != null) {
+        try {
+            if (!filename.exists()) {
+                filename.parentFile.mkdirs()
+                filename.createNewFile()
+            }
+            val out = FileOutputStream(path)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+            out.flush()
+            out.close()
+            return path
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    return ""
 }
 
 /**
@@ -277,5 +275,10 @@ fun getBooleanString(bool: Boolean): String {
     } else {
         "0"
     }
+
+}
+
+fun getStringBoolean(value: String?): Boolean {
+    return value == "1"
 
 }

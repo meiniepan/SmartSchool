@@ -128,6 +128,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/title_padding"
+                            android:gravity="end"
                             android:background="@null"
                             android:hint="请填写具体原因" />
 
@@ -305,6 +306,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/title_padding"
                             android:inputType="number"
+                            android:gravity="end"
                             android:background="@null"
                             android:hint="请填体温" />
 
@@ -390,6 +392,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/title_padding"
+                            android:gravity="end"
                             android:background="@null"
                             android:hint="请填写医院名称" />
 
@@ -433,6 +436,7 @@
                             android:id="@+id/etItem7ApplyLeave"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:gravity="end"
                             android:layout_marginEnd="@dimen/title_padding"
                             android:background="@null"
                             android:hint="请填写具体名称" />
