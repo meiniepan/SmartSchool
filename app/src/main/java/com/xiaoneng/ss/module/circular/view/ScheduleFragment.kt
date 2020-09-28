@@ -5,8 +5,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.utils.*
@@ -143,12 +141,6 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
 
         rvEventSchedule.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            addItemDecoration(
-                RecycleViewDivider(
-                    dp2px(requireContext(), 10f).toInt(),
-                    context.resources.getColor(R.color.transparent)
-                )
-            )
             setAdapter(mAdapterEvent)
         }
         mAdapterEvent.setOnItemClickListener { adapter, view, position ->
@@ -181,28 +173,19 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
     override fun initDataObserver() {
         mViewModel.mScheduleData.observe(this, Observer { response ->
             response?.let {
-                val gson: Gson = GsonBuilder().enableComplexMapKeySerialization().create()
-                val jsonString = gson.toJson(it)
-                gson.fromJson(jsonString, ScheduleResponse::class.java)?.let {
-
-                    mDataEvent.clear()
-                    mDataEvent.addAll(it.data)
-                    if (mDataEvent.size > 0) {
-                        rvEventSchedule.notifyDataSetChanged()
-                    } else {
-                        rvEventSchedule.showEmptyView()
+                netResponseFormat<ScheduleResponse>(it)?.let {
+                    tvSchedule.text = it.semesters
+                    it.data?.let {
+                        mDataEvent.clear()
+                        mDataEvent.addAll(it)
+                            rvEventSchedule.notifyDataSetChanged()
                     }
-//                    showEmpty()
-
                 }
             }
         })
         mViewModel.mScheduleMonthData.observe(this, Observer { response ->
             response?.let {
-                showSuccess()
-                val gson: Gson = GsonBuilder().enableComplexMapKeySerialization().create()
-                val jsonString = gson.toJson(it)
-                gson.fromJson(jsonString, ScheduleDayResponse::class.java)?.let {
+                netResponseFormat<ScheduleDayResponse>(it)?.let {
                     mDataMonth.clear()
                     mDataMonth.addAll(Lunar.getCurrentDaysOfMonth(it.data))
                     mAdapterMonth.notifyDataSetChanged()

@@ -55,7 +55,6 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
         mAdapter = NoticeAdapter(R.layout.item_notice, mData)
         rvNotice.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            addItemDecoration(RecycleViewDivider(dp2px(context, 10f).toInt(),context.resources.getColor(R.color.transparent) ))
             setAdapter(mAdapter)
         }
         mAdapter.setOnItemClickListener { _, view, position ->

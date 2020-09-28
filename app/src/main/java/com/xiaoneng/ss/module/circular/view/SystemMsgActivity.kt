@@ -1,5 +1,6 @@
 package com.xiaoneng.ss.module.circular.view
 
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smartrefresh.layout.api.RefreshLayout
@@ -7,9 +8,14 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.circular.adapter.SysMsgAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
+import com.xiaoneng.ss.module.school.view.AttendanceActivity
+import com.xiaoneng.ss.module.school.view.PerformanceActivity
+import com.xiaoneng.ss.module.school.view.TaskDetailActivity
+import com.xiaoneng.ss.module.school.view.TimetableActivity
 import kotlinx.android.synthetic.main.activity_system_msg.*
 import org.jetbrains.anko.toast
 
@@ -27,16 +33,16 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
 
     override fun initView() {
         super.initView()
-        mData = intent.getParcelableArrayListExtra(Constant.DATA)
         initAdapter()
-        rvSysMsg.notifyDataSetChanged()
         tvCleanMsg.setOnClickListener {
+            showLoading()
             mViewModel.readAll()
         }
     }
 
-    override fun initData() {
-        super.initData()
+    override fun onResume() {
+        super.onResume()
+        getData()
     }
 
     override fun getData() {
@@ -60,7 +66,34 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
             setAdapter(mAdapter)
         }
         mAdapter.setOnItemClickListener { _, view, position ->
-            mViewModel.read(mData[position].id!!,status = "1")
+            mViewModel.read(mData[position].id!!, status = "1")
+            when (mData[position].action) {
+                //1同步新任务 2任务日志被驳回或通过 3考勤更新 4时令更替 5成绩更新 6发布新版本
+                "1" -> {
+                    mStartActivity<TaskDetailActivity>(this){
+                        putExtra(Constant.ID, mData[position].actioninfo)
+                        putExtra(Constant.TYPE, "1")
+                    }
+                }
+                "2" -> {
+                    mStartActivity<TaskDetailActivity>(this){
+                        putExtra(Constant.ID, mData[position].actioninfo)
+                        putExtra(Constant.TYPE, "1")
+                    }
+                }
+                "3" -> {
+                    mStartActivity<AttendanceActivity>(this)
+                }
+                "4" -> {
+                    mStartActivity<TimetableActivity>(this)
+                }
+                "5" -> {
+                    mStartActivity<PerformanceActivity>(this)
+                }
+                "6" -> {
+                    toast("已经是最新版本")
+                }
+            }
 //            mStartActivity<NoticeDetailActivity>(this) {
 //                putExtra(Constant.TITLE, mData!![position].title)
 //                putExtra(Constant.ID, mData!![position].id)
@@ -74,13 +107,17 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 rvSysMsg.finishRefreshLoadMore()
                 mData.clear()
                 mData.addAll(it.data)
+                if (mData.size > 0) {
+                    tvCleanMsg.visibility = View.VISIBLE
+                } else {
+                    tvCleanMsg.visibility = View.GONE
+                }
                 rvSysMsg.notifyDataSetChanged()
             }
         })
 
         mViewModel.mReadData.observe(this, Observer { response ->
             response?.let {
-                toast(R.string.deal_done)
                 getData()
             }
         })

@@ -98,7 +98,7 @@ class AddClassAttendanceTypeMasterActivity : BaseLifeCycleActivity<SchoolViewMod
         mViewModel.mDeleteAttendanceData.observe(this, Observer { response ->
             response?.let {
                 toast(R.string.deal_done)
-                finish()
+                mStartActivity<AttendanceActivity>(this)
             }
         })
 

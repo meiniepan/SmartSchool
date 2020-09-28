@@ -8,8 +8,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.RecycleViewDivider
-import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.school.adapter.TaskStatusAdapter
 import com.xiaoneng.ss.module.school.model.TaskDetailBean
@@ -25,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_task_status.*
  */
 class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     private var status: String? = null
-    private var mType: String? = null
+    private var mType: String? = null//1接收 2发布
     lateinit var mAdapter: TaskStatusAdapter
     var mData = ArrayList<TaskDetailBean>()
 

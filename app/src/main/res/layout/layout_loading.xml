@@ -11,5 +11,11 @@
         android:indeterminateTint="@color/commonBlue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/loading"
+        android:layout_marginTop="10dp"
+        />
 
 </LinearLayout>
