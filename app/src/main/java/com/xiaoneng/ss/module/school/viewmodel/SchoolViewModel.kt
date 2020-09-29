@@ -18,7 +18,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
 
     val mAddAttendanceData: MutableLiveData<Any> = MutableLiveData()
     val mTaskListData: MutableLiveData<TaskResponse> = MutableLiveData()
-    val mPerformanceData: MutableLiveData<PerformanceResponse> = MutableLiveData()
+    val mAchievementData: MutableLiveData<AchievementResponse> = MutableLiveData()
     val mTestCourseData: MutableLiveData<Any> = MutableLiveData()
     val mTimetableData: MutableLiveData<TimetableResponse> = MutableLiveData()
     val mAttTimetableData: MutableLiveData<Any> = MutableLiveData()
@@ -75,9 +75,9 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getPerformance(testname: String = "", crid: String = "", classid: String = "") {
+    fun getAchievement(testname: String = "", crid: String = "", classid: String = "") {
         initiateRequest(
-            { mPerformanceData.value = mRepository.getPerformance(testname, crid, classid) },
+            { mAchievementData.value = mRepository.getAchievement(testname, crid, classid) },
             loadState
         )
     }

@@ -47,9 +47,9 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     override fun initView() {
         super.initView()
-        if (!isSystemWhiteList()){
-            mAlert("为不影响使用，请把智慧校园加入系统白名单"){}
-        }
+//        if (!isSystemWhiteList()){
+//            mAlert("为不影响使用，请把智慧校园加入系统白名单"){}
+//        }
         var bean = UserInfo.getUserBean()
         var name = bean.realname
         var phone = bean.phone

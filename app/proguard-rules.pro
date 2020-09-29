@@ -20,6 +20,8 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 #kotlin
+-keep public class com.xiaoneng.ss.**{*;}
+
 -keep class kotlin.** { *; }
 -keep class kotlin.Metadata { *; }
 -dontwarn kotlin.**
@@ -177,7 +179,7 @@
 }
 
 
--keep public class com.xiaoneng.ss.**{*;}
+
 -keep public class com.xiaoneng.ss.base.viewmodel.BaseViewModel{*;}
 -keep public class com.xiaoneng.ss.common.utils.CommonUtil
 -keep public class * extends com.xiaoneng.ss.base.repository.BaseRepository {*;}
@@ -186,6 +188,20 @@
 -keep public class com.xiaoneng.ss.network.ExtKt{*;}
 -keep public class * extends com.xiaoneng.ss.base.view.BaseFragment{*;}
 -keep public class * extends com.xiaoneng.ss.base.view.BaseActivity{*;}
+
+#极光推送
+-dontoptimize
+-dontpreverify
+
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
+-keep class * extends cn.jpush.android.helpers.JPushMessageReceiver { *; }
+
+-dontwarn cn.jiguang.**
+-keep class cn.jiguang.** { *; }
+-dontwarn com.google.**
+-keep class com.google.gson.** {*;}
+-keep class com.google.protobuf.** {*;}
 
 
 

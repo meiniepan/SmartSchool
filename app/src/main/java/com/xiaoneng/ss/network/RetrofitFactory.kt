@@ -2,6 +2,7 @@ package com.xiaoneng.ss.network
 
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.LoggingInterceptor
+import com.xiaoneng.ss.BuildConfig
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.SPreference
 import okhttp3.Interceptor
@@ -42,15 +43,16 @@ class RetrofitFactory private constructor() {
     }
 
     private fun initOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder()
+        var builder = OkHttpClient.Builder()
             .addInterceptor(initCookieIntercept())
             .addInterceptor(initLoginIntercept())
-            .addInterceptor(LoggingInterceptor.Builder()
-                .setLevel(Level.BASIC)
-                .log(Platform.WARN)
-                .build())
             .addInterceptor(initCommonInterceptor())
-            .build()
+        if (BuildConfig.IS_DEBUG){
+        builder.addInterceptor(LoggingInterceptor.Builder()
+            .setLevel(Level.BASIC)
+            .log(Platform.WARN)
+            .build())}
+        return builder.build()
     }
 
     private fun initCookieIntercept(): Interceptor {

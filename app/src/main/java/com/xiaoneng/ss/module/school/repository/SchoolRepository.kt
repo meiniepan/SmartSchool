@@ -153,28 +153,28 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         }
     }
 
-    suspend fun getPerformance(
+    suspend fun getAchievement(
         testname: String,
         crid: String,
         classid: String
-    ): PerformanceResponse {
+    ): AchievementResponse {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.getPerformance(UserInfo.getUserBean().token, testname)
+                apiService.getAchievement(UserInfo.getUserBean().token, testname)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getPerformance2(UserInfo.getUserBean().token, testname, crid, classid)
+                apiService.getAchievement2(UserInfo.getUserBean().token, testname, crid, classid)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.getPerformance2(UserInfo.getUserBean().token, testname, crid, classid)
+                apiService.getAchievement2(UserInfo.getUserBean().token, testname, crid, classid)
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.getPerformance(UserInfo.getUserBean().token, testname)
+                apiService.getAchievement(UserInfo.getUserBean().token, testname)
                     .dataConvert(loadState)
             }
         }

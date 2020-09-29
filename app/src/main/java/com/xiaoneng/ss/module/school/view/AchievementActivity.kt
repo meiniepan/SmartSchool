@@ -18,11 +18,11 @@ import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.model.ClassBean
 import com.xiaoneng.ss.model.TestBean
 import com.xiaoneng.ss.model.TestCourseResp
+import com.xiaoneng.ss.module.school.adapter.AchievementStuAdapter
+import com.xiaoneng.ss.module.school.adapter.AchievementTeacherAdapter
 import com.xiaoneng.ss.module.school.adapter.DialogListAdapter
-import com.xiaoneng.ss.module.school.adapter.PerformanceStuAdapter
-import com.xiaoneng.ss.module.school.adapter.PerformanceTeacherAdapter
+import com.xiaoneng.ss.module.school.model.AchievementBean
 import com.xiaoneng.ss.module.school.model.CourseBean
-import com.xiaoneng.ss.module.school.model.PerformanceBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_performance.*
 
@@ -31,10 +31,10 @@ import kotlinx.android.synthetic.main.activity_performance.*
  * @description:
  * @date :2020/8/20 11:32 AM
  */
-class PerformanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    lateinit var mAdapterStudent: PerformanceStuAdapter
-    lateinit var mAdapterTea: PerformanceTeacherAdapter
-    var mData: ArrayList<PerformanceBean> = ArrayList()
+class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+    lateinit var mAdapterStudent: AchievementStuAdapter
+    lateinit var mAdapterTea: AchievementTeacherAdapter
+    var mData: ArrayList<AchievementBean> = ArrayList()
     var mDataClass: ArrayList<ClassBean> = ArrayList()
     var mDataCourse: ArrayList<CourseBean> = ArrayList()
     var mDataTest: ArrayList<TestBean> = ArrayList()
@@ -71,7 +71,6 @@ class PerformanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initData() {
         super.initData()
         showLoading()
-        rvPerformance.showLoadingView()
         mViewModel.getTestCourse()
         when (UserInfo.getUserBean().usertype) {
             "1" -> {
@@ -94,9 +93,9 @@ class PerformanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAdapterStu() {
-        mAdapterStudent = PerformanceStuAdapter(R.layout.item_performance_stu, mData)
+        mAdapterStudent = AchievementStuAdapter(R.layout.item_performance_stu, mData)
         rvPerformance?.apply {
-            layoutManager = LinearLayoutManager(this@PerformanceActivity)
+            layoutManager = LinearLayoutManager(this@AchievementActivity)
             addItemDecoration(RecycleViewDivider(context, dp2px(context, 20f).toInt()))
             setAdapter(mAdapterStudent)
         }
@@ -107,9 +106,9 @@ class PerformanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAdapterTeacher() {
-        mAdapterTea = PerformanceTeacherAdapter(R.layout.item_performance_tea, mData)
+        mAdapterTea = AchievementTeacherAdapter(R.layout.item_performance_tea, mData)
         rvPerformance?.apply {
-            layoutManager = LinearLayoutManager(this@PerformanceActivity)
+            layoutManager = LinearLayoutManager(this@AchievementActivity)
             setAdapter(mAdapterTea)
         }
 
@@ -126,7 +125,7 @@ class PerformanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     fun getPerformanceRequest() {
-        mViewModel.getPerformance(currentTest, classid = classid, crid = courseid)
+        mViewModel.getAchievement(currentTest, classid = classid, crid = courseid)
     }
 
     private fun initDialogClass() {
@@ -146,7 +145,7 @@ class PerformanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         dialogClass.window!!.setWindowAnimations(R.style.BottomDialog_Animation)
         var dialogAdapter = DialogListAdapter(R.layout.item_dialog_list, titlesClass)
         var recyclerView = contentView.findViewById<RecyclerView>(R.id.rvDialogList).apply {
-            layoutManager = LinearLayoutManager(this@PerformanceActivity)
+            layoutManager = LinearLayoutManager(this@AchievementActivity)
             addItemDecoration(
                 RecycleViewDivider(
                     dp2px(context, 1f).toInt(),
@@ -182,7 +181,7 @@ class PerformanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         dialogCourse.window!!.setWindowAnimations(R.style.BottomDialog_Animation)
         var dialogAdapter = DialogListAdapter(R.layout.item_dialog_list, titlesCourse)
         var recyclerView = contentView.findViewById<RecyclerView>(R.id.rvDialogList).apply {
-            layoutManager = LinearLayoutManager(this@PerformanceActivity)
+            layoutManager = LinearLayoutManager(this@AchievementActivity)
             addItemDecoration(
                 RecycleViewDivider(
                     dp2px(context, 1f).toInt(),
@@ -218,7 +217,7 @@ class PerformanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         dialogTest.window!!.setWindowAnimations(R.style.BottomDialog_Animation)
         var dialogAdapter = DialogListAdapter(R.layout.item_dialog_list, titlesTest)
         var recyclerView = contentView.findViewById<RecyclerView>(R.id.rvDialogList).apply {
-            layoutManager = LinearLayoutManager(this@PerformanceActivity)
+            layoutManager = LinearLayoutManager(this@AchievementActivity)
             addItemDecoration(
                 RecycleViewDivider(
                     dp2px(context, 1f).toInt(),
@@ -239,7 +238,7 @@ class PerformanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
 
     override fun initDataObserver() {
-        mViewModel.mPerformanceData.observe(this, Observer { response ->
+        mViewModel.mAchievementData.observe(this, Observer { response ->
             response?.let {
                 mData.clear()
                 mData.addAll(it.list)
@@ -250,7 +249,7 @@ class PerformanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mViewModel.mTestCourseData.observe(this, Observer { response ->
             response?.let {
                 netResponseFormat<TestCourseResp>(it)?.let {
-
+                    rvPerformance.showLoadingView()
                     titlesClass.clear()
                     titlesCourse.clear()
                     titlesTest.clear()

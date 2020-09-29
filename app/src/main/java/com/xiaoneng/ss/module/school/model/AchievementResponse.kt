@@ -7,8 +7,8 @@ package com.xiaoneng.ss.module.school.model
  * @date: 2020/08/27
  * Time: 17:06
  */
-data class PerformanceResponse(
-    var list : MutableList<PerformanceBean>,
+data class AchievementResponse(
+    var list : MutableList<AchievementBean>,
     var totle : String,
     var course : MutableList<CourseBean>,
     var classs : String,

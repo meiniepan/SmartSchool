@@ -59,6 +59,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/contentLayout"
+        android:background="@color/tintBac"
         style="@style/nes_scroll_style">
 
         <LinearLayout

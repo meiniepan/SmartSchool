@@ -37,6 +37,7 @@ data class AttCourseBean(
     var minute: String? = "",
     var hmin: String? = "",
     var coursetime: String? = "",
+    var crstime: String? = "",
     var schoolid: String? = "",
     var schoolname: String? = "",
     var muser_id: String? = "",

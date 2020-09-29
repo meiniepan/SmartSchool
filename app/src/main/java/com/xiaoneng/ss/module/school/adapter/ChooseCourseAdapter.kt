@@ -29,7 +29,7 @@ class ChooseCourseAdapter(layoutId: Int, listData: MutableList<AttCourseBean>) :
             holder.setText(R.id.tvCourseName2, item?.coursename)
                 .setText(R.id.tvTeacherName2, item?.teachername)
                 .setText(R.id.tvRoomAtt2, item?.classroomname)
-                .setText(R.id.tvTimeAtt2, item?.coursetime)
+                .setText(R.id.tvTimeAtt2, item?.crstime)
 
 
             holder.getView<CheckBox>(R.id.cbChooseTimetable).apply {

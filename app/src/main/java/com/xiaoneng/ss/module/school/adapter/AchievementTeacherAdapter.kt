@@ -4,7 +4,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.utils.DateUtil
-import com.xiaoneng.ss.module.school.model.PerformanceBean
+import com.xiaoneng.ss.module.school.model.AchievementBean
 
 
 /**
@@ -14,10 +14,10 @@ import com.xiaoneng.ss.module.school.model.PerformanceBean
  * @date: 2020/08/27
  * Time: 17:32
  */
-class PerformanceTeacherAdapter(layoutId: Int, listData: MutableList<PerformanceBean>) :
-    BaseQuickAdapter<PerformanceBean, BaseViewHolder>(layoutId, listData) {
+class AchievementTeacherAdapter(layoutId: Int, listData: MutableList<AchievementBean>) :
+    BaseQuickAdapter<AchievementBean, BaseViewHolder>(layoutId, listData) {
 
-    override fun convert(viewHolder: BaseViewHolder?, item: PerformanceBean?) {
+    override fun convert(viewHolder: BaseViewHolder?, item: AchievementBean?) {
         viewHolder?.let { holder ->
             holder.setText(R.id.tvTime3Performance, DateUtil.formatShowTime(item?.testtime?:""))
                 .setText(R.id.tvRank3Performance,item?.ranking)

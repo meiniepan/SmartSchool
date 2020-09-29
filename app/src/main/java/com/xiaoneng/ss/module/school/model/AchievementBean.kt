@@ -7,7 +7,7 @@ package com.xiaoneng.ss.module.school.model
  * @date: 2020/08/27
  * Time: 17:06
  */
-data class PerformanceBean(
+data class AchievementBean(
     var id: String = "",
     var cno: String= "",
     var realname: String= "",

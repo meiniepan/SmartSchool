@@ -33,7 +33,7 @@ class AttendanceTeacherAdapter(layoutId: Int, listData: MutableList<AttCourseBea
             var tvRoomName = holder.getView<TextView>(R.id.tvRoomAtt)
             var tvAttTime = holder.getView<TextView>(R.id.tvTimeAtt)
             holder.setText(R.id.tvRoomAtt, item?.classroomname)
-                .setText(R.id.tvTimeAtt, item?.coursetime)
+                .setText(R.id.tvTimeAtt, item?.crstime)
 
             if (isTeacher) {
                 tvCourseName.text = item.classname

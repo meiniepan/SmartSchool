@@ -369,23 +369,23 @@ interface ApiService {
      */
     @FormUrlEncoded
     @POST("/api/v1/student/achievements/lists")
-    suspend fun getPerformance(
+    suspend fun getAchievement(
         @Field("token") token: String,
         @Field("testname") testname: String,
         @Field("crid") crid: String = ""
-    ): BaseResponse<PerformanceResponse>
+    ): BaseResponse<AchievementResponse>
 
     /**
      *教师查看成绩
      */
     @FormUrlEncoded
     @POST("/api/v1/teacher/achievements/lists")
-    suspend fun getPerformance2(
+    suspend fun getAchievement2(
         @Field("token") token: String,
         @Field("testname") testname: String,
         @Field("crid") crid: String = "",
         @Field("classid") classid: String
-    ): BaseResponse<PerformanceResponse>
+    ): BaseResponse<AchievementResponse>
 
     /**
      *学生登录退出

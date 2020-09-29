@@ -32,6 +32,11 @@ android {
             //设置支持的SO库架构
             abiFilters "armeabi-v7a", "arm64-v8a"
         }
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "e07277a487bc1e34304d9faa", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
         multiDexEnabled true
 
         signingConfig signingConfigs.release
@@ -48,10 +53,12 @@ android {
 
     buildTypes {
         debug {
+            buildConfigField "boolean", "IS_DEBUG", "true"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
+            buildConfigField "boolean", "IS_DEBUG", "false"
             minifyEnabled true
             zipAlignEnabled true // Zipalign优化
             shrinkResources true  // 移除无用的resource文件 
@@ -108,4 +115,8 @@ dependencies {
 
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.9'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-28'
+
+    //jiguang
+    implementation 'cn.jiguang.sdk:jpush:3.7.0'  // 此处以JPush 3.7.0 版本为例。
+    implementation 'cn.jiguang.sdk:jcore:2.4.2'  // 此处以JCore 2.4.2 版本为例。
 }

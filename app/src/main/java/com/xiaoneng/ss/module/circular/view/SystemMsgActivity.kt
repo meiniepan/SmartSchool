@@ -13,7 +13,7 @@ import com.xiaoneng.ss.module.circular.adapter.SysMsgAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import com.xiaoneng.ss.module.school.view.AttendanceActivity
-import com.xiaoneng.ss.module.school.view.PerformanceActivity
+import com.xiaoneng.ss.module.school.view.AchievementActivity
 import com.xiaoneng.ss.module.school.view.TaskDetailActivity
 import com.xiaoneng.ss.module.school.view.TimetableActivity
 import kotlinx.android.synthetic.main.activity_system_msg.*
@@ -88,7 +88,7 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
                     mStartActivity<TimetableActivity>(this)
                 }
                 "5" -> {
-                    mStartActivity<PerformanceActivity>(this)
+                    mStartActivity<AchievementActivity>(this)
                 }
                 "6" -> {
                     toast("已经是最新版本")
