@@ -47,6 +47,9 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     override fun initView() {
         super.initView()
+        if (!isSystemWhiteList()){
+            mAlert("为不影响使用，请把智慧校园加入系统白名单"){}
+        }
         var bean = UserInfo.getUserBean()
         var name = bean.realname
         var phone = bean.phone
@@ -188,6 +191,10 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
 
     private fun doUpload(it: StsTokenResp) {
+        if (UserInfo.getUserBean().domain.isNullOrEmpty()){
+            toast("domain缺失")
+            return
+        }
         showLoading()
         var mId: String = System.currentTimeMillis().toString() + "_" + fileName
                var bitmapPath = mBitmap2Local(

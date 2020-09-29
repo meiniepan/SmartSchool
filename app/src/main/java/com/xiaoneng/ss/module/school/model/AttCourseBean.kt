@@ -24,6 +24,7 @@ data class AttCourseBean(
     var teachername: String? = "",
     var semesterid: String? = "",
     var classid: String? = "",
+    var courseid: String? = "",
     var groupid: String? = "",
     var semester: String? = "",
     var campusid: String? = "",

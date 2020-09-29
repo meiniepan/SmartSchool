@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.PowerManager
 import android.widget.TextView
 import cn.addapp.pickers.picker.DateTimePicker
 import cn.addapp.pickers.picker.SinglePicker
@@ -281,4 +282,14 @@ fun getBooleanString(bool: Boolean): String {
 fun getStringBoolean(value: String?): Boolean {
     return value == "1"
 
+}
+
+@SuppressLint("NewApi")
+fun Context.isSystemWhiteList(): Boolean {
+    val pm: PowerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+    val packageName: String = packageName
+    val isWhite =
+        pm.isIgnoringBatteryOptimizations(packageName)
+
+    return isWhite
 }
