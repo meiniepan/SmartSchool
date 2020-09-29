@@ -275,6 +275,10 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun doUpload(it: StsTokenResp) {
+        if (UserInfo.getUserBean().domain.isNullOrEmpty()){
+            toast("domain缺失")
+            return
+        }
         showLoading()
         var mId: String = System.currentTimeMillis().toString() + "_" + fileName
         var objectKey =

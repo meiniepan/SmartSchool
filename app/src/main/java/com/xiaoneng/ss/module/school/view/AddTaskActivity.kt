@@ -263,9 +263,10 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             it.list.forEach {
                 receiveList.add(
                     UserBeanSimple(
-                        it.uid,
-                        it.realname,
-                        it.usertype
+                        uid = it.uid,
+                        realname = it.realname,
+                        classid = it.classid,
+                        usertype = it.usertype
                     )
                 )
             }

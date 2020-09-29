@@ -102,6 +102,7 @@ class InvolvePersonActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     var bean: DepartmentPersonBean = DepartmentPersonBean()
                     bean.departmentsname = "班级学生名单"
                     bean.data = it.data
+
                     mDataInvolve.add(bean)
                     rvInvolvePerson.notifyDataSetChanged()
                 }
