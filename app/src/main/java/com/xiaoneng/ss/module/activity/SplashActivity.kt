@@ -1,6 +1,5 @@
 package com.xiaoneng.ss.module.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
@@ -10,7 +9,6 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.mainLogin
-import com.xiaoneng.ss.services.CustomJgService
 
 /**
  * @author Burning
@@ -26,8 +24,8 @@ class SplashActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        var mintent = Intent(this, CustomJgService::class.java)
-        startService(mintent)
+//        var mintent = Intent(this, CustomJgService::class.java)
+//        startService(mintent)
         initView()
     }
 

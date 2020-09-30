@@ -208,7 +208,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="24dp"
                             android:gravity="end"
-                            android:hint="请输入您的学号" />
+                            android:hint="" />
 
                     </LinearLayout>
 

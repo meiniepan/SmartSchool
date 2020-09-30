@@ -4,14 +4,12 @@ import android.os.CountDownTimer
 import android.text.TextUtils
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.Observer
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.model.ParentBean
 import kotlinx.android.synthetic.main.activity_add_parent.*
@@ -92,11 +90,7 @@ class AddParentActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
         mViewModel.mParentsData.observe(this, Observer { response ->
             response?.let {
-                showSuccess()
-                val gson: Gson = GsonBuilder().enableComplexMapKeySerialization().create()
-                val jsonString = gson.toJson(it)
-                val resultType = object : TypeToken<ArrayList<ParentBean>>() {}.type
-                gson.fromJson<ArrayList<ParentBean>>(jsonString,resultType)?.let {
+                netResponseFormat<ArrayList<ParentBean>>(it)?.let {
                     toast("绑定成功")
                     UserInfo.modifyParents(it)
                     finish()

@@ -80,7 +80,7 @@
                     android:layout_marginEnd="@dimen/title_padding"
                     android:drawableRight="@drawable/ic_gray_triangle"
                     android:drawablePadding="5dp"
-                    android:text="08月21日" />
+                    android:text="" />
             </LinearLayout>
         </LinearLayout>
 

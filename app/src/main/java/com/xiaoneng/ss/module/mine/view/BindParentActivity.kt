@@ -1,15 +1,16 @@
 package com.xiaoneng.ss.module.mine.view
 
-import android.content.DialogInterface
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.dialog.DialogUtil
+import com.xiaoneng.ss.common.utils.mAlert
 import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.model.ParentBean
+import com.xiaoneng.ss.model.UnbindParentResp
 import com.xiaoneng.ss.module.mine.adapter.ParentsAdapter
 import kotlinx.android.synthetic.main.activity_bind_parent.*
 
@@ -48,14 +49,11 @@ class BindParentActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     private fun showDialog(phone: String) {
 
-        DialogUtil.showDialogTwoButton(this,
-            "是否确定解除该家长",
-            "解除后不可恢复请慎重选择是否解除与该家长的绑定",
-            DialogInterface.OnClickListener { _, _ ->
-                mViewModel.unbindParent(phone)
+        mAlert("解除后不可恢复请慎重选择是否解除与该家长的绑定", "是否确定解除该家长") {
+            rvParent.showLoadingView()
+            mViewModel.unbindParent(phone)
+        }
 
-            }
-        )
     }
 
 
@@ -65,23 +63,23 @@ class BindParentActivity : BaseLifeCycleActivity<AccountViewModel>() {
         UserInfo.getUserBean().parents?.let {
             mData.addAll(it)
         }
-        if (mData.size > 0) {
             rvParent.notifyDataSetChanged()
-        } else {
-            rvParent.showEmptyView()
-        }
     }
 
     override fun initDataObserver() {
         mViewModel.mParentsData.observe(this, Observer { response ->
             response?.let {
-//                mData.clear()
-//                mData.addAll(it.data)
-//                if (mData.size > 0) {
-//                    rvParent.notifyDataSetChanged()
-//                } else {
-//                    rvParent.showEmptyView()
-//                }
+                netResponseFormat<UnbindParentResp>(it)?.let {
+                    it.parents?.let {
+
+                        var userBean = UserInfo.getUserBean()
+                        userBean.parents = it
+                        UserInfo.modifyUserBean(userBean)
+                        mData.clear()
+                        mData.addAll(it)
+                        rvParent.notifyDataSetChanged()
+                    }
+                }
             }
         })
 

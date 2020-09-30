@@ -305,7 +305,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/title_padding"
-                            android:inputType="number"
+                            android:inputType="numberDecimal"
                             android:gravity="end"
                             android:background="@null"
                             android:hint="请填体温" />

@@ -53,6 +53,7 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             doConfirm()
         }
         tvChooseDay.apply {
+            text = chosenDay
             bean?.mDate?.let {
                 if (it.isEmpty()) {
                     text = chosenDay

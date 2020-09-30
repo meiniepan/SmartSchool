@@ -179,35 +179,43 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun doApplyLeave() {
-        var msg = bean?.cno + bean?.realname + "\n" + bean?.levelname + bean?.classname
-        mAlert(msg, "请确认学生身份") {
-            var courseList = ""
-            mData.forEach {
-                courseList += it.id + ","
+        if (bean == null) {
+            doRealApply()
+        } else {
+            var msg = bean?.cno + bean?.realname + "\n" + bean?.levelname + bean?.classname
+            mAlert(msg, "请确认学生身份") {
+                doRealApply()
             }
-            if (courseList.isNotEmpty()) {
-                courseList.substring(0, courseList.length - 1)
-            }
-            mViewModel.addAttendance(
-                LeaveBean(
-                    UserInfo.getUserBean().token,
-                    uId,
-                    usertype = uType,
-                    atttime = chosenDayNet,
-                    leavetype = leaveType,
-                    remark = etLeaveRemark.text.toString(),
-                    crsid = courseList,
-                    isfever = getBooleanString(cbItem1ApplyLeave.isChecked),
-                    isdiarrhea = getBooleanString(cbItem2ApplyLeave.isChecked),
-                    isvomit = getBooleanString(cbItem3ApplyLeave.isChecked),
-                    ismedical = getBooleanString(cbItem4ApplyLeave.isChecked),
-                    temperature = etItem4ApplyLeave.text.toString(),
-                    hospital = etItem6ApplyLeave.text.toString(),
-                    diseasename = etItem7ApplyLeave.text.toString(),
-                    fileinfo = fileValue ?: ""
-                )
-            )
         }
+    }
+
+    private fun doRealApply() {
+        var courseList = ""
+        mData.forEach {
+            courseList += it.id + ","
+        }
+        if (courseList.isNotEmpty()) {
+            courseList.substring(0, courseList.length - 1)
+        }
+        mViewModel.addAttendance(
+            LeaveBean(
+                UserInfo.getUserBean().token,
+                uId,
+                usertype = uType,
+                atttime = chosenDayNet,
+                leavetype = leaveType,
+                remark = etLeaveRemark.text.toString(),
+                crsid = courseList,
+                isfever = getBooleanString(cbItem1ApplyLeave.isChecked),
+                isdiarrhea = getBooleanString(cbItem2ApplyLeave.isChecked),
+                isvomit = getBooleanString(cbItem3ApplyLeave.isChecked),
+                ismedical = getBooleanString(cbItem4ApplyLeave.isChecked),
+                temperature = etItem4ApplyLeave.text.toString(),
+                hospital = etItem6ApplyLeave.text.toString(),
+                diseasename = etItem7ApplyLeave.text.toString(),
+                fileinfo = fileValue ?: ""
+            )
+        )
     }
 
 
@@ -275,7 +283,7 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun doUpload(it: StsTokenResp) {
-        if (UserInfo.getUserBean().domain.isNullOrEmpty()){
+        if (UserInfo.getUserBean().domain.isNullOrEmpty()) {
             toast("domain缺失")
             return
         }

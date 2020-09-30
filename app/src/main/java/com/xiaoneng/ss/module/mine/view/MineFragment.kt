@@ -111,8 +111,8 @@ MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
                 "切换身份后将改变您的操作权限",
                 "是否确认切换身份"
             ) {
-                mStartActivity<LoginSwitchActivity>(requireContext())
                 AppManager.finishAllActivity()
+                mStartActivity<LoginSwitchActivity>(requireContext())
             }
         }
 
