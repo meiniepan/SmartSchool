@@ -195,7 +195,7 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             courseList += it.id + ","
         }
         if (courseList.isNotEmpty()) {
-            courseList.substring(0, courseList.length - 1)
+            courseList = courseList.substring(0, courseList.length - 1)
         }
         mViewModel.addAttendance(
             LeaveBean(

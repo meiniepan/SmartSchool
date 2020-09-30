@@ -23,10 +23,11 @@ class EventSimpleAdapter(layoutId: Int, listData: MutableList<ScheduleBean>?) :
 
     override fun convert(viewHolder: BaseViewHolder?, item: ScheduleBean) {
         viewHolder?.let { holder ->
-            var str = if (item.title!!.length > 2) {
+            var str = ""
+            str = if (item.title!!.length > 2 && holder.adapterPosition < 2) {
                 item.title!!.substring(0, 2)
             } else {
-                item.title
+                item.title ?: ""
             }
 
 
@@ -36,9 +37,10 @@ class EventSimpleAdapter(layoutId: Int, listData: MutableList<ScheduleBean>?) :
 
             val gd = GradientDrawable()
             if (!TextUtils.isEmpty(item.color)) {
-                gd.setColor(Color.parseColor(item.color))
+                gd.setColor(Color.parseColor("#5E37FF"))
+//                gd.setColor(Color.parseColor(item.color))
             }
-            gd.cornerRadii  = getCornerRadii(5f,5f,5f,5f)
+            gd.cornerRadii = getCornerRadii(5f, 5f, 5f, 5f)
             view.background = gd
 //            gd.setStroke(strokeWidth, strokeColor)
 

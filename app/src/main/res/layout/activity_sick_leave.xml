@@ -36,10 +36,13 @@
         android:layout_height="10dp"
         android:background="@color/tintBac" />
 
-    <androidx.core.widget.NestedScrollView style="@style/nes_scroll_style">
+    <androidx.core.widget.NestedScrollView
+        style="@style/nes_scroll_style"
+        android:id="@+id/contentLayout"
+        >
 
         <LinearLayout
-            android:id="@+id/contentLayout"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">

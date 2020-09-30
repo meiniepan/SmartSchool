@@ -31,6 +31,7 @@ class DaysOfMonthAdapter(layoutId: Int, listData: MutableList<DayBean>?) :
                 eventData.addAll(item.eventList)
             }
             var recyclerView = holder.getView<RecyclerView>(R.id.rvEventDay).apply {
+
                 visibility = View.VISIBLE
                 layoutManager = LinearLayoutManager(mContext)
                 adapter = EventSimpleAdapter(R.layout.item_event_simple, eventData)

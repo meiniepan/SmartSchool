@@ -24,12 +24,16 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bac_white_bac_20"
             android:orientation="vertical"
-            android:padding="12dp">
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -44,9 +48,9 @@
 
                 <ImageView
                     android:id="@+id/ivSwitchSchedule"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_switch" />
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:background="@drawable/ic_switch" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -85,10 +89,10 @@
     </LinearLayout>
     <ImageView
         android:id="@+id/ivAddEvent"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
         android:layout_gravity="end|bottom"
         android:layout_marginEnd="@dimen/title_padding"
-        android:layout_marginBottom="104dp"
+        android:layout_marginBottom="8dp"
         android:src="@drawable/ic_add_blue" />
 </FrameLayout>

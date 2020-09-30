@@ -76,16 +76,18 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             "1" -> {
                 tvActionClass.visibility = View.GONE
                 llTitleTea.visibility = View.GONE
+                llTitleStu.visibility = View.VISIBLE
                 initAdapterStu()
             }
             "2" -> {
                 initAdapterTeacher()
-                llTitleTea.visibility = View.GONE
+                llTitleTea.visibility = View.VISIBLE
+                llTitleStu.visibility = View.GONE
             }
             "99" -> {
                 initAdapterTeacher()
+                llTitleStu.visibility = View.VISIBLE
                 llTitleStu.visibility = View.GONE
-
             }
             else -> {
             }

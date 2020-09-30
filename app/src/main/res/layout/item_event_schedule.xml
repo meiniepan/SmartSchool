@@ -50,9 +50,8 @@
         android:orientation="horizontal"
         >
         <TextView
-            android:layout_width="60dp"
+            android:layout_width="wrap_content"
             android:text="备   注:"
-            android:gravity="fill"
             android:layout_height="wrap_content"
             />
         <TextView

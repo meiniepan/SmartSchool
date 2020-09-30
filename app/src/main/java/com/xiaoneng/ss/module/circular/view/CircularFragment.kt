@@ -64,12 +64,14 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
     }
 
     private fun checkFirsTab() {
+        flSysMsg.visibility = View.VISIBLE
         tvCircular.setChecked(true)
         tvSchedule.setChecked(false)
         vpCircular.setCurrentItem(0, true)
     }
 
     private fun checkSecondTab() {
+        flSysMsg.visibility = View.GONE
         tvCircular.setChecked(false)
         tvSchedule.setChecked(true)
         vpCircular.setCurrentItem(1, true)
@@ -120,6 +122,5 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
             }
         })
     }
-
 
 }

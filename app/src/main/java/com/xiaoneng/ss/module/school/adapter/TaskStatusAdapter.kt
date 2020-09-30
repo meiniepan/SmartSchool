@@ -1,5 +1,7 @@
 package com.xiaoneng.ss.module.school.adapter
 
+import android.view.View
+import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
@@ -31,9 +33,9 @@ class TaskStatusAdapter(layoutId: Int, listData: MutableList<TaskDetailBean>?) :
                 } else {
                     if (it.size > 0) {
                         it.forEach {
-                           ss = ss + it.realname + "、"
+                            ss = ss + it.realname + "、"
                         }
-                        ss.substring(0,ss.length-1)
+                        ss.substring(0, ss.length - 1)
                     } else {
                         ss
                     }
@@ -92,8 +94,15 @@ class TaskStatusAdapter(layoutId: Int, listData: MutableList<TaskDetailBean>?) :
             holder.setText(R.id.tvTaskStatus, statusStr)
                 .setText(R.id.tvTitle4, item?.taskname)
                 .setText(R.id.tvTaskLine2, line2Str)
-                .setText(R.id.tvTaskLine3, item?.remark)
                 .setText(R.id.tvTaskLine4, line4Str)
+
+            var tvRemark = holder.getView<TextView>(R.id.tvTaskLine3)
+            if (item?.remark.isNullOrEmpty()) {
+                tvRemark.visibility = View.GONE
+            } else {
+                tvRemark.visibility = View.VISIBLE
+                tvRemark.text = item?.remark
+            }
 
         }
     }

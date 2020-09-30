@@ -78,9 +78,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/title_padding"
-            android:layout_marginTop="80.5dp"
+            android:layout_marginTop="66.5dp"
             android:layout_marginEnd="@dimen/title_padding"
-            android:layout_marginBottom="14dp"
+            android:layout_marginBottom="0dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -97,6 +97,8 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="26dp"
                 android:background="@null"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
                 android:hint="请输入您的手机号"
                 android:inputType="phone"
                 android:textSize="@dimen/sp_20" />
@@ -108,9 +110,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/title_padding"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="14dp"
             android:layout_marginEnd="@dimen/title_padding"
-            android:layout_marginBottom="14dp"
+            android:layout_marginBottom="0dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -129,6 +131,8 @@
                     android:background="@null"
                     android:hint="验证码"
                     android:imeActionLabel="登录"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
                     android:imeOptions="actionGo"
                     android:inputType="number"
                     android:textSize="@dimen/sp_20"
@@ -143,6 +147,8 @@
                 android:layout_marginStart="@dimen/title_padding"
                 android:layout_marginEnd="26dp"
                 android:gravity="center"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
                 android:text="发送验证码"
                 android:textColor="@color/commonBlue" />
         </LinearLayout>

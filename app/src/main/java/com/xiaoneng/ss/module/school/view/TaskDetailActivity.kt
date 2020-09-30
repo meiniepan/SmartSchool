@@ -146,7 +146,12 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     it.overtime?.let { endTime = it }
                     DateUtil.showTimeFromNet(beginTime, tvBeginDate, tvBeginTime)
                     DateUtil.showTimeFromNet(endTime, tvEndDate, tvEndTime)
-                    tvRemark6.text = it.remark
+                    if (it.remark.isNullOrEmpty()) {
+                        tvRemark6.visibility = View.GONE
+                    } else {
+                        tvRemark6.visibility = View.VISIBLE
+                        tvRemark6.text = it.remark
+                    }
                     tvPublishName.text = "发布人:  " + it.operatorname
                     tvPublishTime.text = "发布时间:  " + it.createtime
 

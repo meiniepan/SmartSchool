@@ -94,7 +94,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 initAdapterStu()
                 initStudentApplyLeave(true)
             }
-            titles1.add("个人考勤")
+            titles1.add("我的考勤")
         } else if (UserInfo.getUserBean().usertype == "2") {
 
             if (UserInfo.getUserBean().classmaster == "1") {
@@ -323,7 +323,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 }
                 initStudentApplyLeave(false)
                 getTimetable()
-            } else if (titles1[position] == "个人考勤") {
+            } else if (titles1[position] == "我的考勤") {
                 llSearch.visibility = View.GONE
                 rvAttendance.showLoadingView()
                 tvLabel2Attendance.visibility = View.GONE

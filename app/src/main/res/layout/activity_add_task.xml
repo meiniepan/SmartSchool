@@ -180,15 +180,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:paddingEnd="10dp">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvParticipant"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="0dp"
-                        android:layout_weight="1"
                         android:overScrollMode="never" />
 
                     <TextView

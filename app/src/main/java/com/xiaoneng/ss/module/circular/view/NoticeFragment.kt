@@ -8,8 +8,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.RecycleViewDivider
-import com.xiaoneng.ss.common.utils.dp2px
+import com.xiaoneng.ss.common.utils.eventBus.SysMsgShowEvent
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.circular.adapter.NoticeAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean

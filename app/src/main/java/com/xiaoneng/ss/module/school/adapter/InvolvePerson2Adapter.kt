@@ -1,7 +1,5 @@
 package com.xiaoneng.ss.module.school.adapter
 
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
 import android.view.View
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -52,22 +50,14 @@ class InvolvePerson2Adapter(layoutId: Int, listData: MutableList<StudentBean>) :
 
     override fun onViewAttachedToWindow(holder: BaseViewHolder) {
         super.onViewAttachedToWindow(holder)
-        if (isManager) {
-            val animatorX =
-                ObjectAnimator.ofFloat(holder.itemView, "rotation", -5f, 5f)
-            animatorX.repeatCount = ValueAnimator.INFINITE
-            animatorX.repeatMode = ValueAnimator.RESTART
-            animatorX.duration = 100
-            animatorX.start()
-        }
-//        val animatorY =
-//            ObjectAnimator.ofFloat(holder.itemView, "scaleY", 0f, 10f)
-//        animatorY.repeatCount = ValueAnimator.INFINITE
-//        val set = AnimatorSet()
-//        set.duration = 30
-//        set.interpolator = CustomScaleInterpolator(0.4f)
-//        set.playSequentially(animatorX, animatorY)
-//        set.start()
+//        if (isManager) {
+//            val animatorX =
+//                ObjectAnimator.ofFloat(holder.itemView, "rotation", -5f, 5f)
+//            animatorX.repeatCount = ValueAnimator.INFINITE
+//            animatorX.repeatMode = ValueAnimator.RESTART
+//            animatorX.duration = 100
+//            animatorX.start()
+//        }
     }
 
 

@@ -17,6 +17,7 @@
         <LinearLayout
             android:id="@+id/contentLayout"
             android:layout_width="match_parent"
+            android:background="@color/tintBac"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
@@ -165,12 +166,7 @@
                 android:layout_height="match_parent" />
             <ImageView
                 android:id="@+id/ivAddTask"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_add_blue"
-                android:layout_marginBottom="104dp"
-                android:layout_gravity="end|bottom"
-                android:layout_marginEnd="@dimen/title_padding"
+                style="@style/button_add_style"
                 />
         </FrameLayout>
     </LinearLayout>

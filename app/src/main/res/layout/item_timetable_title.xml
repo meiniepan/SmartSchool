@@ -5,24 +5,28 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:layout_marginEnd="8dp"
-    >
-<View
-    android:id="@+id/vTimeTitle"
-    android:layout_width="10dp"
-    android:layout_height="10dp"
-    android:background="@drawable/bac_blue_oval"
-    android:layout_centerInParent="true"
-    android:layout_marginEnd="2dp"
-    />
-    <TextView
-        android:layout_toEndOf="@+id/vTimeTitle"
-        android:id="@+id/tvNameWeek"
+    android:layout_marginEnd="8dp">
+
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_centerInParent="true"
-        android:text=""
-        android:textColor="@color/commonHint"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_centerInParent="true">
+
+        <View
+            android:id="@+id/vTimeTitle"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/bac_blue_oval"
+            android:layout_marginEnd="2dp" />
+
+        <TextView
+            android:id="@+id/tvNameWeek"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text=""
+            android:textColor="@color/commonHint" />
+    </LinearLayout>
 
 </RelativeLayout>

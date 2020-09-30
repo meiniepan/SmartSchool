@@ -32,6 +32,7 @@ import org.jetbrains.anko.toast
  * Time: 17:01
  */
 class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+    private val mMax: Int = 5
     var mId: String? = null
     var beginTime: String = DateUtil.getNearTimeBeginYear()
     var endTime: String = DateUtil.getNearTimeEndYear()
@@ -158,7 +159,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun initAdapter() {
         mAdapter = InvolveSimpleAdapter(R.layout.item_involve2, mData)
-        mAdapter.setMax(4)
+        mAdapter.setMax(mMax)
         rvParticipant.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = mAdapter
@@ -245,7 +246,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     addDepartment(it)
                 }
                 for (i in 0 until receiveList.size) {
-                    if (i < 4) {
+                    if (i < mMax) {
                         mData.add(receiveList[i])
                     }
                 }

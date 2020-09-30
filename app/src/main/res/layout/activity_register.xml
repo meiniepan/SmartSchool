@@ -11,8 +11,8 @@
         android:layout_height="wrap_content" />
 
     <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
         android:id="@+id/contentLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:overScrollMode="never"
         android:scrollbars="none">
@@ -82,9 +82,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/title_padding"
-                android:layout_marginTop="80.5dp"
+                android:layout_marginTop="66.5dp"
                 android:layout_marginEnd="@dimen/title_padding"
-                android:layout_marginBottom="14dp"
+                android:layout_marginBottom="0dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -101,6 +101,8 @@
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="26dp"
                     android:background="@null"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
                     android:hint="请输入您的姓名"
                     android:textSize="@dimen/sp_20" />
             </LinearLayout>
@@ -111,9 +113,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/title_padding"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="14dp"
                 android:layout_marginEnd="@dimen/title_padding"
-                android:layout_marginBottom="14dp"
+                android:layout_marginBottom="0dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -129,6 +131,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="26dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
                     android:background="@null"
                     android:hint="请输入您的邀请码"
                     android:textSize="@dimen/sp_20" />
@@ -140,9 +144,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/title_padding"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="14dp"
                 android:layout_marginEnd="@dimen/title_padding"
-                android:layout_marginBottom="14dp"
+                android:layout_marginBottom="0dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -159,6 +163,8 @@
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="26dp"
                     android:background="@null"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
                     android:hint="请输入您的手机号"
                     android:inputType="phone"
                     android:textSize="@dimen/sp_20" />
@@ -170,9 +176,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/title_padding"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="14dp"
                 android:layout_marginEnd="@dimen/title_padding"
-                android:layout_marginBottom="14dp"
+                android:layout_marginBottom="0dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -182,7 +188,6 @@
                     android:src="@drawable/icon_captcha" />
 
 
-
                 <EditText
                     android:id="@+id/etCaptchaRegister"
                     android:layout_width="0dp"
@@ -190,11 +195,12 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="验证码"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
                     android:inputType="number"
                     android:textSize="@dimen/sp_20"
                     android:layout_marginStart="12dp"
-                    android:maxLength="8"
-                    />
+                    android:maxLength="8" />
 
                 <TextView
                     android:id="@+id/tvSendCaptchaRegister"
@@ -204,6 +210,8 @@
                     android:layout_marginEnd="26dp"
                     android:gravity="center"
                     android:text="发送验证码"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
                     android:textColor="@color/commonBlue" />
             </LinearLayout>
 
@@ -213,9 +221,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/title_padding"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="14dp"
                 android:layout_marginEnd="@dimen/title_padding"
-                android:layout_marginBottom="14dp"
+                android:layout_marginBottom="0dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -225,7 +233,6 @@
                     android:src="@drawable/ic_lock" />
 
 
-
                 <EditText
                     android:id="@+id/etPwdRegister"
                     android:layout_width="0dp"
@@ -233,11 +240,12 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="请输入您的密码"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
                     android:textSize="@dimen/sp_20"
                     android:layout_marginStart="12dp"
                     android:inputType="textPassword"
-                    android:maxLength="8"
-                    />
+                    android:maxLength="8" />
 
                 <ImageView
                     android:id="@+id/ivEyeRegiter"
@@ -253,9 +261,9 @@
 
             <TextView
                 android:id="@+id/tvRegister"
+                style="@style/button_blue_bac_style"
                 android:layout_marginTop="120dp"
-                android:text="注      册"
-                style="@style/button_blue_bac_style" />
+                android:text="注      册" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -282,10 +290,10 @@
 
             <TextView
                 android:id="@+id/tvSwitchIdRegister"
+                style="@style/button_blue_line_style"
                 android:layout_marginTop="13dp"
                 android:layout_marginBottom="93dp"
-                android:text="切换身份"
-                style="@style/button_blue_line_style" />
+                android:text="切换身份" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

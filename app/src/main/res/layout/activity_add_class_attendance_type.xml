@@ -18,10 +18,11 @@
         android:layout_height="10dp"
         android:background="@color/tintBac" />
 
-    <androidx.core.widget.NestedScrollView style="@style/nes_scroll_style">
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/contentLayout"
+        style="@style/nes_scroll_style">
 
         <LinearLayout
-            android:id="@+id/contentLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -46,7 +47,8 @@
                         android:id="@+id/tvAddClassAttendance1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:text_badge="病假"/>
+                        app:text_badge="病假" />
+
                     <Space style="@style/space_style" />
 
                     <ImageView
@@ -76,7 +78,8 @@
                         android:id="@+id/tvAddClassAttendance2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:text_badge="事假"/>
+                        app:text_badge="事假" />
+
                     <Space style="@style/space_style" />
 
                     <ImageView
@@ -107,7 +110,7 @@
                         android:id="@+id/tvAddClassAttendance3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:text_badge="课堂迟到"/>
+                        app:text_badge="课堂迟到" />
 
                     <Space style="@style/space_style" />
 
@@ -118,6 +121,7 @@
 
                 <include layout="@layout/layout_split" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/llAddClassAttendance4"
                 android:layout_width="match_parent"
@@ -138,7 +142,7 @@
                         android:id="@+id/tvAddClassAttendance4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:text_badge="旷课"/>
+                        app:text_badge="旷课" />
 
                     <Space style="@style/space_style" />
 
@@ -149,6 +153,7 @@
 
                 <include layout="@layout/layout_split" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/llAddClassAttendance5"
                 android:layout_width="match_parent"
@@ -169,7 +174,7 @@
                         android:id="@+id/tvAddClassAttendance5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:text_badge="早间迟到"/>
+                        app:text_badge="早间迟到" />
 
                     <Space style="@style/space_style" />
 

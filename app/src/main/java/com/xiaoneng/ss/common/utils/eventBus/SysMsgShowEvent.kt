@@ -9,7 +9,7 @@ import org.greenrobot.eventbus.EventBus
  * @date: 2020/03/27
  * Time: 18:46
  */
-class ChangeMasterTimetableEvent(val flag:Boolean) {
+class SysMsgShowEvent(val flag:Boolean) {
     fun post() {
         EventBus.getDefault().post(this)
     }
