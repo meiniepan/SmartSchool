@@ -92,7 +92,9 @@ class AddParentActivity : BaseLifeCycleActivity<AccountViewModel>() {
             response?.let {
                 netResponseFormat<ArrayList<ParentBean>>(it)?.let {
                     toast("绑定成功")
-                    UserInfo.modifyParents(it)
+                    var userBean = UserInfo.getUserBean()
+                    userBean.parents = it
+                    UserInfo.modifyUserBean(userBean)
                     finish()
                 }
             }

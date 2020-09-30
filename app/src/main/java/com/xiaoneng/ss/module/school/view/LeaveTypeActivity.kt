@@ -46,8 +46,8 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private var avatarPath: String? = ""
     private var fileValue: String? = ""
     var isDownLoad: Boolean = false
-    var uId = ""
-    var uType = ""
+    var uId:String? = null
+    var uType:String? = null
     var delNum = 0
     var resDelNum = 0
     var leaveType: String = "0"//1事假  2病假

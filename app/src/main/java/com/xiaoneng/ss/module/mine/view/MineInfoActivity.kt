@@ -35,10 +35,10 @@ import java.io.File
  * Time: 17:01
  */
 class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
-    val mAvatarFileName: String = UserInfo.getUserBean().portrait.split("/").last()
+    val mAvatarFileName: String? = UserInfo.getUserBean().portrait?.split("/")?.last()
     private var fileName: String? = ""
-    private var birthday: String = UserInfo.getUserBean().birthday
-    private var sex: String = UserInfo.getUserBean().sex
+    private var birthday: String? = UserInfo.getUserBean().birthday
+    private var sex: String? = UserInfo.getUserBean().sex
     private var avatarPath: String? = ""
     var isDownLoad: Boolean = false
 
@@ -271,7 +271,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     }
 
-    fun getSexString(a: String): String {
+    fun getSexString(a: String?): String {
         return when (a) {
             "0" -> "未知"
             "1" -> "男"
@@ -324,7 +324,9 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
         mViewModel.mAvatarData.observe(this, Observer { response ->
             response?.let {
                 showSuccess()
-                UserInfo.modifyAvatar(response.portrait)
+                var userBean = UserInfo.getUserBean()
+                userBean.portrait = response.portrait
+                UserInfo.modifyUserBean(userBean)
                 toast("头像上传成功")
                 displayImage(
                     this@MineInfoActivity, avatarPath,

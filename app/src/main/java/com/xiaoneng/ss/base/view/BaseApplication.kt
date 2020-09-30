@@ -50,7 +50,9 @@ open class BaseApplication : Application() {
         JPushInterface.setDebugMode(true)
         JPushInterface.init(this)
         var mSet = HashSet<String>()
-        mSet.add(UserInfo.getUserBean().uid)
+        UserInfo.getUserBean().uid?.let {
+            mSet.add(it)
+        }
         JPushInterface.setTags(this, mSet
         ) { p0, p1, p2 ->
             when (p0) {

@@ -11,35 +11,35 @@ import com.xiaoneng.ss.model.StudentBean
  * Time: 19:54
  */
 data class UserBean(
-    var token: String,
-    var uid: String= "",
-    var icon: String = "",
-    var cno: String= "",//学号
-    var sno: String= "",//教育局编号
-    var realname: String= "",
-    var sex: String= "",//性别0未知1男2女
-    var phone: String= "",
-    var birthday: String= "",
-    var portrait: String= "",
-    var class_id: String= "",
-    var schoolid: String= "",
-    var classname: String= "",
-    var companyid: String= "",
-    var password: String= "",
-    var openid: String= "",
-    var wxname: String= "",
-    var remark: String= "",
-    var isactive: String= "",
-    var device_no: String= "",
-    var parentphone: String= "",
-    var parentuid: String= "",
-    var parentname: String= "",
-    var classmaster: String= "",//是否班主任
-    var isad: String= "",//学生是否是考勤员
-    var roleid: String= "",
-    var usertype: String= "",//学生1  老师2  家长3
-    var logintype: String= "",//学生self   家长parents
+    var token: String? = null,
+    var uid: String? = null,
+    var icon: String? = null,
+    var cno: String? = null,//学号
+    var sno: String? = null,//教育局编号
+    var realname: String? = null,
+    var sex: String? = null,//性别0未知1男2女
+    var phone: String? = null,
+    var birthday: String? = null,
+    var portrait: String? = null,
+    var class_id: String? = null,
+    var schoolid: String? = null,
+    var classname: String? = null,
+    var companyid: String? = null,
+    var password: String? = null,
+    var openid: String? = null,
+    var wxname: String? = null,
+    var remark: String? = null,
+    var isactive: String? = null,
+    var device_no: String? = null,
+    var parentphone: String? = null,
+    var parentuid: String? = null,
+    var parentname: String? = null,
+    var classmaster: String? = null,//是否班主任
+    var isad: String? = null,//学生是否是考勤员
+    var roleid: String? = null,
+    var usertype: String? = null,//学生1  老师2  家长3
+    var logintype: String? = null,//学生self   家长parents
     var parents: ArrayList<ParentBean>? = null,
     var students: ArrayList<StudentBean>? = null,
-    var domain: String= ""
+    var domain: String? = null
 )

@@ -18,8 +18,8 @@ import com.xiaoneng.ss.network.dataConvert
  */
 class AccountRepository(val loadState: MutableLiveData<State>) : ApiRepository() {
 //    fun login(
-//        username: String,
-//        password: String,
+//        username: String?,
+//        password: String?,
 //        liveData: MutableLiveData<BaseResponse<LoginResponse>>
 //    ) {
 //        apiService.onLogin(username, password)
@@ -60,7 +60,7 @@ class AccountRepository(val loadState: MutableLiveData<State>) : ApiRepository()
         }
     }
 
-    suspend fun captcha(type:Int,phone: String): CaptchaResponse {
+    suspend fun captcha(type:Int,phone: String?): CaptchaResponse {
         return when (type) {
             1 -> {
                 apiService.onSmsCode1(phone)
@@ -177,12 +177,12 @@ class AccountRepository(val loadState: MutableLiveData<State>) : ApiRepository()
         }
     }
 
-    suspend fun modifyParentName(name: String): Any {
+    suspend fun modifyParentName(name: String?): Any {
         return apiService.modifyParentName(UserInfo.getUserBean().token,name)
                     .dataConvert(loadState)
     }
 
-    suspend fun onSmsCodeChange(phone: String): Any {
+    suspend fun onSmsCodeChange(phone: String?): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
                 apiService.onSmsCodeChangeStu(UserInfo.getUserBean().token,phone)
@@ -202,7 +202,7 @@ class AccountRepository(val loadState: MutableLiveData<State>) : ApiRepository()
         }
     }
 
-    suspend fun changePhone(phone: String,vCode: String): Any {
+    suspend fun changePhone(phone: String?,vCode: String?): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
                 apiService.changePhoneStu(UserInfo.getUserBean().token,phone,vCode)
@@ -227,20 +227,20 @@ class AccountRepository(val loadState: MutableLiveData<State>) : ApiRepository()
             .dataConvert(loadState)
     }
 
-    suspend fun bindParent(phone: String, vcode: String): Any {
+    suspend fun bindParent(phone: String?, vcode: String?): Any {
         return apiService.bindParent(UserInfo.getUserBean().token, phone, vcode)
             .dataConvert(loadState)
     }
 
-    suspend fun unbindParent(phone: String): Any {
+    suspend fun unbindParent(phone: String?): Any {
         return apiService.unbindParent(UserInfo.getUserBean().token, phone)
             .dataConvert(loadState)
     }
-    suspend fun switchChild(uid: String): Any {
+    suspend fun switchChild(uid: String?): Any {
         return apiService.switchChild(UserInfo.getUserBean().token, uid)
             .dataConvert(loadState)
     }
-    suspend fun queryCodeList(classId: String?): Any {
+    suspend fun queryCodeList(classId: String??): Any {
         return apiService.queryCodeList(UserInfo.getUserBean().token, classId)
             .dataConvert(loadState)
     }

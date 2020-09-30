@@ -32,7 +32,7 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
     val mBaseData: MutableLiveData<Any> = MutableLiveData()
     val mVerifyData: MutableLiveData<Any> = MutableLiveData()
 
-    fun captcha(type: Int, phone: String) {
+    fun captcha(type: Int, phone: String?) {
         initiateRequest(
             { mCaptchaData.value = mRepository.captcha(type, phone) },
             loadState
@@ -88,7 +88,7 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
             loadState
         )
     }
-    fun modifyParentName(name: String) {
+    fun modifyParentName(name: String?) {
         initiateRequest(
             { mParentNameData.value = mRepository.modifyParentName(name) },
             loadState
@@ -104,21 +104,21 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
         )
     }
 
-    fun bindParent(phone: String, vcode: String) {
+    fun bindParent(phone: String?, vcode: String?) {
         initiateRequest(
             { mParentsData.value = mRepository.bindParent(phone, vcode) },
             loadState
         )
     }
 
-    fun unbindParent(phone: String) {
+    fun unbindParent(phone: String?) {
         initiateRequest(
             { mParentsData.value = mRepository.unbindParent(phone) },
             loadState
         )
     }
 
-    fun switchChild(uid: String) {
+    fun switchChild(uid: String?) {
         initiateRequest(
             { mChildData.value = mRepository.switchChild(uid) },
             loadState
@@ -132,14 +132,14 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
         )
     }
 
-    fun onSmsCodeChange(phone: String) {
+    fun onSmsCodeChange(phone: String?) {
         initiateRequest(
             { mBaseData.value = mRepository.onSmsCodeChange(phone) },
             loadState
         )
     }
 
-    fun verifyVcode(phone: String, vCode: String) {
+    fun verifyVcode(phone: String?, vCode: String?) {
         initiateRequest(
             { mVerifyData.value = mRepository.changePhone(phone,vCode) },
             loadState

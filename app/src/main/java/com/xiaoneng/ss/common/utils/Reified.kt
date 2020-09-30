@@ -51,9 +51,9 @@ inline fun <reified T> mStartActivity(context: Context?, block: Intent.() -> Uni
     context?.startActivity(intent)
 }
 
-inline fun formatStarPhoneNum(phone: String): String {
+inline fun formatStarPhoneNum(phone: String?): String? {
     return if (RegexUtils.isMobileSimple(phone)) {
-        phone.substring(0, 3) + "****" + phone.substring(7, 11)
+        phone?.substring(0, 3) + "****" + phone?.substring(7, 11)
     } else {
         phone
     }
@@ -179,7 +179,7 @@ inline fun mainLogin(context: Context) {
 }
 
 
-inline fun mDownloadFile(context: Context, name: String): String? {
+inline fun mDownloadFile(context: Context, name: String?): String? {
 
     return context.getExternalFilesDir(null)?.absolutePath + File.separator + name
 
@@ -259,7 +259,7 @@ fun Context.mAlert(
     }
 }
 
-inline fun getOssObjectKey(@Solang.UserType type: String, id: String, fileName: String): String {
+inline fun getOssObjectKey(@Solang.UserType type: String?, id: String?, fileName: String?): String {
     var mType = ""
     if (type == Solang.STUDENT) {
         mType = "student/"

@@ -12,8 +12,8 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class TaskLogRequest(
-    var token: String,
-    var id: String,
+    var token: String?,
+    var id: String?,
     var feedback: String? = null,//任务反馈
     var fileinfo: String? = null,
     var examine: String? = null,

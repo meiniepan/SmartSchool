@@ -9,7 +9,6 @@ import com.xiaoneng.ss.common.state.callback.CollectListener
 import com.xiaoneng.ss.common.utils.AppManager
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.SPreference
-import com.xiaoneng.ss.model.ParentBean
 
 /**
  * Created with Android Studio.
@@ -56,19 +55,6 @@ object UserInfo {
 
     }
 
-    fun modifyAvatar(avatar: String) {
-        // 改变 sharedPreferences   isLogin值
-        var bean = getUserBean()
-        bean.portrait = avatar
-        userInfoJson = Gson().toJson(bean)
-    }
-
-    fun modifyParents(parents: ArrayList<ParentBean>) {
-        // 改变 sharedPreferences   isLogin值
-        var bean = getUserBean()
-        bean.parents = parents
-        userInfoJson = Gson().toJson(bean)
-    }
 
     fun getUserBean(): UserBean {
         val resultType = object : TypeToken<UserBean>() {}.type
