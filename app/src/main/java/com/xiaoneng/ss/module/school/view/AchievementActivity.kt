@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.scwang.smartrefresh.layout.api.RefreshLayout
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
@@ -32,6 +34,7 @@ import kotlinx.android.synthetic.main.activity_performance.*
  * @date :2020/8/20 11:32 AM
  */
 class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+    private var lastId: String? = null
     lateinit var mAdapterStudent: AchievementStuAdapter
     lateinit var mAdapterTea: AchievementTeacherAdapter
     var mData: ArrayList<AchievementBean> = ArrayList()
@@ -70,8 +73,21 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initData() {
         super.initData()
+        getData()
+    }
+
+    override fun getData() {
         showLoading()
         mViewModel.getTestCourse()
+        rvPerformance.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+            override fun onLoadMore(refreshLayout: RefreshLayout) {
+                getPerformanceRequest()
+            }
+
+            override fun onRefresh(refreshLayout: RefreshLayout) {
+                doRefresh()
+            }
+        })
         when (UserInfo.getUserBean().usertype) {
             "1" -> {
                 tvActionClass.visibility = View.GONE
@@ -94,9 +110,18 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
     }
 
+    private fun doRefresh() {
+        lastId = null
+        mData.clear()
+        rvPerformance.setNoMoreData(false)
+        rvPerformance.showLoadingView()
+        getPerformanceRequest()
+    }
+
     private fun initAdapterStu() {
+
         mAdapterStudent = AchievementStuAdapter(R.layout.item_performance_stu, mData)
-        rvPerformance?.apply {
+        rvPerformance.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@AchievementActivity)
             setAdapter(mAdapterStudent)
         }
@@ -108,7 +133,7 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun initAdapterTeacher() {
         mAdapterTea = AchievementTeacherAdapter(R.layout.item_performance_tea, mData)
-        rvPerformance?.apply {
+        rvPerformance.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@AchievementActivity)
             setAdapter(mAdapterTea)
         }
@@ -126,7 +151,7 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     fun getPerformanceRequest() {
-        mViewModel.getAchievement(currentTest, classid = classid, crid = courseid)
+        mViewModel.getAchievement(currentTest, classid = classid, crid = courseid, lastid = lastId)
     }
 
     private fun initDialogClass() {
@@ -241,9 +266,18 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mAchievementData.observe(this, Observer { response ->
             response?.let {
-                mData.clear()
-                mData.addAll(it.list)
-                rvPerformance.notifyDataSetChanged()
+                rvPerformance.finishRefreshLoadMore()
+                it.list?.let {
+                    if (it.size > 0) {
+                        lastId = it.last().id
+                        mData.addAll(it)
+                    } else {
+                        if (lastId != null) {
+                            rvPerformance.showFinishLoadMore()
+                        }
+                    }
+                    rvPerformance.notifyDataSetChanged()
+                }
             }
         })
 
