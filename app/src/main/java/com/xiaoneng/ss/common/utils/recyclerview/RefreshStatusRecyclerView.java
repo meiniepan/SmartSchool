@@ -1,6 +1,5 @@
 package com.xiaoneng.ss.common.utils.recyclerview;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -13,17 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.xiaoneng.ss.R;
 
 import java.util.List;
-
-import static java.lang.System.currentTimeMillis;
 
 
 /**
@@ -175,7 +170,6 @@ public class RefreshStatusRecyclerView extends SmartRefreshLayout implements Sta
      * 列表数据刷新，自动判断是否是空集合加载空view
      */
     public void showFinishLoadMore(){
-            setEnableLoadMore(false);
             finishLoadMoreWithNoMoreData();
             Toast.makeText(mRecyclerView.getContext(),R.string.load_more_end,Toast.LENGTH_SHORT).show();
     }
@@ -317,145 +311,6 @@ public class RefreshStatusRecyclerView extends SmartRefreshLayout implements Sta
 
 
     /*-------------------------------  重写SmartRefreshLayout的方法，添加page ---------------------------*/
-
-    @SuppressLint("RestrictedApi")
-    @Override
-    protected void setStateRefreshing(final boolean notify) {
-        super.setStateRefreshing(notify);
-        setEnableLoadMore(true);
-    }
-
-
-    /**
-     * 直接将状态设置为 Loading 正在加载
-     * @param triggerLoadMoreEvent 是否触发加载回调
-     */
-    @SuppressLint("RestrictedApi")
-    @Override
-    protected void setStateDirectLoading(boolean triggerLoadMoreEvent) {
-        if (mState != RefreshState.Loading) {
-            mLastOpenTime = currentTimeMillis();
-//            if (mState != RefreshState.LoadReleased) {
-//                if (mState != RefreshState.ReleaseToLoad) {
-//                    if (mState != RefreshState.PullUpToLoad) {
-//                        mKernel.setState(RefreshState.PullUpToLoad);
-//                    }
-//                    mKernel.setState(RefreshState.ReleaseToLoad);
-//                }
-//                notifyStateChanged(RefreshState.LoadReleased);
-//                if (mRefreshFooter != null) {
-//                    mRefreshFooter.onReleased(this, mFooterHeight, (int) (mFooterMaxDragRate * mFooterHeight));
-//                }
-//            }
-            mFooterLocked = true;//Footer 正在loading 的时候是否锁住 列表不能向上滚动
-            notifyStateChanged(RefreshState.Loading);
-            if (mLoadMoreListener != null) {
-                if (triggerLoadMoreEvent) {
-                    currentPage++;
-                    mLoadMoreListener.onLoadMore(this);
-                }
-            } else if (mOnMultiPurposeListener == null) {
-                finishLoadMore(2000);//如果没有任何加载监听器，两秒之后自动关闭
-            }
-            if (mRefreshFooter != null) {
-                mRefreshFooter.onStartAnimator(this, mFooterHeight, (int) (mFooterMaxDragRate * mFooterHeight));
-            }
-            if (mOnMultiPurposeListener != null && mRefreshFooter instanceof RefreshFooter) {
-                final OnLoadMoreListener listener = mOnMultiPurposeListener;
-                if (triggerLoadMoreEvent) {
-                    listener.onLoadMore(this);
-                }
-                mOnMultiPurposeListener.onFooterStartAnimator((RefreshFooter) mRefreshFooter, mFooterHeight, (int) (mFooterMaxDragRate * mFooterHeight));
-            }
-        }
-    }
-    /**
-     * 黏性移动 spinner
-     * @param spinner 偏移量
-     */
-    @SuppressLint("RestrictedApi")
-    @Override
-    protected void moveSpinnerInfinitely(float spinner) {
-        final View thisView = this;
-        if (mNestedInProgress && !mEnableLoadMoreWhenContentNotFull && spinner < 0) {
-            if (!mRefreshContent.canLoadMore()) {
-                /*
-                 * 2019-1-22 修复 嵌套滚动模式下 mEnableLoadMoreWhenContentNotFull=false 无效的bug
-                 */
-                spinner = 0;
-            }
-        }
-        if (spinner > mScreenHeightPixels * 3 && thisView.getTag() == null) {
-            String egg = "你这么死拉，臣妾做不到啊！";
-            Toast.makeText(thisView.getContext(), egg, Toast.LENGTH_SHORT).show();
-            thisView.setTag(egg);
-        }
-        if (mState == RefreshState.TwoLevel && spinner > 0) {
-            mKernel.moveSpinner(Math.min((int) spinner, thisView.getMeasuredHeight()), true);
-        } else if (mState == RefreshState.Refreshing && spinner >= 0) {
-            if (spinner < mHeaderHeight) {
-                mKernel.moveSpinner((int) spinner, true);
-            } else {
-                final double M = (mHeaderMaxDragRate - 1) * mHeaderHeight;
-                final double H = Math.max(mScreenHeightPixels * 4 / 3, thisView.getHeight()) - mHeaderHeight;
-                final double x = Math.max(0, (spinner - mHeaderHeight) * mDragRate);
-                final double y = Math.min(M * (1 - Math.pow(100, -x / (H == 0 ? 1 : H))), x);// 公式 y = M(1-100^(-x/H))
-                mKernel.moveSpinner((int) y + mHeaderHeight, true);
-            }
-        } else if (spinner < 0 && (mState == RefreshState.Loading
-                || (mEnableFooterFollowWhenNoMoreData && mFooterNoMoreData && mFooterNoMoreDataEffective && isEnableRefreshOrLoadMore(mEnableLoadMore))
-                || (mEnableAutoLoadMore && !mFooterNoMoreData && isEnableRefreshOrLoadMore(mEnableLoadMore)))) {
-            if (spinner > -mFooterHeight) {
-                mKernel.moveSpinner((int) spinner, true);
-            } else {
-                final double M = (mFooterMaxDragRate - 1) * mFooterHeight;
-                final double H = Math.max(mScreenHeightPixels * 4 / 3, thisView.getHeight()) - mFooterHeight;
-                final double x = -Math.min(0, (spinner + mFooterHeight) * mDragRate);
-                final double y = -Math.min(M * (1 - Math.pow(100, -x / (H == 0 ? 1 : H))), x);// 公式 y = M(1-100^(-x/H))
-                mKernel.moveSpinner((int) y - mFooterHeight, true);
-            }
-        } else if (spinner >= 0) {
-            final double M = mHeaderMaxDragRate * mHeaderHeight;
-            final double H = Math.max(mScreenHeightPixels / 2, thisView.getHeight());
-            final double x = Math.max(0, spinner * mDragRate);
-            final double y = Math.min(M * (1 - Math.pow(100, -x / (H == 0 ? 1 : H))), x);// 公式 y = M(1-100^(-x/H))
-            mKernel.moveSpinner((int) y, true);
-        } else {
-            final double M = mFooterMaxDragRate * mFooterHeight;
-            final double H = Math.max(mScreenHeightPixels / 2, thisView.getHeight());
-            final double x = -Math.min(0, spinner * mDragRate);
-            final double y = -Math.min(M * (1 - Math.pow(100, -x / (H == 0 ? 1 : H))), x);// 公式 y = M(1-100^(-x/H))
-            mKernel.moveSpinner((int) y, true);
-        }
-        if (mEnableAutoLoadMore && !mFooterNoMoreData && isEnableRefreshOrLoadMore(mEnableLoadMore) && spinner < 0
-                && mState != RefreshState.Refreshing
-                && mState != RefreshState.Loading
-                && mState != RefreshState.LoadFinish) {
-            if (mDisableContentWhenLoading) {
-                animationRunnable = null;
-                mKernel.animSpinner(-mFooterHeight);
-            }
-            setStateDirectLoading(false);
-            /*
-             * 自动加载模式时，延迟触发 onLoadMore ，mReboundDuration 保证动画能顺利执行
-             */
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (mLoadMoreListener != null) {
-                        currentPage++;
-                        mLoadMoreListener.onLoadMore(RefreshStatusRecyclerView.this);
-                    } else if (mOnMultiPurposeListener == null) {
-                        finishLoadMore(2000);//如果没有任何加载监听器，两秒之后自动关闭
-                    }
-                    final OnLoadMoreListener listener = mOnMultiPurposeListener;
-                    if (listener != null) {
-                        listener.onLoadMore(RefreshStatusRecyclerView.this);
-                    }
-                }
-            }, mReboundDuration);
-        }
-    }
 
 
 

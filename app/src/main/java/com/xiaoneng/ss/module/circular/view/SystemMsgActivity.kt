@@ -54,6 +54,7 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
     private fun doRefresh() {
         lastId = null
         mData.clear()
+        rvSysMsg.setNoMoreData(false)
         rvSysMsg.showLoadingView()
         getData()
     }

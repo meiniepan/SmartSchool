@@ -72,6 +72,7 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
         lastId = null
         mData.clear()
         rvNotice.showLoadingView()
+        rvNotice.setNoMoreData(false)
         getData()
     }
 

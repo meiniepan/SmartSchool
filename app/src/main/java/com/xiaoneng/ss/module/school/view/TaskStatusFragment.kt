@@ -61,6 +61,7 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         lastId = null
         mData.clear()
         rvTaskStatus.showLoadingView()
+        rvTaskStatus.setNoMoreData(false)
         getData()
     }
 
