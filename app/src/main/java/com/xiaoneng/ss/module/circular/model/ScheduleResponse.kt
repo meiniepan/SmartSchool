@@ -8,6 +8,6 @@ package com.xiaoneng.ss.module.circular.model
  * Time: 17:06
  */
 data class ScheduleResponse(
-    var data : ArrayList<ScheduleBean>?,
-    var semesters : String?
+    var data: ArrayList<ScheduleBean>? = null,
+    var semesters: String? = null
 )

@@ -24,9 +24,9 @@ class CircularViewModel : BaseViewModel<CircularRepository>() {
     val mScheduleMonthData: MutableLiveData<Any> = MutableLiveData()
     val mAddScheduleData: MutableLiveData<Any> = MutableLiveData()
 
-    fun getNoticeList(page: String = "", pagenum: String = "",type:String = "") {
+    fun getNoticeList(lastid: String? = null, pagenum: String? = null,type:String? = null) {
         initiateRequest(
-            { mNoticeData.value = mRepository.getNoticeList(page, pagenum,type) },
+            { mNoticeData.value = mRepository.getNoticeList(lastid, pagenum,type) },
             loadState
         )
     }
@@ -38,7 +38,7 @@ class CircularViewModel : BaseViewModel<CircularRepository>() {
         )
     }
 
-    fun read(id: String, status: String = "",received:String = "") {
+    fun read(id: String, status: String? = null,received:String? = null) {
         initiateRequest(
             { mReadData.value = mRepository.read(id, status,received) },
             loadState
@@ -52,14 +52,14 @@ class CircularViewModel : BaseViewModel<CircularRepository>() {
         )
     }
 
-    fun querySchedule(day: String, months: String = "") {
+    fun querySchedule(day: String, months: String? = null) {
         initiateRequest(
             { mScheduleData.value = mRepository.querySchedule(day, months) },
             loadState
         )
     }
 
-    fun queryScheduleMonth(day: String, months: String = "") {
+    fun queryScheduleMonth(day: String, months: String? = null) {
         initiateRequest(
             { mScheduleMonthData.value = mRepository.querySchedule(day, months) },
             loadState

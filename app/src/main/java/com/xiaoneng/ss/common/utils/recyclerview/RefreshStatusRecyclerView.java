@@ -1,8 +1,5 @@
 package com.xiaoneng.ss.common.utils.recyclerview;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -17,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -176,6 +172,15 @@ public class RefreshStatusRecyclerView extends SmartRefreshLayout implements Sta
     }
 
     /**
+     * 列表数据刷新，自动判断是否是空集合加载空view
+     */
+    public void showFinishLoadMore(){
+            setEnableLoadMore(false);
+            finishLoadMoreWithNoMoreData();
+            Toast.makeText(mRecyclerView.getContext(),R.string.load_more_end,Toast.LENGTH_SHORT).show();
+    }
+
+    /**
      * @param onShowContentListener 刷新，添加内容展示监听（是否是空布局）
      */
     public void notifyDataSetChanged(OnShowContentListener onShowContentListener){
@@ -300,6 +305,7 @@ public class RefreshStatusRecyclerView extends SmartRefreshLayout implements Sta
         return super.setOnRefreshLoadMoreListener(listener);
     }
 
+
     public void finishRefreshLoadMore() {
         finishRefresh();
         finishLoadMore();
@@ -315,48 +321,8 @@ public class RefreshStatusRecyclerView extends SmartRefreshLayout implements Sta
     @SuppressLint("RestrictedApi")
     @Override
     protected void setStateRefreshing(final boolean notify) {
-        AnimatorListenerAdapter listener = new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mLastOpenTime = currentTimeMillis();
-                notifyStateChanged(RefreshState.Refreshing);
-                if (mRefreshListener != null) {
-                    if(notify) {
-                        currentPage = startPage;
-                        mRefreshListener.onRefresh(RefreshStatusRecyclerView.this);
-                    }
-                } else if (mOnMultiPurposeListener == null) {
-                    finishRefresh(3000);
-                }
-                if (mRefreshHeader != null) {
-                    mRefreshHeader.onStartAnimator(RefreshStatusRecyclerView.this, mHeaderHeight,  (int) (mHeaderMaxDragRate * mHeaderHeight));
-                }
-                if (mOnMultiPurposeListener != null && mRefreshHeader instanceof RefreshHeader) {
-                    if (notify) {
-                        mOnMultiPurposeListener.onRefresh(RefreshStatusRecyclerView.this);
-                    }
-                    mOnMultiPurposeListener.onHeaderStartAnimator((RefreshHeader) mRefreshHeader, mHeaderHeight,  (int) (mHeaderMaxDragRate * mHeaderHeight));
-                }
-            }
-        };
-        notifyStateChanged(RefreshState.RefreshReleased);
-        ValueAnimator animator = mKernel.animSpinner(mHeaderHeight);
-        if (animator != null) {
-            animator.addListener(listener);
-        }
-        if (mRefreshHeader != null) {
-            //onReleased 的执行顺序定在 animSpinner 之后 onAnimationEnd 之前
-            // 这样 onRefreshReleased内部 可以做出 对 前面 animSpinner 的覆盖 操作
-            mRefreshHeader.onReleased(this, mHeaderHeight,  (int) (mHeaderMaxDragRate * mHeaderHeight));
-        }
-        if (mOnMultiPurposeListener != null && mRefreshHeader instanceof RefreshHeader) {
-            //同 mRefreshHeader.onReleased 一致
-            mOnMultiPurposeListener.onHeaderReleased((RefreshHeader)mRefreshHeader, mHeaderHeight,  (int) (mHeaderMaxDragRate * mHeaderHeight));
-        }
-        if (animator == null) {
-            //onAnimationEnd 会改变状态为 Refreshing 必须在 onReleased 之后调用
-            listener.onAnimationEnd(null);
-        }
+        super.setStateRefreshing(notify);
+        setEnableLoadMore(true);
     }
 
 

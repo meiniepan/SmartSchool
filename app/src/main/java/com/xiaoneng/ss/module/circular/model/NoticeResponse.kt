@@ -8,11 +8,11 @@ package com.xiaoneng.ss.module.circular.model
  * Time: 17:06
  */
 data class NoticeResponse(
-    var data : ArrayList<NoticeBean>,
-    var totle : String,
-    var read : String,
-    var retotle : String,
-    var feedback : String,
-    var unread : String,
-    var lastid : String
+    var data: ArrayList<NoticeBean>? = null,
+    var totle: String? = null,
+    var read: String? = null,
+    var retotle: String? = null,
+    var feedback: String? = null,
+    var unread: String? = null,
+    var lastid: String? = null
 )

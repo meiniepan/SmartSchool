@@ -40,28 +40,28 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mRefuseData: MutableLiveData<Any> = MutableLiveData()
     val mModifyTaskStatusData: MutableLiveData<Any> = MutableLiveData()
 
-    fun getTaskList(pagenum: String = "", status: String = "") {
+    fun getTaskList(lastid: String? = null,pagenum: String?= null, status: String?= null) {
         initiateRequest(
-            { mTaskListData.value = mRepository.getTaskList(pagenum, status) },
+            { mTaskListData.value = mRepository.getTaskList(pagenum, status,lastid = lastid) },
             loadState
         )
     }
 
-    fun getPublishTaskList(pagenum: String = "", status: String = "") {
+    fun getPublishTaskList(lastid: String? = null,pagenum: String?= null, status: String?= null) {
         initiateRequest(
-            { mTaskListData.value = mRepository.getPublishTaskList(pagenum, status) },
+            { mTaskListData.value = mRepository.getPublishTaskList(pagenum, status,lastid = lastid) },
             loadState
         )
     }
 
-    fun getTimetable(classid: String = "", time: String = "") {
+    fun getTimetable(classid: String?= null, time: String?= null) {
         initiateRequest(
             { mTimetableData.value = mRepository.getTimetable(classid, time) },
             loadState
         )
     }
 
-    fun getAttTimetable(time: String = "", uId: String = "") {
+    fun getAttTimetable(time: String?= null, uId: String?= null) {
         initiateRequest(
             { mAttTimetableData.value = mRepository.getAttTimetable(time, uId) },
             loadState
@@ -75,7 +75,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getAchievement(testname: String = "", crid: String = "", classid: String = "") {
+    fun getAchievement(testname: String?= null, crid: String?= null, classid: String?= null) {
         initiateRequest(
             { mAchievementData.value = mRepository.getAchievement(testname, crid, classid) },
             loadState
@@ -89,7 +89,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getAttendanceSchool(classid: String = "", time: String = "") {
+    fun getAttendanceSchool(classid: String?= null, time: String?= null) {
         initiateRequest(
             { mAttendanceSchoolData.value = mRepository.getAttendance(classid, time) },
             loadState
@@ -116,7 +116,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getAttendanceStu(classid: String = "", time: String = "") {
+    fun getAttendanceStu(classid: String?= null, time: String?= null) {
         initiateRequest(
             { mAttendanceStuData.value = mRepository.getAttendanceStu(classid, time) },
             loadState
@@ -146,7 +146,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun listByDepartment(id: String = "", realName: String = "") {
+    fun listByDepartment(id: String?= null, realName: String?= null) {
         initiateRequest(
             { mDepartmentPersonData.value = mRepository.listByDepartment(id, realName) },
             loadState

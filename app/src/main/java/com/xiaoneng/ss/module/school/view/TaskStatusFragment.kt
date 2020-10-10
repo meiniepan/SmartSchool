@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_task_status.*
  * Time: 17:01
  */
 class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
+    private var lastId: String? = null
     private var status: String? = null
     private var mType: String? = null//1接收 2发布
     lateinit var mAdapter: TaskStatusAdapter
@@ -43,14 +44,35 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         initAdapter()
     }
 
+    override fun getData() {
+        //任务状态0待发布1进行中2完成3关闭
+        if (status == "-1") {
+            mViewModel.getTaskList(lastid = lastId)
+        } else {
+            if (mType == "1") {
+                mViewModel.getTaskList(status = status, lastid = lastId)
+            } else if (mType == "2") {
+                mViewModel.getPublishTaskList(status = status, lastid = lastId)
+            }
+        }
+    }
+
+    private fun doRefresh() {
+        lastId = null
+        mData.clear()
+        rvTaskStatus.showLoadingView()
+        getData()
+    }
+
+
     private fun initAdapter() {
         rvTaskStatus.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onLoadMore(refreshLayout: RefreshLayout) {
-                rvTaskStatus.finishRefreshLoadMore()
+                getData()
             }
 
             override fun onRefresh(refreshLayout: RefreshLayout) {
-                getData()
+                doRefresh()
             }
         })
         mAdapter = TaskStatusAdapter(R.layout.item_task_status, mData)
@@ -74,24 +96,9 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         }
     }
 
-
-    override fun getData() {
-        rvTaskStatus.showLoadingView()
-        //任务状态0待发布1进行中2完成3关闭
-        if (status == "-1") {
-            mViewModel.getTaskList()
-        } else {
-            if (mType == "1") {
-                mViewModel.getTaskList(status = status ?: "")
-            } else if (mType == "2") {
-                mViewModel.getPublishTaskList(status = status ?: "")
-            }
-        }
-    }
-
     override fun onResume() {
         super.onResume()
-        getData()
+        doRefresh()
     }
 
 
@@ -99,9 +106,17 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         mViewModel.mTaskListData.observe(this, Observer { response ->
             response?.let {
                 rvTaskStatus.finishRefreshLoadMore()
-                mData.clear()
-                mData.addAll(it.data)
-                rvTaskStatus.notifyDataSetChanged()
+                it.data?.let {
+                    if (it.size > 0) {
+                        lastId = it.last().id
+                        mData.addAll(it)
+                    } else {
+                        if (lastId != null) {
+                            rvTaskStatus.showFinishLoadMore()
+                        }
+                    }
+                    rvTaskStatus.notifyDataSetChanged()
+                }
             }
         })
 

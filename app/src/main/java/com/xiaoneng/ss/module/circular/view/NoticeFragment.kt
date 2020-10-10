@@ -8,7 +8,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.eventBus.SysMsgShowEvent
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.circular.adapter.NoticeAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
@@ -23,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_notice.*
  * Time: 17:01
  */
 class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
+    private var lastId: String? = null
     private var readPosition: Int = 0
     lateinit var mAdapter: NoticeAdapter
     var mData = ArrayList<NoticeBean>()
@@ -44,11 +44,11 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
     private fun initAdapter() {
         rvNotice.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onLoadMore(refreshLayout: RefreshLayout) {
-                rvNotice.finishRefreshLoadMore()
+                getData()
             }
 
             override fun onRefresh(refreshLayout: RefreshLayout) {
-                getData()
+                doRefresh()
             }
         })
         mAdapter = NoticeAdapter(R.layout.item_notice, mData)
@@ -59,7 +59,7 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
         mAdapter.setOnItemClickListener { _, view, position ->
             //"status": "0",   0未读 1已读
             if (mData[position].status == "0") {
-                mViewModel.read(mData[position].id!!,  "1")
+                mViewModel.read(mData[position].id!!, "1")
                 readPosition = position
             }
             mStartActivity<NoticeDetailActivity>(context) {
@@ -68,28 +68,37 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
         }
     }
 
+    private fun doRefresh() {
+        lastId = null
+        mData.clear()
+        rvNotice.showLoadingView()
+        getData()
+    }
 
 
     override fun onResume() {
         super.onResume()
-        getData()
+        doRefresh()
     }
 
     override fun getData() {
-        rvNotice.showLoadingView()
-        mViewModel.getNoticeList()
+        mViewModel.getNoticeList(lastid = lastId)
     }
 
     override fun initDataObserver() {
         mViewModel.mNoticeData.observe(this, Observer { response ->
             response?.let {
                 rvNotice.finishRefreshLoadMore()
-                mData.clear()
-                mData.addAll(it.data)
-                if (mData.size > 0) {
+                it.data?.let {
+                    if (it.size > 0) {
+                        lastId = it.last().id
+                        mData.addAll(it)
+                    } else {
+                        if (lastId != null) {
+                            rvNotice.showFinishLoadMore()
+                        }
+                    }
                     rvNotice.notifyDataSetChanged()
-                } else {
-                    rvNotice.showEmptyView()
                 }
             }
         })

@@ -110,14 +110,17 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
 
     override fun initDataObserver() {
         mViewModel.mNoticeData.observe(this, Observer { response ->
-            response?.let {
+            response?.let {hData->
                 showSuccess()
                 mData.clear()
-                mData.addAll(it.data)
-                if (it.unread == "1") {
-                    vBadge.visibility = View.VISIBLE
-                } else {
-                    vBadge.visibility = View.GONE
+                hData.data?.let {
+
+                    mData.addAll(it)
+                    if (hData.unread == "1") {
+                        vBadge.visibility = View.VISIBLE
+                    } else {
+                        vBadge.visibility = View.GONE
+                    }
                 }
             }
         })

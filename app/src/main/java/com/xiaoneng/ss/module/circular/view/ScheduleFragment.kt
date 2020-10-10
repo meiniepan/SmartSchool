@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.utils.*
-import com.xiaoneng.ss.common.utils.eventBus.SysMsgShowEvent
 import com.xiaoneng.ss.module.circular.adapter.DaysOfMonthAdapter
 import com.xiaoneng.ss.module.circular.adapter.DaysOfWeekAdapter
 import com.xiaoneng.ss.module.circular.adapter.EventAdapter
@@ -29,6 +28,7 @@ import kotlinx.android.synthetic.main.fragment_schedule.*
  * Time: 17:01
  */
 class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
+    private var lastId: String? = null
     private var chosenDay: Long? = System.currentTimeMillis()
     lateinit var mAdapterWeek: DaysOfWeekAdapter
     lateinit var mAdapterMonth: DaysOfMonthAdapter
@@ -101,43 +101,53 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
     private fun initAdapterDayOfWeek() {
 
 
-            mAdapterWeek = DaysOfWeekAdapter(R.layout.item_days_week, mDataWeek)
-            rvWeek.apply {
-                layoutManager = GridLayoutManager(context, 7)
-                adapter = mAdapterWeek
+        mAdapterWeek = DaysOfWeekAdapter(R.layout.item_days_week, mDataWeek)
+        rvWeek.apply {
+            layoutManager = GridLayoutManager(context, 7)
+            adapter = mAdapterWeek
+        }
+        mAdapterWeek.setOnItemClickListener { adapter, view, position ->
+            chosenDay = mDataWeek[position].day
+            for (i in 0 until mDataWeek.size) {
+                mDataWeek[i].isCheck = i == position
             }
-            mAdapterWeek.setOnItemClickListener { adapter, view, position ->
-                chosenDay = mDataWeek[position].day
-                for (i in 0 until mDataWeek.size) {
-                    mDataWeek[i].isCheck = i == position
-                }
-                adapter.notifyDataSetChanged()
-                getData()
-            }
+            adapter.notifyDataSetChanged()
+            getData()
+        }
     }
 
     private fun initAdapterDayOfMonth() {
 
-            mAdapterMonth = DaysOfMonthAdapter(R.layout.item_days_week, mDataMonth)
+        mAdapterMonth = DaysOfMonthAdapter(R.layout.item_days_week, mDataMonth)
 
-            rvMonth.apply {
-                layoutManager = GridLayoutManager(context, 7)
+        rvMonth.apply {
+            layoutManager = GridLayoutManager(context, 7)
 
-                adapter = mAdapterMonth
+            adapter = mAdapterMonth
+        }
+        mAdapterMonth.setOnItemClickListener { adapter, view, position ->
+            if (mDataMonth[position].inMonth) {
+                chosenDay = mDataMonth[position].day
+                mDataWeek.clear()
+                mDataWeek.addAll(Lunar.getCurrentDaysOfWeek(chosenDay))
+                mAdapterWeek.notifyDataSetChanged()
+                switch()
+                getData()
             }
-            mAdapterMonth.setOnItemClickListener { adapter, view, position ->
-                if (mDataMonth[position].inMonth) {
-                    chosenDay = mDataMonth[position].day
-                    mDataWeek.clear()
-                    mDataWeek.addAll(Lunar.getCurrentDaysOfWeek(chosenDay))
-                    mAdapterWeek.notifyDataSetChanged()
-                    switch()
-                    getData()
-                }
         }
     }
 
+
     private fun initAdapterEvent() {
+//        rvEventSchedule.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+//            override fun onLoadMore(refreshLayout: RefreshLayout) {
+//                getData()
+//            }
+//
+//            override fun onRefresh(refreshLayout: RefreshLayout) {
+//                doRefresh()
+//            }
+//        })
         mAdapterEvent = EventAdapter(R.layout.item_event_schedule, mDataEvent)
 
         rvEventSchedule.recyclerView.apply {
@@ -177,9 +187,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
                 netResponseFormat<ScheduleResponse>(it)?.let {
                     tvSchedule.text = it.semesters
                     it.data?.let {
-                        mDataEvent.clear()
-                        mDataEvent.addAll(it)
-                            rvEventSchedule.notifyDataSetChanged()
+                        rvEventSchedule.notifyDataSetChanged()
                     }
                 }
             }

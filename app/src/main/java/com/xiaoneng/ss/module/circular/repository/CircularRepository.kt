@@ -19,31 +19,31 @@ import com.xiaoneng.ss.network.dataConvert
 class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository() {
 
 
-    suspend fun getNoticeList(page: String, pagenum: String, type: String): NoticeResponse {
+    suspend fun getNoticeList(lastid: String? = null, pagenum: String? = null, type: String? = null): NoticeResponse {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.getNoticeList(UserInfo.getUserBean().token, page, pagenum, type)
+                apiService.getNoticeList(UserInfo.getUserBean().token, lastid, pagenum, type)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getNoticeList2(UserInfo.getUserBean().token, page, pagenum, type)
+                apiService.getNoticeList2(UserInfo.getUserBean().token, lastid, pagenum, type)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.getNoticeList2(UserInfo.getUserBean().token, page, pagenum, type)
+                apiService.getNoticeList2(UserInfo.getUserBean().token, lastid, pagenum, type)
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.getNoticeList(UserInfo.getUserBean().token, page, pagenum, type)
+                apiService.getNoticeList(UserInfo.getUserBean().token, lastid, pagenum, type)
                     .dataConvert(loadState)
 
             }
         }
     }
 
-    suspend fun getNoticeDetail(id: String): NoticeDetailBean {
+    suspend fun getNoticeDetail(id: String? = null): NoticeDetailBean {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
                 apiService.getNoticeDetail(UserInfo.getUserBean().token, id)
@@ -67,7 +67,7 @@ class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository(
         }
     }
 
-    suspend fun read(id: String, status: String = "", received: String = ""): Any {
+    suspend fun read(id: String? = null, status: String? = null, received: String? = null): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
                 apiService.readNotice(UserInfo.getUserBean().token, id, status, received)
@@ -113,7 +113,7 @@ class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository(
         }
     }
 
-    suspend fun querySchedule(day: String, month: String): Any {
+    suspend fun querySchedule(day: String? = null, month: String? = null): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
                 apiService.querySchedule(UserInfo.getUserBean().token, day, month = month)

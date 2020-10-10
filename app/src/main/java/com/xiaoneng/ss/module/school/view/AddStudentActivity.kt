@@ -65,14 +65,6 @@ class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
 
-    override fun initData() {
-        super.initData()
-//        mData.add(NoticeBean(""))
-//        mData.add(NoticeBean(""))
-//        mData.add(NoticeBean(""))
-//        mViewModel.getTimetable()
-    }
-
 
     private fun mShowDialog(position: Int) {
         // 弹出对话框

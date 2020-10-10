@@ -12,8 +12,8 @@ import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.circular.adapter.SysMsgAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
-import com.xiaoneng.ss.module.school.view.AttendanceActivity
 import com.xiaoneng.ss.module.school.view.AchievementActivity
+import com.xiaoneng.ss.module.school.view.AttendanceActivity
 import com.xiaoneng.ss.module.school.view.TaskDetailActivity
 import com.xiaoneng.ss.module.school.view.TimetableActivity
 import kotlinx.android.synthetic.main.activity_system_msg.*
@@ -25,6 +25,7 @@ import org.jetbrains.anko.toast
  * @date :2020/8/20 11:32 AM
  */
 class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
+    private var lastId: String? = null
     lateinit var mAdapter: SysMsgAdapter
     var mData: ArrayList<NoticeBean> = ArrayList()
     override fun getLayoutId(): Int {
@@ -42,22 +43,29 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        getData()
+        doRefresh()
     }
 
     override fun getData() {
         super.getData()
-        mViewModel.getNoticeList(type = "system")
+        mViewModel.getNoticeList(type = "system", lastid = lastId)
+    }
+
+    private fun doRefresh() {
+        lastId = null
+        mData.clear()
+        rvSysMsg.showLoadingView()
+        getData()
     }
 
     private fun initAdapter() {
         rvSysMsg.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onLoadMore(refreshLayout: RefreshLayout) {
-                rvSysMsg.finishRefreshLoadMore()
+                getData()
             }
 
             override fun onRefresh(refreshLayout: RefreshLayout) {
-                getData()
+                doRefresh()
             }
         })
         mAdapter = SysMsgAdapter(R.layout.item_sys_msg, mData)
@@ -70,13 +78,13 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
             when (mData[position].action) {
                 //1同步新任务 2任务日志被驳回或通过 3考勤更新 4时令更替 5成绩更新 6发布新版本
                 "1" -> {
-                    mStartActivity<TaskDetailActivity>(this){
+                    mStartActivity<TaskDetailActivity>(this) {
                         putExtra(Constant.ID, mData[position].actioninfo)
                         putExtra(Constant.TYPE, "1")
                     }
                 }
                 "2" -> {
-                    mStartActivity<TaskDetailActivity>(this){
+                    mStartActivity<TaskDetailActivity>(this) {
                         putExtra(Constant.ID, mData[position].actioninfo)
                         putExtra(Constant.TYPE, "1")
                     }
@@ -105,14 +113,20 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
         mViewModel.mNoticeData.observe(this, Observer { response ->
             response?.let {
                 rvSysMsg.finishRefreshLoadMore()
-                mData.clear()
-                mData.addAll(it.data)
-                if (mData.size > 0) {
-                    tvCleanMsg.visibility = View.VISIBLE
-                } else {
-                    tvCleanMsg.visibility = View.GONE
+                it.data?.let {
+                    if (it.size > 0) {
+                        tvCleanMsg.visibility = View.VISIBLE
+                        lastId = it.last().id
+                        mData.addAll(it)
+                    } else {
+                        if (lastId != null) {
+                            rvSysMsg.showFinishLoadMore()
+                        } else {
+                            tvCleanMsg.visibility = View.GONE
+                        }
+                    }
+                    rvSysMsg.notifyDataSetChanged()
                 }
-                rvSysMsg.notifyDataSetChanged()
             }
         })
 

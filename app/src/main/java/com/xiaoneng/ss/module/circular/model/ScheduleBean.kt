@@ -1,7 +1,7 @@
 package com.xiaoneng.ss.module.circular.model
 
-import android.os.Parcel
 import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
 /**
  * Created with Android Studio.
@@ -10,87 +10,26 @@ import android.os.Parcelable
  * @date: 2020/08/27
  * Time: 17:06
  */
+@Parcelize
 data class ScheduleBean(
-    var token: String? = "",
-    var id: String? = "",
-    var realname: String?= "",
-    var type: String?= "",
-    var title: String?= "",
-    var remark: String?= "",
-    var schoolname: String?= "",
-    var status: String?= "",
-    var usertype: String?= "",
-    var uid: String?= "",
-    var scheduletime: String?= "",
-    var scheduleover: String?= "",
-    var day: String?= "",
-    var month: String?= "",
-    var him: String?= "",
-    var cno: String?= "",
-    var color: String?= "",
-    var schoolid: String?= "",
-    var muser_id: String?= "",
-    var cuser_id: String?= ""
-):Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString()
-    ) {
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(token)
-        parcel.writeString(id)
-        parcel.writeString(realname)
-        parcel.writeString(type)
-        parcel.writeString(title)
-        parcel.writeString(remark)
-        parcel.writeString(schoolname)
-        parcel.writeString(status)
-        parcel.writeString(usertype)
-        parcel.writeString(uid)
-        parcel.writeString(scheduletime)
-        parcel.writeString(scheduleover)
-        parcel.writeString(day)
-        parcel.writeString(month)
-        parcel.writeString(him)
-        parcel.writeString(cno)
-        parcel.writeString(color)
-        parcel.writeString(schoolid)
-        parcel.writeString(muser_id)
-        parcel.writeString(cuser_id)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<ScheduleBean> {
-        override fun createFromParcel(parcel: Parcel): ScheduleBean {
-            return ScheduleBean(parcel)
-        }
-
-        override fun newArray(size: Int): Array<ScheduleBean?> {
-            return arrayOfNulls(size)
-        }
-    }
-
-}
+    var token: String? = null,
+    var id: String? = null,
+    var realname: String? = null,
+    var type: String? = null,
+    var title: String? = null,
+    var remark: String? = null,
+    var schoolname: String? = null,
+    var status: String? = null,
+    var usertype: String? = null,
+    var uid: String? = null,
+    var scheduletime: String? = null,
+    var scheduleover: String? = null,
+    var day: String? = null,
+    var month: String? = null,
+    var him: String? = null,
+    var cno: String? = null,
+    var color: String? = null,
+    var schoolid: String? = null,
+    var muser_id: String? = null,
+    var cuser_id: String? = null
+) : Parcelable
