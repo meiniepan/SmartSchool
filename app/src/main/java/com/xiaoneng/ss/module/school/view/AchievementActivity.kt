@@ -98,7 +98,6 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mAdapterStudent = AchievementStuAdapter(R.layout.item_performance_stu, mData)
         rvPerformance?.apply {
             layoutManager = LinearLayoutManager(this@AchievementActivity)
-            addItemDecoration(RecycleViewDivider(context, dp2px(context, 20f).toInt()))
             setAdapter(mAdapterStudent)
         }
 
