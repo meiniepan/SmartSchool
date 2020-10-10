@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.scwang.smartrefresh.layout.api.RefreshLayout
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
@@ -79,15 +77,15 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun getData() {
         showLoading()
         mViewModel.getTestCourse()
-        rvPerformance.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
-            override fun onLoadMore(refreshLayout: RefreshLayout) {
-                getPerformanceRequest()
-            }
-
-            override fun onRefresh(refreshLayout: RefreshLayout) {
-                doRefresh()
-            }
-        })
+//        rvPerformance.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+//            override fun onLoadMore(refreshLayout: RefreshLayout) {
+//                getPerformanceRequest()
+//            }
+//
+//            override fun onRefresh(refreshLayout: RefreshLayout) {
+//                doRefresh()
+//            }
+//        })
         when (UserInfo.getUserBean().usertype) {
             "1" -> {
                 tvActionClass.visibility = View.GONE
