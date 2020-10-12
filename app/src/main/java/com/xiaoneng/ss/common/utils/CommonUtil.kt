@@ -2,7 +2,6 @@ package com.xiaoneng.ss.common.utils
 
 import android.app.Service
 import android.content.Context
-import android.content.Intent
 import android.os.Vibrator
 import java.lang.reflect.ParameterizedType
 
@@ -23,7 +22,7 @@ object CommonUtil {
      * @param context
      * @param milliseconds
      */
-    fun Vibrate(context: Context, milliseconds: Long) {
+    fun vibrate(context: Context, milliseconds: Long) {
         val vibrator =
             context.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
         vibrator.vibrate(milliseconds)

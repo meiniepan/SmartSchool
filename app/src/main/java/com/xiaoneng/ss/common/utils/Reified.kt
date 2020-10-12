@@ -290,6 +290,5 @@ fun Context.isSystemWhiteList(): Boolean {
     val packageName: String = packageName
     val isWhite =
         pm.isIgnoringBatteryOptimizations(packageName)
-
     return isWhite
 }
