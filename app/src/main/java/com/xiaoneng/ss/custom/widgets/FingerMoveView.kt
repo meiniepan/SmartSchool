@@ -30,7 +30,7 @@ class FingerMoveView(context: Context, attrs: AttributeSet?) : AppCompatImageVie
         var x = event.rawX
         var y = event.rawY
 
-        when (event.getAction()) {
+        when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 lastX = x
                 lastY = y
