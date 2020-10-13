@@ -24,7 +24,7 @@ import com.xiaoneng.ss.module.school.adapter.DialogListAdapter
 import com.xiaoneng.ss.module.school.model.AchievementBean
 import com.xiaoneng.ss.module.school.model.CourseBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import kotlinx.android.synthetic.main.activity_performance.*
+import kotlinx.android.synthetic.main.activity_achievement.*
 
 /**
  * @author Burning
@@ -52,7 +52,7 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private lateinit var dialogTest: Dialog
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_performance
+        return R.layout.activity_achievement
     }
 
     override fun initView() {

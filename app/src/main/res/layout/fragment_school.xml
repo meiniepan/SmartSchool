@@ -167,6 +167,11 @@
                         android:textSize="@dimen/sp_12" />
                 </LinearLayout>
             </LinearLayout>
+            <com.xiaoneng.ss.custom.widgets.FingerMoveView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="50dp"
+                android:background="@drawable/ic_add_blue"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

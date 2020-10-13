@@ -43,6 +43,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
             mStartActivity<AchievementActivity>(context)
 
         }
+
     }
 
 

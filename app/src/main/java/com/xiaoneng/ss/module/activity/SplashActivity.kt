@@ -17,7 +17,8 @@ import com.xiaoneng.ss.common.utils.mainLogin
  */
 class SplashActivity : AppCompatActivity() {
 
-
+    var handler = Handler()
+    var runnable:Runnable? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
@@ -30,8 +31,8 @@ class SplashActivity : AppCompatActivity() {
     }
 
     fun initView() {
-        var handler = Handler()
-        var runnable = Runnable { startIntent() }
+
+         runnable = Runnable { startIntent() }
         handler.postDelayed(runnable, 1000)
 
     }
@@ -44,6 +45,11 @@ class SplashActivity : AppCompatActivity() {
             mStartActivity<MainActivity>(this)
         }
         finish()
+    }
+
+    override fun onDestroy() {
+        handler.removeCallbacks(runnable)
+        super.onDestroy()
     }
 
 }

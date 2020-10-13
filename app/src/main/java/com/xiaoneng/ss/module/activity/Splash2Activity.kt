@@ -45,6 +45,7 @@ class Splash2Activity : BaseLifeCycleActivity<AccountViewModel>() {
     override fun initStatusBar() {
 
     }
+
     override fun initData() {
         super.initData()
 
