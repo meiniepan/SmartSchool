@@ -8,8 +8,8 @@ package com.xiaoneng.ss.model
  * Time: 17:06
  */
 data class GroupBean(
-    var groupid: String,
-    var groupname: String,
-    var level: String,
-    var levelname: String
+    var groupid: String?,
+    var groupname: String?,
+    var level: String?,
+    var levelname: String?
 )

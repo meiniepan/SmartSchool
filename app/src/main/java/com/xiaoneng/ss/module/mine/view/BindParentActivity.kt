@@ -47,7 +47,7 @@ class BindParentActivity : BaseLifeCycleActivity<AccountViewModel>() {
         }
     }
 
-    private fun showDialog(phone: String) {
+    private fun showDialog(phone: String?) {
 
         mAlert("解除后不可恢复请慎重选择是否解除与该家长的绑定", "是否确定解除该家长") {
             rvParent.showLoadingView()

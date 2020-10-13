@@ -8,10 +8,10 @@ package com.xiaoneng.ss.model
  * Time: 17:06
  */
 data class ClassBean(
-    var classid: String,
-    var id: String,
-    var classname: String,
-    var level: String,
-    var choice: String ,
-    var levelname: String
+    var classid: String?,
+    var id: String?,
+    var classname: String?,
+    var level: String?,
+    var choice: String? ,
+    var levelname: String?
 )

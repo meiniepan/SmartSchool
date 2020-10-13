@@ -39,7 +39,7 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var mData = ArrayList<TimetableBean>()
     var mDataClass = ArrayList<ClassBean>()
     var mLabelData = ArrayList<TimetableLabelBean>()
-    var mClassId = ""
+    var mClassId:String? = null
 
     private val classDialog: Dialog by lazy {
         initClassDialog()
@@ -197,7 +197,7 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private fun initClassDialog(): Dialog {
         var titles = ArrayList<String>().apply {
             mDataClass.forEach {
-                add(it.classname)
+                add(it.classname?:"")
             }
         }
         // 底部弹出对话框

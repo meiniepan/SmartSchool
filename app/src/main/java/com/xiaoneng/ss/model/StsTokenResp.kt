@@ -8,7 +8,7 @@ package com.xiaoneng.ss.model
  * Time: 17:06
  */
 data class StsTokenResp(
-    var Credentials: StsTokenBean,
-    var RequestId: String?= ""
+    var Credentials: StsTokenBean?,
+    var RequestId: String?= null
 
 )

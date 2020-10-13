@@ -8,8 +8,8 @@ package com.xiaoneng.ss.model
  * Time: 17:06
  */
 data class StsTokenBean(
-    var AccessKeyId: String? = "",
-    var AccessKeySecret: String?= "",
-    var SecurityToken: String= ""
+    var AccessKeyId: String? = null,
+    var AccessKeySecret: String? = null,
+    var SecurityToken: String? = null
 
 )

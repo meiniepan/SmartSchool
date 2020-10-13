@@ -42,11 +42,11 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var titlesClass = ArrayList<String>()
     var titlesCourse = ArrayList<String>()
     var titlesTest = ArrayList<String>()
-    var currentClass: String = ""
-    var currentCourse: String = ""
-    var currentTest: String = ""
-    var classid = ""
-    var courseid = ""
+    var currentClass: String? = null
+    var currentCourse: String? = null
+    var currentTest: String? = null
+    var classid: String? = null
+    var courseid: String? = null
     private lateinit var dialogClass: Dialog
     private lateinit var dialogCourse: Dialog
     private lateinit var dialogTest: Dialog
@@ -317,7 +317,7 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     tvActionTest.text = currentTest
 
                     mDataClass.forEach {
-                        titlesClass.add(it.classname)
+                        titlesClass.add(it.classname ?: "")
                     }
 
                     mDataCourse.forEach {

@@ -12,9 +12,9 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class ParentBean(
-    var id: String,
-    var schoolid: String,
-    var phone: String,
-    var sid: String,
-    var createtime: String
+    var id: String?,
+    var schoolid: String?,
+    var phone: String?,
+    var sid: String?,
+    var createtime: String?
 ):Parcelable
