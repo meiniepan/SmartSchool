@@ -541,7 +541,7 @@ interface ApiService {
      */
     @POST("/api/v1/student/schedules/add")
     suspend fun addSchedule(
-        @Body requestBody: ScheduleBean
+        @Body requestBody: ScheduleBean?
     ): BaseResponse<Any>
 
     /**
@@ -549,7 +549,7 @@ interface ApiService {
      */
     @POST("/api/v1/teacher/schedules/add")
     suspend fun addSchedule2(
-        @Body requestBody: ScheduleBean
+        @Body requestBody: ScheduleBean?
     ): BaseResponse<Any>
 
     /**
@@ -557,7 +557,7 @@ interface ApiService {
      */
     @POST("/api/v1/student/schedules/modify")
     suspend fun modifySchedule(
-        @Body requestBody: ScheduleBean
+        @Body requestBody: ScheduleBean?
     ): BaseResponse<Any>
 
     /**
@@ -565,7 +565,7 @@ interface ApiService {
      */
     @POST("/api/v1/teacher/schedules/modify")
     suspend fun modifySchedule2(
-        @Body requestBody: ScheduleBean
+        @Body requestBody: ScheduleBean?
     ): BaseResponse<Any>
 
     /**

@@ -59,7 +59,7 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initView() {
         super.initView()
         tvTimeToday.text = "您的请假时间是" + DateUtil.formatTitleToday()
-        leaveType = intent.getStringExtra(Constant.LEAVE_TYPE)
+        leaveType = intent.getStringExtra(Constant.LEAVE_TYPE)!!
         bean = intent.getParcelableExtra(Constant.DATA)
 
         if (leaveType == "1") {
@@ -264,7 +264,7 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         if (requestCode == Constant.REQUEST_CODE_COURSE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 mData.clear()
-                mData.addAll(data.getParcelableArrayListExtra(Constant.DATA))
+                mData.addAll(data.getParcelableArrayListExtra(Constant.DATA)!!)
                 initCourseList(data.getStringExtra(Constant.TITLE))
             }
         }

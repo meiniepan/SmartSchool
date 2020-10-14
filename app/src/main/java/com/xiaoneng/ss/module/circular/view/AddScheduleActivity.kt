@@ -29,7 +29,7 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
     var beginTime: String? = ""
     var endTime: String? = ""
     val mData by lazy { ColorUtil.getCustomColors() }
-    var bean: ScheduleBean = ScheduleBean()
+    var bean: ScheduleBean? = ScheduleBean()
     var isModify = false
 
 
@@ -41,7 +41,9 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
         isModify = intent.getBooleanExtra(Constant.TITLE, false)
         if (isModify) {
             bean = intent.getParcelableExtra(Constant.DATA)
-            initUI()
+            bean?.let {
+                initUI(it)
+            }
         }
         initTime()
         beginTime = DateUtil.getNearTimeBeginYear(time)
@@ -68,14 +70,14 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
         initAdapter()
     }
 
-    private fun initUI() {
-        etThemeAddSchedule.setText(bean.title)
-        DateUtil.showTimeFromNet(bean.scheduletime!!, tvBeginDate, tvBeginTime)
-        DateUtil.showTimeFromNet(bean.scheduleover!!, tvEndDate, tvEndTime)
-        etRemarkAddSchedule.setText(bean.remark)
-        chosenColor = bean.color!!
+    private fun initUI(it: ScheduleBean) {
+        etThemeAddSchedule.setText(it.title)
+        DateUtil.showTimeFromNet(it.scheduletime!!, tvBeginDate, tvBeginTime)
+        DateUtil.showTimeFromNet(it.scheduleover!!, tvEndDate, tvEndTime)
+        etRemarkAddSchedule.setText(it.remark)
+        chosenColor = it.color!!
         mData.forEach {
-            it.isCheck = it.color == bean.color
+            it.isCheck = it.color == it.color
         }
     }
 
@@ -103,12 +105,12 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
             return
         }
 
-        bean.token = UserInfo.getUserBean().token
-        bean.title = etThemeAddSchedule.text.toString()
-        bean.scheduletime = beginTime
-        bean.scheduleover = endTime
-        bean.remark = etRemarkAddSchedule.text.toString()
-        bean.color = chosenColor
+        bean!!.token = UserInfo.getUserBean().token
+        bean!!.title = etThemeAddSchedule.text.toString()
+        bean!!.scheduletime = beginTime
+        bean!!.scheduleover = endTime
+        bean!!.remark = etRemarkAddSchedule.text.toString()
+        bean!!.color = chosenColor
         showLoading()
         if (isModify) {
             mViewModel.modifySchedule(bean)

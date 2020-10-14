@@ -237,8 +237,8 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 isDraftFirst = false
                 mData.clear()
                 receiveList.clear()
-                mDataDepartment = data.getParcelableArrayListExtra(Constant.DATA)
-                mDataClasses = data.getParcelableArrayListExtra(Constant.DATA2)
+                mDataDepartment = data.getParcelableArrayListExtra(Constant.DATA)!!
+                mDataClasses = data.getParcelableArrayListExtra(Constant.DATA2)!!
                 mDataDepartment.forEach {
                     addDepartment(it)
                 }

@@ -35,8 +35,8 @@ class InvolvePersonActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
-        id = intent.getStringExtra(Constant.ID)
-        type = intent.getStringExtra(Constant.TYPE)
+        id = intent.getStringExtra(Constant.ID)!!
+        type = intent.getStringExtra(Constant.TYPE)!!
         mDataReceive = intent.getParcelableArrayListExtra(Constant.DATA)
         initAdapterInvolve()
         tvConfirm.setOnClickListener {

@@ -30,6 +30,12 @@ class InviteCodeActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     }
 
+    override fun initData() {
+        super.initData()
+        mViewModel.queryCodeList()
+    }
+
+
     private fun initAdapter() {
         mAdapter = InviteCodeAdapter(R.layout.item_invite_code, mData)
         rvInviteCode.apply {
@@ -39,12 +45,6 @@ class InviteCodeActivity : BaseLifeCycleActivity<AccountViewModel>() {
         mAdapter.setOnItemClickListener { _, view, position ->
 
         }
-    }
-
-
-    override fun initData() {
-        super.initData()
-        mViewModel.queryCodeList()
     }
 
 

@@ -32,7 +32,7 @@ class AddClassAttendanceTypeTeacherActivity : BaseLifeCycleActivity<SchoolViewMo
 
     override fun initView() {
         super.initView()
-        bean = intent.getParcelableExtra(Constant.DATA)
+        bean = intent.getParcelableExtra(Constant.DATA)!!
         bean2 = intent.getParcelableExtra(Constant.DATA2)
         llAddClassAttendance1.visibility = View.GONE
         llAddClassAttendance2.visibility = View.GONE

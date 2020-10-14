@@ -52,8 +52,8 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
-        mDataDepartment = intent.getParcelableArrayListExtra(Constant.DATA)
-        mDataClasses = intent.getParcelableArrayListExtra(Constant.DATA2)
+        mDataDepartment = intent.getParcelableArrayListExtra(Constant.DATA)!!
+        mDataClasses = intent.getParcelableArrayListExtra(Constant.DATA2)!!
         mReceiveList = intent.getParcelableArrayListExtra(Constant.DATA3)
         mReceiveList?.let {
             if (it.size > 0) {
@@ -368,7 +368,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             if (data != null) {
                 var removeList = ArrayList<StudentBean>()
                 var receiveList: ArrayList<StudentBean> =
-                    data.getParcelableArrayListExtra(Constant.DATA)
+                    data.getParcelableArrayListExtra(Constant.DATA)!!
                 mDataInvolve.forEach {
                     if (it.parentId == currentItemId) {
                         removeList.add(it)

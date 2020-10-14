@@ -33,7 +33,7 @@ class SplashActivity : AppCompatActivity() {
     fun initView() {
 
          runnable = Runnable { startIntent() }
-        handler.postDelayed(runnable, 1000)
+        handler.postDelayed(runnable!!, 1000)
 
     }
 
@@ -48,7 +48,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        handler.removeCallbacks(runnable)
+        runnable?.let { handler.removeCallbacks(it) }
         super.onDestroy()
     }
 

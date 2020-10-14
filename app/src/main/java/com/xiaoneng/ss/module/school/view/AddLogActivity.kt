@@ -26,7 +26,7 @@ class AddLogActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
-        taskBean = intent.getParcelableExtra(Constant.DATA)
+        taskBean = intent.getParcelableExtra(Constant.DATA)!!
         rvConfirm.setOnClickListener {
             if (etFeedback.text.toString().isNullOrEmpty()) {
                 toast(R.string.lack_info)

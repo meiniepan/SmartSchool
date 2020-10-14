@@ -26,7 +26,7 @@ class AddClassAttendanceTypeMasterActivity : BaseLifeCycleActivity<SchoolViewMod
 
     override fun initView() {
         super.initView()
-        bean = intent.getParcelableExtra(Constant.DATA)
+        bean = intent.getParcelableExtra(Constant.DATA)!!
         if (bean.has_sickleave != "0") {
             tvAddClassAttendance1.show(true)
         }

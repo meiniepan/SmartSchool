@@ -66,21 +66,21 @@ class CircularViewModel : BaseViewModel<CircularRepository>() {
         )
     }
 
-    fun addSchedule(bean: ScheduleBean) {
+    fun addSchedule(bean: ScheduleBean?) {
         initiateRequest(
             { mAddScheduleData.value = mRepository.addSchedule(bean) },
             loadState
         )
     }
 
-    fun modifySchedule(bean: ScheduleBean) {
+    fun modifySchedule(bean: ScheduleBean?) {
         initiateRequest(
             { mAddScheduleData.value = mRepository.modifySchedule(bean) },
             loadState
         )
     }
 
-    fun deleteSchedule(bean: ScheduleBean) {
+    fun deleteSchedule(bean: ScheduleBean?) {
         initiateRequest(
             { mAddScheduleData.value = mRepository.deleteSchedule(bean) },
             loadState

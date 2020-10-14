@@ -42,7 +42,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
-        id = intent.getStringExtra(Constant.ID)
+        id = intent.getStringExtra(Constant.ID)!!
         type = intent.getStringExtra(Constant.TYPE)
         tvAddLogTaskDetail.setOnClickListener {
             mStartActivity<AddLogActivity>(this) {

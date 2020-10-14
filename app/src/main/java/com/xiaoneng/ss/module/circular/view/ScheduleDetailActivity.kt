@@ -18,7 +18,7 @@ import org.jetbrains.anko.toast
  * @date :2020/8/20 11:32 AM
  */
 class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
-    var bean: ScheduleBean = ScheduleBean()
+    var bean: ScheduleBean? = ScheduleBean()
     var beginTime: String? = ""
     var endTime: String? = ""
 
@@ -29,18 +29,21 @@ class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
     override fun initView() {
         super.initView()
         bean = intent.getParcelableExtra(Constant.DATA)
-        beginTime = bean.scheduletime
-        endTime = bean.scheduleover
-        etDetailSchedule.apply {
-            if (bean.remark.isNullOrEmpty()) {
-                this.visibility = View.GONE
-            } else {
-                etDetailSchedule.setText(bean.remark)
+        bean?.let {
+            beginTime = it.scheduletime
+            endTime = it.scheduleover
+            etDetailSchedule.apply {
+                if (it.remark.isNullOrEmpty()) {
+                    this.visibility = View.GONE
+                } else {
+                    etDetailSchedule.setText(it.remark)
+                }
             }
+            tvTitleScheduleDetail.text = it.title
+            DateUtil.showTimeFromNet(it.scheduletime!!, tvBeginDate, tvBeginTime)
+            DateUtil.showTimeFromNet(it.scheduleover!!, tvEndDate, tvEndTime)
         }
-        tvTitleScheduleDetail.text = bean.title
-        DateUtil.showTimeFromNet(bean.scheduletime!!, tvBeginDate, tvBeginTime)
-        DateUtil.showTimeFromNet(bean.scheduleover!!, tvEndDate, tvEndTime)
+
 
         ivAction1Schedule.setOnClickListener {
             onEdit()

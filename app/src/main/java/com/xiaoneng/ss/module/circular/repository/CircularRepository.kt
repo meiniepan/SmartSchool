@@ -137,7 +137,7 @@ class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository(
         }
     }
 
-    suspend fun addSchedule(bean: ScheduleBean): Any {
+    suspend fun addSchedule(bean: ScheduleBean?): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
                 apiService.addSchedule(bean)
@@ -161,7 +161,7 @@ class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository(
         }
     }
 
-    suspend fun modifySchedule(bean: ScheduleBean): Any {
+    suspend fun modifySchedule(bean: ScheduleBean?): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
                 apiService.modifySchedule(bean)
@@ -185,24 +185,24 @@ class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository(
         }
     }
 
-    suspend fun deleteSchedule(bean: ScheduleBean): Any {
+    suspend fun deleteSchedule(bean: ScheduleBean?): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.deleteScheduleStu(UserInfo.getUserBean().token,bean.id!!)
+                apiService.deleteScheduleStu(UserInfo.getUserBean().token,bean?.id)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.deleteScheduleTea(UserInfo.getUserBean().token,bean.id!!)
+                apiService.deleteScheduleTea(UserInfo.getUserBean().token,bean?.id)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.deleteScheduleTea(UserInfo.getUserBean().token,bean.id!!)
+                apiService.deleteScheduleTea(UserInfo.getUserBean().token,bean?.id)
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.deleteScheduleTea(UserInfo.getUserBean().token,bean.id!!)
+                apiService.deleteScheduleTea(UserInfo.getUserBean().token,bean?.id)
                     .dataConvert(loadState)
 
             }
