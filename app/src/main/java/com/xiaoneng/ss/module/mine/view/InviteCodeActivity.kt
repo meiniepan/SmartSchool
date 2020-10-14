@@ -34,7 +34,7 @@ class InviteCodeActivity : BaseLifeCycleActivity<AccountViewModel>() {
         mAdapter = InviteCodeAdapter(R.layout.item_invite_code, mData)
         rvInviteCode.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = mAdapter
+            setAdapter(mAdapter)
         }
         mAdapter.setOnItemClickListener { _, view, position ->
 
@@ -51,11 +51,11 @@ class InviteCodeActivity : BaseLifeCycleActivity<AccountViewModel>() {
     override fun initDataObserver() {
         mViewModel.mParentsData.observe(this, Observer { response ->
             response?.let {
-                netResponseFormat<ArrayList<InviteCodeBean>>(it)?.let{
-                mData.clear()
-                mData.addAll(it)
+                netResponseFormat<ArrayList<InviteCodeBean>>(it)?.let {
+                    mData.clear()
+                    mData.addAll(it)
                     rvInviteCode.notifyDataSetChanged()
-               }
+                }
             }
         })
 
