@@ -18,6 +18,7 @@ import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.module.activity.MainActivity
+import com.xiaoneng.ss.module.mine.view.UserProtocolActivity
 import kotlinx.android.synthetic.main.activity_login_stu.*
 import org.jetbrains.anko.toast
 
@@ -44,6 +45,7 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
         tvSendCaptcha.setOnClickListener(this)
         tvLogin.setOnClickListener(this)
         tvSwitchId.setOnClickListener(this)
+        tvProtocolRegister.setOnClickListener(this)
         UserInfo.getUserBean().phone?.let {
             etPhone.setText(UserInfo.getUserBean().phone)
         }
@@ -131,6 +133,10 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
 
             R.id.tvLogin -> {
                 doLogin()
+            }
+
+            R.id.tvProtocolRegister -> {
+                mStartActivity<UserProtocolActivity>(this)
             }
 
         }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#5E37FF</color>
+    <color name="colorPrimary">#C7000B</color>
     <color name="colorPrimaryDark">#ffffff</color>
-    <color name="colorAccent">#5E37FF</color>
+    <color name="colorAccent">#C7000B</color>
     <color name="text_333333">#333333</color>
     <color name="black">#000000</color>
     <color name="white_85">#85ffffff</color>
@@ -15,9 +15,9 @@
     <color name="titleBlack">#212121</color>
     <color name="commonHint">#999999</color>
     <color name="splitColor">#E3E6E9</color>
-    <color name="commonBlue">#5E37FF</color>
+    <color name="oldBlue">#5E37FF</color>
+    <color name="commonBlue">#C7000B</color>
     <color name="commonRed">#C7000B</color>
-    <color name="tintBlue">#9980FF</color>
     <color name="splitGray">#D3D9DF</color>
     <color name="grayF6">#F6F6F6</color>
     <color name="grayE0">#E0E0E0</color>

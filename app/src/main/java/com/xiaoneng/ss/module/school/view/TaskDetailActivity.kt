@@ -35,6 +35,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var mDataPrincipal = ArrayList<UserBeanSimple>()
     lateinit var taskBean: TaskDetailBean
     private var type: String? = null
+
     override fun getLayoutId(): Int {
         return R.layout.activity_task_detail
     }

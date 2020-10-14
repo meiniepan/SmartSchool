@@ -94,5 +94,5 @@
         android:layout_gravity="end|bottom"
         android:layout_marginEnd="@dimen/title_padding"
         android:layout_marginBottom="8dp"
-        android:src="@drawable/ic_add_blue" />
+        android:src="@drawable/ic_add_common" />
 </FrameLayout>

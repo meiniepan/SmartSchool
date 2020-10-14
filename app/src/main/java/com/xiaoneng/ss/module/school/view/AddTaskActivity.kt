@@ -93,7 +93,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun setOrderPublish(img: ImageView) {
-        img.setImageResource(R.drawable.ic_timing_blue)
+        img.setImageResource(R.drawable.ic_timing_common)
         tvConfirmAddTask.text = "定时发布"
     }
 

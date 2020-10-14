@@ -16,6 +16,7 @@ import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.module.activity.MainActivity
+import com.xiaoneng.ss.module.mine.view.UserProtocolActivity
 import kotlinx.android.synthetic.main.activity_login_tea.*
 import org.jetbrains.anko.toast
 
@@ -39,6 +40,7 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
         tvSendCaptchaTeacher.setOnClickListener(this)
         tvLoginTeacher.setOnClickListener(this)
         tvSwitchIdTeacher.setOnClickListener(this)
+        tvProtocolRegister.setOnClickListener(this)
         UserInfo.getUserBean().phone?.let {
             if (isTeacher) {
                 etPhoneTeacher.setText(UserInfo.getUserBean().phone)
@@ -98,6 +100,9 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
                 doLogin()
             }
 
+            R.id.tvProtocolRegister -> {
+                mStartActivity<UserProtocolActivity>(this)
+            }
         }
     }
 
