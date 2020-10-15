@@ -41,7 +41,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var mStudentData: ArrayList<AttendanceStuBean> = ArrayList()
     var mClassData: ArrayList<ClassBean> = ArrayList()
     var chosenDay = DateUtil.formatDateCustomDay()
-    lateinit var getDataLambda:()->Unit
+    lateinit var getDataLambda: () -> Unit
     private val bottomDialog1: Dialog by lazy {
         initDialog1()
     }
@@ -161,6 +161,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         getDataLambda = ::getStuData
         mViewModel.getAttendanceStu(time = "")
     }
+
     private fun getSchoolData() {
         getDataLambda = ::getSchoolData
         mViewModel.getAttendanceSchool(time = "")
@@ -184,7 +185,8 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
         }
     }
-    private fun getDataMaster( keyWord: String? = null) {
+
+    private fun getDataMaster(keyWord: String? = null) {
         mViewModel.getAttendanceTea(
             time = chosenDay,
             classid = currentClassId,
@@ -199,6 +201,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             classid = currentClassId
         )
     }
+
     private fun initTitle() {
 
 
@@ -400,7 +403,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         titles2.clear()
                         mClassData.addAll(it.classs)
                         mClassData.forEach {
-                            titles2.add(it.classname?:"")
+                            titles2.add(it.classname ?: "")
                             if (it.choice == "1") {
                                 currentClassId = it.classid
                                 tvLabel2Attendance.text = it.classname
