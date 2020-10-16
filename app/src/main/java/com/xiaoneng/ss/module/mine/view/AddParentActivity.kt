@@ -9,6 +9,7 @@ import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.captchaToast
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.model.ParentBean
@@ -84,7 +85,7 @@ class AddParentActivity : BaseLifeCycleActivity<AccountViewModel>() {
     override fun initDataObserver() {
         mViewModel.mCaptchaData.observe(this, Observer {
             it?.let {
-                toast(it.code)
+                captchaToast(it.code)
             }
         })
 
@@ -104,6 +105,6 @@ class AddParentActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        timer?.let { it.cancel() }
+        timer?.cancel()
     }
 }

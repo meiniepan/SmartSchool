@@ -20,6 +20,7 @@ import com.xiaoneng.ss.account.view.LoginTeacherActivity
 import com.xiaoneng.ss.common.constclass.Solang
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
+import org.jetbrains.anko.toast
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -291,4 +292,10 @@ fun Context.isSystemWhiteList(): Boolean {
     val isWhite =
         pm.isIgnoringBatteryOptimizations(packageName)
     return isWhite
+}
+
+fun Context.captchaToast(code: String?) {
+    code?.let {
+        toast(it)
+    }
 }

@@ -11,6 +11,7 @@ import com.xiaoneng.ss.account.model.CaptchaResponse
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.captchaToast
 import com.xiaoneng.ss.common.utils.formatStarPhoneNum
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import kotlinx.android.synthetic.main.fragment_modify_pwd.*
@@ -116,7 +117,7 @@ class ModifyPwdFragment : BaseLifeCycleFragment<AccountViewModel>() {
         mViewModel.mBaseData.observe(this, Observer {
             it?.let {
                 netResponseFormat<CaptchaResponse>(it)?.let {
-                    requireContext().toast(it.code)
+                    requireContext().captchaToast(it.code)
                 }
             }
         })

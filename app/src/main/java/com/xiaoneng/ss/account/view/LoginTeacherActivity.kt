@@ -13,6 +13,7 @@ import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.captchaToast
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.module.activity.MainActivity
@@ -129,7 +130,7 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
     override fun initDataObserver() {
         mViewModel.mCaptchaData.observe(this, Observer {
             it?.let {
-                toast(it.code)
+                captchaToast(it.code)
             }
         })
 

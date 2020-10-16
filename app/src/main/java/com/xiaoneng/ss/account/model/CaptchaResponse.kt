@@ -8,6 +8,6 @@ package com.xiaoneng.ss.account.model
  * Time: 19:54
  */
 data class CaptchaResponse(
-    var code : String
+    var code : String?
 
 )

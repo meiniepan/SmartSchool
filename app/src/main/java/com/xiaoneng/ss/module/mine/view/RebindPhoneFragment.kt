@@ -12,6 +12,7 @@ import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.captchaToast
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import kotlinx.android.synthetic.main.fragment_rebind.*
@@ -111,7 +112,7 @@ class RebindPhoneFragment : BaseLifeCycleFragment<AccountViewModel>() {
         mViewModel.mBaseData.observe(this, Observer {
             it?.let {
                 netResponseFormat<CaptchaResponse>(it)?.let {
-                    requireContext().toast(it.code)
+                    requireContext().captchaToast(it.code)
                 }
             }
         })
