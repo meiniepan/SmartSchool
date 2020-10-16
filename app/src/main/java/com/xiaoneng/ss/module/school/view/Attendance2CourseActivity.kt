@@ -27,7 +27,7 @@ class Attendance2CourseActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapterMaster: AttendanceMasterAdapter
     var mMasterData: ArrayList<AttendanceBean> = ArrayList()
     var mQueryData: ArrayList<AttendanceBean> = ArrayList()
-    var bean:AttCourseBean? = null
+    var bean: AttCourseBean? = null
 
 
     override fun getLayoutId(): Int = R.layout.activity_attendance
@@ -66,6 +66,7 @@ class Attendance2CourseActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.onResume()
         getData()
     }
+
     override fun getData() {
         super.getData()
         rvAttendance.showLoadingView()
@@ -76,6 +77,7 @@ class Attendance2CourseActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         initAdapterMaster()
 
     }
+
     private fun getDataMaster(keyWord: String? = null) {
         mViewModel.getAttendanceTea(
             classid = bean?.classid,
