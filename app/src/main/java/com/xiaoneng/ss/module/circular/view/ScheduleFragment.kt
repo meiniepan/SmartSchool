@@ -187,6 +187,8 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
                 netResponseFormat<ScheduleResponse>(it)?.let {
                     tvSchedule.text = it.semesters
                     it.data?.let {
+                        mDataEvent.clear()
+                        mDataEvent.addAll(it)
                         rvEventSchedule.notifyDataSetChanged()
                     }
                 }

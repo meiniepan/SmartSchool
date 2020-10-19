@@ -1,6 +1,5 @@
 package com.xiaoneng.ss.module.circular.adapter
 
-import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.text.TextUtils
 import android.widget.TextView
@@ -37,7 +36,7 @@ class EventSimpleAdapter(layoutId: Int, listData: MutableList<ScheduleBean>?) :
 
             val gd = GradientDrawable()
             if (!TextUtils.isEmpty(item.color)) {
-                gd.setColor(Color.parseColor("#5E37FF"))
+                gd.setColor(mContext.resources.getColor(R.color.commonBlue))
 //                gd.setColor(Color.parseColor(item.color))
             }
             gd.cornerRadii = getCornerRadii(5f, 5f, 5f, 5f)
