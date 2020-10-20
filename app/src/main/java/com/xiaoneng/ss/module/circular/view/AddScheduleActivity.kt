@@ -23,7 +23,7 @@ import java.util.*
  * Time: 17:01
  */
 class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
-    private var chosenColor: String = "#5E37FF"
+    private var chosenColor: String = "#C7000B"
     lateinit var mAdapter: ChooseColorAdapter
     var time: Long = System.currentTimeMillis()
     var beginTime: String? = ""
@@ -67,7 +67,7 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 }
             }
         }
-        initAdapter()
+//        initAdapter()
     }
 
     private fun initUI(it: ScheduleBean) {

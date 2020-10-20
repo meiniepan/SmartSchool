@@ -189,19 +189,30 @@
 -keep public class * extends com.xiaoneng.ss.base.view.BaseFragment{*;}
 -keep public class * extends com.xiaoneng.ss.base.view.BaseActivity{*;}
 
-#极光推送
--dontoptimize
--dontpreverify
 
--dontwarn cn.jpush.**
--keep class cn.jpush.** { *; }
--keep class * extends cn.jpush.android.helpers.JPushMessageReceiver { *; }
+#腾讯移动推送
+#TPNS SDK
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep class com.tencent.android.tpush.** {*;}
+-keep class com.tencent.tpns.baseapi.** {*;}
+-keep class com.tencent.tpns.mqttchannel.** {*;}
+-keep class com.tencent.tpns.dataacquisition.** {*;}
 
--dontwarn cn.jiguang.**
--keep class cn.jiguang.** { *; }
--dontwarn com.google.**
--keep class com.google.gson.** {*;}
--keep class com.google.protobuf.** {*;}
+#华为通道
+-keepattributes *Annotation*
+-keepattributes Exceptions
+-keepattributes InnerClasses
+-keepattributes Signature
+-keepattributes SourceFile,LineNumberTable
+-keep class com.hianalytics.android.**{*;}
+-keep class com.huawei.updatesdk.**{*;}
+-keep class com.huawei.hms.**{*;}
+-keep class com.huawei.android.hms.agent.**{*;}
+
+#小米通道
+-keep class com.xiaomi.**{*;}
+-keep public class * extends com.xiaomi.mipush.sdk.PushMessageReceiver
 
 
 

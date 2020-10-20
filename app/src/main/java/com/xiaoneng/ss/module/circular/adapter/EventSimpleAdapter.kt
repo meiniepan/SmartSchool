@@ -35,10 +35,8 @@ class EventSimpleAdapter(layoutId: Int, listData: MutableList<ScheduleBean>?) :
 
 
             val gd = GradientDrawable()
-            if (!TextUtils.isEmpty(item.color)) {
                 gd.setColor(mContext.resources.getColor(R.color.commonBlue))
 //                gd.setColor(Color.parseColor(item.color))
-            }
             gd.cornerRadii = getCornerRadii(5f, 5f, 5f, 5f)
             view.background = gd
 //            gd.setStroke(strokeWidth, strokeColor)

@@ -4,16 +4,17 @@ import android.app.Application
 import android.content.Context
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
-import cn.jpush.android.api.JPushInterface
 import com.kingja.loadsir.core.LoadSir
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
+import com.tencent.android.tpush.XGIOperateCallback
+import com.tencent.android.tpush.XGPushConfig
+import com.tencent.android.tpush.XGPushManager
 import com.tencent.bugly.Bugly
 import com.xiaoneng.ss.common.callback.EmptyCallBack
 import com.xiaoneng.ss.common.callback.ErrorCallBack
 import com.xiaoneng.ss.common.callback.LoadingCallBack
-import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.SPreference
 
@@ -34,8 +35,8 @@ open class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         SPreference.setContext(applicationContext)
-//        initJPush()
-        Bugly.init(getApplicationContext(), "c55b4f8e6e", false);
+        initTpns()
+        Bugly.init(getApplicationContext(), "c55b4f8e6e", false)
         instance = this
         initMode()
         LoadSir.beginBuilder()
@@ -46,25 +47,26 @@ open class BaseApplication : Application() {
         initSmartRefreshHeaderFooter()
     }
 
-    private fun initJPush() {
-        JPushInterface.setDebugMode(true)
-        JPushInterface.init(this)
-        var mSet = HashSet<String>()
-        UserInfo.getUserBean().uid?.let {
-            mSet.add(it)
-        }
-        JPushInterface.setTags(this, mSet
-        ) { p0, p1, p2 ->
-            when (p0) {
-                0 ->                                 //这里可以往 SharePreference 里写一个成功设置的状态。成功设置一次后，以后不必再次设置了。
-                    //UserUtils.saveTagAlias(getHoldingActivity(), true);
-                    Log.e("JPushInterface","Set tag and alias success极光推送别名设置成功${p2}")
-                6002 ->                                 //极低的可能设置失败 我设置过几百回 出现3次失败 不放心的话可以失败后继续调用上面那个方面 重连3次即可 记得return 不要进入死循环了...
-                    Log.e("JPushInterface","$p0...${p1}")
-                else -> Log.e("JPushInterface","$p0")
+    private fun initTpns() {
+        XGPushConfig.setMiPushAppId(applicationContext, "2882303761518744928");
+        XGPushConfig.setMiPushAppKey(getApplicationContext(), "5751874450928");
+//打开第三方推送
+        XGPushConfig.enableOtherPush(getApplicationContext(), true);
+        XGPushConfig.enableDebug(this,true)
+        XGPushManager.registerPush(this, object : XGIOperateCallback {
+            override fun onSuccess(data: Any, flag: Int) {
+                //token在设备卸载重装的时候有可能会变
+                Log.d("TPush", "注册成功，设备token为：$data")
+                XGPushManager.setTag(applicationContext,"aaaa")
             }
-        }
+
+            override fun onFail(data: Any?, errCode: Int, msg: String) {
+                Log.d("TPush", "注册失败，错误码：$errCode,错误信息：$msg")
+            }
+        })
+
     }
+
 
     private  fun initSmartRefreshHeaderFooter() {
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->

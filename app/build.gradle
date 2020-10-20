@@ -6,6 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: "com.tencent.android.tpns"
+
 def rootAndroidId = rootProject.ext.android
 def appId = rootProject.ext.appId
 def support = rootProject.ext.dependencies
@@ -74,7 +76,6 @@ kapt {
     }
 }
 
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation support.appcompat
@@ -115,7 +116,8 @@ dependencies {
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.9'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-28'
 
-    //jiguang
-    implementation 'cn.jiguang.sdk:jpush:3.7.0'  // 此处以JPush 3.7.0 版本为例。
-    implementation 'cn.jiguang.sdk:jcore:2.4.2'  // 此处以JCore 2.4.2 版本为例。
+    //腾讯移动推送
+    //小米推送
+    implementation 'com.tencent.tpns:xiaomi:1.2.1.1-release'//小米推送 [VERSION]
+
 }
