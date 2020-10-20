@@ -35,7 +35,7 @@ open class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         SPreference.setContext(applicationContext)
-        initTpns()
+//        initTpns()
         Bugly.init(getApplicationContext(), "c55b4f8e6e", false)
         instance = this
         initMode()
@@ -57,7 +57,7 @@ open class BaseApplication : Application() {
             override fun onSuccess(data: Any, flag: Int) {
                 //token在设备卸载重装的时候有可能会变
                 Log.d("TPush", "注册成功，设备token为：$data")
-                XGPushManager.setTag(applicationContext,"aaaa")
+//                XGPushManager.setTag(applicationContext,"aaaa")
             }
 
             override fun onFail(data: Any?, errCode: Int, msg: String) {
