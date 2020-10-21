@@ -8,15 +8,18 @@ import com.kingja.loadsir.core.LoadSir
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
-import com.tencent.android.tpush.XGIOperateCallback
-import com.tencent.android.tpush.XGPushConfig
-import com.tencent.android.tpush.XGPushManager
 import com.tencent.bugly.Bugly
+import com.umeng.commonsdk.UMConfigure
+import com.umeng.message.IUmengRegisterCallback
+import com.umeng.message.PushAgent
 import com.xiaoneng.ss.common.callback.EmptyCallBack
 import com.xiaoneng.ss.common.callback.ErrorCallBack
 import com.xiaoneng.ss.common.callback.LoadingCallBack
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.SPreference
+import org.android.agoo.huawei.HuaWeiRegister
+import org.android.agoo.xiaomi.MiPushRegistar
+
 
 /**
  * Created with Android Studio.
@@ -26,18 +29,21 @@ import com.xiaoneng.ss.common.utils.SPreference
  * Time: 14:27
  */
 open class BaseApplication : Application() {
+    private val TAG: String? = "====="
     val context: Context by lazy {
         instance.applicationContext
     }
+
     companion object {
-        lateinit var instance : BaseApplication
+        lateinit var instance: BaseApplication
     }
+
     override fun onCreate() {
         super.onCreate()
-        SPreference.setContext(applicationContext)
-//        initTpns()
-        Bugly.init(getApplicationContext(), "c55b4f8e6e", false)
         instance = this
+        SPreference.setContext(applicationContext)
+        initPush()
+        Bugly.init(getApplicationContext(), "c55b4f8e6e", false)
         initMode()
         LoadSir.beginBuilder()
             .addCallback(ErrorCallBack())
@@ -47,28 +53,42 @@ open class BaseApplication : Application() {
         initSmartRefreshHeaderFooter()
     }
 
-    private fun initTpns() {
-        XGPushConfig.setMiPushAppId(applicationContext, "2882303761518744928");
-        XGPushConfig.setMiPushAppKey(getApplicationContext(), "5751874450928");
-//打开第三方推送
-        XGPushConfig.enableOtherPush(getApplicationContext(), true);
-        XGPushConfig.enableDebug(this,true)
-        XGPushManager.registerPush(this, object : XGIOperateCallback {
-            override fun onSuccess(data: Any, flag: Int) {
-                //token在设备卸载重装的时候有可能会变
-                Log.d("TPush", "注册成功，设备token为：$data")
-//                XGPushManager.setTag(applicationContext,"aaaa")
+    private fun initPush() {
+
+        PushAgent.getInstance(this).onAppStart()
+
+        UMConfigure.init(
+            this,
+            "5f8fe60b2065791705f41ce5",
+            "Umeng",
+            UMConfigure.DEVICE_TYPE_PHONE,
+            "ab59d5ba71c396e8c388d2d9b309eb28"
+        )
+//获取消息推送代理示例
+//获取消息推送代理示例
+        val mPushAgent = PushAgent.getInstance(this)
+//注册推送服务，每次调用register方法都会回调该接口
+//注册推送服务，每次调用register方法都会回调该接口
+        mPushAgent.register(object : IUmengRegisterCallback {
+            override fun onSuccess(deviceToken: String) {
+                //注册成功会返回deviceToken deviceToken是推送消息的唯一标志
+                Log.i(TAG, "注册成功：deviceToken：-------->  $deviceToken")
             }
 
-            override fun onFail(data: Any?, errCode: Int, msg: String) {
-                Log.d("TPush", "注册失败，错误码：$errCode,错误信息：$msg")
+            override fun onFailure(s: String, s1: String) {
+                Log.e(TAG, "注册失败：-------->  s:$s,s1:$s1")
             }
         })
+        /**
+         * 初始化厂商通道
+         */
+        HuaWeiRegister.register(this)
+        MiPushRegistar.register(this, "2882303761518747426", "5581874725426")
 
     }
 
 
-    private  fun initSmartRefreshHeaderFooter() {
+    private fun initSmartRefreshHeaderFooter() {
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
 //            RefreshViewHeader(context) //.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
             ClassicsHeader(context)
@@ -78,6 +98,7 @@ open class BaseApplication : Application() {
             ClassicsFooter(context)
         }
     }
+
     private fun initMode() {
         var isNightMode: Boolean by SPreference(Constant.NIGHT_MODE, false)
         AppCompatDelegate.setDefaultNightMode(if (isNightMode) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO)

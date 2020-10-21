@@ -1,0 +1,12 @@
+{
+	"client":{
+		"cp_id":"890086000102164254",
+		"product_id":"736430079244673870",
+		"client_id":"478071473957766208",
+		"client_secret":"94AA182FAE95BB946A4856C927DDF6F3D1010F9BAAB11D2AC2A2BEA4512779E7",
+		"app_id":"103098443",
+		"package_name":"com.xiaoneng.ss",
+		"api_key":"CgB6e3x96eR1Zxth7kfhF7OaDzB4jPHXnCIy+tUNXbm/NHFX3Mg2j4VNDwaK+IwJXTdbNDd30GiULBufliGWjE75"
+	},
+	"configuration_version":"1.0"
+}
