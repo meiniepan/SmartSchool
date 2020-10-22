@@ -183,7 +183,7 @@
         <activity
             android:name=".module.school.view.AddClassAttendanceTypeTeacherActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".module.activity.MipushTestActivity"
+        <activity android:name=".module.activity.OtherPushActivity"
             android:launchMode="singleTask"
             android:exported="true"/>
 
