@@ -42,7 +42,7 @@ open class BaseApplication : Application() {
         super.onCreate()
         instance = this
         SPreference.setContext(applicationContext)
-        initPush()
+//        initPush()
         Bugly.init(getApplicationContext(), "c55b4f8e6e", false)
         initMode()
         LoadSir.beginBuilder()
