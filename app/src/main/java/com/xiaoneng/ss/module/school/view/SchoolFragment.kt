@@ -7,6 +7,7 @@ import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.fragment_school.*
+import org.jetbrains.anko.toast
 
 /**
  * Created with Android Studio.
@@ -41,6 +42,14 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         }
         llPerformance.setOnClickListener {
             mStartActivity<AchievementActivity>(context)
+
+        }
+        llProperty.setOnClickListener {
+            requireContext().toast(R.string.not_open)
+
+        }
+        llSalary.setOnClickListener {
+            requireContext().toast(R.string.not_open)
 
         }
 
