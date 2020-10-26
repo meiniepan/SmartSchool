@@ -1,7 +1,6 @@
 package com.xiaoneng.ss.module.circular.adapter
 
 import android.graphics.drawable.GradientDrawable
-import android.text.TextUtils
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -35,7 +34,7 @@ class EventSimpleAdapter(layoutId: Int, listData: MutableList<ScheduleBean>?) :
 
 
             val gd = GradientDrawable()
-                gd.setColor(mContext.resources.getColor(R.color.commonBlue))
+                gd.setColor(mContext.resources.getColor(R.color.themeColor))
 //                gd.setColor(Color.parseColor(item.color))
             gd.cornerRadii = getCornerRadii(5f, 5f, 5f, 5f)
             view.background = gd

@@ -22,6 +22,8 @@ class FingerMoveView(context: Context, attrs: AttributeSet?) : AppCompatImageVie
     private var isFirst: Boolean = true
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        parent.requestDisallowInterceptTouchEvent(true)
+        var canClick = false
 
         if (isFirst) {
             originalLeft = left
@@ -41,6 +43,7 @@ class FingerMoveView(context: Context, attrs: AttributeSet?) : AppCompatImageVie
 
                 var disX = x - lastX
                 var disY = y - lastY
+
                 var left = lastL + disX
                 var top = lastT + disY
 
@@ -48,11 +51,11 @@ class FingerMoveView(context: Context, attrs: AttributeSet?) : AppCompatImageVie
                 if (left < 0) {
                     left = 0f
                 }
-                if (left > parent.right-width) {
-                    left = parent.right.toFloat()-width
+                if (left > parent.right - width) {
+                    left = parent.right.toFloat() - width
                 }
-                if (top > parent.height-height) {
-                    top = parent.height.toFloat()-height
+                if (top > parent.height - height) {
+                    top = parent.height.toFloat() - height
                 }
                 if (top < 0) {
                     top = 0f
@@ -64,6 +67,11 @@ class FingerMoveView(context: Context, attrs: AttributeSet?) : AppCompatImageVie
             }
 
             MotionEvent.ACTION_UP -> {
+                var disX = x - lastX
+                var disY = y - lastY
+                if (disX ==0f&&disY ==0f){
+                    canClick = true
+                }
                 val top = top
                 val height = top + height
 
@@ -74,7 +82,11 @@ class FingerMoveView(context: Context, attrs: AttributeSet?) : AppCompatImageVie
                 }
                 anim.duration = 300
                 anim.start()
+
             }
+        }
+        if (canClick) {
+           performClick()
         }
         return true
     }

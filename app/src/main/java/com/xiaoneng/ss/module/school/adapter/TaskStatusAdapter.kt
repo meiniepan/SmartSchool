@@ -51,14 +51,14 @@ class TaskStatusAdapter(layoutId: Int, listData: MutableList<TaskDetailBean>?) :
                         statusStr = "未完成"
                         holder.setTextColor(
                             R.id.tvTaskStatus,
-                            mContext.resources.getColor(R.color.commonBlue)
+                            mContext.resources.getColor(R.color.themeColor)
                         )
                     }
                     "1" -> {
                         statusStr = "已完成"
                         holder.setTextColor(
                             R.id.tvTaskStatus,
-                            mContext.resources.getColor(R.color.commonBlue)
+                            mContext.resources.getColor(R.color.themeColor)
                         )
                     }
 
@@ -69,14 +69,14 @@ class TaskStatusAdapter(layoutId: Int, listData: MutableList<TaskDetailBean>?) :
                         statusStr = "草稿箱"
                         holder.setTextColor(
                             R.id.tvTaskStatus,
-                            mContext.resources.getColor(R.color.commonBlue)
+                            mContext.resources.getColor(R.color.themeColor)
                         )
                     }
                     "1" -> {
                         statusStr = "进行中"
                         holder.setTextColor(
                             R.id.tvTaskStatus,
-                            mContext.resources.getColor(R.color.commonBlue)
+                            mContext.resources.getColor(R.color.themeColor)
                         )
                     }
                     "3" -> {

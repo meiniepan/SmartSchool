@@ -27,7 +27,7 @@ class SysMsgAdapter(layoutId: Int, listData: MutableList<NoticeBean>?) :
                 if (item?.status == "1") {
                     setTextColor(mContext.resources.getColor(R.color.commonHint))
                 } else {
-                    setTextColor(mContext.resources.getColor(R.color.commonBlue))
+                    setTextColor(mContext.resources.getColor(R.color.themeColor))
                 }
             }
         }

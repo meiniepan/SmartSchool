@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="复制邀请码"
-        android:textColor="@color/commonBlue"
+        android:textColor="@color/themeColor"
         android:layout_marginTop="26dp"
         android:textSize="@dimen/sp_16"
         android:ellipsize="end"
@@ -47,7 +47,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/commonBlue"
+            android:background="@color/themeColor"
             />
     </LinearLayout>
 </LinearLayout>

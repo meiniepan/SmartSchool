@@ -58,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="我 是 学 生"
-                    android:textColor="@color/commonBlue"
+                    android:textColor="@color/themeColor"
                     android:textSize="@dimen/sp_15"
                     android:textStyle="bold" />
 
@@ -107,7 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="我 是 老 师"
-                    android:textColor="@color/commonBlue"
+                    android:textColor="@color/themeColor"
                     android:textSize="@dimen/sp_15"
                     android:textStyle="bold" />
 
@@ -156,7 +156,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="我 是 家 长"
-                    android:textColor="@color/commonBlue"
+                    android:textColor="@color/themeColor"
                     android:textSize="@dimen/sp_15"
                     android:textStyle="bold" />
 

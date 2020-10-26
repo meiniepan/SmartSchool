@@ -37,7 +37,7 @@
         android:layout_marginBottom="12dp"
         android:gravity="center"
         android:text="起晚了"
-        android:textColor="@color/commonBlue"
+        android:textColor="@color/themeColor"
         android:textSize="@dimen/sp_18" />
 
     <include layout="@layout/layout_split" />
@@ -50,7 +50,7 @@
         android:layout_marginBottom="22dp"
         android:gravity="center"
         android:text="堵车了"
-        android:textColor="@color/commonBlue"
+        android:textColor="@color/themeColor"
         android:textSize="@dimen/sp_18" />
 
 </LinearLayout>

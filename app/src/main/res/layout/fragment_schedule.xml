@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="第18周"
-                    android:textColor="@color/commonBlue"
+                    android:textColor="@color/themeColor"
                     android:textSize="@dimen/sp_18"
                     android:textStyle="bold" />
 
@@ -87,7 +87,7 @@
 
 
     </LinearLayout>
-    <ImageView
+    <com.xiaoneng.ss.custom.widgets.FingerMoveView
         android:id="@+id/ivAddEvent"
         android:layout_width="68dp"
         android:layout_height="68dp"

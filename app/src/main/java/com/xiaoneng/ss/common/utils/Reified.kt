@@ -67,7 +67,7 @@ inline fun Activity.showDatePick(
 ) {
     DateTimePicker(this, DateTimePicker.HOUR_24).apply {
 //            setActionButtonTop(false)
-        setSelectedTextColor(resources.getColor(R.color.commonBlue))
+        setSelectedTextColor(resources.getColor(R.color.themeColor))
         setDateRangeStart(Constant.THIS_YEAR, 1, 1)
         setDateRangeEnd(Constant.THIS_YEAR + 5, 11, 11)
         setSelectedItem(
@@ -87,7 +87,7 @@ inline fun Activity.showDatePick(
                 hour: String?,
                 minute: String?
             ) {
-                setSelectedTextColor(resources.getColor(R.color.commonBlue))
+                setSelectedTextColor(resources.getColor(R.color.themeColor))
                 val sdf = SimpleDateFormat("yyyyMMdd")
                 var week = DateUtil.getWeek(sdf.parse("${year}${month}${day}"))
                 var time1 = "${month}月${day}日 $week"
@@ -106,7 +106,7 @@ inline fun Activity.showDatePick(
 inline fun Activity.showDateDayPick(textView: TextView, crossinline block: String.() -> Unit) {
     DateTimePicker(this, DateTimePicker.NONE).apply {
 //            setActionButtonTop(false)
-        setSelectedTextColor(resources.getColor(R.color.commonBlue))
+        setSelectedTextColor(resources.getColor(R.color.themeColor))
         setDateRangeStart(Constant.THIS_YEAR, 1, 1)
         setDateRangeEnd(Constant.THIS_YEAR + 5, 11, 11)
         setSelectedItem(
@@ -140,7 +140,7 @@ inline fun Activity.showSexPick(textView: TextView, crossinline block: String.()
     SinglePicker(this, arrayOf("男", "女", "未知")).apply {
 //            setActionButtonTop(false)
         setCanLoop(false)
-        setSelectedTextColor(resources.getColor(R.color.commonBlue))
+        setSelectedTextColor(resources.getColor(R.color.themeColor))
         setOnItemPickListener { index, item ->
             item.block()
             textView.text = item

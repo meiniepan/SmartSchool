@@ -46,6 +46,6 @@ class LoginSwitchActivity :BaseActivity() ,View.OnClickListener{
     }
 
     override fun initStatusBar() {
-//        initStatusColor(resources.getColor(R.color.commonBlue))
+//        initStatusColor(resources.getColor(R.color.themeColor))
     }
 }

@@ -80,7 +80,7 @@
                 android:paddingBottom="14dp"
                 android:gravity="center"
                 android:text="发送验证码"
-                android:textColor="@color/commonBlue" />
+                android:textColor="@color/themeColor" />
         </LinearLayout>
 
         <include layout="@layout/layout_split_margin" />

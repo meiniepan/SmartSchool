@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="查看详情"
-        android:textColor="@color/commonBlue"
+        android:textColor="@color/themeColor"
         tool:text="haha" />
 </LinearLayout>
 

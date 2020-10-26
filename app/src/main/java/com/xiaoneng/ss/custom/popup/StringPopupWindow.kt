@@ -46,7 +46,7 @@ class StringPopupWindow constructor(context: Context, data: ArrayList<String>) :
             addItemDecoration(
                 RecycleViewDivider(
                     dp2px(context, 1f).toInt(),
-                    context.resources.getColor(R.color.commonBlue)
+                    context.resources.getColor(R.color.themeColor)
                 )
             )
             adapter = mAdapter

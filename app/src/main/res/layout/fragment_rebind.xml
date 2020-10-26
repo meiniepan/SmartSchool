@@ -51,7 +51,7 @@
                     android:background="@drawable/bac_tint_bac_5"
                     android:gravity="center"
                     android:text="当前使用"
-                    android:textColor="@color/commonBlue" />
+                    android:textColor="@color/themeColor" />
 
             </LinearLayout>
 
@@ -140,7 +140,7 @@
                 android:text="发送验证码"
                 android:paddingTop="14dp"
                 android:paddingBottom="14dp"
-                android:textColor="@color/commonBlue" />
+                android:textColor="@color/themeColor" />
         </LinearLayout>
 
         <include layout="@layout/layout_split_margin" />

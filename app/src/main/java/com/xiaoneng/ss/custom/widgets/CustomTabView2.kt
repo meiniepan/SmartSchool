@@ -65,7 +65,7 @@ class CustomTabView2 @JvmOverloads constructor(
 
     private fun doCheck() {
         tvCustomTab.textSize = 18f
-        tvCustomTab.setTextColor(resources.getColor(R.color.commonBlue))
+        tvCustomTab.setTextColor(resources.getColor(R.color.themeColor))
         vCustomTab.visibility = View.VISIBLE
     }
 }

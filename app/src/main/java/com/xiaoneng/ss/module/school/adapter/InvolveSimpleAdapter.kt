@@ -38,7 +38,7 @@ class InvolveSimpleAdapter(layoutId: Int, listData: MutableList<UserBeanSimple>)
                     .setBackgroundResource(R.drawable.bac_blue_oval)
             }
 //            if (DateUtil.isSameDay(item.time.toLong() * 1000)) {
-//                holder.setTextColor(R.id.tvNameWeek,mContext.resources.getColor(R.color.commonBlue))
+//                holder.setTextColor(R.id.tvNameWeek,mContext.resources.getColor(R.color.themeColor))
 //            } else {
 //                holder.setTextColor(R.id.tvNameWeek,mContext.resources.getColor(R.color.commonHint))
 //            }

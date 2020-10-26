@@ -46,6 +46,7 @@
         <meta-data
             android:name="com.huawei.hms.client.appid"
             android:value="appid=103098443" />
+
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
@@ -183,9 +184,15 @@
         <activity
             android:name=".module.school.view.AddClassAttendanceTypeTeacherActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".module.activity.OtherPushActivity"
+        <activity
+            android:name=".module.activity.OtherPushActivity"
             android:launchMode="singleTask"
-            android:exported="true"/>
+            android:exported="true" />
+        <activity
+            android:name=".module.school.view.SalaryActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".module.school.view.CloudDiskActivity" />
+        <activity android:name=".module.school.view.PropertyActivity" />
 
 
         <provider
@@ -218,6 +225,7 @@
                 <action android:name="com.taobao.accs.intent.action.RECEIVE" />
             </intent-filter>
         </service>
+
         <receiver
             android:name="com.taobao.accs.EventReceiver"
             android:process=":channel">
@@ -245,10 +253,11 @@
                 <action android:name="com.taobao.accs.intent.action.START_FROM_AGOO" />
             </intent-filter>
         </receiver>
+
         <service
             android:name="com.taobao.accs.internal.AccsJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"
-            android:process=":channel"/>
+            android:process=":channel" />
         <service
             android:name="com.taobao.accs.ChannelService$KernelService"
             android:process=":channel" />
@@ -275,6 +284,7 @@
                 <action android:name="org.agoo.android.intent.action.RECEIVE" />
             </intent-filter>
         </service>
+
         <receiver
             android:name="com.taobao.agoo.AgooCommondReceiver"
             android:exported="true"
@@ -298,6 +308,7 @@
         <receiver
             android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
             android:exported="false" />
+
         <service
             android:name="com.umeng.message.UmengMessageCallbackHandlerService"
             android:permission="android.permission.BIND_JOB_SERVICE"
@@ -322,6 +333,7 @@
             android:name="com.umeng.message.UmengDownloadResourceService"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:exported="false" />
+
         <provider
             android:name="com.umeng.message.provider.MessageProvider"
             android:authorities="${applicationId}.umeng.message"

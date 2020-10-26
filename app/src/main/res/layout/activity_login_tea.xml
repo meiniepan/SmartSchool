@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="登录"
-                android:textColor="@color/commonBlue"
+                android:textColor="@color/themeColor"
                 android:textSize="@dimen/sp_20"
                 android:textStyle="bold" />
 
@@ -75,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="老师"
-                android:textColor="@color/commonBlue" />
+                android:textColor="@color/themeColor" />
         </LinearLayout>
 
 
@@ -155,7 +155,7 @@
                 android:paddingTop="14dp"
                 android:paddingBottom="14dp"
                 android:text="发送验证码"
-                android:textColor="@color/commonBlue" />
+                android:textColor="@color/themeColor" />
         </LinearLayout>
 
         <include layout="@layout/layout_split_margin_login" />
@@ -189,7 +189,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="《用户协议及隐私政策》"
-                android:textColor="@color/commonBlue"
+                android:textColor="@color/themeColor"
                 android:textSize="@dimen/sp_12" />
         </LinearLayout>
 

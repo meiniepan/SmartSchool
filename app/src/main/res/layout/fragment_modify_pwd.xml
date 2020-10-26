@@ -111,7 +111,7 @@
                 android:paddingTop="14dp"
                 android:paddingBottom="14dp"
                 android:text="发送验证码"
-                android:textColor="@color/commonBlue" />
+                android:textColor="@color/themeColor" />
 
         </LinearLayout>
 

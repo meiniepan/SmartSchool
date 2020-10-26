@@ -45,10 +45,10 @@ class ChooseCourseAdapter(layoutId: Int, listData: MutableList<AttCourseBean>) :
 //
 //            } else {
 //                llbac.setBackgroundResource(R.drawable.bac_blue_line_5)
-//                tvCourseName.setTextColor(mContext.resources.getColor(R.color.commonBlue))
-//                tvTeacherName.setTextColor(mContext.resources.getColor(R.color.commonBlue))
-//                tvRoomName.setTextColor(mContext.resources.getColor(R.color.commonBlue))
-//                tvAttTime.setTextColor(mContext.resources.getColor(R.color.commonBlue))
+//                tvCourseName.setTextColor(mContext.resources.getColor(R.color.themeColor))
+//                tvTeacherName.setTextColor(mContext.resources.getColor(R.color.themeColor))
+//                tvRoomName.setTextColor(mContext.resources.getColor(R.color.themeColor))
+//                tvAttTime.setTextColor(mContext.resources.getColor(R.color.themeColor))
 //            }
 //
         }

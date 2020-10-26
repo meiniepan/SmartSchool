@@ -42,7 +42,7 @@ class InvolvePerson2Adapter(layoutId: Int, listData: MutableList<StudentBean>) :
             } else {
                 holder.getView<TextView>(R.id.tvLabelInvolve).apply {
                     setBackgroundResource(R.drawable.bac_blue_line_oval)
-                    setTextColor(mContext.resources.getColor(R.color.commonBlue))
+                    setTextColor(mContext.resources.getColor(R.color.themeColor))
                 }
             }
         }
