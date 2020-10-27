@@ -2,7 +2,9 @@ package com.xiaoneng.ss.module.school.view
 
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
+import kotlinx.android.synthetic.main.activity_property.*
 
 /**
  * @author Burning
@@ -17,6 +19,9 @@ class PropertyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
+        tvPropertyApply1.setOnClickListener {
+            mStartActivity<PropertyApplyActivity>(this)
+        }
         initAdapter()
     }
 

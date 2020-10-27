@@ -29,6 +29,7 @@
             android:paddingEnd="@dimen/title_padding">
 
             <TextView
+                android:id="@+id/tvPropertyApply1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -39,6 +40,7 @@
 
 
             <TextView
+                android:id="@+id/tvPropertyApply2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -58,6 +60,7 @@
             android:paddingEnd="@dimen/title_padding">
 
             <TextView
+                android:id="@+id/tvPropertyRecord1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -68,6 +71,7 @@
 
 
             <TextView
+                android:id="@+id/tvPropertyRecord2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

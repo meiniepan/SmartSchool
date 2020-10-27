@@ -25,10 +25,10 @@ import java.util.*
 class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
     private var chosenColor: String = "#C7000B"
     lateinit var mAdapter: ChooseColorAdapter
+    val mData by lazy { ColorUtil.getCustomColors() }
     var time: Long = System.currentTimeMillis()
     var beginTime: String? = ""
     var endTime: String? = ""
-    val mData by lazy { ColorUtil.getCustomColors() }
     var bean: ScheduleBean? = ScheduleBean()
     var isModify = false
 
@@ -132,10 +132,11 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 if (i.isCheck) {
                     i.isCheck = false
                 }
-                mData[position].isCheck = true
-                adapter.notifyDataSetChanged()
-                chosenColor = mData[position].color
             }
+            mData[position].isCheck = true
+            adapter.notifyDataSetChanged()
+            chosenColor = mData[position].color
+
         }
     }
 
