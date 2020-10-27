@@ -164,7 +164,7 @@
                 android:overScrollMode="never"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-            <ImageView
+            <com.xiaoneng.ss.custom.widgets.FingerMoveView
                 android:id="@+id/ivAddTask"
                 style="@style/button_add_style"
                 />

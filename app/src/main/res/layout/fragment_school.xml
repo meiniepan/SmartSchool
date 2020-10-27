@@ -251,6 +251,7 @@
                         android:id="@+id/llCloudDisk"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:visibility="invisible"
                         android:layout_weight="1"
                         android:background="@drawable/bac_white_bac_20"
                         android:orientation="vertical"
