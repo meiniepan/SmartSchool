@@ -18,6 +18,8 @@ import com.xiaoneng.ss.common.callback.LoadingCallBack
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.SPreference
 import org.android.agoo.huawei.HuaWeiRegister
+import org.android.agoo.oppo.OppoRegister
+import org.android.agoo.vivo.VivoRegister
 import org.android.agoo.xiaomi.MiPushRegistar
 
 
@@ -84,6 +86,10 @@ open class BaseApplication : Application() {
          */
         HuaWeiRegister.register(this)
         MiPushRegistar.register(this, "2882303761518747426", "5581874725426")
+        //vivo 通道
+        VivoRegister.register(this)
+        //OPPO通道，参数1为app key，参数2为app secret
+        OppoRegister.register(this, "5cbd913970a44ecc9e54e536f68d1fe8", "0d004009e32f42149a6c5e6c8fbf40cd")
 
     }
 

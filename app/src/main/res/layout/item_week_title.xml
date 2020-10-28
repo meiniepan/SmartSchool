@@ -6,7 +6,6 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-
     <TextView
         android:id="@+id/tvWeekTitle"
         android:layout_width="match_parent"
@@ -14,6 +13,5 @@
         android:gravity="center"
         android:textColor="@color/commonHint"
         android:textSize="@dimen/sp_10" />
-
 
 </LinearLayout>

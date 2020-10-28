@@ -47,6 +47,16 @@
             android:name="com.huawei.hms.client.appid"
             android:value="appid=103098443" />
 
+        <!--vivo push参数声明 -->
+        <!-- vivo start-->
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="xxxxxx" />
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="xxxxxx" />
+        <!-- VIVO end-->
+
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"

@@ -22,6 +22,15 @@ class PropertyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvPropertyApply1.setOnClickListener {
             mStartActivity<PropertyApplyActivity>(this)
         }
+        tvPropertyApply2.setOnClickListener {
+            mStartActivity<PropertyApplyActivity>(this)
+        }
+        tvPropertyRecord1.setOnClickListener {
+            mStartActivity<PropertyApplyActivity>(this)
+        }
+        tvPropertyRecord2.setOnClickListener {
+            mStartActivity<PropertyApplyActivity>(this)
+        }
         initAdapter()
     }
 
