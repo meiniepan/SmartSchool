@@ -51,10 +51,10 @@
         <!-- vivo start-->
         <meta-data
             android:name="com.vivo.push.api_key"
-            android:value="xxxxxx" />
+            android:value="efb523cf01c8fe265127044a6c49ecd6" />
         <meta-data
             android:name="com.vivo.push.app_id"
-            android:value="xxxxxx" />
+            android:value="105013886" />
         <!-- VIVO end-->
 
         <activity
