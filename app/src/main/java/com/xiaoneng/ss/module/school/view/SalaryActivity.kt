@@ -32,6 +32,7 @@ class SalaryActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
+        mViewModel.getSalaryDetail("17")
     }
 
     private fun initAdapter() {

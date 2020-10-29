@@ -231,5 +231,12 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
+    fun getSalaryDetail(id: String) {
+        initiateRequest(
+            { mBaseData.value = mRepository.getSalaryDetail(id) },
+            loadState
+        )
+    }
+
 
 }
