@@ -238,5 +238,19 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
+    fun getSalaryList(page: String?=null) {
+        initiateRequest(
+            { mBaseData.value = mRepository.getSalaryList(page) },
+            loadState
+        )
+    }
+
+    fun getSalaryCaptcha() {
+        initiateRequest(
+            { mBaseData.value = mRepository.getSalaryCaptcha() },
+            loadState
+        )
+    }
+
 
 }

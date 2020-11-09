@@ -869,5 +869,24 @@ interface ApiService {
         @Field("id") id: String?
     ): BaseResponse<Any>
 
+    /**
+     *工资列表
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/admin/wages/lists")
+    suspend fun getSalaryList(
+        @Field("token") token: String?,
+        @Field("page") id: String?
+    ): BaseResponse<Any>
+
+    /**
+     *员工工资条验证码
+     */
+    @FormUrlEncoded
+    @POST("/api/v1/admin/wages/smsCode")
+    suspend fun getSalaryCaptcha(
+        @Field("token") token: String?
+    ): BaseResponse<Any>
+
 }
 
