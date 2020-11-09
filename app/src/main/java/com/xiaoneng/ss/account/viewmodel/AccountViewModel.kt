@@ -145,4 +145,12 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
             loadState
         )
     }
+
+    fun getAppsTea() {
+        initiateRequest(
+            { mBaseData.value = mRepository.getAppsTea() },
+            loadState
+        )
+    }
+
 }

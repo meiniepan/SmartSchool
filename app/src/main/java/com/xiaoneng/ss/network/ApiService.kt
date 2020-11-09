@@ -152,10 +152,10 @@ interface ApiService {
      * 教师获取授权应用列表
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/teachers/apps")
-    suspend fun onTeaApps(
+    @POST("/api/v17/user/teachers/apps")
+    suspend fun getAppsTea(
         @Field("token") token: String?
-    ): BaseResponse<UserBean>
+    ): BaseResponse<Any>
 
     /**
      *学生通知列表

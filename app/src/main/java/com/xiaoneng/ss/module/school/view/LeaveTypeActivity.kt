@@ -243,9 +243,11 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 override fun onResult(result: MutableList<LocalMedia>?) {
                     isDownLoad = false
                     avatarPath = result!![0].realPath
-                    fileName = result!![0].fileName
-                    mViewModel.getSts()
-                    showLoading()
+                    fileName = avatarPath?.split("/")?.last()
+                    if(!avatarPath.isNullOrEmpty()) {
+                        mViewModel.getSts()
+                        showLoading()
+                    }
                 }
 
                 override fun onCancel() {

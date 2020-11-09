@@ -153,6 +153,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     override fun initData() {
         super.initData()
+//        mViewModel.getAppsTea()
         if (UserInfo.getUserBean().usertype == "1" &&
             UserInfo.getUserBean().logintype == Constant.LOGIN_TYPE_PAR
         ) {
@@ -296,7 +297,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                 PictureSelector.obtainMultipleResult(data)
             isDownLoad = false
             avatarPath = result!![0].realPath
-            fileName = result!![0].fileName
+            fileName = avatarPath?.split("/")?.last()
             if(!avatarPath.isNullOrEmpty()) {
                 mViewModel.getSts()
             }
