@@ -142,11 +142,11 @@ interface ApiService {
     /**
      *学生获取授权应用列表
      */
-    @POST("/api/v1/user/student/apps")
+    @POST("/api/v17/user/student/apps")
     @FormUrlEncoded
-    suspend fun onStuApps(
+    suspend fun getAppsStu(
         @Field("token") token: String?
-    ): BaseResponse<UserBean>
+    ): BaseResponse<Any>
 
     /**
      * 教师获取授权应用列表

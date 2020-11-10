@@ -146,9 +146,9 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
         )
     }
 
-    fun getAppsTea() {
+    fun getApps() {
         initiateRequest(
-            { mBaseData.value = mRepository.getAppsTea() },
+            { mBaseData.value = mRepository.getApps() },
             loadState
         )
     }

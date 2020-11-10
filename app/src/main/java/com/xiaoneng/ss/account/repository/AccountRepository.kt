@@ -245,9 +245,13 @@ class AccountRepository(val loadState: MutableLiveData<State>) : ApiRepository()
             .dataConvert(loadState)
     }
 
-    suspend fun getAppsTea(): Any {
+    suspend fun getApps(): Any {
         return when (UserInfo.getUserBean().usertype) {
 
+            "1" -> {
+                apiService.getAppsStu(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+            }
             "2" -> {
                 apiService.getAppsTea(UserInfo.getUserBean().token)
                     .dataConvert(loadState)
