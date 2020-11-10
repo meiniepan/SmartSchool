@@ -80,7 +80,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/user/student/bindSmsCode")
     suspend fun onSmsCode4(
-        @Field("phone") phone: String?=null,
+        @Field("phone") phone: String? = null,
         @Field("token") token: String?
     ): BaseResponse<CaptchaResponse>
 
@@ -115,7 +115,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/user/student/modifyParents")
     suspend fun modifyParentName(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("realname") realname: String?
     ): BaseResponse<Any>
 
@@ -163,8 +163,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/student/notices/lists")
     suspend fun getNoticeList(
-        @Field("token") token: String?=null,
-        @Field("id") lastid: String?=null,
+        @Field("token") token: String? = null,
+        @Field("id") lastid: String? = null,
         @Field("pagenum") pagenum: String? = null,
         @Field("type") type: String? = null
     ): BaseResponse<NoticeResponse>
@@ -175,8 +175,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/notices/lists")
     suspend fun getNoticeList2(
-        @Field("token") token: String?=null,
-        @Field("id") id: String?=null,
+        @Field("token") token: String? = null,
+        @Field("id") id: String? = null,
         @Field("pagenum") pagenum: String? = null,
         @Field("type") type: String? = null
     ): BaseResponse<NoticeResponse>
@@ -187,7 +187,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/student/notices/info")
     suspend fun getNoticeDetail(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("id") id: String?
     ): BaseResponse<NoticeDetailBean>
 
@@ -197,7 +197,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/notices/info")
     suspend fun getNoticeDetail2(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("id") id: String?
     ): BaseResponse<NoticeDetailBean>
 
@@ -207,8 +207,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/student/notices/modify")
     suspend fun readNotice(
-        @Field("token") token: String?=null,
-        @Field("id") id: String?=null,
+        @Field("token") token: String? = null,
+        @Field("id") id: String? = null,
         @Field("status") status: String? = null,
         @Field("received") received: String? = null
     ): BaseResponse<Any>
@@ -220,8 +220,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/notices/modify")
     suspend fun readNotice2(
-        @Field("token") token: String?=null,
-        @Field("id") id: String?=null,
+        @Field("token") token: String? = null,
+        @Field("id") id: String? = null,
         @Field("status") status: String? = null,
         @Field("received") received: String? = null
     ): BaseResponse<Any>
@@ -232,7 +232,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/student/notices/modifyAll")
     suspend fun readAll(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("status") status: String? = "1",
         @Field("received") received: String? = null,
         @Field("type") type: String?
@@ -244,7 +244,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/notices/modifyAll")
     suspend fun readAllTea(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("status") status: String? = null,
         @Field("received") received: String? = null,
         @Field("type") type: String?
@@ -256,7 +256,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/student/tasks/lists")
     suspend fun getTaskList(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("id") id: String? = null,
         @Field("pagenum") pagenum: String? = null,
         @Field("type") type: String? = null,
@@ -269,7 +269,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/tasks/lists")
     suspend fun getTaskList2(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("id") id: String? = null,
         @Field("pagenum") pagenum: String? = null,
         @Field("type") type: String? = null,
@@ -282,7 +282,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/tasks/tasklist")
     suspend fun getPublishTaskListTea(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("id") id: String? = null,
         @Field("pagenum") pagenum: String? = null,
         @Field("type") type: String? = null,
@@ -295,7 +295,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/student/attendances/timeTable")
     suspend fun getAttTimetableStu(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("time") time: String? = null,
         @Field("uid") uid: String? = null
     ): BaseResponse<Any>
@@ -306,7 +306,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/attendances/timeTable")
     suspend fun getAttTimetableTea(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("classid") classid: String? = null,
         @Field("time") time: String? = null,
         @Field("uid") uid: String? = null
@@ -336,7 +336,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/student/courses/timeTable")
     suspend fun getTimetable(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("time") time: String? = null,
         @Field("semesterid") semesterid: String? = null
     ): BaseResponse<TimetableResponse>
@@ -347,7 +347,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/courses/timeTable")
     suspend fun getTimetable2(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("time") time: String? = null,
         @Field("classid") classid: String? = null,
         @Field("groupid") groupid: String? = null
@@ -359,7 +359,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/courses/mTimeTable")
     suspend fun getTimetableMaster(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("time") time: String? = null,
         @Field("classid") classid: String? = null
     ): BaseResponse<TimetableResponse>
@@ -370,8 +370,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/student/achievements/lists")
     suspend fun getAchievement(
-        @Field("token") token: String?=null,
-        @Field("testname") testname: String?=null,
+        @Field("token") token: String? = null,
+        @Field("testname") testname: String? = null,
         @Field("crid") crid: String? = null
     ): BaseResponse<AchievementResponse>
 
@@ -381,9 +381,9 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/achievements/lists")
     suspend fun getAchievement2(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("id") id: String? = null,
-        @Field("testname") testname: String?=null,
+        @Field("testname") testname: String? = null,
         @Field("crid") crid: String? = null,
         @Field("classid") classid: String?
     ): BaseResponse<AchievementResponse>
@@ -394,7 +394,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/user/login/sloginout")
     suspend fun logout(
-        @Field("phone") phone: String?=null,
+        @Field("phone") phone: String? = null,
         @Field("token") token: String?
     ): BaseResponse<Any>
 
@@ -404,7 +404,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/user/login/eloginout")
     suspend fun logout2(
-        @Field("phone") phone: String?=null,
+        @Field("phone") phone: String? = null,
         @Field("token") token: String?
     ): BaseResponse<Any>
 
@@ -414,8 +414,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/student/attendances/privateAtts")
     suspend fun getAttendance(
-        @Field("token") token: String?=null,
-        @Field("classid") classid: String?=null,
+        @Field("token") token: String? = null,
+        @Field("classid") classid: String? = null,
         @Field("groupid") groupid: String? = null,
         @Field("teacheruid") teacheruid: String? = null,
         @Field("atttime") atttime: String? = null
@@ -427,7 +427,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/student/attendances/lists")
     suspend fun getAttendanceStuAdmin(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("classid") classid: String? = null,
         @Field("courseid") courseid: String? = null,
         @Field("keyword") keyword: String? = null,
@@ -440,7 +440,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/attendances/lists")
     suspend fun getAttendanceTea(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("classid") classid: String? = null,
         @Field("courseid") courseid: String? = null,
         @Field("groupid") groupid: String? = null,
@@ -455,7 +455,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/attendances/info")
     suspend fun getAttendanceInfo(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("id") id: String?
     ): BaseResponse<Any>
 
@@ -465,7 +465,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/attendances/sclists")
     suspend fun getAttendanceSchool(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("classid") classid: String? = null,
         @Field("level") level: String? = null,
         @Field("type") type: String? = null,//0按日统计1按学年统计
@@ -496,7 +496,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/admin/rbac/apps")
     suspend fun getAuthority(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("roleid") roleid: String?
     ): BaseResponse<RegisterResponse>
 
@@ -506,7 +506,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/student/listAll")
     suspend fun queryStudent(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("keyword") keyword: String? = null
     ): BaseResponse<Any>
 
@@ -516,8 +516,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/student/schedules/listDWM")
     suspend fun querySchedule(
-        @Field("token") token: String?=null,
-        @Field("day") day: String?=null,
+        @Field("token") token: String? = null,
+        @Field("day") day: String? = null,
         @Field("week_s") week_s: String? = null,
         @Field("week_e") week_e: String? = null,
         @Field("month") month: String? = null
@@ -529,8 +529,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/schedules/listDWM")
     suspend fun querySchedule2(
-        @Field("token") token: String?=null,
-        @Field("day") day: String?=null,
+        @Field("token") token: String? = null,
+        @Field("day") day: String? = null,
         @Field("week_s") week_s: String? = null,
         @Field("week_e") week_e: String? = null,
         @Field("month") month: String? = null
@@ -574,7 +574,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/student/schedules/del")
     suspend fun deleteScheduleStu(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("id") id: String? = null
     ): BaseResponse<Any>
 
@@ -584,7 +584,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/schedules/del")
     suspend fun deleteScheduleTea(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("id") id: String? = null
     ): BaseResponse<Any>
 
@@ -603,7 +603,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/teacher/listByDep")
     suspend fun listByDepartment(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("depid") depid: String? = null,
         @Field("realname") realname: String? = null
     ): BaseResponse<Any>
@@ -614,7 +614,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/student/tasks/examine")
     suspend fun queryDepartments(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("id") id: String? = null,
         @Field("examine") examine: String? = null,
         @Field("examinestatus") examinestatus: String? = null
@@ -626,7 +626,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/tasks/examine")
     suspend fun examineTask2(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("id") id: String? = null,
         @Field("examine") examine: String? = null,
         @Field("examinestatus") examinestatus: String? = null
@@ -647,8 +647,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/user/student/pBind")
     suspend fun bindParent(
-        @Field("token") token: String?=null,
-        @Field("phone") phone: String?=null,
+        @Field("token") token: String? = null,
+        @Field("phone") phone: String? = null,
         @Field("vcode") vcode: String?
     ): BaseResponse<Any>
 
@@ -658,7 +658,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/user/student/pUnbind")
     suspend fun unbindParent(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("phone") phone: String?
     ): BaseResponse<Any>
 
@@ -668,7 +668,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/user/student/modifyPS")
     suspend fun switchChild(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("uid") uid: String?
     ): BaseResponse<Any>
 
@@ -678,7 +678,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/classs/codeList")
     suspend fun queryCodeList(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("classid") classid: String? = null
     ): BaseResponse<Any>
 
@@ -696,7 +696,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/student/attendances/del")
     suspend fun deleteAttendanceByStu(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("id") id: String?
     ): BaseResponse<Any>
 
@@ -706,7 +706,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/attendances/del")
     suspend fun deleteAttendanceByTea(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("id") id: String?
     ): BaseResponse<Any>
 
@@ -749,7 +749,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/student/listByClass")
     suspend fun getStudentsByClass(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("classid") classid: String? = null,
         @Field("realname") realname: String? = null
     ): BaseResponse<Any>
@@ -760,7 +760,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/student/tasks/info")
     suspend fun getTaskInfoStu(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("id") id: String?
     ): BaseResponse<Any>
 
@@ -770,8 +770,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/tasks/info")
     suspend fun getTaskInfoTea(
-        @Field("token") token: String?=null,
-        @Field("id") id: String?=null,
+        @Field("token") token: String? = null,
+        @Field("id") id: String? = null,
         @Field("type") type: String? = null
     ): BaseResponse<Any>
 
@@ -813,7 +813,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/user/student/mSmsCode")
     suspend fun onSmsCodeChangeStu(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("phone") phone: String?
     ): BaseResponse<CaptchaResponse>
 
@@ -823,7 +823,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/user/teacher/mSmsCode")
     suspend fun onSmsCodeChangeTea(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("phone") phone: String?
     ): BaseResponse<Any>
 
@@ -833,8 +833,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/user/student/checkCode")
     suspend fun changePhoneStu(
-        @Field("token") token: String?=null,
-        @Field("phone") phone: String?=null,
+        @Field("token") token: String? = null,
+        @Field("phone") phone: String? = null,
         @Field("vcode") vcode: String?
     ): BaseResponse<CaptchaResponse>
 
@@ -844,8 +844,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/user/teacher/checkCode")
     suspend fun changePhoneTea(
-        @Field("token") token: String?=null,
-        @Field("phone") phone: String?=null,
+        @Field("token") token: String? = null,
+        @Field("phone") phone: String? = null,
         @Field("vcode") vcode: String?
     ): BaseResponse<CaptchaResponse>
 
@@ -855,7 +855,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v1/teacher/tasks/delTask")
     suspend fun delTaskDraft(
-        @Field("token") token: String?=null,
+        @Field("token") token: String? = null,
         @Field("id") id: String?
     ): BaseResponse<CaptchaResponse>
 
