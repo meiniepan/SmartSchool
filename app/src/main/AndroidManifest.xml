@@ -204,6 +204,7 @@
         <activity android:name=".module.school.view.CloudDiskActivity" />
         <activity android:name=".module.school.view.PropertyActivity" />
         <activity android:name=".module.school.view.PropertyApplyActivity" />
+        <activity android:name=".module.school.view.SalaryCaptchaActivity" />
 
 
         <provider

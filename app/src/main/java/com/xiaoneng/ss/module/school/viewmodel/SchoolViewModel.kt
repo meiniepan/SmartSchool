@@ -36,6 +36,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mDeleteAttendanceData: MutableLiveData<Any> = MutableLiveData()
     val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
     val mBaseData: MutableLiveData<Any> = MutableLiveData()
+    val mSalaryDetailData: MutableLiveData<Any> = MutableLiveData()
     val mTaskDetailData: MutableLiveData<Any> = MutableLiveData()
     val mRefuseData: MutableLiveData<Any> = MutableLiveData()
     val mModifyTaskStatusData: MutableLiveData<Any> = MutableLiveData()
@@ -231,9 +232,9 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getSalaryDetail(id: String) {
+    fun getSalaryDetail(id: String?,code: String?) {
         initiateRequest(
-            { mBaseData.value = mRepository.getSalaryDetail(id) },
+            { mSalaryDetailData.value = mRepository.getSalaryDetail(id,code) },
             loadState
         )
     }

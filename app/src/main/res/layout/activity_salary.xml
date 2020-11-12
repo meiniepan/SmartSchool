@@ -17,49 +17,22 @@
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/tintBac"
         android:orientation="vertical">
 
 
-
-        <LinearLayout
-            android:id="@+id/llTitleStu"
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingStart="@dimen/title_padding"
-            android:paddingEnd="@dimen/title_padding">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="发布日期"
-                android:gravity="center"
-                android:textSize="@dimen/sp_16"
-                android:textStyle="bold" />
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="工资条名称"
-                android:textSize="@dimen/sp_16"
-                android:textStyle="bold" />
-
-
-        </LinearLayout>
-
-        <include
-            layout="@layout/layout_split"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="@dimen/title_padding" />
+            android:layout_height="88dp"
+            android:layout_marginStart="@dimen/title_padding"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:layout_marginTop="12dp"
+            android:background="@color/pink"
+            android:layout_marginBottom="12dp" />
 
         <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
             android:id="@+id/rvSalary"
             style="@style/recycler_style" />
     </LinearLayout>
+
 </LinearLayout>

@@ -1,7 +1,5 @@
 package com.xiaoneng.ss.module.school.model
 
-import com.xiaoneng.ss.model.ValueBean
-
 /**
  * @author Burning
  * @description:工资详情
@@ -9,10 +7,16 @@ import com.xiaoneng.ss.model.ValueBean
  */
 data class SalaryDetailBean(
     var id: String? = null,
-    var teacher_name: String? = null,
-    var id_number: String? = null,//身份证号码
-    var plan_time: String? = null,//计划发放时间
-    var operate_time: String? = null,//实际发放时间
-    var actual_paid: String? = null,//实际支付合计
-    var expend: ArrayList<ValueBean>? = null//扩展数组
+    var uid: String? = null,
+    var userinfo: String? = null,
+    var createtime: String? = null,
+    var realname: String? = null,
+    var reachwages: String? = null,
+    var receivable: String? = null,
+    var taxablewages: String? = null,
+    var post: String? = null,
+    var idcard: String? = null,
+    var schoolid: String? = null,
+    var schoolname: String? = null
+//    var expand: ArrayList<ValueBean>? = null//扩展数组
 )

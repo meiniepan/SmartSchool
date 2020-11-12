@@ -58,7 +58,6 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
         // 判断当前是recreate还是新启动
         if (savedInstanceState == null) {
             contentLayout.currentItem = Constant.HOME
-            checkUpdate(this, false)
         }
         initCameraPermission()
     }

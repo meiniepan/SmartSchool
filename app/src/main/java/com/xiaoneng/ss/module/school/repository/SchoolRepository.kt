@@ -447,8 +447,8 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
     }
 
-    suspend fun getSalaryDetail(id: String? = null): Any {
-        return apiService.getSalaryDetail(UserInfo.getUserBean().token,id)
+    suspend fun getSalaryDetail(id: String?,code: String?): Any {
+        return apiService.getSalaryDetail(UserInfo.getUserBean().token,id,code)
             .dataConvert(loadState)
     }
 

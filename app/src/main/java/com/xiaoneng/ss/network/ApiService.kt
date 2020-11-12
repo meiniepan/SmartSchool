@@ -863,10 +863,11 @@ interface ApiService {
      *管理工资条明细
      */
     @FormUrlEncoded
-    @POST("/api/v1/admin/wages/mdetail")
+    @POST("/api/v1/admin/wages/detail")
     suspend fun getSalaryDetail(
         @Field("token") token: String?,
-        @Field("id") id: String?
+        @Field("id") id: String?,
+        @Field("code") code: String?
     ): BaseResponse<Any>
 
     /**
