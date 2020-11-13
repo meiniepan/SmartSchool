@@ -18,6 +18,8 @@
     <color name="splitColor">#E3E6E9</color>
     <color name="oldBlue">#5E37FF</color>
     <color name="themeColor">#C7000B</color>
+    <color name="gradientBlue">#445FF5</color>
+    <color name="gradientPurple">#6D0BBD</color>
     <color name="commonRed">#C7000B</color>
     <color name="splitGray">#D3D9DF</color>
     <color name="grayF6">#F6F6F6</color>
