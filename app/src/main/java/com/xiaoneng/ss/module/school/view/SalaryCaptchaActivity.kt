@@ -86,6 +86,7 @@ class SalaryCaptchaActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             showTip("请输入完整信息")
             return
         }
+        showLoading()
         mViewModel.getSalaryDetail(id,vCodeStr)
     }
 

@@ -152,12 +152,14 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
                 showTip("请输入完整信息")
                 return
             }
+            showLoading()
             mViewModel.login(1, LoginReq(phoneStr, spassword = pwdStr))
         } else {
             if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(vCodeStr)) {
                 showTip("请输入完整信息")
                 return
             }
+            showLoading()
             mViewModel.login(1, LoginReq(phoneStr, vCodeStr))
         }
 
@@ -165,7 +167,7 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
 
     override fun onDestroy() {
         super.onDestroy()
-        timer?.let { it.cancel() }
+        timer?.cancel()
     }
 
     override fun initDataObserver() {

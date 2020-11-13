@@ -115,6 +115,7 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
             showTip("请输入完整信息")
             return
         }
+        showLoading()
         if (isTeacher) {
             mViewModel.login(2, LoginReq(phoneStr, vCodeStr))
         } else {
