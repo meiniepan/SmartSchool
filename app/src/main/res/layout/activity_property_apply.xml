@@ -28,11 +28,19 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:hint="填写工单"
+    android:layout_marginStart="26dp"
+    android:layout_marginTop="17dp"
+    android:textSize="@dimen/sp_12"
+    />
             <EditText
+                android:layout_marginStart="26dp"
                 style="@style/edit_style"
                 android:id="@+id/etPropertyRemark"
-                android:hint="填写工单"
+                android:hint="请简述您遇到的问题…"
                 />
             <TextView
                 android:layout_width="wrap_content"

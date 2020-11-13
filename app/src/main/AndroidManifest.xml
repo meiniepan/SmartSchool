@@ -206,6 +206,7 @@
         <activity android:name=".module.school.view.PropertyApplyActivity" />
         <activity android:name=".module.school.view.SalaryCaptchaActivity" />
         <activity android:name=".module.school.view.SalaryDetailActivity" />
+        <activity android:name=".module.school.view.BookSiteActivity" />
 
 
         <provider

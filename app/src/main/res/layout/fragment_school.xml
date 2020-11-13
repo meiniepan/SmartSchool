@@ -248,10 +248,10 @@
                     android:layout_marginEnd="@dimen/title_padding">
 
                     <LinearLayout
-                        android:id="@+id/llCloudDisk"
+                        android:id="@+id/llBookSite"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:visibility="invisible"
+                        android:visibility="visible"
                         android:layout_weight="1"
                         android:background="@drawable/bac_white_bac_20"
                         android:orientation="vertical"
@@ -266,7 +266,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
-                            android:text="教学云盘"
+                            android:text="场地预约"
                             android:textSize="@dimen/sp_16"
                             android:textStyle="bold" />
 
@@ -274,7 +274,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="校本资源，协同备课"
+                            android:text="场地时段 一目了然"
                             android:textColor="@color/colorGray999"
                             android:textSize="@dimen/sp_12" />
                     </LinearLayout>

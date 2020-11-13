@@ -54,8 +54,8 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
             showLoading()
             mViewModel.getSalaryList()
         }
-        llCloudDisk.setOnClickListener {
-            mStartActivity<CloudDiskActivity>(context)
+        llBookSite.setOnClickListener {
+            mStartActivity<BookSiteActivity>(context)
         }
 
     }

@@ -115,6 +115,7 @@ class SalaryCaptchaActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mStartActivity<SalaryActivity>(this) {
                         putExtra(Constant.DATA, it.data)
                     }
+                    finish()
                 }
             }
         })
