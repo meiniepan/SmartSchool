@@ -898,5 +898,12 @@ interface ApiService {
         @Field("code") code: String?
     ): BaseResponse<Any>
 
+    /**
+     *教师发布任务驳回
+     */
+    @POST("/api/v17/admin/repair/add")
+    suspend fun addRepair(
+        @Body requestBody: RepairBean
+    ): BaseResponse<Any>
 }
 

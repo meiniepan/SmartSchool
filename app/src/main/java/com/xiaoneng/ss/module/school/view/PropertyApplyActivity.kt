@@ -1,8 +1,13 @@
 package com.xiaoneng.ss.module.school.view
 
+import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.module.school.model.RepairBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
+import kotlinx.android.synthetic.main.activity_property_apply.*
+import org.jetbrains.anko.toast
 
 /**
  * @author Burning
@@ -19,6 +24,9 @@ class PropertyApplyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
+        tvPropertyConfirm.setOnClickListener {
+            doConfirm()
+        }
     }
 
     override fun initData() {
@@ -30,8 +38,21 @@ class PropertyApplyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.getData()
     }
 
+    private fun doConfirm() {
+        var bean = RepairBean(
+            token = UserInfo.getUserBean().token,
+            remark = "aa"
+        )
+        mViewModel.addRepair(bean)
+    }
+
 
     override fun initDataObserver() {
-
+        mViewModel.mBaseData.observe(this, Observer {
+            it?.let {
+                toast(R.string.deal_done)
+                finish()
+            }
+        })
     }
 }
