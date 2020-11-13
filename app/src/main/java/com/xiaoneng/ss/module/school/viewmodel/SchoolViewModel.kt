@@ -37,6 +37,8 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
     val mBaseData: MutableLiveData<Any> = MutableLiveData()
     val mSalaryDetailData: MutableLiveData<Any> = MutableLiveData()
+    val mSalaryListData: MutableLiveData<Any> = MutableLiveData()
+    val mTmpTokenData: MutableLiveData<Any> = MutableLiveData()
     val mTaskDetailData: MutableLiveData<Any> = MutableLiveData()
     val mRefuseData: MutableLiveData<Any> = MutableLiveData()
     val mModifyTaskStatusData: MutableLiveData<Any> = MutableLiveData()
@@ -232,16 +234,16 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getSalaryDetail(id: String?,code: String?) {
+    fun getSalaryDetail(id: String?) {
         initiateRequest(
-            { mSalaryDetailData.value = mRepository.getSalaryDetail(id,code) },
+            { mSalaryDetailData.value = mRepository.getSalaryDetail(id) },
             loadState
         )
     }
 
     fun getSalaryList(page: String?=null) {
         initiateRequest(
-            { mBaseData.value = mRepository.getSalaryList(page) },
+            { mSalaryListData.value = mRepository.getSalaryList(page) },
             loadState
         )
     }
@@ -249,6 +251,13 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     fun getSalaryCaptcha() {
         initiateRequest(
             { mBaseData.value = mRepository.getSalaryCaptcha() },
+            loadState
+        )
+    }
+
+    fun getTmpToken(code: String?) {
+        initiateRequest(
+            { mTmpTokenData.value = mRepository.getTmpToken(code) },
             loadState
         )
     }

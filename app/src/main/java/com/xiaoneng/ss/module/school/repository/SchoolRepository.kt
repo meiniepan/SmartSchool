@@ -447,8 +447,8 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
     }
 
-    suspend fun getSalaryDetail(id: String?,code: String?): Any {
-        return apiService.getSalaryDetail(UserInfo.getUserBean().token,id,code)
+    suspend fun getSalaryDetail(id: String?): Any {
+        return apiService.getSalaryDetail(UserInfo.getUserBean().token,id)
             .dataConvert(loadState)
     }
 
@@ -459,6 +459,10 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
     suspend fun getSalaryCaptcha(): Any {
         return apiService.getSalaryCaptcha(UserInfo.getUserBean().token)
+            .dataConvert(loadState)
+    }
+    suspend fun getTmpToken(code: String?): Any {
+        return apiService.getTmpToken(UserInfo.getUserBean().token,code)
             .dataConvert(loadState)
     }
 

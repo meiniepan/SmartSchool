@@ -1,10 +1,14 @@
 package com.xiaoneng.ss.module.school.view
 
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.common.utils.netResponseFormat
+import com.xiaoneng.ss.module.school.model.SalaryResponse
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.fragment_school.*
 
@@ -47,7 +51,8 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
             mStartActivity<PropertyActivity>(context)
         }
         llSalary.setOnClickListener {
-            mStartActivity<SalaryActivity>(context)
+            showLoading()
+            mViewModel.getSalaryList()
         }
         llCloudDisk.setOnClickListener {
             mStartActivity<CloudDiskActivity>(context)
@@ -57,11 +62,15 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
 
 
     override fun initDataObserver() {
-//        mViewModel.mSystemTabNameData.observe(this, Observer { response ->
-//            response?.let {
-//                setSystemTabData(it)
-//            }
-//        })
+        mViewModel.mSalaryListData.observe(this, Observer {
+            it?.let {
+                netResponseFormat<SalaryResponse>(it)?.let {
+                    mStartActivity<SalaryActivity>(requireContext()) {
+                        putExtra(Constant.DATA, it.data)
+                    }
+                }
+            }
+        })
     }
 
 

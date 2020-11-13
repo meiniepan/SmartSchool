@@ -17,7 +17,9 @@ import com.xiaoneng.ss.common.callback.LoadingCallBack
 import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.StateType
 import com.xiaoneng.ss.common.utils.CommonUtil
+import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.mainLogin
+import com.xiaoneng.ss.module.school.view.SalaryCaptchaActivity
 
 
 /**
@@ -91,6 +93,22 @@ abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
         loadService.showCallback(SuccessCallback::class.java)
     }
 
+    open fun showTmpOutTimeTip(msg: String = "请重新验证") {
+        if (!TextUtils.isEmpty(msg)) {
+            MaterialDialog(this).show {
+                title(R.string.title)
+                message(text = msg)
+                cornerRadius(8.0f)
+                positiveButton(R.string.done)
+                positiveButton {
+                    mStartActivity<SalaryCaptchaActivity>(this@BaseLifeCycleActivity)
+                }
+                cancelOnTouchOutside(false)
+            }
+        }
+        loadService.showCallback(SuccessCallback::class.java)
+    }
+
     open fun showEmpty() {
         loadService.showCallback(EmptyCallBack::class.java)
     }
@@ -102,7 +120,9 @@ abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
         Observer<State> {
             it?.let {
                 when (it.code) {
-                    StateType.SUCCESS -> {showSuccess()}
+                    StateType.SUCCESS -> {
+                        showSuccess()
+                    }
                     StateType.LOADING -> showLoading()
                     StateType.ERROR -> showTip(it.message)
                     StateType.NETWORK_ERROR -> showError(getString(R.string.error_message))
@@ -110,6 +130,9 @@ abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
                     StateType.EMPTY -> showEmpty()
                     StateType.NOT_LOGIN -> {
                         showNotLoginTip(it.message)
+                    }
+                    StateType.TEMP_OUT_TIME -> {
+                        showTmpOutTimeTip(it.message)
                     }
                 }
             }

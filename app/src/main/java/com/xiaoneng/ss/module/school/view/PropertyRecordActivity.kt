@@ -1,12 +1,10 @@
 package com.xiaoneng.ss.module.school.view
 
-import androidx.recyclerview.widget.GridLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.module.school.adapter.ChooseDeviceAdapter
 import com.xiaoneng.ss.module.school.model.DeviceBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import kotlinx.android.synthetic.main.activity_property_apply.*
 
 /**
  * @author Burning
@@ -44,22 +42,22 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAdapter() {
-        mAdapter = ChooseDeviceAdapter(R.layout.item_property_device, mData)
-
-        rvPropertyDevice.apply {
-            layoutManager = GridLayoutManager(context, 3)
-            setAdapter(mAdapter)
-        }
-        mAdapter.setOnItemClickListener { adapter, view, position ->
-            for (i in mData) {
-                if (i.isCheck) {
-                    i.isCheck = false
-                }
-            }
-            mData[position].isCheck = true
-            adapter.notifyDataSetChanged()
-            chosenDevice = mData[position].name ?: ""
-        }
+//        mAdapter = ChooseDeviceAdapter(R.layout.item_property_device, mData)
+//
+//        rvPropertyDevice.apply {
+//            layoutManager = GridLayoutManager(context, 3)
+//            setAdapter(mAdapter)
+//        }
+//        mAdapter.setOnItemClickListener { adapter, view, position ->
+//            for (i in mData) {
+//                if (i.isCheck) {
+//                    i.isCheck = false
+//                }
+//            }
+//            mData[position].isCheck = true
+//            adapter.notifyDataSetChanged()
+//            chosenDevice = mData[position].name ?: ""
+//        }
 
 
     }

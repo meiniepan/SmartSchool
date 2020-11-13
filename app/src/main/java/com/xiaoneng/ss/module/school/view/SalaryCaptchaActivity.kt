@@ -1,6 +1,7 @@
 package com.xiaoneng.ss.module.school.view
 
 import android.os.CountDownTimer
+import android.os.Handler
 import android.text.TextUtils
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.Observer
@@ -8,11 +9,8 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.model.CaptchaResponse
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.captchaToast
-import com.xiaoneng.ss.common.utils.formatStarPhoneNum
-import com.xiaoneng.ss.common.utils.netResponseFormat
-import com.xiaoneng.ss.module.school.model.SalaryDetailBean
+import com.xiaoneng.ss.common.utils.*
+import com.xiaoneng.ss.module.school.model.SalaryResponse
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_salary_captcha.*
 
@@ -87,7 +85,7 @@ class SalaryCaptchaActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             return
         }
         showLoading()
-        mViewModel.getSalaryDetail(id,vCodeStr)
+        mViewModel.getTmpToken(vCodeStr)
     }
 
     override fun initDataObserver() {
@@ -99,10 +97,24 @@ class SalaryCaptchaActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
         })
 
-        mViewModel.mSalaryDetailData.observe(this, Observer {
+        mViewModel.mTmpTokenData.observe(this, Observer {
             it?.let {
-                netResponseFormat<SalaryDetailBean>(it)?.let {
+                Handler().postDelayed(
+                    {
+                        showLoading()
+                        mViewModel.getSalaryList()
 
+                    }, 100
+                )
+            }
+        })
+
+        mViewModel.mSalaryListData.observe(this, Observer {
+            it?.let {
+                netResponseFormat<SalaryResponse>(it)?.let {
+                    mStartActivity<SalaryActivity>(this) {
+                        putExtra(Constant.DATA, it.data)
+                    }
                 }
             }
         })

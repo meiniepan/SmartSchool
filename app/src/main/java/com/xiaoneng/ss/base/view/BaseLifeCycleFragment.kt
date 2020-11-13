@@ -17,7 +17,9 @@ import com.xiaoneng.ss.common.callback.LoadingCallBack
 import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.StateType
 import com.xiaoneng.ss.common.utils.CommonUtil
+import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.mainLogin
+import com.xiaoneng.ss.module.school.view.SalaryCaptchaActivity
 
 /**
  * Created with Android Studio.
@@ -87,6 +89,23 @@ abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
         }
         loadService.showCallback(SuccessCallback::class.java)
     }
+
+    open fun showTmpOutTimeTip(msg: String = "请重新验证") {
+        if (!TextUtils.isEmpty(msg)) {
+            MaterialDialog(requireContext()).show {
+                title(R.string.title)
+                message(text = msg)
+                cornerRadius(8.0f)
+                positiveButton(R.string.done)
+                positiveButton {
+                    mStartActivity<SalaryCaptchaActivity>(requireContext())
+                }
+                cancelOnTouchOutside(false)
+            }
+        }
+        loadService.showCallback(SuccessCallback::class.java)
+    }
+
     open fun showEmpty() {
         loadService.showCallback(EmptyCallBack::class.java)
     }
@@ -105,6 +124,9 @@ abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
                     StateType.EMPTY -> showEmpty()
                     StateType.NOT_LOGIN -> {
                         showNotLoginTip(it.message)
+                    }
+                    StateType.TEMP_OUT_TIME -> {
+                        showTmpOutTimeTip(it.message)
                     }
                 }
             }

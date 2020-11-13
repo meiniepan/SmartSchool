@@ -34,6 +34,10 @@ fun <T> BaseResponse<T>.dataConvert(
             loadState.postValue(State(StateType.NOT_LOGIN, message = "请重新登录"))
             return respResult
         }
+        Constant.TEMP_OUT_TIME -> {
+            loadState.postValue(State(StateType.TEMP_OUT_TIME, message = respMsg))
+            return respResult
+        }
         else -> {
             loadState.postValue(State(StateType.ERROR, message = respMsg))
             return respResult

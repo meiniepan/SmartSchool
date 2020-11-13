@@ -7,6 +7,7 @@ enum class StateType {
     SUCCESS,
     ERROR,
     NOT_LOGIN,
+    TEMP_OUT_TIME,
     EMPTY,
     NETWORK_ERROR,
     LOADING,

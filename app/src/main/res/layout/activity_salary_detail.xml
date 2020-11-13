@@ -11,7 +11,7 @@
         android:id="@+id/ctbNoticeDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="" />
+        app:title="工资条" />
 
     <LinearLayout
         android:id="@+id/contentLayout"
@@ -29,7 +29,7 @@
             android:layout_marginTop="20dp"
             android:textSize="@dimen/sp_36"
             android:textStyle="bold"
-            android:text="工资条为私人信息"
+            android:text="工"
             android:singleLine="true"
             />
         <TextView

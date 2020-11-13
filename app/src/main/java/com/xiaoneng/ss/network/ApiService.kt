@@ -860,21 +860,20 @@ interface ApiService {
     ): BaseResponse<CaptchaResponse>
 
     /**
-     *管理工资条明细
+     *工资条明细
      */
     @FormUrlEncoded
-    @POST("/api/v1/admin/wages/detail")
+    @POST("/api/v17/admin/wages/detail")
     suspend fun getSalaryDetail(
         @Field("token") token: String?,
-        @Field("id") id: String?,
-        @Field("code") code: String?
+        @Field("id") id: String?
     ): BaseResponse<Any>
 
     /**
      *工资列表
      */
     @FormUrlEncoded
-    @POST("/api/v1/admin/wages/lists")
+    @POST("/api/v17/admin/wages/lists")
     suspend fun getSalaryList(
         @Field("token") token: String?,
         @Field("page") id: String?
@@ -884,9 +883,19 @@ interface ApiService {
      *员工工资条验证码
      */
     @FormUrlEncoded
-    @POST("/api/v1/admin/wages/smsCode")
+    @POST("/api/v17/admin/wages/smsCode")
     suspend fun getSalaryCaptcha(
         @Field("token") token: String?
+    ): BaseResponse<Any>
+
+    /**
+     *员工工资条临时token
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/admin/wages/tmpToken")
+    suspend fun getTmpToken(
+        @Field("token") token: String?,
+        @Field("code") code: String?
     ): BaseResponse<Any>
 
 }

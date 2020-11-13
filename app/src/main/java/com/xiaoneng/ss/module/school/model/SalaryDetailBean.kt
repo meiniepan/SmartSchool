@@ -16,6 +16,8 @@ data class SalaryDetailBean(
     var taxablewages: String? = null,
     var post: String? = null,
     var idcard: String? = null,
+    var keys: ArrayList<String>? = null,
+    var vals: ArrayList<String>? = null,
     var schoolid: String? = null,
     var schoolname: String? = null
 //    var expand: ArrayList<ValueBean>? = null//扩展数组
