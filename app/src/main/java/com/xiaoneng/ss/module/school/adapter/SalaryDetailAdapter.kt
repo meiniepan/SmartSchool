@@ -18,8 +18,8 @@ class SalaryDetailAdapter(layoutId: Int, listData: MutableList<String>?) :
     var eData: SalaryDetailBean? = null
     override fun convert(viewHolder: BaseViewHolder?, item: String) {
         viewHolder?.let { holder ->
-            holder.setText(R.id.tvSalaryName, eData?.keys?.get(holder.adapterPosition))
-                .setText(R.id.tvSalaryValue, eData?.vals?.get(holder.adapterPosition))
+            holder.setText(R.id.tvSalaryName, eData?.expand?.keys?.get(holder.adapterPosition))
+                .setText(R.id.tvSalaryValue, eData?.expand?.vals?.get(holder.adapterPosition))
 
 
         }

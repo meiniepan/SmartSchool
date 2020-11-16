@@ -873,7 +873,7 @@ interface ApiService {
      *工资列表
      */
     @FormUrlEncoded
-    @POST("/api/v17/admin/wages/lists")
+    @POST("/api/v17/admin/wages/mywdlists")
     suspend fun getSalaryList(
         @Field("token") token: String?,
         @Field("page") id: String?

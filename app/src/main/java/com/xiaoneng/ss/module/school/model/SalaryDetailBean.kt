@@ -8,7 +8,7 @@ package com.xiaoneng.ss.module.school.model
 data class SalaryDetailBean(
     var id: String? = null,
     var uid: String? = null,
-    var userinfo: String? = null,
+    var userinfo: SalaryUserBean? = null,
     var createtime: String? = null,
     var realname: String? = null,
     var reachwages: String? = null,
@@ -16,9 +16,7 @@ data class SalaryDetailBean(
     var taxablewages: String? = null,
     var post: String? = null,
     var idcard: String? = null,
-    var keys: ArrayList<String>? = null,
-    var vals: ArrayList<String>? = null,
     var schoolid: String? = null,
-    var schoolname: String? = null
-//    var expand: ArrayList<ValueBean>? = null//扩展数组
+    var schoolname: String? = null,
+    var expand: SalaryExpandBean? = null//扩展数组
 )

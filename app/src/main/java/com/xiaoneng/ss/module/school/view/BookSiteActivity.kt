@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_salary.*
 
 /**
  * @author Burning
- * @description:教学云盘
+ * @description:场地预约
  * @date :2020/10/23 3:17 PM
  */
 class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {

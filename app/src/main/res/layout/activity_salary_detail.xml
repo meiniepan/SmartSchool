@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/tintBac"
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/contentLayout"
         android:layout_width="match_parent"
         android:layout_height="234dp"
         android:orientation="vertical"
@@ -21,12 +22,13 @@
             app:title="工资条" />
 
         <TextView
+            android:id="@+id/tvReal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_30"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:text="1234"
+            android:text=""
             android:layout_marginStart="@dimen/title_padding"
             android:layout_marginTop="19dp" />
 
@@ -40,23 +42,13 @@
             android:layout_marginTop="0dp" />
     </LinearLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/contentLayout"
-        style="@style/nes_scroll_style"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/tintBac"
-        >
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginStart="@dimen/title_padding"
-            android:layout_marginEnd="@dimen/title_padding"
-            android:layout_marginTop="-40dp"
-            style="@style/recycler_style"
-            android:id="@+id/rvSalaryDetail"
-            android:background="@drawable/bac_white_bac_5"
-            />
-
-    </androidx.core.widget.NestedScrollView>
-
-</LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSalaryDetail"
+        style="@style/recycler_style"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="@dimen/title_padding"
+        android:layout_marginEnd="@dimen/title_padding"
+        android:layout_marginTop="194dp"
+        android:background="@drawable/bac_white_bac_5" />
+</FrameLayout>
