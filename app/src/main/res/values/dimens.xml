@@ -10,6 +10,7 @@
     <dimen name="minHeight">500dp</dimen>
 
     <dimen name="sp_36">36dp</dimen>
+    <dimen name="sp_30">30dp</dimen>
     <dimen name="sp_24">24dp</dimen>
     <dimen name="sp_22">22dp</dimen>
     <dimen name="sp_20">20dp</dimen>

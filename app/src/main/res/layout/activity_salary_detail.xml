@@ -4,113 +4,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <com.xiaoneng.ss.custom.widgets.CustomTitleBar
-        android:id="@+id/ctbNoticeDetail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="工资条" />
-
     <LinearLayout
-        android:id="@+id/contentLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:paddingStart="@dimen/title_padding"
-        android:paddingEnd="@dimen/title_padding"
-        android:orientation="vertical">
+        android:layout_height="234dp"
+        android:orientation="vertical"
+        android:paddingTop="30dp"
+        android:background="@color/oldBlue">
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textSize="@dimen/sp_36"
-            android:textStyle="bold"
-            android:text="工"
-            android:singleLine="true"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:textSize="@dimen/sp_16"
-            android:text="请先验证您的账号信息"
-            android:singleLine="true"
-            />
-        <LinearLayout
-            android:layout_marginTop="56dp"
+        <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+            android:id="@+id/ctbNoticeDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            app:is_white_icon="true"
+            app:title="工资条" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_30"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="1234"
+            android:layout_marginStart="@dimen/title_padding"
+            android:layout_marginTop="19dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="14dp"
-                android:layout_marginTop="12dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-
-                <TextView
-                    android:id="@+id/etPhone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint=""
-                    android:inputType="phone"
-                    android:textSize="@dimen/sp_16" />
-            </LinearLayout>
-
-            <include layout="@layout/layout_split" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:layout_marginBottom="0dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-
-                <EditText
-                    android:id="@+id/etCaptcha"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:hint="输入验证码"
-                    android:paddingTop="14dp"
-                    android:paddingBottom="14dp"
-                    android:imeOptions="actionGo"
-                    android:inputType="number"
-                    android:maxLength="8"
-                    android:textSize="@dimen/sp_20" />
-
-                <TextView
-                    android:id="@+id/tvSendCaptcha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/title_padding"
-                    android:layout_marginEnd="26dp"
-                    android:gravity="center"
-                    android:paddingTop="14dp"
-                    android:paddingBottom="14dp"
-                    android:text="发送验证码"
-                    android:textColor="@color/themeColor" />
-
-            </LinearLayout>
-
-            <include layout="@layout/layout_split" />
-        </LinearLayout>
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/white"
+            android:text="实发金额"
+            android:layout_marginStart="@dimen/title_padding"
+            android:layout_marginTop="0dp" />
     </LinearLayout>
-    <TextView
-        android:id="@+id/tvConfirm"
-        style="@style/button_bottom_blue_bac_style"
-        android:layout_alignParentBottom="true"
-        android:text="确定" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/contentLayout"
+        style="@style/nes_scroll_style"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/tintBac"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginStart="@dimen/title_padding"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:layout_marginTop="-40dp"
+            style="@style/recycler_style"
+            android:id="@+id/rvSalaryDetail"
+            android:background="@drawable/bac_white_bac_5"
+            />
+
+    </androidx.core.widget.NestedScrollView>
+
 </LinearLayout>

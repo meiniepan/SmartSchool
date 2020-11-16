@@ -1,13 +1,17 @@
 package com.xiaoneng.ss.module.school.view
 
+import android.os.Bundle
+import android.view.WindowManager
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.netResponseFormat
+import com.xiaoneng.ss.module.school.adapter.SalaryDetailAdapter
 import com.xiaoneng.ss.module.school.model.SalaryDetailBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import org.jetbrains.anko.toast
+import kotlinx.android.synthetic.main.activity_salary_detail.*
 
 /**
  * @author Burning
@@ -16,14 +20,21 @@ import org.jetbrains.anko.toast
  */
 class SalaryDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private var id: String? = null
+    lateinit var mAdapter: SalaryDetailAdapter
+    var mData: ArrayList<String>? = ArrayList()
     override fun getLayoutId(): Int {
         return R.layout.activity_salary_detail
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        super.onCreate(savedInstanceState)
+    }
     override fun initView() {
         super.initView()
         id = intent.getStringExtra(Constant.ID)
-
+        initAdapter()
     }
 
     override fun initData() {
@@ -37,12 +48,28 @@ class SalaryDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mViewModel.getSalaryDetail(id)
     }
 
+    private fun initAdapter() {
+
+        mAdapter = SalaryDetailAdapter(R.layout.item_salary_detail, mData)
+        rvSalaryDetail.apply {
+            layoutManager = LinearLayoutManager(this@SalaryDetailActivity)
+            setAdapter(mAdapter)
+        }
+
+        mAdapter.setOnItemClickListener { adapter, view, position ->
+
+        }
+    }
 
     override fun initDataObserver() {
         mViewModel.mSalaryDetailData.observe(this, Observer {
             it?.let {
-                netResponseFormat<SalaryDetailBean>(it)?.let {
-                    toast("ss")
+                netResponseFormat<SalaryDetailBean>(it)?.let { bean ->
+                    bean.keys?.let {
+                        mAdapter.setNewData(it)
+                        mAdapter.setEdata(bean)
+                        mAdapter.notifyDataSetChanged()
+                    }
                 }
             }
         })
