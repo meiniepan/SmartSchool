@@ -62,6 +62,14 @@
                 android:id="@+id/tvPropertyConfirm"
                 style="@style/button_bottom_blue_bac_style"
                 android:text="提交" />
+            <TextView
+                android:id="@+id/tvPropertyStart"
+                style="@style/button_blue_bac_style"
+                android:text="开始" />
+            <TextView
+                android:id="@+id/tvPropertyStop"
+                style="@style/button_blue_bac_style"
+                android:text="停止" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

@@ -31,7 +31,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             //设置支持的SO库架构
-            abiFilters 'armeabi',"armeabi-v7a", "arm64-v8a",'x86'
+            abiFilters 'armeabi', "armeabi-v7a", "arm64-v8a", 'x86'
         }
 
         multiDexEnabled true
@@ -73,6 +73,12 @@ kapt {
     useBuildCache = true
     javacOptions {
         option("-Xmaxerrs", 500)
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
     }
 }
 
@@ -147,5 +153,9 @@ dependencies {
 
     implementation 'com.umeng.umsdk:oppo-push:2.0.2'
     implementation 'com.umeng.umsdk:oppo-umengaccs:1.0.6'
+
+    //阿里云语音
+    implementation files('libs/fastjson-1.1.46.android.jar')
+    compile(name: 'nuisdk-release', ext: 'aar')
 
 }

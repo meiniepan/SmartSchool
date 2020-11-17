@@ -238,6 +238,8 @@
 -keep class com.vivo.push.**{*; }
 -keep class com.vivo.vms.**{*; }
 -keep class xxx.xxx.xxx.PushMessageReceiverImpl{*;}
+#阿里云语音
+-keep class com.alibaba.idst.nui.*{*;}
 
 
 

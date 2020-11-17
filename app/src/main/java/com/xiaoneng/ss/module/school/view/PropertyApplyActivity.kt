@@ -1,9 +1,10 @@
 package com.xiaoneng.ss.module.school.view
 
+import android.widget.EditText
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.aliSpeech.SpeechTranscriberActivity
 import com.xiaoneng.ss.module.school.model.RepairBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_property_apply.*
@@ -14,7 +15,7 @@ import org.jetbrains.anko.toast
  * @description:填写报修报送
  * @date :2020/10/23 3:17 PM
  */
-class PropertyApplyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+class PropertyApplyActivity : SpeechTranscriberActivity<SchoolViewModel>() {
 
     private var chosenDevice: String = ""
 
@@ -22,12 +23,22 @@ class PropertyApplyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         return R.layout.activity_property_apply
     }
 
+    override fun getEditText(): EditText {
+        return etPropertyRemark
+    }
     override fun initView() {
         super.initView()
         tvPropertyConfirm.setOnClickListener {
             doConfirm()
         }
+        tvPropertyStart.setOnClickListener {
+            doStart()
+        }
+        tvPropertyStop.setOnClickListener {
+            doStop()
+        }
     }
+
 
     override fun initData() {
         super.initData()

@@ -31,6 +31,7 @@ class SalaryDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         super.onCreate(savedInstanceState)
     }
+
     override fun initView() {
         super.initView()
         id = intent.getStringExtra(Constant.ID)
@@ -68,15 +69,16 @@ class SalaryDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     tvReal.text = bean.reachwages
                     bean.expand?.keys?.let {
                         var ignores = ArrayList<Int>()
-                        for ( i in it.indices){
-                            if (it.get(i) == "教师姓名"||
-                                it.get(i) == "身份证号"){
+                        for (i in it.indices) {
+                            if (it.get(i) == "教师姓名" ||
+                                it.get(i) == "身份证号"
+                            ) {
                                 ignores.add(i)
                             }
                         }
-                        if (ignores.size>0){
+                        if (ignores.size > 0) {
                             ignores.reverse()
-                                ignores.forEach {it2->
+                            ignores.forEach { it2 ->
                                 it.removeAt(it2)
                                 bean.expand?.vals?.removeAt(it2)
                             }
