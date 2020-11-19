@@ -16,7 +16,7 @@
         android:layout_height="98dp"
         app:radius="6dp"
         android:scaleType="centerCrop"
-        android:background="@drawable/bac_add" />
+         />
     <ImageView
         android:id="@+id/ivPropertyDelete"
         android:layout_width="14dp"

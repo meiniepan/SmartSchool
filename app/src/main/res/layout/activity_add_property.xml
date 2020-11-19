@@ -84,7 +84,7 @@
                 android:textSize="@dimen/sp_12"
                 android:textColor="@color/commonHint"
                 android:layout_marginStart="@dimen/title_padding"
-                android:drawableTop="@drawable/ic_stop" />
+                android:drawableTop="@drawable/ic_speech" />
 
         </LinearLayout>
 
@@ -94,7 +94,7 @@
             android:layout_weight="1"
             android:layout_height="30dp"
             android:text="点击说话"
-            android:background="@color/white"
+            android:background="@drawable/bac_white_bac_2"
             android:textStyle="bold"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"

@@ -22,7 +22,15 @@ class AddImgAdapter(layoutId: Int, listData: MutableList<String>?) :
         viewHolder?.let { holder ->
            var imageView: ImageView  = holder.getView(R.id.ivPropertyAddPic)
            var ivDelete: ImageView  = holder.getView(R.id.ivPropertyDelete)
+            ivDelete.setOnClickListener {
+                mData.removeAt(holder.adapterPosition)
+                notifyDataSetChanged()
+            }
             if (holder.layoutPosition==mData.size-1){
+                displayImage(
+                    mContext, R.drawable.bac_add_2,
+                    imageView
+                )
                 ivDelete.visibility = View.INVISIBLE
             }else{
                 displayImage(
