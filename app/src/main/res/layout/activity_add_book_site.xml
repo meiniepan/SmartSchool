@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+        android:id="@+id/ctbNoticeDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="场地预约" />
+
+    <LinearLayout
+        android:id="@+id/contentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
+            android:id="@+id/rvSite"
+            style="@style/recycler_style" />
+    </LinearLayout>
+</LinearLayout>

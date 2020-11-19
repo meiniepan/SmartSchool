@@ -4,7 +4,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.school.adapter.SiteAdapter
 import com.xiaoneng.ss.module.school.model.SiteBean
 import com.xiaoneng.ss.module.school.model.SiteItemBean
@@ -13,10 +12,10 @@ import kotlinx.android.synthetic.main.activity_book_site.*
 
 /**
  * @author Burning
- * @description:场地预约
+ * @description:添加场地预约
  * @date :2020/10/23 3:17 PM
  */
-class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+class AddBookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapter: SiteAdapter
     var mData: ArrayList<SiteBean> = ArrayList()
     var recyclerViews = ArrayList<RecyclerView>()
@@ -64,12 +63,12 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private fun initAdapter() {
         mAdapter = SiteAdapter(R.layout.item_site, mData)
         rvSite.recyclerView.apply {
-            layoutManager = LinearLayoutManager(this@BookSiteActivity)
+            layoutManager = LinearLayoutManager(this@AddBookSiteActivity)
             setAdapter(mAdapter)
         }
 
         mAdapter.setOnItemClickListener { adapter, view, position ->
-            mStartActivity<AddBookSiteActivity>(this)
+
         }
     }
 

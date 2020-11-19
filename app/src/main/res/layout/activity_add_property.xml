@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+        android:id="@+id/ctbNoticeDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="报修报送" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/contentLayout"
+        style="@style/nes_scroll_style"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/title_padding"
+            android:paddingEnd="@dimen/title_padding"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="上传图片" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvImg"
+                    style="@style/recycler_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="填写工单"
+                android:layout_marginTop="12dp"
+                android:textSize="@dimen/sp_12" />
+
+            <EditText
+                android:id="@+id/etPropertyRemark"
+                style="@style/edit_style"
+                android:gravity="start"
+                android:layout_marginTop="7dp"
+                android:padding="11dp"
+                android:background="@drawable/bac_tint_bac_10"
+                android:layout_height="170dp"
+                android:hint="请简述您遇到的问题…" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grayF6"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="语音输入"
+                android:textSize="@dimen/sp_12"
+                android:textColor="@color/commonHint"
+                android:layout_marginStart="@dimen/title_padding"
+                android:drawableTop="@drawable/ic_stop" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvPropertySpeech"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="30dp"
+            android:text="点击说话"
+            android:background="@color/white"
+            android:textStyle="bold"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tvPropertyConfirm"
+            android:layout_width="86dp"
+            android:layout_height="42dp"
+            android:text="提交"
+            android:textSize="@dimen/sp_15"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/bac_blue_bac_0" />
+    </LinearLayout>
+</LinearLayout>

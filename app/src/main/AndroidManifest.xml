@@ -204,11 +204,12 @@
             android:screenOrientation="portrait" />
         <activity android:name=".module.school.view.CloudDiskActivity" />
         <activity android:name=".module.school.view.PropertyActivity" />
-        <activity android:name=".module.school.view.PropertyApplyActivity" />
+        <activity android:name=".module.school.view.AddPropertyActivity" />
         <activity android:name=".module.school.view.SalaryCaptchaActivity" />
         <activity android:name=".module.school.view.SalaryDetailActivity" />
         <activity android:name=".module.school.view.BookSiteActivity" />
         <activity android:name=".common.utils.aliSpeech.SpeechTranscriberActivity" />
+        <activity android:name=".module.school.view.AddBookSiteActivity" />
 
 
         <provider

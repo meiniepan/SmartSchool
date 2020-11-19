@@ -302,7 +302,7 @@ public class SpeechTranscriberActivity<T extends BaseViewModel<?>> extends BaseL
                 } else {
                     Gson gson = new Gson();
                     ResultBean bean = gson.fromJson(text,ResultBean.class);
-                    getEditText().setText(bean.getPayload().getResult());
+                    getEditText().append(bean.getPayload().getResult());
                 }
             }
         });

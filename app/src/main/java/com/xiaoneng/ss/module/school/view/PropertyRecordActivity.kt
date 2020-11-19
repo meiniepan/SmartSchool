@@ -14,7 +14,7 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private var chosenDevice: String =  ""
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_property_apply
+        return R.layout.activity_add_property
     }
 
     override fun initView() {

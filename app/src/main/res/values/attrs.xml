@@ -39,6 +39,13 @@
         <attr name="border_inside_color" format="color" />
         <attr name="border_outside_color" format="color"></attr>
     </declare-styleable>
+    <declare-styleable name="CornerImageView">
+        <attr name="radius" format="dimension" />
+        <attr name="leftTopRadius" format="dimension" />
+        <attr name="rightTopRadius" format="dimension"/>
+        <attr name="rightBottomRadius" format="dimension"/>
+        <attr name="leftBottomRadius" format="dimension"/>
+    </declare-styleable>
 
     <declare-styleable name="StatusRecyclerView">
         <attr name="emptyLayout"  />

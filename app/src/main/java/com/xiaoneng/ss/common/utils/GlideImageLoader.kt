@@ -5,6 +5,7 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.xiaoneng.ss.R
 
+
 /**
  * Created with Android Studio.
  * Description:
@@ -12,10 +13,17 @@ import com.xiaoneng.ss.R
  * @date: 2020/02/26
  * Time: 11:12
  */
-fun displayImage(context: Context, path: Any?, imageView: ImageView,placeholder: Int = R.drawable.ic_img_placehold) {
+fun displayImage(
+    context: Context,
+    path: Any?,
+    imageView: ImageView,
+    placeholder: Int = R.drawable.ic_img_placehold
+) {
     Glide.with(context)
         .load(path)
         .error(R.drawable.ic_img_error)
         .placeholder(placeholder)
         .into(imageView)
+
 }
+
