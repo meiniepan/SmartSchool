@@ -7,7 +7,7 @@ package com.xiaoneng.ss.module.school.model
  * @date: 2020/11/13
  * Time: 17:06
  */
-data class RepairBean(
+data class RepairBody(
     var token: String? = null,
     var remark: String? = null,
     var status: String? = null,

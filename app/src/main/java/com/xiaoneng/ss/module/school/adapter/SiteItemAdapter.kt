@@ -22,7 +22,7 @@ class SiteItemAdapter(layoutId: Int, listData: MutableList<SiteItemBean>) :
         viewHolder?.let { holder ->
             var view = holder.getView<View>(R.id.llSiteItem)
             if (holder.adapterPosition % 2 == 0) {
-                view.setBackgroundColor(mContext.resources.getColor(R.color.primary_red))
+                view.setBackgroundColor(mContext.resources.getColor(R.color.commonRed))
             } else {
                 view.setBackgroundColor(mContext.resources.getColor(R.color.transparent))
             }

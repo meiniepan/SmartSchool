@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingStart="26dp"
-            android:background="@drawable/bac_white_bac_5"
+            android:background="@drawable/bac_white_bac_6"
             android:paddingEnd="26dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -38,7 +38,7 @@
             <ImageView
                 android:layout_width="74dp"
                 android:layout_height="74dp"
-                android:background="@drawable/ic_avatar_default" />
+                android:background="@drawable/ic_dianjiao" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingStart="26dp"
-            android:background="@drawable/bac_white_bac_5"
+            android:background="@drawable/bac_white_bac_6"
             android:paddingEnd="26dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -79,7 +79,7 @@
             <ImageView
                 android:layout_width="74dp"
                 android:layout_height="74dp"
-                android:background="@drawable/ic_avatar_default" />
+                android:background="@drawable/ic_zongwu" />
 
             <LinearLayout
                 android:layout_width="match_parent"

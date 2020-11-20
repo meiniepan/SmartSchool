@@ -899,11 +899,23 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
-     *教师发布任务驳回
+     *申请设备/教室维修
      */
-    @POST("/api/v17/admin/repair/add")
+    @POST("/api/v17/admin/repair/myadd")
     suspend fun addRepair(
-        @Body requestBody: RepairBean
+        @Body requestBody: RepairBody
+    ): BaseResponse<Any>
+
+    /**
+     *报修/维修记录列表按id拉列表
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/teacher/repair/listsByID")
+    suspend fun getPropertyRecord(
+        @Field("token") token: String?,
+        @Field("lastid") lastid: String?,
+        @Field("status") status: String?,
+        @Field("type") type: String?
     ): BaseResponse<Any>
 }
 

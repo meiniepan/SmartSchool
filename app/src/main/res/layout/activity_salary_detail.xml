@@ -50,5 +50,5 @@
         android:layout_marginStart="@dimen/title_padding"
         android:layout_marginEnd="@dimen/title_padding"
         android:layout_marginTop="194dp"
-        android:background="@drawable/bac_white_bac_5" />
+        android:background="@drawable/bac_white_bac_6" />
 </FrameLayout>

@@ -465,8 +465,12 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         return apiService.getTmpToken(UserInfo.getUserBean().token,code)
             .dataConvert(loadState)
     }
-    suspend fun addRepair(body: RepairBean): Any {
+    suspend fun addRepair(body: RepairBody): Any {
         return apiService.addRepair(body)
+            .dataConvert(loadState)
+    }
+    suspend fun getPropertyRecord(lastid: String?=null,status: String?=null,type: String?=null): Any {
+        return apiService.getPropertyRecord(UserInfo.getUserBean().token,lastid,status,type)
             .dataConvert(loadState)
     }
 

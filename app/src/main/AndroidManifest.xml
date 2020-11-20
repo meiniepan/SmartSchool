@@ -210,6 +210,7 @@
         <activity android:name=".module.school.view.BookSiteActivity" />
         <activity android:name=".common.utils.aliSpeech.SpeechTranscriberActivity" />
         <activity android:name=".module.school.view.AddBookSiteActivity" />
+        <activity android:name=".module.school.view.PropertyRecordActivity" />
 
 
         <provider

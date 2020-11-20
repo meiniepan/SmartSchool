@@ -2,6 +2,7 @@ package com.xiaoneng.ss.module.school.view
 
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_property.*
@@ -26,10 +27,17 @@ class PropertyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             mStartActivity<AddPropertyActivity>(this)
         }
         tvPropertyRecord1.setOnClickListener {
-            mStartActivity<AddPropertyActivity>(this)
+            //维修记录
+            mStartActivity<PropertyRecordActivity>(this){
+                putExtra(Constant.TYPE,"1")
+            }
         }
         tvPropertyRecord2.setOnClickListener {
-            mStartActivity<AddPropertyActivity>(this)
+            //报修记录
+            mStartActivity<PropertyRecordActivity>(this)
+            {
+                putExtra(Constant.TYPE,"0")
+            }
         }
         initAdapter()
     }

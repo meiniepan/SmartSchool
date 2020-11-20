@@ -262,9 +262,15 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun addRepair(body: RepairBean) {
+    fun addRepair(body: RepairBody) {
         initiateRequest(
             { mBaseData.value = mRepository.addRepair(body) },
+            loadState
+        )
+    }
+    fun getPropertyRecord(lastid: String?=null,status: String?=null,type: String?=null) {
+        initiateRequest(
+            { mBaseData.value = mRepository.getPropertyRecord(lastid,status,type) },
             loadState
         )
     }

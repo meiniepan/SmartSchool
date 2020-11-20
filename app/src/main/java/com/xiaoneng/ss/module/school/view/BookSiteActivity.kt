@@ -1,7 +1,6 @@
 package com.xiaoneng.ss.module.school.view
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.mStartActivity
@@ -19,7 +18,6 @@ import kotlinx.android.synthetic.main.activity_book_site.*
 class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapter: SiteAdapter
     var mData: ArrayList<SiteBean> = ArrayList()
-    var recyclerViews = ArrayList<RecyclerView>()
 
     override fun getLayoutId(): Int {
         return R.layout.activity_book_site
@@ -55,9 +53,7 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mData.add(bean2)
         mData.add(bean2)
         mData.add(bean2)
-        mData.forEach {
-            recyclerViews.add(RecyclerView(this))
-        }
+
         rvSite.notifyDataSetChanged()
     }
 
