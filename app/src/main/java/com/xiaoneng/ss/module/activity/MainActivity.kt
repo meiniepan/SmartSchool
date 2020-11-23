@@ -6,9 +6,12 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
@@ -43,7 +46,7 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
     override fun getLayoutId(): Int = R.layout.activity_main
 
     override fun initView() {
-        initColor()
+//        initColor()
         initViewPager()
         initBottomNavigation()
     }
@@ -96,22 +99,35 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
     }
 
     private fun initBottomNavigation() {
+        var menuView =  bottom_navigation.getChildAt(0)as BottomNavigationMenuView
+        var icon0 = (menuView.getChildAt(0)as BottomNavigationItemView).findViewById<ImageView>(com.google.android.material.R.id.icon)
+        var icon1 = (menuView.getChildAt(1)as BottomNavigationItemView).findViewById<ImageView>(com.google.android.material.R.id.icon)
+        var icon2 = (menuView.getChildAt(2)as BottomNavigationItemView).findViewById<ImageView>(com.google.android.material.R.id.icon)
         bottom_navigation.setOnNavigationItemSelectedListener { menuItem: MenuItem ->
 
             when (menuItem.itemId) {
                 R.id.menu_home -> {
                     mLastIndex = Constant.HOME
                     contentLayout.currentItem = Constant.HOME
+                    icon0.setImageResource(R.drawable.ic_tab_todo_c)
+                    icon1.setImageResource(R.drawable.ic_tab_school)
+                    icon2.setImageResource(R.drawable.ic_tab_mine)
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.menu_school -> {
                     mLastIndex = Constant.SCHOOL
                     contentLayout.currentItem = Constant.SCHOOL
+                    icon0.setImageResource(R.drawable.ic_tab_todo)
+                    icon1.setImageResource(R.drawable.ic_tab_school_c)
+                    icon2.setImageResource(R.drawable.ic_tab_mine_c)
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.menu_mine -> {
                     mLastIndex = Constant.MINE
                     contentLayout.currentItem = Constant.MINE
+                    icon0.setImageResource(R.drawable.ic_tab_todo)
+                    icon1.setImageResource(R.drawable.ic_tab_school)
+                    icon2.setImageResource(R.drawable.ic_tab_mine_c)
                     return@setOnNavigationItemSelectedListener true
                 }
 

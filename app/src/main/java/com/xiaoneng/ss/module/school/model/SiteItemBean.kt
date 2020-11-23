@@ -12,9 +12,8 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class SiteItemBean(
-    var id: String? = "",
-
-    var showhim: String? = ""
+    var id: String? = null,
+    var timeStr: String? = null
 
 
     ):Parcelable

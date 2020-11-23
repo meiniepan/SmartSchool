@@ -917,5 +917,15 @@ interface ApiService {
         @Field("status") status: String?,
         @Field("type") type: String?
     ): BaseResponse<Any>
+
+    /**
+     *可预约场地列表
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/admin/spacebook/listRooms")
+    suspend fun getCanBookRooms(
+        @Field("token") token: String?,
+        @Field("booktime") booktime: String?
+    ): BaseResponse<Any>
 }
 

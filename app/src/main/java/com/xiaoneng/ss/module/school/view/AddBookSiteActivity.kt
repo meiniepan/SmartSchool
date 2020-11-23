@@ -4,29 +4,34 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.module.school.adapter.SiteAdapter
+import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.DateUtil
+import com.xiaoneng.ss.common.utils.initSiteTimes
+import com.xiaoneng.ss.module.school.adapter.SiteItemAdapter
 import com.xiaoneng.ss.module.school.model.SiteBean
-import com.xiaoneng.ss.module.school.model.SiteItemBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import kotlinx.android.synthetic.main.activity_book_site.*
 
 /**
  * @author Burning
- * @description:添加场地预约
+ * @description:场地预约详情
  * @date :2020/10/23 3:17 PM
  */
 class AddBookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    lateinit var mAdapter: SiteAdapter
-    var mData: ArrayList<SiteBean> = ArrayList()
-    var recyclerViews = ArrayList<RecyclerView>()
+    private var chosenDay: Long? = System.currentTimeMillis()
+    lateinit var mAdapter: SiteItemAdapter
+    var mData:SiteBean? = null
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_book_site
+        return R.layout.activity_add_book_site
     }
 
     override fun initView() {
         super.initView()
-        initAdapter()
+        mData = intent.getParcelableExtra(Constant.DATA)
+        mData?.let {
+
+            initAdapter()
+        }
     }
 
     override fun initData() {
@@ -36,37 +41,18 @@ class AddBookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
-        var bean = SiteItemBean()
-        var bean2 = SiteBean()
-        var beans = ArrayList<SiteItemBean>()
-        var beans2 = ArrayList<SiteBean>()
-        beans.add(bean)
-        beans.add(bean)
-        beans.add(bean)
-        beans.add(bean)
-        beans.add(bean)
-        beans.add(bean)
-        beans.add(bean)
-        beans.add(bean)
-        beans.add(bean)
-        beans.add(bean)
-        bean2.list = beans
-        mData.add(bean2)
-        mData.add(bean2)
-        mData.add(bean2)
-        mData.forEach {
-            recyclerViews.add(RecyclerView(this))
-        }
-        rvSite.notifyDataSetChanged()
+        mViewModel.getCanBookRooms(DateUtil.formatDateCustomDay(chosenDay!!))
     }
 
     private fun initAdapter() {
-        mAdapter = SiteAdapter(R.layout.item_site, mData)
-        rvSite.recyclerView.apply {
-            layoutManager = LinearLayoutManager(this@AddBookSiteActivity)
+        var mSiteTimes = initSiteTimes()
+        mAdapter = SiteItemAdapter(R.layout.item_site_item, mSiteTimes)
+        var recyclerView = findViewById<RecyclerView>(R.id.rvSiteItem)
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             setAdapter(mAdapter)
         }
-
+        recyclerView.scrollToPosition(mData?.position!!)
         mAdapter.setOnItemClickListener { adapter, view, position ->
 
         }

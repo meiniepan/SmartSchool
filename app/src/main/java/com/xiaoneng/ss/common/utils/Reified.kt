@@ -20,6 +20,7 @@ import com.xiaoneng.ss.account.view.LoginTeacherActivity
 import com.xiaoneng.ss.common.constclass.Solang
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
+import com.xiaoneng.ss.module.school.model.SiteItemBean
 import org.jetbrains.anko.toast
 import java.io.File
 import java.io.FileOutputStream
@@ -298,4 +299,58 @@ fun Context.captchaToast(code: String?) {
     code?.let {
         toast(it)
     }
+}
+
+fun initSiteTimes(): ArrayList<SiteItemBean> {
+    var mSiteData: ArrayList<SiteItemBean> = ArrayList()
+    mSiteData.add(SiteItemBean(timeStr = "00:00"))
+    mSiteData.add(SiteItemBean(timeStr = "00:30"))
+    mSiteData.add(SiteItemBean(timeStr = "01:00"))
+    mSiteData.add(SiteItemBean(timeStr = "01:30"))
+    mSiteData.add(SiteItemBean(timeStr = "02:00"))
+    mSiteData.add(SiteItemBean(timeStr = "02:30"))
+    mSiteData.add(SiteItemBean(timeStr = "03:00"))
+    mSiteData.add(SiteItemBean(timeStr = "03:30"))
+    mSiteData.add(SiteItemBean(timeStr = "04:00"))
+    mSiteData.add(SiteItemBean(timeStr = "04:30"))
+    mSiteData.add(SiteItemBean(timeStr = "05:00"))
+    mSiteData.add(SiteItemBean(timeStr = "05:30"))
+    mSiteData.add(SiteItemBean(timeStr = "06:00"))
+    mSiteData.add(SiteItemBean(timeStr = "06:30"))
+    mSiteData.add(SiteItemBean(timeStr = "07:00"))
+    mSiteData.add(SiteItemBean(timeStr = "07:30"))
+    mSiteData.add(SiteItemBean(timeStr = "08:00"))
+    mSiteData.add(SiteItemBean(timeStr = "08:30"))
+    mSiteData.add(SiteItemBean(timeStr = "09:00"))
+    mSiteData.add(SiteItemBean(timeStr = "09:30"))
+    mSiteData.add(SiteItemBean(timeStr = "10:00"))
+    mSiteData.add(SiteItemBean(timeStr = "10:30"))
+    mSiteData.add(SiteItemBean(timeStr = "11:00"))
+    mSiteData.add(SiteItemBean(timeStr = "11:30"))
+    mSiteData.add(SiteItemBean(timeStr = "12:00"))
+    mSiteData.add(SiteItemBean(timeStr = "12:30"))
+    mSiteData.add(SiteItemBean(timeStr = "13:00"))
+    mSiteData.add(SiteItemBean(timeStr = "13:30"))
+    mSiteData.add(SiteItemBean(timeStr = "14:00"))
+    mSiteData.add(SiteItemBean(timeStr = "14:30"))
+    mSiteData.add(SiteItemBean(timeStr = "15:00"))
+    mSiteData.add(SiteItemBean(timeStr = "15:30"))
+    mSiteData.add(SiteItemBean(timeStr = "16:00"))
+    mSiteData.add(SiteItemBean(timeStr = "16:30"))
+    mSiteData.add(SiteItemBean(timeStr = "17:00"))
+    mSiteData.add(SiteItemBean(timeStr = "17:30"))
+    mSiteData.add(SiteItemBean(timeStr = "18:00"))
+    mSiteData.add(SiteItemBean(timeStr = "18:30"))
+    mSiteData.add(SiteItemBean(timeStr = "19:00"))
+    mSiteData.add(SiteItemBean(timeStr = "19:30"))
+    mSiteData.add(SiteItemBean(timeStr = "20:00"))
+    mSiteData.add(SiteItemBean(timeStr = "20:30"))
+    mSiteData.add(SiteItemBean(timeStr = "21:00"))
+    mSiteData.add(SiteItemBean(timeStr = "21:30"))
+    mSiteData.add(SiteItemBean(timeStr = "22:00"))
+    mSiteData.add(SiteItemBean(timeStr = "22:30"))
+    mSiteData.add(SiteItemBean(timeStr = "23:00"))
+    mSiteData.add(SiteItemBean(timeStr = "23:30"))
+    return mSiteData
+
 }

@@ -43,28 +43,35 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mRefuseData: MutableLiveData<Any> = MutableLiveData()
     val mModifyTaskStatusData: MutableLiveData<Any> = MutableLiveData()
 
-    fun getTaskList(lastid: String? = null,pagenum: String?= null, status: String?= null) {
+    fun getTaskList(lastid: String? = null, pagenum: String? = null, status: String? = null) {
         initiateRequest(
-            { mTaskListData.value = mRepository.getTaskList(pagenum, status,lastid = lastid) },
+            { mTaskListData.value = mRepository.getTaskList(pagenum, status, lastid = lastid) },
             loadState
         )
     }
 
-    fun getPublishTaskList(lastid: String? = null,pagenum: String?= null, status: String?= null) {
+    fun getPublishTaskList(
+        lastid: String? = null,
+        pagenum: String? = null,
+        status: String? = null
+    ) {
         initiateRequest(
-            { mTaskListData.value = mRepository.getPublishTaskList(pagenum, status,lastid = lastid) },
+            {
+                mTaskListData.value =
+                    mRepository.getPublishTaskList(pagenum, status, lastid = lastid)
+            },
             loadState
         )
     }
 
-    fun getTimetable(classid: String?= null, time: String?= null) {
+    fun getTimetable(classid: String? = null, time: String? = null) {
         initiateRequest(
             { mTimetableData.value = mRepository.getTimetable(classid, time) },
             loadState
         )
     }
 
-    fun getAttTimetable(time: String?= null, uId: String?= null) {
+    fun getAttTimetable(time: String? = null, uId: String? = null) {
         initiateRequest(
             { mAttTimetableData.value = mRepository.getAttTimetable(time, uId) },
             loadState
@@ -78,9 +85,17 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getAchievement(testname: String?= null, crid: String?= null, classid: String?= null,lastid: String? = null) {
+    fun getAchievement(
+        testname: String? = null,
+        crid: String? = null,
+        classid: String? = null,
+        lastid: String? = null
+    ) {
         initiateRequest(
-            { mAchievementData.value = mRepository.getAchievement(testname, crid, classid,lastid=lastid) },
+            {
+                mAchievementData.value =
+                    mRepository.getAchievement(testname, crid, classid, lastid = lastid)
+            },
             loadState
         )
     }
@@ -92,7 +107,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getAttendanceSchool(classid: String?= null, time: String?= null) {
+    fun getAttendanceSchool(classid: String? = null, time: String? = null) {
         initiateRequest(
             { mAttendanceSchoolData.value = mRepository.getAttendance(classid, time) },
             loadState
@@ -101,17 +116,27 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
 
 
     fun getAttendanceTea(
-        classid: String? = null,courseId: String? = null, time: String? = null,
+        classid: String? = null, courseId: String? = null, time: String? = null,
         keyword: String? = null
     ) {
         initiateRequest(
             {
                 if (keyword == null) {
                     mAttendanceTeaData.value =
-                        mRepository.getAttendance(classid = classid,courseId = courseId, atttime = time, keyword = keyword)
+                        mRepository.getAttendance(
+                            classid = classid,
+                            courseId = courseId,
+                            atttime = time,
+                            keyword = keyword
+                        )
                 } else {
                     mAttendanceQueryData.value =
-                        mRepository.getAttendance(classid = classid,courseId = courseId, atttime = time, keyword = keyword)
+                        mRepository.getAttendance(
+                            classid = classid,
+                            courseId = courseId,
+                            atttime = time,
+                            keyword = keyword
+                        )
                 }
 
             },
@@ -119,7 +144,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getAttendanceStu(classid: String?= null, time: String?= null) {
+    fun getAttendanceStu(classid: String? = null, time: String? = null) {
         initiateRequest(
             { mAttendanceStuData.value = mRepository.getAttendanceStu(classid, time) },
             loadState
@@ -149,7 +174,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun listByDepartment(id: String?= null, realName: String?= null) {
+    fun listByDepartment(id: String? = null, realName: String? = null) {
         initiateRequest(
             { mDepartmentPersonData.value = mRepository.listByDepartment(id, realName) },
             loadState
@@ -241,7 +266,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getSalaryList(page: String?=null) {
+    fun getSalaryList(page: String? = null) {
         initiateRequest(
             { mSalaryListData.value = mRepository.getSalaryList(page) },
             loadState
@@ -268,9 +293,17 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
             loadState
         )
     }
-    fun getPropertyRecord(lastid: String?=null,status: String?=null,type: String?=null) {
+
+    fun getPropertyRecord(lastid: String? = null, status: String? = null, type: String? = null) {
         initiateRequest(
-            { mBaseData.value = mRepository.getPropertyRecord(lastid,status,type) },
+            { mBaseData.value = mRepository.getPropertyRecord(lastid, status, type) },
+            loadState
+        )
+    }
+
+    fun getCanBookRooms(bookTime: String) {
+        initiateRequest(
+            { mBaseData.value = mRepository.getCanBookRooms(bookTime) },
             loadState
         )
     }

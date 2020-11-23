@@ -34,7 +34,6 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
     lateinit var mAdapterMonth: DaysOfMonthAdapter
     lateinit var mAdapterEvent: EventAdapter
     var isDayOfWeek = true
-    var hasInitMonth = false
     var mDataWeekTitle = ArrayList<String>()
     var mDataWeek = ArrayList<DayBean>()
     var mDataMonth = ArrayList<DayBean>()

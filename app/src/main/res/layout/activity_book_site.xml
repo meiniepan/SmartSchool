@@ -19,9 +19,66 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bac_white_bac_20"
+            android:orientation="vertical"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
 
-        <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
-            android:id="@+id/rvSite"
-            style="@style/recycler_style" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvWeekSchedule"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="第18周"
+                    android:textColor="@color/themeColor"
+                    android:textSize="@dimen/sp_18"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/ivSwitchSchedule"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:background="@drawable/ic_switch" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvWeekTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:layout_marginTop="12dp" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvWeek"
+                style="@style/recycler_horizontal_style" />
+
+        </LinearLayout>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/titleBlack"/>
+    <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
+        android:id="@+id/rvSite"
+        android:paddingTop="50dp"
+        android:background="@drawable/bac_dialog_bac_40"
+        style="@style/recycler_style" />
+</FrameLayout>
+
     </LinearLayout>
 </LinearLayout>
