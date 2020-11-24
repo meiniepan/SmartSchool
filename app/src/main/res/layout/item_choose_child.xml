@@ -18,7 +18,7 @@
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:clickable="false"
-            android:background="@drawable/selector_check_round"
+            android:background="@drawable/selector_check_timetable"
             android:button="@null"
             android:text="" />
 

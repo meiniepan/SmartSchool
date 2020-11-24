@@ -469,8 +469,16 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         return apiService.addRepair(body)
             .dataConvert(loadState)
     }
+    suspend fun addBookSite(body: AddBookSiteBody): Any {
+        return apiService.addBookSite(body)
+            .dataConvert(loadState)
+    }
     suspend fun getPropertyRecord(lastid: String?=null,status: String?=null,type: String?=null): Any {
         return apiService.getPropertyRecord(UserInfo.getUserBean().token,lastid,status,type)
+            .dataConvert(loadState)
+    }
+    suspend fun getBookSiteRecord(lastid: String? = null): Any {
+        return apiService.getBookSiteRecord(UserInfo.getUserBean().token,lastid)
             .dataConvert(loadState)
     }
     suspend fun getCanBookRooms(bookTime: String): Any {

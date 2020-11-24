@@ -354,3 +354,14 @@ fun initSiteTimes(): ArrayList<SiteItemBean> {
     return mSiteData
 
 }
+fun getSiteTimeByPosition(begin:Int, end:Int=begin): String {
+    var mB = begin
+    var mE = end+1
+    if (begin<0||begin>47){
+        mB = 0
+    }
+    if (end<0||end>47){
+        mE = 0
+    }
+    return initSiteTimes()[mB].timeStr + "-"+initSiteTimes()[mE].timeStr
+}

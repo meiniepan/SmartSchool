@@ -6,13 +6,22 @@
     android:background="@color/white"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <com.xiaoneng.ss.custom.widgets.CustomTitleBar
-        android:id="@+id/ctbNoticeDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="场地预约" />
-
+    <TextView
+        android:id="@+id/tvBookSiteRecords"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="我的预约"
+        android:layout_marginEnd="@dimen/title_padding"
+        android:layout_gravity="end|center_vertical"
+        />
+</FrameLayout>
     <LinearLayout
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"

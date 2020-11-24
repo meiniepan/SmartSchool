@@ -13,7 +13,7 @@
     <color name="tabGray">#ADB1B7</color>
 
 
-    <color name="titleBlack">#212121</color>
+    <color name="titleBlack">#222222</color>
     <color name="commonHint">#999999</color>
     <color name="splitColor">#E3E6E9</color>
     <color name="oldBlue">#5E37FF</color>
@@ -23,6 +23,7 @@
     <color name="commonRed">#C7000B</color>
     <color name="splitGray">#D3D9DF</color>
     <color name="grayF6">#F6F6F6</color>
+    <color name="gray63">#636E95</color>
     <color name="grayE0">#E0E0E0</color>
     <color name="grayDB">#DBDBDB</color>
     <color name="grayEE">#EEEEEE</color>

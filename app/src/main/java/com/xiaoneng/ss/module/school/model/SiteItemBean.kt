@@ -13,6 +13,13 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class SiteItemBean(
     var id: String? = null,
+    var roomid: String? = null,
+    var ostime: String? = null,
+    var oetime: String? = null,
+    var os_position: String? = null,
+    var oe_position: String? = null,
+    var isBooked: Boolean = false,//是否被预订
+    var isChecked: Boolean = false,//是否被选中
     var timeStr: String? = null
 
 

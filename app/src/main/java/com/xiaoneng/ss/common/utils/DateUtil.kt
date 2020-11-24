@@ -130,6 +130,45 @@ object DateUtil {
     }
 
 
+
+    @SuppressLint("SimpleDateFormat")
+    fun getBookSitePositionNearNow(date: Long = System.currentTimeMillis()): Int {
+        val s1 = SimpleDateFormat("yyyy-MM")
+        val s2 = SimpleDateFormat("dd")
+        val s3 = SimpleDateFormat("HH")
+        val s4 = SimpleDateFormat("mm")
+        var MM = s1.format(Date(date))
+        var dd = s2.format(Date(date))
+        var hh = s3.format(Date(date))
+        var mm = s4.format(Date(date))
+        if (mm.toInt() < 30) {
+            mm = "30"
+        } else if (mm.toInt() > 30) {
+            //23点后进行跨天处理
+            if (hh.toInt() == 23) {
+                var date2 = date + 30 * 60 * 1000
+                MM = s1.format(Date(date2))
+                dd = s2.format(Date(date2))
+                hh = s3.format(Date(date2))
+            } else {
+                hh = (hh.toInt() + 1).toString()
+            }
+            mm = "00"
+
+        }
+        var tStr:String = "$hh:$mm"
+        var list = initSiteTimes()
+        var p = 0
+        for (i in list.indices) {
+            if (list[i].timeStr ==tStr ){
+                p = i
+                return p
+            }
+        }
+
+        return p
+    }
+
     @SuppressLint("SimpleDateFormat")
     fun getNearTimeBeginYear(date: Long = System.currentTimeMillis()): String {
         val s1 = SimpleDateFormat("yyyy-MM")

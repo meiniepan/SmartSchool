@@ -80,7 +80,7 @@ open class BaseApplication : Application() {
             }
         })
         //该方法是【友盟+】Push后台进行日活统计及多维度推送的必调用方法，请务必调用！
-//        mPushAgent.onAppStart()
+        mPushAgent.onAppStart()
 
         /**
          * 初始化厂商通道

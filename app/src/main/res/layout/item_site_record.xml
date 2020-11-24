@@ -3,8 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_marginBottom="25dp"
+    android:layout_marginTop="10dp"
     android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
@@ -22,8 +25,7 @@
             android:textSize="@dimen/sp_30"
             android:textStyle="bold"
             android:textColor="@color/gray63"
-            android:text="A01"
-             />
+            android:text="A01" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,15 +34,16 @@
             android:text="A01"
             android:drawableLeft="@drawable/ic_didian"
             android:drawablePadding="5dp"
-            android:layout_marginStart="10dp"
-             />
+            android:layout_marginStart="10dp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/title_padding"
         android:paddingEnd="@dimen/title_padding"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:gravity="bottom"
         android:orientation="horizontal">
 
@@ -50,8 +53,7 @@
             android:textSize="@dimen/sp_14"
             android:text="20人"
             android:drawableLeft="@drawable/ic_renshu"
-            android:drawablePadding="5dp"
-             />
+            android:drawablePadding="5dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,18 +62,34 @@
             android:text="设备"
             android:drawableLeft="@drawable/ic_shebei"
             android:drawablePadding="5dp"
-            android:layout_marginStart="15dp"
-             />
+            android:layout_marginStart="15dp" />
     </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSiteItem"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/splitColor"
-        />
+        android:background="@color/splitColor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/title_padding"
+        android:paddingEnd="@dimen/title_padding"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvSiteRecordTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/tvSiteRecordRemark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
 </LinearLayout>
 

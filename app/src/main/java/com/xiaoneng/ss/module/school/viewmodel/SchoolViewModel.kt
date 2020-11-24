@@ -36,6 +36,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mDeleteAttendanceData: MutableLiveData<Any> = MutableLiveData()
     val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
     val mBaseData: MutableLiveData<Any> = MutableLiveData()
+    val mAddBookSiteData: MutableLiveData<Any> = MutableLiveData()
     val mSalaryDetailData: MutableLiveData<Any> = MutableLiveData()
     val mSalaryListData: MutableLiveData<Any> = MutableLiveData()
     val mTmpTokenData: MutableLiveData<Any> = MutableLiveData()
@@ -294,6 +295,13 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
+    fun addBookSite(body: AddBookSiteBody) {
+        initiateRequest(
+            { mAddBookSiteData.value = mRepository.addBookSite(body) },
+            loadState
+        )
+    }
+
     fun getPropertyRecord(lastid: String? = null, status: String? = null, type: String? = null) {
         initiateRequest(
             { mBaseData.value = mRepository.getPropertyRecord(lastid, status, type) },
@@ -304,6 +312,13 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     fun getCanBookRooms(bookTime: String) {
         initiateRequest(
             { mBaseData.value = mRepository.getCanBookRooms(bookTime) },
+            loadState
+        )
+    }
+
+    fun getBookSiteRecord(lastid: String? = null) {
+        initiateRequest(
+            { mBaseData.value = mRepository.getBookSiteRecord(lastid) },
             loadState
         )
     }

@@ -157,18 +157,16 @@ class AddPropertyActivity : SpeechTranscriberActivity<SchoolViewModel>() {
 
     private fun doRealConfirm() {
         var fileInfo = ArrayList<FileInfoBean>()
-        var fileInfoStr:String?=null
         if (mUrlData.size > 0) {
             mUrlData.forEach {
                 fileInfo.add(FileInfoBean(url = it))
             }
-            fileInfoStr = Gson().toJson(fileInfo)
         }
 
         var bean = RepairBody(
             token = UserInfo.getUserBean().token,
             remark = etPropertyRemark.text.toString(),
-            fileinfo = Gson().toJson(fileInfo)
+            fileinfo = fileInfo
         )
         mViewModel.addRepair(bean)
     }

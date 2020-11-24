@@ -119,7 +119,7 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
                     contentLayout.currentItem = Constant.SCHOOL
                     icon0.setImageResource(R.drawable.ic_tab_todo)
                     icon1.setImageResource(R.drawable.ic_tab_school_c)
-                    icon2.setImageResource(R.drawable.ic_tab_mine_c)
+                    icon2.setImageResource(R.drawable.ic_tab_mine)
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.menu_mine -> {

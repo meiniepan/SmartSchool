@@ -27,7 +27,11 @@
             android:paddingBottom="12dp">
 
 
-            <include layout="@layout/item_site" />
+            <include layout="@layout/item_site"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,12 +50,13 @@
                     android:background="@drawable/selector_jian" />
 
                 <TextView
+                    android:id="@+id/tvAddSiteTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:textStyle="bold"
-                    android:textColor="@color/commonHint" />
+                    />
 
                 <ImageView
                     android:id="@+id/ivAddSiteJia"
@@ -75,19 +80,20 @@
                     android:layout_weight="1"
                     android:textStyle="bold"
                     android:text="日期"
-                    android:textColor="@color/commonHint" />
+                    />
                 <TextView
+                    android:id="@+id/tvAddSiteDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2020/11/11"
-                    android:drawableRight="@drawable/ic_next"
+                    android:text="2020"
                     android:drawablePadding="5dp"
-                    android:textColor="@color/commonHint" />
+                    android:drawableRight="@drawable/ic_next"
+                     />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:paddingStart="@dimen/title_padding"
                 android:paddingEnd="@dimen/title_padding"
                 android:paddingTop="20dp"
@@ -100,68 +106,18 @@
                     android:layout_weight="1"
                     android:textStyle="bold"
                     android:text="会议主题"
-                    android:textColor="@color/commonHint" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2020/11/11"
-                    android:drawableRight="@drawable/ic_next"
-                    android:drawablePadding="5dp"
-                    android:textColor="@color/commonHint" />
+                    />
+                <EditText
+                    android:id="@+id/etAddSiteRemark"
+                    style="@style/edit_style"
+                    android:hint="请描述会议主题"
+                    />
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/title_padding"
-                android:paddingEnd="@dimen/title_padding"
-                android:paddingTop="20dp"
-                android:gravity="center_vertical"
-                android:paddingBottom="20dp">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textStyle="bold"
-                    android:text="提醒"
-                    android:textColor="@color/commonHint" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2020/11/11"
-                    android:drawableRight="@drawable/ic_next"
-                    android:drawablePadding="5dp"
-                    android:textColor="@color/commonHint" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/title_padding"
-                android:paddingEnd="@dimen/title_padding"
-                android:paddingTop="20dp"
-                android:gravity="center_vertical"
-                android:paddingBottom="20dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textStyle="bold"
-                    android:text="每周重复"
-                    android:textColor="@color/commonHint" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2020/11/11"
-                    android:drawableRight="@drawable/ic_next"
-                    android:drawablePadding="5dp"
-                    android:textColor="@color/commonHint" />
-            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
     <TextView
+        android:id="@+id/tvAddSiteConfirm"
         style="@style/button_bottom_blue_bac_style"
         android:layout_marginBottom="28dp"
         android:text="预约"

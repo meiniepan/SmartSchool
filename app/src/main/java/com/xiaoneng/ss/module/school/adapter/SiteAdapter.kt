@@ -1,5 +1,6 @@
 package com.xiaoneng.ss.module.school.adapter
 
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -21,12 +22,14 @@ import com.xiaoneng.ss.module.school.view.AddBookSiteActivity
  */
 class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
     BaseQuickAdapter<SiteBean, BaseViewHolder>(layoutId, listData) {
+    private var mP: Int = -1
     var recyclerViews = ArrayList<RecyclerView>()
     var mScroll: RecyclerView? = null
 
     override fun convert(viewHolder: BaseViewHolder, item: SiteBean) {
         viewHolder.let { holder ->
-
+            var tvRoomName = holder.getView<TextView>(R.id.tvSiteItemRoomName)
+            tvRoomName.text = item.roomname
             initAdapter(holder, item)
         }
     }
@@ -60,7 +63,7 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
         })
         var mSiteData = initSiteTimes()
 
-        mSiteData.addAll(item.list)
+        mSiteData.addAll(item.books)
 
         mAdapter = SiteItemAdapter(R.layout.item_site_item, mSiteData)
 
@@ -68,12 +71,19 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = mAdapter
         }
+        if (mP>-1){
+            mRecycler.scrollToPosition(mP)
+        }
         mAdapter.setOnItemClickListener { _, view, position ->
             item.position = position
             mStartActivity<AddBookSiteActivity>(mContext) {
                 putExtra(Constant.DATA, item)
             }
         }
+    }
+
+    fun setPosition(position: Int) {
+        this.mP = position
     }
 
 

@@ -11,7 +11,7 @@ data class RepairBody(
     var token: String? = null,
     var remark: String? = null,
     var status: String? = null,
-    var fileinfo: String? = null,
+    var fileinfo: ArrayList<FileInfoBean>? = null,
     var typeid: String? = null,
     var deviceid: String? = null,
     var repairerid: String? = null,

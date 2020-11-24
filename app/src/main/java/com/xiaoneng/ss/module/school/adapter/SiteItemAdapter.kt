@@ -23,6 +23,8 @@ class SiteItemAdapter(layoutId: Int, listData: MutableList<SiteItemBean>?) :
             var space = holder.getView<View>(R.id.vSpace)
             var view = holder.getView<View>(R.id.tvItemSitePosition)
             var line1 = holder.getView<View>(R.id.vItemSiteLine1)
+            var line2 = holder.getView<View>(R.id.vItemSiteLine2)
+            holder.setText(R.id.tvItemSiteTime,item.timeStr)
             if (holder.adapterPosition == 0) {
                 space.visibility = View.VISIBLE
             } else {
@@ -30,12 +32,19 @@ class SiteItemAdapter(layoutId: Int, listData: MutableList<SiteItemBean>?) :
             }
             if (holder.adapterPosition % 2 == 0) {
                 line1.visibility  = View.VISIBLE
-                view.setBackgroundColor(mContext.resources.getColor(R.color.grayDB))
             } else {
                 line1.visibility  = View.INVISIBLE
-                view.setBackgroundColor(mContext.resources.getColor(R.color.transparent))
             }
-            holder.setText(R.id.tvItemSiteTime,item.timeStr)
+            if (item.isChecked) {
+                view.setBackgroundColor(mContext.resources.getColor(R.color.themeColor))
+                line2.visibility  = View.GONE
+            } else if (item.isBooked){
+                view.setBackgroundColor(mContext.resources.getColor(R.color.grayDB))
+                line2.visibility  = View.GONE
+            }else{
+                view.setBackgroundColor(mContext.resources.getColor(R.color.transparent))
+                line2.visibility  = View.VISIBLE
+            }
         }
 
     }

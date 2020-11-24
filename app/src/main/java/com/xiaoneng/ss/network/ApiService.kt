@@ -907,6 +907,14 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
+     *添加场地预约
+     */
+    @POST("/api/v17/admin/spacebook/add")
+    suspend fun addBookSite(
+        @Body requestBody: AddBookSiteBody
+    ): BaseResponse<Any>
+
+    /**
      *报修/维修记录列表按id拉列表
      */
     @FormUrlEncoded
@@ -916,6 +924,16 @@ interface ApiService {
         @Field("lastid") lastid: String?,
         @Field("status") status: String?,
         @Field("type") type: String?
+    ): BaseResponse<Any>
+
+    /**
+     *我的预约列表瀑布流
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/admin/spacebook/myListsByLID")
+    suspend fun getBookSiteRecord(
+        @Field("token") token: String?,
+        @Field("lastid") lastid: String?
     ): BaseResponse<Any>
 
     /**
