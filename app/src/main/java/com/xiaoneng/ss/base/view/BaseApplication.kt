@@ -57,8 +57,6 @@ open class BaseApplication : Application() {
 
     private fun initPush() {
 
-        PushAgent.getInstance(this).onAppStart()
-
         UMConfigure.init(
             this,
             "5f8fe60b2065791705f41ce5",
@@ -81,6 +79,9 @@ open class BaseApplication : Application() {
                 Log.e(TAG, "注册失败：-------->  s:$s,s1:$s1")
             }
         })
+        //该方法是【友盟+】Push后台进行日活统计及多维度推送的必调用方法，请务必调用！
+//        mPushAgent.onAppStart()
+
         /**
          * 初始化厂商通道
          */
@@ -89,7 +90,11 @@ open class BaseApplication : Application() {
         //vivo 通道
         VivoRegister.register(this)
         //OPPO通道，参数1为app key，参数2为app secret
-        OppoRegister.register(this, "5cbd913970a44ecc9e54e536f68d1fe8", "0d004009e32f42149a6c5e6c8fbf40cd")
+        OppoRegister.register(
+            this,
+            "5cbd913970a44ecc9e54e536f68d1fe8",
+            "0d004009e32f42149a6c5e6c8fbf40cd"
+        )
 
     }
 

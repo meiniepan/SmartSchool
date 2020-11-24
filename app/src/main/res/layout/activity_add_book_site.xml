@@ -13,11 +13,10 @@
         android:layout_height="wrap_content"
         app:title="场地预约" />
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/contentLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_weight="1"
+        style="@style/nes_scroll_style">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,41 +27,143 @@
             android:paddingBottom="12dp">
 
 
-            <include
-                layout="@layout/item_site"
-                />
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingStart="@dimen/title_padding"
-    android:paddingEnd="@dimen/title_padding"
-    android:paddingTop="20dp"
-    android:gravity="center_vertical"
-    android:paddingBottom="20dp"
-    >
-    <ImageView
-        android:id="@+id/ivAddSiteJian"
-        android:layout_width="31dp"
-        android:layout_height="31dp"
-        android:background="@drawable/selector_jian"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textColor="@color/commonHint"
-        />
-    <ImageView
-        android:id="@+id/ivAddSiteJia"
-        android:layout_width="31dp"
-        android:layout_height="31dp"
-        android:background="@drawable/selector_jia"
-        />
-</LinearLayout>
-        </LinearLayout>
+            <include layout="@layout/item_site" />
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/title_padding"
+                android:paddingEnd="@dimen/title_padding"
+                android:paddingTop="20dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="20dp">
+
+                <ImageView
+                    android:id="@+id/ivAddSiteJian"
+                    android:layout_width="31dp"
+                    android:layout_height="31dp"
+                    android:background="@drawable/selector_jian" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/commonHint" />
+
+                <ImageView
+                    android:id="@+id/ivAddSiteJia"
+                    android:layout_width="31dp"
+                    android:layout_height="31dp"
+                    android:background="@drawable/selector_jia" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/title_padding"
+                android:paddingEnd="@dimen/title_padding"
+                android:paddingTop="20dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:text="日期"
+                    android:textColor="@color/commonHint" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2020/11/11"
+                    android:drawableRight="@drawable/ic_next"
+                    android:drawablePadding="5dp"
+                    android:textColor="@color/commonHint" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/title_padding"
+                android:paddingEnd="@dimen/title_padding"
+                android:paddingTop="20dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:text="会议主题"
+                    android:textColor="@color/commonHint" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2020/11/11"
+                    android:drawableRight="@drawable/ic_next"
+                    android:drawablePadding="5dp"
+                    android:textColor="@color/commonHint" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/title_padding"
+                android:paddingEnd="@dimen/title_padding"
+                android:paddingTop="20dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:text="提醒"
+                    android:textColor="@color/commonHint" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2020/11/11"
+                    android:drawableRight="@drawable/ic_next"
+                    android:drawablePadding="5dp"
+                    android:textColor="@color/commonHint" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/title_padding"
+                android:paddingEnd="@dimen/title_padding"
+                android:paddingTop="20dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:text="每周重复"
+                    android:textColor="@color/commonHint" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2020/11/11"
+                    android:drawableRight="@drawable/ic_next"
+                    android:drawablePadding="5dp"
+                    android:textColor="@color/commonHint" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <TextView
+        style="@style/button_bottom_blue_bac_style"
+        android:layout_marginBottom="28dp"
+        android:text="预约"
+        />
 </LinearLayout>
