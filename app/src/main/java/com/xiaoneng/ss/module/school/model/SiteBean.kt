@@ -14,6 +14,9 @@ import kotlinx.android.parcel.Parcelize
 data class SiteBean(
     var id: String?,
     var roomname: String?,
+    var classroomname: String?,
+    var classroom: RoomBean?,
+    var addr: String?,
     var operatorid: String?,
     var operator: UserBeanSimple?,
     var remark: String? = null,
@@ -21,7 +24,8 @@ data class SiteBean(
     var oetime: String? = null,
     var os_position: String? = null,
     var oe_position: String? = null,
-    var books:ArrayList<SiteItemBean> = ArrayList(),
-    var position: Int = -1
+    var books:ArrayList<SiteItemBean>? = ArrayList(),
+    var position: Int = -1,
+    var startType: Int = 0//0灰色进入  1白色可选进入
 
     ) : Parcelable

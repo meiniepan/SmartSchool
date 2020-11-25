@@ -83,13 +83,13 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
 
     private fun initAdapterWeekTitle() {
         mDataWeekTitle.clear()
-        mDataWeekTitle.add("周日")
-        mDataWeekTitle.add("周一")
-        mDataWeekTitle.add("周二")
-        mDataWeekTitle.add("周三")
-        mDataWeekTitle.add("周四")
-        mDataWeekTitle.add("周五")
-        mDataWeekTitle.add("周六")
+        mDataWeekTitle.add("日")
+        mDataWeekTitle.add("一")
+        mDataWeekTitle.add("二")
+        mDataWeekTitle.add("三")
+        mDataWeekTitle.add("四")
+        mDataWeekTitle.add("五")
+        mDataWeekTitle.add("六")
         rvWeekTitle.apply {
             layoutManager = GridLayoutManager(context, 7)
             adapter = WeekTitleAdapter(R.layout.item_week_title, mDataWeekTitle)

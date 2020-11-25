@@ -13,6 +13,7 @@ import kotlin.jvm.internal.Intrinsics
  * @author: Burning
  * @CreateDate: 2020/4/5 20:24
  */
+@SuppressLint("SimpleDateFormat")
 object DateUtil {
     /**
      * 获取当前时刻
@@ -90,7 +91,7 @@ object DateUtil {
                     5,
                     10
                 )
-            }else{
+            } else {
                 result = date.substring(
                     2,
                     10
@@ -130,7 +131,6 @@ object DateUtil {
     }
 
 
-
     @SuppressLint("SimpleDateFormat")
     fun getBookSitePositionNearNow(date: Long = System.currentTimeMillis()): Int {
         val s1 = SimpleDateFormat("yyyy-MM")
@@ -156,11 +156,11 @@ object DateUtil {
             mm = "00"
 
         }
-        var tStr:String = "$hh:$mm"
+        var tStr: String = "$hh:$mm"
         var list = initSiteTimes()
         var p = 0
         for (i in list.indices) {
-            if (list[i].timeStr ==tStr ){
+            if (list[i].timeStr == tStr) {
                 p = i
                 return p
             }
@@ -250,24 +250,26 @@ object DateUtil {
     fun formatDateCustomMmDay(date: String): String {
         val sdf = SimpleDateFormat("MM月dd日")
         var str = ""
-        if (date.length>7){
-            str = date.substring(4,6)+"月"+date.substring(6,8)+"日"
+        if (date.length > 7) {
+            str = date.substring(4, 6) + "月" + date.substring(6, 8) + "日"
         }
         return str
 
     }
 
-    @SuppressLint("SimpleDateFormat")
-    fun getWhichMonth(date: Long = Date().time): String {
+    fun getWhichMonth(date: Long? = Date().time, offset: Int = 0): String {
         val sdf = SimpleDateFormat("yyyy年MM月")
-        return sdf.format(Date(date))
+        val cal = Calendar.getInstance()
+        cal.add(Calendar.MONTH, offset)
+        return sdf.format(Date(cal.timeInMillis))
 
     }
 
-    fun isSameDay(date: Long = Date().time): Boolean {
+
+    fun isSameDay(date: Long = Date().time,date0: Long = System.currentTimeMillis()): Boolean {
         var cal1: Calendar = Calendar.getInstance()
         var cal2: Calendar = Calendar.getInstance()
-        var date1 = Date(System.currentTimeMillis())
+        var date1 = Date(date0)
         var date2 = Date(date)
         cal1.time = date1
         cal2.time = date2

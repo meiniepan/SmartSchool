@@ -1,5 +1,6 @@
 package com.xiaoneng.ss.module.school.view
 
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +10,7 @@ import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.common.utils.Lunar
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.netResponseFormat
+import com.xiaoneng.ss.module.circular.adapter.DaysOfMonthAdapter
 import com.xiaoneng.ss.module.circular.adapter.DaysOfWeekAdapter
 import com.xiaoneng.ss.module.circular.adapter.WeekTitleAdapter
 import com.xiaoneng.ss.module.circular.model.DayBean
@@ -26,8 +28,11 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private var chosenDay: Long? = System.currentTimeMillis()
     lateinit var mAdapterWeek: DaysOfWeekAdapter
     var isDayOfWeek = true
+    var dateOffset = 0
     var mDataWeekTitle = ArrayList<String>()
     var mDataWeek = ArrayList<DayBean>()
+    var mDataMonth = ArrayList<DayBean>()
+    lateinit var mAdapterMonth: DaysOfMonthAdapter
     lateinit var mAdapter: SiteAdapter
     var mData: ArrayList<SiteBean> = ArrayList()
 
@@ -38,9 +43,20 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initView() {
         super.initView()
         tvWeekSchedule.text = Lunar.getWhichWeek(chosenDay)
-
+        ivSwitchSchedule.setOnClickListener {
+            switch()
+        }
+        ivDateBack.setOnClickListener {
+            dateOffset--
+            setMonthDays()
+        }
+        ivDateNext.setOnClickListener {
+            dateOffset++
+            setMonthDays()
+        }
         initAdapterWeekTitle()
         initAdapterDayOfWeek()
+        initAdapterDayOfMonth()
         mDataWeek.clear()
         mDataWeek.addAll(Lunar.getCurrentDaysOfWeek(chosenDay))
         initAdapter()
@@ -49,14 +65,26 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
     }
 
+    private fun setMonthDays() {
+        tvWeekSchedule.text = DateUtil.getWhichMonth(offset = dateOffset)
+        mDataMonth.clear()
+        mDataMonth.addAll(Lunar.getDaysOfMonth(chosenDay = chosenDay!!, offset = dateOffset))
+        mAdapterMonth.notifyDataSetChanged()
+    }
+
     override fun initData() {
         super.initData()
-        getData()
     }
 
     override fun getData() {
         super.getData()
+        showLoading()
         mViewModel.getCanBookRooms(DateUtil.formatDateCustomDay(chosenDay!!))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getData()
     }
 
     private fun initAdapterWeekTitle() {
@@ -93,6 +121,32 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
     }
 
+    private fun initAdapterDayOfMonth() {
+        mDataMonth.clear()
+        mDataMonth.addAll(Lunar.getDaysOfMonth())
+        mAdapterMonth = DaysOfMonthAdapter(R.layout.item_days_week, mDataMonth)
+
+        rvMonth.apply {
+            layoutManager = GridLayoutManager(context, 7)
+
+            adapter = mAdapterMonth
+        }
+        mAdapterMonth.setOnItemClickListener { adapter, view, position ->
+            if (mDataMonth[position].inMonth) {
+                chosenDay = mDataMonth[position].day
+                for (i in 0 until mDataMonth.size) {
+                    mDataMonth[i].isCheck = i == position
+                }
+                adapter.notifyDataSetChanged()
+                mDataWeek.clear()
+                mDataWeek.addAll(Lunar.getCurrentDaysOfWeek(chosenDay))
+                mAdapterWeek.notifyDataSetChanged()
+                switch()
+                getData()
+            }
+        }
+    }
+
     private fun initAdapter() {
         mAdapter = SiteAdapter(R.layout.item_site, mData)
         rvSite.recyclerView.apply {
@@ -101,7 +155,34 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         mAdapter.setOnItemClickListener { adapter, view, position ->
-            mStartActivity<AddBookSiteActivity>(this)
+
+        }
+    }
+
+    private fun switch() {
+        isDayOfWeek = if (isDayOfWeek) {
+            setDateNextVisibility(isDayOfWeek)
+            rvWeek.visibility = View.GONE
+            rvMonth.visibility = View.VISIBLE
+            tvWeekSchedule.text = DateUtil.getWhichMonth(offset = dateOffset)
+            false
+        } else {
+            setDateNextVisibility(isDayOfWeek)
+            rvWeek.visibility = View.VISIBLE
+            rvMonth.visibility = View.GONE
+            tvWeekSchedule.text = Lunar.getWhichWeek(chosenDay)
+            true
+        }
+
+    }
+
+    private fun setDateNextVisibility(visibility: Boolean) {
+        if (!visibility) {
+            ivDateBack.visibility = View.GONE
+            ivDateNext.visibility = View.GONE
+        } else {
+            ivDateBack.visibility = View.VISIBLE
+            ivDateNext.visibility = View.VISIBLE
         }
     }
 
@@ -109,6 +190,7 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mViewModel.mBaseData.observe(this, Observer { response ->
             response?.let {
                 netResponseFormat<List<SiteBean>>(it)?.let {
+                    mData.clear()
                     mData.addAll(it)
                     mAdapter.setPosition(DateUtil.getBookSitePositionNearNow(chosenDay!!))
                     rvSite.notifyDataSetChanged()

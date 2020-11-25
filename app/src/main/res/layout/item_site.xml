@@ -26,6 +26,7 @@
              />
 
         <TextView
+            android:id="@+id/tvSiteItemRoomAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_14"
@@ -41,10 +42,12 @@
         android:paddingStart="@dimen/title_padding"
         android:paddingEnd="@dimen/title_padding"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:gravity="bottom"
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tvSiteItemRoomCapacity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_14"
@@ -54,6 +57,7 @@
              />
 
         <TextView
+            android:id="@+id/tvSiteItemRoomEquip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_14"
@@ -65,7 +69,6 @@
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSiteItem"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <View

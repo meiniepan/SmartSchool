@@ -56,10 +56,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="recycler_margin_style">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:overScrollMode">never</item>
+    <style name="recycler_margin_style" parent="recycler_style">
         <item name="android:layout_marginStart">@dimen/title_padding</item>
         <item name="android:layout_marginEnd">@dimen/title_padding</item>
     </style>

@@ -28,6 +28,7 @@
             android:text="A01" />
 
         <TextView
+            android:id="@+id/tvSiteItemRoomAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_14"
@@ -48,6 +49,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tvSiteItemRoomCapacity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_14"
@@ -56,6 +58,7 @@
             android:drawablePadding="5dp" />
 
         <TextView
+            android:id="@+id/tvSiteItemRoomEquip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_14"
@@ -76,20 +79,56 @@
         android:paddingStart="@dimen/title_padding"
         android:paddingEnd="@dimen/title_padding"
         android:layout_marginTop="10dp"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvSiteRecordTime"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_14" />
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_marginTop="10dp"
-            android:id="@+id/tvSiteRecordRemark"
+            <TextView
+                android:id="@+id/tvSiteRecordTime"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/tvSiteRecordRemark"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:textSize="@dimen/sp_14" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_14" />
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvSiteRecordStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:textStyle="bold"
+                android:text="未开始"
+                android:gravity="center"
+                android:textSize="@dimen/sp_18" />
+
+            <TextView
+                android:id="@+id/tvSiteRecordCancel"
+                android:layout_marginTop="10dp"
+                android:layout_width="76dp"
+                android:background="@drawable/bac_blue_line_12"
+                android:text="取消预约"
+                android:textColor="@color/themeColor"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:textSize="@dimen/sp_14" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
 

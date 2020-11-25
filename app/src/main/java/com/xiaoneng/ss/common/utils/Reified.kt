@@ -351,6 +351,7 @@ fun initSiteTimes(): ArrayList<SiteItemBean> {
     mSiteData.add(SiteItemBean(timeStr = "22:30"))
     mSiteData.add(SiteItemBean(timeStr = "23:00"))
     mSiteData.add(SiteItemBean(timeStr = "23:30"))
+    mSiteData.add(SiteItemBean(timeStr = "00:00"))
     return mSiteData
 
 }
@@ -364,4 +365,14 @@ fun getSiteTimeByPosition(begin:Int, end:Int=begin): String {
         mE = 0
     }
     return initSiteTimes()[mB].timeStr + "-"+initSiteTimes()[mE].timeStr
+}
+
+fun String?.toIntSafe(): Int {
+    var result = -1
+    return try {
+        this!!.toInt()
+    }catch (e:java.lang.Exception){
+        result
+    }
+
 }

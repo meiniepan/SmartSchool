@@ -9,6 +9,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.initSiteTimes
 import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.common.utils.toIntSafe
 import com.xiaoneng.ss.module.school.model.SiteBean
 import com.xiaoneng.ss.module.school.view.AddBookSiteActivity
 
@@ -29,7 +30,7 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
     override fun convert(viewHolder: BaseViewHolder, item: SiteBean) {
         viewHolder.let { holder ->
             var tvRoomName = holder.getView<TextView>(R.id.tvSiteItemRoomName)
-            tvRoomName.text = item.roomname
+            tvRoomName.text = item.classroomname
             initAdapter(holder, item)
         }
     }
@@ -62,8 +63,11 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
             }
         })
         var mSiteData = initSiteTimes()
-
-        mSiteData.addAll(item.books)
+        item.books?.forEach {
+            for (i in it.os_position!!.toIntSafe()..it.oe_position!!.toIntSafe()) {
+                mSiteData[i].isBooked = true
+            }
+        }
 
         mAdapter = SiteItemAdapter(R.layout.item_site_item, mSiteData)
 
@@ -71,12 +75,17 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = mAdapter
         }
-        if (mP>-1){
+        if (mP > -1) {
             mRecycler.scrollToPosition(mP)
         }
         mAdapter.setOnItemClickListener { _, view, position ->
             item.position = position
             mStartActivity<AddBookSiteActivity>(mContext) {
+                if (mSiteData[position].isBooked) {
+                    item.startType = 0
+                } else {
+                    item.startType = 1
+                }
                 putExtra(Constant.DATA, item)
             }
         }

@@ -32,6 +32,12 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
+        llTonggao.setOnClickListener {
+            mStartActivity<NoticeActivity>(context)
+        }
+        llRicheng.setOnClickListener {
+            mStartActivity<ScheduleActivity>(context)
+        }
         llTask.setOnClickListener {
             mStartActivity<TaskActivity>(context)
         }

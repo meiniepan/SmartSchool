@@ -11,9 +11,6 @@ import kotlinx.android.parcel.Parcelize
  * Time: 17:06
  */
 @Parcelize
-data class FileInfoBean(
-    var name: String ? = null,
-    var type: String ? = null,
-    var url: String ? = null,
-    var ext: FileExtBean ? = null
+data class FileExtBean(
+    var ext: String ? = null
     ):Parcelable

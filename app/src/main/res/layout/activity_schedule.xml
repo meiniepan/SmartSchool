@@ -11,21 +11,18 @@
         android:id="@+id/ctbNoticeDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="报修报送" />
+        app:title="汇文集团" />
 
     <LinearLayout
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/tintBac"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        >
-
-        <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
-            android:id="@+id/rvPropertyRecord"
-            style="@style/recycler_style" />
+        android:orientation="vertical">
+<fragment
+    android:id="@+id/fragment"
+    android:name="com.xiaoneng.ss.module.circular.view.ScheduleFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
 
     </LinearLayout>
 </LinearLayout>

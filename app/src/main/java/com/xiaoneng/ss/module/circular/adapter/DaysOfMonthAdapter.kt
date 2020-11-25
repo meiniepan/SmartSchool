@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.module.circular.model.DayBean
 import com.xiaoneng.ss.module.circular.model.ScheduleBean
 
@@ -44,7 +45,12 @@ class DaysOfMonthAdapter(layoutId: Int, listData: MutableList<DayBean>?) :
                 holder.setTextColor(R.id.tvDay2, mContext.resources.getColor(R.color.white))
             } else {
                 holder.setBackgroundRes(R.id.tvDay2, 0)
-                holder.setTextColor(R.id.tvDay2, mContext.resources.getColor(R.color.titleBlack))
+                holder.setTextColor(R.id.tvDay2, mContext.resources.getColor(R.color.white))
+            }
+            if (DateUtil.isSameDay(item?.day!!)) {
+                holder.setTextColor(R.id.tvDay2, mContext.resources.getColor(R.color.colorGold))
+            }else{
+                holder.setTextColor(R.id.tvDay2, mContext.resources.getColor(R.color.white))
             }
         }
     }

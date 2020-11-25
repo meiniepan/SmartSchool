@@ -4,13 +4,13 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.module.school.adapter.SiteRecordAdapter
 import com.xiaoneng.ss.module.school.model.BookSiteRecordsResp
 import com.xiaoneng.ss.module.school.model.SiteBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_book_site_records.*
+import org.jetbrains.anko.toast
 
 /**
  * @author Burning
@@ -48,8 +48,9 @@ class BookSiteRecordsActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             setAdapter(mAdapter)
         }
 
-        mAdapter.setOnItemClickListener { adapter, view, position ->
-            mStartActivity<AddBookSiteActivity>(this)
+        mAdapter.setOnItemChildClickListener { adapter, view, position ->
+            if (view.id == R.id.tvSiteRecordCancel)
+                toast(R.string.not_open)
         }
     }
 

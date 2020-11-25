@@ -417,7 +417,47 @@ class Lunar(cal: Calendar) {
             }
             return list
         }
+
+        fun getDaysOfMonth(chosenDay: Long= System.currentTimeMillis(),offset: Int= 0): ArrayList<DayBean> {
+            val cal = Calendar.getInstance()
+            cal.add(Calendar.MONTH, offset)
+            val maxDays = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
+            val calToday = Calendar.getInstance()
+            calToday.timeInMillis = chosenDay
+            var d = cal[Calendar.DAY_OF_MONTH]
+            d = 1 - d
+            // 所在月开始日期
+            cal.add(Calendar.DAY_OF_WEEK, d)
+            //计算开始日期是星期几
+            val which = cal[Calendar.DAY_OF_WEEK]
+            val beginNum = which - 1
+            val list = ArrayList<DayBean>()
+            var bean = DayBean()
+            if (beginNum > 0) {
+                for (i in 0 until beginNum) {
+                    list.add(bean)
+                }
+            }
+            var isToday = false
+            for (i in 0 until maxDays) {
+                isToday = DateUtil.isSameDay(cal.timeInMillis,calToday.timeInMillis)
+                var beanList = ArrayList<ScheduleBean>()
+
+                bean = DayBean(
+                    cal.timeInMillis, cal[Calendar.DAY_OF_MONTH].toString() + "",
+                    Lunar(cal).chinaDayString,
+                    isToday,
+                    true,
+                    beanList
+                )
+                list.add(bean)
+                cal.add(Calendar.DAY_OF_WEEK, 1)
+            }
+            return list
+        }
     }
+
+
 
     init {
         val yearCyl: Int
