@@ -368,7 +368,7 @@ fun getSiteTimeByPosition(begin:Int, end:Int=begin): String {
 }
 
 fun String?.toIntSafe(): Int {
-    var result = -1
+    var result = 0
     return try {
         this!!.toInt()
     }catch (e:java.lang.Exception){
