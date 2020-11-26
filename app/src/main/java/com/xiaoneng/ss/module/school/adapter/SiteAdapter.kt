@@ -27,6 +27,7 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
     var recyclerViews = ArrayList<RecyclerView>()
     var mScroll: RecyclerView? = null
 
+
     override fun convert(viewHolder: BaseViewHolder, item: SiteBean) {
         viewHolder.let { holder ->
             var tvRoomName = holder.getView<TextView>(R.id.tvSiteItemRoomName)
@@ -38,8 +39,10 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
     private fun initAdapter(holder: BaseViewHolder, item: SiteBean) {
         lateinit var mAdapter: SiteItemAdapter
         var mRecycler: RecyclerView = holder.getView(R.id.rvSiteItem)
-        recyclerViews.add(mRecycler)
-
+        if (!recyclerViews.contains(mRecycler)) {
+            recyclerViews.add(mRecycler)
+        }
+        mRecycler.clearOnScrollListeners()
         mRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
