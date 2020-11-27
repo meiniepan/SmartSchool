@@ -502,6 +502,10 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         return apiService.getBookSiteRecord(UserInfo.getUserBean().token, lastid)
             .dataConvert(loadState)
     }
+    suspend fun getPropertyType(lastid: String? = null): Any {
+        return apiService.getPropertyType(UserInfo.getUserBean().token, lastid)
+            .dataConvert(loadState)
+    }
 
     suspend fun getCanBookRooms(bookTime: String): Any {
         return apiService.getCanBookRooms(UserInfo.getUserBean().token, bookTime)

@@ -323,5 +323,12 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
+    fun getPropertyType(lastid: String? = null) {
+        initiateRequest(
+            { mBaseData.value = mRepository.getPropertyType(lastid) },
+            loadState
+        )
+    }
+
 
 }

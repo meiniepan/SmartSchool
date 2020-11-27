@@ -26,7 +26,7 @@ interface ApiService {
     /**
      * 学生登陆接口
      */
-    @POST("/api/v1/user/login/sloginin")
+    @POST("/api/v17/user/login/sloginin")
     suspend fun onLogin1(
         @Body requestBody: LoginReq
     ): BaseResponse<UserBean>
@@ -34,7 +34,7 @@ interface ApiService {
     /**
      *教师登录接口
      */
-    @POST("/api/v1/user/login/eloginin")
+    @POST("/api/v17/user/login/eloginin")
     suspend fun onLogin2(
         @Body requestBody: LoginReq
     ): BaseResponse<UserBean>
@@ -42,7 +42,7 @@ interface ApiService {
     /**
      * 家长登陆接口
      */
-    @POST("/api/v1/user/login/ploginin")
+    @POST("/api/v17/user/login/ploginin")
     suspend fun onLogin3(
         @Body requestBody: LoginReq
     ): BaseResponse<UserBean>
@@ -51,7 +51,7 @@ interface ApiService {
      * 学生登录获取短信验证码
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/login/smsCode")
+    @POST("/api/v17/user/login/smsCode")
     suspend fun onSmsCode1(
         @Field("phone") phone: String?
     ): BaseResponse<CaptchaResponse>
@@ -60,7 +60,7 @@ interface ApiService {
      * 教师登录获取短信验证码
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/login/esmsCode")
+    @POST("/api/v17/user/login/esmsCode")
     suspend fun onSmsCode2(
         @Field("phone") phone: String?
     ): BaseResponse<CaptchaResponse>
@@ -69,7 +69,7 @@ interface ApiService {
      * 家长登录获取短信验证码
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/login/pSmsCode")
+    @POST("/api/v17/user/login/pSmsCode")
     suspend fun onSmsCode3(
         @Field("phone") phone: String?
     ): BaseResponse<CaptchaResponse>
@@ -78,7 +78,7 @@ interface ApiService {
      * 家长登录获取短信验证码
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/student/bindSmsCode")
+    @POST("/api/v17/user/student/bindSmsCode")
     suspend fun onSmsCode4(
         @Field("phone") phone: String? = null,
         @Field("token") token: String?
@@ -87,7 +87,7 @@ interface ApiService {
     /**
      * 学生注册绑定接口
      */
-    @POST("/api/v1/user/login/register")
+    @POST("/api/v17/user/login/register")
     suspend fun onStuRegister(
         @Body requestBody: RegisterReq
     ): BaseResponse<RegisterResponse>
@@ -96,7 +96,7 @@ interface ApiService {
     /**
      * 学生信息修改接口
      */
-    @POST("/api/v1/user/student/modify")
+    @POST("/api/v17/user/student/modify")
     suspend fun modifyInfo1(
         @Body requestBody: UserBean
     ): BaseResponse<UserBean>
@@ -104,7 +104,7 @@ interface ApiService {
     /**
      * 教师信息修改接口
      */
-    @POST("/api/v1/user/teachers/modify")
+    @POST("/api/v17/user/teachers/modify")
     suspend fun modifyInfo2(
         @Body requestBody: UserBean
     ): BaseResponse<UserBean>
@@ -113,7 +113,7 @@ interface ApiService {
      * 学生家长姓名修改
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/student/modifyParents")
+    @POST("/api/v17/user/student/modifyParents")
     suspend fun modifyParentName(
         @Field("token") token: String? = null,
         @Field("realname") realname: String?
@@ -124,7 +124,7 @@ interface ApiService {
      * 学生信息查询
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/student/info")
+    @POST("/api/v17/user/student/info")
     suspend fun onQueryInfo1(
         @Field("token") token: String?
     ): BaseResponse<UserBean>
@@ -133,7 +133,7 @@ interface ApiService {
      * 教师信息查询
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/teachers/info")
+    @POST("/api/v17/user/teachers/info")
     suspend fun onQueryInfo2(
         @Field("token") token: String?
     ): BaseResponse<UserBean>
@@ -161,7 +161,7 @@ interface ApiService {
      *学生通知列表
      */
     @FormUrlEncoded
-    @POST("/api/v1/student/notices/lists")
+    @POST("/api/v17/student/notices/lists")
     suspend fun getNoticeList(
         @Field("token") token: String? = null,
         @Field("id") lastid: String? = null,
@@ -173,7 +173,7 @@ interface ApiService {
      *教师通知列表
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/notices/lists")
+    @POST("/api/v17/teacher/notices/lists")
     suspend fun getNoticeList2(
         @Field("token") token: String? = null,
         @Field("id") id: String? = null,
@@ -185,7 +185,7 @@ interface ApiService {
      *学生通知详情
      */
     @FormUrlEncoded
-    @POST("/api/v1/student/notices/info")
+    @POST("/api/v17/student/notices/info")
     suspend fun getNoticeDetail(
         @Field("token") token: String? = null,
         @Field("id") id: String?
@@ -195,7 +195,7 @@ interface ApiService {
      *教师通知详情
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/notices/info")
+    @POST("/api/v17/teacher/notices/info")
     suspend fun getNoticeDetail2(
         @Field("token") token: String? = null,
         @Field("id") id: String?
@@ -205,7 +205,7 @@ interface ApiService {
      *学生通知状态变更
      */
     @FormUrlEncoded
-    @POST("/api/v1/student/notices/modify")
+    @POST("/api/v17/student/notices/modify")
     suspend fun readNotice(
         @Field("token") token: String? = null,
         @Field("id") id: String? = null,
@@ -218,7 +218,7 @@ interface ApiService {
      *教师通知状态变更
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/notices/modify")
+    @POST("/api/v17/teacher/notices/modify")
     suspend fun readNotice2(
         @Field("token") token: String? = null,
         @Field("id") id: String? = null,
@@ -230,7 +230,7 @@ interface ApiService {
      *学生通知全部已读
      */
     @FormUrlEncoded
-    @POST("/api/v1/student/notices/modifyAll")
+    @POST("/api/v17/student/notices/modifyAll")
     suspend fun readAll(
         @Field("token") token: String? = null,
         @Field("status") status: String? = "1",
@@ -242,7 +242,7 @@ interface ApiService {
      *教师通知全部已读
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/notices/modifyAll")
+    @POST("/api/v17/teacher/notices/modifyAll")
     suspend fun readAllTea(
         @Field("token") token: String? = null,
         @Field("status") status: String? = null,
@@ -254,7 +254,7 @@ interface ApiService {
      *学生任务接口
      */
     @FormUrlEncoded
-    @POST("/api/v1/student/tasks/lists")
+    @POST("/api/v17/student/tasks/lists")
     suspend fun getTaskList(
         @Field("token") token: String? = null,
         @Field("id") id: String? = null,
@@ -267,7 +267,7 @@ interface ApiService {
      *教师任务接口
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/tasks/lists")
+    @POST("/api/v17/teacher/tasks/lists")
     suspend fun getTaskList2(
         @Field("token") token: String? = null,
         @Field("id") id: String? = null,
@@ -280,7 +280,7 @@ interface ApiService {
      *教师发布任务查询列表
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/tasks/tasklist")
+    @POST("/api/v17/teacher/tasks/tasklist")
     suspend fun getPublishTaskListTea(
         @Field("token") token: String? = null,
         @Field("id") id: String? = null,
@@ -293,7 +293,7 @@ interface ApiService {
      *学生添加考勤-查看课程表
      */
     @FormUrlEncoded
-    @POST("/api/v1/student/attendances/timeTable")
+    @POST("/api/v17/student/attendances/timeTable")
     suspend fun getAttTimetableStu(
         @Field("token") token: String? = null,
         @Field("time") time: String? = null,
@@ -304,7 +304,7 @@ interface ApiService {
      *班主任/任课教师添加考勤-查看课程表
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/attendances/timeTable")
+    @POST("/api/v17/teacher/attendances/timeTable")
     suspend fun getAttTimetableTea(
         @Field("token") token: String? = null,
         @Field("classid") classid: String? = null,
@@ -316,7 +316,7 @@ interface ApiService {
      *学生查看成绩-考试/班级/群组/课程信息
      */
     @FormUrlEncoded
-    @POST("/api/v1/student/achievements/testCourse")
+    @POST("/api/v17/student/achievements/testCourse")
     suspend fun getTestCourseStu(
         @Field("token") token: String?
     ): BaseResponse<Any>
@@ -325,7 +325,7 @@ interface ApiService {
      *教师查看成绩-考试/班级/群组/课程信息
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/achievements/testCourse")
+    @POST("/api/v17/teacher/achievements/testCourse")
     suspend fun getTestCourseTea(
         @Field("token") token: String?
     ): BaseResponse<Any>
@@ -334,7 +334,7 @@ interface ApiService {
      *学生课程表
      */
     @FormUrlEncoded
-    @POST("/api/v1/student/courses/timeTable")
+    @POST("/api/v17/student/courses/timeTable")
     suspend fun getTimetable(
         @Field("token") token: String? = null,
         @Field("time") time: String? = null,
@@ -345,7 +345,7 @@ interface ApiService {
      *教师课程表
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/courses/timeTable")
+    @POST("/api/v17/teacher/courses/timeTable")
     suspend fun getTimetable2(
         @Field("token") token: String? = null,
         @Field("time") time: String? = null,
@@ -357,7 +357,7 @@ interface ApiService {
      *班主任课程表
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/courses/mTimeTable")
+    @POST("/api/v17/teacher/courses/mTimeTable")
     suspend fun getTimetableMaster(
         @Field("token") token: String? = null,
         @Field("time") time: String? = null,
@@ -368,7 +368,7 @@ interface ApiService {
      *学生查看成绩
      */
     @FormUrlEncoded
-    @POST("/api/v1/student/achievements/lists")
+    @POST("/api/v17/student/achievements/lists")
     suspend fun getAchievement(
         @Field("token") token: String? = null,
         @Field("testname") testname: String? = null,
@@ -379,7 +379,7 @@ interface ApiService {
      *教师查看成绩
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/achievements/lists")
+    @POST("/api/v17/teacher/achievements/lists")
     suspend fun getAchievement2(
         @Field("token") token: String? = null,
         @Field("id") id: String? = null,
@@ -392,7 +392,7 @@ interface ApiService {
      *学生登录退出
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/login/sloginout")
+    @POST("/api/v17/user/login/sloginout")
     suspend fun logout(
         @Field("phone") phone: String? = null,
         @Field("token") token: String?
@@ -402,7 +402,7 @@ interface ApiService {
      *教师登录退出
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/login/eloginout")
+    @POST("/api/v17/user/login/eloginout")
     suspend fun logout2(
         @Field("phone") phone: String? = null,
         @Field("token") token: String?
@@ -412,7 +412,7 @@ interface ApiService {
      *学生查看考勤
      */
     @FormUrlEncoded
-    @POST("/api/v1/student/attendances/privateAtts")
+    @POST("/api/v17/student/attendances/privateAtts")
     suspend fun getAttendance(
         @Field("token") token: String? = null,
         @Field("classid") classid: String? = null,
@@ -425,7 +425,7 @@ interface ApiService {
      *学生考勤员查看考勤
      */
     @FormUrlEncoded
-    @POST("/api/v1/student/attendances/lists")
+    @POST("/api/v17/student/attendances/lists")
     suspend fun getAttendanceStuAdmin(
         @Field("token") token: String? = null,
         @Field("classid") classid: String? = null,
@@ -438,7 +438,7 @@ interface ApiService {
      *教师查看考勤
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/attendances/lists")
+    @POST("/api/v17/teacher/attendances/lists")
     suspend fun getAttendanceTea(
         @Field("token") token: String? = null,
         @Field("classid") classid: String? = null,
@@ -453,7 +453,7 @@ interface ApiService {
      *班主任/教师查看考勤信息
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/attendances/info")
+    @POST("/api/v17/teacher/attendances/info")
     suspend fun getAttendanceInfo(
         @Field("token") token: String? = null,
         @Field("id") id: String?
@@ -463,7 +463,7 @@ interface ApiService {
      *管理员校级考勤
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/attendances/sclists")
+    @POST("/api/v17/teacher/attendances/sclists")
     suspend fun getAttendanceSchool(
         @Field("token") token: String? = null,
         @Field("classid") classid: String? = null,
@@ -476,7 +476,7 @@ interface ApiService {
      *学生上传文件oss签名接口
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/student/osssts")
+    @POST("/api/v17/user/student/osssts")
     suspend fun getSts(
         @Field("token") token: String?
     ): BaseResponse<StsTokenResp>
@@ -485,7 +485,7 @@ interface ApiService {
      *教师上传文件oss签名接口
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/teachers/osssts")
+    @POST("/api/v17/user/teachers/osssts")
     suspend fun getSts2(
         @Field("token") token: String?
     ): BaseResponse<StsTokenResp>
@@ -494,7 +494,7 @@ interface ApiService {
      *app应用权限接口
      */
     @FormUrlEncoded
-    @POST("/api/v1/admin/rbac/apps")
+    @POST("/api/v17/admin/rbac/apps")
     suspend fun getAuthority(
         @Field("token") token: String? = null,
         @Field("roleid") roleid: String?
@@ -504,7 +504,7 @@ interface ApiService {
      *管理查询所有学生
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/student/listAll")
+    @POST("/api/v17/teacher/student/listAll")
     suspend fun queryStudent(
         @Field("token") token: String? = null,
         @Field("keyword") keyword: String? = null
@@ -514,7 +514,7 @@ interface ApiService {
      *学生查询日程
      */
     @FormUrlEncoded
-    @POST("/api/v1/student/schedules/listDWM")
+    @POST("/api/v17/student/schedules/listDWM")
     suspend fun querySchedule(
         @Field("token") token: String? = null,
         @Field("day") day: String? = null,
@@ -527,7 +527,7 @@ interface ApiService {
      *教师查询日程
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/schedules/listDWM")
+    @POST("/api/v17/teacher/schedules/listDWM")
     suspend fun querySchedule2(
         @Field("token") token: String? = null,
         @Field("day") day: String? = null,
@@ -539,7 +539,7 @@ interface ApiService {
     /**
      *学生添加日程
      */
-    @POST("/api/v1/student/schedules/add")
+    @POST("/api/v17/student/schedules/add")
     suspend fun addSchedule(
         @Body requestBody: ScheduleBean?
     ): BaseResponse<Any>
@@ -547,7 +547,7 @@ interface ApiService {
     /**
      *教师添加日程
      */
-    @POST("/api/v1/teacher/schedules/add")
+    @POST("/api/v17/teacher/schedules/add")
     suspend fun addSchedule2(
         @Body requestBody: ScheduleBean?
     ): BaseResponse<Any>
@@ -555,7 +555,7 @@ interface ApiService {
     /**
      *学生修改日程
      */
-    @POST("/api/v1/student/schedules/modify")
+    @POST("/api/v17/student/schedules/modify")
     suspend fun modifySchedule(
         @Body requestBody: ScheduleBean?
     ): BaseResponse<Any>
@@ -563,7 +563,7 @@ interface ApiService {
     /**
      *教师修改日程
      */
-    @POST("/api/v1/teacher/schedules/modify")
+    @POST("/api/v17/teacher/schedules/modify")
     suspend fun modifySchedule2(
         @Body requestBody: ScheduleBean?
     ): BaseResponse<Any>
@@ -572,7 +572,7 @@ interface ApiService {
      *学生删除个人日程
      */
     @FormUrlEncoded
-    @POST("/api/v1/student/schedules/del")
+    @POST("/api/v17/student/schedules/del")
     suspend fun deleteScheduleStu(
         @Field("token") token: String? = null,
         @Field("id") id: String? = null
@@ -582,7 +582,7 @@ interface ApiService {
      *教师删除个人日程
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/schedules/del")
+    @POST("/api/v17/teacher/schedules/del")
     suspend fun deleteScheduleTea(
         @Field("token") token: String? = null,
         @Field("id") id: String? = null
@@ -592,7 +592,7 @@ interface ApiService {
      *教师获取组织架构
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/departments/treeDep")
+    @POST("/api/v17/teacher/departments/treeDep")
     suspend fun queryDepartments(
         @Field("token") token: String?
     ): BaseResponse<Any>
@@ -601,7 +601,7 @@ interface ApiService {
      *教师按部门查询教师接口
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/teacher/listByDep")
+    @POST("/api/v17/teacher/teacher/listByDep")
     suspend fun listByDepartment(
         @Field("token") token: String? = null,
         @Field("depid") depid: String? = null,
@@ -612,7 +612,7 @@ interface ApiService {
      *学生发布任务审批
      */
     @FormUrlEncoded
-    @POST("/api/v1/student/tasks/examine")
+    @POST("/api/v17/student/tasks/examine")
     suspend fun queryDepartments(
         @Field("token") token: String? = null,
         @Field("id") id: String? = null,
@@ -624,7 +624,7 @@ interface ApiService {
      *教师发布任务审批
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/tasks/examine")
+    @POST("/api/v17/teacher/tasks/examine")
     suspend fun examineTask2(
         @Field("token") token: String? = null,
         @Field("id") id: String? = null,
@@ -636,7 +636,7 @@ interface ApiService {
      *学生家长信息查询
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/student/pinfo")
+    @POST("/api/v17/user/student/pinfo")
     suspend fun getParents(
         @Field("token") token: String?
     ): BaseResponse<Any>
@@ -645,7 +645,7 @@ interface ApiService {
      *学生绑定家长
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/student/pBind")
+    @POST("/api/v17/user/student/pBind")
     suspend fun bindParent(
         @Field("token") token: String? = null,
         @Field("phone") phone: String? = null,
@@ -656,7 +656,7 @@ interface ApiService {
      *学生解除绑定家长
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/student/pUnbind")
+    @POST("/api/v17/user/student/pUnbind")
     suspend fun unbindParent(
         @Field("token") token: String? = null,
         @Field("phone") phone: String?
@@ -666,7 +666,7 @@ interface ApiService {
      *学生家长切换登录学生
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/student/modifyPS")
+    @POST("/api/v17/user/student/modifyPS")
     suspend fun switchChild(
         @Field("token") token: String? = null,
         @Field("uid") uid: String?
@@ -676,7 +676,7 @@ interface ApiService {
      *教师查询班级邀请码
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/classs/codeList")
+    @POST("/api/v17/teacher/classs/codeList")
     suspend fun queryCodeList(
         @Field("token") token: String? = null,
         @Field("classid") classid: String? = null
@@ -685,7 +685,7 @@ interface ApiService {
     /**
      *教师发布任务
      */
-    @POST("/api/v1/teacher/tasks/add")
+    @POST("/api/v17/teacher/tasks/add")
     suspend fun addTask(
         @Body requestBody: TaskBean
     ): BaseResponse<Any>
@@ -694,7 +694,7 @@ interface ApiService {
      *学生考勤员删除考勤
      */
     @FormUrlEncoded
-    @POST("/api/v1/student/attendances/del")
+    @POST("/api/v17/student/attendances/del")
     suspend fun deleteAttendanceByStu(
         @Field("token") token: String? = null,
         @Field("id") id: String?
@@ -704,7 +704,7 @@ interface ApiService {
      *教师删除考勤
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/attendances/del")
+    @POST("/api/v17/teacher/attendances/del")
     suspend fun deleteAttendanceByTea(
         @Field("token") token: String? = null,
         @Field("id") id: String?
@@ -713,7 +713,7 @@ interface ApiService {
     /**
      *学生提交请假申请
      */
-    @POST("/api/v1/student/attendances/add")
+    @POST("/api/v17/student/attendances/add")
     suspend fun addAttendance(
         @Body requestBody: LeaveBean
     ): BaseResponse<Any>
@@ -721,7 +721,7 @@ interface ApiService {
     /**
      *学生考勤员添加考勤
      */
-    @POST("/api/v1/student/attendances/mAdd")
+    @POST("/api/v17/student/attendances/mAdd")
     suspend fun addAttendanceByStu(
         @Body requestBody: LeaveBean
     ): BaseResponse<Any>
@@ -729,7 +729,7 @@ interface ApiService {
     /**
      *老师考勤员添加考勤
      */
-    @POST("/api/v1/teacher/attendances/add")
+    @POST("/api/v17/teacher/attendances/add")
     suspend fun addAttendanceByTea(
         @Body requestBody: LeaveBean
     ): BaseResponse<Any>
@@ -738,7 +738,7 @@ interface ApiService {
      *教师获取班级
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/classs/treeClass")
+    @POST("/api/v17/teacher/classs/treeClass")
     suspend fun getClassesByTea(
         @Field("token") token: String?
     ): BaseResponse<Any>
@@ -747,7 +747,7 @@ interface ApiService {
      *教师按班级获取学生列表
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/student/listByClass")
+    @POST("/api/v17/teacher/student/listByClass")
     suspend fun getStudentsByClass(
         @Field("token") token: String? = null,
         @Field("classid") classid: String? = null,
@@ -758,7 +758,7 @@ interface ApiService {
      *学生任务详情
      */
     @FormUrlEncoded
-    @POST("/api/v1/student/tasks/info")
+    @POST("/api/v17/student/tasks/info")
     suspend fun getTaskInfoStu(
         @Field("token") token: String? = null,
         @Field("id") id: String?
@@ -768,7 +768,7 @@ interface ApiService {
      *教师任务详情
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/tasks/info")
+    @POST("/api/v17/teacher/tasks/info")
     suspend fun getTaskInfoTea(
         @Field("token") token: String? = null,
         @Field("id") id: String? = null,
@@ -778,7 +778,7 @@ interface ApiService {
     /**
      *学生更新接收任务状态
      */
-    @POST("/api/v1/student/tasks/modify")
+    @POST("/api/v17/student/tasks/modify")
     suspend fun modifyTaskInfoStu(
         @Body requestBody: TaskLogRequest
     ): BaseResponse<Any>
@@ -786,7 +786,7 @@ interface ApiService {
     /**
      *教师更新接收任务状态
      */
-    @POST("/api/v1/teacher/tasks/modify")
+    @POST("/api/v17/teacher/tasks/modify")
     suspend fun modifyTaskInfoTea(
         @Body requestBody: TaskLogRequest
     ): BaseResponse<Any>
@@ -794,7 +794,7 @@ interface ApiService {
     /**
      *教师发布任务驳回
      */
-    @POST("/api/v1/teacher/tasks/examine")
+    @POST("/api/v17/teacher/tasks/examine")
     suspend fun refuseTask(
         @Body requestBody: TaskLogRequest
     ): BaseResponse<Any>
@@ -802,7 +802,7 @@ interface ApiService {
     /**
      *教师发布任务驳回
      */
-    @POST("/api/v1/teacher/tasks/modifyTask")
+    @POST("/api/v17/teacher/tasks/modifyTask")
     suspend fun modifyTaskStatus(
         @Body requestBody: TaskBean
     ): BaseResponse<Any>
@@ -811,7 +811,7 @@ interface ApiService {
      * 学生更换手机号短信验证码
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/student/mSmsCode")
+    @POST("/api/v17/user/student/mSmsCode")
     suspend fun onSmsCodeChangeStu(
         @Field("token") token: String? = null,
         @Field("phone") phone: String?
@@ -821,7 +821,7 @@ interface ApiService {
      *  教师更换手机号短信验证码
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/teacher/mSmsCode")
+    @POST("/api/v17/user/teacher/mSmsCode")
     suspend fun onSmsCodeChangeTea(
         @Field("token") token: String? = null,
         @Field("phone") phone: String?
@@ -831,7 +831,7 @@ interface ApiService {
      * 学生更换手机号短信验证码验证
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/student/checkCode")
+    @POST("/api/v17/user/student/checkCode")
     suspend fun changePhoneStu(
         @Field("token") token: String? = null,
         @Field("phone") phone: String? = null,
@@ -842,7 +842,7 @@ interface ApiService {
      *  教师更换手机号短信验证码验证
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/teacher/checkCode")
+    @POST("/api/v17/user/teacher/checkCode")
     suspend fun changePhoneTea(
         @Field("token") token: String? = null,
         @Field("phone") phone: String? = null,
@@ -853,7 +853,7 @@ interface ApiService {
      *  教师删除草稿任务
      */
     @FormUrlEncoded
-    @POST("/api/v1/teacher/tasks/delTask")
+    @POST("/api/v17/teacher/tasks/delTask")
     suspend fun delTaskDraft(
         @Field("token") token: String? = null,
         @Field("id") id: String?
@@ -927,6 +927,15 @@ interface ApiService {
         @Field("type") type: String?
     ): BaseResponse<Any>
 
+    /**
+     *查看报修类型列表
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/admin/repair/listsType")
+    suspend fun getPropertyType(
+        @Field("token") token: String?,
+        @Field("lastid") lastid: String?
+    ): BaseResponse<Any>
     /**
      *我的预约列表瀑布流
      */

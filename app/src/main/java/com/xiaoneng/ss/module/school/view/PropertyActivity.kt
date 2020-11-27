@@ -49,6 +49,7 @@ class PropertyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
+        mViewModel.getPropertyType()
     }
 
     private fun initAdapter() {
