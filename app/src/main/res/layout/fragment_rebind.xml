@@ -60,7 +60,7 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_next_round" />
+                android:src="@drawable/ic_next_round_blue" />
         </LinearLayout>
     </LinearLayout>
 

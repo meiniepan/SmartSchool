@@ -32,6 +32,7 @@ class InviteCodeActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     override fun initData() {
         super.initData()
+        rvInviteCode.showLoadingView()
         mViewModel.queryCodeList()
     }
 
