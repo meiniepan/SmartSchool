@@ -876,6 +876,7 @@ interface ApiService {
     @POST("/api/v17/admin/wages/mywdlists")
     suspend fun getSalaryList(
         @Field("token") token: String?,
+        @Field("type") type: String?,
         @Field("lastid") lastid: String?
     ): BaseResponse<Any>
 

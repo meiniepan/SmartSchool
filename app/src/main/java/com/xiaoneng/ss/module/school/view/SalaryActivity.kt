@@ -23,26 +23,24 @@ import kotlinx.android.synthetic.main.activity_salary.*
 class SalaryActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private var lastId: String? = null
     lateinit var mAdapter: SalaryAdapter
-    var mData: ArrayList<SalaryListBean>? = ArrayList()
+    var mData: ArrayList<SalaryListBean> = ArrayList()
     override fun getLayoutId(): Int {
         return R.layout.activity_salary
     }
 
     override fun initView() {
         super.initView()
-        mData = intent.getParcelableArrayListExtra(Constant.DATA)
-        mData?.let {
-            if (it.size > 0) {
-                lastId = it.last().id
-            }
-            initAdapter()
-        }
+        initAdapter()
     }
 
+    override fun initData() {
+        super.initData()
+        doRefresh()
+    }
 
     private fun doRefresh() {
         lastId = null
-        mData?.clear()
+        mData.clear()
         rvSalary.showLoadingView()
         rvSalary.setNoMoreData(false)
         getData()
@@ -51,7 +49,7 @@ class SalaryActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
-        mViewModel.getSalaryList(lastid = lastId)
+        mViewModel.getSalaryList(type = "nopage",lastid = lastId)
     }
 
     private fun initAdapter() {
@@ -72,7 +70,7 @@ class SalaryActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         mAdapter.setOnItemClickListener { adapter, view, position ->
             mStartActivity<SalaryDetailActivity>(this) {
-                putExtra(Constant.ID, mData?.get(position)?.id)
+                putExtra(Constant.ID, mData.get(position)?.id)
             }
         }
     }
@@ -85,7 +83,7 @@ class SalaryActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     bean.data?.let {
                         if (it.size > 0) {
                             lastId = it.last().id
-                            mData?.addAll(it)
+                            mData.addAll(it)
                         } else {
                             if (lastId != null) {
                                 rvSalary.showFinishLoadMore()

@@ -171,7 +171,7 @@ public class RefreshStatusRecyclerView extends SmartRefreshLayout implements Sta
      */
     public void showFinishLoadMore(){
             finishLoadMoreWithNoMoreData();
-            Toast.makeText(mRecyclerView.getContext(),R.string.load_more_end,Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mRecyclerView.getContext(),R.string.load_more_end,Toast.LENGTH_SHORT).show();
     }
 
     /**

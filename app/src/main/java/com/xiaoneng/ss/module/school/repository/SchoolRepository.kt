@@ -178,12 +178,24 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.getAchievement2(UserInfo.getUserBean().token,lastid, testname, crid, classid)
+                apiService.getAchievement2(
+                    UserInfo.getUserBean().token,
+                    lastid,
+                    testname,
+                    crid,
+                    classid
+                )
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.getAchievement2(UserInfo.getUserBean().token, lastid,testname, crid, classid)
+                apiService.getAchievement2(
+                    UserInfo.getUserBean().token,
+                    lastid,
+                    testname,
+                    crid,
+                    classid
+                )
                     .dataConvert(loadState)
 
             }
@@ -448,12 +460,12 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
     }
 
     suspend fun getSalaryDetail(id: String?): Any {
-        return apiService.getSalaryDetail(UserInfo.getUserBean().token,id)
+        return apiService.getSalaryDetail(UserInfo.getUserBean().token, id)
             .dataConvert(loadState)
     }
 
-    suspend fun getSalaryList(lastid: String? = null): Any {
-        return apiService.getSalaryList(UserInfo.getUserBean().token, lastid = lastid)
+    suspend fun getSalaryList(type: String? = null, lastid: String? = null): Any {
+        return apiService.getSalaryList(UserInfo.getUserBean().token, type = type, lastid = lastid)
             .dataConvert(loadState)
     }
 
@@ -461,28 +473,38 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         return apiService.getSalaryCaptcha(UserInfo.getUserBean().token)
             .dataConvert(loadState)
     }
+
     suspend fun getTmpToken(code: String?): Any {
-        return apiService.getTmpToken(UserInfo.getUserBean().token,code)
+        return apiService.getTmpToken(UserInfo.getUserBean().token, code)
             .dataConvert(loadState)
     }
+
     suspend fun addRepair(body: RepairBody): Any {
         return apiService.addRepair(body)
             .dataConvert(loadState)
     }
+
     suspend fun addBookSite(body: AddBookSiteBody): Any {
         return apiService.addBookSite(body)
             .dataConvert(loadState)
     }
-    suspend fun getPropertyRecord(lastid: String?=null,status: String?=null,type: String?=null): Any {
-        return apiService.getPropertyRecord(UserInfo.getUserBean().token,lastid,status,type)
+
+    suspend fun getPropertyRecord(
+        lastid: String? = null,
+        status: String? = null,
+        type: String? = null
+    ): Any {
+        return apiService.getPropertyRecord(UserInfo.getUserBean().token, lastid, status, type)
             .dataConvert(loadState)
     }
+
     suspend fun getBookSiteRecord(lastid: String? = null): Any {
-        return apiService.getBookSiteRecord(UserInfo.getUserBean().token,lastid)
+        return apiService.getBookSiteRecord(UserInfo.getUserBean().token, lastid)
             .dataConvert(loadState)
     }
+
     suspend fun getCanBookRooms(bookTime: String): Any {
-        return apiService.getCanBookRooms(UserInfo.getUserBean().token,bookTime)
+        return apiService.getCanBookRooms(UserInfo.getUserBean().token, bookTime)
             .dataConvert(loadState)
     }
 
