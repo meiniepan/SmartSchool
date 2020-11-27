@@ -267,9 +267,9 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getSalaryList(page: String? = null) {
+    fun getSalaryList(lastid: String? = null) {
         initiateRequest(
-            { mSalaryListData.value = mRepository.getSalaryList(page) },
+            { mSalaryListData.value = mRepository.getSalaryList(lastid) },
             loadState
         )
     }
