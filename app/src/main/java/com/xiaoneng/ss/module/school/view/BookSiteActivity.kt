@@ -6,10 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.utils.DateUtil
-import com.xiaoneng.ss.common.utils.Lunar
-import com.xiaoneng.ss.common.utils.mStartActivity
-import com.xiaoneng.ss.common.utils.netResponseFormat
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.circular.adapter.DaysOfMonthAdapter
 import com.xiaoneng.ss.module.circular.adapter.DaysOfWeekAdapter
 import com.xiaoneng.ss.module.circular.adapter.WeekTitleAdapter
@@ -155,7 +152,9 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         mAdapter.setOnItemClickListener { adapter, view, position ->
-
+            mStartActivity<RoomBookRecordsActivity>(this) {
+                putExtra(Constant.DATA, mData[position].books)
+            }
         }
     }
 
@@ -192,6 +191,9 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 netResponseFormat<List<SiteBean>>(it)?.let {
                     mData.clear()
                     mData.addAll(it)
+                    mData.forEach {
+                        it.chosenDay = chosenDay!!
+                    }
                     mAdapter.setPosition(DateUtil.getBookSitePositionNearNow(chosenDay!!))
                     rvSite.notifyDataSetChanged()
                 }

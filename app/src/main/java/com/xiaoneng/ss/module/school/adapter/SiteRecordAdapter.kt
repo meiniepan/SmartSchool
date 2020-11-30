@@ -20,9 +20,23 @@ class SiteRecordAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
 
     override fun convert(viewHolder: BaseViewHolder, item: SiteBean) {
         viewHolder.let { holder ->
-            var tvRemark = holder.getView<TextView>(R.id.tvSiteRecordRemark)
-            var tvCancel = holder.getView<TextView>(R.id.tvSiteRecordCancel)
-            holder.addOnClickListener(R.id.tvSiteRecordCancel)
+            holder.addOnClickListener(R.id.tvAction)
+            var tvAction = holder.getView<TextView>(R.id.tvAction)
+            var tvRemark = holder.getView<TextView>(R.id.tvRecordBookTheme)
+            var statusStr = ""
+            tvAction.visibility = View.GONE
+            if (item.status == "-1") {
+                statusStr = "已取消"
+            } else if (item.status == "0") {
+                statusStr = "未开始"
+                tvAction.visibility = View.VISIBLE
+            } else if (item.status == "1") {
+                statusStr = "进行中"
+            } else if (item.status == "2") {
+                statusStr = "已结束"
+            } else if (item.status == "3") {
+                statusStr = "被占用"
+            }
             var timeStr = ""
             item.oetime?.let {
                 if (it.length > 5) {
@@ -34,12 +48,11 @@ class SiteRecordAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
             } else {
                 tvRemark.visibility = View.VISIBLE
             }
-            holder.setText(R.id.tvSiteItemRoomName, item.classroomname)
-            holder.setText(R.id.tvSiteItemRoomAddress, item.classroom?.addr)
-            holder.setText(R.id.tvSiteItemRoomCapacity, item.classroom?.addr)
-            holder.setText(R.id.tvSiteItemRoomEquip, item.classroom?.addr)
-                .setText(R.id.tvSiteRecordTime, timeStr)
-                .setText(R.id.tvSiteRecordRemark, item.remark)
+            holder.setText(R.id.tvRecordBookName, item.classroom?.classroomname)
+            holder.setText(R.id.tvRecordBookTime, timeStr)
+            holder.setText(R.id.tvRecordBookStatus, statusStr)
+            holder.setText(R.id.tvRecordBookTheme, item.remark)
+                .setText(R.id.tvRecordBookAddress, item.classroom?.addr)
         }
     }
 

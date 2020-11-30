@@ -8,22 +8,26 @@
     android:orientation="vertical">
 
     <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+        android:id="@+id/ctbNoticeDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="场地预约" />
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/contentLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        style="@style/nes_scroll_style"
         android:background="@color/tintBac"
-        android:paddingBottom="20dp"
-        android:orientation="vertical">
+        android:layout_weight="1">
 
-            <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
-                android:id="@+id/rvSiteRecords"
-                android:layout_marginTop="12dp"
-                style="@style/recycler_horizontal_style" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </LinearLayout>
+            <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
+                android:id="@+id/rvRoomBookRecords"
+                style="@style/recycler_style"
+                android:layout_marginTop="12dp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
 </LinearLayout>

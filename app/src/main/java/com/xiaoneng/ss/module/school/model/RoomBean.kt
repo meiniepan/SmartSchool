@@ -21,6 +21,8 @@ data class RoomBean(
     var campus: String?,
     var campusid: String?,
     var total: String?,
+    var remark: String?,
+    var status: String?,
     var isorder: String?,
     var ostime: String?,
     var oetime: String?,

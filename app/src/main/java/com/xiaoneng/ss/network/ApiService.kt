@@ -916,6 +916,14 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
+     *修改场地预约
+     */
+    @POST("/api/v17/admin/spacebook/modify")
+    suspend fun modifyBookSite(
+        @Body requestBody: AddBookSiteBody
+    ): BaseResponse<Any>
+
+    /**
      *报修/维修记录列表按id拉列表
      */
     @FormUrlEncoded

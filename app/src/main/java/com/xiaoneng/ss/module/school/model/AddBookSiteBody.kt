@@ -9,6 +9,7 @@ package com.xiaoneng.ss.module.school.model
  */
 data class AddBookSiteBody(
     var token: String? = null,
+    var id: String? = null,
     var roomid: String? = null,
     var ostime: String? = null,
     var oetime: String? = null,

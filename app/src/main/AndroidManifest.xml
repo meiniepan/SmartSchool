@@ -215,6 +215,7 @@
         <activity android:name=".module.school.view.BookSiteRecordsActivity" />
         <activity android:name=".module.school.view.NoticeActivity" />
         <activity android:name=".module.school.view.ScheduleActivity" />
+        <activity android:name=".module.school.view.RoomBookRecordsActivity" />
 
 
         <provider

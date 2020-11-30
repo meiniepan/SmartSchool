@@ -1,6 +1,5 @@
 package com.xiaoneng.ss.module.school.adapter
 
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -12,6 +11,7 @@ import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.toIntSafe
 import com.xiaoneng.ss.module.school.model.SiteBean
 import com.xiaoneng.ss.module.school.view.AddBookSiteActivity
+import com.xiaoneng.ss.module.school.view.RoomBookRecordsActivity
 
 
 /**
@@ -30,8 +30,10 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
 
     override fun convert(viewHolder: BaseViewHolder, item: SiteBean) {
         viewHolder.let { holder ->
-            var tvRoomName = holder.getView<TextView>(R.id.tvSiteItemRoomName)
-            tvRoomName.text = item.classroomname
+            holder.setText(R.id.tvSiteItemRoomName,item.classroomname)
+                .setText(R.id.tvSiteItemRoomAddress, item.addr)
+                .setText(R.id.tvSiteItemRoomCapacity, item.total)
+                .setText(R.id.tvSiteItemRoomEquip, item.remark)
             initAdapter(holder, item)
         }
     }
@@ -83,13 +85,17 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
         }
         mAdapter.setOnItemClickListener { _, view, position ->
             item.position = position
-            mStartActivity<AddBookSiteActivity>(mContext) {
-                if (mSiteData[position].isBooked) {
-                    item.startType = 0
-                } else {
-                    item.startType = 1
+            if (mSiteData[position].isBooked) {
+                item.startType = 0
+                mStartActivity<RoomBookRecordsActivity>(mContext) {
+                    putExtra(Constant.DATA, item.books)
                 }
-                putExtra(Constant.DATA, item)
+
+            } else {
+                item.startType = 1
+                mStartActivity<AddBookSiteActivity>(mContext) {
+                    putExtra(Constant.DATA, item)
+                }
             }
         }
     }

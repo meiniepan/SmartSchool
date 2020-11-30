@@ -37,6 +37,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
     val mBaseData: MutableLiveData<Any> = MutableLiveData()
     val mAddBookSiteData: MutableLiveData<Any> = MutableLiveData()
+    val mModifyBookSiteData: MutableLiveData<Any> = MutableLiveData()
     val mSalaryDetailData: MutableLiveData<Any> = MutableLiveData()
     val mSalaryListData: MutableLiveData<Any> = MutableLiveData()
     val mTmpTokenData: MutableLiveData<Any> = MutableLiveData()
@@ -329,6 +330,11 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
             loadState
         )
     }
-
+    fun modifyBookSite(body: AddBookSiteBody) {
+        initiateRequest(
+            { mModifyBookSiteData.value = mRepository.modifyBookSite(body) },
+            loadState
+        )
+    }
 
 }

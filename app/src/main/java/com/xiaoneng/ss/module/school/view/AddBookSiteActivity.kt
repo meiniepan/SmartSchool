@@ -47,7 +47,7 @@ class AddBookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mData = intent.getParcelableExtra(Constant.DATA)
         mData?.let {
             initUI(it)
-            tvAddSiteDate.text = DateUtil.formatDateCustomDay(chosenDay!!)
+            tvAddSiteDate.text = DateUtil.formatDateCustomWeekDay(it.chosenDay)
             ivAddSiteJian.isEnabled = false
             mBegin = it.position
             mEnd = it.position
@@ -91,9 +91,9 @@ class AddBookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         recyclerView = findViewById(R.id.rvSiteItem)
         if (it.startType == 0) {
             var item = SiteItemBean()
-            it.books?.forEach {it2->
+            it.books?.forEach { it2 ->
                 for (i in it2.os_position!!.toIntSafe()..it2.oe_position!!.toIntSafe()) {
-                    if (i==it.position){
+                    if (i == it.position) {
                         item = it2
                         return@forEach
                     }
@@ -115,14 +115,14 @@ class AddBookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             tvAddSiteDate.isEnabled = false
             etAddSiteRemark.isEnabled = false
             etAddSiteRemark.setText(item.remark)
-        } else if (it.startType == 1){
+        } else if (it.startType == 1) {
             var tmpP = it.position
-            it.books?.forEach {it2->
-                if(it2.os_position.toIntSafe()>it.position){
-                    mMax = it2.os_position.toIntSafe()-1
-                    if (it2.os_position.toIntSafe()<tmpP){
+            it.books?.forEach { it2 ->
+                if (it2.os_position.toIntSafe() > it.position) {
+                    mMax = it2.os_position.toIntSafe() - 1
+                    if (it2.os_position.toIntSafe() < tmpP) {
                         tmpP = it2.os_position.toIntSafe()
-                        mMax = it2.os_position.toIntSafe()-1
+                        mMax = it2.os_position.toIntSafe() - 1
                     }
                 }
             }
@@ -139,11 +139,11 @@ class AddBookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvRoomName = findViewById(R.id.tvSiteItemRoomName)
         tvRoomAddress = findViewById(R.id.tvSiteItemRoomAddress)
         tvRoomCapacity = findViewById(R.id.tvSiteItemRoomCapacity)
-        tvRoomEquip= findViewById(R.id.tvSiteItemRoomEquip)
+        tvRoomEquip = findViewById(R.id.tvSiteItemRoomEquip)
         tvRoomName.text = it.classroomname
         tvRoomAddress.text = it.addr
-        tvRoomCapacity.text = it.addr
-        tvRoomEquip.text = it.addr
+        tvRoomCapacity.text = it.total
+        tvRoomEquip.text = it.remark
     }
 
     private fun doConfirm(it: SiteBean) {

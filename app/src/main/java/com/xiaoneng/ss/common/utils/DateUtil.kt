@@ -130,6 +130,12 @@ object DateUtil {
 
     }
 
+    fun formatDateCustomWeekDay(date: Long = System.currentTimeMillis()): String {
+        val sdf = SimpleDateFormat("yyyy年MM月dd "+ getWeek(Date(date)))
+        return sdf.format(Date(date))
+
+    }
+
 
     @SuppressLint("SimpleDateFormat")
     fun getBookSitePositionNearNow(date: Long = System.currentTimeMillis()): Int {

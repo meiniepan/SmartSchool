@@ -488,6 +488,10 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         return apiService.addBookSite(body)
             .dataConvert(loadState)
     }
+    suspend fun modifyBookSite(body: AddBookSiteBody): Any {
+        return apiService.modifyBookSite(body)
+            .dataConvert(loadState)
+    }
 
     suspend fun getPropertyRecord(
         lastid: String? = null,

@@ -89,8 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:drawablePadding="5dp"
-                    android:drawableRight="@drawable/ic_next" />
+                    />
             </LinearLayout>
 
             <include layout="@layout/layout_split" />
