@@ -34,6 +34,7 @@ public class RoundImageView extends ImageView {
     // 控件默认长、宽
     private int defaultWidth = 0;
     private int defaultHeight = 0;
+
     //构造方法，参数上下文
     public RoundImageView(Context context) {
         super(context);
@@ -134,8 +135,8 @@ public class RoundImageView extends ImageView {
             scaledSrcBmp = squareBitmap;
         }
         Bitmap output = Bitmap.createBitmap(scaledSrcBmp.getWidth(),
-        scaledSrcBmp.getHeight(),
-        Bitmap.Config.ARGB_8888);
+                scaledSrcBmp.getHeight(),
+                Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
 
         Paint paint = new Paint();
@@ -146,9 +147,9 @@ public class RoundImageView extends ImageView {
         paint.setDither(true);
         canvas.drawARGB(0, 0, 0, 0);
         canvas.drawCircle(scaledSrcBmp.getWidth() / 2,
-            scaledSrcBmp.getHeight() / 2,
-            scaledSrcBmp.getWidth() / 2,
-            paint);
+                scaledSrcBmp.getHeight() / 2,
+                scaledSrcBmp.getWidth() / 2,
+                paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(scaledSrcBmp, rect, rect, paint);
         bmp = null;

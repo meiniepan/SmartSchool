@@ -119,7 +119,7 @@ dependencies {
     implementation 'com.tencent.bugly:crashreport_upgrade:latest.release'
 //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
     implementation 'com.tencent.bugly:nativecrashreport:latest.release'
-    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
+    //图片选择器
 
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.9'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-28'
@@ -130,7 +130,7 @@ dependencies {
     //基础组件库依赖(必须) Push 6.2.0版本必须升级新版本Common SDK
     implementation 'com.umeng.umsdk:common:9.3.0'
     implementation 'com.umeng.umsdk:utdid:1.5.2'
-    implementation  'com.umeng.umsdk:asms:1.1.3'
+    implementation 'com.umeng.umsdk:asms:1.1.3'
     implementation 'com.umeng.umsdk:crash:0.0.5'
     implementation 'com.umeng.umsdk:push:6.2.0'
     implementation 'com.umeng.umsdk:alicloud-httpdns:1.2.5'
