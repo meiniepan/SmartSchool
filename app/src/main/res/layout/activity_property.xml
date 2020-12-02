@@ -57,7 +57,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="电脑，网络，信息化设备"
+                    android:hint="电脑,网络,信息化设,电教协助等"
                     android:textSize="@dimen/sp_15" />
             </LinearLayout>
         </LinearLayout>
@@ -98,7 +98,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="校舍，家具"
+                    android:hint="校舍,家具,水暖,电路等"
                     android:textSize="@dimen/sp_15" />
             </LinearLayout>
         </LinearLayout>
