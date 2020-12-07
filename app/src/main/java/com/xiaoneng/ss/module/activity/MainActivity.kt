@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.account.model.UpTokenBean
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.permission.PermissionResult
@@ -47,12 +48,15 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     override fun initView() {
 //        initColor()
+        super.initView()
         initViewPager()
         initBottomNavigation()
     }
 
     override fun initData() {
         super.initData()
+        //上报设备token
+        mViewModel.upToken(UpTokenBean())
         //        mViewModel.getAuthority()
     }
 

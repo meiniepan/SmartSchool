@@ -153,4 +153,10 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
         )
     }
 
+    fun upToken(bean: UpTokenBean) {
+        initiateRequest(
+            { mBaseData.value = mRepository.upToken(bean) },
+            loadState
+        )
+    }
 }

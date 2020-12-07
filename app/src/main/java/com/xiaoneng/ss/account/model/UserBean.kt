@@ -41,5 +41,6 @@ data class UserBean(
     var logintype: String? = null,//学生self   家长parents
     var parents: ArrayList<ParentBean>? = null,
     var students: ArrayList<StudentBean>? = null,
-    var domain: String? = null
+    var domain: String? = null,
+    var devicetoken: String? = null
 )

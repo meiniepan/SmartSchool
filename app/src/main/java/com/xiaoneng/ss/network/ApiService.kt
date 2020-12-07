@@ -963,5 +963,13 @@ interface ApiService {
         @Field("token") token: String?,
         @Field("booktime") booktime: String?
     ): BaseResponse<Any>
+
+    /**
+     *设备token上报
+     */
+    @POST("/api/v17/global/setting/upToken")
+    suspend fun upToken(
+        @Body requestBody: UpTokenBean
+    ): BaseResponse<Any>
 }
 
