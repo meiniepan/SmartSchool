@@ -32,6 +32,7 @@ class RoomBookRecordsActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mData = intent.getParcelableArrayListExtra(Constant.DATA)
         mData?.let {
             initAdapter()
+            rvRoomBookRecords.notifyDataSetChanged()
         }
     }
 
