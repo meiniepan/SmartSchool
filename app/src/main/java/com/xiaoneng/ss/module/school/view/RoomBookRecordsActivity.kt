@@ -65,8 +65,6 @@ class RoomBookRecordsActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mAddBookSiteData.observe(this, Observer { response ->
             response?.let {
-                toast(R.string.deal_done)
-                finish()
 //                netResponseFormat<List<SiteBean>>(it)?.let {
 //                    mData.addAll(it)
 //                    rvSite.notifyDataSetChanged()
