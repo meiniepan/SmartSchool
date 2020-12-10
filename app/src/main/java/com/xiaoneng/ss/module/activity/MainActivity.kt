@@ -13,11 +13,13 @@ import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.account.model.AppBean
 import com.xiaoneng.ss.account.model.UpTokenBean
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.permission.PermissionResult
 import com.xiaoneng.ss.common.permission.Permissions
+import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.circular.view.CircularFragment
 import com.xiaoneng.ss.module.mine.view.MineFragment
@@ -57,6 +59,8 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
         super.initData()
         //上报设备token
         mViewModel.upToken(UpTokenBean())
+        mViewModel.getApps()
+
         //        mViewModel.getAuthority()
     }
 
@@ -103,10 +107,13 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
     }
 
     private fun initBottomNavigation() {
-        var menuView =  bottom_navigation.getChildAt(0)as BottomNavigationMenuView
-        var icon0 = (menuView.getChildAt(0)as BottomNavigationItemView).findViewById<ImageView>(com.google.android.material.R.id.icon)
-        var icon1 = (menuView.getChildAt(1)as BottomNavigationItemView).findViewById<ImageView>(com.google.android.material.R.id.icon)
-        var icon2 = (menuView.getChildAt(2)as BottomNavigationItemView).findViewById<ImageView>(com.google.android.material.R.id.icon)
+        var menuView = bottom_navigation.getChildAt(0) as BottomNavigationMenuView
+        var icon0 =
+            (menuView.getChildAt(0) as BottomNavigationItemView).findViewById<ImageView>(com.google.android.material.R.id.icon)
+        var icon1 =
+            (menuView.getChildAt(1) as BottomNavigationItemView).findViewById<ImageView>(com.google.android.material.R.id.icon)
+        var icon2 =
+            (menuView.getChildAt(2) as BottomNavigationItemView).findViewById<ImageView>(com.google.android.material.R.id.icon)
         bottom_navigation.setOnNavigationItemSelectedListener { menuItem: MenuItem ->
 
             when (menuItem.itemId) {
@@ -209,7 +216,13 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
     }
 
     override fun initDataObserver() {
-
+        mViewModel.mAppData.observe(this, Observer {
+            it?.let {
+                netResponseFormat<ArrayList<AppBean>>(it)?.let { bean ->
+                    AppInfo.modifyAppInfo(bean)
+                }
+            }
+        })
     }
 
 }

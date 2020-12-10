@@ -153,7 +153,6 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     override fun initData() {
         super.initData()
-        mViewModel.getApps()
         if (UserInfo.getUserBean().usertype == "1" &&
             UserInfo.getUserBean().logintype == Constant.LOGIN_TYPE_PAR
         ) {
