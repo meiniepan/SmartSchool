@@ -30,7 +30,7 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
 
     override fun convert(viewHolder: BaseViewHolder, item: SiteBean) {
         viewHolder.let { holder ->
-            holder.setText(R.id.tvSiteItemRoomName,item.classroomname)
+            holder.setText(R.id.tvSiteItemRoomName, item.classroomname)
                 .setText(R.id.tvSiteItemRoomAddress, item.addr)
                 .setText(R.id.tvSiteItemRoomCapacity, item.total)
                 .setText(R.id.tvSiteItemRoomEquip, item.remark)
@@ -68,6 +68,17 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
             }
         })
         var mSiteData = initSiteTimes()
+        var canBook: List<String>? = item.book_position?.split(",")
+        if (canBook != null && canBook.isNotEmpty()) {
+            canBook.forEach {
+                mSiteData[it.toIntSafe()].isBooked = false
+            }
+        } else {
+            mSiteData.forEach {
+                it.isBooked = false
+            }
+        }
+
         item.books?.forEach {
             for (i in it.os_position!!.toIntSafe()..it.oe_position!!.toIntSafe()) {
                 mSiteData[i].isBooked = true

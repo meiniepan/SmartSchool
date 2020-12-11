@@ -21,7 +21,7 @@ data class SiteItemBean(
     var operatorid: String? = null,
     var operator: UserBeanSimple? = null,
     var remark: String? = null,
-    var isBooked: Boolean = false,//是否被预订
+    var isBooked: Boolean = true,//是否被预订
     var isChecked: Boolean = false,//是否被选中
     var timeStr: String? = null
 

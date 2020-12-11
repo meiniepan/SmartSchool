@@ -13,6 +13,7 @@ import com.xiaoneng.ss.module.circular.adapter.WeekTitleAdapter
 import com.xiaoneng.ss.module.circular.model.DayBean
 import com.xiaoneng.ss.module.school.adapter.SiteAdapter
 import com.xiaoneng.ss.module.school.model.SiteBean
+import com.xiaoneng.ss.module.school.model.SiteResp
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_book_site.*
 
@@ -25,6 +26,7 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private var chosenDay: Long? = System.currentTimeMillis()
     lateinit var mAdapterWeek: DaysOfWeekAdapter
     var isDayOfWeek = true
+    var weekStr:String? = ""
     var dateOffset = 0
     var mDataWeekTitle = ArrayList<String>()
     var mDataWeek = ArrayList<DayBean>()
@@ -39,7 +41,7 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
-        tvWeekSchedule.text = Lunar.getWhichWeek(chosenDay)
+//        tvWeekSchedule.text = Lunar.getWhichWeek(chosenDay)
         ivSwitchSchedule.setOnClickListener {
             switch()
         }
@@ -169,7 +171,7 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             setDateNextVisibility(isDayOfWeek)
             rvWeek.visibility = View.VISIBLE
             rvMonth.visibility = View.GONE
-            tvWeekSchedule.text = Lunar.getWhichWeek(chosenDay)
+            tvWeekSchedule.text = weekStr
             true
         }
 
@@ -188,14 +190,18 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mBaseData.observe(this, Observer { response ->
             response?.let {
-                netResponseFormat<List<SiteBean>>(it)?.let {
-                    mData.clear()
-                    mData.addAll(it)
-                    mData.forEach {
-                        it.chosenDay = chosenDay!!
+                netResponseFormat<SiteResp>(it)?.let {
+                    weekStr = it.semesters
+                    tvWeekSchedule.text = weekStr
+                    it.classrooms?.let {
+                        mData.clear()
+                        mData.addAll(it)
+                        mData.forEach {
+                            it.chosenDay = chosenDay!!
+                        }
+                        mAdapter.setPosition(DateUtil.getBookSitePositionNearNow(chosenDay!!))
+                        rvSite.notifyDataSetChanged()
                     }
-                    mAdapter.setPosition(DateUtil.getBookSitePositionNearNow(chosenDay!!))
-                    rvSite.notifyDataSetChanged()
                 }
             }
         })

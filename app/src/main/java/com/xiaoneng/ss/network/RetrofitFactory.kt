@@ -44,8 +44,8 @@ class RetrofitFactory private constructor() {
 
     private fun initOkHttpClient(): OkHttpClient {
         var builder = OkHttpClient.Builder()
-            .addInterceptor(initCookieIntercept())
-            .addInterceptor(initLoginIntercept())
+//            .addInterceptor(initCookieIntercept())
+//            .addInterceptor(initLoginIntercept())
             .addInterceptor(initCommonInterceptor())
         if (BuildConfig.IS_DEBUG){
         builder.addInterceptor(LoggingInterceptor.Builder()

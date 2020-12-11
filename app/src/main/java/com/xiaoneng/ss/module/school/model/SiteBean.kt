@@ -22,6 +22,7 @@ data class SiteBean(
     var operatorid: String?,
     var operator: UserBeanSimple?,
     var remark: String? = null,
+    var book_position: String? = null,
     var ostime: String? = null,
     var oetime: String? = null,
     var os_position: String? = null,

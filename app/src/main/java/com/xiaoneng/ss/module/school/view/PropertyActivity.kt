@@ -1,6 +1,5 @@
 package com.xiaoneng.ss.module.school.view
 
-import android.util.Log
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.AppInfo
