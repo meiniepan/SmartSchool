@@ -1,5 +1,8 @@
 package com.xiaoneng.ss.module.school.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 /**
  * Created with Android Studio.
  * Description:
@@ -7,6 +10,7 @@ package com.xiaoneng.ss.module.school.model
  * @date: 2020/12/11
  * Time: 17:06
  */
+@Parcelize
 data class PropertyTypeBean(
     var id: String?,
     var name: String?,
@@ -19,4 +23,4 @@ data class PropertyTypeBean(
     var cuser_id: String?,
     var createtime: String?,
     var updatetime: String?
-)
+) : Parcelable

@@ -13,7 +13,6 @@ import com.xiaoneng.ss.module.school.model.PropertyTypeBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import com.xiaoneng.ss.network.response.BaseResp
 import kotlinx.android.synthetic.main.activity_property.*
-import kotlinx.android.synthetic.main.activity_property_record.*
 
 /**
  * @author Burning
@@ -73,7 +72,9 @@ class PropertyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         mAdapter.setOnItemClickListener { adapter, view, position ->
-            mStartActivity<AddPropertyActivity>(this)
+            mStartActivity<AddPropertyActivity>(this){
+                putExtra(Constant.DATA,mData[position])
+            }
         }
     }
 

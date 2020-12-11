@@ -123,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="@dimen/sp_15"
-                    android:text="报修结果" />
+                    android:text="工单状态" />
 
                 <TextView
                     android:id="@+id/tvPropertyDetailResult"
@@ -203,6 +203,7 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/llPropertyDetailAction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -219,16 +220,14 @@
                     android:textColor="@color/themeColor"
                     android:gravity="center"
                     android:text="撤销" />
-                <Space
-                    android:layout_width="7dp"
-                    android:layout_height="wrap_content"
-                    />
+
 
                 <TextView
                     android:id="@+id/tvPropertyDetailAction2"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="44dp"
+                    android:layout_marginStart="7dp"
                     android:textStyle="bold"
                     android:background="@drawable/bac_blue_bac_22"
                     android:textSize="@dimen/sp_15"

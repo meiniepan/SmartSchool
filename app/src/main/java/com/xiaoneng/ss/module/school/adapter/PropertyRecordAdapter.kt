@@ -35,47 +35,128 @@ class PropertyRecordAdapter(layoutId: Int, listData: MutableList<PropertyDetailB
         viewHolder?.let { holder ->
             var view1 = holder.getView<TextView>(R.id.tvPropertyDetailAction1)
             var view2 = holder.getView<TextView>(R.id.tvPropertyDetailAction2)
-            var llResult = holder.getView<View>(R.id.llPropertyDetailResult)
+            var llAction = holder.getView<View>(R.id.llPropertyDetailAction)
+            var statusStr = ""
             holder.setText(R.id.tvPropertyDetailTime, item.reporttime)
                 .setText(R.id.tvPropertyDetailCode, item.id)
                 .setText(R.id.tvPropertyDetailPerson, item.repairerinfo?.realname)
                 .setText(R.id.tvPropertyDetailTime2, item.handletime)
-                .setText(R.id.tvPropertyDetailRemark, item.remark)
+                .setText(R.id.tvPropertyDetailRemark, item.remark)//维修人逻辑
+
+            //报修人逻辑
+            //0撤销 1未接单 2接单 3完成
+            when {
+                item.isdelay == "1" -> {
+                    statusStr = "已延期"
+                }
+                item.status == "0" -> {
+                    statusStr = "已撤销"
+                }
+                item.status == "1" -> {
+                    statusStr = "未接单"
+                }
+                item.status == "2" -> {
+                    statusStr = "已接单"
+                }
+                item.status == "3" -> {
+                    statusStr = "已完成"
+                }
+            }
             if (mType == "0") {
+                //报修人逻辑
+                //0撤销 1未接单 2接单 3完成
                 holder.setText(R.id.tvPropertyDetailTypeKey, "报修类型")
                     .setText(R.id.tvPropertyDetailType, item.typename)
-                llResult.visibility = View.GONE
-                view1.apply {
-                    text = "撤销"
-                    setOnClickListener {
-                        doCancel()
+                if (item.status == "0") {
+                    llAction.visibility = View.GONE
+                } else if (item.status == "1") {
+                    llAction.visibility = View.VISIBLE
+                    view1.visibility = View.VISIBLE
+                    view2.visibility = View.VISIBLE
+                    view1.apply {
+                        text = "撤销"
+                        setOnClickListener {
+                            doCancel()
+                        }
                     }
-                }
-                view2.apply {
-                    text = "提醒"
-                    setOnClickListener {
-                        doRemind()
+                    view2.apply {
+                        text = "提醒"
+                        setOnClickListener {
+                            doRemind()
+                        }
                     }
+                } else if (item.status == "2" || item.isdelay == "1") {
+                    llAction.visibility = View.VISIBLE
+                    view1.visibility = View.GONE
+                    view2.visibility = View.VISIBLE
+                    view2.apply {
+                        text = "提醒"
+                        setOnClickListener {
+                            doRemind()
+                        }
+                    }
+                } else if (item.status == "3") {
+                    llAction.visibility = View.GONE
+
                 }
+
             } else if (mType == "1") {
-                view1.apply {
-                    text = "转单"
-                    setOnClickListener {
-                        doDelay()
+                //维修人逻辑
+                if (item.isdelay == "1") {
+                    llAction.visibility = View.VISIBLE
+                    view1.visibility = View.GONE
+                    view2.visibility = View.VISIBLE
+                    view2.apply {
+                        text = "完成"
+                        setOnClickListener {
+                            doFinish()
+                        }
                     }
-                }
-                view2.apply {
-                    text = "接单"
-                    setOnClickListener {
-                        doReceive()
+                } else if (item.status == "0") {
+                    llAction.visibility = View.GONE
+                } else if (item.status == "1") {
+                    llAction.visibility = View.VISIBLE
+                    view1.visibility = View.VISIBLE
+                    view2.visibility = View.VISIBLE
+                    view1.apply {
+                        text = "转单"
+                        setOnClickListener {
+                            doShift()
+                        }
                     }
+                    view2.apply {
+                        text = "接单"
+                        setOnClickListener {
+                            doReceive()
+                        }
+                    }
+                } else if (item.status == "2") {
+                    llAction.visibility = View.VISIBLE
+                    view1.visibility = View.VISIBLE
+                    view2.visibility = View.VISIBLE
+                    view1.apply {
+                        text = "延期"
+                        setOnClickListener {
+                            doShift()
+                        }
+                    }
+                    view2.apply {
+                        text = "完成"
+                        setOnClickListener {
+                            doFinish()
+                        }
+                    }
+                } else if (item.status == "3") {
+                    llAction.visibility = View.GONE
+
                 }
-                llResult.visibility = View.VISIBLE
+
                 holder.setText(R.id.tvPropertyDetailTypeKey, "发起人")
                     .setText(R.id.tvPropertyDetailType, item.reportinfo?.realname)
-                    .setText(R.id.tvPropertyDetailResult, item.status)
+
 
             }
+            holder.setText(R.id.tvPropertyDetailResult, statusStr)
             item.fileinfo?.let {
                 if (it.size > 0) {
                     initAdapter(holder, item)
@@ -83,6 +164,10 @@ class PropertyRecordAdapter(layoutId: Int, listData: MutableList<PropertyDetailB
 
             }
         }
+
+    }
+
+    private fun doFinish() {
 
     }
 
@@ -102,6 +187,10 @@ class PropertyRecordAdapter(layoutId: Int, listData: MutableList<PropertyDetailB
 
     }
 
+    private fun doShift() {
+
+    }
+
     private fun doDelay() {
         delayDialog.show()
     }
@@ -116,7 +205,7 @@ class PropertyRecordAdapter(layoutId: Int, listData: MutableList<PropertyDetailB
         bottomDialog.setContentView(contentView)
         val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
         params.width =
-            mContext.resources.displayMetrics.widthPixels- dp2px(32f).toInt()
+            mContext.resources.displayMetrics.widthPixels - dp2px(32f).toInt()
         params.bottomMargin = dp2px(mContext, 0f).toInt()
         contentView.layoutParams = params
         bottomDialog.window!!.setGravity(Gravity.CENTER)
