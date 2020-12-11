@@ -21,87 +21,12 @@
         android:orientation="vertical">
 
 
-        <LinearLayout
-            android:id="@+id/tvPropertyApply1"
+        <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
+            style="@style/recycler_style"
+            android:id="@+id/rvPropertyType"
+            android:layout_marginTop="12dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingStart="26dp"
-            android:background="@drawable/bac_white_bac_6"
-            android:paddingEnd="26dp"
-            android:paddingTop="22dp"
-            android:paddingBottom="22dp"
-            android:layout_marginStart="@dimen/title_padding"
-            android:layout_marginEnd="@dimen/title_padding"
-            android:layout_marginTop="12dp">
-
-            <ImageView
-                android:layout_width="74dp"
-                android:layout_height="74dp"
-                android:background="@drawable/ic_dianjiao" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="7dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="电教报修"
-                    android:textSize="@dimen/sp_17"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="电脑,网络,信息化设,电教协助等"
-                    android:textSize="@dimen/sp_15" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/tvPropertyApply2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingStart="26dp"
-            android:background="@drawable/bac_white_bac_6"
-            android:paddingEnd="26dp"
-            android:paddingTop="22dp"
-            android:paddingBottom="22dp"
-            android:layout_marginStart="@dimen/title_padding"
-            android:layout_marginEnd="@dimen/title_padding"
-            android:layout_marginTop="10dp">
-
-            <ImageView
-                android:layout_width="74dp"
-                android:layout_height="74dp"
-                android:background="@drawable/ic_zongwu" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="7dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="总务报修"
-                    android:textSize="@dimen/sp_17"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="校舍,家具,水暖,电路等"
-                    android:textSize="@dimen/sp_15" />
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_height="wrap_content"/>
 
 
         <LinearLayout

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <Space
+        android:id="@+id/space"
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <LinearLayout
+        android:id="@+id/tvPropertyApply2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="26dp"
+        android:background="@drawable/bac_white_bac_6"
+        android:paddingEnd="26dp"
+        android:paddingTop="22dp"
+        android:paddingBottom="22dp"
+        android:layout_marginStart="@dimen/title_padding"
+        android:layout_marginEnd="@dimen/title_padding">
+
+        <ImageView
+            android:id="@+id/ivPropertyTypeIcon"
+            android:layout_width="74dp"
+            android:layout_height="74dp"
+            android:background="@drawable/ic_zongwu" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="7dp">
+
+            <TextView
+                android:id="@+id/tvPropertyTypeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="总务报修"
+                android:textSize="@dimen/sp_17"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvPropertyTypeRemark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="校舍,家具,水暖,电路等"
+                android:textSize="@dimen/sp_15" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
