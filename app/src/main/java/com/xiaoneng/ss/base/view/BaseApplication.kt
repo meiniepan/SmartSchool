@@ -57,50 +57,52 @@ open class BaseApplication : Application() {
     }
 
     private fun initPush() {
-
-        UMConfigure.init(
-            this,
-            "5f8fe60b2065791705f41ce5",
-            "Umeng",
-            UMConfigure.DEVICE_TYPE_PHONE,
-            "ab59d5ba71c396e8c388d2d9b309eb28"
-        )
+        try {
+            UMConfigure.init(
+                this,
+                "5f8fe60b2065791705f41ce5",
+                "Umeng",
+                UMConfigure.DEVICE_TYPE_PHONE,
+                "ab59d5ba71c396e8c388d2d9b309eb28"
+            )
 //获取消息推送代理示例
 //获取消息推送代理示例
-        val mPushAgent = PushAgent.getInstance(this)
+            val mPushAgent = PushAgent.getInstance(this)
 //注册推送服务，每次调用register方法都会回调该接口
 //注册推送服务，每次调用register方法都会回调该接口
-        mPushAgent.register(object : IUmengRegisterCallback {
-            override fun onSuccess(deviceToken: String) {
-                //注册成功会返回deviceToken deviceToken是推送消息的唯一标志
+            mPushAgent.register(object : IUmengRegisterCallback {
+                override fun onSuccess(deviceToken: String) {
+                    //注册成功会返回deviceToken deviceToken是推送消息的唯一标志
 
-                var bean = UserInfo.getUserBean()
-                bean.devicetoken = deviceToken
-                UserInfo.modifyUserBean(bean)
-                Log.i(TAG, "注册成功：deviceToken：-------->  $deviceToken")
-            }
+                    var bean = UserInfo.getUserBean()
+                    bean.devicetoken = deviceToken
+                    UserInfo.modifyUserBean(bean)
+                    Log.i(TAG, "注册成功：deviceToken：-------->  $deviceToken")
+                }
 
-            override fun onFailure(s: String, s1: String) {
-                Log.e(TAG, "注册失败：-------->  s:$s,s1:$s1")
-            }
-        })
-        //该方法是【友盟+】Push后台进行日活统计及多维度推送的必调用方法，请务必调用！
-        mPushAgent.onAppStart()
+                override fun onFailure(s: String, s1: String) {
+                    Log.e(TAG, "注册失败：-------->  s:$s,s1:$s1")
+                }
+            })
+            //该方法是【友盟+】Push后台进行日活统计及多维度推送的必调用方法，请务必调用！
+            mPushAgent.onAppStart()
 
-        /**
-         * 初始化厂商通道
-         */
-        HuaWeiRegister.register(this)
-        MiPushRegistar.register(this, "2882303761518747426", "5581874725426")
-        //vivo 通道
-        VivoRegister.register(this)
-        //OPPO通道，参数1为app key，参数2为app secret
-        OppoRegister.register(
-            this,
-            "5cbd913970a44ecc9e54e536f68d1fe8",
-            "0d004009e32f42149a6c5e6c8fbf40cd"
-        )
-
+            /**
+             * 初始化厂商通道
+             */
+            HuaWeiRegister.register(this)
+            MiPushRegistar.register(this, "2882303761518747426", "5581874725426")
+            //vivo 通道
+            VivoRegister.register(this)
+            //OPPO通道，参数1为app key，参数2为app secret
+            OppoRegister.register(
+                this,
+                "5cbd913970a44ecc9e54e536f68d1fe8",
+                "0d004009e32f42149a6c5e6c8fbf40cd"
+            )
+        } catch (e: ClassNotFoundException) {
+        }catch (e: Exception) {
+        }
     }
 
 

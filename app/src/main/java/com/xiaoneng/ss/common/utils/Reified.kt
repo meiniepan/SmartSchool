@@ -297,7 +297,7 @@ fun Context.isSystemWhiteList(): Boolean {
 
 fun Context.captchaToast(code: String?) {
     code?.let {
-        toast(it)
+        toast("验证码已发送")
     }
 }
 

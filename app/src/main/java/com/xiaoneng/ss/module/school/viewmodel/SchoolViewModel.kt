@@ -340,7 +340,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun modifyRepair(body: PropertyDetailBean) {
+    fun modifyRepair(body: RepairBody) {
         initiateRequest(
             { mModifyRepairData.value = mRepository.modifyRepair(body) },
             loadState

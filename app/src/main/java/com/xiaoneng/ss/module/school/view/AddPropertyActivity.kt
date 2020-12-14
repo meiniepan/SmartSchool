@@ -4,6 +4,7 @@ import android.os.Handler
 import android.widget.EditText
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.gson.Gson
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
@@ -170,7 +171,7 @@ class AddPropertyActivity : SpeechTranscriberActivity<SchoolViewModel>() {
             typeid = mData?.id,
             token = UserInfo.getUserBean().token,
             remark = etPropertyRemark.text.toString(),
-            fileinfo = fileInfo
+            fileinfo = Gson().toJson(fileInfo)
         )
         mViewModel.addRepair(bean)
     }

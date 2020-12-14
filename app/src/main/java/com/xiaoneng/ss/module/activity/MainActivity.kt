@@ -59,7 +59,6 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
         super.initData()
         //上报设备token
         mViewModel.upToken(UpTokenBean())
-        mViewModel.getApps()
 
         //        mViewModel.getAuthority()
     }
@@ -216,13 +215,7 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
     }
 
     override fun initDataObserver() {
-        mViewModel.mAppData.observe(this, Observer {
-            it?.let {
-                netResponseFormat<ArrayList<AppBean>>(it)?.let { bean ->
-                    AppInfo.modifyAppInfo(bean)
-                }
-            }
-        })
+
     }
 
 }

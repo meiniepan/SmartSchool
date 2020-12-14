@@ -1,5 +1,6 @@
 package com.xiaoneng.ss.module.school.view
 
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
@@ -34,6 +35,7 @@ class PropertyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             //维修记录
             mStartActivity<PropertyRecordActivity>(this) {
                 putExtra(Constant.TYPE, "1")
+                putExtra(Constant.DATA, mData)
             }
         }
         tvPropertyRecord2.setOnClickListener {
@@ -41,6 +43,7 @@ class PropertyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             mStartActivity<PropertyRecordActivity>(this)
             {
                 putExtra(Constant.TYPE, "0")
+                putExtra(Constant.DATA, mData)
             }
         }
         initAdapter()
@@ -48,8 +51,10 @@ class PropertyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun initUI() {
         //判断是否有维修权限
-        if (AppInfo.checkRule("admin/repair/default")) {
+        if (AppInfo.checkRule("admin/repair/default","teacher/repairservice/listsByID")) {
+            tvPropertyRecord1.visibility = View.VISIBLE
         } else {
+            tvPropertyRecord1.visibility = View.INVISIBLE
         }
     }
 
@@ -72,8 +77,8 @@ class PropertyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         mAdapter.setOnItemClickListener { adapter, view, position ->
-            mStartActivity<AddPropertyActivity>(this){
-                putExtra(Constant.DATA,mData[position])
+            mStartActivity<AddPropertyActivity>(this) {
+                putExtra(Constant.DATA, mData[position])
             }
         }
     }

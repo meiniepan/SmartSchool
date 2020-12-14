@@ -977,7 +977,7 @@ interface ApiService {
      */
     @POST("/api/v17/teacher/repair/modify")
     suspend fun modifyRepair(
-        @Body requestBody: PropertyDetailBean
+        @Body requestBody: RepairBody
     ): BaseResponse<Any>
 
     /**

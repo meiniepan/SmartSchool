@@ -8,13 +8,16 @@ import android.view.inputmethod.EditorInfo
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.account.model.AppBean
 import com.xiaoneng.ss.account.model.LoginReq
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.captchaToast
 import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.module.activity.MainActivity
 import com.xiaoneng.ss.module.mine.view.UserProtocolActivity
@@ -138,8 +141,17 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
         mViewModel.mLoginData.observe(this, Observer {
             it?.let {
                 UserInfo.loginSuccess(it)
-                toast(R.string.login_success)
-                mStartActivity<MainActivity>(this)
+                mViewModel.getApps()
+
+            }
+        })
+        mViewModel.mAppData.observe(this, Observer {
+            it?.let {
+                netResponseFormat<ArrayList<AppBean>>(it)?.let { bean ->
+                    AppInfo.modifyAppInfo(bean)
+                    toast(R.string.login_success)
+                    mStartActivity<MainActivity>(this)
+                }
             }
         })
     }

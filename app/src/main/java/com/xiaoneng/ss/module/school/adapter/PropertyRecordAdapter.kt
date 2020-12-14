@@ -8,8 +8,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.module.school.`interface`.IPropertyRecord
+import com.xiaoneng.ss.module.school.interfaces.IPropertyRecord
 import com.xiaoneng.ss.module.school.model.PropertyDetailBean
+import com.xiaoneng.ss.module.school.model.RepairBody
 
 
 /**
@@ -73,7 +74,7 @@ class PropertyRecordAdapter(
                     view1.apply {
                         text = "撤销"
                         setOnClickListener {
-                            doCancel(mData[holder.adapterPosition])
+                            doCancel(RepairBody(id = mData[holder.adapterPosition].id))
                         }
                     }
                     view2.apply {
@@ -106,7 +107,7 @@ class PropertyRecordAdapter(
                     view2.apply {
                         text = "完成"
                         setOnClickListener {
-                            doFinish(mData[holder.adapterPosition])
+                            doFinish(RepairBody(id = mData[holder.adapterPosition].id))
                         }
                     }
                 } else if (item.status == "0") {
@@ -118,13 +119,13 @@ class PropertyRecordAdapter(
                     view1.apply {
                         text = "转单"
                         setOnClickListener {
-                            doShift(mData[holder.adapterPosition])
+                            doShift(RepairBody(id = mData[holder.adapterPosition].id))
                         }
                     }
                     view2.apply {
                         text = "接单"
                         setOnClickListener {
-                            doReceive(mData[holder.adapterPosition])
+                            doReceive(RepairBody(id = mData[holder.adapterPosition].id))
                         }
                     }
                 } else if (item.status == "2") {
@@ -134,13 +135,13 @@ class PropertyRecordAdapter(
                     view1.apply {
                         text = "延期"
                         setOnClickListener {
-                            doDelay(mData[holder.adapterPosition])
+                            doDelay(RepairBody(id = mData[holder.adapterPosition].id))
                         }
                     }
                     view2.apply {
                         text = "完成"
                         setOnClickListener {
-                            doFinish(mData[holder.adapterPosition])
+                            doFinish(RepairBody(id = mData[holder.adapterPosition].id))
                         }
                     }
                 } else if (item.status == "3") {
@@ -164,28 +165,28 @@ class PropertyRecordAdapter(
 
     }
 
-    private fun doFinish(bean:PropertyDetailBean) {
+    private fun doFinish(bean: RepairBody) {
         listener.doFinish(bean)
     }
 
-    private fun doReceive(bean:PropertyDetailBean) {
+    private fun doReceive(bean: RepairBody) {
         listener.doReceive(bean)
     }
 
 
-    private fun doRemind(bean:PropertyDetailBean) {
+    private fun doRemind(bean: PropertyDetailBean) {
         listener.doRemind(bean)
     }
 
-    private fun doCancel(bean:PropertyDetailBean) {
+    private fun doCancel(bean: RepairBody) {
         listener.doCancel(bean)
     }
 
-    private fun doShift(bean:PropertyDetailBean) {
+    private fun doShift(bean: RepairBody) {
         listener.doShift(bean)
     }
 
-    private fun doDelay(bean:PropertyDetailBean) {
+    private fun doDelay(bean: RepairBody) {
         listener.doDelay(bean)
     }
 

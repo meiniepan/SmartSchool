@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bac_white_bac_10"
+    android:paddingStart="@dimen/title_padding"
+    android:paddingEnd="@dimen/title_padding"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请选择转单给"
+            android:textSize="@dimen/sp_18"
+            android:textStyle="bold"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/ivClose"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:background="@drawable/ic_close" />
+    </LinearLayout>
+
+    <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
+        style="@style/recycler_style"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="-16dp"
+        android:id="@+id/rvShift"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+
+    <TextView
+        android:id="@+id/tvDelayConfirm"
+        style="@style/button_blue_bac_style"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginTop="50dp"
+        android:text="提交" />
+
+</LinearLayout>

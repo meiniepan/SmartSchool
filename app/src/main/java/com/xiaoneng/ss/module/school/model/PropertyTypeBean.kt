@@ -22,5 +22,6 @@ data class PropertyTypeBean(
     var muser_id: String?,
     var cuser_id: String?,
     var createtime: String?,
-    var updatetime: String?
+    var updatetime: String?,
+    var checked: Boolean = false
 ) : Parcelable

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
@@ -16,15 +17,19 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.dp2px
-import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.netResponseFormat
-import com.xiaoneng.ss.module.school.`interface`.IPropertyRecord
+import com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
 import com.xiaoneng.ss.module.school.adapter.PropertyRecordAdapter
+import com.xiaoneng.ss.module.school.adapter.PropertyShiftAdapter
+import com.xiaoneng.ss.module.school.interfaces.IPropertyRecord
 import com.xiaoneng.ss.module.school.model.PropertyDetailBean
 import com.xiaoneng.ss.module.school.model.PropertyDetailResp
+import com.xiaoneng.ss.module.school.model.PropertyTypeBean
+import com.xiaoneng.ss.module.school.model.RepairBody
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_property_record.*
 import org.jetbrains.anko.toast
+import java.util.*
 
 /**
  * @author Burning
@@ -35,11 +40,15 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
     private var lastId: String? = null
     lateinit var mAdapter: PropertyRecordAdapter
     var mData: ArrayList<PropertyDetailBean> = ArrayList()
+    var mTypeData: ArrayList<PropertyTypeBean>? = null
     private var mType: String? = null//0报修 1维修
     var typeStr = ""
-    lateinit var chosenBean: PropertyDetailBean
+    lateinit var chosenBean: RepairBody
     private val delayDialog: Dialog by lazy {
         initDialog()
+    }
+    private val shiftDialog: Dialog by lazy {
+        initShiftDialog()
     }
 
     override fun getLayoutId(): Int {
@@ -49,6 +58,7 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
     override fun initView() {
         super.initView()
         mType = intent.getStringExtra(Constant.TYPE)
+        mTypeData = intent.getParcelableArrayListExtra(Constant.DATA)
         if (mType == "0") {
             typeStr = "report"
         } else if (mType == "1") {
@@ -95,7 +105,7 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
         }
 
         mAdapter.setOnItemClickListener { adapter, view, position ->
-            mStartActivity<AddBookSiteActivity>(this)
+
         }
     }
 
@@ -122,7 +132,7 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
         mViewModel.mModifyRepairData.observe(this, Observer {
             it?.let {
                 toast(R.string.deal_done)
-                getData()
+                doRefresh()
             }
         })
 
@@ -133,14 +143,14 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
         })
     }
 
-    override fun doFinish(bean: PropertyDetailBean) {
+    override fun doFinish(bean: RepairBody) {
         bean.token = UserInfo.getUserBean().token
         bean.status = "3"
         showLoading()
         mViewModel.modifyRepair(bean)
     }
 
-    override fun doReceive(bean: PropertyDetailBean) {
+    override fun doReceive(bean: RepairBody) {
         bean.token = UserInfo.getUserBean().token
         bean.status = "2"
         showLoading()
@@ -152,21 +162,21 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
         mViewModel.remindRepair(bean.id ?: "")
     }
 
-    override fun doCancel(bean: PropertyDetailBean) {
+    override fun doCancel(bean: RepairBody) {
         bean.token = UserInfo.getUserBean().token
         bean.status = "0"
-        getData()
-
+        showLoading()
         mViewModel.modifyRepair(bean)
     }
 
-    override fun doShift(bean: PropertyDetailBean) {
-
+    override fun doShift(bean: RepairBody) {
+        chosenBean = bean
+        shiftDialog.show()
     }
 
-    override fun doDelay(bean: PropertyDetailBean) {
-        delayDialog.show()
+    override fun doDelay(bean: RepairBody) {
         chosenBean = bean
+        delayDialog.show()
     }
 
     private fun initDialog(): Dialog {
@@ -187,11 +197,18 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
         var remarkStr = tvAction2.text
         var etRemark = contentView.findViewById<EditText>(R.id.etDelayRemark)
         var tvConfirm = contentView.findViewById<TextView>(R.id.tvDelayConfirm)
+        contentView.findViewById<View>(R.id.ivClose).setOnClickListener {
+            bottomDialog.dismiss()
+        }
         tvAction1.setOnClickListener {
             remarkStr = tvAction1.text
+            tvAction1.setBackgroundResource(R.drawable.bac_blue_bac_19)
+            tvAction2.setBackgroundResource(R.drawable.bac_blue_line_19)
         }
         tvAction2.setOnClickListener {
             remarkStr = tvAction2.text
+            tvAction2.setBackgroundResource(R.drawable.bac_blue_bac_19)
+            tvAction1.setBackgroundResource(R.drawable.bac_blue_line_19)
         }
         tvConfirm.setOnClickListener {
             var remark = ""
@@ -205,8 +222,67 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
             chosenBean.delayreasons = remark
             showLoading()
             mViewModel.modifyRepair(chosenBean)
+            bottomDialog.dismiss()
         }
 
+        return bottomDialog
+    }
+
+    private fun initShiftDialog(): Dialog {
+        // 转单对话框
+        var bottomDialog =
+            Dialog(this, R.style.BottomDialog)
+        val contentView: View =
+            LayoutInflater.from(this).inflate(R.layout.dialog_shift, null)
+        bottomDialog.setContentView(contentView)
+        val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
+        params.width =
+            this.resources.displayMetrics.widthPixels - dp2px(32f).toInt()
+        params.bottomMargin = dp2px(this, 0f).toInt()
+        contentView.layoutParams = params
+        bottomDialog.window!!.setGravity(Gravity.CENTER)
+        contentView.findViewById<View>(R.id.ivClose).setOnClickListener {
+            bottomDialog.dismiss()
+        }
+        var recyclerView = contentView.findViewById<StatusRecyclerView>(R.id.rvShift)
+        mTypeData?.let {
+            var removeBean: PropertyTypeBean? = null
+            it.forEach {
+                if (it.id == chosenBean.typeid) {
+                    removeBean = it
+                }
+            }
+            it.remove(removeBean)
+            it[0].checked = true
+            var mAdapter = PropertyShiftAdapter(R.layout.item_shift, it)
+            recyclerView.apply {
+                layoutManager = GridLayoutManager(context, 2)
+                setAdapter(mAdapter)
+            }
+            mAdapter.setOnItemClickListener { adapter, view, position ->
+                it.forEach {
+                    it.checked = false
+                }
+                it[position].checked = true
+                mAdapter.notifyDataSetChanged()
+            }
+
+            var tvConfirm = contentView.findViewById<TextView>(R.id.tvDelayConfirm)
+
+            tvConfirm.setOnClickListener { view ->
+                var typeId = ""
+                it.forEach {
+                    if (it.checked) {
+                        typeId = it.id ?: ""
+                    }
+                }
+                chosenBean.token = UserInfo.getUserBean().token
+                chosenBean.typeid = typeId
+                showLoading()
+                mViewModel.modifyRepair(chosenBean)
+                bottomDialog.dismiss()
+            }
+        }
         return bottomDialog
     }
 }

@@ -22,11 +22,11 @@
 
 
         <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
-            style="@style/recycler_style"
             android:id="@+id/rvPropertyType"
+            style="@style/recycler_style"
             android:layout_marginTop="12dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
 
         <LinearLayout
@@ -37,12 +37,13 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/tvPropertyRecord1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvPropertyRecord1"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="查看维修记录"
@@ -55,13 +56,14 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/tvPropertyRecord2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="43dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvPropertyRecord2"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="查看报修历史"
