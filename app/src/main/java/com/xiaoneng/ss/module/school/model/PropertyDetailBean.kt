@@ -8,6 +8,7 @@ package com.xiaoneng.ss.module.school.model
  * Time: 17:06
  */
 data class PropertyDetailBean(
+    var token: String?,
     var id: String?,
     var remark: String?,
     var repairerid: String?,

@@ -1,10 +1,6 @@
 package com.xiaoneng.ss.module.school.adapter
 
-import android.app.Dialog
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,9 +8,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.dp2px
+import com.xiaoneng.ss.module.school.`interface`.IPropertyRecord
 import com.xiaoneng.ss.module.school.model.PropertyDetailBean
-import org.jetbrains.anko.toast
 
 
 /**
@@ -24,12 +19,14 @@ import org.jetbrains.anko.toast
  * @date: 2020/08/27
  * Time: 17:32
  */
-class PropertyRecordAdapter(layoutId: Int, listData: MutableList<PropertyDetailBean>) :
+class PropertyRecordAdapter(
+    layoutId: Int,
+    listData: MutableList<PropertyDetailBean>,
+    val listener: IPropertyRecord
+) :
     BaseQuickAdapter<PropertyDetailBean, BaseViewHolder>(layoutId, listData) {
     var mType: String? = null
-    private val delayDialog: Dialog by lazy {
-        initDialog()
-    }
+
 
     override fun convert(viewHolder: BaseViewHolder, item: PropertyDetailBean) {
         viewHolder?.let { holder ->
@@ -76,13 +73,13 @@ class PropertyRecordAdapter(layoutId: Int, listData: MutableList<PropertyDetailB
                     view1.apply {
                         text = "撤销"
                         setOnClickListener {
-                            doCancel()
+                            doCancel(mData[holder.adapterPosition])
                         }
                     }
                     view2.apply {
                         text = "提醒"
                         setOnClickListener {
-                            doRemind()
+                            doRemind(mData[holder.adapterPosition])
                         }
                     }
                 } else if (item.status == "2" || item.isdelay == "1") {
@@ -92,7 +89,7 @@ class PropertyRecordAdapter(layoutId: Int, listData: MutableList<PropertyDetailB
                     view2.apply {
                         text = "提醒"
                         setOnClickListener {
-                            doRemind()
+                            doRemind(mData[holder.adapterPosition])
                         }
                     }
                 } else if (item.status == "3") {
@@ -109,7 +106,7 @@ class PropertyRecordAdapter(layoutId: Int, listData: MutableList<PropertyDetailB
                     view2.apply {
                         text = "完成"
                         setOnClickListener {
-                            doFinish()
+                            doFinish(mData[holder.adapterPosition])
                         }
                     }
                 } else if (item.status == "0") {
@@ -121,13 +118,13 @@ class PropertyRecordAdapter(layoutId: Int, listData: MutableList<PropertyDetailB
                     view1.apply {
                         text = "转单"
                         setOnClickListener {
-                            doShift()
+                            doShift(mData[holder.adapterPosition])
                         }
                     }
                     view2.apply {
                         text = "接单"
                         setOnClickListener {
-                            doReceive()
+                            doReceive(mData[holder.adapterPosition])
                         }
                     }
                 } else if (item.status == "2") {
@@ -137,13 +134,13 @@ class PropertyRecordAdapter(layoutId: Int, listData: MutableList<PropertyDetailB
                     view1.apply {
                         text = "延期"
                         setOnClickListener {
-                            doShift()
+                            doDelay(mData[holder.adapterPosition])
                         }
                     }
                     view2.apply {
                         text = "完成"
                         setOnClickListener {
-                            doFinish()
+                            doFinish(mData[holder.adapterPosition])
                         }
                     }
                 } else if (item.status == "3") {
@@ -167,55 +164,31 @@ class PropertyRecordAdapter(layoutId: Int, listData: MutableList<PropertyDetailB
 
     }
 
-    private fun doFinish() {
-
+    private fun doFinish(bean:PropertyDetailBean) {
+        listener.doFinish(bean)
     }
 
-    private fun doReceive() {
-
+    private fun doReceive(bean:PropertyDetailBean) {
+        listener.doReceive(bean)
     }
 
-    private fun doDispatch() {
 
+    private fun doRemind(bean:PropertyDetailBean) {
+        listener.doRemind(bean)
     }
 
-    private fun doRemind() {
-
+    private fun doCancel(bean:PropertyDetailBean) {
+        listener.doCancel(bean)
     }
 
-    private fun doCancel() {
-
+    private fun doShift(bean:PropertyDetailBean) {
+        listener.doShift(bean)
     }
 
-    private fun doShift() {
-
+    private fun doDelay(bean:PropertyDetailBean) {
+        listener.doDelay(bean)
     }
 
-    private fun doDelay() {
-        delayDialog.show()
-    }
-
-    private fun initDialog(): Dialog {
-
-        // 底部弹出对话框
-        var bottomDialog =
-            Dialog(mContext, R.style.BottomDialog)
-        val contentView: View =
-            LayoutInflater.from(mContext).inflate(R.layout.dialog_delay, null)
-        bottomDialog.setContentView(contentView)
-        val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
-        params.width =
-            mContext.resources.displayMetrics.widthPixels - dp2px(32f).toInt()
-        params.bottomMargin = dp2px(mContext, 0f).toInt()
-        contentView.layoutParams = params
-        bottomDialog.window!!.setGravity(Gravity.CENTER)
-        var tvConfirm = contentView.findViewById<TextView>(R.id.tvDelayConfirm)
-        tvConfirm.setOnClickListener {
-            mContext.toast("ss")
-        }
-
-        return bottomDialog
-    }
 
     private fun initAdapter(holder: BaseViewHolder, item: PropertyDetailBean) {
         var mRecycler: RecyclerView = holder.getView(R.id.rvPropertyDetail)

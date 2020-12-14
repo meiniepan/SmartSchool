@@ -516,4 +516,14 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
+    suspend fun modifyRepair(bean: PropertyDetailBean): Any {
+        return apiService.modifyRepair(bean)
+            .dataConvert(loadState)
+    }
+
+    suspend fun remindRepair(id: String): Any {
+        return apiService.remindRepair(UserInfo.getUserBean().token,id)
+            .dataConvert(loadState)
+    }
+
 }

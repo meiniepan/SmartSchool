@@ -240,7 +240,7 @@ class AccountRepository(val loadState: MutableLiveData<State>) : ApiRepository()
         return apiService.switchChild(UserInfo.getUserBean().token, uid)
             .dataConvert(loadState)
     }
-    suspend fun queryCodeList(classId: String??): Any {
+    suspend fun queryCodeList(classId: String?): Any {
         return apiService.queryCodeList(UserInfo.getUserBean().token, classId)
             .dataConvert(loadState)
     }
@@ -249,6 +249,7 @@ class AccountRepository(val loadState: MutableLiveData<State>) : ApiRepository()
         return apiService.upToken(bean)
             .dataConvert(loadState)
     }
+
 
     suspend fun getApps(): Any {
         return when (UserInfo.getUserBean().usertype) {

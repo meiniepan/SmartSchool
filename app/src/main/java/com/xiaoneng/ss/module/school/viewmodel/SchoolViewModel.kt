@@ -38,6 +38,8 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mBaseData: MutableLiveData<Any> = MutableLiveData()
     val mAddBookSiteData: MutableLiveData<Any> = MutableLiveData()
     val mModifyBookSiteData: MutableLiveData<Any> = MutableLiveData()
+    val mModifyRepairData: MutableLiveData<Any> = MutableLiveData()
+    val mRemindRepairData: MutableLiveData<Any> = MutableLiveData()
     val mSalaryDetailData: MutableLiveData<Any> = MutableLiveData()
     val mSalaryListData: MutableLiveData<Any> = MutableLiveData()
     val mTmpTokenData: MutableLiveData<Any> = MutableLiveData()
@@ -268,9 +270,9 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getSalaryList(type: String? = null,lastid: String? = null) {
+    fun getSalaryList(type: String? = null, lastid: String? = null) {
         initiateRequest(
-            { mSalaryListData.value = mRepository.getSalaryList(type,lastid) },
+            { mSalaryListData.value = mRepository.getSalaryList(type, lastid) },
             loadState
         )
     }
@@ -330,11 +332,27 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
             loadState
         )
     }
+
     fun modifyBookSite(body: AddBookSiteBody) {
         initiateRequest(
             { mModifyBookSiteData.value = mRepository.modifyBookSite(body) },
             loadState
         )
     }
+
+    fun modifyRepair(body: PropertyDetailBean) {
+        initiateRequest(
+            { mModifyRepairData.value = mRepository.modifyRepair(body) },
+            loadState
+        )
+    }
+
+    fun remindRepair(id: String) {
+        initiateRequest(
+            { mRemindRepairData.value = mRepository.remindRepair(id) },
+            loadState
+        )
+    }
+
 
 }

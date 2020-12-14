@@ -971,5 +971,23 @@ interface ApiService {
     suspend fun upToken(
         @Body requestBody: UpTokenBean
     ): BaseResponse<Any>
+
+    /**
+     *更新报修记录
+     */
+    @POST("/api/v17/teacher/repair/modify")
+    suspend fun modifyRepair(
+        @Body requestBody: PropertyDetailBean
+    ): BaseResponse<Any>
+
+    /**
+     *提醒维修/报修记录
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/teacher/repair/remind")
+    suspend fun remindRepair(
+        @Field("token") token: String?,
+        @Field("id") id: String?
+    ): BaseResponse<Any>
 }
 
