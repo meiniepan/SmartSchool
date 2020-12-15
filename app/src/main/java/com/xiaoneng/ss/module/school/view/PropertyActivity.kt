@@ -54,7 +54,7 @@ class PropertyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         if (AppInfo.checkRule("admin/repair/default","teacher/repairservice/listsByID")) {
             tvPropertyRecord1.visibility = View.VISIBLE
         } else {
-            tvPropertyRecord1.visibility = View.INVISIBLE
+            tvPropertyRecord1.visibility = View.GONE
         }
     }
 

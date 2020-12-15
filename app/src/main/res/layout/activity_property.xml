@@ -39,6 +39,7 @@
             <LinearLayout
                 android:id="@+id/tvPropertyRecord1"
                 android:layout_width="wrap_content"
+                android:layout_marginEnd="43dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
@@ -59,7 +60,7 @@
                 android:id="@+id/tvPropertyRecord2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="43dp"
+
                 android:orientation="vertical">
 
                 <TextView
