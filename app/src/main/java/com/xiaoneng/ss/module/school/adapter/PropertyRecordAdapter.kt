@@ -44,9 +44,7 @@ class PropertyRecordAdapter(
             //报修人逻辑
             //0撤销 1未接单 2接单 3完成
             when {
-                item.isdelay == "1" -> {
-                    statusStr = "已延期"
-                }
+
                 item.status == "0" -> {
                     statusStr = "已撤销"
                 }
@@ -54,7 +52,13 @@ class PropertyRecordAdapter(
                     statusStr = "未接单"
                 }
                 item.status == "2" -> {
-                    statusStr = "已接单"
+                    if (item.isdelay == "1") {
+
+                        statusStr = "已延期"
+                    } else {
+
+                        statusStr = "已接单"
+                    }
                 }
                 item.status == "3" -> {
                     statusStr = "已完成"
@@ -83,7 +87,7 @@ class PropertyRecordAdapter(
                             doRemind(mData[holder.adapterPosition])
                         }
                     }
-                } else if (item.status == "2" || item.isdelay == "1") {
+                } else if (item.status == "2") {
                     llAction.visibility = View.VISIBLE
                     view1.visibility = View.GONE
                     view2.visibility = View.VISIBLE
@@ -100,17 +104,7 @@ class PropertyRecordAdapter(
 
             } else if (mType == "1") {
                 //维修人逻辑
-                if (item.isdelay == "1") {
-                    llAction.visibility = View.VISIBLE
-                    view1.visibility = View.GONE
-                    view2.visibility = View.VISIBLE
-                    view2.apply {
-                        text = "完成"
-                        setOnClickListener {
-                            doFinish(RepairBody(id = mData[holder.adapterPosition].id))
-                        }
-                    }
-                } else if (item.status == "0") {
+                if (item.status == "0") {
                     llAction.visibility = View.GONE
                 } else if (item.status == "1") {
                     llAction.visibility = View.VISIBLE
@@ -129,21 +123,35 @@ class PropertyRecordAdapter(
                         }
                     }
                 } else if (item.status == "2") {
-                    llAction.visibility = View.VISIBLE
-                    view1.visibility = View.VISIBLE
-                    view2.visibility = View.VISIBLE
-                    view1.apply {
-                        text = "延期"
-                        setOnClickListener {
-                            doDelay(RepairBody(id = mData[holder.adapterPosition].id))
+                    if (item.isdelay == "1") {
+
+                        llAction.visibility = View.VISIBLE
+                        view1.visibility = View.GONE
+                        view2.visibility = View.VISIBLE
+                        view2.apply {
+                            text = "完成"
+                            setOnClickListener {
+                                doFinish(RepairBody(id = mData[holder.adapterPosition].id))
+                            }
+                        }
+                    } else {
+                        llAction.visibility = View.VISIBLE
+                        view1.visibility = View.VISIBLE
+                        view2.visibility = View.VISIBLE
+                        view1.apply {
+                            text = "延期"
+                            setOnClickListener {
+                                doDelay(RepairBody(id = mData[holder.adapterPosition].id))
+                            }
+                        }
+                        view2.apply {
+                            text = "完成"
+                            setOnClickListener {
+                                doFinish(RepairBody(id = mData[holder.adapterPosition].id))
+                            }
                         }
                     }
-                    view2.apply {
-                        text = "完成"
-                        setOnClickListener {
-                            doFinish(RepairBody(id = mData[holder.adapterPosition].id))
-                        }
-                    }
+
                 } else if (item.status == "3") {
                     llAction.visibility = View.GONE
 

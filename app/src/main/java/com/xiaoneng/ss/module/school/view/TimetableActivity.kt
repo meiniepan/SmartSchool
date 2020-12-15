@@ -29,17 +29,15 @@ import kotlin.collections.ArrayList
  * Time: 17:01
  */
 class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    private var isLogin: Boolean by SPreference(Constant.LOGIN_KEY, false)
     private var curTit: Int = 1
     private var hasInitClass: Boolean = false
-    private var mClassPosition = 0
     lateinit var mAdapter: TimetableAdapter
     lateinit var mAdapterTitle: TitleTimetableAdapter
     lateinit var mAdapterLabel: TimetableLabelAdapter
     var mData = ArrayList<TimetableBean>()
     var mDataClass = ArrayList<ClassBean>()
     var mLabelData = ArrayList<TimetableLabelBean>()
-    var mClassId:String? = null
+    var mClassId: String? = null
 
     private val classDialog: Dialog by lazy {
         initClassDialog()
@@ -62,9 +60,9 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initData() {
         super.initData()
-        if (UserInfo.getUserBean().token.isNullOrEmpty()){
+        if (UserInfo.getUserBean().token.isNullOrEmpty()) {
             mAlert(
-                "请先登录",cancelOutside = false
+                "请先登录", cancelOutside = false
             ) {
                 mainLogin(this)
             }
@@ -197,7 +195,7 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private fun initClassDialog(): Dialog {
         var titles = ArrayList<String>().apply {
             mDataClass.forEach {
-                add(it.classname?:"")
+                add(it.classname ?: "")
             }
         }
         // 底部弹出对话框
