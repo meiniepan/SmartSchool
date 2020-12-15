@@ -19,8 +19,6 @@ object AppInfo {
     var appInfoJson: String by SPreference(Constant.APP_INFO, emptyJson)
 
 
-
-
     fun modifyAppInfo(response: ArrayList<AppBean>) {
         appInfoJson = Gson().toJson(response)
     }
@@ -32,22 +30,22 @@ object AppInfo {
         return gson.fromJson<ArrayList<AppBean>>(appInfoJson, resultType)
     }
 
-    fun checkRule(key0:String,key1:String? = null):Boolean {
-        var beans = getAppInfo()
+    fun checkRule1(key: String): Boolean {
+        val beans = getAppInfo()
         beans.forEach {
-            if (it.url==key0){
-                if (key1==null){
-                    if (it.choice =="1"){
-                        return true
-                    }
-                }else{
-                    it.items?.forEach {item->
-                        if (item.url==key1){
-                            if (item.choice=="1"){
-                                return true
-                            }
-                        }
-                    }
+            if (it.url == key) {
+                return it.choice == "1"
+            }
+        }
+        return false
+    }
+
+    fun checkRule2(key: String): Boolean {
+        val beans = getAppInfo()
+        beans.forEach {
+            it.items?.forEach { item ->
+                if (item.url == key) {
+                    return item.choice == "1"
                 }
             }
         }

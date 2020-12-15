@@ -15,6 +15,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.model.UserBean
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.common.utils.oss.OssListener
@@ -108,33 +109,29 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
             return@setOnEditorActionListener false
         }
 
-        when (UserInfo.getUserBean().usertype) {
+        when {
 
-            "1" -> {
-                if (UserInfo.getUserBean().logintype == Constant.LOGIN_TYPE_STU) {
-                    llMineItem6.visibility = View.GONE
-                } else {
-                    etMineItem1.isEnabled = true
-                    name = bean.parentname
-                    phone = bean.parentphone
-                    llMineItem2.visibility = View.GONE
-                    llMineItem3.visibility = View.GONE
-                    llMineItem5.visibility = View.GONE
-                    llMineItem6.visibility = View.GONE
-                    llMineItem7.visibility = View.GONE
-                    llMineItem8.visibility = View.GONE
-                    ivAvatarMineInfo.isClickable = false
-                }
+            AppInfo.checkRule2("user/student/modify") -> {
+                llMineItem6.visibility = View.GONE
             }
-            "2" -> {
+
+            AppInfo.checkRule2("user/student/modifyParents") -> {
+                etMineItem1.isEnabled = true
+                name = bean.parentname
+                phone = bean.parentphone
+                llMineItem2.visibility = View.GONE
+                llMineItem3.visibility = View.GONE
+                llMineItem5.visibility = View.GONE
+                llMineItem6.visibility = View.GONE
+                llMineItem7.visibility = View.GONE
+                llMineItem8.visibility = View.GONE
+                ivAvatarMineInfo.isClickable = false
+            }
+            AppInfo.checkRule2("user/teachers/modify") -> {
                 llMineItem5.visibility = View.GONE
                 llMineItem7.visibility = View.GONE
             }
 
-            "99" -> {
-                llMineItem5.visibility = View.GONE
-                llMineItem7.visibility = View.GONE
-            }
             else -> {
 
             }
@@ -153,9 +150,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     override fun initData() {
         super.initData()
-        if (UserInfo.getUserBean().usertype == "1" &&
-            UserInfo.getUserBean().logintype == Constant.LOGIN_TYPE_PAR
-        ) {
+        if (AppInfo.checkRule2("user/student/modifyParents")) {
 
         } else {
             initAvatar()
@@ -194,13 +189,14 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
         showLoading()
         var mId: String = System.currentTimeMillis().toString() + "_" + fileName
-               var bitmapPath = mBitmap2Local(
+        var bitmapPath = mBitmap2Local(
             Glide.with(this)
                 .asBitmap()
                 .load(avatarPath)
-                .submit(200,200)
+                .submit(200, 200)
                 .get(),
-            fileName?:"")
+            fileName ?: ""
+        )
         var objectKey =
             getOssObjectKey(UserInfo.getUserBean().usertype, UserInfo.getUserBean().uid, mId)
         OssUtils.asyncUploadFile(
@@ -294,11 +290,12 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
             isDownLoad = false
             avatarPath = result!![0].realPath
             fileName = avatarPath?.split("/")?.last()
-            if(!avatarPath.isNullOrEmpty()) {
+            if (!avatarPath.isNullOrEmpty()) {
                 mViewModel.getSts()
             }
         }
     }
+
     override fun initDataObserver() {
         mViewModel.mStsData.observe(this, Observer { response ->
             response?.let {
@@ -308,12 +305,13 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                             doDownload(it)
                         } else {
                             GlobalScope.launch() {
-                              async {
-                                  doUpload(it)
-                              }
+                                async {
+                                    doUpload(it)
+                                }
                             }
                         }
-                },100)
+                    }, 100
+                )
 
             }
         })

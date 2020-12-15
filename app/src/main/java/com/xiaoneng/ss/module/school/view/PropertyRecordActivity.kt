@@ -204,11 +204,15 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
             remarkStr = tvAction1.text
             tvAction1.setBackgroundResource(R.drawable.bac_blue_bac_19)
             tvAction2.setBackgroundResource(R.drawable.bac_blue_line_19)
+            tvAction1.setTextColor(resources.getColor(R.color.white))
+            tvAction2.setTextColor(resources.getColor(R.color.themeColor))
         }
         tvAction2.setOnClickListener {
             remarkStr = tvAction2.text
             tvAction2.setBackgroundResource(R.drawable.bac_blue_bac_19)
             tvAction1.setBackgroundResource(R.drawable.bac_blue_line_19)
+            tvAction2.setTextColor(resources.getColor(R.color.white))
+            tvAction1.setTextColor(resources.getColor(R.color.themeColor))
         }
         tvConfirm.setOnClickListener {
             var remark = ""

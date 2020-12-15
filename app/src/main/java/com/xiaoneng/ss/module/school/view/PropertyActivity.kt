@@ -51,7 +51,7 @@ class PropertyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun initUI() {
         //判断是否有维修权限
-        if (AppInfo.checkRule("admin/repair/default","teacher/repairservice/listsByID")) {
+        if (AppInfo.checkRule2("teacher/repairservice/listsByID")) {
             tvPropertyRecord1.visibility = View.VISIBLE
         } else {
             tvPropertyRecord1.visibility = View.GONE
