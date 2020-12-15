@@ -13,13 +13,11 @@ import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.account.model.AppBean
 import com.xiaoneng.ss.account.model.UpTokenBean
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.permission.PermissionResult
 import com.xiaoneng.ss.common.permission.Permissions
-import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.circular.view.CircularFragment
 import com.xiaoneng.ss.module.mine.view.MineFragment
@@ -36,6 +34,7 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
     private var mUsername: String by SPreference(Constant.USERNAME_KEY, "未登录")
     private var isNightMode: Boolean by SPreference(Constant.NIGHT_MODE, false)
     private var mLastIndex: Int = Constant.HOME
+    private var mDeviceToken: String by SPreference(Constant.DEVICE_TOKEN, "")
 
     private lateinit var fragmentAdapter: FragmentVpAdapter
     private var fragmentList = ArrayList<Fragment>()
@@ -58,7 +57,7 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
     override fun initData() {
         super.initData()
         //上报设备token
-        mViewModel.upToken(UpTokenBean())
+        mViewModel.upToken(UpTokenBean(devicetoken = mDeviceToken))
 
         //        mViewModel.getAuthority()
     }

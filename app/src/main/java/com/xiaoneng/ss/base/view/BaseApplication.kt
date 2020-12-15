@@ -15,7 +15,6 @@ import com.umeng.message.PushAgent
 import com.xiaoneng.ss.common.callback.EmptyCallBack
 import com.xiaoneng.ss.common.callback.ErrorCallBack
 import com.xiaoneng.ss.common.callback.LoadingCallBack
-import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.SPreference
 import org.android.agoo.huawei.HuaWeiRegister
@@ -73,10 +72,8 @@ open class BaseApplication : Application() {
             mPushAgent.register(object : IUmengRegisterCallback {
                 override fun onSuccess(deviceToken: String) {
                     //注册成功会返回deviceToken deviceToken是推送消息的唯一标志
-
-                    var bean = UserInfo.getUserBean()
-                    bean.devicetoken = deviceToken
-                    UserInfo.modifyUserBean(bean)
+                    var mDeviceToken: String by SPreference(Constant.DEVICE_TOKEN, "")
+                    mDeviceToken = deviceToken
                     Log.i(TAG, "注册成功：deviceToken：-------->  $deviceToken")
                 }
 
@@ -101,7 +98,7 @@ open class BaseApplication : Application() {
                 "0d004009e32f42149a6c5e6c8fbf40cd"
             )
         } catch (e: ClassNotFoundException) {
-        }catch (e: Exception) {
+        } catch (e: Exception) {
         }
     }
 

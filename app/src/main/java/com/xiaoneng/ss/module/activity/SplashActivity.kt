@@ -48,6 +48,7 @@ class SplashActivity : BaseLifeCycleActivity<AccountViewModel>() {
     private fun startIntent() {
         if (TextUtils.isEmpty(UserInfo.getUserBean().token)) {
             mainLogin(this)
+            finish()
         } else {
             mViewModel.getApps()
         }

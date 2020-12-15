@@ -28,6 +28,7 @@ object Constant {
     const val USERNAME_KEY = "username"
     const val TASK_STATUS = "task_status"//0草稿箱，1进行中，2已关闭，3未完成，4已完成
     const val LOGIN_KEY = "login"
+    const val DEVICE_TOKEN = "device_token"
     const val IS_MASTER = "is_master"
     const val USER_INFO = "user_info"
     const val APP_INFO = "app_info"

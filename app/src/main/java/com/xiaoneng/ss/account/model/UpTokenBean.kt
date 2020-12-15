@@ -17,7 +17,7 @@ data class UpTokenBean(
     var version: String = BuildConfig.VERSION_NAME,
     var uuid: String = UUID.randomUUID().toString(),
     var system: String = "Android"+Build.VERSION.RELEASE,
-    var devicetoken: String = UserInfo.getUserBean().devicetoken?:"",
+    var devicetoken: String ,
     var uid: String = UserInfo.getUserBean().uid?:"",
     var usertype: String = UserInfo.getUserBean().usertype?:"",
     var remark: String? = null
