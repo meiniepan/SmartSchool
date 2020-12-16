@@ -5,7 +5,7 @@ import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.module.school.model.CourseBean
 
 
@@ -31,7 +31,7 @@ class CourseAdapter(layoutId: Int, listData: MutableList<CourseBean>) :
                 if (isMaster) {
                     holder.setText(R.id.tvNameCourse, item?.coursename)
                 } else {
-                    if (UserInfo.getUserBean().usertype =="2"||UserInfo.getUserBean().usertype =="99") {
+                    if (AppInfo.checkRule2("teacher/courses/timeTable")) {
                         holder.setText(R.id.tvNameCourse, item?.classname)
                     } else {
                         holder.setText(R.id.tvNameCourse, item?.coursename)

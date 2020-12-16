@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.utils.FragmentVpAdapter
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_account_secure.*
@@ -38,7 +38,7 @@ class AccountSecureActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initTab() {
-        if (UserInfo.getUserBean().usertype == "1") {
+        if (AppInfo.checkRule2("user/student/modify")) {
             llTab2.visibility = View.VISIBLE
         } else {
             llTab2.visibility = View.GONE

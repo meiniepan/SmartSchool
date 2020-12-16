@@ -2,6 +2,7 @@ package com.xiaoneng.ss.module.school.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.base.repository.ApiRepository
+import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.model.StsTokenResp
@@ -53,7 +54,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
             }
             else -> {
-                apiService.getTaskList(
+                apiService.getTaskList2(
                     UserInfo.getUserBean().token,
                     id = lastid,
                     pagenum = pagenum,
@@ -87,7 +88,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                     .dataConvert(loadState)
             }
             "2" -> {
-                if (UserInfo.getUserBean().classmaster == "1") {
+                if (AppInfo.checkRule2("teacher/courses/mTimeTable")) {
                     apiService.getTimetableMaster(
                         UserInfo.getUserBean().token,
                         classid = classid,
@@ -318,20 +319,25 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                 }
             }
             "2" -> {
-                if (UserInfo.getUserBean().classmaster == "1") {
+                if (AppInfo.checkRule2("teacher/attendances/del")) {
                     apiService.deleteAttendanceByTea(UserInfo.getUserBean().token, id)
                         .dataConvert(loadState)
                 } else {
                 }
             }
             "99" -> {
-                if (UserInfo.getUserBean().classmaster == "1") {
+                if (AppInfo.checkRule2("teacher/attendances/del")) {
                     apiService.deleteAttendanceByTea(UserInfo.getUserBean().token, id)
                         .dataConvert(loadState)
                 } else {
                 }
             }
             else -> {
+                if (AppInfo.checkRule2("teacher/attendances/del")) {
+                    apiService.deleteAttendanceByTea(UserInfo.getUserBean().token, id)
+                        .dataConvert(loadState)
+                } else {
+                }
             }
         }
     }
@@ -373,7 +379,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
             }
             else -> {
-                apiService.getSts(UserInfo.getUserBean().token)
+                apiService.getSts2(UserInfo.getUserBean().token)
                     .dataConvert(loadState)
 
             }
