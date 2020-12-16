@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.AppInfo
-import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.model.ClassBean
 import com.xiaoneng.ss.module.school.adapter.*
@@ -83,11 +82,11 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAdapter() {
-        if (UserInfo.getUserBean().usertype == "1") {
+        if (AppInfo.checkRule2("student/attendances/privateAtts")) {
             llSearch.visibility = View.GONE
             tvLabel2Attendance.visibility = View.GONE
             tvLabel3Attendance.visibility = View.GONE
-            if (UserInfo.getUserBean().isad == "1") {
+            if (AppInfo.checkRule2("student/attendances/timeTable")) {
                 titles1.add("课堂考勤")
                 initAdapterTeacher()
                 mAdapterTeacher?.setIsTeacher(false)
@@ -96,9 +95,9 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 initStudentApplyLeave(true)
             }
             titles1.add("我的考勤")
-        } else if (UserInfo.getUserBean().usertype == "2") {
+        } else if (AppInfo.checkRule2("teacher/attendances/lists")) {
 
-            if (UserInfo.getUserBean().classmaster == "1") {
+            if (AppInfo.checkRule2("teacher/attendances/masterlists")) {
                 titles1.add("班级考勤")
                 initAdapterMaster()
                 llSearch.visibility = View.VISIBLE
@@ -109,7 +108,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 tvLabel3Attendance.visibility = View.GONE
             }
             titles1.add("课堂考勤")
-        } else if (UserInfo.getUserBean().usertype == "99") {
+        } else if (AppInfo.checkRule2("teacher/attendances/sclists")) {
             titles1.add("校级考勤")
             ivAddAttendance.apply {
                 visibility = View.VISIBLE
@@ -145,13 +144,13 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             } else {
                 getStuData()
             }
-        } else if (UserInfo.getUserBean().usertype == "2") {
-            if (UserInfo.getUserBean().classmaster == "1") {
+        } else if (AppInfo.checkRule2("teacher/attendances/lists")) {
+            if (AppInfo.checkRule2("teacher/attendances/masterlists")) {
                 getDataMaster()
             } else {
                 getTimetable()
             }
-        } else if (UserInfo.getUserBean().usertype == "99") {
+        } else if (AppInfo.checkRule2("teacher/attendances/sclists")) {
             getSchoolData()
         } else {
             getStuData()
@@ -176,7 +175,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun initStudentApplyLeave(b: Boolean) {
         tvApplyLeave.apply {
-            visibility = if (UserInfo.getUserBean().usertype == "1" && b) {
+            visibility = if (AppInfo.checkRule2("student/attendances/privateAtts") && b) {
                 View.VISIBLE
             } else {
                 View.GONE
@@ -320,7 +319,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 tvLabel2Attendance.visibility = View.GONE
                 tvLabel3Attendance.visibility = View.GONE
                 initAdapterTeacher()
-                if (UserInfo.getUserBean().usertype == "1") {
+                if (AppInfo.checkRule2("student/attendances/privateAtts")) {
                     mAdapterTeacher?.setIsTeacher(false)
                 } else {
                     mAdapterTeacher?.setIsTeacher(true)
