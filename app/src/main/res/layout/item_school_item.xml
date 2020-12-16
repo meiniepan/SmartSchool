@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bac_white_bac_20"
+    android:orientation="vertical"
+    android:layout_marginTop="10dp"
+    android:id="@+id/llItem"
+    android:layout_marginStart="15dp"
+    android:padding="20dp">
+
+    <ImageView
+        android:id="@+id/ivSchoolItemIcon"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:background="@drawable/ic_renwu" />
+
+    <TextView
+        android:id="@+id/tvSchoolItemLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text=""
+        android:textSize="@dimen/sp_16"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvSchoolItemRemark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text=""
+        android:textColor="@color/colorGray999"
+        android:textSize="@dimen/sp_12" />
+</LinearLayout>
+
