@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.model.ClassBean
@@ -138,8 +139,8 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         rvAttendance.showLoadingView()
-        if (UserInfo.getUserBean().usertype == "1") {
-            if (UserInfo.getUserBean().isad == "1") {
+        if (AppInfo.checkRule2("student/attendances/privateAtts")) {
+            if (AppInfo.checkRule2("student/attendances/timeTable")) {
                 getTimetable()
             } else {
                 getStuData()

@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.FragmentVpAdapter
 import com.xiaoneng.ss.common.utils.mStartActivity
@@ -30,22 +30,20 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
-        if (UserInfo.getUserBean().usertype == "2" || UserInfo.getUserBean().usertype == "99") {
+        if (AppInfo.checkRule2("teacher/tasks/add")) {
             ivAddTask.visibility = View.VISIBLE
             llTab1.visibility = View.VISIBLE
             llTab2.visibility = View.GONE
+            initViewPager2()
+            initTab2()
         } else {
             ivAddTask.visibility = View.GONE
             llTab1.visibility = View.GONE
             llTab2.visibility = View.VISIBLE
-        }
-        if (UserInfo.getUserBean().usertype == "1") {
             initViewPager1()
             initTab1()
-        } else {
-            initViewPager2()
-            initTab2()
         }
+
         ivAddTask.setOnClickListener {
             mStartActivity<AddTaskActivity>(this)
         }

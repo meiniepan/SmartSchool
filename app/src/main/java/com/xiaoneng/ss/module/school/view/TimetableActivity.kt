@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.model.ClassBean
@@ -234,7 +235,7 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mTimetableData.observe(this, Observer { response ->
             response?.let {
-                if (UserInfo.getUserBean().classmaster == "1") {
+                if (AppInfo.checkRule2("teacher/courses/mTimeTable")) {
                     mAdapter.setMaster(true)
                     llClassTimetable.visibility = View.VISIBLE
                     tvTab1.setOnClickListener {
@@ -250,7 +251,7 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 mLabelData.clear()
                 mLabelData.addAll(it.positions)
                 mAdapterLabel.notifyDataSetChanged()
-                if (UserInfo.getUserBean().classmaster == "1") {
+                if (AppInfo.checkRule2("teacher/courses/mTimeTable")) {
                     llClassTimetable.visibility = View.VISIBLE
                     if (!hasInitClass) {
                         hasInitClass = true

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.utils.RecycleViewDivider
 import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.common.utils.mAlert
@@ -86,24 +86,18 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 //                doRefresh()
 //            }
 //        })
-        when (UserInfo.getUserBean().usertype) {
-            "1" -> {
+        when  {
+            AppInfo.checkRule2("student/achievements/testCourse") -> {
                 tvActionClass.visibility = View.GONE
                 llTitleTea.visibility = View.GONE
                 llTitleStu.visibility = View.VISIBLE
                 initAdapterStu()
             }
-            "2" -> {
-                initAdapterTeacher()
-                llTitleTea.visibility = View.VISIBLE
-                llTitleStu.visibility = View.GONE
-            }
-            "99" -> {
+
+            else -> {
                 initAdapterTeacher()
                 llTitleStu.visibility = View.VISIBLE
                 llTitleStu.visibility = View.GONE
-            }
-            else -> {
             }
         }
     }
