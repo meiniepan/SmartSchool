@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="112dp"
-            android:text="选择您目前绑定的手机"
+            android:text="您目前绑定的手机号"
             android:textSize="@dimen/sp_24" />
 
         <LinearLayout
