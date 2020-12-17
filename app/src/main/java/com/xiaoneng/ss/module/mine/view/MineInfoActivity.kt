@@ -180,7 +180,6 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
         PictureSelector.create(this)
             .openGallery(PictureMimeType.ofImage())
             .maxSelectNum(1)
-            .isAndroidQTransform(true)
             .imageEngine(GlideEngine.createGlideEngine())
             .forResult(PictureConfig.CHOOSE_REQUEST)
     }
