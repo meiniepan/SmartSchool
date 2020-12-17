@@ -49,7 +49,7 @@ class SplashTimerTextView : TextView {
     private var mSweepAngle = 360f
 
     // 属性动画
-    private lateinit var animator: ValueAnimator
+    private var animator: ValueAnimator? = null
 
     // 矩形用来保存位置大小信息
     private val mRect = RectF()
@@ -191,12 +191,12 @@ class SplashTimerTextView : TextView {
     private fun startAnim() {
         if (mSweepAngle != 360f || duration <= 0) return
         animator = ValueAnimator.ofInt(360)
-        animator.setDuration(duration.toLong())
-        animator.addUpdateListener(AnimatorUpdateListener { animation: ValueAnimator ->
+        animator?.setDuration(duration.toLong())
+        animator?.addUpdateListener(AnimatorUpdateListener { animation: ValueAnimator ->
             mSweepAngle = (animation.animatedValue as Int).toFloat()
             invalidate()
         })
-        animator.start()
+        animator?.start()
     }
 
     /**
@@ -211,6 +211,6 @@ class SplashTimerTextView : TextView {
     fun getDurationTime() = duration.toLong()
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        animator.cancel()
+        animator?.cancel()
     }
 }
