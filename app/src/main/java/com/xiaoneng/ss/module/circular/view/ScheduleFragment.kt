@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.fragment_schedule.*
  * Time: 17:01
  */
 class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
+    private var weekStr: String? = ""
     private var lastId: String? = null
     private var chosenDay: Long? = System.currentTimeMillis()
     lateinit var mAdapterWeek: DaysOfWeekAdapter
@@ -52,7 +53,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
         ivSwitchSchedule.setOnClickListener {
             switch()
         }
-        tvWeekSchedule.text = Lunar.getWhichWeek(chosenDay)
+//        tvWeekSchedule.text = Lunar.getWhichWeek(chosenDay)
         ivAddEvent.setOnClickListener {
             addEvent()
         }
@@ -174,7 +175,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
         } else {
             rvWeek.visibility = View.VISIBLE
             rvMonth.visibility = View.GONE
-            tvWeekSchedule.text = Lunar.getWhichWeek(chosenDay)
+            tvWeekSchedule.text = weekStr
             true
         }
 
@@ -184,7 +185,8 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
         mViewModel.mScheduleData.observe(this, Observer { response ->
             response?.let {
                 netResponseFormat<ScheduleResponse>(it)?.let {
-                    tvSchedule.text = it.semesters
+                    weekStr = it.semesters
+                    tvWeekSchedule.text = weekStr
                     it.data?.let {
                         mDataEvent.clear()
                         mDataEvent.addAll(it)
