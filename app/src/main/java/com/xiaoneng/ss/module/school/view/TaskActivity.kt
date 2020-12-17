@@ -207,6 +207,7 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             fragmentList
         )
         vpCircular.adapter = fragmentAdapter
+        vpCircular.offscreenPageLimit = fragmentList.size
         vpCircular.addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
 

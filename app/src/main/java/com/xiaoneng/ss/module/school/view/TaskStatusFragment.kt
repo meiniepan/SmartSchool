@@ -38,9 +38,10 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     }
 
     override fun initView() {
+        super.initView()
+        mData.clear()
         status = arguments?.getString(Constant.TASK_STATUS)
         mType = arguments?.getString(Constant.TYPE)
-        super.initView()
         initAdapter()
     }
 
