@@ -149,9 +149,9 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private fun initAdapter() {
         mAdapter = SiteAdapter(R.layout.item_site, mData)
         rvSite.recyclerView.apply {
-            layoutManager = LinearLayoutManager(this@BookSiteActivity)
+            var linearLayoutManager = LinearLayoutManager(this@BookSiteActivity)
+            layoutManager = linearLayoutManager
             setAdapter(mAdapter)
-            setItemViewCacheSize(20)
         }
         mAdapter.setOnItemClickListener { adapter, view, position ->
             mStartActivity<RoomBookRecordsActivity>(this) {

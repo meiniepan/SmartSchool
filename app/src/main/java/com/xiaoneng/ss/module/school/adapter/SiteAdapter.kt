@@ -1,5 +1,6 @@
 package com.xiaoneng.ss.module.school.adapter
 
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -51,6 +52,7 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
             }
             recyclerViews.add(mRecycler)
         }
+        Log.e("+++++", holder.adapterPosition.toString() )
         mRecycler.clearOnScrollListeners()
         mRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
