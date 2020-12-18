@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.*
+import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.DateUtil
+import com.xiaoneng.ss.common.utils.getSiteTimeByPosition
+import com.xiaoneng.ss.common.utils.toIntSafe
 import com.xiaoneng.ss.module.school.adapter.SiteItemAdapter
 import com.xiaoneng.ss.module.school.model.AddBookSiteBody
 import com.xiaoneng.ss.module.school.model.SiteBean
@@ -116,14 +119,19 @@ class AddBookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             etAddSiteRemark.isEnabled = false
             etAddSiteRemark.setText(item.remark)
         } else if (it.startType == 1) {
-            var tmpP = it.position
-            it.books?.forEach { it2 ->
-                if (it2.os_position.toIntSafe() > it.position) {
-                    mMax = it2.os_position.toIntSafe() - 1
-                    if (it2.os_position.toIntSafe() < tmpP) {
-                        tmpP = it2.os_position.toIntSafe()
-                        mMax = it2.os_position.toIntSafe() - 1
-                    }
+//            var tmpP = it.position
+//            it.books?.forEach { it2 ->
+//                if (it2.os_position.toIntSafe() > it.position) {
+//                    mMax = it2.os_position.toIntSafe() - 1
+//                    if (it2.os_position.toIntSafe() < tmpP) {
+//                        tmpP = it2.os_position.toIntSafe()
+//                        mMax = it2.os_position.toIntSafe() - 1
+//                    }
+//                }
+//            }
+            for (i in it.position until it.books?.size!!-1){
+                if (!it?.books!![i].isBooked){
+                    mMax = i
                 }
             }
             tvAddSiteTime.text = getSiteTimeByPosition(it.position) + "   30分钟"
@@ -171,12 +179,8 @@ class AddBookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAdapter() {
-        mSiteData = initSiteTimes()
-        mData?.books?.forEach {
-            for (i in it.os_position!!.toIntSafe()..it.oe_position!!.toIntSafe()) {
-                mSiteData[i].isBooked = true
-            }
-        }
+        mSiteData = mData?.books!!
+
         mSiteData[mData?.position!!].isChecked = true
         mAdapter = SiteItemAdapter(R.layout.item_site_item, mSiteData)
         recyclerView.apply {

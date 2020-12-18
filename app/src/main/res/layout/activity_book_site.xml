@@ -6,22 +6,25 @@
     android:background="@color/white"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="场地预约" />
-    <TextView
-        android:id="@+id/tvBookSiteRecords"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="我的预约"
-        android:layout_marginEnd="@dimen/title_padding"
-        android:layout_gravity="end|center_vertical"
-        />
-</FrameLayout>
+        android:layout_height="wrap_content">
+
+        <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="场地预约" />
+
+        <TextView
+            android:id="@+id/tvBookSiteRecords"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的预约"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:layout_gravity="end|center_vertical" />
+    </FrameLayout>
+
     <LinearLayout
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"
@@ -54,6 +57,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_18"
                     android:textStyle="bold" />
+
                 <ImageView
                     android:id="@+id/ivDateBack"
                     android:layout_width="22dp"
@@ -61,6 +65,7 @@
                     android:layout_height="22dp"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/ic_date_back" />
+
                 <ImageView
                     android:id="@+id/ivDateNext"
                     android:layout_width="22dp"
@@ -68,11 +73,12 @@
                     android:layout_height="22dp"
                     android:layout_marginStart="10dp"
                     android:background="@drawable/ic_date_next" />
+
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    />
+                    android:layout_weight="1" />
+
                 <ImageView
                     android:id="@+id/ivSwitchSchedule"
                     android:layout_width="22dp"
@@ -97,20 +103,27 @@
                 style="@style/recycler_horizontal_style"
                 android:visibility="gone" />
         </LinearLayout>
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/titleBlack"/>
-    <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
-        android:id="@+id/rvSite"
-        android:paddingTop="40dp"
-        android:background="@drawable/bac_dialog_bac_40"
-        style="@style/recycler_style" />
-</FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/titleBlack" />
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
+                    android:id="@+id/rvSite"
+                    style="@style/recycler_style"
+                    android:paddingTop="40dp"
+                    android:background="@drawable/bac_dialog_bac_40" />
+            </androidx.core.widget.NestedScrollView>
+        </FrameLayout>
 
     </LinearLayout>
 </LinearLayout>

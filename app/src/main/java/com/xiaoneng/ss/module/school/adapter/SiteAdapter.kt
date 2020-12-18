@@ -39,9 +39,16 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
     }
 
     private fun initAdapter(holder: BaseViewHolder, item: SiteBean) {
-        lateinit var mAdapter: SiteItemAdapter
+        var mAdapter: SiteItemAdapter = SiteItemAdapter(R.layout.item_site_item, null)
         var mRecycler: RecyclerView = holder.getView(R.id.rvSiteItem)
         if (!recyclerViews.contains(mRecycler)) {
+            mRecycler.apply {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                adapter = mAdapter
+            }
+            if (mP > -1) {
+                mRecycler.scrollToPosition(mP)
+            }
             recyclerViews.add(mRecycler)
         }
         mRecycler.clearOnScrollListeners()
@@ -84,16 +91,14 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
                 mSiteData[i].isBooked = true
             }
         }
-
-        mAdapter = SiteItemAdapter(R.layout.item_site_item, mSiteData)
-
-        mRecycler.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = mAdapter
+        for (i in 0 until mSiteData.size) {
+            if (i < mP) {
+                mSiteData[i].isBooked = true
+            }
         }
-        if (mP > -1) {
-            mRecycler.scrollToPosition(mP)
-        }
+
+
+        mAdapter.setNewData(mSiteData)
         mAdapter.setOnItemClickListener { _, view, position ->
             item.position = position
             if (mSiteData[position].isBooked) {
@@ -105,6 +110,7 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
             } else {
                 item.startType = 1
                 mStartActivity<AddBookSiteActivity>(mContext) {
+                    item.books = mSiteData
                     putExtra(Constant.DATA, item)
                 }
             }
