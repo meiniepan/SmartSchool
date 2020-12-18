@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -41,8 +42,6 @@ public class SpeechTranscriberActivity<T extends BaseViewModel<?>> extends BaseL
     final static int WAVE_FRAM_SIZE = 20 * 2 * 1 * 16000 / 1000; //20ms audio for 16k/16bit/mono
     public final static int SAMPLE_RATE = 16000;
     private AudioRecord mAudioRecorder;
-
-
     private AtomicBoolean vadMode = new AtomicBoolean(false);
 
 
@@ -56,7 +55,12 @@ public class SpeechTranscriberActivity<T extends BaseViewModel<?>> extends BaseL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (CommonUtils.copyAssetsData(this)) {
+            Log.i(TAG, "copy assets data done");
+        } else {
+            Log.i(TAG, "copy assets failed");
+            return;
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // 检查该权限是否已经获取
             int i = ContextCompat.checkSelfPermission(this, permissions[0]);

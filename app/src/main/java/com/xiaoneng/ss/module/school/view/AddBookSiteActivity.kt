@@ -153,7 +153,7 @@ class AddBookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             ostime = DateUtil.formatDateCustomDay(chosenDay!!) + " " + mSiteData[mBegin].timeStr,
             oetime = DateUtil.formatDateCustomDay(chosenDay!!) + " " + mSiteData[mEnd + 1].timeStr,
             remark = etAddSiteRemark.text.toString(),
-            status = "1",
+            status = "0",
             os_position = mBegin.toString(),
             oe_position = mEnd.toString()
         )
