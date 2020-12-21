@@ -15,12 +15,13 @@
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:overScrollMode="never"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -118,6 +119,13 @@
 
             </LinearLayout>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvNoticeImg"
+                style="@style/recycler_margin_style"
+                android:visibility="gone"
+                android:layout_marginTop="-7dp"
+                android:layout_height="wrap_content" />
+
             <TextView
                 android:id="@+id/tvRead"
                 style="@style/button_blue_bac_style"
@@ -125,15 +133,42 @@
                 android:visibility="gone"
                 android:layout_marginBottom="20dp"
                 android:text="我已阅读" />
+
             <ImageView
                 android:id="@+id/ivHasRead"
                 android:visibility="gone"
                 android:layout_width="148dp"
                 android:layout_height="65dp"
                 android:src="@drawable/bac_read"
-                android:layout_gravity="center_horizontal"
-                />
-
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/llNoticeFile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:background="@color/grayF6">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/title_padding"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:layout_marginTop="7dp"
+            android:hint="附件下载"
+            android:textSize="@dimen/sp_12"
+            android:drawableTop="@drawable/ic_file"
+            android:drawablePadding="3dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvNoticeFile"
+            style="@style/recycler_margin_style"
+            android:layout_marginStart="15dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp" />
+    </LinearLayout>
 </LinearLayout>

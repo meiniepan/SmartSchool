@@ -24,6 +24,7 @@ import com.xiaoneng.ss.module.school.model.SiteItemBean
 import org.jetbrains.anko.toast
 import java.io.File
 import java.io.FileOutputStream
+import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -253,7 +254,7 @@ fun Context.mAlert(
         title(text = title ?: "温馨提示")
         message(text = message)
         cornerRadius(8.0f)
-        positiveButton(text = getString(R.string.done))
+        positiveButton(text = getString(R.string.doneM))
         positiveButton {
             onConfirm()
         }
@@ -355,24 +356,65 @@ fun initSiteTimes(): ArrayList<SiteItemBean> {
     return mSiteData
 
 }
-fun getSiteTimeByPosition(begin:Int, end:Int=begin): String {
+
+fun getSiteTimeByPosition(begin: Int, end: Int = begin): String {
     var mB = begin
-    var mE = end+1
-    if (begin<0||begin>47){
+    var mE = end + 1
+    if (begin < 0 || begin > 47) {
         mB = 0
     }
-    if (end<0||end>47){
+    if (end < 0 || end > 47) {
         mE = 0
     }
-    return initSiteTimes()[mB].timeStr + "-"+initSiteTimes()[mE].timeStr
+    return initSiteTimes()[mB].timeStr + "-" + initSiteTimes()[mE].timeStr
 }
 
 fun String?.toIntSafe(): Int {
     var result = 0
     return try {
         this!!.toInt()
-    }catch (e:java.lang.Exception){
+    } catch (e: java.lang.Exception) {
         result
     }
 
+}
+
+fun String?.toLongSafe(): Long {
+    var result = 0L
+    return try {
+        this!!.toLong()
+    } catch (e: java.lang.Exception) {
+        result
+    }
+
+}
+
+fun String?.isImage(): Boolean {
+    this?.let {
+        if (it.contains("image/")) {
+            return true
+        }
+    }
+    return false
+}
+
+fun Long.formatMemorySize(): String {
+    val kiloByte = this / 1024.toDouble()
+
+    val megaByte = kiloByte / 1024
+    if (megaByte < 1) {
+        return kiloByte.toBigDecimal().setScale(2, BigDecimal.ROUND_HALF_UP).toString() + "K"
+    }
+
+    val gigaByte = megaByte / 1024
+    if (gigaByte < 1) {
+        return megaByte.toBigDecimal().setScale(2, BigDecimal.ROUND_HALF_UP).toString() + "M"
+    }
+
+    val teraBytes = megaByte / 1024
+    if (teraBytes < 1) {
+        return megaByte.toBigDecimal().setScale(2, BigDecimal.ROUND_HALF_UP).toString() + "G"
+    }
+
+    return teraBytes.toBigDecimal().setScale(2, BigDecimal.ROUND_HALF_UP).toString() + "T"
 }

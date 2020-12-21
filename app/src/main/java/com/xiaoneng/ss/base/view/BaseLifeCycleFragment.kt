@@ -69,7 +69,7 @@ abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
                 title(R.string.title)
                 message(text = msg)
                 cornerRadius(8.0f)
-                negativeButton(R.string.done)
+                negativeButton(R.string.doneM)
             }
         }
         loadService.showCallback(SuccessCallback::class.java)
@@ -80,7 +80,7 @@ abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
                 title(R.string.title)
                 message(text = msg)
                 cornerRadius(8.0f)
-                positiveButton(R.string.done)
+                positiveButton(R.string.doneM)
                 positiveButton {
                     mainLogin(requireContext())
                 }
@@ -96,7 +96,7 @@ abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
                 title(R.string.title)
                 message(text = msg)
                 cornerRadius(8.0f)
-                positiveButton(R.string.done)
+                positiveButton(R.string.doneM)
                 positiveButton {
                     mStartActivity<SalaryCaptchaActivity>(requireContext())
                 }

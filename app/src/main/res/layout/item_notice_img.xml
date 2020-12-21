@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.xiaoneng.ss.custom.widgets.CornerImageView
+        android:layout_marginTop="7dp"
+        android:id="@+id/ivNoticeImg"
+        android:layout_width="match_parent"
+        android:layout_height="218dp"
+        app:radius="16dp"
+        android:scaleType="centerCrop"
+         />
+
+</LinearLayout>
+

@@ -241,6 +241,18 @@
 #阿里云语音
 -keep class com.alibaba.idst.nui.*{*;}
 
+#x5
+-dontwarn dalvik.**
+-dontwarn com.tencent.smtt.**
+
+-keep class com.tencent.smtt.** {
+    *;
+}
+
+-keep class com.tencent.tbs.** {
+    *;
+}
+
 
 
 

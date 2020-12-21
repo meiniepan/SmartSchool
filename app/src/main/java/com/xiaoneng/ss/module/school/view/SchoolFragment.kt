@@ -1,12 +1,19 @@
 package com.xiaoneng.ss.module.school.view
 
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jiang.awesomedownloader.downloader.AwesomeDownloader
+import com.jiang.awesomedownloader.tool.PathSelector
+import com.tencent.smtt.sdk.QbSdk
+import com.tencent.smtt.sdk.ValueCallback
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.base.view.BaseApplication
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.state.AppInfo
+import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.netResponseFormat
@@ -16,6 +23,8 @@ import com.xiaoneng.ss.module.school.model.SchoolBean
 import com.xiaoneng.ss.module.school.model.SchoolItemBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.fragment_school.*
+import org.json.JSONException
+import org.json.JSONObject
 
 /**
  * Created with Android Studio.
@@ -27,6 +36,7 @@ import kotlinx.android.synthetic.main.fragment_school.*
 class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     lateinit var mAdapter: SchoolAdapter
     var mData = ArrayList<SchoolBean>()
+    var pp = ""
 
     override fun getLayoutId(): Int = R.layout.fragment_school
 
@@ -175,6 +185,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
 
 
     }
+
 
     private fun initAdapter() {
         mAdapter = SchoolAdapter(R.layout.item_school, mData)

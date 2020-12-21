@@ -366,7 +366,11 @@
         <receiver android:name=".receives.CustomTPushReceiver">
 
         </receiver>
-
+        <!--        x5初始化-->
+        <service
+            android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
+            android:label="dexopt"
+            android:process=":dexopt"></service>
     </application>
 
 </manifest>

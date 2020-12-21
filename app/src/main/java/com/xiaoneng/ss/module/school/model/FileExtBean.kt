@@ -12,5 +12,6 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class FileExtBean(
+    var size: String ? = null,
     var ext: String ? = null
-    ):Parcelable
+):Parcelable

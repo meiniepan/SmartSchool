@@ -18,6 +18,7 @@ data class NoticeBean(
     var uid: String?= "",
     var usertype: String?= "",
     var taskinfo: String?= "",
+    var fileinfo: String?= "",
     var status: String?= "",
     var received: String?= "",
     var title: String?= "",

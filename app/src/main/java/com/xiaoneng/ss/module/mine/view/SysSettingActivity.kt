@@ -6,13 +6,13 @@ import com.tencent.bugly.beta.Beta
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.utils.formatMemorySize
 import com.xiaoneng.ss.common.utils.mAlert
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.mainLogin
 import kotlinx.android.synthetic.main.activity_sys_setting.*
 import org.jetbrains.anko.toast
 import java.io.File
-import java.math.BigDecimal
 
 /**
  * Created with Android Studio.
@@ -109,24 +109,4 @@ class SysSettingActivity : BaseLifeCycleActivity<AccountViewModel>() {
         if (isDirectory) listFiles().forEach { it.suicide() }
     }
 
-    fun Long.formatMemorySize(): String {
-        val kiloByte = this / 1024.toDouble()
-
-        val megaByte = kiloByte / 1024
-        if (megaByte < 1) {
-            return kiloByte.toBigDecimal().setScale(2, BigDecimal.ROUND_HALF_UP).toString() + "K"
-        }
-
-        val gigaByte = megaByte / 1024
-        if (gigaByte < 1) {
-            return megaByte.toBigDecimal().setScale(2, BigDecimal.ROUND_HALF_UP).toString() + "M"
-        }
-
-        val teraBytes = megaByte / 1024
-        if (teraBytes < 1) {
-            return megaByte.toBigDecimal().setScale(2, BigDecimal.ROUND_HALF_UP).toString() + "G"
-        }
-
-        return teraBytes.toBigDecimal().setScale(2, BigDecimal.ROUND_HALF_UP).toString() + "T"
-    }
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:background="@drawable/bac_white_bac_15"
+    android:gravity="center_horizontal"
+    android:layout_marginStart="8dp"
+    android:orientation="vertical">
+
+    <com.xiaoneng.ss.custom.widgets.CornerImageView
+        android:id="@+id/ivNoticeFile"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:scaleType="centerCrop"
+        app:radius="0dp" />
+
+    <TextView
+        android:id="@+id/tvNoticeFileName"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_12"
+        android:singleLine="true"
+        android:layout_marginTop="7dp" />
+
+    <TextView
+        android:id="@+id/tvNoticeFileSize"
+        android:layout_width="wrap_content"
+        android:textColor="@color/commonHint"
+        android:drawableStart="@drawable/ic_downloadd"
+        android:textSize="@dimen/sp_12"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp" />
+</LinearLayout>
+

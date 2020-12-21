@@ -3,13 +3,29 @@ package com.xiaoneng.ss.module.circular.view
 import android.os.CountDownTimer
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.jiang.awesomedownloader.downloader.AwesomeDownloader
+import com.jiang.awesomedownloader.tool.PathSelector
+import com.tencent.smtt.sdk.QbSdk
+import com.tencent.smtt.sdk.ValueCallback
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.base.view.BaseApplication
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.DateUtil
+import com.xiaoneng.ss.common.utils.isImage
+import com.xiaoneng.ss.module.circular.adapter.NoticeFileAdapter
+import com.xiaoneng.ss.module.circular.adapter.NoticeImgAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
+import com.xiaoneng.ss.module.school.model.FileInfoBean
 import kotlinx.android.synthetic.main.activity_notice_detail.*
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.File
 
 /**
  * @author Burning
@@ -19,6 +35,13 @@ import kotlinx.android.synthetic.main.activity_notice_detail.*
 class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
     var bean: NoticeBean? = null
     private var timer: CountDownTimer? = null
+    var files = ArrayList<FileInfoBean>()
+    lateinit var mAdapterImg: NoticeImgAdapter
+    var mDataImg = ArrayList<FileInfoBean>()
+    lateinit var mAdapterFile: NoticeFileAdapter
+    var mDataFile = ArrayList<FileInfoBean>()
+    var pp = ""
+
     override fun getLayoutId(): Int {
         return R.layout.activity_notice_detail
     }
@@ -33,6 +56,62 @@ class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
         tvNoticeInfo.text = bean?.remark
         tvTime1.text = DateUtil.formatShowTime(bean?.noticetime!!)
         initReceivedUI()
+        initFiles()
+    }
+
+    private fun initFiles() {
+        val resultType = object : TypeToken<ArrayList<FileInfoBean>>() {}.type
+        val gson = Gson()
+        try {
+            files = gson.fromJson<ArrayList<FileInfoBean>>(bean?.fileinfo, resultType)
+            if (files.size > 0) {
+                files.forEach {
+                    if (it.type?.isImage()!!) {
+                        mDataImg.add(it)
+                    } else {
+                        mDataFile.add(it)
+                    }
+                }
+            }
+            if (mDataImg.size>0){
+                rvNoticeImg.visibility =View.VISIBLE
+                initAdapterImg()
+            }
+            if (mDataFile.size>0){
+                llNoticeFile.visibility =View.VISIBLE
+                initAdapterFile()
+            }
+        }catch (e:Exception){
+            showError(getString(R.string.error_message))
+        }
+
+    }
+
+    private fun initAdapterImg() {
+        mAdapterImg = NoticeImgAdapter(R.layout.item_notice_img, mDataImg)
+        rvNoticeImg.apply {
+            layoutManager = LinearLayoutManager(context)
+            setAdapter(mAdapterImg)
+        }
+
+    }
+
+    private fun initAdapterFile() {
+        mAdapterFile = NoticeFileAdapter(R.layout.item_notice_file, mDataFile)
+        rvNoticeFile.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            setAdapter(mAdapterFile)
+        }
+        mAdapterFile.setOnItemClickListener { _, view, position ->
+            var path = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+            var filePath = path+File.separator+mDataFile[position].name
+            var filename = File(filePath)
+            if (filename.exists()) {
+               doOpen(filePath)
+            }else{
+                doDown(mDataFile[position].url,mDataFile[position].name)
+            }
+        }
     }
 
     private fun initReceivedUI() {
@@ -73,6 +152,46 @@ class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 tvRead.setTextColor(resources.getColor(R.color.commonHint))
             }
         }.start()
+    }
+
+    private fun doDown(url: String?, fileName: String?) {
+        AwesomeDownloader.init(BaseApplication.instance)
+        val url = UserInfo.getUserBean().domain+url
+        //获取应用外部照片储存路径
+        val filePath = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+        //加入下载队列
+        AwesomeDownloader.enqueue(url, filePath, fileName?:"")
+    }
+
+    private fun doOpen(filePath: String) {
+        QbSdk.forceSysWebView()
+
+        QbSdk.initX5Environment(this, object : QbSdk.PreInitCallback{
+            override fun onCoreInitFinished() {
+
+            }
+
+            override fun onViewInitFinished(p0: Boolean) {
+
+            }
+        })
+        val ob = JSONObject()
+        try {
+            ob.put("pkgName", BaseApplication.instance.packageName)
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        val params =  HashMap<String, String>()
+        params.put("style", "1");
+        params.put("local", "true");
+        params.put("memuData", ob.toString())
+        QbSdk.getMiniQBVersion(this)
+        QbSdk.openFileReader(this,filePath, params,object : ValueCallback<String> {
+            override fun onReceiveValue(p0: String?) {
+
+            }
+        }
+        )
     }
 
     override fun onDestroy() {
