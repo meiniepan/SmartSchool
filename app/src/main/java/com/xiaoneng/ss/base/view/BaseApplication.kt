@@ -55,16 +55,22 @@ open class BaseApplication : Application() {
             .addCallback(EmptyCallBack())
             .commit()
         initSmartRefreshHeaderFooter()
-        //initX5()
+        initX5()
     }
 
     private fun initX5() {
         // 在调用TBS初始化、创建WebView之前进行如下配置
-        // 在调用TBS初始化、创建WebView之前进行如下配置
         val map = HashMap<String, Any>()
         map[TbsCoreSettings.TBS_SETTINGS_USE_SPEEDY_CLASSLOADER] = true
         map[TbsCoreSettings.TBS_SETTINGS_USE_DEXLOADER_SERVICE] = true
-        QbSdk.initTbsSettings(map)
+        QbSdk.initX5Environment(this, object : QbSdk.PreInitCallback {
+            override fun onCoreInitFinished() {
+            }
+
+            override fun onViewInitFinished(p0: Boolean) {
+
+            }
+        })
     }
 
     private fun initPush() {

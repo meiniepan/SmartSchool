@@ -1,6 +1,7 @@
 package com.xiaoneng.ss.module.circular.view
 
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,7 +41,9 @@ class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
     var mDataImg = ArrayList<FileInfoBean>()
     lateinit var mAdapterFile: NoticeFileAdapter
     var mDataFile = ArrayList<FileInfoBean>()
-    var pp = ""
+    var idString = ""
+    var fileNum = 0
+    var downloadNum = 0
 
     override fun getLayoutId(): Int {
         return R.layout.activity_notice_detail
@@ -49,14 +52,17 @@ class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
     override fun initView() {
         super.initView()
         bean = intent.getParcelableExtra(Constant.DATA)
-        tvRead.setOnClickListener {
-            doRead()
+        bean?.let {
+            idString = "task_${it.id}_"
+            tvRead.setOnClickListener {
+                doRead()
+            }
+            tvNoticeTitle.text = it.title
+            tvNoticeInfo.text = it.remark
+            tvTime1.text = DateUtil.formatShowTime(it.noticetime!!)
+            initReceivedUI()
+            initFiles()
         }
-        tvNoticeTitle.text = bean?.title
-        tvNoticeInfo.text = bean?.remark
-        tvTime1.text = DateUtil.formatShowTime(bean?.noticetime!!)
-        initReceivedUI()
-        initFiles()
     }
 
     private fun initFiles() {
@@ -73,15 +79,33 @@ class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
                     }
                 }
             }
-            if (mDataImg.size>0){
-                rvNoticeImg.visibility =View.VISIBLE
+            if (mDataImg.size > 0) {
+                rvNoticeImg.visibility = View.VISIBLE
                 initAdapterImg()
             }
-            if (mDataFile.size>0){
-                llNoticeFile.visibility =View.VISIBLE
+            if (mDataFile.size > 0) {
+                fileNum = mDataFile.size
+                showLoading()
+                mDataFile.forEach {
+                    var path = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+                    var name = idString + it.name
+                    var filePath = path + File.separator + name
+                    Log.e("=====", filePath)
+                    var filename = File(filePath)
+                    if (filename.exists()) {
+                        downloadNum++
+                        if (downloadNum == fileNum) {
+                            showSuccess()
+                        }
+                    } else {
+                        doDown(it.url, name)
+                    }
+                }
+
+                llNoticeFile.visibility = View.VISIBLE
                 initAdapterFile()
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             showError(getString(R.string.error_message))
         }
 
@@ -104,12 +128,13 @@ class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
         }
         mAdapterFile.setOnItemClickListener { _, view, position ->
             var path = PathSelector(BaseApplication.instance).getDownloadsDirPath()
-            var filePath = path+File.separator+mDataFile[position].name
+            var name = idString + mDataFile[position].name
+            var filePath = path + File.separator + name
             var filename = File(filePath)
             if (filename.exists()) {
-               doOpen(filePath)
-            }else{
-                doDown(mDataFile[position].url,mDataFile[position].name)
+                doOpen(filePath)
+            } else {
+                doDown(mDataFile[position].url, name)
             }
         }
     }
@@ -156,47 +181,57 @@ class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
 
     private fun doDown(url: String?, fileName: String?) {
         AwesomeDownloader.init(BaseApplication.instance)
-        val url = UserInfo.getUserBean().domain+url
+        //关闭通知栏
+        AwesomeDownloader.option.showNotification = false
+        val url = UserInfo.getUserBean().domain + url
         //获取应用外部照片储存路径
         val filePath = PathSelector(BaseApplication.instance).getDownloadsDirPath()
         //加入下载队列
-        AwesomeDownloader.enqueue(url, filePath, fileName?:"")
+        AwesomeDownloader.enqueue(url, filePath, fileName ?: "")
+        AwesomeDownloader.setOnProgressChange { progress ->
+            //do something...
+        }.setOnStop { downloadBytes, totalBytes ->
+            //do something...
+        }.setOnFinished { filePath, fileName ->
+            downloadNum++
+            if (downloadNum == fileNum) {
+                showSuccess()
+            }
+        }.setOnError { exception ->
+            //do something...
+        }
     }
 
     private fun doOpen(filePath: String) {
-        QbSdk.forceSysWebView()
 
-        QbSdk.initX5Environment(this, object : QbSdk.PreInitCallback{
-            override fun onCoreInitFinished() {
-
-            }
-
-            override fun onViewInitFinished(p0: Boolean) {
-
-            }
-        })
         val ob = JSONObject()
         try {
             ob.put("pkgName", BaseApplication.instance.packageName)
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        val params =  HashMap<String, String>()
+        val params = HashMap<String, String>()
         params.put("style", "1");
         params.put("local", "true");
         params.put("memuData", ob.toString())
-        QbSdk.getMiniQBVersion(this)
-        QbSdk.openFileReader(this,filePath, params,object : ValueCallback<String> {
-            override fun onReceiveValue(p0: String?) {
+        QbSdk.getMiniQBVersion(this@NoticeDetailActivity)
+        QbSdk.openFileReader(
+            this@NoticeDetailActivity,
+            filePath,
+            params,
+            object : ValueCallback<String> {
+                override fun onReceiveValue(p0: String?) {
 
+                }
             }
-        }
         )
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
         timer?.let { it.cancel() }
+        QbSdk.closeFileReader(this)
     }
 
     override fun initDataObserver() {
