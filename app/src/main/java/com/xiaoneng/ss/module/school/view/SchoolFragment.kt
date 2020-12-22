@@ -1,19 +1,12 @@
 package com.xiaoneng.ss.module.school.view
 
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jiang.awesomedownloader.downloader.AwesomeDownloader
-import com.jiang.awesomedownloader.tool.PathSelector
-import com.tencent.smtt.sdk.QbSdk
-import com.tencent.smtt.sdk.ValueCallback
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.base.view.BaseApplication
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.state.AppInfo
-import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.netResponseFormat
@@ -23,8 +16,6 @@ import com.xiaoneng.ss.module.school.model.SchoolBean
 import com.xiaoneng.ss.module.school.model.SchoolItemBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.fragment_school.*
-import org.json.JSONException
-import org.json.JSONObject
 
 /**
  * Created with Android Studio.
@@ -144,7 +135,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         }
 
         var bean4 = SchoolBean(name = "家校协同")
-        if (AppInfo.checkRule1("admin/spacebook/default")) {
+        if (AppInfo.checkRule1("admin/attendances/default")) {
             bean4.items.add(
                 SchoolItemBean(
                     name = "学生考勤",
@@ -156,7 +147,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                 )
             )
         }
-        if (AppInfo.checkRule1("admin/spacebook/default")) {
+        if (AppInfo.checkRule1("admin/achievements/default")) {
             bean4.items.add(
                 SchoolItemBean(
                     name = "成绩汇总",
@@ -168,7 +159,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                 )
             )
         }
-        if (AppInfo.checkRule1("admin/spacebook/default")) {
+        if (AppInfo.checkRule1("admin/courses/default")) {
             bean4.items.add(SchoolItemBean(
                 name = "我的课表",
                 remark = "班级课表 教学课表",

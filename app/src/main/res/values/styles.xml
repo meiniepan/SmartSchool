@@ -17,7 +17,7 @@
         <item name="android:textColorHint">@color/commonHint</item>
         <item name="android:screenOrientation">portrait</item>
         <item name="android:windowAnimationStyle">@style/anim_fade</item>
-        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:windowSoftInputMode">adjustResize|stateHidden</item>
         <item name="android:windowEnableSplitTouch">false</item>
         <item name="android:splitMotionEvents">false</item>
     </style>
