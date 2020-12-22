@@ -17,12 +17,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/tintBac"
-        android:paddingBottom="20dp"
         android:orientation="vertical">
 
             <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
                 android:id="@+id/rvSiteRecords"
-                android:layout_marginTop="12dp"
                 style="@style/recycler_horizontal_style" />
 
     </LinearLayout>
