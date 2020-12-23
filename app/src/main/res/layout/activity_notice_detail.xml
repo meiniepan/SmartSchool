@@ -161,7 +161,7 @@
             android:layout_marginStart="@dimen/title_padding"
             android:layout_marginEnd="@dimen/title_padding"
             android:layout_marginTop="7dp"
-            android:hint="附件下载"
+            android:hint="全部附件"
             android:textSize="@dimen/sp_12"
             android:drawableTop="@drawable/ic_file"
             android:drawablePadding="3dp" />

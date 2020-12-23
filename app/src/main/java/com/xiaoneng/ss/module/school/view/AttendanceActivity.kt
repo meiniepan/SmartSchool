@@ -86,7 +86,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             llSearch.visibility = View.GONE
             tvLabel2Attendance.visibility = View.GONE
             tvLabel3Attendance.visibility = View.GONE
-            if (AppInfo.checkRule2("student/attendances/timeTable")) {
+            if (AppInfo.checkRule2("student/attendances/lists")) {
                 titles1.add("课堂考勤")
                 initAdapterTeacher()
                 mAdapterTeacher?.setIsTeacher(false)
@@ -120,7 +120,18 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             tvLabel3Attendance.visibility = View.GONE
             initAdapterSchool()
         } else {
-
+            llSearch.visibility = View.GONE
+            tvLabel2Attendance.visibility = View.GONE
+            tvLabel3Attendance.visibility = View.GONE
+            if (AppInfo.checkRule2("student/attendances/lists")) {
+                titles1.add("课堂考勤")
+                initAdapterTeacher()
+                mAdapterTeacher?.setIsTeacher(false)
+            } else {
+                initAdapterStu()
+                initStudentApplyLeave(true)
+            }
+            titles1.add("我的考勤")
         }
         tvLabel1Attendance.text = titles1[0]
 
@@ -139,7 +150,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun getData() {
         rvAttendance.showLoadingView()
         if (AppInfo.checkRule2("student/attendances/privateAtts")) {
-            if (AppInfo.checkRule2("student/attendances/timeTable")) {
+            if (AppInfo.checkRule2("student/attendances/lists")) {
                 getTimetable()
             } else {
                 getStuData()

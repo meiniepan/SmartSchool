@@ -21,8 +21,8 @@ fun displayImage(
 ) {
     Glide.with(context)
         .load(path)
-        .error(R.drawable.ic_img_error)
         .placeholder(placeholder)
+        .error(R.drawable.ic_img_error)
         .into(imageView)
 
 }

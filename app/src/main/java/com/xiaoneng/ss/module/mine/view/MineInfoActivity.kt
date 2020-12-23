@@ -133,7 +133,12 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
             }
 
             else -> {
-
+                llMineItem2.visibility = View.GONE
+                llMineItem3.visibility = View.GONE
+                llMineItem5.visibility = View.GONE
+                llMineItem6.visibility = View.GONE
+                llMineItem7.visibility = View.GONE
+                llMineItem8.visibility = View.GONE
             }
         }
         etMineItem1.setText(name)

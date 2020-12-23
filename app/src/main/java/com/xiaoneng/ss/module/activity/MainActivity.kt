@@ -42,7 +42,8 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
     private val mPermissions = arrayOf(
         Manifest.permission.CAMERA,
         Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.RECORD_AUDIO
     )
 
     override fun getLayoutId(): Int = R.layout.activity_main

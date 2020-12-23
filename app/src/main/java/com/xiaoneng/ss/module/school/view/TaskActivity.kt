@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.state.AppInfo
+import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.FragmentVpAdapter
 import com.xiaoneng.ss.common.utils.mStartActivity
@@ -30,7 +30,8 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
-        if (AppInfo.checkRule2("teacher/tasks/add")) {
+        //todo 权限 AppInfo.checkRule2("teacher/tasks/add"
+        if (UserInfo.getUserBean().usertype != "1") {
             ivAddTask.visibility = View.VISIBLE
             llTab1.visibility = View.VISIBLE
             llTab2.visibility = View.GONE
@@ -169,8 +170,10 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun initViewPager2() {
         fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "-1")
-                putString(Constant.TYPE, "1")}
+            arguments = Bundle().apply {
+                putString(Constant.TASK_STATUS, "-1")
+                putString(Constant.TYPE, "1")
+            }
         })
         fragmentList.add(TaskStatusFragment.getInstance().apply {
             arguments = Bundle().apply {
@@ -241,8 +244,10 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun initViewPager1() {
         fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply { putString(Constant.TASK_STATUS, "-1")
-                putString(Constant.TYPE, "1")}
+            arguments = Bundle().apply {
+                putString(Constant.TASK_STATUS, "-1")
+                putString(Constant.TYPE, "1")
+            }
         })
         fragmentList.add(TaskStatusFragment.getInstance().apply {
             arguments = Bundle().apply {

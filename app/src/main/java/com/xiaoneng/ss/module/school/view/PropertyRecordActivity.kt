@@ -109,39 +109,6 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
         }
     }
 
-    override fun initDataObserver() {
-        mViewModel.mBaseData.observe(this, Observer {
-            it?.let {
-                rvPropertyRecord.finishRefreshLoadMore()
-                netResponseFormat<PropertyDetailResp>(it)?.let { bean ->
-                    bean.data?.let {
-                        if (it.size > 0) {
-                            lastId = it.last().id
-                            mData.addAll(it)
-                        } else {
-                            if (lastId != null) {
-                                rvPropertyRecord.showFinishLoadMore()
-                            }
-                        }
-                        rvPropertyRecord.notifyDataSetChanged()
-                    }
-                }
-            }
-        })
-
-        mViewModel.mModifyRepairData.observe(this, Observer {
-            it?.let {
-                toast(R.string.deal_done)
-                doRefresh()
-            }
-        })
-
-        mViewModel.mRemindRepairData.observe(this, Observer {
-            it?.let {
-                toast(R.string.deal_done)
-            }
-        })
-    }
 
     override fun doFinish(bean: RepairBody) {
         bean.token = UserInfo.getUserBean().token
@@ -153,6 +120,7 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
     override fun doReceive(bean: RepairBody) {
         bean.token = UserInfo.getUserBean().token
         bean.status = "2"
+        bean.repairerid = UserInfo.getUserBean().uid
         showLoading()
         mViewModel.modifyRepair(bean)
     }
@@ -288,5 +256,39 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
             }
         }
         return bottomDialog
+    }
+
+    override fun initDataObserver() {
+        mViewModel.mBaseData.observe(this, Observer {
+            it?.let {
+                rvPropertyRecord.finishRefreshLoadMore()
+                netResponseFormat<PropertyDetailResp>(it)?.let { bean ->
+                    bean.data?.let {
+                        if (it.size > 0) {
+                            lastId = it.last().id
+                            mData.addAll(it)
+                        } else {
+                            if (lastId != null) {
+                                rvPropertyRecord.showFinishLoadMore()
+                            }
+                        }
+                        rvPropertyRecord.notifyDataSetChanged()
+                    }
+                }
+            }
+        })
+
+        mViewModel.mModifyRepairData.observe(this, Observer {
+            it?.let {
+                toast(R.string.deal_done)
+                doRefresh()
+            }
+        })
+
+        mViewModel.mRemindRepairData.observe(this, Observer {
+            it?.let {
+                toast(R.string.deal_done)
+            }
+        })
     }
 }
