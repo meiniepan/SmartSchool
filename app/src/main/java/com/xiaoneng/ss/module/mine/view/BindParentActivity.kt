@@ -42,8 +42,9 @@ class BindParentActivity : BaseLifeCycleActivity<AccountViewModel>() {
             layoutManager = LinearLayoutManager(context)
             setAdapter(mAdapter)
         }
-        mAdapter.setOnItemClickListener { _, view, position ->
-
+        mAdapter.setOnItemChildClickListener { adapter, view, position ->
+            if (view.id == R.id.tvUnbindParent)
+                showDialog(mData[position].phone)
         }
     }
 
