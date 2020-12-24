@@ -58,9 +58,6 @@ class BookSiteRecordsActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 var bean = AddBookSiteBody(
                     token = UserInfo.getUserBean().token,
                     id = sourceBean.id,
-                    roomid = sourceBean.roomid,
-                    ostime = sourceBean.ostime,
-                    oetime = sourceBean.oetime,
                     status = "-1"
                 )
                 mViewModel.modifyBookSite(bean)

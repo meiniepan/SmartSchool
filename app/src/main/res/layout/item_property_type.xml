@@ -26,7 +26,8 @@
             android:id="@+id/ivPropertyTypeIcon"
             android:layout_width="74dp"
             android:layout_height="74dp"
-            android:background="@drawable/ic_zongwu" />
+            android:scaleType="centerCrop"
+             />
 
         <LinearLayout
             android:layout_width="match_parent"

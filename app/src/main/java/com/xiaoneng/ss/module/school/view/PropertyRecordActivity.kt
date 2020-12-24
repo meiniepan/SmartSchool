@@ -162,21 +162,21 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
         bottomDialog.window!!.setGravity(Gravity.CENTER)
         var tvAction1 = contentView.findViewById<TextView>(R.id.tvPropertyDetailAction1)
         var tvAction2 = contentView.findViewById<TextView>(R.id.tvPropertyDetailAction2)
-        var remarkStr = tvAction2.text
+        var remarkStr = ""
         var etRemark = contentView.findViewById<EditText>(R.id.etDelayRemark)
         var tvConfirm = contentView.findViewById<TextView>(R.id.tvDelayConfirm)
         contentView.findViewById<View>(R.id.ivClose).setOnClickListener {
             bottomDialog.dismiss()
         }
         tvAction1.setOnClickListener {
-            remarkStr = tvAction1.text
+            remarkStr = tvAction1.text.toString()
             tvAction1.setBackgroundResource(R.drawable.bac_blue_bac_19)
             tvAction2.setBackgroundResource(R.drawable.bac_blue_line_19)
             tvAction1.setTextColor(resources.getColor(R.color.white))
             tvAction2.setTextColor(resources.getColor(R.color.themeColor))
         }
         tvAction2.setOnClickListener {
-            remarkStr = tvAction2.text
+            remarkStr = tvAction2.text.toString()
             tvAction2.setBackgroundResource(R.drawable.bac_blue_bac_19)
             tvAction1.setBackgroundResource(R.drawable.bac_blue_line_19)
             tvAction2.setTextColor(resources.getColor(R.color.white))
@@ -188,6 +188,10 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
                 remark = remarkStr.toString()
             } else {
                 remark = etRemark.text.toString()
+            }
+            if (remark.isEmpty()){
+                toast(R.string.lack_info)
+                return@setOnClickListener
             }
             chosenBean.token = UserInfo.getUserBean().token
             chosenBean.isdelay = "1"

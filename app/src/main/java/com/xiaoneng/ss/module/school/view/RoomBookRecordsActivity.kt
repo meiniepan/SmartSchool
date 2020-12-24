@@ -4,13 +4,14 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.module.school.adapter.RoomBookRecordAdapter
+import com.xiaoneng.ss.module.school.model.AddBookSiteBody
 import com.xiaoneng.ss.module.school.model.SiteBean
 import com.xiaoneng.ss.module.school.model.SiteItemBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_book_room_records.*
-import org.jetbrains.anko.toast
 
 /**
  * @author Burning
@@ -21,6 +22,8 @@ class RoomBookRecordsActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     lateinit var mAdapter: RoomBookRecordAdapter
     var mData: ArrayList<SiteItemBean>? = null
+    var curPosition = 0
+    var oStr = "3"
 
     override fun getLayoutId(): Int {
         return R.layout.activity_book_room_records
@@ -57,18 +60,24 @@ class RoomBookRecordsActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             setAdapter(mAdapter)
         }
         mAdapter.setOnItemChildClickListener { adapter, view, position ->
-            if (view.id == R.id.tvAction)
-                toast(R.string.not_open)
+            if (view.id == R.id.tvAction) {
+                var sourceBean = mData!![position]
+                var bean = AddBookSiteBody(
+                    token = UserInfo.getUserBean().token,
+                    id = sourceBean.id,
+                    status = oStr
+                )
+                mViewModel.modifyBookSite(bean)
+                curPosition = position
+            }
         }
     }
 
     override fun initDataObserver() {
-        mViewModel.mAddBookSiteData.observe(this, Observer { response ->
+        mViewModel.mModifyBookSiteData.observe(this, Observer { response ->
             response?.let {
-//                netResponseFormat<List<SiteBean>>(it)?.let {
-//                    mData.addAll(it)
-//                    rvSite.notifyDataSetChanged()
-//                }
+                mData!![curPosition].status = oStr
+                mAdapter.notifyItemChanged(curPosition)
             }
         })
     }

@@ -52,7 +52,6 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
             }
             recyclerViews.add(mRecycler)
         }
-        Log.e("+++++", holder.adapterPosition.toString() )
         mRecycler.clearOnScrollListeners()
         mRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

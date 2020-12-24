@@ -23,7 +23,8 @@ data class SiteItemBean(
     var remark: String? = null,
     var isBooked: Boolean = true,//是否被预订
     var isChecked: Boolean = false,//是否被选中
-    var timeStr: String? = null
+    var timeStr: String? = null,
+    var status: String? = null//-1已取消 0未开始 1进行中 2已结束 3被占用
 
 
     ):Parcelable

@@ -1,14 +1,12 @@
 package com.xiaoneng.ss.module.circular.adapter
 
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.ImageView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.module.circular.model.DayBean
-import com.xiaoneng.ss.module.circular.model.ScheduleBean
 
 
 /**
@@ -23,20 +21,29 @@ class DaysOfMonthAdapter(layoutId: Int, listData: MutableList<DayBean>?) :
 
     override fun convert(viewHolder: BaseViewHolder?, item: DayBean) {
         viewHolder?.let { holder ->
-            var eventData = ArrayList<ScheduleBean>()
-            if (item.eventList.size > 2) {
-                eventData.add(item.eventList[0])
-                eventData.add(item.eventList[1])
-                eventData.add(ScheduleBean(title = "···", color = "#5E37FF"))
-            } else {
-                eventData.addAll(item.eventList)
+//            var eventData = ArrayList<ScheduleBean>()
+//            if (item.eventList.size > 2) {
+//                eventData.add(item.eventList[0])
+//                eventData.add(item.eventList[1])
+//                eventData.add(ScheduleBean(title = "···", color = "#5E37FF"))
+//            } else {
+//                eventData.addAll(item.eventList)
+//            }
+//            var recyclerView = holder.getView<RecyclerView>(R.id.rvEventDay).apply {
+//
+//                visibility = View.VISIBLE
+//                layoutManager = LinearLayoutManager(mContext)
+//                adapter = EventSimpleAdapter(R.layout.item_event_simple, eventData)
+//            }
+            item.eventList?.let {
+                var view = holder.getView<ImageView>(R.id.iv_flag)
+                if (it.size>0){
+                    view.visibility = View.VISIBLE
+                }else{
+                    view.visibility = View.INVISIBLE
+                }
             }
-            var recyclerView = holder.getView<RecyclerView>(R.id.rvEventDay).apply {
 
-                visibility = View.VISIBLE
-                layoutManager = LinearLayoutManager(mContext)
-                adapter = EventSimpleAdapter(R.layout.item_event_simple, eventData)
-            }
             holder
                 .setText(R.id.tvDay2, item?.dayOfSun)
                 .setText(R.id.tvDay3, item?.dayOfLunar)

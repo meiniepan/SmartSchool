@@ -13,6 +13,6 @@ data class DayBean(
     var dayOfLunar: String? = "",
     var isCheck: Boolean = false,
     var inMonth: Boolean = false,
-    var eventList: MutableList<ScheduleBean> = ArrayList()
+    var eventList: MutableList<ScheduleBean>? = ArrayList()
 
     )
