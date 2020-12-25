@@ -155,6 +155,10 @@ class AddBookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun doConfirm(it: SiteBean) {
+        if (etAddSiteRemark.text.toString().isEmpty()){
+            toast(R.string.lack_info)
+            return
+        }
         var bean = AddBookSiteBody(
             token = UserInfo.getUserBean().token,
             roomid = it.id,

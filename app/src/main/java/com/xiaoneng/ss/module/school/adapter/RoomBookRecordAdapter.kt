@@ -28,7 +28,7 @@ class RoomBookRecordAdapter(layoutId: Int, listData: MutableList<SiteItemBean>) 
             if (item.status == "-1") {
                 statusStr = "已取消"
             } else if (item.status == "0") {
-                if (AppInfo.checkRule2("")){
+                if (AppInfo.checkRule2("admin/spacebook/adlistRooms")){
                     tvAction.visibility = View.VISIBLE
                 }
                 statusStr = "未开始"

@@ -373,10 +373,16 @@ class Lunar(cal: Calendar) {
             return list
         }
 
-        fun getCurrentDaysOfMonth(data: ArrayList<ScheduleDayBean>): ArrayList<DayBean> {
+        fun getCurrentDaysOfMonth(
+            data: ArrayList<ScheduleDayBean>,
+            chosenDay: Long? = null
+        ): ArrayList<DayBean> {
             val cal = Calendar.getInstance()
             val maxDays = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
             val calToday = Calendar.getInstance()
+            if (chosenDay!=null){
+                calToday.timeInMillis = chosenDay
+            }
             var d = cal[Calendar.DAY_OF_MONTH]
             d = 1 - d
             // 所在月开始日期

@@ -1,6 +1,5 @@
 package com.xiaoneng.ss.module.school.adapter
 
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -76,14 +75,16 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
             }
         })
         var mSiteData = initSiteTimes()
-        var canBook: List<String>? = item.book_position?.split(",")
-        if (canBook != null && canBook.isNotEmpty()) {
-            canBook.forEach {
-                mSiteData[it.toIntSafe()].isBooked = false
-            }
-        } else {
+        if (item.book_position.isNullOrEmpty()) {
             mSiteData.forEach {
                 it.isBooked = false
+            }
+        } else {
+            var canBook: List<String>? = item.book_position?.split(",")
+            if (canBook != null && canBook.isNotEmpty()) {
+                canBook.forEach {
+                    mSiteData[it.toIntSafe()].isBooked = false
+                }
             }
         }
 
@@ -120,6 +121,9 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
 
     fun setPosition(position: Int) {
         this.mP = position
+    }
+    fun recycleR() {
+        recyclerViews.clear()
     }
 
 

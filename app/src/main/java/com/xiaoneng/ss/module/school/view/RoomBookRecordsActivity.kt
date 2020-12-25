@@ -12,6 +12,7 @@ import com.xiaoneng.ss.module.school.model.SiteBean
 import com.xiaoneng.ss.module.school.model.SiteItemBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_book_room_records.*
+import org.jetbrains.anko.toast
 
 /**
  * @author Burning
@@ -76,6 +77,7 @@ class RoomBookRecordsActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mModifyBookSiteData.observe(this, Observer { response ->
             response?.let {
+                toast(R.string.deal_done)
                 mData!![curPosition].status = oStr
                 mAdapter.notifyItemChanged(curPosition)
             }

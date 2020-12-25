@@ -50,6 +50,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
 
     override fun initView() {
         super.initView()
+        switch()
         ivSwitchSchedule.setOnClickListener {
             switch()
         }
@@ -75,6 +76,10 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
     override fun onResume() {
         super.onResume()
         getData()
+        mViewModel.queryScheduleMonth(
+            DateUtil.formatDateCustomDay(chosenDay!!),
+            DateUtil.formatDateCustomMonth(chosenDay!!)
+        )
     }
 
     override fun getData() {
@@ -199,7 +204,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
             response?.let {
                 netResponseFormat<ScheduleDayResponse>(it)?.let {
                     mDataMonth.clear()
-                    mDataMonth.addAll(Lunar.getCurrentDaysOfMonth(it.data))
+                    mDataMonth.addAll(Lunar.getCurrentDaysOfMonth(it.data,chosenDay))
                     mAdapterMonth.notifyDataSetChanged()
 
                 }

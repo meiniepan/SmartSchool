@@ -2,6 +2,7 @@ package com.xiaoneng.ss.module.school.view
 
 import android.app.Dialog
 import android.content.Intent
+import android.util.LruCache
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View

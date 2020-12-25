@@ -83,6 +83,9 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun onResume() {
         super.onResume()
+        if (mAdapter!=null){
+            mAdapter.recycleR()
+        }
         getData()
     }
 
