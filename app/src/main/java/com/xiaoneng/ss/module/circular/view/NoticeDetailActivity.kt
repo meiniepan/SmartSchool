@@ -90,7 +90,6 @@ class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
                     var path = PathSelector(BaseApplication.instance).getDownloadsDirPath()
                     var name = idString + it.name
                     var filePath = path + File.separator + name
-                    Log.e("=====", filePath)
                     var filename = File(filePath)
                     if (filename.exists()) {
                         downloadNum++

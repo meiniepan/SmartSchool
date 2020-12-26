@@ -29,8 +29,6 @@ class SplashActivity : BaseLifeCycleActivity<AccountViewModel>() {
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         super.onCreate(savedInstanceState)
-//        var mintent = Intent(this, CustomJgService::class.java)
-//        startService(mintent)
     }
 
     override fun getLayoutId(): Int {

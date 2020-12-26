@@ -25,7 +25,7 @@ object Constant {
     const val TIME = "time"
     const val FLAG = "flag"
     const val BIND_PARENT_SMS = 4
-    const val USERNAME_KEY = "username"
+    const val INIT_X5 = "init_x5"
     const val TASK_STATUS = "task_status"//0草稿箱，1进行中，2已关闭，3未完成，4已完成
     const val LOGIN_KEY = "login"
     const val DEVICE_TOKEN = "device_token"

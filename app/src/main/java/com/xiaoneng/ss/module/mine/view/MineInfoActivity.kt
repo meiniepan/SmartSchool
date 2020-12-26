@@ -1,7 +1,5 @@
 package com.xiaoneng.ss.module.mine.view
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Handler
 import android.text.TextUtils
 import android.view.View
@@ -9,8 +7,9 @@ import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.luck.picture.lib.PictureSelector
-import com.luck.picture.lib.config.PictureConfig
 import com.luck.picture.lib.config.PictureMimeType
+import com.luck.picture.lib.entity.LocalMedia
+import com.luck.picture.lib.listener.OnResultCallbackListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.model.UserBean
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
@@ -186,7 +185,21 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
             .openGallery(PictureMimeType.ofImage())
             .maxSelectNum(1)
             .imageEngine(GlideEngine.createGlideEngine())
-            .forResult(PictureConfig.CHOOSE_REQUEST)
+            .forResult(object : OnResultCallbackListener<LocalMedia> {
+                override fun onResult(result: MutableList<LocalMedia>?) {
+                    isDownLoad = false
+                    avatarPath = result!![0].realPath
+                    fileName = avatarPath?.split("/")?.last()
+                    if (!avatarPath.isNullOrEmpty()) {
+                        mViewModel.getSts()
+                    }
+                }
+
+                override fun onCancel() {
+
+                }
+
+            })
     }
 
 
@@ -284,20 +297,6 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
             "男" -> "1"
             "女" -> "2"
             else -> "0"
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PictureConfig.CHOOSE_REQUEST && resultCode == Activity.RESULT_OK) {
-            val result =
-                PictureSelector.obtainMultipleResult(data)
-            isDownLoad = false
-            avatarPath = result!![0].realPath
-            fileName = avatarPath?.split("/")?.last()
-            if (!avatarPath.isNullOrEmpty()) {
-                mViewModel.getSts()
-            }
         }
     }
 

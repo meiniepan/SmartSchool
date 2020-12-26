@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
+import com.tencent.smtt.export.external.TbsCoreSettings
+import com.tencent.smtt.sdk.QbSdk
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.model.UpTokenBean
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
@@ -31,9 +33,8 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
     private var mExitTime: Long = 0
 
     // 委托属性   将实现委托给了 -> Preference
-    private var mUsername: String by SPreference(Constant.USERNAME_KEY, "未登录")
-    private var isNightMode: Boolean by SPreference(Constant.NIGHT_MODE, false)
     private var mLastIndex: Int = Constant.HOME
+    private var initX5: Boolean by SPreference(Constant.INIT_X5, false)
     private var mDeviceToken: String by SPreference(Constant.DEVICE_TOKEN, "")
 
     private lateinit var fragmentAdapter: FragmentVpAdapter
@@ -41,15 +42,15 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     private val mPermissions = arrayOf(
         Manifest.permission.CAMERA,
+        Manifest.permission.RECORD_AUDIO,
         Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.RECORD_AUDIO
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
+
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
     override fun initView() {
-//        initColor()
         super.initView()
         initViewPager()
         initBottomNavigation()
@@ -187,11 +188,7 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
             this, Observer {
                 when (it) {
                     is PermissionResult.Grant -> {
-//                        val intent = Intent(this@MainActivity, CaptureActivity::class.java)
-//                        var config = ZxingConfig()
-//                        config.isShowAlbum = false
-//                        intent.putExtra(Constant.INTENT_ZXING_CONFIG, config)
-//                        startActivityForResult(intent, Constant.REQUEST_CODE_SCAN)
+                        initX5()
                     }
                     // 进入设置界面申请权限
                     is PermissionResult.Rationale -> {
@@ -212,6 +209,25 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
                 }
             }
         )
+
+    }
+
+    private fun initX5() {
+        // 在调用TBS初始化、创建WebView之前进行如下配置
+        if (initX5) {
+            return
+        }
+        val map = HashMap<String, Any>()
+        map[TbsCoreSettings.TBS_SETTINGS_USE_SPEEDY_CLASSLOADER] = true
+        map[TbsCoreSettings.TBS_SETTINGS_USE_DEXLOADER_SERVICE] = true
+        QbSdk.initX5Environment(this, object : QbSdk.PreInitCallback {
+            override fun onCoreInitFinished() {
+            }
+
+            override fun onViewInitFinished(p0: Boolean) {
+                initX5 = p0
+            }
+        })
     }
 
     override fun initDataObserver() {
