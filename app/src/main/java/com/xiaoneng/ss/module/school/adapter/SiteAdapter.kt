@@ -44,13 +44,13 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
         if (!recyclerViews.contains(mRecycler)) {
             mRecycler.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                adapter = mAdapter
             }
             if (mP > -1) {
                 mRecycler.scrollToPosition(mP)
             }
             recyclerViews.add(mRecycler)
         }
+        mRecycler.adapter = mAdapter
         mRecycler.clearOnScrollListeners()
         mRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
