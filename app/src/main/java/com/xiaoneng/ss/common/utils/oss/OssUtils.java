@@ -94,6 +94,10 @@ public class OssUtils {
         //初始化OSS服务的客户端oss
         //事实上，初始化OSS的实例对象，应该具有与整个应用程序相同的生命周期，在应用程序生命周期结束时销毁
         //但这里只是实现功能，若时间紧，你仍然可以按照本文方式先将功能实现，然后优化
+        if (endpoint ==null){
+            listener.onFail();
+            return;
+        }
         OSS oss = new OSSClient(context, endpoint, credentialProvider, conf);
         // 构造上传请求。
         PutObjectRequest put = new PutObjectRequest(BUCKET, objectKey, filePath);
@@ -151,6 +155,10 @@ public class OssUtils {
         //初始化OSS服务的客户端oss
         //事实上，初始化OSS的实例对象，应该具有与整个应用程序相同的生命周期，在应用程序生命周期结束时销毁
         //但这里只是实现功能，若时间紧，你仍然可以按照本文方式先将功能实现，然后优化
+        if (endpoint ==null){
+            listener.onFail();
+            return;
+        }
         OSS oss = new OSSClient(context, endpoint, credentialProvider, conf);
 
         //下载文件。

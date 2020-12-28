@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.module.school.adapter.SiteRecordAdapter
 import com.xiaoneng.ss.module.school.model.AddBookSiteBody
@@ -39,6 +40,7 @@ class BookSiteRecordsActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
+        mData.clear()
         rvSiteRecords.showLoadingView()
         mViewModel.getBookSiteRecord()
     }
@@ -74,6 +76,13 @@ class BookSiteRecordsActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         rvSiteRecords.notifyDataSetChanged()
                     }
                 }
+            }
+        })
+
+        mViewModel.mModifyBookSiteData.observe(this, Observer { response ->
+            response?.let {
+                mToast(R.string.deal_done)
+                getData()
             }
         })
     }
