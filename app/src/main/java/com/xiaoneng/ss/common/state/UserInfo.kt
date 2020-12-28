@@ -1,11 +1,8 @@
 package com.xiaoneng.ss.common.state
 
-import android.app.Activity
-import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.xiaoneng.ss.account.model.UserBean
-import com.xiaoneng.ss.common.state.callback.CollectListener
 import com.xiaoneng.ss.common.utils.AppManager
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.SPreference
@@ -25,25 +22,12 @@ object UserInfo {
 
 //    var token: String  = "683fa08d7b0e133c3a96859b04cc1fea"
 
-    // 设置默认状态
-    var mState: UserState = if (isLogin) LoginState() else LogoutState()
 
 
-    // 收藏
-    fun collect(context: Context, position: Int, listener: CollectListener) {
-        mState.collect(context, position, listener)
-    }
-
-
-    // 跳转去登录
-    fun login(context: Activity) {
-        mState.login(context)
-    }
 
     fun loginSuccess(response: UserBean) {
         // 改变 sharedPreferences   isLogin值
         isLogin = true
-        mState = LoginState()
         userInfoJson = Gson().toJson(response)
 
     }

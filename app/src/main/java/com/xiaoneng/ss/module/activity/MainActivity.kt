@@ -176,7 +176,7 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
         val time = System.currentTimeMillis()
 
         if (time - mExitTime > 2000) {
-            toast(getString(R.string.exit_app))
+            mToast(getString(R.string.exit_app))
             mExitTime = time
         } else {
             AppManager.exitApp(this)

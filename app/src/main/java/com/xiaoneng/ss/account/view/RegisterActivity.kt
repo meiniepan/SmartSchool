@@ -15,6 +15,7 @@ import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.captchaToast
 import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.module.mine.view.UserProtocolActivity
 import kotlinx.android.synthetic.main.activity_register.*
@@ -46,7 +47,7 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
         })
         mViewModel.mRegisterData.observe(this, Observer {
             it?.let{
-                toast(R.string.register_success)
+                mToast(R.string.register_success)
                 mStartActivity<LoginStuActivity>(this)
                 finish()
             }
@@ -92,7 +93,7 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
         }
 
         if (etPwdRegister.text.toString().trim().length<8){
-            toast(R.string.pwd_too_short)
+            mToast(R.string.pwd_too_short)
             return
         }
 

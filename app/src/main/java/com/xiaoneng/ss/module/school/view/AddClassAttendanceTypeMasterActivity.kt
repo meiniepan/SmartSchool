@@ -6,6 +6,7 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.mAlert
 import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.module.school.model.AttendanceBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_add_class_attendance_type.*
@@ -97,7 +98,7 @@ class AddClassAttendanceTypeMasterActivity : BaseLifeCycleActivity<SchoolViewMod
     override fun initDataObserver() {
         mViewModel.mDeleteAttendanceData.observe(this, Observer { response ->
             response?.let {
-                toast(R.string.deal_done)
+                mToast(R.string.deal_done)
                 mStartActivity<AttendanceActivity>(this)
             }
         })

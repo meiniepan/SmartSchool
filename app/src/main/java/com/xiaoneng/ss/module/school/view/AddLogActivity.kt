@@ -5,6 +5,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.module.school.model.LogBean
 import com.xiaoneng.ss.module.school.model.TaskLogRequest
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
@@ -29,7 +30,7 @@ class AddLogActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         taskBean = intent.getParcelableExtra(Constant.DATA)!!
         rvConfirm.setOnClickListener {
             if (etFeedback.text.toString().isNullOrEmpty()) {
-                toast(R.string.lack_info)
+                mToast(R.string.lack_info)
                 return@setOnClickListener
             }
             var bean = TaskLogRequest(
@@ -54,7 +55,7 @@ class AddLogActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mBaseData.observe(this, Observer { response ->
             response?.let {
-                toast(R.string.deal_done)
+                mToast(R.string.deal_done)
                 finish()
             }
         })

@@ -8,6 +8,7 @@ import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.common.utils.mAlert
+import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.module.school.model.AttCourseBean
 import com.xiaoneng.ss.module.school.model.AttendanceBean
 import com.xiaoneng.ss.module.school.model.LeaveBean
@@ -70,7 +71,7 @@ class AddClassAttendanceTypeTeacherActivity : BaseLifeCycleActivity<SchoolViewMo
     override fun initDataObserver() {
         mViewModel.mAddAttendanceData.observe(this, Observer { response ->
             response?.let {
-                toast(R.string.deal_done)
+                mToast(R.string.deal_done)
                 finish()
             }
         })

@@ -111,7 +111,7 @@ MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
             mStartActivity<BindParentActivity>(requireContext())
 //            var text:String = ""
 //                File(mDownloadFile(requireContext()))?.let {text = it.readText()  }
-//            requireContext().toast(text)
+//            requireContext().mToast(text)
         }
 
         llItem7.setOnClickListener {
@@ -174,7 +174,7 @@ MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
                 override fun onFail() {
                     showSuccess()
                     view?.post {
-                        requireContext().toast("头像下载失败")
+                        requireContext().mToast("头像下载失败")
                     }
                 }
 

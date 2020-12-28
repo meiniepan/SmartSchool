@@ -15,6 +15,7 @@ import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.GlideEngine
 import com.xiaoneng.ss.common.utils.aliSpeech.SpeechTranscriberActivity
 import com.xiaoneng.ss.common.utils.getOssObjectKey
+import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.common.utils.oss.OssListener
 import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.model.StsTokenResp
@@ -152,7 +153,7 @@ class AddPropertyActivity : SpeechTranscriberActivity<SchoolViewModel>() {
                 override fun onFail() {
                     mRootView.post {
                         showSuccess()
-                        toast("上传失败")
+                        mToast("上传失败")
                     }
                 }
 
@@ -179,7 +180,7 @@ class AddPropertyActivity : SpeechTranscriberActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mBaseData.observe(this, Observer {
             it?.let {
-                toast(R.string.deal_done)
+                mToast(R.string.deal_done)
                 finish()
             }
         })

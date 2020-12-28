@@ -6,12 +6,8 @@ import com.tencent.bugly.beta.Beta
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.utils.formatMemorySize
-import com.xiaoneng.ss.common.utils.mAlert
-import com.xiaoneng.ss.common.utils.mStartActivity
-import com.xiaoneng.ss.common.utils.mainLogin
+import com.xiaoneng.ss.common.utils.*
 import kotlinx.android.synthetic.main.activity_sys_setting.*
-import org.jetbrains.anko.toast
 import java.io.File
 
 /**
@@ -72,10 +68,10 @@ class SysSettingActivity : BaseLifeCycleActivity<AccountViewModel>() {
             context.mAlert("清除所有缓存？") {
                 context.cacheDir.suicide()
                 context.filesDir.suicide()
-                toast("成功清除${cacheSize.formatMemorySize()}缓存")
+                mToast("成功清除${cacheSize.formatMemorySize()}缓存")
                 tvSettingItem3.text = "0K"
             }
-        } else toast("无需清理")
+        } else mToast("无需清理")
     }
 
     override fun initDataObserver() {

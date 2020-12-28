@@ -10,6 +10,7 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.captchaToast
+import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.model.ParentBean
@@ -92,7 +93,7 @@ class AddParentActivity : BaseLifeCycleActivity<AccountViewModel>() {
         mViewModel.mParentsData.observe(this, Observer { response ->
             response?.let {
                 netResponseFormat<ArrayList<ParentBean>>(it)?.let {
-                    toast("绑定成功")
+                    mToast("绑定成功")
                     var userBean = UserInfo.getUserBean()
                     userBean.parents = it
                     UserInfo.modifyUserBean(userBean)

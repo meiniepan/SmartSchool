@@ -17,6 +17,7 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.dp2px
+import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
 import com.xiaoneng.ss.module.school.adapter.PropertyRecordAdapter
@@ -190,7 +191,7 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
                 remark = etRemark.text.toString()
             }
             if (remark.isEmpty()){
-                toast(R.string.lack_info)
+                mToast(R.string.lack_info)
                 return@setOnClickListener
             }
             chosenBean.token = UserInfo.getUserBean().token
@@ -284,14 +285,14 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
 
         mViewModel.mModifyRepairData.observe(this, Observer {
             it?.let {
-                toast(R.string.deal_done)
+                mToast(R.string.deal_done)
                 doRefresh()
             }
         })
 
         mViewModel.mRemindRepairData.observe(this, Observer {
             it?.let {
-                toast(R.string.deal_done)
+                mToast(R.string.deal_done)
             }
         })
     }

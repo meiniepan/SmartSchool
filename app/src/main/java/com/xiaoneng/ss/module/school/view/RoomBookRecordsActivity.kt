@@ -6,6 +6,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.module.school.adapter.RoomBookRecordAdapter
 import com.xiaoneng.ss.module.school.model.AddBookSiteBody
 import com.xiaoneng.ss.module.school.model.SiteBean
@@ -77,7 +78,7 @@ class RoomBookRecordsActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mModifyBookSiteData.observe(this, Observer { response ->
             response?.let {
-                toast(R.string.deal_done)
+                mToast(R.string.deal_done)
                 mData!![curPosition].status = oStr
                 mAdapter.notifyItemChanged(curPosition)
             }

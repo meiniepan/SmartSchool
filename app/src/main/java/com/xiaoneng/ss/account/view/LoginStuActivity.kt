@@ -19,12 +19,12 @@ import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.captchaToast
 import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.module.activity.MainActivity
 import com.xiaoneng.ss.module.mine.view.UserProtocolActivity
 import kotlinx.android.synthetic.main.activity_login_stu.*
-import org.jetbrains.anko.toast
 
 /**
  * @author Burning
@@ -189,7 +189,7 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
             it?.let {
                 netResponseFormat<ArrayList<AppBean>>(it)?.let { bean ->
                     AppInfo.modifyAppInfo(bean)
-                    toast(R.string.login_success)
+                    mToast(R.string.login_success)
                     mStartActivity<MainActivity>(this)
                 }
             }

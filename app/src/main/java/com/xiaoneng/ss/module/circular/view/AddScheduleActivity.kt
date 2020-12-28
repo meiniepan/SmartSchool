@@ -101,7 +101,7 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
             TextUtils.isEmpty(tvBeginDate.text.toString())
 
         ) {
-            toast("请完善信息")
+            mToast("请完善信息")
             return
         }
 
@@ -151,7 +151,7 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
         mViewModel.mAddScheduleData.observe(this, Observer { response ->
             response?.let {
                 showSuccess()
-                toast(R.string.deal_done)
+                mToast(R.string.deal_done)
                 mStartActivity<MainActivity>(this)
             }
         })

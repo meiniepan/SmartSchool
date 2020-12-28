@@ -7,8 +7,8 @@ import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.module.mine.model.InviteCodeBean
-import org.jetbrains.anko.toast
 
 
 /**
@@ -33,7 +33,7 @@ class InviteCodeAdapter(layoutId: Int, listData: MutableList<InviteCodeBean>?) :
                         mContext.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                     val mClipData = ClipData.newPlainText("Label", item.code)
                     cm.setPrimaryClip(mClipData)
-                    mContext.toast("复制成功")
+                    mContext.mToast("复制成功")
                 }
             }
 

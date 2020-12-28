@@ -144,7 +144,7 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 //                }
                 doApplyLeave()
             } else {
-                toast(R.string.lack_info)
+                mToast(R.string.lack_info)
                 return
             }
 
@@ -171,7 +171,7 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     doApplyLeave()
                 }
             } else {
-                toast(R.string.lack_info)
+                mToast(R.string.lack_info)
                 return
             }
         }
@@ -306,7 +306,7 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 override fun onFail() {
                     mRootView.post {
                         showSuccess()
-                        toast("上传失败")
+                        mToast("上传失败")
                     }
                 }
 
@@ -337,7 +337,7 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 override fun onFail() {
                     mRootView.post {
                         showSuccess()
-                        toast("头像下载失败")
+                        mToast("头像下载失败")
                     }
                 }
 
@@ -362,7 +362,7 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mAddAttendanceData.observe(this, Observer { response ->
             response?.let {
-                toast(R.string.deal_done)
+                mToast(R.string.deal_done)
                 mStartActivity<AttendanceActivity>(this)
             }
         })

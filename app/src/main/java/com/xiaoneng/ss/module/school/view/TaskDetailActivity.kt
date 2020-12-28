@@ -13,7 +13,6 @@ import com.xiaoneng.ss.module.school.adapter.TaskLogAdapter
 import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_task_detail.*
-import org.jetbrains.anko.toast
 
 /**
  * @author Burning
@@ -212,7 +211,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         mViewModel.mRefuseData.observe(this, Observer { response ->
             response?.let {
-                toast(R.string.deal_done)
+                mToast(R.string.deal_done)
                 getData()
 //                netResponseFormat<TaskDetailBean>(it)?.let {
 //
@@ -222,7 +221,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         mViewModel.mModifyTaskStatusData.observe(this, Observer { response ->
             response?.let {
-                toast(R.string.deal_done)
+                mToast(R.string.deal_done)
                 finish()
 //                netResponseFormat<TaskDetailBean>(it)?.let {
 //

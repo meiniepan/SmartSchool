@@ -6,7 +6,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.PowerManager
+import android.view.Gravity
 import android.widget.TextView
+import android.widget.Toast
 import cn.addapp.pickers.picker.DateTimePicker
 import cn.addapp.pickers.picker.SinglePicker
 import com.afollestad.materialdialogs.MaterialDialog
@@ -21,7 +23,6 @@ import com.xiaoneng.ss.common.constclass.Solang
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.module.school.model.SiteItemBean
-import org.jetbrains.anko.toast
 import java.io.File
 import java.io.FileOutputStream
 import java.math.BigDecimal
@@ -298,7 +299,7 @@ fun Context.isSystemWhiteList(): Boolean {
 
 fun Context.captchaToast(code: String?) {
     code?.let {
-        toast("验证码已发送")
+        mToast("验证码已发送")
     }
 }
 
@@ -418,3 +419,17 @@ fun Long.formatMemorySize(): String {
 
     return teraBytes.toBigDecimal().setScale(2, BigDecimal.ROUND_HALF_UP).toString() + "T"
 }
+
+inline fun Context.mToast(message: CharSequence): Toast = Toast
+    .makeText(this, message, Toast.LENGTH_SHORT)
+    .apply {
+        setGravity(Gravity.CENTER, 0, 0)
+        show()
+    }
+
+inline fun Context.mToast(message: Int): Toast = Toast
+    .makeText(this, message, Toast.LENGTH_SHORT)
+    .apply {
+        setGravity(Gravity.CENTER, 0, 0)
+        show()
+    }

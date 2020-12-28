@@ -240,7 +240,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                 override fun onFail() {
                     mRootView.post {
                         showSuccess()
-                        toast("头像上传失败")
+                        mToast("头像上传失败")
                     }
                 }
 
@@ -261,7 +261,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                 override fun onFail() {
                     mRootView.post {
                         showSuccess()
-                        toast("头像下载失败")
+                        mToast("头像下载失败")
                     }
                 }
 
@@ -326,7 +326,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                 var userBean = UserInfo.getUserBean()
                 userBean.portrait = response.portrait
                 UserInfo.modifyUserBean(userBean)
-                toast("头像上传成功")
+                mToast("头像上传成功")
                 displayImage(
                     this@MineInfoActivity, avatarPath,
                     ivAvatarMineInfo
@@ -338,7 +338,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
             response?.let {
                 showSuccess()
                 UserInfo.modifyUserBean(it)
-                toast("修改成功")
+                mToast("修改成功")
             }
         })
 
@@ -349,7 +349,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                 var bean = UserInfo.getUserBean()
                 bean.parentname = etMineItem1.text.toString()
                 UserInfo.modifyUserBean(bean)
-                toast("修改成功")
+                mToast("修改成功")
             }
         })
 

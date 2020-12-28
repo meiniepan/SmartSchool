@@ -8,17 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.DateUtil
-import com.xiaoneng.ss.common.utils.getSiteTimeByPosition
-import com.xiaoneng.ss.common.utils.toIntSafe
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.school.adapter.SiteItemAdapter
 import com.xiaoneng.ss.module.school.model.AddBookSiteBody
 import com.xiaoneng.ss.module.school.model.SiteBean
 import com.xiaoneng.ss.module.school.model.SiteItemBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_add_book_site.*
-import org.jetbrains.anko.toast
 import java.util.*
 
 /**
@@ -58,7 +54,7 @@ class AddBookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             ivAddSiteJia.setOnClickListener { view ->
                 if (mEnd == mMax) {
                     view.isEnabled = false
-                    toast("不能再加了~")
+                    mToast("不能再加了~")
                     return@setOnClickListener
                 }
                 ivAddSiteJian.isEnabled = true
@@ -73,7 +69,7 @@ class AddBookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             ivAddSiteJian.setOnClickListener { view ->
                 if (mEnd - it.position == 0) {
                     view.isEnabled = false
-                    toast("不能再减了~")
+                    mToast("不能再减了~")
                     return@setOnClickListener
                 }
                 ivAddSiteJia.isEnabled = true
@@ -157,7 +153,7 @@ class AddBookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun doConfirm(it: SiteBean) {
         if (etAddSiteRemark.text.toString().isEmpty()){
-            toast(R.string.lack_info)
+            mToast(R.string.lack_info)
             return
         }
         var bean = AddBookSiteBody(
@@ -201,7 +197,7 @@ class AddBookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mAddBookSiteData.observe(this, Observer { response ->
             response?.let {
-                toast(R.string.deal_done)
+                mToast(R.string.deal_done)
                 finish()
 //                netResponseFormat<List<SiteBean>>(it)?.let {
 //                    mData.addAll(it)

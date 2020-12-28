@@ -22,7 +22,6 @@ import com.xiaoneng.ss.module.school.model.TaskDetailBean
 import com.xiaoneng.ss.module.school.model.UserBeanSimple
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_add_task.*
-import org.jetbrains.anko.toast
 
 /**
  * Created with Android Studio.
@@ -112,7 +111,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun addTask() {
         if (tvTitleAddTask.text.isEmpty() || receiveList.size == 0) {
-            toast(R.string.lack_info)
+            mToast(R.string.lack_info)
             return
         }
         var taskBean = TaskBean(
@@ -284,21 +283,21 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mAddTaskData.observe(this, Observer { response ->
             response?.let {
-                toast(R.string.deal_done)
+                mToast(R.string.deal_done)
                 finish()
             }
         })
 
         mViewModel.mModifyTaskStatusData.observe(this, Observer { response ->
             response?.let {
-                toast(R.string.deal_done)
+                mToast(R.string.deal_done)
                 finish()
             }
         })
 
         mViewModel.mBaseData.observe(this, Observer { response ->
             response?.let {
-                toast(R.string.deal_done)
+                mToast(R.string.deal_done)
                 finish()
             }
         })

@@ -6,10 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.DateUtil
-import com.xiaoneng.ss.common.utils.mAlert
-import com.xiaoneng.ss.common.utils.mStartActivity
-import com.xiaoneng.ss.common.utils.netResponseFormat
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.model.StudentBean
 import com.xiaoneng.ss.model.StudentResp
 import com.xiaoneng.ss.module.school.adapter.QueryStudentAdapter
@@ -95,7 +92,7 @@ class AddStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         mViewModel.mAddAttendanceData.observe(this, Observer { response ->
             response?.let {
-                toast(R.string.deal_done)
+                mToast(R.string.deal_done)
                 mStartActivity<AttendanceActivity>(this)
             }
         })

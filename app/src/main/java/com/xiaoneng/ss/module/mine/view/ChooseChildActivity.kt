@@ -7,6 +7,7 @@ import com.xiaoneng.ss.account.model.UserBean
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.model.StudentBean
 import com.xiaoneng.ss.module.mine.adapter.ChooseChildAdapter
@@ -69,7 +70,7 @@ class ChooseChildActivity : BaseLifeCycleActivity<AccountViewModel>() {
             response?.let {
                 showSuccess()
                 netResponseFormat<UserBean>(it)?.let {
-                    toast("切换成功")
+                    mToast("切换成功")
                     UserInfo.loginSuccess(it)
                     finish()
                 }

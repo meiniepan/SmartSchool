@@ -9,6 +9,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.module.circular.adapter.SysMsgAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
@@ -100,7 +101,7 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
                     mStartActivity<AchievementActivity>(this)
                 }
                 "6" -> {
-                    toast("已经是最新版本")
+                    mToast("已经是最新版本")
                 }
             }
 //            mStartActivity<NoticeDetailActivity>(this) {

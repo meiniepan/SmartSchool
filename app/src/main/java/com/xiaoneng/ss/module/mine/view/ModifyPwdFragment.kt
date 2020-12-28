@@ -13,6 +13,7 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.captchaToast
 import com.xiaoneng.ss.common.utils.formatStarPhoneNum
+import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import kotlinx.android.synthetic.main.fragment_modify_pwd.*
 import org.jetbrains.anko.toast
@@ -104,7 +105,7 @@ class ModifyPwdFragment : BaseLifeCycleFragment<AccountViewModel>() {
 
     private fun modifyPwd() {
         if (etPwdRebind.text.toString().trim().length<8){
-            requireContext().toast(R.string.pwd_too_short)
+            requireContext().mToast(R.string.pwd_too_short)
             return
         }
         var bean = UserInfo.getUserBean()
@@ -134,7 +135,7 @@ class ModifyPwdFragment : BaseLifeCycleFragment<AccountViewModel>() {
         mViewModel.mUserInfoData.observe(this, Observer {
             it?.let {
                 UserInfo.modifyUserBean(it)
-                requireContext().toast("修改成功")
+                requireContext().mToast("修改成功")
                 activity?.finish()
             }
         })

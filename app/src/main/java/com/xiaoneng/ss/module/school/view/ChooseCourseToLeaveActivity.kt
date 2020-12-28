@@ -255,7 +255,7 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 resNum++
                 if (resNum == delNum) {
                     if (isDelete) {
-                        toast(R.string.deal_done)
+                        mToast(R.string.deal_done)
                         mStartActivity<AttendanceActivity>(this)
                     } else {
                         doApplyLeave()
@@ -266,7 +266,7 @@ class ChooseCourseToLeaveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         mViewModel.mAddAttendanceData.observe(this, Observer { response ->
             response?.let {
-                toast(R.string.deal_done)
+                mToast(R.string.deal_done)
                 mStartActivity<AttendanceActivity>(this)
             }
         })

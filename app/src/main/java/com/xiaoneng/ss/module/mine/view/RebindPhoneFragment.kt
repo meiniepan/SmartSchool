@@ -13,10 +13,10 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.captchaToast
+import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import kotlinx.android.synthetic.main.fragment_rebind.*
-import org.jetbrains.anko.toast
 
 /**
  * Created with Android Studio.
@@ -129,7 +129,7 @@ class RebindPhoneFragment : BaseLifeCycleFragment<AccountViewModel>() {
         mViewModel.mUserInfoData.observe(this, Observer {
             it?.let {
                 UserInfo.modifyUserBean(it)
-                requireContext().toast("修改成功")
+                requireContext().mToast("修改成功")
                 activity?.finish()
             }
         })

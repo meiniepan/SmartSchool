@@ -7,6 +7,7 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.module.circular.model.ScheduleBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import kotlinx.android.synthetic.main.activity_schedule_detail.*
@@ -75,7 +76,7 @@ class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
         mViewModel.mAddScheduleData.observe(this, Observer { response ->
             response?.let {
                 showSuccess()
-                toast(R.string.deal_done)
+                mToast(R.string.deal_done)
                 finish()
             }
         })
