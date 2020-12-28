@@ -202,6 +202,7 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         mData.forEach {
                             it.chosenDay = chosenDay!!
                         }
+                        mAdapter.recycleR()
                         mAdapter.setPosition(DateUtil.getBookSitePositionNearNow(chosenDay!!))
                         rvSite.notifyDataSetChanged()
                     }

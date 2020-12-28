@@ -33,7 +33,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-permission android:name="android.permission.VIBRATE" />
-<!--    android:requestLegacyExternalStorage="true"-->
+    <!--    android:requestLegacyExternalStorage="true"-->
     <application
         android:name=".base.view.BaseApplication"
         android:allowBackup="false"
@@ -196,24 +196,51 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.activity.OtherPushActivity"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:exported="true" />
         <activity
             android:name=".module.school.view.SalaryActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".module.school.view.CloudDiskActivity" />
-        <activity android:name=".module.school.view.PropertyActivity" />
-        <activity android:name=".module.school.view.AddPropertyActivity" />
-        <activity android:name=".module.school.view.SalaryCaptchaActivity" />
-        <activity android:name=".module.school.view.SalaryDetailActivity" />
-        <activity android:name=".module.school.view.BookSiteActivity" />
-        <activity android:name=".common.utils.aliSpeech.SpeechTranscriberActivity" />
-        <activity android:name=".module.school.view.AddBookSiteActivity" />
-        <activity android:name=".module.school.view.PropertyRecordActivity" />
-        <activity android:name=".module.school.view.BookSiteRecordsActivity" />
-        <activity android:name=".module.school.view.NoticeActivity" />
-        <activity android:name=".module.school.view.ScheduleActivity" />
-        <activity android:name=".module.school.view.RoomBookRecordsActivity" />
+        <activity
+            android:name=".module.school.view.CloudDiskActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.PropertyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.AddPropertyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.SalaryCaptchaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.SalaryDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.BookSiteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".common.utils.aliSpeech.SpeechTranscriberActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.AddBookSiteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.PropertyRecordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.BookSiteRecordsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.NoticeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.ScheduleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.RoomBookRecordsActivity"
+            android:screenOrientation="portrait" />
 
 
         <provider

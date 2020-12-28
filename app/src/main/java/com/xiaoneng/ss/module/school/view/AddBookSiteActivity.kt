@@ -49,6 +49,7 @@ class AddBookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         mData = intent.getParcelableExtra(Constant.DATA)
         mData?.let {
+            chosenDay = it.chosenDay
             initUI(it)
             tvAddSiteDate.text = DateUtil.formatDateCustomWeekDay(it.chosenDay)
             ivAddSiteJian.isEnabled = false
