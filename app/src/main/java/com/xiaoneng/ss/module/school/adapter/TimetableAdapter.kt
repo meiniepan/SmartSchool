@@ -6,6 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.utils.DateUtil
+import com.xiaoneng.ss.common.utils.toIntSafe
 import com.xiaoneng.ss.module.school.model.CourseBean
 import com.xiaoneng.ss.module.school.model.TimetableBean
 
@@ -38,17 +39,11 @@ class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>) :
         mRecycler.isNestedScrollingEnabled = false
         mLessonData.addAll(item.list)
         if (total > 0 && mLessonData.size > 0) {
-            var ii = 0
             for (i in 0 until total) {
-                if (ii >= mLessonData.size) {
-                    break
-                }
-                if (mLessonData[ii].position == i.toString()) {
-                    mRealLessonData.add(mLessonData[ii])
-                    ii += 1
-                } else {
-                    mRealLessonData.add(CourseBean())
-                }
+                mRealLessonData.add(CourseBean())
+            }
+            for (i in 0 until mLessonData.size) {
+                mRealLessonData[mLessonData[i].position.toIntSafe()] = mLessonData[i]
             }
         }
         mAdapter = CourseAdapter(R.layout.item_lesson, mRealLessonData)

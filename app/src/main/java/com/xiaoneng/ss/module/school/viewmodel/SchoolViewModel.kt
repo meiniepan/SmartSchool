@@ -84,7 +84,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
 
     fun getTimetableT() {
         initiateRequest(
-            { mTimetableDataT.value = mRepository.getTimetable() },
+            { mTimetableDataT.value = mRepository.getTimetableT() },
             loadState
         )
     }

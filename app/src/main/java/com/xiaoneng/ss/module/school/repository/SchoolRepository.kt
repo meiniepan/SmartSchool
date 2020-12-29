@@ -120,6 +120,10 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
     }
 
+    suspend fun getTimetableT(classid: String? = null, time: String? = null): TimetableResponse {
+        return apiService.getTimetable2(UserInfo.getUserBean().token, time = time)
+                .dataConvert(loadState)
+    }
     suspend fun getAttTimetable(time: String? = null, uId: String? = null): Any {
 
 
