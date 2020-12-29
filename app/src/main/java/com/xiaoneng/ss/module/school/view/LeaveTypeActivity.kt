@@ -3,7 +3,6 @@ package com.xiaoneng.ss.module.school.view
 import android.app.Activity
 import android.content.Intent
 import android.os.Handler
-import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,7 +27,6 @@ import kotlinx.android.synthetic.main.activity_sick_leave.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import org.jetbrains.anko.toast
 
 /**
  * Created with Android Studio.
@@ -45,7 +43,6 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private var fileName: String? = ""
     private var avatarPath: String? = ""
     private var fileValue: String? = ""
-    var isDownLoad: Boolean = false
     var uId:String? = null
     var uType:String? = null
     var delNum = 0
@@ -241,7 +238,6 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             .imageEngine(GlideEngine.createGlideEngine()) // Please refer to the Demo GlideEngine.java
             .forResult(object : OnResultCallbackListener<LocalMedia> {
                 override fun onResult(result: MutableList<LocalMedia>?) {
-                    isDownLoad = false
                     avatarPath = result!![0].realPath
                     fileName = avatarPath?.split("/")?.last()
                     if(!avatarPath.isNullOrEmpty()) {
@@ -314,49 +310,11 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAvatar() {
-        if (!TextUtils.isEmpty(fileValue!!)) {
             displayImage(
                 this,
                 UserInfo.getUserBean().domain + fileValue,
                 ivAddPic
             )
-        }
-    }
-
-    private fun doDownload(it: StsTokenResp) {
-
-        showLoading()
-
-        OssUtils.downloadFile(
-            this@LeaveTypeActivity,
-            it.Credentials,
-            UserInfo.getUserBean().portrait,
-            mDownloadFile(this, fileValue!!),
-            object : OssListener {
-
-                override fun onFail() {
-                    mRootView.post {
-                        showSuccess()
-                        mToast("头像下载失败")
-                    }
-                }
-
-                override fun onSuccess() {
-                    mRootView.post {
-                        showSuccess()
-
-                        displayImage(
-                            this@LeaveTypeActivity,
-                            mDownloadFile(
-                                this@LeaveTypeActivity,
-                                fileValue!!
-                            ),
-                            ivAddPic
-                        )
-                    }
-                }
-            })
-
     }
 
     override fun initDataObserver() {
@@ -388,14 +346,10 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             response?.let {
                 Handler().postDelayed(
                     {
-                        if (isDownLoad) {
-                            doDownload(it)
-                        } else {
                             GlobalScope.launch() {
                                 async {
                                     doUpload(it)
                                 }
-                            }
                         }
                     }, 100
                 )

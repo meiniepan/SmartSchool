@@ -1,7 +1,6 @@
 package com.xiaoneng.ss.module.mine.view
 
 import android.os.Handler
-import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.Observer
@@ -24,8 +23,6 @@ import kotlinx.android.synthetic.main.activity_mine_info.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import org.jetbrains.anko.toast
-import java.io.File
 
 /**
  * Created with Android Studio.
@@ -40,7 +37,6 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
     private var birthday: String? = UserInfo.getUserBean().birthday
     private var sex: String? = UserInfo.getUserBean().sex
     private var avatarPath: String? = ""
-    var isDownLoad: Boolean = false
 
     override fun getLayoutId(): Int = R.layout.activity_mine_info
 
@@ -163,21 +159,11 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
     }
 
     private fun initAvatar() {
-        if (!TextUtils.isEmpty(mAvatarFileName)) {
-            if (File(mDownloadFile(this, mAvatarFileName)).exists()) {
-                displayImage(
-                    this@MineInfoActivity,
-                    mDownloadFile(
-                        this@MineInfoActivity,
-                        mAvatarFileName
-                    ),
-                    ivAvatarMineInfo
-                )
-            } else {
-                isDownLoad = true
-                mViewModel.getSts()
-            }
-        }
+        displayImage(
+            this,
+            UserInfo.getUserBean().domain + UserInfo.getUserBean().portrait,
+            ivAvatarMineInfo
+        )
     }
 
     private fun choosePic() {
@@ -187,7 +173,6 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
             .imageEngine(GlideEngine.createGlideEngine())
             .forResult(object : OnResultCallbackListener<LocalMedia> {
                 override fun onResult(result: MutableList<LocalMedia>?) {
-                    isDownLoad = false
                     avatarPath = result!![0].realPath
                     fileName = avatarPath?.split("/")?.last()
                     if (!avatarPath.isNullOrEmpty()) {
@@ -305,13 +290,9 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
             response?.let {
                 Handler().postDelayed(
                     {
-                        if (isDownLoad) {
-                            doDownload(it)
-                        } else {
-                            GlobalScope.launch() {
-                                async {
-                                    doUpload(it)
-                                }
+                        GlobalScope.launch() {
+                            async {
+                                doUpload(it)
                             }
                         }
                     }, 100

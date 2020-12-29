@@ -1,24 +1,19 @@
 package com.xiaoneng.ss.module.mine.view
 
-import android.os.Handler
-import android.text.TextUtils
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.view.LoginSwitchActivity
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.*
-import com.xiaoneng.ss.common.utils.oss.OssListener
-import com.xiaoneng.ss.common.utils.oss.OssUtils
-import com.xiaoneng.ss.model.StsTokenResp
+import com.xiaoneng.ss.common.utils.AppManager
+import com.xiaoneng.ss.common.utils.displayImage
+import com.xiaoneng.ss.common.utils.mAlert
+import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.mine.adapter.MineAdapter
 import kotlinx.android.synthetic.main.fragment_mine.*
-import org.jetbrains.anko.toast
-import java.io.File
 
 /**
  * Created with Android Studio.
@@ -27,8 +22,7 @@ import java.io.File
  * @date: 2020/08/27
  * Time: 17:01
  */
-class
-MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
+class MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
     lateinit var mAdapter: MineAdapter
     override fun getLayoutId(): Int = R.layout.fragment_mine
 
@@ -130,64 +124,15 @@ MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
     }
 
     private fun initAvatar() {
-        val mAvatarFileName: String? = UserInfo.getUserBean().portrait?.split("/")?.last()
-        if (!TextUtils.isEmpty(mAvatarFileName)) {
-            if (File(mDownloadFile(requireContext(), mAvatarFileName)).exists()) {
                 displayImage(
                     requireContext(),
-                    mDownloadFile(
-                        requireContext(),
-                        mAvatarFileName
-                    ),
+                    UserInfo.getUserBean().domain+UserInfo.getUserBean().portrait,
                     ivAvatarMine
                 )
-            } else {
-                showLoading()
-                mViewModel.getSts()
-            }
-        }
     }
 
     override fun initDataObserver() {
-        mViewModel.mStsData.observe(this, Observer { response ->
-            response?.let {
 
-                Handler().postDelayed(
-                    {
-                        doDownload(it)
-                    }, 100
-                )
-            }
-        })
     }
 
-    private fun doDownload(it: StsTokenResp) {
-        val mAvatarFileName: String? = UserInfo.getUserBean().portrait?.split("/")?.last()
-        showLoading()
-        OssUtils.downloadFile(
-            requireContext(),
-            it.Credentials,
-            UserInfo.getUserBean().portrait,
-            mDownloadFile(requireContext(), mAvatarFileName),
-            object : OssListener {
-
-                override fun onFail() {
-                    showSuccess()
-                    view?.post {
-                        requireContext().mToast("头像下载失败")
-                    }
-                }
-
-                override fun onSuccess() {
-                    view?.post {
-                        showSuccess()
-                        displayImage(
-                            requireContext(),
-                            mDownloadFile(requireContext(), mAvatarFileName),
-                            ivAvatarMine
-                        )
-                    }
-                }
-            })
-    }
 }
