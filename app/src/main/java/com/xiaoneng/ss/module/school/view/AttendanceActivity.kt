@@ -2,7 +2,6 @@ package com.xiaoneng.ss.module.school.view
 
 import android.app.Dialog
 import android.content.Intent
-import android.util.LruCache
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -87,6 +86,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             llSearch.visibility = View.GONE
             tvLabel2Attendance.visibility = View.GONE
             tvLabel3Attendance.visibility = View.GONE
+            //学生管理员权限
             if (AppInfo.checkRule2("student/attendances/lists")) {
                 titles1.add("课堂考勤")
                 initAdapterTeacher()

@@ -43,7 +43,9 @@ class TimetableAdapter(layoutId: Int, listData: MutableList<TimetableBean>) :
                 mRealLessonData.add(CourseBean())
             }
             for (i in 0 until mLessonData.size) {
-                mRealLessonData[mLessonData[i].position.toIntSafe()] = mLessonData[i]
+                if (mLessonData[i].position.toIntSafe() in 0 until total) {
+                    mRealLessonData[mLessonData[i].position.toIntSafe()] = mLessonData[i]
+                }
             }
         }
         mAdapter = CourseAdapter(R.layout.item_lesson, mRealLessonData)
