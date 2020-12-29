@@ -16,7 +16,6 @@ import com.xiaoneng.ss.common.utils.formatStarPhoneNum
 import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import kotlinx.android.synthetic.main.fragment_modify_pwd.*
-import org.jetbrains.anko.toast
 
 /**
  * Created with Android Studio.
@@ -134,7 +133,6 @@ class ModifyPwdFragment : BaseLifeCycleFragment<AccountViewModel>() {
 
         mViewModel.mUserInfoData.observe(this, Observer {
             it?.let {
-                UserInfo.modifyUserBean(it)
                 requireContext().mToast("修改成功")
                 activity?.finish()
             }

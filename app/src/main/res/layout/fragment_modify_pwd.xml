@@ -9,7 +9,7 @@
         android:id="@+id/llNewPwd"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginStart="@dimen/title_padding"
         android:layout_marginTop="164dp"
         android:layout_marginEnd="@dimen/title_padding"
@@ -41,13 +41,18 @@
         </LinearLayout>
 
         <include layout="@layout/layout_split_margin" />
+        <Space style="@style/space_style" />
+        <TextView
+            android:id="@+id/tvConfirmModifyPwd2"
+            style="@style/button_bottom_blue_bac_style"
+            android:text="修改密码" />
     </LinearLayout>
 
 
     <LinearLayout
         android:id="@+id/llRebind"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginStart="@dimen/title_padding"
         android:layout_marginEnd="@dimen/title_padding"
         android:orientation="vertical">
@@ -116,18 +121,14 @@
         </LinearLayout>
 
         <include layout="@layout/layout_split_margin" />
+        <Space style="@style/space_style" />
+        <TextView
+            android:id="@+id/tvConfirmModifyPwd"
+            style="@style/button_bottom_blue_bac_style"
+            android:text="确定" />
+
+
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvConfirmModifyPwd"
-        style="@style/button_bottom_blue_bac_style"
-        android:layout_alignParentBottom="true"
-        android:text="确定" />
 
-    <TextView
-        android:id="@+id/tvConfirmModifyPwd2"
-        style="@style/button_bottom_blue_bac_style"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
-        android:text="修改密码" />
 </RelativeLayout>
