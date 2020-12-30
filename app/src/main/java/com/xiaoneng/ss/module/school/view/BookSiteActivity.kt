@@ -16,8 +16,6 @@ import com.xiaoneng.ss.module.school.model.SiteBean
 import com.xiaoneng.ss.module.school.model.SiteResp
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_book_site.*
-import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * @author Burning
@@ -79,11 +77,8 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
-        val cal = Calendar.getInstance()
-        cal.add(Calendar.MONTH, dateOffset)
-        var c = cal.timeInMillis
         showLoading()
-        mViewModel.getCanBookRooms(DateUtil.formatDateCustomDay(c))
+        mViewModel.getCanBookRooms(DateUtil.formatDateCustomDay(chosenDay!!))
     }
 
     override fun onResume() {
