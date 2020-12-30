@@ -18,6 +18,8 @@ import com.xiaoneng.ss.module.circular.model.ScheduleDayResponse
 import com.xiaoneng.ss.module.circular.model.ScheduleResponse
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import kotlinx.android.synthetic.main.fragment_schedule.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -39,6 +41,8 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
     var mDataWeek = ArrayList<DayBean>()
     var mDataMonth = ArrayList<DayBean>()
     var mDataEvent = ArrayList<ScheduleBean>()
+    var dateOffset = 0
+
     override fun getLayoutId(): Int = R.layout.fragment_schedule
 
     companion object {
@@ -58,6 +62,14 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
         ivAddEvent.setOnClickListener {
             addEvent()
         }
+        ivDateBack.setOnClickListener {
+            dateOffset--
+            setMonthDays()
+        }
+        ivDateNext.setOnClickListener {
+            dateOffset++
+            setMonthDays()
+        }
         initAdapterWeekTitle()
         initAdapterDayOfWeek()
         initAdapterDayOfMonth()
@@ -72,14 +84,26 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
         }
     }
 
+    private fun setMonthDays() {
+        tvWeekSchedule.text = DateUtil.getWhichMonth(offset = dateOffset)
+        queryMonthData()
+    }
+
+    private fun queryMonthData() {
+        val cal = Calendar.getInstance()
+        cal.add(Calendar.MONTH, dateOffset)
+        var c = cal.timeInMillis
+        showLoading()
+        mViewModel.queryScheduleMonth(
+            DateUtil.formatDateCustomDay(c),
+            DateUtil.formatDateCustomMonth(c)
+        )
+    }
 
     override fun onResume() {
         super.onResume()
         getData()
-        mViewModel.queryScheduleMonth(
-            DateUtil.formatDateCustomDay(chosenDay!!),
-            DateUtil.formatDateCustomMonth(chosenDay!!)
-        )
+        queryMonthData()
     }
 
     override fun getData() {
@@ -168,16 +192,14 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
 
     private fun switch() {
         isDayOfWeek = if (isDayOfWeek) {
-            showLoading()
-            mViewModel.queryScheduleMonth(
-                DateUtil.formatDateCustomDay(chosenDay!!),
-                DateUtil.formatDateCustomMonth(chosenDay!!)
-            )
+            setDateNextVisibility(isDayOfWeek)
+            queryMonthData()
             rvWeek.visibility = View.GONE
             rvMonth.visibility = View.VISIBLE
-            tvWeekSchedule.text = DateUtil.getWhichMonth()
+            tvWeekSchedule.text = DateUtil.getWhichMonth(offset = dateOffset)
             false
         } else {
+            setDateNextVisibility(isDayOfWeek)
             rvWeek.visibility = View.VISIBLE
             rvMonth.visibility = View.GONE
             tvWeekSchedule.text = weekStr
@@ -186,12 +208,21 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
 
     }
 
+    private fun setDateNextVisibility(visibility: Boolean) {
+        if (!visibility) {
+            ivDateBack.visibility = View.GONE
+            ivDateNext.visibility = View.GONE
+        } else {
+            ivDateBack.visibility = View.VISIBLE
+            ivDateNext.visibility = View.VISIBLE
+        }
+    }
+
     override fun initDataObserver() {
         mViewModel.mScheduleData.observe(this, Observer { response ->
             response?.let {
                 netResponseFormat<ScheduleResponse>(it)?.let {
                     weekStr = it.semesters
-                    tvWeekSchedule.text = weekStr
                     it.data?.let {
                         mDataEvent.clear()
                         mDataEvent.addAll(it)
@@ -204,7 +235,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
             response?.let {
                 netResponseFormat<ScheduleDayResponse>(it)?.let {
                     mDataMonth.clear()
-                    mDataMonth.addAll(Lunar.getCurrentDaysOfMonth(it.data,chosenDay))
+                    mDataMonth.addAll(Lunar.getCurrentDaysOfMonth(it.data, chosenDay,dateOffset))
                     mAdapterMonth.notifyDataSetChanged()
 
                 }

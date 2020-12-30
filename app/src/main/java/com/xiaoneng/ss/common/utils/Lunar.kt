@@ -375,9 +375,11 @@ class Lunar(cal: Calendar) {
 
         fun getCurrentDaysOfMonth(
             data: ArrayList<ScheduleDayBean>,
-            chosenDay: Long? = null
+            chosenDay: Long? = null,
+            offset: Int = 0
         ): ArrayList<DayBean> {
             val cal = Calendar.getInstance()
+            cal.add(Calendar.MONTH, offset)
             val maxDays = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
             val calToday = Calendar.getInstance()
             if (chosenDay!=null){
@@ -399,7 +401,7 @@ class Lunar(cal: Calendar) {
             }
             var isToday = false
             for (i in 0 until maxDays) {
-                isToday = calToday[Calendar.DAY_OF_MONTH] == cal[Calendar.DAY_OF_MONTH]
+                isToday = DateUtil.isSameDay(cal.timeInMillis,calToday.timeInMillis)
                 var beanList = ArrayList<ScheduleBean>()
                 var beanRemove = ArrayList<ScheduleDayBean>()
                 for (beans in data) {

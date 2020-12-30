@@ -38,14 +38,33 @@
 
                 <TextView
                     android:id="@+id/tvWeekSchedule"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="第18周"
+                    android:text=""
+                    android:singleLine="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_18"
                     android:textStyle="bold" />
+                <ImageView
+                    android:id="@+id/ivDateBack"
+                    android:layout_width="22dp"
+                    android:visibility="gone"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/ic_date_back" />
 
+                <ImageView
+                    android:id="@+id/ivDateNext"
+                    android:layout_width="22dp"
+                    android:visibility="gone"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/ic_date_next" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
                 <ImageView
                     android:id="@+id/ivSwitchSchedule"
                     android:layout_width="22dp"

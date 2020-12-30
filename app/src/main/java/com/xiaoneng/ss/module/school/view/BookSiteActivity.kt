@@ -16,6 +16,8 @@ import com.xiaoneng.ss.module.school.model.SiteBean
 import com.xiaoneng.ss.module.school.model.SiteResp
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_book_site.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * @author Burning
@@ -26,7 +28,7 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private var chosenDay: Long? = System.currentTimeMillis()
     lateinit var mAdapterWeek: DaysOfWeekAdapter
     var isDayOfWeek = true
-    var weekStr:String? = ""
+    var weekStr: String? = ""
     var dateOffset = 0
     var mDataWeekTitle = ArrayList<String>()
     var mDataWeek = ArrayList<DayBean>()
@@ -77,13 +79,16 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
+        val cal = Calendar.getInstance()
+        cal.add(Calendar.MONTH, dateOffset)
+        var c = cal.timeInMillis
         showLoading()
-        mViewModel.getCanBookRooms(DateUtil.formatDateCustomDay(chosenDay!!))
+        mViewModel.getCanBookRooms(DateUtil.formatDateCustomDay(c))
     }
 
     override fun onResume() {
         super.onResume()
-        if (mAdapter!=null){
+        if (mAdapter != null) {
             mAdapter.recycleR()
         }
         getData()
@@ -195,7 +200,9 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             response?.let {
                 netResponseFormat<SiteResp>(it)?.let {
                     weekStr = it.semesters
-                    tvWeekSchedule.text = weekStr
+                    if (isDayOfWeek) {
+                        tvWeekSchedule.text = weekStr
+                    }
                     it.classrooms?.let {
                         mData.clear()
                         mData.addAll(it)

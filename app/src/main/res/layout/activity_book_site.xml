@@ -53,7 +53,8 @@
                     android:id="@+id/tvWeekSchedule"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="第18周"
+                    android:text=""
+                    android:singleLine="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_18"
                     android:textStyle="bold" />
