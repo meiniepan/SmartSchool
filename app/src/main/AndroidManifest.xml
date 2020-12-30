@@ -219,7 +219,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.school.view.BookSiteActivity"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".common.utils.aliSpeech.SpeechTranscriberActivity"
             android:screenOrientation="portrait" />
