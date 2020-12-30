@@ -26,6 +26,9 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
     val mAvatarData: MutableLiveData<UserBean> = MutableLiveData()
     val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
     val mUserInfoData: MutableLiveData<UserBean> = MutableLiveData()
+    val mUserInfoDataWx: MutableLiveData<UserBean> = MutableLiveData()
+    val mUserInfoDataSex: MutableLiveData<UserBean> = MutableLiveData()
+    val mUserInfoDataBirth: MutableLiveData<UserBean> = MutableLiveData()
     val mParentNameData: MutableLiveData<Any> = MutableLiveData()
     val mParentsData: MutableLiveData<Any> = MutableLiveData()
     val mChildData: MutableLiveData<Any> = MutableLiveData()
@@ -86,6 +89,27 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
     fun modifyUserInfo(bean: UserBean) {
         initiateRequest(
             { mUserInfoData.value = mRepository.modifyUserInfo(bean) },
+            loadState
+        )
+    }
+
+    fun modifyUserInfoWx(bean: UserBean) {
+        initiateRequest(
+            { mUserInfoDataWx.value = mRepository.modifyUserInfo(bean) },
+            loadState
+        )
+    }
+
+    fun modifyUserInfoSex(bean: UserBean) {
+        initiateRequest(
+            { mUserInfoDataSex.value = mRepository.modifyUserInfo(bean) },
+            loadState
+        )
+    }
+
+    fun modifyUserInfoBirth(bean: UserBean) {
+        initiateRequest(
+            { mUserInfoDataBirth.value = mRepository.modifyUserInfo(bean) },
             loadState
         )
     }

@@ -2,6 +2,7 @@ package com.xiaoneng.ss.account.view
 
 import android.os.Build
 import android.os.CountDownTimer
+import android.os.Handler
 import android.text.TextUtils
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -182,7 +183,12 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
         mViewModel.mLoginData.observe(this, Observer {
             it?.let {
                 UserInfo.loginSuccess(it)
-                mViewModel.getApps()
+                Handler().postDelayed(
+                    {
+                        mViewModel.getApps()
+                        showLoading()
+                    }, 100
+                )
             }
         })
         mViewModel.mAppData.observe(this, Observer {

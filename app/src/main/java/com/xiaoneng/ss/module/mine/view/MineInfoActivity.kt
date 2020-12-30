@@ -60,10 +60,11 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
             setOnClickListener {
                 showSexPick(this) {
                     sex = getSexInt(this)
-                    var bean = UserInfo.getUserBean()
+                    var bean = UserBean()
+                    bean.token = UserInfo.getUserBean().token
                     bean.sex = sex
                     showLoading()
-                    mViewModel.modifyUserInfo(bean)
+                    mViewModel.modifyUserInfoSex(bean)
                 }
             }
         }
@@ -71,20 +72,22 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
             setOnClickListener {
                 showDateDayPick(this) {
                     birthday = this
-                    var bean = UserInfo.getUserBean()
+                    var bean = UserBean()
+                    bean.token = UserInfo.getUserBean().token
                     bean.birthday = birthday
                     showLoading()
-                    mViewModel.modifyUserInfo(bean)
+                    mViewModel.modifyUserInfoBirth(bean)
                 }
             }
         }
         etMineItem8.setOnEditorActionListener { teew, i, keyEvent ->
             when (i) {
                 EditorInfo.IME_ACTION_GO -> {
-                    var bean = UserInfo.getUserBean()
+                    var bean = UserBean()
+                    bean.token = UserInfo.getUserBean().token
                     bean.wxname = etMineItem8.text.toString()
                     showLoading()
-                    mViewModel.modifyUserInfo(bean)
+                    mViewModel.modifyUserInfoWx(bean)
                 }
 
             }
@@ -317,7 +320,6 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
         mViewModel.mUserInfoData.observe(this, Observer { response ->
             response?.let {
-                showSuccess()
                 UserInfo.modifyUserBean(it)
                 mToast("修改成功")
             }
@@ -325,10 +327,35 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
         mViewModel.mParentNameData.observe(this, Observer { response ->
             response?.let {
-
-                showSuccess()
                 var bean = UserInfo.getUserBean()
                 bean.parentname = etMineItem1.text.toString()
+                UserInfo.modifyUserBean(bean)
+                mToast("修改成功")
+            }
+        })
+
+        mViewModel.mUserInfoDataBirth.observe(this, Observer { response ->
+            response?.let {
+                var bean = UserInfo.getUserBean()
+                bean.birthday = it.birthday
+                UserInfo.modifyUserBean(bean)
+                mToast("修改成功")
+            }
+        })
+
+        mViewModel.mUserInfoDataSex.observe(this, Observer { response ->
+            response?.let {
+                var bean = UserInfo.getUserBean()
+                bean.sex = it.sex
+                UserInfo.modifyUserBean(bean)
+                mToast("修改成功")
+            }
+        })
+
+        mViewModel.mUserInfoDataWx.observe(this, Observer { response ->
+            response?.let {
+                var bean = UserInfo.getUserBean()
+                bean.wxname = it.wxname
                 UserInfo.modifyUserBean(bean)
                 mToast("修改成功")
             }

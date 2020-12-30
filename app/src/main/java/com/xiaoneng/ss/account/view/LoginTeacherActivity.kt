@@ -2,6 +2,7 @@ package com.xiaoneng.ss.account.view
 
 import android.os.Build
 import android.os.CountDownTimer
+import android.os.Handler
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -19,7 +20,6 @@ import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.module.activity.MainActivity
 import com.xiaoneng.ss.module.mine.view.UserProtocolActivity
 import kotlinx.android.synthetic.main.activity_login_tea.*
-import org.jetbrains.anko.toast
 
 /**
  * @author Burning
@@ -138,7 +138,12 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
         mViewModel.mLoginData.observe(this, Observer {
             it?.let {
                 UserInfo.loginSuccess(it)
-                mViewModel.getApps()
+                Handler().postDelayed(
+                    {
+                        mViewModel.getApps()
+                        showLoading()
+                    }, 100
+                )
 
             }
         })

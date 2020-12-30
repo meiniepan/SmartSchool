@@ -128,8 +128,10 @@ class RebindPhoneFragment : BaseLifeCycleFragment<AccountViewModel>() {
 
         mViewModel.mUserInfoData.observe(this, Observer {
             it?.let {
-                UserInfo.modifyUserBean(it)
                 requireContext().mToast("修改成功")
+                var bean = UserInfo.getUserBean()
+                bean.phone = it.phone
+                UserInfo.modifyUserBean(it)
                 activity?.finish()
             }
         })
