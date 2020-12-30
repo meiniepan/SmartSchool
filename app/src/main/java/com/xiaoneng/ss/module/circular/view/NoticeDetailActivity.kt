@@ -1,7 +1,6 @@
 package com.xiaoneng.ss.module.circular.view
 
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,7 +9,6 @@ import com.google.gson.reflect.TypeToken
 import com.jiang.awesomedownloader.downloader.AwesomeDownloader
 import com.jiang.awesomedownloader.tool.PathSelector
 import com.tencent.smtt.sdk.QbSdk
-import com.tencent.smtt.sdk.ValueCallback
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseApplication
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
@@ -24,8 +22,6 @@ import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import com.xiaoneng.ss.module.school.model.FileInfoBean
 import kotlinx.android.synthetic.main.activity_notice_detail.*
-import org.json.JSONException
-import org.json.JSONObject
 import java.io.File
 
 /**
@@ -202,35 +198,12 @@ class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
     }
 
     private fun doOpen(filePath: String) {
-
-        val ob = JSONObject()
-        try {
-            ob.put("pkgName", BaseApplication.instance.packageName)
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-        val params = HashMap<String, String>()
-        params.put("style", "1");
-        params.put("local", "true");
-        params.put("memuData", ob.toString())
-        QbSdk.getMiniQBVersion(this@NoticeDetailActivity)
-        QbSdk.openFileReader(
-            this@NoticeDetailActivity,
-            filePath,
-            params,
-            object : ValueCallback<String> {
-                override fun onReceiveValue(p0: String?) {
-
-                }
-            }
-        )
-
+        QbSdk.openFileReader(this, filePath, null, null)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        timer?.let { it.cancel() }
-        QbSdk.closeFileReader(this)
+        timer?.cancel()
     }
 
     override fun initDataObserver() {
