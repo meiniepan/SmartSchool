@@ -40,7 +40,7 @@ public class OssUtils {
 
     public static void uploadFile(Context context, StsTokenBean stsTokenBean, String filePath) {
 
-        String endpoint = END_POINT;
+        String endpoint = UserInfo.INSTANCE.getUserBean().getDomain();
 
         //移动端建议使用该方式，此时，stsToken中的前三个参数就派上用场了
         OSSCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(stsTokenBean.getAccessKeyId(), stsTokenBean.getAccessKeySecret(), stsTokenBean.getSecurityToken());
@@ -79,7 +79,7 @@ public class OssUtils {
 
     public static void asyncUploadFile(Context context, StsTokenBean stsTokenBean, String objectKey, String filePath,OssListener listener) {
 
-        String endpoint = END_POINT;
+        String endpoint = UserInfo.INSTANCE.getUserBean().getDomain();
 
         //移动端建议使用该方式，此时，stsToken中的前三个参数就派上用场了
         OSSCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(stsTokenBean.getAccessKeyId(), stsTokenBean.getAccessKeySecret(), stsTokenBean.getSecurityToken());
@@ -141,7 +141,7 @@ public class OssUtils {
     }
 
     public static void downloadFile(Context context, StsTokenBean stsTokenBean, String objectKey, String filePath,OssListener listener) {
-        String endpoint = END_POINT;
+        String endpoint = UserInfo.INSTANCE.getUserBean().getDomain();
         //移动端建议使用该方式，此时，stsToken中的前三个参数就派上用场了
         OSSCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(stsTokenBean.getAccessKeyId(), stsTokenBean.getAccessKeySecret(), stsTokenBean.getSecurityToken());
 
