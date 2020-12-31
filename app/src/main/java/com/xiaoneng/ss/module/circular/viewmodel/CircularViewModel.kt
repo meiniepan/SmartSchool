@@ -59,7 +59,7 @@ class CircularViewModel : BaseViewModel<CircularRepository>() {
         )
     }
 
-    fun queryScheduleMonth(day: String, months: String? = null) {
+    fun queryScheduleMonth(day: String? = null, months: String? = null) {
         initiateRequest(
             { mScheduleMonthData.value = mRepository.querySchedule(day, months) },
             loadState

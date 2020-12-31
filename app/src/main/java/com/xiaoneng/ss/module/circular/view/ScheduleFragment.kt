@@ -95,7 +95,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
         var c = cal.timeInMillis
         showLoading()
         mViewModel.queryScheduleMonth(
-            DateUtil.formatDateCustomDay(c),
+            months =
             DateUtil.formatDateCustomMonth(c)
         )
     }
