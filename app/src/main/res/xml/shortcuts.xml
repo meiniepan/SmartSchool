@@ -6,10 +6,11 @@
         android:shortcutDisabledMessage="@string/not_open"
         android:shortcutId="timetable"
         android:shortcutShortLabel="@string/timetable">
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:targetClass="com.xiaoneng.ss.module.activity.SplashActivity"
-            android:targetPackage="com.xiaoneng.ss" />
+<!--        返回栈-->
+<!--        <intent-->
+<!--            android:action="android.intent.action.VIEW"-->
+<!--            android:targetClass="com.xiaoneng.ss.module.activity.SplashActivity"-->
+<!--            android:targetPackage="com.xiaoneng.ss" />-->
         <intent
             android:action="android.intent.action.VIEW"
             android:targetClass="com.xiaoneng.ss.module.school.view.TimetableActivity"
