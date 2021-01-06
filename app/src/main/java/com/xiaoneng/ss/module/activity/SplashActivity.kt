@@ -26,8 +26,6 @@ class SplashActivity : BaseLifeCycleActivity<AccountViewModel>() {
     var runnable: Runnable? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         super.onCreate(savedInstanceState)
     }
 

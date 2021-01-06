@@ -160,5 +160,7 @@ dependencies {
     implementation 'com.gitee.jiang_li_jie_j:awesome-downloader:v1.1.1'
 
     implementation 'com.tencent.tbs.tbssdk:sdk:43939'
+    //状态栏适配
+    implementation 'com.zackratos.ultimatebarx:ultimatebarx:0.3.3'
 
 }

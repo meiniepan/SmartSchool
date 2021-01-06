@@ -2,6 +2,7 @@ package com.xiaoneng.ss.base.view
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.AttributeSet
@@ -18,6 +19,7 @@ import com.xiaoneng.ss.common.utils.ColorUtil
 import com.xiaoneng.ss.common.utils.RevealUtil.circularFinishReveal
 import com.xiaoneng.ss.common.utils.RevealUtil.setReveal
 import com.xiaoneng.ss.common.utils.eventBus.ChangeThemeEvent
+import com.zackratos.ultimatebarx.library.UltimateBarX
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -148,7 +150,12 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     open fun initStatusBar() {
-        initStatusColor(resources.getColor(R.color.white))
+        UltimateBarX.with(this)
+            .fitWindow(false)
+            .color(Color.TRANSPARENT)
+//            .drawableRes(R.drawable.bac_blue_bac_19)
+            .light(true)
+            .applyStatusBar()
     }
 
     @SuppressLint("NewApi")

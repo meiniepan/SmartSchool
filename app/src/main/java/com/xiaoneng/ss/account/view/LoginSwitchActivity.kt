@@ -1,8 +1,6 @@
 package com.xiaoneng.ss.account.view
 
-import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseActivity
 import com.xiaoneng.ss.common.utils.Constant
@@ -15,12 +13,6 @@ import kotlinx.android.synthetic.main.activity_login_switch.*
  * @date :2020/8/12 6:51 PM
  */
 class LoginSwitchActivity :BaseActivity() ,View.OnClickListener{
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        super.onCreate(savedInstanceState)
-    }
 
     override fun getLayoutId()= R.layout.activity_login_switch
     override fun initView() {
@@ -45,7 +37,4 @@ class LoginSwitchActivity :BaseActivity() ,View.OnClickListener{
         }
     }
 
-    override fun initStatusBar() {
-//        initStatusColor(resources.getColor(R.color.themeColor))
-    }
 }
