@@ -5,8 +5,10 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.MenuItem
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -25,7 +27,6 @@ import com.xiaoneng.ss.module.circular.view.CircularFragment
 import com.xiaoneng.ss.module.mine.view.MineFragment
 import com.xiaoneng.ss.module.school.view.SchoolFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.toast
 import pub.devrel.easypermissions.AppSettingsDialog
 
 
@@ -110,10 +111,29 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
         var menuView = bottom_navigation.getChildAt(0) as BottomNavigationMenuView
         var icon0 =
             (menuView.getChildAt(0) as BottomNavigationItemView).findViewById<ImageView>(com.google.android.material.R.id.icon)
+        var text0 =
+            (menuView.getChildAt(0) as BottomNavigationItemView).findViewById<TextView>(com.google.android.material.R.id.smallLabel)
+        var text0L =
+            (menuView.getChildAt(0) as BottomNavigationItemView).findViewById<TextView>(com.google.android.material.R.id.largeLabel)
         var icon1 =
             (menuView.getChildAt(1) as BottomNavigationItemView).findViewById<ImageView>(com.google.android.material.R.id.icon)
+        var text1 =
+            (menuView.getChildAt(1) as BottomNavigationItemView).findViewById<TextView>(com.google.android.material.R.id.smallLabel)
+        var text1L =
+            (menuView.getChildAt(1) as BottomNavigationItemView).findViewById<TextView>(com.google.android.material.R.id.largeLabel)
         var icon2 =
             (menuView.getChildAt(2) as BottomNavigationItemView).findViewById<ImageView>(com.google.android.material.R.id.icon)
+        var text2 =
+            (menuView.getChildAt(2) as BottomNavigationItemView).findViewById<TextView>(com.google.android.material.R.id.smallLabel)
+        var text2L =
+            (menuView.getChildAt(2) as BottomNavigationItemView).findViewById<TextView>(com.google.android.material.R.id.largeLabel)
+
+        text0.setTextSize(TypedValue.COMPLEX_UNIT_DIP,14f)
+        text0L.setTextSize(TypedValue.COMPLEX_UNIT_DIP,14f)
+        text1.setTextSize(TypedValue.COMPLEX_UNIT_DIP,14f)
+        text1L.setTextSize(TypedValue.COMPLEX_UNIT_DIP,14f)
+        text2.setTextSize(TypedValue.COMPLEX_UNIT_DIP,14f)
+        text2L.setTextSize(TypedValue.COMPLEX_UNIT_DIP,14f)
         bottom_navigation.setOnNavigationItemSelectedListener { menuItem: MenuItem ->
 
             when (menuItem.itemId) {
