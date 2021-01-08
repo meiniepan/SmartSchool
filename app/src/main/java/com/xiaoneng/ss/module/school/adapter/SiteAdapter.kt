@@ -93,11 +93,12 @@ class SiteAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
                 mSiteData[i].isBooked = true
             }
         }
-        for (i in 0 until mSiteData.size) {
-            if (i < mP) {
-                mSiteData[i].isBooked = true
-            }
-        }
+        //当天过去时间不可约
+//        for (i in 0 until mSiteData.size) {
+//            if (i < mP) {
+//                mSiteData[i].isBooked = true
+//            }
+//        }
 
 
         mAdapter.setNewData(mSiteData)

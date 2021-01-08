@@ -2,6 +2,7 @@ package com.xiaoneng.ss.custom.widgets
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.View
 import android.widget.FrameLayout
 import com.xiaoneng.ss.R
@@ -52,13 +53,13 @@ class CustomTabView @JvmOverloads constructor(
     }
 
     private fun doCheckNot() {
-        tvCustomTab.textSize = 16f
+        tvCustomTab.setTextSize(TypedValue.COMPLEX_UNIT_DIP,16f)
         tvCustomTab.setTextColor(resources.getColor(R.color.colorGray999))
         vCustomTab.visibility = View.GONE
     }
 
     private fun doCheck() {
-        tvCustomTab.textSize = 24f
+        tvCustomTab.setTextSize(TypedValue.COMPLEX_UNIT_DIP,24f)
         tvCustomTab.setTextColor(resources.getColor(R.color.titleBlack))
         vCustomTab.visibility = View.VISIBLE
     }

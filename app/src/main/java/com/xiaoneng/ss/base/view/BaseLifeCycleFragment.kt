@@ -91,18 +91,19 @@ abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
     }
 
     open fun showTmpOutTimeTip(msg: String = "请重新验证") {
-        if (!TextUtils.isEmpty(msg)) {
-            MaterialDialog(requireContext()).show {
-                title(R.string.title)
-                message(text = msg)
-                cornerRadius(8.0f)
-                positiveButton(R.string.doneM)
-                positiveButton {
-                    mStartActivity<SalaryCaptchaActivity>(requireContext())
-                }
-                cancelOnTouchOutside(false)
-            }
-        }
+//        if (!TextUtils.isEmpty(msg)) {
+//            MaterialDialog(requireContext()).show {
+//                title(R.string.title)
+//                message(text = msg)
+//                cornerRadius(8.0f)
+//                positiveButton(R.string.doneM)
+//                positiveButton {
+//                    mStartActivity<SalaryCaptchaActivity>(requireContext())
+//                }
+//                cancelOnTouchOutside(false)
+//            }
+//        }
+        mStartActivity<SalaryCaptchaActivity>(requireContext())
         loadService.showCallback(SuccessCallback::class.java)
     }
 

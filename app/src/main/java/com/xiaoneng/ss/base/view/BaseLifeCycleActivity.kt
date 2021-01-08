@@ -94,18 +94,19 @@ abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
     }
 
     open fun showTmpOutTimeTip(msg: String = "请重新验证") {
-        if (!TextUtils.isEmpty(msg)) {
-            MaterialDialog(this).show {
-                title(R.string.title)
-                message(text = msg)
-                cornerRadius(8.0f)
-                positiveButton(R.string.doneM)
-                positiveButton {
-                    mStartActivity<SalaryCaptchaActivity>(this@BaseLifeCycleActivity)
-                }
-                cancelOnTouchOutside(false)
-            }
-        }
+//        if (!TextUtils.isEmpty(msg)) {
+//            MaterialDialog(this).show {
+//                title(R.string.title)
+//                message(text = msg)
+//                cornerRadius(8.0f)
+//                positiveButton(R.string.doneM)
+//                positiveButton {
+//                    mStartActivity<SalaryCaptchaActivity>(this@BaseLifeCycleActivity)
+//                }
+//                cancelOnTouchOutside(false)
+//            }
+//        }
+        mStartActivity<SalaryCaptchaActivity>(this@BaseLifeCycleActivity)
         loadService.showCallback(SuccessCallback::class.java)
     }
 
