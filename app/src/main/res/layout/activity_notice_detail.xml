@@ -13,6 +13,8 @@
         style="@style/title_style"
         app:title="通知" />
 
+    <include layout="@layout/layout_split_tint_10" />
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"
@@ -25,26 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/llAddsFile"
-                android:layout_width="match_parent"
-                android:layout_height="62dp"
-                android:background="@color/tintBac"
-                android:gravity="center_vertical"
-                android:paddingStart="@dimen/title_padding"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:visibility="gone">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvAddsFile"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:overScrollMode="never" />
-            </LinearLayout>
-
-            <include layout="@layout/layout_split_tint_10" />
 
             <LinearLayout
                 android:layout_width="match_parent"
