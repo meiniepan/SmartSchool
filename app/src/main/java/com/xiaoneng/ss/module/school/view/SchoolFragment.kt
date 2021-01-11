@@ -139,7 +139,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
             bean4.items.add(
                 SchoolItemBean(
                     name = "学生考勤",
-                    remark = "早间考勤 课堂考勤",
+                    remark = "实时更新 系统上报",
                     icon = R.drawable.ic_kaoqin,
                     click = View.OnClickListener {
                         mStartActivity<AttendanceActivity>(context)
@@ -151,7 +151,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
             bean4.items.add(
                 SchoolItemBean(
                     name = "成绩汇总",
-                    remark = "各科成绩 排名浮动",
+                    remark = "各科成绩 汇总分析",
                     icon = R.drawable.ic_chengji,
                     click = View.OnClickListener {
                         mStartActivity<AchievementActivity>(context)

@@ -114,7 +114,7 @@
                     android:paddingStart="@dimen/title_padding"
                     android:paddingEnd="@dimen/title_padding"
                     android:layout_marginBottom="10dp"
-                    android:text="今日日程" />
+                    android:text="日程安排" />
 
                 <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
                     android:id="@+id/rvEventSchedule"
