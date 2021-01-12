@@ -122,12 +122,14 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                 llMineItem5.visibility = View.GONE
                 llMineItem6.visibility = View.GONE
                 llMineItem7.visibility = View.GONE
+                llMineItemEduId.visibility= View.GONE
                 llMineItem8.visibility = View.GONE
                 ivAvatarMineInfo.isClickable = false
             }
             AppInfo.checkRule2("user/teachers/modify") -> {
                 llMineItem5.visibility = View.GONE
                 llMineItem7.visibility = View.GONE
+                llMineItemEduId.visibility = View.GONE
             }
 
             else -> {
@@ -136,6 +138,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                 llMineItem5.visibility = View.GONE
                 llMineItem6.visibility = View.GONE
                 llMineItem7.visibility = View.GONE
+                llMineItemEduId.visibility = View.GONE
                 llMineItem8.visibility = View.GONE
             }
         }
@@ -146,6 +149,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
         tvMineItem5.text = UserInfo.getUserBean().cno
         tvMineItem6.text = UserInfo.getUserBean().cno
         tvMineItem7.text = UserInfo.getUserBean().sno
+        tvMineItemEduId.text = UserInfo.getUserBean().eduid
         etMineItem8.setText(UserInfo.getUserBean().wxname)
 
     }

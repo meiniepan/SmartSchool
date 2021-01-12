@@ -7,12 +7,10 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
-import com.xiaoneng.ss.module.activity.MainActivity
 import com.xiaoneng.ss.module.circular.adapter.ChooseColorAdapter
 import com.xiaoneng.ss.module.circular.model.ScheduleBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import kotlinx.android.synthetic.main.activity_add_schedule.*
-import org.jetbrains.anko.toast
 import java.util.*
 
 /**
@@ -152,7 +150,7 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
             response?.let {
                 showSuccess()
                 mToast(R.string.deal_done)
-                mStartActivity<MainActivity>(this)
+                finish()
             }
         })
 

@@ -281,6 +281,39 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/llMineItemEduId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="教育ID" />
+
+                        <TextView
+                            android:id="@+id/tvMineItemEduId"
+                            android:layout_width="wrap_content"
+                            android:gravity="end"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="24dp"
+                            android:hint="" />
+
+                    </LinearLayout>
+
+                    <include layout="@layout/layout_split" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/llMineItem8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
