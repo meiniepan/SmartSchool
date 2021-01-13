@@ -163,12 +163,7 @@ class PropertyRecordAdapter(
 
             }
             holder.setText(R.id.tvPropertyDetailResult, statusStr)
-            item.fileinfo?.let {
-                if (it.size > 0) {
-                    initAdapter(holder, item)
-                }
-
-            }
+            initAdapter(holder, item)
         }
 
     }

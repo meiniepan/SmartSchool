@@ -26,12 +26,11 @@ class AttendanceMasterAdapter(layoutId: Int, listData: MutableList<AttendanceBea
             eData = ArrayList()
             holder.setText(R.id.tvStudentCode, item?.cno)
                 .setText(R.id.tvStudentName, item?.realname)
-//
-
-            eData.addAll(item.tags!!)
-            if (eData.size > 0) {
-                initAdapter(holder.getView(R.id.rvAttTags))
+            item.tags?.let {
+                eData.addAll(it)
             }
+
+            initAdapter(holder.getView(R.id.rvAttTags))
         }
     }
 
