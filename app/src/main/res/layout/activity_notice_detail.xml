@@ -11,7 +11,7 @@
 
     <com.xiaoneng.ss.custom.widgets.CustomTitleBar
         style="@style/title_style"
-        app:title="通知" />
+        app:title="@string/noticeTitle" />
 
     <include layout="@layout/layout_split_tint_10" />
 

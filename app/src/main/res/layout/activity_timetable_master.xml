@@ -8,7 +8,7 @@
 
     <com.xiaoneng.ss.custom.widgets.CustomTitleBar
         style="@style/title_style"
-        app:title="课表" />
+        app:title="@string/timetableTitle" />
 
     <LinearLayout
         android:id="@+id/llClassTimetable"

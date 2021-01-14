@@ -10,7 +10,7 @@
     <com.xiaoneng.ss.custom.widgets.CustomTitleBar
         android:id="@+id/ctbDetailSchedule"
         style="@style/title_style"
-        app:title="日程" />
+        app:title="@string/scheduleTitle" />
 
     <View
         android:layout_width="match_parent"

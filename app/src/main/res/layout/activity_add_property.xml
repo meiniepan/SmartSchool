@@ -11,7 +11,7 @@
         android:id="@+id/ctbNoticeDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="报修报送" />
+        app:title="@string/propertyTitle" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/contentLayout"

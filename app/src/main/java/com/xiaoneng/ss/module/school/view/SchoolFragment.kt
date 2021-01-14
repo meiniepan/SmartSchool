@@ -49,7 +49,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         if (AppInfo.checkRule1("admin/notices/default")) {
             bean1.items.add(
                 SchoolItemBean(
-                    name = "全校通告",
+                    name = getString(R.string.noticeTitle),
                     remark = "快速准确 一键提醒",
                     icon = R.drawable.ic_tonggao,
                     click = View.OnClickListener {
@@ -61,7 +61,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         if (AppInfo.checkRule1("admin/wages/default")) {
             bean1.items.add(
                 SchoolItemBean(
-                    name = "工资条",
+                    name = getString(R.string.salaryTitle),
                     remark = "保护隐私 查看明细",
                     icon = R.drawable.ic_gongzitiao,
                     click = View.OnClickListener {
@@ -74,7 +74,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         if (AppInfo.checkRule1("admin/schedules/default")) {
             bean1.items.add(
                 SchoolItemBean(
-                    name = "日程安排",
+                    name = getString(R.string.scheduleTitle),
                     remark = "工作安排 井井有条",
                     icon = R.drawable.ic_richeng,
                     click = View.OnClickListener {
@@ -91,7 +91,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         if (AppInfo.checkRule1("admin/tasks/default")) {
             bean2.items.add(
                 SchoolItemBean(
-                    name = "任务协作",
+                    name = getString(R.string.taskTitle),
                     remark = "任务管理 办公协作",
                     icon = R.drawable.ic_renwu,
                     click = View.OnClickListener {
@@ -103,7 +103,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         if (AppInfo.checkRule1("admin/repair/default")) {
             bean2.items.add(
                 SchoolItemBean(
-                    name = "报修报送",
+                    name = getString(R.string.propertyTitle),
                     remark = "一键拨打 随叫随到",
                     icon = R.drawable.ic_baoxiu,
                     click = View.OnClickListener {
@@ -120,7 +120,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         if (AppInfo.checkRule1("admin/spacebook/default")) {
             bean3.items.add(
                 SchoolItemBean(
-                    name = "场地预约",
+                    name = getString(R.string.siteTitle),
                     remark = "场地时段 一目了然",
                     icon = R.drawable.ic_changdi,
                     click = View.OnClickListener {
@@ -138,7 +138,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         if (AppInfo.checkRule1("admin/attendances/default")) {
             bean4.items.add(
                 SchoolItemBean(
-                    name = "学生考勤",
+                    name = getString(R.string.attendanceTitle),
                     remark = "实时更新 系统上报",
                     icon = R.drawable.ic_kaoqin,
                     click = View.OnClickListener {
@@ -150,7 +150,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         if (AppInfo.checkRule1("admin/achievements/default")) {
             bean4.items.add(
                 SchoolItemBean(
-                    name = "成绩汇总",
+                    name = getString(R.string.achievementTitle),
                     remark = "各科成绩 汇总分析",
                     icon = R.drawable.ic_chengji,
                     click = View.OnClickListener {
@@ -161,7 +161,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         }
         if (AppInfo.checkRule1("admin/courses/default")) {
             bean4.items.add(SchoolItemBean(
-                name = "我的课表",
+                name = getString(R.string.timetableTitle),
                 remark = "班级课表 教学课表",
                 icon = R.drawable.ic_kebiao,
                 click = View.OnClickListener {

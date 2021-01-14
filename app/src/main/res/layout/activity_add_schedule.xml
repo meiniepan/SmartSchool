@@ -14,7 +14,7 @@
 
         <com.xiaoneng.ss.custom.widgets.CustomTitleBar
             style="@style/title_style"
-            app:title="日程" />
+            app:title="@string/scheduleTitle" />
 
         <TextView
             android:id="@+id/tvActionTitle"

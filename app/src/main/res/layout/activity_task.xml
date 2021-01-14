@@ -12,7 +12,7 @@
 
         <com.xiaoneng.ss.custom.widgets.CustomTitleBar
             style="@style/title_style"
-            app:title="任务" />
+            app:title="@string/taskTitle" />
 
         <LinearLayout
             android:id="@+id/contentLayout"

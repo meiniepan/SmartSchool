@@ -29,7 +29,6 @@ import com.xiaoneng.ss.module.school.model.PropertyTypeBean
 import com.xiaoneng.ss.module.school.model.RepairBody
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_property_record.*
-import org.jetbrains.anko.toast
 import java.util.*
 
 /**
@@ -190,7 +189,7 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
             } else {
                 remark = etRemark.text.toString()
             }
-            if (remark.isEmpty()){
+            if (remark.isEmpty()) {
                 mToast(R.string.lack_info)
                 return@setOnClickListener
             }

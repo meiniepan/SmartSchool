@@ -11,7 +11,7 @@
         android:id="@+id/ctbNoticeDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="成绩" />
+        app:title="@string/achievementTitle" />
 
     <LinearLayout
         android:id="@+id/contentLayout"

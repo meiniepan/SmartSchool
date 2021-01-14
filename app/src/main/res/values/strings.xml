@@ -11,6 +11,16 @@
     <string name="title">温馨提示</string>
     <string name="doneM">确定</string>
 
+    <string name="scheduleTitle">日程安排</string>
+    <string name="noticeTitle">通知公告</string>
+    <string name="salaryTitle">工资条</string>
+    <string name="taskTitle">任务协作</string>
+    <string name="propertyTitle">报修报送</string>
+    <string name="siteTitle">场地预约</string>
+    <string name="attendanceTitle">学生考勤</string>
+    <string name="achievementTitle">成绩汇总</string>
+    <string name="timetableTitle">我的课表</string>
+
     <string name="login">登录</string>
     <string name="login_success">登录成功</string>
     <string name="register">注册</string>

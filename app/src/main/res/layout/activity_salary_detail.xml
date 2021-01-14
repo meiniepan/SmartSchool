@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:is_white_icon="true"
-            app:title="工资条" />
+            app:title="@string/salaryTitle" />
 
         <TextView
             android:id="@+id/tvReal"

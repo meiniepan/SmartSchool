@@ -10,7 +10,7 @@
     <com.xiaoneng.ss.custom.widgets.CustomTitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="场地预约" />
+        app:title="@string/siteTitle" />
 
     <LinearLayout
         android:id="@+id/contentLayout"
