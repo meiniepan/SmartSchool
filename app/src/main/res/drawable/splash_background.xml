@@ -3,10 +3,7 @@
     android:opacity="opaque">
 
     <!--两层-->
-    <item android:drawable="@drawable/bac_splash"/>
-    <item android:top="235dp" >
-        <bitmap android:gravity="top" android:src="@drawable/ic_splash_logo_text" />
-    </item>
+    <item android:drawable="@drawable/bac_splash_2"/>
 
 
 </layer-list>

@@ -4,16 +4,11 @@
     android:id="@+id/contentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bac_splash"
+    android:background="@drawable/bac_splash_2"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     >
 
 
-    <ImageView
-        android:layout_marginTop="235dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_splash_logo_text" />
 
 </LinearLayout>
