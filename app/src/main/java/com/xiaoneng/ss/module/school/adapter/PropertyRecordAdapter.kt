@@ -38,7 +38,7 @@ class PropertyRecordAdapter(
             holder.setText(R.id.tvPropertyDetailTime, item.reporttime)
                 .setText(R.id.tvPropertyDetailCode, item.id)
                 .setText(R.id.tvPropertyDetailPerson, item.repairerinfo?.realname)
-                .setText(R.id.tvPropertyDetailTime2, item.handletime)
+                .setText(R.id.tvPropertyDetailTime2, item.completetime)
                 .setText(R.id.tvPropertyDetailRemark, item.remark)//维修人逻辑
 
             //报修人逻辑
