@@ -11,6 +11,7 @@ import com.xiaoneng.ss.module.school.model.CourseBean
  */
 data class TestCourseResp(
     var testcourse: MutableList<TestBean>,
+    var testname: MutableList<String>,
     var course: MutableList<CourseBean>,
     var classs: MutableList<ClassBean>,
     var currenttestname: String,

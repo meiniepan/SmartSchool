@@ -16,7 +16,6 @@ import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.common.utils.mAlert
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.model.ClassBean
-import com.xiaoneng.ss.model.TestBean
 import com.xiaoneng.ss.model.TestCourseResp
 import com.xiaoneng.ss.module.school.adapter.AchievementStuAdapter
 import com.xiaoneng.ss.module.school.adapter.AchievementTeacherAdapter
@@ -38,7 +37,7 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var mData: ArrayList<AchievementBean> = ArrayList()
     var mDataClass: ArrayList<ClassBean> = ArrayList()
     var mDataCourse: ArrayList<CourseBean> = ArrayList()
-    var mDataTest: ArrayList<TestBean> = ArrayList()
+    var mDataTest: ArrayList<String> = ArrayList()
     var titlesClass = ArrayList<String>()
     var titlesCourse = ArrayList<String>()
     var titlesTest = ArrayList<String>()
@@ -86,6 +85,7 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 //                doRefresh()
 //            }
 //        })
+
         when  {
             AppInfo.checkRule2("student/achievements/testCourse") -> {
                 tvActionClass.visibility = View.GONE
@@ -111,7 +111,6 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAdapterStu() {
-
         mAdapterStudent = AchievementStuAdapter(R.layout.item_performance_stu, mData)
         rvPerformance.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@AchievementActivity)
@@ -176,7 +175,7 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             tvActionClass.text = mDataClass[position].classname
             classid = mDataClass[position].classid
             rvPerformance.showLoadingView()
-            getPerformanceRequest()
+            doRefresh()
             dialogClass.dismiss()
         }
 
@@ -212,7 +211,7 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             tvActionCourse.text = mDataCourse[position].coursename
             courseid = mDataCourse[position].crsid!!
             rvPerformance.showLoadingView()
-            getPerformanceRequest()
+            doRefresh()
             dialogCourse.dismiss()
         }
 
@@ -245,10 +244,10 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             adapter = dialogAdapter
         }
         dialogAdapter.setOnItemClickListener { adapter, view, position ->
-            currentTest = mDataTest[position].testname
-            tvActionTest.text = mDataTest[position].testname
+            currentTest = mDataTest[position]
+            tvActionTest.text = mDataTest[position]
             rvPerformance.showLoadingView()
-            getPerformanceRequest()
+            doRefresh()
             dialogTest.dismiss()
         }
 
@@ -285,9 +284,9 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mDataTest.clear()
                     mDataClass.addAll(it.classs)
                     mDataCourse.addAll(it.course)
-                    mDataTest.addAll(it.testcourse)
+                    mDataTest.addAll(it.testname)
                     if (mDataTest.size > 0) {
-                        currentTest = mDataTest[0].testname
+                        currentTest = mDataTest[0]
                     } else {
                         mRootView.post {
                             showEmpty()
@@ -305,7 +304,7 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         currentCourse = mDataCourse[0].coursename!!
                         courseid = mDataCourse[0].crsid!!
                     }
-                    getPerformanceRequest()
+                    doRefresh()
                     tvActionClass.text = currentClass
                     tvActionCourse.text = currentCourse
                     tvActionTest.text = currentTest
@@ -319,7 +318,7 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     }
 
                     mDataTest.forEach {
-                        titlesTest.add(it.testname)
+                        titlesTest.add(it)
                     }
                 }
             }
