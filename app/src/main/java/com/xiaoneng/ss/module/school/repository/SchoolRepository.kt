@@ -179,7 +179,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
     ): AchievementResponse {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.getAchievement(UserInfo.getUserBean().token, testname)
+                apiService.getAchievement(UserInfo.getUserBean().token, testname = testname,crid = crid)
                     .dataConvert(loadState)
             }
             "2" -> {
@@ -205,7 +205,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
             }
             else -> {
-                apiService.getAchievement(UserInfo.getUserBean().token, testname)
+                apiService.getAchievement(UserInfo.getUserBean().token, testname = testname,crid = crid)
                     .dataConvert(loadState)
             }
         }
