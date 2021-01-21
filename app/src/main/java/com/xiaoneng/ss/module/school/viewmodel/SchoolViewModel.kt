@@ -91,14 +91,14 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
 
     fun getAchievement(
         testname: String? = null,
-        crid: String? = null,
+        crsid: String? = null,
         classid: String? = null,
         lastid: String? = null
     ) {
         initiateRequest(
             {
                 mAchievementData.value =
-                    mRepository.getAchievement(testname, crid, classid, lastid = lastid)
+                    mRepository.getAchievement(testname, crsid, classid, lastid = lastid)
             },
             loadState
         )

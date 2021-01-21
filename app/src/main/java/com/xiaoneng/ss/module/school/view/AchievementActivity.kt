@@ -142,7 +142,7 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     fun getPerformanceRequest() {
-        mViewModel.getAchievement(currentTest, classid = classid, crid = courseid, lastid = lastId)
+        mViewModel.getAchievement(currentTest, classid = classid, crsid = courseid, lastid = lastId)
     }
 
     private fun initDialogClass() {

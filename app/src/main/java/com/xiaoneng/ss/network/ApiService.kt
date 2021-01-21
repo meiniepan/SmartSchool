@@ -372,7 +372,7 @@ interface ApiService {
     suspend fun getAchievement(
         @Field("token") token: String? = null,
         @Field("testname") testname: String? = null,
-        @Field("crid") crid: String? = null
+        @Field("crsid") crsid: String? = null
     ): BaseResponse<AchievementResponse>
 
     /**
@@ -384,7 +384,7 @@ interface ApiService {
         @Field("token") token: String? = null,
         @Field("id") id: String? = null,
         @Field("testname") testname: String? = null,
-        @Field("crid") crid: String? = null,
+        @Field("crsid") crsid: String? = null,
         @Field("classid") classid: String?
     ): BaseResponse<AchievementResponse>
 

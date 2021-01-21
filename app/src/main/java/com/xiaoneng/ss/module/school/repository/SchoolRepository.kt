@@ -173,13 +173,13 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
     suspend fun getAchievement(
         testname: String? = null,
-        crid: String? = null,
+        crsid: String? = null,
         classid: String? = null,
         lastid: String? = null
     ): AchievementResponse {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.getAchievement(UserInfo.getUserBean().token, testname = testname,crid = crid)
+                apiService.getAchievement(UserInfo.getUserBean().token, testname = testname,crsid = crsid)
                     .dataConvert(loadState)
             }
             "2" -> {
@@ -187,7 +187,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                     UserInfo.getUserBean().token,
                     lastid,
                     testname,
-                    crid,
+                    crsid,
                     classid
                 )
                     .dataConvert(loadState)
@@ -198,14 +198,14 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                     UserInfo.getUserBean().token,
                     lastid,
                     testname,
-                    crid,
+                    crsid,
                     classid
                 )
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.getAchievement(UserInfo.getUserBean().token, testname = testname,crid = crid)
+                apiService.getAchievement(UserInfo.getUserBean().token, testname = testname,crsid = crsid)
                     .dataConvert(loadState)
             }
         }
