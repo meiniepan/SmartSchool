@@ -1,6 +1,6 @@
 package com.xiaoneng.ss.model
 
-import com.xiaoneng.ss.module.school.model.CourseBean
+import com.xiaoneng.ss.module.school.model.LevelCourseBean
 
 /**
  * Created with Android Studio.
@@ -12,7 +12,7 @@ import com.xiaoneng.ss.module.school.model.CourseBean
 data class TestCourseResp(
     var testcourse: MutableList<TestBean>,
     var testname: MutableList<String>,
-    var course: MutableList<CourseBean>,
+    var course: MutableList<LevelCourseBean>,
     var classs: MutableList<ClassBean>,
     var currenttestname: String,
     var total: String

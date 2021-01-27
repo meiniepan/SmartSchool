@@ -209,7 +209,7 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
         dialogAdapter.setOnItemClickListener { adapter, view, position ->
             tvActionCourse.text = mDataCourse[position].coursename
-            courseid = mDataCourse[position].crsid!!
+            courseid = mDataCourse[position].cno!!
             rvPerformance.showLoadingView()
             doRefresh()
             dialogCourse.dismiss()
@@ -283,7 +283,9 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mDataCourse.clear()
                     mDataTest.clear()
                     mDataClass.addAll(it.classs)
-                    mDataCourse.addAll(it.course)
+                    it.course.forEach {
+                        mDataCourse.addAll(it.courses!!)
+                    }
                     mDataTest.addAll(it.testname)
                     if (mDataTest.size > 0) {
                         currentTest = mDataTest[0]
@@ -302,7 +304,7 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     }
                     if (mDataCourse.size > 0) {
                         currentCourse = mDataCourse[0].coursename!!
-                        courseid = mDataCourse[0].crsid!!
+                        courseid = mDataCourse[0].cno!!
                     }
                     doRefresh()
                     tvActionClass.text = currentClass

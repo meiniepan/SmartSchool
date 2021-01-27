@@ -13,7 +13,6 @@ import com.xiaoneng.ss.model.StudentBean
 data class UserBean(
     var token: String? = null,
     var uid: String? = null,
-    var icon: String? = null,
     var cno: String? = null,//学号
     var sno: String? = null,//教育局编号
     var eduid: String? = null,//教育局id
