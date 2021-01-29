@@ -32,7 +32,7 @@ class RoomBookRecordAdapter(layoutId: Int, listData: MutableList<SiteItemBean>) 
                     tvAction.visibility = View.VISIBLE
                 }
                 statusStr = "未开始"
-            } else if (item.status == "1") {
+            } else if (item.status == "1") { 
                 statusStr = "进行中"
             } else if (item.status == "2") {
                 statusStr = "已结束"
