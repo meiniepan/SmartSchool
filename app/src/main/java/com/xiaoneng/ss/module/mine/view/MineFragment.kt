@@ -37,10 +37,6 @@ class MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
         super.initView()
         tvNameMine.text = UserInfo.getUserBean().realname
 
-        if (AppInfo.checkRule2("user/student/modifyParents")) {
-            tvNameMine.text = UserInfo.getUserBean().parentname
-        }
-
         when {
             AppInfo.checkRule2("user/student/modify") -> {
                 llItem3.visibility = View.GONE
@@ -49,6 +45,7 @@ class MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
             }
 
             AppInfo.checkRule2("user/student/modifyParents") -> {
+                tvNameMine.text = UserInfo.getUserBean().parentname
                 llItem3.visibility = View.VISIBLE
                 llItem6.visibility = View.GONE
                 llItem2.visibility = View.GONE
