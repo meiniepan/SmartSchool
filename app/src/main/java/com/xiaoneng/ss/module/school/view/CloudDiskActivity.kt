@@ -1,5 +1,12 @@
 package com.xiaoneng.ss.module.school.view
 
+import android.R.attr
+import android.app.Activity
+import android.content.Intent
+import android.database.Cursor
+import android.net.Uri
+import android.provider.MediaStore
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
@@ -7,6 +14,8 @@ import com.xiaoneng.ss.module.school.adapter.AchievementStuAdapter
 import com.xiaoneng.ss.module.school.model.AchievementBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_salary.*
+import java.io.File
+
 
 /**
  * @author Burning
@@ -23,6 +32,7 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initView() {
         super.initView()
         initAdapter()
+        choseFile()
     }
 
     override fun initData() {
@@ -46,7 +56,29 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         }
     }
+    private fun choseFile(){
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.setType("*/*") //设置类型，我这里是任意类型，任意后缀的可以这样写。
 
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        startActivityForResult(intent, 1)
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode === Activity.RESULT_OK) { //是否选择，没选择就不会继续
+            val uri: Uri = data?.getData()!! //得到uri，后面就是将uri转化成file的过程。
+            val proj = arrayOf(MediaStore.Images.Media.DATA)
+            val actualimagecursor: Cursor = managedQuery(uri, proj, null, null, null)
+            val actual_image_column_index: Int = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            actualimagecursor.moveToFirst()
+            val img_path: String = actualimagecursor.getString(actual_image_column_index)
+            val file = File(img_path)
+            Toast.makeText(this, file.toString(), Toast.LENGTH_SHORT).show()
+        }
+
+    }
     override fun initDataObserver() {
 
     }

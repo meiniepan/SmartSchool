@@ -17,6 +17,7 @@
     <string name="taskTitle">任务协作</string>
     <string name="propertyTitle">报修报送</string>
     <string name="siteTitle">场地预约</string>
+    <string name="diskTitle">教学云盘</string>
     <string name="attendanceTitle">学生考勤</string>
     <string name="achievementTitle">成绩汇总</string>
     <string name="timetableTitle">我的课表</string>
