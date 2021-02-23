@@ -17,48 +17,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:background="@drawable/ic_logo_page"
-            android:layout_marginTop="17dp"
-            android:layout_gravity="center_horizontal" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginStart="@dimen/title_padding"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="80dp"
             android:layout_marginEnd="@dimen/title_padding"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="欢迎"
-                android:textSize="@dimen/sp_20"
-                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="登录"
-                android:textColor="@color/themeColor"
-                android:textSize="@dimen/sp_20"
+                android:textSize="@dimen/sp_36"
                 android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="  校能智慧校园"
-                android:textSize="@dimen/sp_20"
-                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginStart="@dimen/title_padding"
             android:layout_marginTop="7.5dp"
             android:layout_marginEnd="@dimen/title_padding"
@@ -68,14 +48,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="我的身份是"
-                android:textColor="@color/colorGray999" />
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="老师"
-                android:textColor="@color/themeColor" />
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold" />
         </LinearLayout>
 
 
@@ -83,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/title_padding"
-            android:layout_marginTop="66.5dp"
+            android:layout_marginTop="56dp"
             android:layout_marginEnd="@dimen/title_padding"
             android:layout_marginBottom="0dp"
             android:gravity="center_vertical"
@@ -102,10 +84,10 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="26dp"
                 android:background="@null"
-                android:paddingTop="14dp"
-                android:paddingBottom="14dp"
                 android:hint="请输入您的手机号"
                 android:inputType="phone"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
                 android:textSize="@dimen/sp_20" />
         </LinearLayout>
 
@@ -127,23 +109,21 @@
                 android:src="@drawable/icon_captcha" />
 
 
-
-                <EditText
-                    android:id="@+id/etCaptchaTeacher"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="验证码"
-                    android:imeActionLabel="登录"
-                    android:paddingTop="14dp"
-                    android:paddingBottom="14dp"
-                    android:imeOptions="actionGo"
-                    android:inputType="number"
-                    android:textSize="@dimen/sp_20"
-                    android:layout_marginStart="12dp"
-                    android:maxLength="8"
-                     />
+            <EditText
+                android:id="@+id/etCaptchaTeacher"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="验证码"
+                android:imeActionLabel="登录"
+                android:imeOptions="actionGo"
+                android:inputType="number"
+                android:maxLength="8"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:textSize="@dimen/sp_20" />
 
             <TextView
                 android:id="@+id/tvSendCaptchaTeacher"

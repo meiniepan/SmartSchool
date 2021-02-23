@@ -4,7 +4,6 @@
         android:id="@+id/menu_home"
         android:checked="true"
         android:icon="@drawable/ic_tab_todo_c"
-
         android:title="@string/navigation_1" />
 
     <item

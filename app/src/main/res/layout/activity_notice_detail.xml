@@ -118,14 +118,19 @@
                 android:layout_marginBottom="20dp"
                 android:text="我已阅读" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/ivHasRead"
                 android:visibility="gone"
-                android:layout_width="148dp"
-                android:layout_height="65dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="20dp"
-                android:src="@drawable/bac_read"
+                android:textSize="40dp"
+                android:textColor="@color/themeColor"
+                android:alpha="0.3"
+                android:rotation="-15"
+                android:text="我已阅读"
+                android:textStyle="bold"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>
 

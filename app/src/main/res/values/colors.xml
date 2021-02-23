@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#445FF5</color>
+    <color name="colorPrimary">#F95B49</color>
     <color name="colorPrimaryDark">#ffffff</color>
-    <color name="colorAccent">#445FF5</color>
+    <color name="colorAccent">#F95B49</color>
     <color name="text_333333">#333333</color>
     <color name="black">#000000</color>
     <color name="pink">#EDDBDB</color>
@@ -18,9 +18,9 @@
     <color name="commonHint">#999999</color>
     <color name="splitColor">#E3E6E9</color>
     <color name="oldBlue">#5E37FF</color>
-    <color name="themeColor">#445FF5</color>
-    <color name="gradientBlue">#445FF5</color>
-    <color name="gradientPurple">#6D0BBD</color>
+    <color name="themeColor">#F95B49</color>
+    <color name="gradientBlue">#EF8D82</color>
+    <color name="gradientPurple">#F95B49</color>
     <color name="commonRed">#C7000B</color>
     <color name="splitGray">#D3D9DF</color>
     <color name="grayF6">#F6F6F6</color>
