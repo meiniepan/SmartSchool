@@ -8,10 +8,13 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.eventBus.RefreshUnreadEvent
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.circular.adapter.NoticeAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
+import com.xiaoneng.ss.module.school.interfaces.INoticeUnread
+import com.xiaoneng.ss.module.school.view.NoticeActivity
 import kotlinx.android.synthetic.main.fragment_notice.*
 
 /**
@@ -30,7 +33,7 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_notice
 
     companion object {
-        fun getInstance(): Fragment {
+        fun getInstance(circularFragment: CircularFragment): Fragment {
             return NoticeFragment()
         }
 
@@ -101,6 +104,7 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
                     }
                     rvNotice.notifyDataSetChanged()
                 }
+                RefreshUnreadEvent(it.unread).post()
             }
         })
 

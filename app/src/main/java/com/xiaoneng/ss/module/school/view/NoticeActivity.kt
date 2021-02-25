@@ -1,8 +1,15 @@
 package com.xiaoneng.ss.module.school.view
 
+import android.text.TextUtils
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.utils.eventBus.ChangeThemeEvent
+import com.xiaoneng.ss.common.utils.eventBus.RefreshUnreadEvent
+import com.xiaoneng.ss.module.school.interfaces.INoticeUnread
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
+import kotlinx.android.synthetic.main.activity_notice.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * @author Burning
@@ -35,4 +42,17 @@ class NoticeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
 
     }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun refreshNotice(event: RefreshUnreadEvent) {
+        var unread = event.unread
+        if (unread=="0"|| TextUtils.isEmpty(unread)){
+            unread="通知"
+        }else{
+            unread = "通知($unread)"
+        }
+        ctbNotice.setTitle(unread)
+    }
+
 }

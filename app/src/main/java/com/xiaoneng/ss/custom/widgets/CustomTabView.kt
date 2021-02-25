@@ -44,6 +44,10 @@ class CustomTabView @JvmOverloads constructor(
         check()
     }
 
+    fun setText(text:String?) {
+        tvCustomTab.text = text
+    }
+
     private fun check() {
         if (this.isCheck) {
             doCheck()

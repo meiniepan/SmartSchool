@@ -14,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="请选择您的身份"
         android:src="@drawable/bac_splash"
         android:scaleType="centerCrop"
         />

@@ -1,5 +1,6 @@
 package com.xiaoneng.ss.module.circular.view
 
+import android.text.TextUtils
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -8,10 +9,15 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.FragmentVpAdapter
+import com.xiaoneng.ss.common.utils.eventBus.RefreshUnreadEvent
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
+import com.xiaoneng.ss.module.school.interfaces.INoticeUnread
+import kotlinx.android.synthetic.main.activity_notice.*
 import kotlinx.android.synthetic.main.fragment_circular.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Created with Android Studio.
@@ -78,7 +84,7 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
     }
 
     private fun initViewPager() {
-        fragmentList.add(NoticeFragment.getInstance())
+        fragmentList.add(NoticeFragment.getInstance(this))
         fragmentList.add(ScheduleFragment.getInstance())
         fragmentAdapter = FragmentVpAdapter(
             childFragmentManager,
@@ -126,4 +132,15 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
         })
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun refreshNotice(event: RefreshUnreadEvent) {
+        var unread = event.unread
+        if (unread=="0"|| TextUtils.isEmpty(unread)){
+            unread="通知"
+        }else{
+            unread = "通知($unread)"
+        }
+        tvCircular.setText(unread)
+    }
 }
