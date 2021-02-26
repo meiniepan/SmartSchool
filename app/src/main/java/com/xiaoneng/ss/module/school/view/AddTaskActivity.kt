@@ -3,25 +3,40 @@ package com.xiaoneng.ss.module.school.view
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.net.Uri
+import android.os.Handler
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.google.gson.Gson
+import com.jiang.awesomedownloader.downloader.AwesomeDownloader
+import com.jiang.awesomedownloader.tool.PathSelector
+import com.tencent.smtt.sdk.QbSdk
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.account.model.UserBean
+import com.xiaoneng.ss.base.view.BaseApplication
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
+import com.xiaoneng.ss.common.utils.oss.OssListener
+import com.xiaoneng.ss.common.utils.oss.OssUtils
+import com.xiaoneng.ss.model.StsTokenResp
+import com.xiaoneng.ss.module.circular.adapter.NoticeFileAdapter
 import com.xiaoneng.ss.module.school.adapter.InvolveSimpleAdapter
-import com.xiaoneng.ss.module.school.model.DepartmentBean
-import com.xiaoneng.ss.module.school.model.TaskBean
-import com.xiaoneng.ss.module.school.model.TaskDetailBean
-import com.xiaoneng.ss.module.school.model.UserBeanSimple
+import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_add_task.*
+import kotlinx.android.synthetic.main.activity_notice_detail.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import java.io.File
 
 /**
  * Created with Android Studio.
@@ -45,6 +60,13 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var mDataClasses = ArrayList<DepartmentBean>()
     var receiveList: ArrayList<UserBeanSimple> = ArrayList()
     var isDraftFirst: Boolean = true
+    lateinit var mAdapterFile: NoticeFileAdapter
+    var mDataFile = ArrayList<FileInfoBean>()
+    var idString = ""
+    var fileNum = 0
+    var downloadNum = 0
+    var filePath = ""
+    var fileName = ""
 
 
     override fun getLayoutId(): Int = R.layout.activity_add_task
@@ -55,6 +77,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mId = intent.getStringExtra(Constant.ID)
         initAdapter()
         initAdapterPrincipal()
+        initAdapterFile()
         initUi()
         llBeginTime.apply {
             setOnClickListener {
@@ -70,12 +93,17 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 }
             }
         }
-        ivTimingAddTask.apply {
+        tvTimingAddTask.apply {
             setOnClickListener {
                 showDatePick(tvEndDate, tvEndTime) {
                     orderTime = this
-                    setOrderPublish(this@apply)
+                    setOrderPublish()
                 }
+            }
+        }
+        tvUpFile.apply {
+            setOnClickListener {
+                choseFile()
             }
         }
 
@@ -91,8 +119,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
     }
 
-    private fun setOrderPublish(img: ImageView) {
-        img.setImageResource(R.drawable.ic_timing_common)
+    private fun setOrderPublish() {
         tvConfirmAddTask.text = "定时发布"
     }
 
@@ -109,21 +136,30 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
     }
 
+    private fun choseFile() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.setType("*/*") //设置类型，我这里是任意类型，任意后缀的可以这样写。
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        startActivityForResult(intent, Constant.REQUEST_CODE_FILE)
+
+    }
+
     private fun addTask() {
         if (tvTitleAddTask.text.isEmpty() || receiveList.size == 0) {
             mToast(R.string.lack_info)
             return
         }
         var taskBean = TaskBean(
-            UserInfo.getUserBean().token,
-            taskname = tvTitleAddTask.text.toString(),
-            plantime = beginTime,
-            plantotal = 10.toString(),
-            overtime = endTime,
-            involve = Gson().toJson(receiveList),
-            ordertime = orderTime,
-            remark = etRemarkAddTask.text.toString(),
-            status = "1"
+                UserInfo.getUserBean().token,
+                taskname = tvTitleAddTask.text.toString(),
+                plantime = beginTime,
+                plantotal = 10.toString(),
+                overtime = endTime,
+                involve = Gson().toJson(receiveList),
+                ordertime = orderTime,
+                remark = etRemarkAddTask.text.toString(),
+                status = "1",
+                fileinfo = Gson().toJson(mDataFile)
         )
         mAlert("确定发布任务？") {
             if (mId.isNullOrEmpty()) {
@@ -136,10 +172,58 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     }
 
+
+    private fun doDown(url: String?, fileName: String?) {
+        AwesomeDownloader.init(BaseApplication.instance)
+        //关闭通知栏
+        AwesomeDownloader.option.showNotification = false
+        val url = UserInfo.getUserBean().domain + url
+        //获取应用外部照片储存路径
+        val filePath = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+        //加入下载队列
+        AwesomeDownloader.enqueue(url, filePath, fileName ?: "")
+        AwesomeDownloader.setOnProgressChange { progress ->
+            //do something...
+        }.setOnStop { downloadBytes, totalBytes ->
+            //do something...
+        }.setOnFinished { filePath, fileName ->
+            downloadNum++
+            if (downloadNum == fileNum) {
+                showSuccess()
+            }
+        }.setOnError { exception ->
+            //do something...
+        }
+    }
+
+    private fun doOpen(filePath: String) {
+        QbSdk.openFileReader(this, filePath, null, null)
+    }
+
     private fun doAddPrincipal() {
 //        mStartForResult<AddInvolveActivity>(this, Constant.REQUEST_CODE_PRINCIPAL) {
 //
 //        }
+    }
+
+    private fun initAdapterFile() {
+        rvTaskFile.visibility = View.GONE
+        mAdapterFile = NoticeFileAdapter(R.layout.item_notice_file, mDataFile)
+        rvTaskFile.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            setAdapter(mAdapterFile)
+        }
+        mAdapterFile.setOnItemClickListener { _, view, position ->
+            var path = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+            var name = idString + mDataFile[position].name
+            var filePath = path + File.separator + name
+            var filename = File(filePath)
+            if (filename.exists()) {
+                doOpen(filePath)
+            } else {
+                doDown(mDataFile[position].url, name)
+            }
+        }
     }
 
     private fun doAddParticipant() {
@@ -180,81 +264,87 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private fun showDialog() {
         // 底部弹出对话框
         val bottomDialog =
-            Dialog(this, R.style.BottomDialog)
+                Dialog(this, R.style.BottomDialog)
         val contentView: View =
-            LayoutInflater.from(this).inflate(R.layout.dialog_save_draft, null)
+                LayoutInflater.from(this).inflate(R.layout.dialog_save_draft, null)
         bottomDialog.setContentView(contentView)
         val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
         params.width =
-            resources.displayMetrics.widthPixels
+                resources.displayMetrics.widthPixels
         params.bottomMargin = dp2px(this, 0f).toInt()
         contentView.layoutParams = params
         bottomDialog.window!!.setGravity(Gravity.BOTTOM)
         bottomDialog.window!!.setWindowAnimations(R.style.BottomDialog_Animation)
         bottomDialog.show()
         contentView.findViewById<View>(R.id.tvSaveDraft)
-            .setOnClickListener { v: View? ->
-                taskBean = TaskBean(
-                    token = UserInfo.getUserBean().token,
-                    taskname = tvTitleAddTask.text.toString(),
-                    plantime = beginTime,
-                    plantotal = 10.toString(),
-                    overtime = endTime,
-                    involve = Gson().toJson(receiveList),
-                    ordertime = orderTime,
-                    remark = etRemarkAddTask.text.toString(),
-                    status = "0"
-                )
-                if (mId.isNullOrEmpty()) {
-                    mViewModel.addTask(taskBean)
-                } else {
-                    taskBean.id = mId
-                    mViewModel.modifyTaskStatus(taskBean)
+                .setOnClickListener { v: View? ->
+                    taskBean = TaskBean(
+                            token = UserInfo.getUserBean().token,
+                            taskname = tvTitleAddTask.text.toString(),
+                            plantime = beginTime,
+                            plantotal = 10.toString(),
+                            overtime = endTime,
+                            involve = Gson().toJson(receiveList),
+                            ordertime = orderTime,
+                            remark = etRemarkAddTask.text.toString(),
+                            status = "0",
+                            fileinfo = Gson().toJson(mDataFile)
+                    )
+                    if (mId.isNullOrEmpty()) {
+                        mViewModel.addTask(taskBean)
+                    } else {
+                        taskBean.id = mId
+                        mViewModel.modifyTaskStatus(taskBean)
+                    }
+                    bottomDialog.dismiss()
                 }
-                bottomDialog.dismiss()
-            }
         contentView.findViewById<View>(R.id.tvNoSaveDraft)
-            .setOnClickListener { v: View? ->
-                finish()
-                bottomDialog.dismiss()
-            }
+                .setOnClickListener { v: View? ->
+                    finish()
+                    bottomDialog.dismiss()
+                }
         contentView.findViewById<View>(R.id.tvCancelDraft)
-            .setOnClickListener { v: View? ->
+                .setOnClickListener { v: View? ->
 
-                bottomDialog.dismiss()
-            }
+                    bottomDialog.dismiss()
+                }
     }
 
     override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?
+            requestCode: Int,
+            resultCode: Int,
+            data: Intent?
     ) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == Constant.REQUEST_CODE_COURSE && resultCode == Activity.RESULT_OK) {
-            if (data != null) {
-                isDraftFirst = false
-                mData.clear()
-                receiveList.clear()
-                mDataDepartment = data.getParcelableArrayListExtra(Constant.DATA)!!
-                mDataClasses = data.getParcelableArrayListExtra(Constant.DATA2)!!
-                mDataDepartment.forEach {
-                    addDepartment(it)
-                }
-                mDataClasses.forEach {
-                    addDepartment(it)
-                }
-                for (i in 0 until receiveList.size) {
-                    if (i < mMax) {
-                        mData.add(receiveList[i])
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == Constant.REQUEST_CODE_COURSE) {
+                if (data != null) {
+                    isDraftFirst = false
+                    mData.clear()
+                    receiveList.clear()
+                    mDataDepartment = data.getParcelableArrayListExtra(Constant.DATA)!!
+                    mDataClasses = data.getParcelableArrayListExtra(Constant.DATA2)!!
+                    mDataDepartment.forEach {
+                        addDepartment(it)
                     }
+                    mDataClasses.forEach {
+                        addDepartment(it)
+                    }
+                    for (i in 0 until receiveList.size) {
+                        if (i < mMax) {
+                            mData.add(receiveList[i])
+                        }
+                    }
+                    mAdapter.notifyDataSetChanged()
                 }
-                mAdapter.notifyDataSetChanged()
+            } else if (requestCode == Constant.REQUEST_CODE_FILE) {
+                val uri: Uri = data?.getData()!! //得到uri，后面就是将uri转化成file的过程。
+                filePath = OssUtils().getPath(this, uri)
+                fileName = filePath?.split("/")?.last()
+                if (!filePath.isNullOrEmpty()) {
+                    mViewModel.getSts()
+                }
             }
-        }
-
-        if (requestCode == Constant.REQUEST_CODE_PRINCIPAL && resultCode == Activity.RESULT_OK) {
-
         }
     }
 
@@ -262,12 +352,12 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         if (it.num!!.toInt() > 0) {
             it.list.forEach {
                 receiveList.add(
-                    UserBeanSimple(
-                        uid = it.uid,
-                        realname = it.realname,
-                        classid = it.classid,
-                        usertype = it.usertype
-                    )
+                        UserBeanSimple(
+                                uid = it.uid,
+                                realname = it.realname,
+                                classid = it.classid,
+                                usertype = it.usertype
+                        )
                 )
             }
         }
@@ -275,12 +365,60 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun doDustbin() {
         mAlert("删除后不可恢复请慎重选择是否删除该任务", "是否确定删除该任务") {
-
             mViewModel.delTaskDraft(mId ?: "")
         }
     }
 
+    private fun doUpload(it: StsTokenResp) {
+
+        showLoading()
+        var mId: String = System.currentTimeMillis().toString() + "_" + fileName
+
+        var objectKey =
+                getOssObjectKey(UserInfo.getUserBean().usertype, UserInfo.getUserBean().uid, mId)
+        OssUtils.asyncUploadFile(
+                this,
+                it.Credentials,
+                objectKey,
+                filePath,
+                object : OssListener {
+                    override fun onSuccess() {
+                        mRootView.post {
+                            showSuccess()
+                            mDataFile.add(FileInfoBean(name = fileName, url = objectKey, ext = FileExtBean(size = File(filePath).length().toString())))
+                            rvTaskFile.visibility = View.VISIBLE
+                            mAdapterFile.notifyDataSetChanged()
+
+                        }
+
+                    }
+
+                    override fun onFail() {
+                        mRootView.post {
+                            showSuccess()
+                            mToast("文件上传失败")
+                        }
+                    }
+
+                })
+    }
+
     override fun initDataObserver() {
+        mViewModel.mStsData.observe(this, Observer { response ->
+            response?.let {
+                Handler().postDelayed(
+                        {
+                            GlobalScope.launch() {
+                                async {
+                                    doUpload(it)
+                                }
+                            }
+                        }, 100
+                )
+
+            }
+        })
+
         mViewModel.mAddTaskData.observe(this, Observer { response ->
             response?.let {
                 mToast(R.string.deal_done)
@@ -305,8 +443,8 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mViewModel.mTaskDetailData.observe(this, Observer { response ->
             response?.let {
                 netResponseFormat<TaskDetailBean>(it)?.let {
-                    ivDustbin.visibility = View.VISIBLE
-                    ivDustbin.setOnClickListener {
+                    tvDustbin.visibility = View.VISIBLE
+                    tvDustbin.setOnClickListener {
                         doDustbin()
                     }
                     it.plantime?.let {
@@ -335,7 +473,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     }
                     it.ordertime?.let {
                         if (it.isNotEmpty()) {
-                            setOrderPublish(ivTimingAddTask)
+                            setOrderPublish()
                         }
                     }
                 }

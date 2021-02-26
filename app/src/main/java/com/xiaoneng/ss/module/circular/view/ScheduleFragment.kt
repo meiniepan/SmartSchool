@@ -157,10 +157,15 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
         mAdapterMonth.setOnItemClickListener { adapter, view, position ->
             if (mDataMonth[position].inMonth) {
                 chosenDay = mDataMonth[position].day
-                mDataWeek.clear()
-                mDataWeek.addAll(Lunar.getCurrentDaysOfWeek(chosenDay))
-                mAdapterWeek.notifyDataSetChanged()
-                switch()
+//                mDataWeek.clear()
+//                mDataWeek.addAll(Lunar.getCurrentDaysOfWeek(chosenDay))
+//                mAdapterWeek.notifyDataSetChanged()
+//                switch()
+                mDataMonth.forEach{
+                    it.isCheck = false
+                }
+                mDataMonth[position].isCheck=true
+                mAdapterMonth.notifyDataSetChanged()
                 getData()
             }
         }
@@ -223,6 +228,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
             response?.let {
                 netResponseFormat<ScheduleResponse>(it)?.let {
                     weekStr = it.semesters
+                    tvSem.text = it.semesters
                     it.data?.let {
                         mDataEvent.clear()
                         mDataEvent.addAll(it)

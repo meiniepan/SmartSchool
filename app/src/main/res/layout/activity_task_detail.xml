@@ -239,7 +239,40 @@
                 </LinearLayout>
 
             </LinearLayout>
+            <include layout="@layout/layout_split_tint_10" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/title_padding"
+                android:id="@+id/llFile"
+                android:paddingTop="20dp"
+                android:paddingEnd="@dimen/title_padding"
+                android:paddingBottom="0dp">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:hint="相关附件" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvTaskFile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/recycler_style"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp" />
+
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

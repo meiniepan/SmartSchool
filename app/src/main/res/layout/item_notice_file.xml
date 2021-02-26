@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tool="http://schemas.android.com/tools"
+    android:id="@+id/llChooseCourse"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingStart="10dp"
-    android:paddingEnd="10dp"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp"
-    android:background="@drawable/bac_white_bac_15"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="15dp"
+    app:contentPaddingLeft="10dp"
+    app:contentPaddingRight="10dp"
+    app:contentPaddingTop="16dp"
+    app:contentPaddingBottom="16dp"
+    android:layout_marginLeft="8dp"
+    >
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:gravity="center_horizontal"
-    android:layout_marginStart="8dp"
     android:orientation="vertical">
 
     <com.xiaoneng.ss.custom.widgets.CornerImageView
@@ -37,4 +42,4 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp" />
 </LinearLayout>
-
+</androidx.cardview.widget.CardView>

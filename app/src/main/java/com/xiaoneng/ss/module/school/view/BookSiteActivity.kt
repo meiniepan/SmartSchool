@@ -16,6 +16,15 @@ import com.xiaoneng.ss.module.school.model.SiteBean
 import com.xiaoneng.ss.module.school.model.SiteResp
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_book_site.*
+import kotlinx.android.synthetic.main.activity_book_site.ivDateBack
+import kotlinx.android.synthetic.main.activity_book_site.ivDateNext
+import kotlinx.android.synthetic.main.activity_book_site.ivSwitchSchedule
+import kotlinx.android.synthetic.main.activity_book_site.rvMonth
+import kotlinx.android.synthetic.main.activity_book_site.rvWeek
+import kotlinx.android.synthetic.main.activity_book_site.rvWeekTitle
+import kotlinx.android.synthetic.main.activity_book_site.tvSem
+import kotlinx.android.synthetic.main.activity_book_site.tvWeekSchedule
+import kotlinx.android.synthetic.main.fragment_schedule.*
 
 /**
  * @author Burning
@@ -41,6 +50,7 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
+        switch()
 //        tvWeekSchedule.text = Lunar.getWhichWeek(chosenDay)
         ivSwitchSchedule.setOnClickListener {
             switch()
@@ -77,7 +87,7 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
-        showLoading()
+        rvSite.showLoadingView()
         mViewModel.getCanBookRooms(DateUtil.formatDateCustomDay(chosenDay!!))
     }
 
@@ -143,7 +153,7 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 mDataWeek.clear()
                 mDataWeek.addAll(Lunar.getCurrentDaysOfWeek(chosenDay))
                 mAdapterWeek.notifyDataSetChanged()
-                switch()
+//                switch()
                 getData()
             }
         }
@@ -195,6 +205,7 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             response?.let {
                 netResponseFormat<SiteResp>(it)?.let {
                     weekStr = it.semesters
+                    tvSem.text = it.semesters
                     if (isDayOfWeek) {
                         tvWeekSchedule.text = weekStr
                     }

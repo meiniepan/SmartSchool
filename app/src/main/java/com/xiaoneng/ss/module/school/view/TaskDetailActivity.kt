@@ -4,15 +4,32 @@ import android.annotation.SuppressLint
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.jiang.awesomedownloader.downloader.AwesomeDownloader
+import com.jiang.awesomedownloader.tool.PathSelector
+import com.tencent.smtt.sdk.QbSdk
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.base.view.BaseApplication
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
+import com.xiaoneng.ss.module.circular.adapter.NoticeFileAdapter
 import com.xiaoneng.ss.module.school.adapter.InvolveSimpleAdapter
 import com.xiaoneng.ss.module.school.adapter.TaskLogAdapter
 import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
+import kotlinx.android.synthetic.main.activity_add_task.*
+import kotlinx.android.synthetic.main.activity_notice_detail.*
 import kotlinx.android.synthetic.main.activity_task_detail.*
+import kotlinx.android.synthetic.main.activity_task_detail.rvParticipant
+import kotlinx.android.synthetic.main.activity_task_detail.rvTaskFile
+import kotlinx.android.synthetic.main.activity_task_detail.tvBeginDate
+import kotlinx.android.synthetic.main.activity_task_detail.tvBeginTime
+import kotlinx.android.synthetic.main.activity_task_detail.tvEndDate
+import kotlinx.android.synthetic.main.activity_task_detail.tvEndTime
+import kotlinx.android.synthetic.main.activity_task_detail.tvTitleAddTask
+import java.io.File
 
 /**
  * @author Burning
@@ -34,6 +51,11 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var mDataPrincipal = ArrayList<UserBeanSimple>()
     lateinit var taskBean: TaskDetailBean
     private var type: String? = null
+    lateinit var mAdapterFile: NoticeFileAdapter
+    var mDataFile = ArrayList<FileInfoBean>()
+    var idString = ""
+    var fileNum = 0
+    var downloadNum = 0
 
     override fun getLayoutId(): Int {
         return R.layout.activity_task_detail
@@ -100,17 +122,17 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 }
                 R.id.tvAction1Log -> {
                     var bean = TaskLogRequest(
-                        UserInfo.getUserBean().token,
-                        mData[position].id ?: "",
-                        examinestatus = "2"
+                            UserInfo.getUserBean().token,
+                            mData[position].id ?: "",
+                            examinestatus = "2"
                     )
                     mViewModel.refuseTask(bean)
                 }
                 R.id.tvAction2Log -> {
                     var bean = TaskLogRequest(
-                        UserInfo.getUserBean().token,
-                        mData[position].id ?: "",
-                        examinestatus = "1"
+                            UserInfo.getUserBean().token,
+                            mData[position].id ?: "",
+                            examinestatus = "1"
                     )
                     mViewModel.refuseTask(bean)
                 }
@@ -132,6 +154,52 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun initAdapterPrincipal() {
 
+    }
+
+    private fun initAdapterFile() {
+        mAdapterFile = NoticeFileAdapter(R.layout.item_notice_file, mDataFile)
+        rvTaskFile.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            setAdapter(mAdapterFile)
+        }
+        mAdapterFile.setOnItemClickListener { _, view, position ->
+            var path = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+            var name = idString + mDataFile[position].name
+            var filePath = path + File.separator + name
+            var filename = File(filePath)
+            if (filename.exists()) {
+                doOpen(filePath)
+            } else {
+                doDown(mDataFile[position].url, name)
+            }
+        }
+    }
+
+    private fun doDown(url: String?, fileName: String?) {
+        AwesomeDownloader.init(BaseApplication.instance)
+        //关闭通知栏
+        AwesomeDownloader.option.showNotification = false
+        val url = UserInfo.getUserBean().domain + url
+        //获取应用外部照片储存路径
+        val filePath = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+        //加入下载队列
+        AwesomeDownloader.enqueue(url, filePath, fileName ?: "")
+        AwesomeDownloader.setOnProgressChange { progress ->
+            //do something...
+        }.setOnStop { downloadBytes, totalBytes ->
+            //do something...
+        }.setOnFinished { filePath, fileName ->
+            downloadNum++
+            if (downloadNum == fileNum) {
+                showSuccess()
+            }
+        }.setOnError { exception ->
+            //do something...
+        }
+    }
+
+    private fun doOpen(filePath: String) {
+        QbSdk.openFileReader(this, filePath, null, null)
     }
 
     @SuppressLint("SetTextI18n")
@@ -169,6 +237,24 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         }
                     }
                     mAdapterInvolve.notifyDataSetChanged()
+                    //附件列表
+                    mDataFile.clear()
+                    var files= ArrayList<FileInfoBean>()
+                    val resultType = object : TypeToken<ArrayList<FileInfoBean>>() {}.type
+                    val gson = Gson()
+                    try {
+                        files = gson.fromJson<ArrayList<FileInfoBean>>(it.fileinfo, resultType)
+
+                    } catch (e: Exception) {
+                        showError(getString(R.string.error_message))
+                    }
+                    mDataFile.addAll(files)
+                    if (mDataFile.size > 0) {
+                        llFile.visibility = View.VISIBLE
+                        initAdapterFile()
+                    } else {
+                        llFile.visibility = View.GONE
+                    }
 
                     //处理参与任务列表
                     mData.clear()

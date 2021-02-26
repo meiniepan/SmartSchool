@@ -252,29 +252,56 @@
     </androidx.core.widget.NestedScrollView>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:background="@color/colorGrayF8"
         android:gravity="center_vertical"
-        android:paddingStart="@dimen/title_padding"
-        android:paddingEnd="@dimen/title_padding">
+        android:paddingStart="14dp"
+        >
 
-        <ImageView
-            android:id="@+id/ivTimingAddTask"
-            android:layout_width="@dimen/title_height"
-            android:layout_height="@dimen/title_height"
-            android:scaleType="center"
-            android:src="@drawable/ic_timing_black" />
+        <TextView
+            android:id="@+id/tvUpFile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上传附件"
+            android:drawableTop="@drawable/ic_up_file"
+            android:textColor="@color/commonHint"
+            android:textSize="@dimen/sp_12"
+            android:drawablePadding="2dp"
+            />
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-        <ImageView
-            android:id="@+id/ivDustbin"
+        <TextView
+            android:id="@+id/tvTimingAddTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="定时发送"
+            android:drawableTop="@drawable/ic_timing"
+            android:textColor="@color/commonHint"
+            android:textSize="@dimen/sp_12"
+            android:drawablePadding="2dp"
+            />
+        <TextView
+            android:id="@+id/tvDustbin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="删除"
+            android:drawableTop="@drawable/ic_dustbin"
+            android:textColor="@color/commonHint"
+            android:textSize="@dimen/sp_12"
             android:visibility="gone"
-            android:layout_width="@dimen/title_height"
-            android:layout_height="@dimen/title_height"
-            android:scaleType="center"
-            android:src="@drawable/ic_dustbin" />
+            android:drawablePadding="2dp"
+            />
     </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTaskFile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGrayF8"
+        style="@style/recycler_style"
+        android:paddingStart="15dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp" />
 </LinearLayout>

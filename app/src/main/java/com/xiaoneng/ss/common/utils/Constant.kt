@@ -62,6 +62,7 @@ object Constant {
     const val REQUEST_CODE_SCAN = 1
     const val REQUEST_CODE_COURSE = 2
     const val REQUEST_CODE_PRINCIPAL = 3
+    const val REQUEST_CODE_FILE = 4
 
     const val CODED_CONTENT = "codedContent"
     const val INTENT_ZXING_CONFIG = "zxingConfig"
