@@ -3,9 +3,7 @@
     android:opacity="opaque">
 
     <!--两层-->
-    <item android:drawable="@drawable/bac_splash_2" >
-        <bitmap android:src="@drawable/bac_splash_2" android:gravity="center"
-            />
+    <item android:drawable="@drawable/bac_splash_2">
     </item>
 
 

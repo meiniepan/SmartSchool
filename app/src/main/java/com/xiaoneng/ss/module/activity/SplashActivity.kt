@@ -33,6 +33,9 @@ class SplashActivity : BaseLifeCycleActivity<AccountViewModel>() {
         return R.layout.activity_splash
     }
 
+    override fun showCreateReveal(): Boolean {
+        return false
+    }
     override fun initView() {
         super.initView()
         runnable = Runnable { startIntent() }
