@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Handler
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.jiang.awesomedownloader.downloader.AwesomeDownloader
 import com.jiang.awesomedownloader.tool.PathSelector
 import com.tencent.smtt.sdk.QbSdk
@@ -32,7 +34,17 @@ import com.xiaoneng.ss.module.school.adapter.InvolveSimpleAdapter
 import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_add_task.*
+import kotlinx.android.synthetic.main.activity_add_task.llBeginTime
+import kotlinx.android.synthetic.main.activity_add_task.llEndTime
+import kotlinx.android.synthetic.main.activity_add_task.rvParticipant
+import kotlinx.android.synthetic.main.activity_add_task.rvTaskFile
+import kotlinx.android.synthetic.main.activity_add_task.tvBeginDate
+import kotlinx.android.synthetic.main.activity_add_task.tvBeginTime
+import kotlinx.android.synthetic.main.activity_add_task.tvEndDate
+import kotlinx.android.synthetic.main.activity_add_task.tvEndTime
+import kotlinx.android.synthetic.main.activity_add_task.tvTitleAddTask
 import kotlinx.android.synthetic.main.activity_notice_detail.*
+import kotlinx.android.synthetic.main.activity_task_detail.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -141,7 +153,6 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         intent.setType("*/*") //设置类型，我这里是任意类型，任意后缀的可以这样写。
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         startActivityForResult(intent, Constant.REQUEST_CODE_FILE)
-
     }
 
     private fun addTask() {
@@ -174,6 +185,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
 
     private fun doDown(url: String?, fileName: String?) {
+        showLoading()
         AwesomeDownloader.init(BaseApplication.instance)
         //关闭通知栏
         AwesomeDownloader.option.showNotification = false
@@ -187,10 +199,8 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }.setOnStop { downloadBytes, totalBytes ->
             //do something...
         }.setOnFinished { filePath, fileName ->
-            downloadNum++
-            if (downloadNum == fileNum) {
-                showSuccess()
-            }
+            showSuccess()
+            doOpen(filePath+fileName)
         }.setOnError { exception ->
             //do something...
         }
@@ -475,6 +485,22 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         if (it.isNotEmpty()) {
                             setOrderPublish()
                         }
+                    }
+                    //附件列表
+                    mDataFile.clear()
+                    var files= ArrayList<FileInfoBean>()
+                    val resultType = object : TypeToken<ArrayList<FileInfoBean>>() {}.type
+                    val gson = Gson()
+                    try {
+                        files = gson.fromJson<ArrayList<FileInfoBean>>(it.fileinfo, resultType)
+
+                    } catch (e: Exception) {
+                        showError(getString(R.string.error_message))
+                    }
+                    mDataFile.addAll(files)
+                    if (mDataFile.size > 0) {
+                        rvTaskFile.visibility = View.VISIBLE
+                        mAdapterFile.notifyDataSetChanged()
                     }
                 }
             }

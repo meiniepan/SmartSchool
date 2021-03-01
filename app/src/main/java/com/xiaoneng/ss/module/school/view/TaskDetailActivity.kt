@@ -1,6 +1,7 @@
 package com.xiaoneng.ss.module.school.view
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -105,7 +106,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAdapter() {
-        mAdapterLog = TaskLogAdapter(R.layout.item_task_log, mData)
+        mAdapterLog = TaskLogAdapter(R.layout.item_task_log, mData,this)
         rvTaskDetail.apply {
             layoutManager = LinearLayoutManager(this@TaskDetailActivity)
             setAdapter(mAdapterLog)
@@ -176,6 +177,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun doDown(url: String?, fileName: String?) {
+        showLoading()
         AwesomeDownloader.init(BaseApplication.instance)
         //关闭通知栏
         AwesomeDownloader.option.showNotification = false
@@ -189,10 +191,8 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }.setOnStop { downloadBytes, totalBytes ->
             //do something...
         }.setOnFinished { filePath, fileName ->
-            downloadNum++
-            if (downloadNum == fileNum) {
-                showSuccess()
-            }
+            showSuccess()
+            doOpen(filePath+fileName)
         }.setOnError { exception ->
             //do something...
         }

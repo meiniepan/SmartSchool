@@ -3,10 +3,24 @@ package com.xiaoneng.ss.module.school.adapter
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.jiang.awesomedownloader.downloader.AwesomeDownloader
+import com.jiang.awesomedownloader.tool.PathSelector
+import com.tencent.smtt.sdk.QbSdk
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.base.view.BaseApplication
+import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
+import com.xiaoneng.ss.module.circular.adapter.NoticeFileAdapter
+import com.xiaoneng.ss.module.school.model.FileInfoBean
 import com.xiaoneng.ss.module.school.model.LogBean
+import com.xiaoneng.ss.module.school.view.TaskDetailActivity
+import java.io.File
 
 
 /**
@@ -16,10 +30,11 @@ import com.xiaoneng.ss.module.school.model.LogBean
  * @date: 2020/08/27
  * Time: 17:32
  */
-class TaskLogAdapter(layoutId: Int, listData: MutableList<LogBean>?) :
+class TaskLogAdapter(layoutId: Int, listData: MutableList<LogBean>?,activity: TaskDetailActivity) :
     BaseQuickAdapter<LogBean, BaseViewHolder>(layoutId, listData) {
-
+var activity = activity
     private var isOperator: Boolean = false
+    var idString = ""
 
     override fun convert(viewHolder: BaseViewHolder?, item: LogBean?) {
         viewHolder?.let { holder ->
@@ -39,10 +54,14 @@ class TaskLogAdapter(layoutId: Int, listData: MutableList<LogBean>?) :
             if (isOperator) {
                 textView0.visibility = View.GONE
                 ivMark.visibility = View.GONE
-                textView1.visibility = View.VISIBLE
-                textView2.visibility = View.VISIBLE
+
+//                textView1.visibility = View.VISIBLE
+//                textView2.visibility = View.VISIBLE
+                textView1.visibility = View.GONE
+                textView2.visibility = View.GONE
             } else {
-                textView0.visibility = View.VISIBLE
+//                textView0.visibility = View.VISIBLE
+                textView0.visibility = View.GONE
 
 
                 textView1.visibility = View.GONE
@@ -51,14 +70,14 @@ class TaskLogAdapter(layoutId: Int, listData: MutableList<LogBean>?) :
 
             when (item?.examinestatus) {
                 "2" -> {
-                    ivMark.visibility = View.VISIBLE
+                    ivMark.visibility = View.GONE
                     ivMark.setImageResource(R.drawable.ic_refuse)
                     textView0.visibility = View.GONE
                     textView1.visibility = View.GONE
                     textView2.visibility = View.GONE
                 }
                 "1" -> {
-                    ivMark.visibility = View.VISIBLE
+                    ivMark.visibility = View.GONE
                     ivMark.setImageResource(R.drawable.ic_pass)
                     textView0.visibility = View.GONE
                     textView1.visibility = View.GONE
@@ -69,7 +88,69 @@ class TaskLogAdapter(layoutId: Int, listData: MutableList<LogBean>?) :
                 }
             }
 //            holder.setText(R.id.tvAction, item?.title)
+            initAdapterFile(holder,item)
         }
+    }
+
+    private fun initAdapterFile(holder: BaseViewHolder, item: LogBean?) {
+       var rvTaskFile = holder.getView<RecyclerView>(R.id.rvTaskFile)
+        var mDataFile = ArrayList<FileInfoBean>()
+        rvTaskFile.visibility = View.GONE
+        var files= ArrayList<FileInfoBean>()
+        val resultType = object : TypeToken<ArrayList<FileInfoBean>>() {}.type
+        val gson = Gson()
+        try {
+            files = gson.fromJson<ArrayList<FileInfoBean>>(item?.fileinfo, resultType)
+
+        } catch (e: Exception) {
+
+        }
+        mDataFile.addAll(files)
+        if (mDataFile.size > 0) {
+            rvTaskFile.visibility = View.VISIBLE
+           var mAdapterFile = NoticeFileAdapter(R.layout.item_notice_file, mDataFile)
+            rvTaskFile.apply {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                setAdapter(mAdapterFile)
+            }
+            mAdapterFile.setOnItemClickListener { _, view, position ->
+                var path = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+                var name = idString + mDataFile[position].name
+                var filePath = path + File.separator + name
+                var filename = File(filePath)
+                if (filename.exists()) {
+                    doOpen(filePath)
+                } else {
+                    doDown(mDataFile[position].url, name)
+                }
+            }
+        }
+
+    }
+
+    private fun doDown(url: String?, fileName: String?) {
+        AwesomeDownloader.init(BaseApplication.instance)
+        //关闭通知栏
+        AwesomeDownloader.option.showNotification = false
+        val url = UserInfo.getUserBean().domain + url
+        //获取应用外部照片储存路径
+        val filePath = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+        //加入下载队列
+        AwesomeDownloader.enqueue(url, filePath, fileName ?: "")
+        AwesomeDownloader.setOnProgressChange { progress ->
+            //do something...
+        }.setOnStop { downloadBytes, totalBytes ->
+            //do something...
+        }.setOnFinished { filePath, fileName ->
+            activity.showSuccess()
+            doOpen(filePath+fileName)
+        }.setOnError { exception ->
+            //do something...
+        }
+    }
+
+    private fun doOpen(filePath: String) {
+        QbSdk.openFileReader(mContext, filePath, null, null)
     }
 
     fun setIsOperator(operator: Boolean) {
