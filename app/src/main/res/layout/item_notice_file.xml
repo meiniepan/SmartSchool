@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/llChooseCourse"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:cardElevation="2dp"
-    app:cardCornerRadius="15dp"
-    app:contentPaddingLeft="10dp"
-    app:contentPaddingRight="10dp"
-    app:contentPaddingTop="16dp"
-    app:contentPaddingBottom="16dp"
+    android:background="@drawable/bac_white_bac_stroke_15"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
     android:layout_marginLeft="8dp"
     >
 <LinearLayout
@@ -42,4 +41,4 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp" />
 </LinearLayout>
-</androidx.cardview.widget.CardView>
+</LinearLayout>

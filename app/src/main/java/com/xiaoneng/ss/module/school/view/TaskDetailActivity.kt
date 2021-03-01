@@ -192,7 +192,10 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             //do something...
         }.setOnFinished { filePath, fileName ->
             showSuccess()
-            doOpen(filePath+fileName)
+            var path = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+            var name = fileName
+            var filePath = path + File.separator + name
+            doOpen(filePath)
         }.setOnError { exception ->
             //do something...
         }

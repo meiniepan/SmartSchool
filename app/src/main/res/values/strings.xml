@@ -10,6 +10,7 @@
     <string name="load_more_end">已经加载到最后一页了</string>
     <string name="title">温馨提示</string>
     <string name="doneM">确定</string>
+    <string name="errFile">不支持该文件</string>
 
     <string name="scheduleTitle">日程安排</string>
     <string name="noticeTitle">通知公告</string>

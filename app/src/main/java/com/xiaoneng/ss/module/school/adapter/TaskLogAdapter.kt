@@ -30,9 +30,9 @@ import java.io.File
  * @date: 2020/08/27
  * Time: 17:32
  */
-class TaskLogAdapter(layoutId: Int, listData: MutableList<LogBean>?,activity: TaskDetailActivity) :
-    BaseQuickAdapter<LogBean, BaseViewHolder>(layoutId, listData) {
-var activity = activity
+class TaskLogAdapter(layoutId: Int, listData: MutableList<LogBean>?, activity: TaskDetailActivity) :
+        BaseQuickAdapter<LogBean, BaseViewHolder>(layoutId, listData) {
+    var activity = activity
     private var isOperator: Boolean = false
     var idString = ""
 
@@ -46,8 +46,8 @@ var activity = activity
             holder.addOnClickListener(R.id.tvAction2Log)
             holder.addOnClickListener(R.id.tvAction0Log)
             holder.setText(R.id.tvName4, item?.username)
-                .setText(R.id.tvTime4, item?.updatetime)
-                .setText(R.id.tvIntro4, item?.feedback)
+                    .setText(R.id.tvTime4, item?.updatetime)
+                    .setText(R.id.tvIntro4, item?.feedback)
             textView1.visibility = View.GONE
             textView2.visibility = View.GONE
 
@@ -88,15 +88,15 @@ var activity = activity
                 }
             }
 //            holder.setText(R.id.tvAction, item?.title)
-            initAdapterFile(holder,item)
+            initAdapterFile(holder, item)
         }
     }
 
     private fun initAdapterFile(holder: BaseViewHolder, item: LogBean?) {
-       var rvTaskFile = holder.getView<RecyclerView>(R.id.rvTaskFile)
+        var rvTaskFile = holder.getView<RecyclerView>(R.id.rvTaskFile)
         var mDataFile = ArrayList<FileInfoBean>()
         rvTaskFile.visibility = View.GONE
-        var files= ArrayList<FileInfoBean>()
+        var files = ArrayList<FileInfoBean>()
         val resultType = object : TypeToken<ArrayList<FileInfoBean>>() {}.type
         val gson = Gson()
         try {
@@ -108,7 +108,7 @@ var activity = activity
         mDataFile.addAll(files)
         if (mDataFile.size > 0) {
             rvTaskFile.visibility = View.VISIBLE
-           var mAdapterFile = NoticeFileAdapter(R.layout.item_notice_file, mDataFile)
+            var mAdapterFile = NoticeFileAdapter(R.layout.item_notice_file, mDataFile)
             rvTaskFile.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 setAdapter(mAdapterFile)
@@ -143,7 +143,10 @@ var activity = activity
             //do something...
         }.setOnFinished { filePath, fileName ->
             activity.showSuccess()
-            doOpen(filePath+fileName)
+            var path = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+            var name = fileName
+            var filePath = path + File.separator + name
+            doOpen(filePath)
         }.setOnError { exception ->
             //do something...
         }

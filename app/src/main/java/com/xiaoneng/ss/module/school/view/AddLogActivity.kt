@@ -45,8 +45,8 @@ import java.io.File
 class AddLogActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     lateinit var taskBean:LogBean
-    var filePath = ""
-    var fileName = ""
+    var filePath:String? = null
+    var fileName:String? = null
     lateinit var mAdapterFile: NoticeFileAdapter
     var mDataFile = ArrayList<FileInfoBean>()
     var idString = ""
@@ -188,6 +188,8 @@ class AddLogActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 fileName = filePath?.split("/")?.last()
                 if (!filePath.isNullOrEmpty()) {
                     mViewModel.getSts()
+                }else{
+                    mToast(getString(R.string.errFile))
                 }
             }
         }

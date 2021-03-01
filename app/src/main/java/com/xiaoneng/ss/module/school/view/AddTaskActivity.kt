@@ -77,8 +77,8 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var idString = ""
     var fileNum = 0
     var downloadNum = 0
-    var filePath = ""
-    var fileName = ""
+    var filePath:String? = null
+    var fileName:String? = null
 
 
     override fun getLayoutId(): Int = R.layout.activity_add_task
@@ -181,29 +181,6 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
         }
 
-    }
-
-
-    private fun doDown(url: String?, fileName: String?) {
-        showLoading()
-        AwesomeDownloader.init(BaseApplication.instance)
-        //关闭通知栏
-        AwesomeDownloader.option.showNotification = false
-        val url = UserInfo.getUserBean().domain + url
-        //获取应用外部照片储存路径
-        val filePath = PathSelector(BaseApplication.instance).getDownloadsDirPath()
-        //加入下载队列
-        AwesomeDownloader.enqueue(url, filePath, fileName ?: "")
-        AwesomeDownloader.setOnProgressChange { progress ->
-            //do something...
-        }.setOnStop { downloadBytes, totalBytes ->
-            //do something...
-        }.setOnFinished { filePath, fileName ->
-            showSuccess()
-            doOpen(filePath+fileName)
-        }.setOnError { exception ->
-            //do something...
-        }
     }
 
     private fun doOpen(filePath: String) {
@@ -348,12 +325,14 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mAdapter.notifyDataSetChanged()
                 }
             } else if (requestCode == Constant.REQUEST_CODE_FILE) {
-                val uri: Uri = data?.getData()!! //得到uri，后面就是将uri转化成file的过程。
-                filePath = OssUtils().getPath(this, uri)
-                fileName = filePath?.split("/")?.last()
-                if (!filePath.isNullOrEmpty()) {
-                    mViewModel.getSts()
-                }
+                val uri: Uri? = data?.getData() //得到uri，后面就是将uri转化成file的过程。
+                    filePath = OssUtils().getPath(this, uri)
+                    fileName = filePath?.split("/")?.last()
+                    if (!filePath.isNullOrEmpty()) {
+                        mViewModel.getSts()
+                    }else{
+                        mToast(getString(R.string.errFile))
+                    }
             }
         }
     }
@@ -411,6 +390,31 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     }
 
                 })
+    }
+
+    private fun doDown(url: String?, fileName: String?) {
+        showLoading()
+        AwesomeDownloader.init(BaseApplication.instance)
+        //关闭通知栏
+        AwesomeDownloader.option.showNotification = false
+        val url = UserInfo.getUserBean().domain + url
+        //获取应用外部照片储存路径
+        val filePath = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+        //加入下载队列
+        AwesomeDownloader.enqueue(url, filePath, fileName ?: "")
+        AwesomeDownloader.setOnProgressChange { progress ->
+            //do something...
+        }.setOnStop { downloadBytes, totalBytes ->
+            //do something...
+        }.setOnFinished { filePath, fileName2 ->
+            showSuccess()
+            var path = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+            var name = fileName
+            var filePath = path + File.separator + name
+            doOpen(filePath)
+        }.setOnError { exception ->
+            //do something...
+        }
     }
 
     override fun initDataObserver() {
