@@ -55,13 +55,23 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
             setOnClickListener {
                 showDatePick(tvBeginDate, tvBeginTime) {
                     beginTime = this
+                    //当结束时间小于开始时间时
+                    if (endTime.isNullOrEmpty() || DateUtil.getTimeInMillis(beginTime) > DateUtil.getTimeInMillis(endTime)) {
+                        DateUtil.showTimeFromNet(DateUtil.getNearTimeBeginYear(DateUtil.getTimeInMillis(beginTime)), tvEndDate, tvEndTime)
+                        endTime = DateUtil.getNearTimeBeginYear(DateUtil.getTimeInMillis(beginTime))
+                    }
                 }
             }
         }
         llEndTime.apply {
             setOnClickListener {
-                showDatePick(tvEndDate, tvEndTime) {
+                showDatePick(tvEndDate, tvEndTime, beginTime = DateUtil.getTimeInMillis(beginTime)) {
                     endTime = this
+                    //当结束时间小于开始时间时
+                    if (beginTime.isNullOrEmpty() || DateUtil.getTimeInMillis(beginTime) > DateUtil.getTimeInMillis(endTime)) {
+                        DateUtil.showTimeFromNet(endTime!!, tvBeginDate, tvBeginTime)
+                        beginTime = endTime
+                    }
                 }
             }
         }
@@ -95,8 +105,8 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
 
     private fun addSchedule() {
         if (
-            TextUtils.isEmpty(etThemeAddSchedule.text.toString()) ||
-            TextUtils.isEmpty(tvBeginDate.text.toString())
+                TextUtils.isEmpty(etThemeAddSchedule.text.toString()) ||
+                TextUtils.isEmpty(tvBeginDate.text.toString())
 
         ) {
             mToast("请完善信息")

@@ -33,6 +33,7 @@ import com.xiaoneng.ss.module.circular.adapter.NoticeFileAdapter
 import com.xiaoneng.ss.module.school.adapter.InvolveSimpleAdapter
 import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
+import kotlinx.android.synthetic.main.activity_add_schedule.*
 import kotlinx.android.synthetic.main.activity_add_task.*
 import kotlinx.android.synthetic.main.activity_add_task.llBeginTime
 import kotlinx.android.synthetic.main.activity_add_task.llEndTime
@@ -95,13 +96,23 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             setOnClickListener {
                 showDatePick(tvBeginDate, tvBeginTime) {
                     beginTime = this
+                    //当结束时间小于开始时间时
+                    if (endTime.isNullOrEmpty() || DateUtil.getTimeInMillis(beginTime) > DateUtil.getTimeInMillis(endTime)) {
+                        DateUtil.showTimeFromNet(DateUtil.getNearTimeBeginYear(DateUtil.getTimeInMillis(beginTime)), tvEndDate, tvEndTime)
+                        endTime = DateUtil.getNearTimeBeginYear(DateUtil.getTimeInMillis(beginTime))
+                    }
                 }
             }
         }
         llEndTime.apply {
             setOnClickListener {
-                showDatePick(tvEndDate, tvEndTime) {
+                showDatePick(tvEndDate, tvEndTime,beginTime = DateUtil.getTimeInMillis(beginTime)) {
                     endTime = this
+                    //当结束时间小于开始时间时
+                    if (beginTime.isNullOrEmpty() || DateUtil.getTimeInMillis(beginTime) > DateUtil.getTimeInMillis(endTime)) {
+                        DateUtil.showTimeFromNet(endTime!!, tvBeginDate, tvBeginTime)
+                        beginTime = endTime
+                    }
                 }
             }
         }

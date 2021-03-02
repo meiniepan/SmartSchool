@@ -355,6 +355,15 @@ object DateUtil {
         }
     }
 
+    fun getTimeInMillis(day:String?): Long {
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
+        return if (day.isNullOrEmpty()){
+            System.currentTimeMillis()
+        }else{
+            sdf.parse(day).time
+        }
+    }
+
     fun getWeekPosition(day: Int): Int {
         return when (day) {
             1 -> 6

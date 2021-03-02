@@ -66,6 +66,7 @@ inline fun formatStarPhoneNum(phone: String?): String? {
 inline fun Activity.showDatePick(
     textView1: TextView,
     textView2: TextView,
+    beginTime:Long = System.currentTimeMillis(),
     crossinline block: String.() -> Unit
 ) {
     DateTimePicker(this, DateTimePicker.HOUR_24).apply {
@@ -73,12 +74,14 @@ inline fun Activity.showDatePick(
         setSelectedTextColor(resources.getColor(R.color.themeColor))
         setDateRangeStart(Constant.THIS_YEAR, 1, 1)
         setDateRangeEnd(Constant.THIS_YEAR + 5, 11, 11)
+        var calendar = Calendar.getInstance()
+        calendar.timeInMillis = beginTime
         setSelectedItem(
-            Calendar.getInstance().get(Calendar.YEAR),
-            Calendar.getInstance().get(Calendar.MONTH) + 1,
-            Calendar.getInstance().get(Calendar.DAY_OF_MONTH),
-            Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
-            Calendar.getInstance().get(Calendar.MINUTE)
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH) + 1,
+                calendar.get(Calendar.DAY_OF_MONTH),
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE)
         )
 
         setOnDateTimePickListener(object : DateTimePicker.OnYearMonthDayTimePickListener {

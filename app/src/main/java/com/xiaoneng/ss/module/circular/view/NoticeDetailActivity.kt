@@ -158,7 +158,7 @@ class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
 
     private fun preRead() {
 
-        timer = object : CountDownTimer(5 * 1000, 1000) {
+        timer = object : CountDownTimer(0 * 1000, 1000) {
             override fun onFinish() {
                 tvRead.text = "我已阅读"
                 tvRead.isEnabled = true
