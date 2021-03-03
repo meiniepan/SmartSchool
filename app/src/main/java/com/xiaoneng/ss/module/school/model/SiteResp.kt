@@ -12,7 +12,7 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class SiteResp(
-    var classrooms: ArrayList<SiteBean>?,
-    var day: String?,
+    var data: ArrayList<SiteBean>?,
+    var days: ArrayList<String>?,
     var semesters: String?
     ) : Parcelable

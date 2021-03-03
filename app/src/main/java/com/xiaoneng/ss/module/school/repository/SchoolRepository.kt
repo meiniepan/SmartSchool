@@ -526,6 +526,11 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
+    suspend fun getBookList(start: String,end:String?=null): Any {
+        return apiService.getBookList(UserInfo.getUserBean().token, start,end)
+            .dataConvert(loadState)
+    }
+
     suspend fun modifyRepair(bean: RepairBody): Any {
         return apiService.modifyRepair(bean)
             .dataConvert(loadState)

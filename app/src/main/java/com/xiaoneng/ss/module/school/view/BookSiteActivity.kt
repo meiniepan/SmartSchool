@@ -11,6 +11,7 @@ import com.xiaoneng.ss.module.circular.adapter.DaysOfMonthAdapter
 import com.xiaoneng.ss.module.circular.adapter.DaysOfWeekAdapter
 import com.xiaoneng.ss.module.circular.adapter.WeekTitleAdapter
 import com.xiaoneng.ss.module.circular.model.DayBean
+import com.xiaoneng.ss.module.school.adapter.BookSiteAdapter
 import com.xiaoneng.ss.module.school.adapter.SiteAdapter
 import com.xiaoneng.ss.module.school.model.SiteBean
 import com.xiaoneng.ss.module.school.model.SiteResp
@@ -41,7 +42,7 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var mDataWeek = ArrayList<DayBean>()
     var mDataMonth = ArrayList<DayBean>()
     lateinit var mAdapterMonth: DaysOfMonthAdapter
-    lateinit var mAdapter: SiteAdapter
+    lateinit var mAdapter: BookSiteAdapter
     var mData: ArrayList<SiteBean> = ArrayList()
 
     override fun getLayoutId(): Int {
@@ -88,14 +89,11 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun getData() {
         super.getData()
         rvSite.showLoadingView()
-        mViewModel.getCanBookRooms(DateUtil.formatDateCustomDay(chosenDay!!))
+        mViewModel.getBookList(DateUtil.formatDateCustomDay(chosenDay!!))
     }
 
     override fun onResume() {
         super.onResume()
-        if (mAdapter != null) {
-            mAdapter.recycleR()
-        }
         getData()
     }
 
@@ -160,7 +158,7 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAdapter() {
-        mAdapter = SiteAdapter(R.layout.item_site, mData)
+        mAdapter = BookSiteAdapter(R.layout.item_book_site, mData)
         rvSite.recyclerView.apply {
             var linearLayoutManager = LinearLayoutManager(this@BookSiteActivity)
             layoutManager = linearLayoutManager
@@ -204,19 +202,10 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mViewModel.mBaseData.observe(this, Observer { response ->
             response?.let {
                 netResponseFormat<SiteResp>(it)?.let {
-                    weekStr = it.semesters
-                    tvSem.text = it.semesters
-                    if (isDayOfWeek) {
-                        tvWeekSchedule.text = weekStr
-                    }
-                    it.classrooms?.let {
+
+                    it.data?.let {
                         mData.clear()
                         mData.addAll(it)
-                        mData.forEach {
-                            it.chosenDay = chosenDay!!
-                        }
-                        mAdapter.recycleR()
-                        mAdapter.setPosition(DateUtil.getBookSitePositionNearNow(chosenDay!!))
                         rvSite.notifyDataSetChanged()
                     }
                 }

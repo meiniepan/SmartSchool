@@ -319,6 +319,13 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
+    fun getBookList(start: String,end:String?=null) {
+        initiateRequest(
+                { mBaseData.value = mRepository.getBookList(start,end) },
+                loadState
+        )
+    }
+
     fun getBookSiteRecord(lastid: String? = null) {
         initiateRequest(
             { mBaseData.value = mRepository.getBookSiteRecord(lastid) },
