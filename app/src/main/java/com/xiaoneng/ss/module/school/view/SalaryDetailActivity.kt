@@ -67,22 +67,8 @@ class SalaryDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             it?.let {
                 netResponseFormat<SalaryDetailBean>(it)?.let { bean ->
                     tvReal.text = bean.reachwages
+                    tvRealText.text = bean.title+"实发工资"
                     bean.expand?.keys?.let {
-                        var ignores = ArrayList<Int>()
-                        for (i in it.indices) {
-                            if (it.get(i) == "教师姓名" ||
-                                it.get(i) == "身份证号"
-                            ) {
-                                ignores.add(i)
-                            }
-                        }
-                        if (ignores.size > 0) {
-                            ignores.reverse()
-                            ignores.forEach { it2 ->
-                                it.removeAt(it2)
-                                bean.expand?.vals?.removeAt(it2)
-                            }
-                        }
                         mAdapter.setNewData(it)
                         mAdapter.setEdata(bean)
                         mAdapter.notifyDataSetChanged()
