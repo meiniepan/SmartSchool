@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -25,44 +25,29 @@
             android:text="我的预约" />
     </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/contentLayout"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="@color/titleBlack">
 
         <LinearLayout
+            android:id="@+id/contentLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/black29"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/title_padding"
-            android:paddingTop="12dp"
-            android:paddingEnd="@dimen/title_padding"
-            android:paddingBottom="12dp">
-
-            <TextView
-                android:id="@+id/tvSem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxWidth="300dp"
-                android:singleLine="true"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_18"
-                android:textStyle="bold"
-                android:visibility="gone" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp">
+                android:background="@color/black29"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/title_padding"
+                android:paddingTop="12dp"
+                android:paddingEnd="@dimen/title_padding"
+                android:paddingBottom="12dp">
 
                 <TextView
-                    android:id="@+id/tvWeekSchedule"
+                    android:id="@+id/tvSem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxWidth="300dp"
@@ -70,75 +55,104 @@
                     android:text=""
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_18"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/ivDateBack"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layout_marginStart="20dp"
-                    android:background="@drawable/ic_date_back"
+                    android:textStyle="bold"
                     android:visibility="gone" />
 
-                <ImageView
-                    android:id="@+id/ivDateNext"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layout_marginStart="10dp"
-                    android:background="@drawable/ic_date_next"
-                    android:visibility="gone" />
-
-                <Space
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp">
 
-                <ImageView
-                    android:id="@+id/ivSwitchSchedule"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:background="@drawable/ic_switch"
+                    <TextView
+                        android:id="@+id/tvWeekSchedule"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="300dp"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_18"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/ivDateBack"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_marginStart="20dp"
+                        android:background="@drawable/ic_date_back"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/ivDateNext"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/ic_date_next"
+                        android:visibility="gone" />
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/ivSwitchSchedule"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:background="@drawable/ic_switch"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvWeekTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:overScrollMode="never" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvWeek"
+                    style="@style/recycler_horizontal_style" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvMonth"
+                    style="@style/recycler_horizontal_style"
                     android:visibility="gone" />
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvWeekTitle"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:overScrollMode="never" />
+                android:layout_height="match_parent"
+                android:background="@drawable/bac_dialog_bac_40"
+                android:orientation="vertical"
+                android:paddingTop="40dp">
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvWeek"
-                style="@style/recycler_horizontal_style" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/title_padding"
+                    android:text="预约信息"
+                    android:textColor="@color/commonHint" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvMonth"
-                style="@style/recycler_horizontal_style"
-                android:visibility="gone" />
+                <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
+                    android:id="@+id/rvSite"
+                    style="@style/recycler_style" />
+            </LinearLayout>
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="-40dp"
-            android:background="@drawable/bac_dialog_bac_40"
-            android:orientation="vertical"
-            android:paddingTop="40dp">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/title_padding"
-                android:text="预约信息"
-                android:textColor="@color/commonHint" />
-
-            <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
-                android:id="@+id/rvSite"
-                style="@style/recycler_style" />
-        </LinearLayout>
-
-    </LinearLayout>
+        <com.xiaoneng.ss.custom.widgets.FingerMoveView
+            android:id="@+id/ivAddEvent"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_add_common" />
+    </FrameLayout>
 </LinearLayout>

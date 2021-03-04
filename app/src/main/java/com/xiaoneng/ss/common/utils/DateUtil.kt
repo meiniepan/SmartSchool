@@ -130,6 +130,15 @@ object DateUtil {
 
     }
 
+    @SuppressLint("SimpleDateFormat")
+    fun formatDateCustomBookDay(date: Long = System.currentTimeMillis()): String {
+        val sdf = SimpleDateFormat("yyyy.MM.dd")
+        return sdf.format(Date(date))
+
+    }
+
+
+
     fun formatDateCustomWeekDay(date: Long = System.currentTimeMillis()): String {
         val sdf = SimpleDateFormat("yyyy年MM月dd "+ getWeek(Date(date)))
         return sdf.format(Date(date))

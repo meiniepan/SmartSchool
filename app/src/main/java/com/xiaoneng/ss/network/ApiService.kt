@@ -976,6 +976,29 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
+     *可预约场地列表
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/admin/spacebook/listRooms17")
+    suspend fun getBookRoomList(
+        @Field("token") token: String?,
+        @Field("starttime") start: String?,
+        @Field("endtime") end: String?
+    ): BaseResponse<Any>
+
+    /**
+     *可预约场地列表
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/admin/spacebook/myBookLists")
+    suspend fun getBookListMonth(
+        @Field("token") token: String?,
+        @Field("month") month: String?,
+        @Field("starttime") start: String?=null,
+        @Field("endtime") end: String?=null
+    ): BaseResponse<Any>
+
+    /**
      *设备token上报
      */
     @POST("/api/v17/global/setting/upToken")

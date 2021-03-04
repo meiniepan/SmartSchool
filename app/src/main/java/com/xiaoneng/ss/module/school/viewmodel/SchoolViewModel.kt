@@ -36,6 +36,8 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mDeleteAttendanceData: MutableLiveData<Any> = MutableLiveData()
     val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
     val mBaseData: MutableLiveData<Any> = MutableLiveData()
+    val mBookRoomData: MutableLiveData<Any> = MutableLiveData()
+    val mBookMonthData: MutableLiveData<Any> = MutableLiveData()
     val mAddBookSiteData: MutableLiveData<Any> = MutableLiveData()
     val mModifyBookSiteData: MutableLiveData<Any> = MutableLiveData()
     val mModifyRepairData: MutableLiveData<Any> = MutableLiveData()
@@ -323,6 +325,20 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         initiateRequest(
                 { mBaseData.value = mRepository.getBookList(start,end) },
                 loadState
+        )
+    }
+
+    fun getBookRoomList(start: String,end:String?=null) {
+        initiateRequest(
+            { mBookRoomData.value = mRepository.getBookRoomList(start,end) },
+            loadState
+        )
+    }
+
+    fun getBookListMonth(month: String) {
+        initiateRequest(
+            { mBookMonthData.value = mRepository.getBookListMonth(month) },
+            loadState
         )
     }
 

@@ -6,6 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.state.AppInfo
+import com.xiaoneng.ss.module.school.model.SiteBean
 import com.xiaoneng.ss.module.school.model.SiteItemBean
 
 
@@ -16,10 +17,10 @@ import com.xiaoneng.ss.module.school.model.SiteItemBean
  * @date: 2020/08/27
  * Time: 17:32
  */
-class RoomBookRecordAdapter(layoutId: Int, listData: MutableList<SiteItemBean>) :
-    BaseQuickAdapter<SiteItemBean, BaseViewHolder>(layoutId, listData) {
+class RoomBookRecordAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
+    BaseQuickAdapter<SiteBean, BaseViewHolder>(layoutId, listData) {
 
-    override fun convert(viewHolder: BaseViewHolder, item: SiteItemBean) {
+    override fun convert(viewHolder: BaseViewHolder, item: SiteBean) {
         viewHolder.let { holder ->
             var tvAction = holder.getView<TextView>(R.id.tvAction)
             holder.addOnClickListener(R.id.tvAction)

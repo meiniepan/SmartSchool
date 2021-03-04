@@ -241,6 +241,8 @@
         <activity
             android:name=".module.school.view.RoomBookRecordsActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".module.school.view.AddBookSite2Activity"
+            android:screenOrientation="portrait" />
 
 
         <provider

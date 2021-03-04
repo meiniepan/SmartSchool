@@ -23,7 +23,7 @@ import org.jetbrains.anko.toast
 class RoomBookRecordsActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     lateinit var mAdapter: RoomBookRecordAdapter
-    var mData: ArrayList<SiteItemBean>? = null
+    var mData: ArrayList<SiteBean>? = null
     var curPosition = 0
     var oStr = "3"
 

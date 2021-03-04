@@ -402,11 +402,13 @@ class Lunar(cal: Calendar) {
             var isToday = false
             for (i in 0 until maxDays) {
                 isToday = DateUtil.isSameDay(cal.timeInMillis,calToday.timeInMillis)
-                var beanList = ArrayList<ScheduleBean>()
+                var isShow = false
                 var beanRemove = ArrayList<ScheduleDayBean>()
                 for (beans in data) {
                     if (DateUtil.formatDateCustomDay(cal.timeInMillis) == beans.day) {
-                        beanList.addAll(beans.list)
+                        if (beans.list.size>0){
+                            isShow = true
+                        }
                         beanRemove.add(beans)
                     }
                 }
@@ -418,7 +420,7 @@ class Lunar(cal: Calendar) {
                     Lunar(cal).chinaDayString,
                     isToday,
                     true,
-                    beanList
+                    isShow = isShow
                 )
                 list.add(bean)
                 cal.add(Calendar.DAY_OF_WEEK, 1)
@@ -426,12 +428,17 @@ class Lunar(cal: Calendar) {
             return list
         }
 
-        fun getDaysOfMonth(chosenDay: Long= System.currentTimeMillis(),offset: Int= 0): ArrayList<DayBean> {
+        fun getDaysOfMonth(data: ArrayList<String>,
+                           chosenDay: Long? = null,
+                           offset: Int = 0
+        ): ArrayList<DayBean> {
             val cal = Calendar.getInstance()
             cal.add(Calendar.MONTH, offset)
             val maxDays = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
             val calToday = Calendar.getInstance()
-            calToday.timeInMillis = chosenDay
+            if (chosenDay!=null){
+                calToday.timeInMillis = chosenDay
+            }
             var d = cal[Calendar.DAY_OF_MONTH]
             d = 1 - d
             // 所在月开始日期
@@ -449,14 +456,23 @@ class Lunar(cal: Calendar) {
             var isToday = false
             for (i in 0 until maxDays) {
                 isToday = DateUtil.isSameDay(cal.timeInMillis,calToday.timeInMillis)
-                var beanList = ArrayList<ScheduleBean>()
-
+                var beanRemove = ArrayList<String>()
+                var isShow = false
+                for (beans in data) {
+                    if (DateUtil.formatDateCustomDay(cal.timeInMillis) == beans) {
+                        isShow = true
+                        beanRemove.add(beans)
+                    }
+                }
+                if (beanRemove.size > 0) {
+                    data.removeAll(beanRemove)
+                }
                 bean = DayBean(
                     cal.timeInMillis, cal[Calendar.DAY_OF_MONTH].toString() + "",
                     Lunar(cal).chinaDayString,
                     isToday,
                     true,
-                    beanList
+                    isShow = isShow
                 )
                 list.add(bean)
                 cal.add(Calendar.DAY_OF_WEEK, 1)

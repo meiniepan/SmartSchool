@@ -35,14 +35,12 @@ class DaysOfMonthAdapter(layoutId: Int, listData: MutableList<DayBean>?) :
 //                layoutManager = LinearLayoutManager(mContext)
 //                adapter = EventSimpleAdapter(R.layout.item_event_simple, eventData)
 //            }
-            item.eventList?.let {
                 var view = holder.getView<ImageView>(R.id.iv_flag)
-                if (it.size>0){
+                if (item.isShow){
                     view.visibility = View.VISIBLE
                 }else{
                     view.visibility = View.INVISIBLE
                 }
-            }
 
             holder
                 .setText(R.id.tvDay2, item?.dayOfSun)

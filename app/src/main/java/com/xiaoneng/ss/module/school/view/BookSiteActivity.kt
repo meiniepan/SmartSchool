@@ -12,20 +12,12 @@ import com.xiaoneng.ss.module.circular.adapter.DaysOfWeekAdapter
 import com.xiaoneng.ss.module.circular.adapter.WeekTitleAdapter
 import com.xiaoneng.ss.module.circular.model.DayBean
 import com.xiaoneng.ss.module.school.adapter.BookSiteAdapter
-import com.xiaoneng.ss.module.school.adapter.SiteAdapter
 import com.xiaoneng.ss.module.school.model.SiteBean
 import com.xiaoneng.ss.module.school.model.SiteResp
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_book_site.*
-import kotlinx.android.synthetic.main.activity_book_site.ivDateBack
-import kotlinx.android.synthetic.main.activity_book_site.ivDateNext
-import kotlinx.android.synthetic.main.activity_book_site.ivSwitchSchedule
-import kotlinx.android.synthetic.main.activity_book_site.rvMonth
-import kotlinx.android.synthetic.main.activity_book_site.rvWeek
-import kotlinx.android.synthetic.main.activity_book_site.rvWeekTitle
-import kotlinx.android.synthetic.main.activity_book_site.tvSem
-import kotlinx.android.synthetic.main.activity_book_site.tvWeekSchedule
-import kotlinx.android.synthetic.main.fragment_schedule.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * @author Burning
@@ -64,6 +56,9 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             dateOffset++
             setMonthDays()
         }
+        ivAddEvent.setOnClickListener {
+            addEvent()
+        }
         initAdapterWeekTitle()
         initAdapterDayOfWeek()
         initAdapterDayOfMonth()
@@ -77,9 +72,7 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun setMonthDays() {
         tvWeekSchedule.text = DateUtil.getWhichMonth(offset = dateOffset)
-        mDataMonth.clear()
-        mDataMonth.addAll(Lunar.getDaysOfMonth(chosenDay = chosenDay!!, offset = dateOffset))
-        mAdapterMonth.notifyDataSetChanged()
+        queryMonthData()
     }
 
     override fun initData() {
@@ -95,8 +88,23 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun onResume() {
         super.onResume()
         getData()
+        queryMonthData()
     }
 
+    private fun addEvent() {
+        mStartActivity<AddBookSite2Activity>(this) {
+            putExtra(Constant.TIME, chosenDay)
+        }
+    }
+
+    private fun queryMonthData() {
+        val cal = Calendar.getInstance()
+        cal.add(Calendar.MONTH, dateOffset)
+        var c = cal.timeInMillis
+        showLoading()
+        mViewModel.getBookListMonth(month =
+        DateUtil.formatDateCustomMonth(c))
+    }
     private fun initAdapterWeekTitle() {
         mDataWeekTitle.clear()
         mDataWeekTitle.add("日")
@@ -132,8 +140,7 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAdapterDayOfMonth() {
-        mDataMonth.clear()
-        mDataMonth.addAll(Lunar.getDaysOfMonth())
+
         mAdapterMonth = DaysOfMonthAdapter(R.layout.item_days_week, mDataMonth)
 
         rvMonth.apply {
@@ -166,7 +173,7 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
         mAdapter.setOnItemClickListener { adapter, view, position ->
             mStartActivity<RoomBookRecordsActivity>(this) {
-                putExtra(Constant.DATA, mData[position].books)
+                putExtra(Constant.DATA, mData)
             }
         }
     }
@@ -207,6 +214,19 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         mData.clear()
                         mData.addAll(it)
                         rvSite.notifyDataSetChanged()
+                    }
+                }
+            }
+        })
+
+        mViewModel.mBookMonthData.observe(this, Observer { response ->
+            response?.let {
+                netResponseFormat<SiteResp>(it)?.let {
+
+                    it.days?.let {
+                        mDataMonth.clear()
+                        mDataMonth.addAll(Lunar.getDaysOfMonth(it,chosenDay = chosenDay!!, offset = dateOffset))
+                        mAdapterMonth.notifyDataSetChanged()
                     }
                 }
             }
