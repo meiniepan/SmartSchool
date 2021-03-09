@@ -82,7 +82,7 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun getData() {
         super.getData()
         rvSite.showLoadingView()
-        mViewModel.getBookList(DateUtil.formatDateCustomDay(chosenDay!!))
+        mViewModel.getBookList(DateUtil.formatDateCustomDay(chosenDay!!),end=DateUtil.formatDateCustomDay(chosenDay!!+24*3600*1000))
     }
 
     override fun onResume() {

@@ -67,7 +67,7 @@ class RoomBookRecordsActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 var bean = AddBookSiteBody(
                     token = UserInfo.getUserBean().token,
                     id = sourceBean.id,
-                    status = oStr
+                    status = oStr//3是占用
                 )
                 mViewModel.modifyBookSite(bean)
                 curPosition = position

@@ -1,65 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
-
-    <com.xiaoneng.ss.custom.widgets.CustomTitleBar
-        android:id="@+id/ctbNoticeDetail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="教学云盘" />
+    android:fitsSystemWindows="true">
 
     <LinearLayout
-        android:id="@+id/contentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
+        <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+            android:id="@+id/ctbNoticeDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="教学云盘" />
 
+        <include layout="@layout/layout_split" />
 
         <LinearLayout
-            android:id="@+id/llTitleStu"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/title_padding"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bac_tint_bac_10"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="@dimen/title_padding"
-            android:paddingEnd="@dimen/title_padding">
+            android:paddingStart="17dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="17dp"
+            android:paddingBottom="8dp">
 
-            <TextView
+            <EditText
+                android:id="@+id/etSearch"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="发布日期"
-                android:gravity="center"
-                android:textSize="@dimen/sp_16"
-                android:textStyle="bold" />
-
+                android:background="@null"
+                android:drawableStart="@drawable/ic_search"
+                android:drawablePadding="5dp"
+                android:hint="@string/search_involve"
+                android:imeOptions="actionSearch"
+                android:singleLine="true" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="工资条名称"
-                android:textSize="@dimen/sp_16"
-                android:textStyle="bold" />
-
-
+                android:id="@+id/tvSearchClear"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/ic_search_clear"
+                android:visibility="gone" />
         </LinearLayout>
 
-        <include
-            layout="@layout/layout_split"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="@dimen/title_padding" />
+        <include layout="@layout/layout_split" />
 
-        <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
-            android:id="@+id/rvSalary"
-            style="@style/recycler_style" />
+        <LinearLayout
+            android:id="@+id/contentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llTitleStu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/title_padding"
+                android:paddingTop="12dp"
+                android:paddingEnd="@dimen/title_padding"
+                android:paddingBottom="12dp">
+
+                <TextView
+                    android:id="@+id/tvPrivate"
+                    style="@style/button_blue_bac_style"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_weight="1"
+                    android:text="私有云" />
+
+
+                <TextView
+                    android:id="@+id/tvPublic"
+                    style="@style/button_blue_line_style"
+                    android:layout_marginStart="17dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_weight="1"
+                    android:text="共享云" />
+
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_split" />
+
+            <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
+                android:id="@+id/rvDisk"
+                style="@style/recycler_style" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="100dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvDiskUpload"
+            style="@style/button_blue_bac_style"
+            android:layout_width="145dp"
+            android:layout_height="38dp"
+            android:visibility="gone"
+            android:layout_gravity="end"
+            android:layout_marginEnd="85dp"
+            android:text="上传" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvDiskNew"
+                style="@style/button_blue_bac_style"
+                android:layout_width="145dp"
+                android:layout_height="38dp"
+                android:visibility="gone"
+                android:layout_marginEnd="15dp"
+                android:text="新建文件夹" />
+
+            <ImageView
+                android:id="@+id/ivAddFile"
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:layout_marginEnd="34dp"
+                android:src="@drawable/ic_add_common" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

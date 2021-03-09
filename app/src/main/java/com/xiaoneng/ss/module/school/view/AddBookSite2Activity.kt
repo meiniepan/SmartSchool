@@ -1,6 +1,7 @@
 package com.xiaoneng.ss.module.school.view
 
 import android.app.Dialog
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -95,7 +96,7 @@ class AddBookSite2Activity : BaseLifeCycleActivity<SchoolViewModel>() {
                 timeTitles.clear()
                 timeTitles.apply {
                     var d = initSiteTimes()
-                    for (i in startPosition until d.size) {
+                    for (i in startPosition+1 until d.size) {
                         add(d[i].timeStr ?: "")
                     }
                 }
@@ -106,7 +107,7 @@ class AddBookSite2Activity : BaseLifeCycleActivity<SchoolViewModel>() {
                 if (timeStart.isNullOrEmpty() || timeEnd.isNullOrEmpty()) {
                     mToast("请先选择时间")
                 } else {
-                    mViewModel.getBookRoomList(timeStart, timeEnd)
+                    mViewModel.getBookRoomList(DateUtil.formatDateCustomDay(mData!!) + " " + timeStart, DateUtil.formatDateCustomDay(mData!!) + " " + timeEnd)
                     showLoading()
                 }
             }
@@ -125,15 +126,16 @@ class AddBookSite2Activity : BaseLifeCycleActivity<SchoolViewModel>() {
             mToast(R.string.lack_info)
             return
         }
+
         var bean = AddBookSiteBody(
             token = UserInfo.getUserBean().token,
             roomid = mRoomData[roomPosition].id,
-            ostime = dateText + " " + timeStart,
-            oetime = dateText + " " + timeEnd,
+            ostime = DateUtil.formatDateCustomDay(mData!!) + " " + timeStart,
+            oetime = DateUtil.formatDateCustomDay(mData!!) + " " + timeEnd,
             remark = etAddSiteRemark.text.toString(),
             status = "0",
             os_position = startPosition.toString(),
-            oe_position = (startPosition+endPosition).toString()
+            oe_position = (startPosition+endPosition+1).toString()
         )
         mViewModel.addBookSite(bean)
     }
