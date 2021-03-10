@@ -27,7 +27,9 @@ import com.alibaba.sdk.android.oss.model.GetObjectResult;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.xiaoneng.ss.common.state.UserInfo;
+import com.xiaoneng.ss.common.utils.eventBus.FileUploadEvent;
 import com.xiaoneng.ss.model.StsTokenBean;
+import com.xiaoneng.ss.module.school.model.DiskFileBean;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -115,6 +117,11 @@ public class OssUtils {
             @Override
             public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
                 Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
+                DiskFileBean bean = new DiskFileBean();
+                bean.setPath(filePath);
+                bean.setCurrentSize(currentSize);
+                bean.setTotalSize(totalSize);
+                new FileUploadEvent(bean).post();
             }
         });
 

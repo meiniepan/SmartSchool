@@ -243,6 +243,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".module.school.view.AddBookSite2Activity"
             android:screenOrientation="portrait" />
+        <activity android:name=".module.school.view.CloudTransActivity"
+            android:screenOrientation="portrait"/>
 
 
         <provider

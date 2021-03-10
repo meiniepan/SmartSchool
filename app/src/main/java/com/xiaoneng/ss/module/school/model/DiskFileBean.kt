@@ -9,7 +9,10 @@ package com.xiaoneng.ss.module.school.model
  */
 data class DiskFileBean(
     var id: String = "",
-
+    var path: String = "",
+    var totalSize: Long = 0,
+    var currentSize: Long = 0,
+    var progress: Int = 0,
 
     var schoolname: String= ""
 )
