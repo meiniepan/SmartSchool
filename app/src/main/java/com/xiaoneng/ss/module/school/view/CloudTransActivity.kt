@@ -3,19 +3,31 @@ package com.xiaoneng.ss.module.school.view
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Handler
 import android.text.TextUtils
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.FileTransInfo
+import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.eventBus.FileUploadEvent
 import com.xiaoneng.ss.common.utils.eventBus.RefreshUnreadEvent
+import com.xiaoneng.ss.common.utils.getOssObjectKey
+import com.xiaoneng.ss.common.utils.mToast
+import com.xiaoneng.ss.common.utils.oss.OssListener
 import com.xiaoneng.ss.common.utils.oss.OssUtils
+import com.xiaoneng.ss.model.StsTokenResp
 import com.xiaoneng.ss.module.school.adapter.CloudTransAdapter
+import com.xiaoneng.ss.module.school.interfaces.IFileTrans
 import com.xiaoneng.ss.module.school.model.DiskFileBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_cloud_trans.*
 import kotlinx.android.synthetic.main.fragment_circular.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.io.File
@@ -26,10 +38,11 @@ import java.io.File
  * @description:教学云盘传输列表
  * @date :2021/03/10 3:17 PM
  */
-class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans {
     lateinit var mAdapter: CloudTransAdapter
     var mData: ArrayList<DiskFileBean> = ArrayList()
     var rotationB = false
+    var bean:DiskFileBean = DiskFileBean()
 
     override fun getLayoutId(): Int {
         return R.layout.activity_cloud_trans
@@ -50,13 +63,14 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
-        mData.add(DiskFileBean(progress=30))
+        mData.clear()
+        mData.addAll(FileTransInfo.getFilesInfo())
         rvTrans.notifyDataSetChanged()
     }
 
     private fun initAdapter() {
 
-        mAdapter = CloudTransAdapter(R.layout.item_cloud_trans, mData)
+        mAdapter = CloudTransAdapter(R.layout.item_cloud_trans, mData,this)
         rvTrans.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@CloudTransActivity)
             setAdapter(mAdapter)
@@ -65,6 +79,41 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mAdapter.setOnItemClickListener { adapter, view, position ->
 
         }
+    }
+
+    override fun upload(file:DiskFileBean){
+        if (!file.path.isNullOrEmpty()) {
+            bean = file
+            mViewModel.getSts()
+        } else {
+            mToast(getString(R.string.errFile))
+        }
+    }
+
+    private fun doUpload(it: StsTokenResp) {
+        //将上传文件的进度信息存储到本地
+
+        OssUtils.uploadResumeFile(
+            this,
+            it.Credentials,
+            bean.objectKey,
+            bean.path,
+            object : OssListener {
+                override fun onSuccess() {
+                    mRootView.post {
+
+
+                    }
+
+                }
+
+                override fun onFail() {
+                    mRootView.post {
+                        mToast("文件上传失败")
+                    }
+                }
+
+            })
     }
 
     private fun choseFile() {
@@ -87,17 +136,45 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     override fun initDataObserver() {
+        mViewModel.mStsData.observe(this, Observer { response ->
+            response?.let {
+                Handler().postDelayed(
+                    {
+                        GlobalScope.launch() {
+                            async {
+                                doUpload(it)
+                            }
+                        }
+                    }, 100
+                )
 
+            }
+        })
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun refreshFile(event: FileUploadEvent) {
         mData.forEach {
             if (it.path == event.file.path){
+                if (event.file.currentSize!=0L){
                 it.currentSize = event.file.currentSize
-                it.totalSize = event.file.totalSize
+                }
+                if (event.file.totalSize!=0L){
+                    it.totalSize = event.file.totalSize
+                }
+                if (event.file.status!=0){
+                    it.status = event.file.status
+                }
+                if (event.file.task!=null){
+                    it.task?.cancel()
+                    it.task = event.file.task
+                }
                 return@forEach
             }
         }
+        FileTransInfo.modifyFilesInfo(mData)
         rvTrans.notifyDataSetChanged()
     }
+
+
 }

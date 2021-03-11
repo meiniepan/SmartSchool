@@ -25,11 +25,17 @@ class EventAdapter(layoutId: Int, listData: MutableList<ScheduleBean>) :
     override fun convert(viewHolder: BaseViewHolder?, item: ScheduleBean) {
         viewHolder?.let { holder ->
             var timeB = ""
+            var timeB2 = ""
             var timeE = ""
+            var timeE2 = ""
             if (item.scheduletime!!.length >= 5) {
                 timeB = item.scheduletime!!.substring(
                     item.scheduletime!!.length - 5,
                     item.scheduletime!!.length
+                )
+                timeB2 = item.scheduletime!!.substring(
+                    5,
+                    item.scheduletime!!.length - 5
                 )
             } else {
                 timeB = item.scheduletime!!
@@ -39,11 +45,26 @@ class EventAdapter(layoutId: Int, listData: MutableList<ScheduleBean>) :
                     item.scheduleover!!.length - 5,
                     item.scheduleover!!.length
                 )
+                timeE2 = item.scheduleover!!.substring(
+                    5,
+                    item.scheduleover!!.length - 5
+                )
             } else {
                 timeE = item.scheduleover!!
             }
+            var timeStr = ""
+            if (timeB2 != timeE2) {
+                 timeStr = item.scheduletime!!.substring(
+                     5,
+                     item.scheduletime!!.length
+                 ) + "~".plus(item.scheduleover!!.substring(
+                     5,
+                     item.scheduleover!!.length
+                 ))
+            } else {
+                 timeStr = timeB + "~".plus(timeE)
+            }
 
-            var timeStr = timeB + "~".plus(timeE)
             var remarkStr = "" + item.remark
             if (item.remark.isNullOrEmpty()) {
                 holder.getView<View>(R.id.llRemarkScheduleItem).visibility = View.GONE

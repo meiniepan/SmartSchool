@@ -26,12 +26,6 @@ class SalaryDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         return R.layout.activity_salary_detail
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        super.onCreate(savedInstanceState)
-    }
-
     override fun initView() {
         super.initView()
         id = intent.getStringExtra(Constant.ID)

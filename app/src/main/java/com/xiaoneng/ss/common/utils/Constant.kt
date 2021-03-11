@@ -32,6 +32,7 @@ object Constant {
     const val IS_MASTER = "is_master"
     const val USER_INFO = "user_info"
     const val APP_INFO = "app_info"
+    const val FILE_TRANS_INFO = "file_trans_info"
     const val TITLE = "title"
     const val TYPE = "type"
     const val TITLE_2 = "title_2"

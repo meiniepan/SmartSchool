@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.FileTransInfo
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.getOssObjectKey
 import com.xiaoneng.ss.common.utils.mStartActivity
@@ -110,13 +111,15 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun doUpload(it: StsTokenResp) {
-
-        showLoading()
+        mRootView.post {
+            mToast("已加入上传列表")
+        }
         var mId: String = System.currentTimeMillis().toString() + "_" + fileName
         //将上传文件的进度信息存储到本地
         var objectKey =
             getOssObjectKey(UserInfo.getUserBean().usertype, UserInfo.getUserBean().uid, mId)
-        OssUtils.asyncUploadFile(
+        FileTransInfo.addFile(DiskFileBean(path = filePath?:"",objectKey = objectKey))
+        OssUtils.uploadResumeFile(
             this,
             it.Credentials,
             objectKey,

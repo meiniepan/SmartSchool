@@ -1,11 +1,14 @@
 package com.xiaoneng.ss.module.school.adapter
 
+import android.util.Log
+import android.widget.ImageView
 import android.widget.ProgressBar
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.common.utils.DateUtil
+import com.xiaoneng.ss.common.state.FileTransInfo
 import com.xiaoneng.ss.common.utils.formatMemorySize
+import com.xiaoneng.ss.module.school.interfaces.IFileTrans
 import com.xiaoneng.ss.module.school.model.DiskFileBean
 
 
@@ -16,16 +19,55 @@ import com.xiaoneng.ss.module.school.model.DiskFileBean
  * @date: 2020/08/27
  * Time: 17:32
  */
-class CloudTransAdapter(layoutId: Int, listData: MutableList<DiskFileBean>?) :
+class CloudTransAdapter(
+    layoutId: Int,
+    listData: MutableList<DiskFileBean>?,
+    val listener: IFileTrans
+) :
     BaseQuickAdapter<DiskFileBean, BaseViewHolder>(layoutId, listData) {
-
     override fun convert(viewHolder: BaseViewHolder?, item: DiskFileBean?) {
         viewHolder?.let { holder ->
             var pb = holder.getView<ProgressBar>(R.id.pbFile)
-            var p = (item?.currentSize?:0)/(item?.totalSize?:1)*100
-            var fileSize = item?.currentSize?.formatMemorySize()+"/"+item?.totalSize?.formatMemorySize()
+            var action = holder.getView<ImageView>(R.id.ivAction)
+            var total: Long = item?.totalSize ?: 0
+            var p = 0L
+            if (total != 0L) {
+                p = (item?.currentSize ?: 0) / total * 100
+
+            } else {
+                p = 100L
+            }
+            var fileSize =
+                item?.currentSize?.formatMemorySize() + "/" + item?.totalSize?.formatMemorySize()
             pb.setProgress(p.toInt())
-            holder.setText(R.id.tvDiskFileName, DateUtil.formatShowTime(item?.id?:""))
+            holder.setText(R.id.tvDiskFileName, item?.path?.split("/")?.last())
+                .setText(R.id.tvDiskFileSize, fileSize)
+            if (item?.status == 0) {
+                action.setImageResource(R.drawable.ic_pause_d)
+                action.setOnClickListener {
+                    item?.task?.cancel()
+                    item.status = 1
+                    FileTransInfo.modifyFile(item)
+                    notifyItemChanged(holder.adapterPosition)
+                    Log.d("action====", "pause!")
+                }
+            } else if (item?.status == 1) {
+                action.setImageResource(R.drawable.ic_start_d)
+                action.setOnClickListener {
+                    listener.upload(item)
+                    item.status = 0
+                    FileTransInfo.modifyFile(item)
+                    notifyItemChanged(holder.adapterPosition)
+                    Log.d("action====", "start!")
+                }
+            } else {
+                action.setImageResource(R.drawable.ic_dustbin)
+                action.setOnClickListener {
+                    FileTransInfo.delFile(item!!)
+                    mData.remove(item!!)
+                    notifyItemRemoved(holder.adapterPosition)
+                }
+            }
         }
     }
 }

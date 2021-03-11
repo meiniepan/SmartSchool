@@ -26,6 +26,9 @@ import com.alibaba.sdk.android.oss.model.GetObjectRequest;
 import com.alibaba.sdk.android.oss.model.GetObjectResult;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
+import com.alibaba.sdk.android.oss.model.ResumableUploadRequest;
+import com.alibaba.sdk.android.oss.model.ResumableUploadResult;
+import com.xiaoneng.ss.common.state.FileTransInfo;
 import com.xiaoneng.ss.common.state.UserInfo;
 import com.xiaoneng.ss.common.utils.eventBus.FileUploadEvent;
 import com.xiaoneng.ss.model.StsTokenBean;
@@ -155,6 +158,78 @@ public class OssUtils {
 // task.waitUntilFinished(); // 等待任务完成
     }
 
+    //异步上传文件方法
+
+    public static void uploadResumeFile(Context context, StsTokenBean stsTokenBean, String objectKey, String filePath,OssListener listener) {
+
+        String endpoint = UserInfo.INSTANCE.getUserBean().getDomain();
+
+        //移动端建议使用该方式，此时，stsToken中的前三个参数就派上用场了
+        OSSCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(stsTokenBean.getAccessKeyId(), stsTokenBean.getAccessKeySecret(), stsTokenBean.getSecurityToken());
+
+        // 配置类如果不设置，会有默认配置。
+        ClientConfiguration conf = new ClientConfiguration();
+        conf.setConnectionTimeout(15 * 1000);   // 连接超时，默认15秒。
+        conf.setSocketTimeout(15 * 1000);       // socket超时，默认15秒。
+        conf.setMaxConcurrentRequest(5);        // 最大并发请求数，默认5个。
+        conf.setMaxErrorRetry(2);               // 失败后最大重试次数，默认2次。
+
+        //初始化OSS服务的客户端oss
+        //事实上，初始化OSS的实例对象，应该具有与整个应用程序相同的生命周期，在应用程序生命周期结束时销毁
+        //但这里只是实现功能，若时间紧，你仍然可以按照本文方式先将功能实现，然后优化
+        if (endpoint ==null){
+            listener.onFail();
+            return;
+        }
+        OSS oss = new OSSClient(context, endpoint, credentialProvider, conf);
+        // 构造上传请求。
+        ResumableUploadRequest put = new ResumableUploadRequest(BUCKET, objectKey, filePath);
+
+// 异步上传时可以设置进度回调。
+        put.setProgressCallback(new OSSProgressCallback<ResumableUploadRequest>() {
+            @Override
+            public void onProgress(ResumableUploadRequest request, long currentSize, long totalSize) {
+                Log.d("resumableUpload====", "currentSize: " + currentSize + " totalSize: " + totalSize);
+                DiskFileBean bean = new DiskFileBean();
+                bean.setPath(filePath);
+                bean.setCurrentSize(currentSize);
+                bean.setTotalSize(totalSize);
+                new FileUploadEvent(bean).post();
+                FileTransInfo.INSTANCE.modifyFile(bean);
+            }
+        });
+        // 异步调用断点上传。
+        OSSAsyncTask resumableTask = oss.asyncResumableUpload(put, new OSSCompletedCallback<ResumableUploadRequest, ResumableUploadResult>() {
+            @Override
+            public void onSuccess(ResumableUploadRequest request, ResumableUploadResult result) {
+                Log.d("resumableUpload====", "success!");
+                listener.onSuccess();
+                DiskFileBean bean = new DiskFileBean();
+                bean.setPath(filePath);
+                bean.setStatus(2);
+                new FileUploadEvent(bean).post();
+                  FileTransInfo.INSTANCE.modifyFile(bean);
+            }
+
+            @Override
+            public void onFailure(ResumableUploadRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                // 异常处理。
+                Log.d("resumableUpload====", clientExcepion+" "+serviceException);
+                listener.onFail();
+            }
+        });
+
+        DiskFileBean bean = new DiskFileBean();
+        bean.setPath(filePath);
+        bean.setTask(resumableTask);
+        FileTransInfo.INSTANCE.modifyFile(bean);
+        new FileUploadEvent(bean).post();
+
+// task.cancel(); // 可以取消任务。
+        resumableTask.waitUntilFinished(); // 等待任务完成
+
+
+    }
     public static void downloadFile(Context context, StsTokenBean stsTokenBean, String objectKey, String filePath,OssListener listener) {
         String endpoint = UserInfo.INSTANCE.getUserBean().getDomain();
         //移动端建议使用该方式，此时，stsToken中的前三个参数就派上用场了
