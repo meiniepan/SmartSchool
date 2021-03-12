@@ -115,10 +115,15 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             mToast("已加入上传列表")
         }
         var mId: String = System.currentTimeMillis().toString() + "_" + fileName
+        var totalSize = 0L
+        if (File(filePath).exists()){
+            totalSize = File(filePath).length()
+        }
         //将上传文件的进度信息存储到本地
         var objectKey =
             getOssObjectKey(UserInfo.getUserBean().usertype, UserInfo.getUserBean().uid, mId)
-        FileTransInfo.addFile(DiskFileBean(path = filePath?:"",objectKey = objectKey))
+        FileTransInfo.addFile(DiskFileBean(path
+        = filePath?:"",objectKey = objectKey,totalSize = totalSize))
         OssUtils.uploadResumeFile(
             this,
             it.Credentials,
@@ -135,7 +140,7 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
                 override fun onFail() {
                     mRootView.post {
-                        mToast("文件上传失败")
+//                        mToast("文件上传失败")
                     }
                 }
 

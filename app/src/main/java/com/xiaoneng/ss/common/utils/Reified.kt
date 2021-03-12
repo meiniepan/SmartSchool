@@ -415,9 +415,9 @@ fun Long.formatMemorySize(): String {
         return megaByte.toBigDecimal().setScale(2, BigDecimal.ROUND_HALF_UP).toString() + "M"
     }
 
-    val teraBytes = megaByte / 1024
+    val teraBytes = gigaByte / 1024
     if (teraBytes < 1) {
-        return megaByte.toBigDecimal().setScale(2, BigDecimal.ROUND_HALF_UP).toString() + "G"
+        return gigaByte.toBigDecimal().setScale(2, BigDecimal.ROUND_HALF_UP).toString() + "G"
     }
 
     return teraBytes.toBigDecimal().setScale(2, BigDecimal.ROUND_HALF_UP).toString() + "T"

@@ -14,4 +14,7 @@ class FileUploadEvent(val file:DiskFileBean) {
     fun post() {
         EventBus.getDefault().post(this)
     }
+    fun postSticky() {
+        EventBus.getDefault().postSticky(this)
+    }
 }

@@ -27,7 +27,7 @@ object FileTransInfo {
     fun modifyFile(file: DiskFileBean) {
         var files = getFilesInfo()
         files.forEach {
-            if (it.path == file.path){
+            if (it.objectKey == file.objectKey){
                 if (file.currentSize!=0L){
                     it.currentSize = file.currentSize
                 }
@@ -42,6 +42,16 @@ object FileTransInfo {
                     it.task = file.task
                 }
                 return@forEach
+            }
+        }
+        fileInfoJson = gson.toJson(files)
+    }
+
+    fun reset() {
+        var files = getFilesInfo()
+        files.forEach {
+            if (it.status == 0){
+                it.status = 1
             }
         }
         fileInfoJson = gson.toJson(files)

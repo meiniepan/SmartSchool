@@ -15,6 +15,7 @@ import com.umeng.message.PushAgent
 import com.xiaoneng.ss.common.callback.EmptyCallBack
 import com.xiaoneng.ss.common.callback.ErrorCallBack
 import com.xiaoneng.ss.common.callback.LoadingCallBack
+import com.xiaoneng.ss.common.state.FileTransInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.SPreference
 import org.android.agoo.huawei.HuaWeiRegister
@@ -53,9 +54,12 @@ open class BaseApplication : Application() {
             .addCallback(EmptyCallBack())
             .commit()
         initSmartRefreshHeaderFooter()
+        resetDownLoad()
     }
 
-
+    private fun resetDownLoad() {
+        FileTransInfo.reset()
+    }
 
     private fun initPush() {
         try {

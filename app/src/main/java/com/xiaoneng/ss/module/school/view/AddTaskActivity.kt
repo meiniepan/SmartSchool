@@ -414,6 +414,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         //加入下载队列
         AwesomeDownloader.enqueue(url, filePath, fileName ?: "")
         AwesomeDownloader.setOnProgressChange { progress ->
+
             //do something...
         }.setOnStop { downloadBytes, totalBytes ->
             //do something...

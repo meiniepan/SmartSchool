@@ -163,7 +163,14 @@ public class OssUtils {
     public static void uploadResumeFile(Context context, StsTokenBean stsTokenBean, String objectKey, String filePath,OssListener listener) {
 
         String endpoint = UserInfo.INSTANCE.getUserBean().getDomain();
+        String recordDirectory = Environment.getExternalStorageDirectory().getAbsolutePath() + "/oss_record/";
 
+        File recordDir = new File(recordDirectory);
+
+// 确保断点记录的保存文件夹已存在，如果不存在则新建断点记录的保存文件夹。
+        if (!recordDir.exists()) {
+            recordDir.mkdirs();
+        }
         //移动端建议使用该方式，此时，stsToken中的前三个参数就派上用场了
         OSSCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(stsTokenBean.getAccessKeyId(), stsTokenBean.getAccessKeySecret(), stsTokenBean.getSecurityToken());
 
@@ -183,15 +190,16 @@ public class OssUtils {
         }
         OSS oss = new OSSClient(context, endpoint, credentialProvider, conf);
         // 构造上传请求。
-        ResumableUploadRequest put = new ResumableUploadRequest(BUCKET, objectKey, filePath);
-
+        ResumableUploadRequest request = new ResumableUploadRequest(BUCKET, objectKey, filePath,recordDirectory);
+        request.setDeleteUploadOnCancelling(false);
 // 异步上传时可以设置进度回调。
-        put.setProgressCallback(new OSSProgressCallback<ResumableUploadRequest>() {
+        request.setProgressCallback(new OSSProgressCallback<ResumableUploadRequest>() {
             @Override
             public void onProgress(ResumableUploadRequest request, long currentSize, long totalSize) {
                 Log.d("resumableUpload====", "currentSize: " + currentSize + " totalSize: " + totalSize);
                 DiskFileBean bean = new DiskFileBean();
                 bean.setPath(filePath);
+                bean.setObjectKey(objectKey);
                 bean.setCurrentSize(currentSize);
                 bean.setTotalSize(totalSize);
                 new FileUploadEvent(bean).post();
@@ -199,13 +207,14 @@ public class OssUtils {
             }
         });
         // 异步调用断点上传。
-        OSSAsyncTask resumableTask = oss.asyncResumableUpload(put, new OSSCompletedCallback<ResumableUploadRequest, ResumableUploadResult>() {
+        OSSAsyncTask resumableTask = oss.asyncResumableUpload(request, new OSSCompletedCallback<ResumableUploadRequest, ResumableUploadResult>() {
             @Override
             public void onSuccess(ResumableUploadRequest request, ResumableUploadResult result) {
                 Log.d("resumableUpload====", "success!");
                 listener.onSuccess();
                 DiskFileBean bean = new DiskFileBean();
                 bean.setPath(filePath);
+                bean.setObjectKey(objectKey);
                 bean.setStatus(2);
                 new FileUploadEvent(bean).post();
                   FileTransInfo.INSTANCE.modifyFile(bean);
@@ -214,6 +223,12 @@ public class OssUtils {
             @Override
             public void onFailure(ResumableUploadRequest request, ClientException clientExcepion, ServiceException serviceException) {
                 // 异常处理。
+                DiskFileBean bean = new DiskFileBean();
+                bean.setPath(filePath);
+                bean.setObjectKey(objectKey);
+                bean.setStatus(1);
+                new FileUploadEvent(bean).post();
+                FileTransInfo.INSTANCE.modifyFile(bean);
                 Log.d("resumableUpload====", clientExcepion+" "+serviceException);
                 listener.onFail();
             }
@@ -221,9 +236,9 @@ public class OssUtils {
 
         DiskFileBean bean = new DiskFileBean();
         bean.setPath(filePath);
+        bean.setObjectKey(objectKey);
         bean.setTask(resumableTask);
-        FileTransInfo.INSTANCE.modifyFile(bean);
-        new FileUploadEvent(bean).post();
+        new FileUploadEvent(bean).postSticky();
 
 // task.cancel(); // 可以取消任务。
         resumableTask.waitUntilFinished(); // 等待任务完成

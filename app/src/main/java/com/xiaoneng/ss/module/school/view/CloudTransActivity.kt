@@ -109,7 +109,7 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
 
                 override fun onFail() {
                     mRootView.post {
-                        mToast("文件上传失败")
+//                        mToast("文件上传失败")
                     }
                 }
 
@@ -154,26 +154,29 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun refreshFile(event: FileUploadEvent) {
-        mData.forEach {
-            if (it.path == event.file.path){
+        var pp = 0
+        for (i in 0..mData.size){
+            if (mData[i].objectKey == event.file.objectKey){
                 if (event.file.currentSize!=0L){
-                it.currentSize = event.file.currentSize
+                    mData[i].currentSize = event.file.currentSize
                 }
                 if (event.file.totalSize!=0L){
-                    it.totalSize = event.file.totalSize
+                    mData[i].totalSize = event.file.totalSize
                 }
                 if (event.file.status!=0){
-                    it.status = event.file.status
+                    mData[i].status = event.file.status
                 }
                 if (event.file.task!=null){
-                    it.task?.cancel()
-                    it.task = event.file.task
+                    mData[i].task?.cancel()
+                    mData[i].task = event.file.task
                 }
-                return@forEach
+                pp = i
+                break
             }
         }
+
         FileTransInfo.modifyFilesInfo(mData)
-        rvTrans.notifyDataSetChanged()
+        mAdapter.notifyItemChanged(pp)
     }
 
 

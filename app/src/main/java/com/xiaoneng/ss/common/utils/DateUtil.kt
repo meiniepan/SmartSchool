@@ -89,12 +89,12 @@ object DateUtil {
             } else if (isSameYear(date)) {
                 result = date.substring(
                     5,
-                    10
+                    date.length
                 )
             } else {
                 result = date.substring(
                     2,
-                    10
+                    date.length
                 )
             }
 
