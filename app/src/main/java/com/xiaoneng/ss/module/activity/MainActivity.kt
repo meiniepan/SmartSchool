@@ -60,7 +60,7 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
     override fun initData() {
         super.initData()
         //上报设备token
-        mViewModel.upToken(UpTokenBean(devicetoken = mDeviceToken))
+//        mViewModel.upToken(UpTokenBean(devicetoken = mDeviceToken))
 
         //        mViewModel.getAuthority()
     }
