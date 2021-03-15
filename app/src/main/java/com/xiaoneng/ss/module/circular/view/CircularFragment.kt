@@ -11,6 +11,7 @@ import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.FragmentVpAdapter
 import com.xiaoneng.ss.common.utils.eventBus.RefreshUnreadEvent
 import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.common.utils.toIntSafe
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import com.xiaoneng.ss.module.school.interfaces.INoticeUnread
@@ -116,7 +117,7 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
 
     override fun initDataObserver() {
         mViewModel.mNoticeData.observe(this, Observer { response ->
-            response?.let {hData->
+            response?.let { hData ->
                 showSuccess()
                 mData.clear()
                 hData.data?.let {
@@ -136,9 +137,11 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun refreshNotice(event: RefreshUnreadEvent) {
         var unread = event.unread
-        if (unread=="0"|| TextUtils.isEmpty(unread)){
-            unread="通知"
-        }else{
+        if (unread == "0" || TextUtils.isEmpty(unread)) {
+            unread = "通知"
+        } else if (unread.toIntSafe()>99) {
+            unread = "通知(99+)"
+        } else {
             unread = "通知($unread)"
         }
         tvCircular.setText(unread)

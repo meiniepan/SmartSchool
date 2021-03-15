@@ -54,13 +54,13 @@ abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
     }
 
     open fun showError(msg: String) {
-        loadService.showCallback(ErrorCallBack::class.java)
+//        loadService.showCallback(ErrorCallBack::class.java)
         if (!TextUtils.isEmpty(msg)) {
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-            loadService.setCallBack(ErrorCallBack::class.java, Transport { context, view ->
-                val mTvEmpty = view.findViewById(R.id.tv_error) as TextView
-                mTvEmpty.text = msg
-            })
+//            loadService.setCallBack(ErrorCallBack::class.java, Transport { context, view ->
+//                val mTvEmpty = view.findViewById(R.id.tv_error) as TextView
+//                mTvEmpty.text = msg
+//            })
         }
 
     }
