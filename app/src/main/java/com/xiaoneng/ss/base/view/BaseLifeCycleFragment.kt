@@ -53,6 +53,7 @@ abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
     }
 
     private fun showError(msg: String) {
+        loadService.showCallback(SuccessCallback::class.java)
 //        loadService.showCallback(ErrorCallBack::class.java)
         if (!TextUtils.isEmpty(msg)) {
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()

@@ -54,6 +54,7 @@ abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
     }
 
     open fun showError(msg: String) {
+        loadService.showCallback(SuccessCallback::class.java)
 //        loadService.showCallback(ErrorCallBack::class.java)
         if (!TextUtils.isEmpty(msg)) {
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
