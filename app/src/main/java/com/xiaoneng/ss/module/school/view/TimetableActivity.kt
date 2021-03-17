@@ -54,6 +54,10 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initView() {
         super.initView()
 
+        initAdapterAll()
+    }
+
+    private fun initAdapterAll() {
         initAdapterLabel()
         initAdapter()
         initAdapterTitle()
@@ -94,6 +98,7 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mAdapter.setOnItemClickListener { _, view, position ->
 
         }
+        rvTimetable.clearOnScrollListeners()
         rvTimetable.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -235,6 +240,7 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mTimetableData.observe(this, Observer { response ->
             response?.let {
+                initAdapterAll()
                 if (AppInfo.checkRule2("teacher/courses/mTimeTable")) {
                     mAdapter.setMaster(true)
                     llClassTimetable.visibility = View.VISIBLE
@@ -286,6 +292,7 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         mViewModel.mTimetableDataT.observe(this, Observer { response ->
             response?.let {
+                initAdapterAll()
                 //初始化时间段数据
                 mLabelData.clear()
                 mLabelData.addAll(it.positions)
