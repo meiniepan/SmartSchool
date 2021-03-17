@@ -8,10 +8,7 @@ import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.AppManager
-import com.xiaoneng.ss.common.utils.displayImage
-import com.xiaoneng.ss.common.utils.mAlert
-import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.mine.adapter.MineAdapter
 import kotlinx.android.synthetic.main.fragment_mine.*
 
@@ -37,23 +34,27 @@ class MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
         super.initView()
         tvNameMine.text = UserInfo.getUserBean().realname
 
-        when {
-            AppInfo.checkRule2("user/student/modify") -> {
-                llItem3.visibility = View.GONE
-                llItem6.visibility = View.VISIBLE
+        if (UserInfo.getUserBean().usertype == "1" &&
+            UserInfo.getUserBean().logintype == Constant.LOGIN_TYPE_PAR
+        ) {
+            tvNameMine.text = UserInfo.getUserBean().parentname
+        }
+
+        when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                if ((UserInfo.getUserBean().logintype) == Constant.LOGIN_TYPE_STU) {
+                    llItem3.visibility = View.GONE
+                    llItem6.visibility = View.VISIBLE
+                } else {
+                    llItem3.visibility = View.VISIBLE
+                    llItem6.visibility = View.GONE
+                    llItem2.visibility = View.GONE
+                }
                 llItem4.visibility = View.GONE
             }
 
-            AppInfo.checkRule2("user/student/modifyParents") -> {
-                tvNameMine.text = UserInfo.getUserBean().parentname
-                llItem3.visibility = View.VISIBLE
-                llItem6.visibility = View.GONE
-                llItem2.visibility = View.GONE
-                llItem4.visibility = View.GONE
-            }
-
-            AppInfo.checkRule2("user/teachers/modify") -> {
-                if (AppInfo.checkRule2("teacher/classs/codeList")) {
+            "2" -> {
+                if ((UserInfo.getUserBean().classmaster) == "1") {
                     llItem4.visibility = View.VISIBLE
                 } else {
                     llItem4.visibility = View.GONE
@@ -62,6 +63,15 @@ class MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
                 llItem6.visibility = View.GONE
             }
 
+            "99" -> {
+                if ((UserInfo.getUserBean().classmaster) == "1") {
+                    llItem4.visibility = View.VISIBLE
+                } else {
+                    llItem4.visibility = View.GONE
+                }
+                llItem3.visibility = View.GONE
+                llItem6.visibility = View.GONE
+            }
 
             else -> {
                 llItem3.visibility = View.GONE
@@ -113,7 +123,9 @@ class MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        if (AppInfo.checkRule2("user/student/modifyParents")) {
+        if (UserInfo.getUserBean().usertype == "1" &&
+            UserInfo.getUserBean().logintype == Constant.LOGIN_TYPE_PAR
+        ) {
 
         } else {
             initAvatar()
