@@ -107,39 +107,38 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
             return@setOnEditorActionListener false
         }
 
-        when {
+        when (UserInfo.getUserBean().usertype) {
 
-            AppInfo.checkRule2("user/student/modify") -> {
-                llMineItem6.visibility = View.GONE
+            "1" -> {
+                if (UserInfo.getUserBean().logintype == Constant.LOGIN_TYPE_STU) {
+                    llMineItem6.visibility = View.GONE
+                } else {
+                    etMineItem1.isEnabled = true
+                    name = bean.parentname
+                    phone = bean.parentphone
+                    llMineItem2.visibility = View.GONE
+                    llMineItem3.visibility = View.GONE
+                    llMineItem5.visibility = View.GONE
+                    llMineItem6.visibility = View.GONE
+                    llMineItem7.visibility = View.GONE
+                    llMineItem8.visibility = View.GONE
+                    llMineItemEduId.visibility = View.GONE
+                    ivAvatarMineInfo.isClickable = false
+                }
             }
-
-            AppInfo.checkRule2("user/student/modifyParents") -> {
-                etMineItem1.isEnabled = true
-                name = bean.parentname
-                phone = bean.parentphone
-                llMineItem2.visibility = View.GONE
-                llMineItem3.visibility = View.GONE
-                llMineItem5.visibility = View.GONE
-                llMineItem6.visibility = View.GONE
-                llMineItem7.visibility = View.GONE
-                llMineItemEduId.visibility= View.GONE
-                llMineItem8.visibility = View.GONE
-                ivAvatarMineInfo.isClickable = false
-            }
-            AppInfo.checkRule2("user/teachers/modify") -> {
+            "2" -> {
                 llMineItem5.visibility = View.GONE
                 llMineItem7.visibility = View.GONE
                 llMineItemEduId.visibility = View.GONE
             }
 
+            "99" -> {
+                llMineItem5.visibility = View.GONE
+                llMineItem7.visibility = View.GONE
+                llMineItemEduId.visibility = View.GONE
+            }
             else -> {
-                llMineItem2.visibility = View.GONE
-                llMineItem3.visibility = View.GONE
-                llMineItem5.visibility = View.GONE
-                llMineItem6.visibility = View.GONE
-                llMineItem7.visibility = View.GONE
-                llMineItemEduId.visibility = View.GONE
-                llMineItem8.visibility = View.GONE
+
             }
         }
         etMineItem1.setText(name)
@@ -157,7 +156,9 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
     override fun initData() {
         super.initData()
-        if (AppInfo.checkRule2("user/student/modifyParents")) {
+        if (UserInfo.getUserBean().usertype == "1" &&
+            UserInfo.getUserBean().logintype == Constant.LOGIN_TYPE_PAR
+        ) {
 
         } else {
             initAvatar()
