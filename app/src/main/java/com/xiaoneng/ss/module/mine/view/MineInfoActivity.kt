@@ -167,11 +167,13 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
     }
 
     private fun initAvatar() {
-        displayImage(
-            this,
-            UserInfo.getUserBean().domain + UserInfo.getUserBean().portrait,
-            ivAvatarMineInfo
-        )
+        if (!UserInfo.getUserBean().portrait.isNullOrEmpty()) {
+            displayImage(
+                this,
+                UserInfo.getUserBean().domain + UserInfo.getUserBean().portrait,
+                ivAvatarMineInfo
+            )
+        }
     }
 
     private fun choosePic() {

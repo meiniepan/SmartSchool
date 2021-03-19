@@ -133,11 +133,13 @@ class MineFragment : BaseLifeCycleFragment<AccountViewModel>() {
     }
 
     private fun initAvatar() {
-                displayImage(
-                    requireContext(),
-                    UserInfo.getUserBean().domain+UserInfo.getUserBean().portrait,
-                    ivAvatarMine
-                )
+        if (!UserInfo.getUserBean().portrait.isNullOrEmpty()) {
+            displayImage(
+                requireContext(),
+                UserInfo.getUserBean().domain + UserInfo.getUserBean().portrait,
+                ivAvatarMine
+            )
+        }
     }
 
     override fun initDataObserver() {

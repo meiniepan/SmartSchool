@@ -51,6 +51,7 @@ class RoomBookRecordAdapter(layoutId: Int, listData: MutableList<SiteBean>) :
             holder.setText(R.id.tvRoomBookTime, timeStr)
             holder.setText(R.id.tvRoomBookStatus, statusStr)
             holder.setText(R.id.tvRoomBookTheme, item.remark)
+                .setText(R.id.tvRoomBookRoomName, item.classroomname)
         }
     }
 
