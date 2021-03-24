@@ -18,7 +18,7 @@ class AttendanceSchoolItemAdapter(layoutId: Int, listData: MutableList<Attendanc
     override fun convert(viewHolder: BaseViewHolder?, item: AttendanceStuBean) {
         viewHolder?.let { holder ->
             holder.setText(R.id.tvNameLeaveTypeSchool, item?.realname)
-                .setText(R.id.tvClassLeaveTypeSchool,item?.levelname+item?.classname)
+                .setText(R.id.tvClassLeaveTypeSchool, item?.levelname + item?.classname)
         }
     }
 

@@ -50,4 +50,4 @@ data class CourseBean(
     var showhim: String? = ""
 
 
-    ):Parcelable
+) : Parcelable

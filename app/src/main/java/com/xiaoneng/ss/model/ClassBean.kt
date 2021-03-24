@@ -12,6 +12,6 @@ data class ClassBean(
     var id: String?,
     var classname: String?,
     var level: String?,
-    var choice: String? ,
+    var choice: String?,
     var levelname: String?
 )

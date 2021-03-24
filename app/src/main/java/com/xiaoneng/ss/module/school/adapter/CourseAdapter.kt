@@ -32,7 +32,7 @@ class CourseAdapter(layoutId: Int, listData: MutableList<CourseBean>) :
                     holder.setText(R.id.tvNameCourse, item?.coursename)
                 } else {
                     if (AppInfo.checkRule2("teacher/courses/timeTable")) {
-                        holder.setText(R.id.tvNameCourse, item?.levelname+item?.classname)
+                        holder.setText(R.id.tvNameCourse, item?.levelname + item?.classname)
                     } else {
                         holder.setText(R.id.tvNameCourse, item?.coursename)
                     }

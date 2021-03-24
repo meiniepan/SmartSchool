@@ -170,7 +170,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         if (mDataDepartment.size > 0 || mDataClasses.size > 0) {
             mAdapterDepartment.notifyDataSetChanged()
             mDataDepartment.forEach {
-                if (it.num!!.toInt()>0) {
+                if (it.num!!.toInt() > 0) {
                     mDataInvolve.addAll(it.list)
                 }
             }
@@ -441,7 +441,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     it.forEach {
                         it.list.forEach {
 
-                            mDataClasses.add(DepartmentBean(it.id, it.levelname+it.classname))
+                            mDataClasses.add(DepartmentBean(it.id, it.levelname + it.classname))
                         }
 
                     }
