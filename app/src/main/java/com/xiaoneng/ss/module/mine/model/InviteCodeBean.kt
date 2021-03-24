@@ -15,6 +15,7 @@ data class InviteCodeBean(
     var day : String? = null,
     var classid : String? = null,
     var classname : String? = null,
+    var levelname : String? = null,
     var schoolname : String? = null,
     var schoolid : String? = null,
     var muser_id : String? = null,

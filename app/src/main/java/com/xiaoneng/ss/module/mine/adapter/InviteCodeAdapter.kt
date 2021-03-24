@@ -24,7 +24,7 @@ class InviteCodeAdapter(layoutId: Int, listData: MutableList<InviteCodeBean>?) :
     override fun convert(viewHolder: BaseViewHolder?, item: InviteCodeBean) {
         viewHolder?.let { holder ->
 
-            holder.setText(R.id.tvNameInviteCode, item?.classname)
+            holder.setText(R.id.tvNameInviteCode, item?.levelname+item?.classname)
                 .setText(R.id.tvCodeInviteCode, item?.code)
 
             holder.getView<TextView>(R.id.tvCopyInviteCode).apply {

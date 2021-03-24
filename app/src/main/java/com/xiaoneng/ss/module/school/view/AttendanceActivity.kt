@@ -415,10 +415,10 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         titles2.clear()
                         mClassData.addAll(it.classs)
                         mClassData.forEach {
-                            titles2.add(it.classname ?: "")
+                            titles2.add(it.levelname +it.classname)
                             if (it.choice == "1") {
                                 currentClassId = it.classid
-                                tvLabel2Attendance.text = it.classname
+                                tvLabel2Attendance.text = it.levelname+it.classname
                             }
                         }
                     }

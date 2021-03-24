@@ -25,6 +25,7 @@ data class AttendanceStuBean(
     var leavetype: String? = "",//请假类型1事假2病假3传染病
     var remark: String? = "",
     var classname: String? = "",
+    var levelname: String? = "",
     var atttime: String? = "",
     var courseid: String? = "",
     var leaveid: String? = "",

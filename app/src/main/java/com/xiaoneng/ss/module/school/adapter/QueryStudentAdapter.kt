@@ -18,7 +18,7 @@ class QueryStudentAdapter(layoutId: Int, listData: MutableList<StudentBean>) :
 
     override fun convert(viewHolder: BaseViewHolder?, item: StudentBean) {
         viewHolder?.let { holder ->
-            var nameStr = item.realname + "-" + item.classname
+            var nameStr = item.realname + "-" + item.levelname+ item.classname
             holder.setText(R.id.tvName1Query, nameStr)
                 .setText(R.id.tvName2Query, item.cno)
 

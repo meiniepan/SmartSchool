@@ -201,7 +201,7 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private fun initClassDialog(): Dialog {
         var titles = ArrayList<String>().apply {
             mDataClass.forEach {
-                add(it.classname ?: "")
+                add(it.levelname+it.classname)
             }
         }
         // 底部弹出对话框
@@ -264,10 +264,10 @@ class TimetableActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         mDataClass.clear()
                         mDataClass.addAll(it.classs)
                         if (mDataClass.size > 0) {
-                            tvTab2.text = mDataClass[0].classname
+                            tvTab2.text = mDataClass[0].levelname+mDataClass[0].classname
                             mDataClass.forEach {
                                 if (it.choice =="1"){
-                                    tvTab2.text = it.classname
+                                    tvTab2.text = it.levelname+it.classname
                                 }
                             }
                         }

@@ -36,7 +36,7 @@ class AttendanceTeacherAdapter(layoutId: Int, listData: MutableList<AttCourseBea
                 .setText(R.id.tvTimeAtt, item?.crstime)
 
             if (isTeacher) {
-                tvCourseName.text = item.classname
+                tvCourseName.text = item.levelname+item.classname
                 tvTeacherName.visibility = View.GONE
             } else {
                 tvCourseName.text = item.coursename

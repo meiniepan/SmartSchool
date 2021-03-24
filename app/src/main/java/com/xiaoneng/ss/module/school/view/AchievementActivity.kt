@@ -172,7 +172,7 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             adapter = dialogAdapter
         }
         dialogAdapter.setOnItemClickListener { adapter, view, position ->
-            tvActionClass.text = mDataClass[position].classname
+            tvActionClass.text = mDataClass[position].levelname+mDataClass[position].classname
             classid = mDataClass[position].classid
             rvPerformance.showLoadingView()
             doRefresh()
@@ -299,7 +299,7 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         return@Observer
                     }
                     if (mDataClass.size > 0) {
-                        currentClass = mDataClass[0].classname
+                        currentClass = mDataClass[0].levelname+mDataClass[0].classname
                         classid = mDataClass[0].classid
                     }
                     if (mDataCourse.size > 0) {
@@ -312,7 +312,7 @@ class AchievementActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     tvActionTest.text = currentTest
 
                     mDataClass.forEach {
-                        titlesClass.add(it.classname ?: "")
+                        titlesClass.add(it.levelname +it.classname)
                     }
 
                     mDataCourse.forEach {

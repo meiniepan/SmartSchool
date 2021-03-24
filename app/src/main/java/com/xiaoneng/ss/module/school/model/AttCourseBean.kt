@@ -31,6 +31,7 @@ data class AttCourseBean(
     var campus: String? = "",//校区
     var level: String? = "",
     var classname: String? = "",
+    var levelname: String? = "",
     var weekday: String? = "",
     var weeks: String? = "",
     var hour: String? = "",
