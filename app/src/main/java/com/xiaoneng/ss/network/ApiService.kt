@@ -1024,6 +1024,28 @@ interface ApiService {
         @Field("id") id: String?
     ): BaseResponse<Any>
 
+    /**
+     *私有云我的文件夹
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/disk/folder/mylists")
+    suspend fun getPriCloudList(
+        @Field("token") token: String?,
+        @Field("uid") uid: String?,
+        @Field("fileid") fileid: String?
+    ): BaseResponse<Any>
+
+    /**
+     *共享云授权文件及文件夹
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/disk/folder/myFolderFiles")
+    suspend fun getPubCloudList(
+        @Field("token") token: String?,
+        @Field("uid") uid: String?,
+        @Field("fileid") fileid: String?
+    ): BaseResponse<Any>
+
 
 
 }

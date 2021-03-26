@@ -86,7 +86,8 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
-        mViewModel.getBookList("")
+        mViewModel.getPriCloudList()
+        mViewModel.getPubCloudList()
     }
 
     private fun initAdapter() {
