@@ -1046,6 +1046,19 @@ interface ApiService {
         @Field("fileid") fileid: String?
     ): BaseResponse<Any>
 
+    /**
+     *创建文件夹
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/disk/folder/add")
+    suspend fun newFileFolder(
+        @Field("token") token: String?,
+        @Field("parentid") parentid: String?,
+        @Field("foldername") foldername: String?,
+        @Field("type") type: String?=null,
+        @Field("status") status: String?=null
+    ): BaseResponse<Any>
+
 
 
 }

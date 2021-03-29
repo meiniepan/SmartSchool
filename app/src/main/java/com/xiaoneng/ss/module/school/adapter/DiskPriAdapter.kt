@@ -15,7 +15,7 @@ import com.xiaoneng.ss.module.school.model.DiskFileBean
  * @date: 2020/08/27
  * Time: 17:32
  */
-class DiskAdapter(layoutId: Int, listData: MutableList<DiskFileBean>?) :
+class DiskPriAdapter(layoutId: Int, listData: MutableList<DiskFileBean>?) :
     BaseQuickAdapter<DiskFileBean, BaseViewHolder>(layoutId, listData) {
 
     override fun convert(viewHolder: BaseViewHolder?, item: DiskFileBean?) {

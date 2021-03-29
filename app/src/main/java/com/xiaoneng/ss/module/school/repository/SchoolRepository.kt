@@ -536,6 +536,11 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
+    suspend fun newFileFolder(parentid:String?=null,foldername:String?=null): Any {
+        return apiService.newFileFolder(UserInfo.getUserBean().token, parentid = parentid,foldername = foldername)
+            .dataConvert(loadState)
+    }
+
     suspend fun getBookList(start: String,end:String?=null): Any {
         return apiService.getBookList(UserInfo.getUserBean().token, start,end)
             .dataConvert(loadState)

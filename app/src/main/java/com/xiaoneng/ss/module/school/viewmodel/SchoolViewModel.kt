@@ -38,6 +38,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mBaseData: MutableLiveData<Any> = MutableLiveData()
     val mPriCloudData: MutableLiveData<Any> = MutableLiveData()
     val mPubCloudData: MutableLiveData<Any> = MutableLiveData()
+    val mNewFolderData: MutableLiveData<Any> = MutableLiveData()
     val mBookRoomData: MutableLiveData<Any> = MutableLiveData()
     val mBookMonthData: MutableLiveData<Any> = MutableLiveData()
     val mAddBookSiteData: MutableLiveData<Any> = MutableLiveData()
@@ -340,6 +341,13 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     fun getPubCloudList(fileId:String?=null) {
         initiateRequest(
             { mPubCloudData.value = mRepository.getPubCloudList(fileId) },
+            loadState
+        )
+    }
+
+    fun newFileFolder(parentid:String?=null,foldername:String?=null) {
+        initiateRequest(
+            { mNewFolderData.value = mRepository.newFileFolder(parentid,foldername) },
             loadState
         )
     }

@@ -14,6 +14,9 @@ import com.tencent.bugly.proguard.T
  */
 data class DiskFileBean(
     var id: String = "",
+    var parentid: String = "",
+    var foldername: String = "",
+    var updatetime: String = "",
     var path: String = "",
     var objectKey: String = "",
     var totalSize: Long = 0,
