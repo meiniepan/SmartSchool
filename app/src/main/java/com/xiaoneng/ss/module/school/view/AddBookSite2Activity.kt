@@ -47,7 +47,7 @@ class AddBookSite2Activity : BaseLifeCycleActivity<SchoolViewModel>() {
     private val roomDialog: Dialog by lazy {
         initRoomDialog()
     }
-    var startPosition = 0
+    var startPosition = 16
     var endPosition = 0
     var timeStart = ""
     var timeEnd = ""
