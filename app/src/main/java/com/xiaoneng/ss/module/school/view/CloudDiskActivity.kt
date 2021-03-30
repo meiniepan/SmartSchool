@@ -3,10 +3,16 @@ package com.xiaoneng.ss.module.school.view
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Handler
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.animation.doOnEnd
 import androidx.lifecycle.Observer
@@ -15,10 +21,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.FileTransInfo
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.getOssObjectKey
-import com.xiaoneng.ss.common.utils.mStartActivity
-import com.xiaoneng.ss.common.utils.mToast
-import com.xiaoneng.ss.common.utils.netResponseFormat
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.common.utils.oss.OssListener
 import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.model.StsTokenResp
@@ -26,10 +29,7 @@ import com.xiaoneng.ss.model.TestCourseResp
 import com.xiaoneng.ss.module.school.adapter.DiskAdapter
 import com.xiaoneng.ss.module.school.adapter.DiskPriAdapter
 import com.xiaoneng.ss.module.school.adapter.DiskPubAdapter
-import com.xiaoneng.ss.module.school.model.DiskFileBean
-import com.xiaoneng.ss.module.school.model.DiskFileResp
-import com.xiaoneng.ss.module.school.model.FileExtBean
-import com.xiaoneng.ss.module.school.model.FileInfoBean
+import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_add_involve.*
 import kotlinx.android.synthetic.main.activity_add_task.*
@@ -49,12 +49,15 @@ import java.io.File
 class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapterPri: DiskPriAdapter
     lateinit var mAdapterPub: DiskPubAdapter
-    var mPriData: ArrayList<DiskFileBean> = ArrayList()
-    var mPubData: ArrayList<DiskFileBean> = ArrayList()
+    var mPriData: ArrayList<FolderBean> = ArrayList()
+    var mPubData: ArrayList<FolderBean> = ArrayList()
     var rotationB = false
     var filePath: String? = null
     var fileName: String? = null
     var mCurrent: Int = 0
+    private val newFolderDialog: Dialog by lazy {
+        initDialog()
+    }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_cloud_disk
@@ -88,7 +91,7 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             anim.start()
         }
         tvDiskUpload.setOnClickListener { choseFile() }
-        tvDiskNew.setOnClickListener {newFileFolder() }
+        tvDiskNew.setOnClickListener {newFolderDialog.show() }
         ivFileRecord.setOnClickListener {
             mStartActivity<CloudTransActivity>(this)
         }
@@ -108,7 +111,7 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun initAdapter() {
 
-        mAdapterPri = DiskPriAdapter(R.layout.item_disk, mPriData)
+        mAdapterPri = DiskPriAdapter(R.layout.item_folder_pri, mPriData)
         mAdapterPub = DiskPubAdapter(R.layout.item_disk, mPubData)
         rvDisk.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@CloudDiskActivity)
@@ -117,6 +120,17 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         mAdapterPri.setOnItemClickListener { adapter, view, position ->
 
+        }
+        mAdapterPri.setOnItemChildClickListener { adapter, view, position ->
+            when (view.id) {
+
+                R.id.ivFolderInfo -> {
+                    mStartActivity<FolderSettingActivity>(this) {
+                        putExtra(Constant.DATA, mPriData[position])
+                    }
+                }
+
+            }
         }
     }
     private fun checkFirsTab() {
@@ -143,11 +157,6 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         intent.setType("*/*") //设置类型，我这里是任意类型，任意后缀的可以这样写。
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         startActivityForResult(intent, 1)
-
-    }
-
-    private fun newFileFolder() {
-        mViewModel.newFileFolder(foldername = "安卓文件夹1")
 
     }
 
@@ -186,6 +195,41 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 }
 
             })
+    }
+
+    private fun initDialog(): Dialog {
+        // 底部弹出对话框
+        var bottomDialog =
+            Dialog(this, R.style.BottomDialog)
+        val contentView: View =
+            LayoutInflater.from(this).inflate(R.layout.dialog_new_folder, null)
+        bottomDialog.setContentView(contentView)
+        val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
+        params.width =
+            this.resources.displayMetrics.widthPixels - dp2px(32f).toInt()
+        params.bottomMargin = dp2px(this, 0f).toInt()
+        contentView.layoutParams = params
+        bottomDialog.window!!.setGravity(Gravity.CENTER)
+        var etFolderName = contentView.findViewById<EditText>(R.id.etFolderName)
+        var tvConfirm = contentView.findViewById<TextView>(R.id.tvFolderConfirm)
+        contentView.findViewById<View>(R.id.ivClose).setOnClickListener {
+            bottomDialog.dismiss()
+        }
+
+        tvConfirm.setOnClickListener {
+            var folderName = etFolderName.text.toString()
+
+            if (folderName.isEmpty()) {
+                mToast(R.string.lack_info)
+                return@setOnClickListener
+            }
+
+            showLoading()
+            mViewModel.newFileFolder(foldername= folderName)
+            bottomDialog.dismiss()
+        }
+
+        return bottomDialog
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -242,8 +286,7 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 netResponseFormat<DiskFileResp>(it)?.let {
                     mPubData.clear()
                     it.data?.let { it1 -> mPubData.addAll(it1) }
-                    rvDisk.recyclerView.setAdapter(mAdapterPub)
-                    rvDisk.notifyDataSetChanged()
+
                 }
 
             }

@@ -13,6 +13,6 @@ import com.tencent.bugly.proguard.T
  * Time: 17:06
  */
 data class DiskFileResp(
-    var data: ArrayList<DiskFileBean>? = null
+    var data: ArrayList<FolderBean>? = null
 
 )

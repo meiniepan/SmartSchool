@@ -352,6 +352,13 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
+    fun setFileFolder(parentid:String?=null,folderid:String?=null,uid:String?=null) {
+        initiateRequest(
+            { mBaseData.value = mRepository.setFileFolder(parentid,folderid,uid) },
+            loadState
+        )
+    }
+
     fun getBookRoomList(start: String,end:String?=null) {
         initiateRequest(
             { mBookRoomData.value = mRepository.getBookRoomList(start,end) },

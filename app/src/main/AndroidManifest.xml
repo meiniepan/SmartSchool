@@ -245,6 +245,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".module.school.view.CloudTransActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".module.school.view.FolderSettingActivity"
+            android:screenOrientation="portrait"/>
 
 
         <provider
