@@ -47,7 +47,8 @@ class AddBookSite2Activity : BaseLifeCycleActivity<SchoolViewModel>() {
     private val roomDialog: Dialog by lazy {
         initRoomDialog()
     }
-    var startPosition = 16
+    var basePosition = 16
+    var startPosition = 0
     var endPosition = 0
     var timeStart = ""
     var timeEnd = ""
@@ -80,8 +81,9 @@ class AddBookSite2Activity : BaseLifeCycleActivity<SchoolViewModel>() {
                 isStart = true
                 timeTitles.clear()
                 timeTitles.apply {
-                    initSiteTimes().forEach {
-                        add(it.timeStr ?: "")
+                    var d = initSiteTimes()
+                    for (i in basePosition until d.size) {
+                        add(d[i].timeStr ?: "")
                     }
                 }
                 timeDialogAdapter.notifyDataSetChanged()
@@ -96,7 +98,7 @@ class AddBookSite2Activity : BaseLifeCycleActivity<SchoolViewModel>() {
                 timeTitles.clear()
                 timeTitles.apply {
                     var d = initSiteTimes()
-                    for (i in startPosition+1 until d.size) {
+                    for (i in basePosition+startPosition+1 until d.size) {
                         add(d[i].timeStr ?: "")
                     }
                 }
