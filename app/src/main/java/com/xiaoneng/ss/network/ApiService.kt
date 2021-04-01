@@ -1036,10 +1036,29 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
-     *共享云授权文件及文件夹
+     *私有云文件夹文件
      */
     @FormUrlEncoded
-    @POST("/api/v17/disk/folder/myFolderFiles")
+    @POST("/api/v17/disk/folder/myFiles")
+    suspend fun getPriCloudFiles(
+        @Field("token") token: String?,
+        @Field("folderid") folderid: String?
+    ): BaseResponse<Any>
+
+    /**
+     *上传我的文件
+     */
+    @POST("/api/v17/disk/files/add")
+    suspend fun addFile(
+        @Body fileBean:DiskFileBean
+    ): BaseResponse<Any>
+
+    /**
+     *共享文件夹
+
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/disk/folder/myShareFolder")
     suspend fun getPubCloudList(
         @Field("token") token: String?,
         @Field("uid") uid: String?,
@@ -1060,7 +1079,7 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
-     *创建文件夹
+     *文件夹授权
      */
     @FormUrlEncoded
     @POST("/api/v17/disk/folderrs/add")
@@ -1069,6 +1088,9 @@ interface ApiService {
         @Field("parentid") parentid: String?=null,
         @Field("folderid") folderid: String?,
         @Field("uid") uid: String?=null,
+        @Field("usertype") usertype: String?=null,
+        @Field("sendlabel") sendlabel: String?=null,
+        @Field("involve") involve: String?=null,
         @Field("status") status: String?=null
     ): BaseResponse<Any>
 

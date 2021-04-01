@@ -14,10 +14,15 @@ import kotlinx.android.parcel.Parcelize
  * Time: 17:06
  */
 data class DiskFileBean(
+    var token: String? = "",
     var id: String = "",
     var parentid: String = "",
     var foldername: String = "",
     var updatetime: String = "",
+    var filename: String = "",
+    var fileinfo: String = "",
+    var objectid: String = "",
+    var folderid: String = "",
     var path: String = "",
     var objectKey: String = "",
     var totalSize: Long = 0,

@@ -2,8 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,16 +19,6 @@
             <com.xiaoneng.ss.custom.widgets.CustomTitleBar
                 style="@style/title_style"
                 app:title="@string/diskTitle" />
-
-            <ImageView
-                android:id="@+id/ivFileRecord"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/title_padding"
-                android:src="@drawable/ic_file_record"
-                />
         </RelativeLayout>
 
         <include layout="@layout/layout_split" />
@@ -78,36 +67,10 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/llTitleStu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/title_padding"
-                android:paddingTop="12dp"
-                android:paddingEnd="@dimen/title_padding"
-                android:paddingBottom="12dp">
-
-                <TextView
-                    android:id="@+id/tvPrivate"
-                    style="@style/button_blue_bac_style"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginEnd="0dp"
-                    android:layout_weight="1"
-                    android:text="私有云" />
-
-
-                <TextView
-                    android:id="@+id/tvPublic"
-                    style="@style/button_blue_line_style"
-                    android:layout_marginStart="17dp"
-                    android:layout_marginEnd="0dp"
-                    android:layout_weight="1"
-                    android:text="共享云" />
-
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tvParentName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <include layout="@layout/layout_split" />
 
@@ -121,10 +84,10 @@
         android:id="@+id/llMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/commonHint"
         android:alpha="0.6"
-        android:visibility="gone"
-        android:orientation="vertical"/>
+        android:background="@color/commonHint"
+        android:orientation="vertical"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -138,10 +101,10 @@
             style="@style/button_blue_bac_style"
             android:layout_width="145dp"
             android:layout_height="38dp"
-            android:visibility="gone"
             android:layout_gravity="end"
             android:layout_marginEnd="85dp"
-            android:text="上传" />
+            android:text="上传"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -155,9 +118,9 @@
                 style="@style/button_blue_bac_style"
                 android:layout_width="145dp"
                 android:layout_height="38dp"
-                android:visibility="gone"
                 android:layout_marginEnd="15dp"
-                android:text="新建文件夹" />
+                android:text="新建文件夹"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/ivAddFile"

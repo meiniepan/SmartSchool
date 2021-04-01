@@ -531,6 +531,16 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
+    suspend fun getPriCloudFiles(folderid:String?=null): Any {
+        return apiService.getPriCloudFiles(UserInfo.getUserBean().token, folderid = folderid)
+            .dataConvert(loadState)
+    }
+
+    suspend fun addFile(fileBean: DiskFileBean): Any {
+        return apiService.addFile(fileBean)
+            .dataConvert(loadState)
+    }
+
     suspend fun getPubCloudList(fileId:String?=null): Any {
         return apiService.getPubCloudList(UserInfo.getUserBean().token, uid = UserInfo.getUserBean().uid,fileid = fileId)
             .dataConvert(loadState)
@@ -541,8 +551,8 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
-    suspend fun setFileFolder(parentid:String?=null,folderid:String?=null,uid:String?=null): Any {
-        return apiService.setFileFolder(UserInfo.getUserBean().token, parentid = parentid,folderid = folderid,uid = uid)
+    suspend fun setFileFolder(parentid:String?=null,folderid:String?=null,involve:String?=null): Any {
+        return apiService.setFileFolder(UserInfo.getUserBean().token, parentid = parentid,folderid = folderid,involve = involve)
             .dataConvert(loadState)
     }
 

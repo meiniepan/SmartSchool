@@ -17,7 +17,9 @@ import android.widget.Toast
 import androidx.core.animation.doOnEnd
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.account.model.UserBean
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.FileTransInfo
 import com.xiaoneng.ss.common.state.UserInfo
@@ -47,7 +49,9 @@ import java.io.File
  * @date :2021/03/30 3:17 PM
  */
 class FolderSettingActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    var filePath: String? = null
+    var folderBean: FolderBean? = null
+    var involves: ArrayList<UserBean> = ArrayList()
+
 
 
     override fun getLayoutId(): Int {
@@ -56,6 +60,7 @@ class FolderSettingActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
+        folderBean = intent.getParcelableExtra(Constant.DATA)
         tvConfirm.setOnClickListener {
             doConfirm()
         }
@@ -71,7 +76,8 @@ class FolderSettingActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun doConfirm() {
-        mViewModel.setFileFolder()
+        involves.add(UserBean(uid = "12",usertype = "2"))
+        mViewModel.setFileFolder(parentid = folderBean?.parentid,folderid = folderBean?.id,involve = Gson().toJson(involves))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

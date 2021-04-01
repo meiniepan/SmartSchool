@@ -247,6 +247,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".module.school.view.FolderSettingActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".module.school.view.CloudFolderActivity"
+            android:screenOrientation="portrait"/>
 
 
         <provider

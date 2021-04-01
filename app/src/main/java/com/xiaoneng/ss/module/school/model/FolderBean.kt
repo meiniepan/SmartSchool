@@ -19,6 +19,7 @@ data class FolderBean(
     var id: String = "",
     var parentid: String = "",
     var foldername: String = "",
+    var fullName: String = "",
     var updatetime: String = "",
     var path: String = "",
     var schoolname: String= ""

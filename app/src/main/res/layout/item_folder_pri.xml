@@ -61,8 +61,8 @@
         </LinearLayout>
         <ImageView
             android:id="@+id/ivFolderInfo"
-            android:layout_width="14dp"
-            android:layout_height="14dp"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
             android:src="@drawable/ic_info" />
     </LinearLayout>
 

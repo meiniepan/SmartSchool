@@ -338,6 +338,20 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
+    fun getPriCloudFiles(folderid:String?=null) {
+        initiateRequest(
+            { mPriCloudData.value = mRepository.getPriCloudFiles(folderid) },
+            loadState
+        )
+    }
+
+    fun addFile(fileBean: DiskFileBean) {
+        initiateRequest(
+            { mPriCloudData.value = mRepository.addFile(fileBean) },
+            loadState
+        )
+    }
+
     fun getPubCloudList(fileId:String?=null) {
         initiateRequest(
             { mPubCloudData.value = mRepository.getPubCloudList(fileId) },
@@ -352,9 +366,9 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun setFileFolder(parentid:String?=null,folderid:String?=null,uid:String?=null) {
+    fun setFileFolder(parentid:String?=null,folderid:String?=null,involve:String?=null) {
         initiateRequest(
-            { mBaseData.value = mRepository.setFileFolder(parentid,folderid,uid) },
+            { mBaseData.value = mRepository.setFileFolder(parentid,folderid,involve) },
             loadState
         )
     }

@@ -28,6 +28,12 @@ import com.xiaoneng.ss.module.school.adapter.DiskPubAdapter
 import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_cloud_disk.*
+import kotlinx.android.synthetic.main.activity_cloud_disk.ivAddFile
+import kotlinx.android.synthetic.main.activity_cloud_disk.llMain
+import kotlinx.android.synthetic.main.activity_cloud_disk.rvDisk
+import kotlinx.android.synthetic.main.activity_cloud_disk.tvDiskNew
+import kotlinx.android.synthetic.main.activity_cloud_disk.tvDiskUpload
+import kotlinx.android.synthetic.main.activity_cloud_folder.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -40,39 +46,32 @@ import java.io.File
  * @description:教学云盘
  * @date :2020/10/23 3:17 PM
  */
-class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapterPri: DiskPriAdapter
-    lateinit var mAdapterPub: DiskPubAdapter
     var mPriData: ArrayList<FolderBean> = ArrayList()
-    var mPubData: ArrayList<FolderBean> = ArrayList()
     var rotationB = false
     var filePath: String? = null
     var fileName: String? = null
+    var folderBean: FolderBean? = null
     var mCurrent: Int = 0
     private val newFolderDialog: Dialog by lazy {
         initDialog()
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_cloud_disk
+        return R.layout.activity_cloud_folder
     }
 
     override fun initView() {
         super.initView()
-        tvPrivate.setOnClickListener {
-            checkFirsTab()
-        }
-        tvPublic.setOnClickListener {
-            checkSecondTab()
-        }
+        folderBean = intent.getParcelableExtra(Constant.DATA)
+        tvParentName.text = folderBean?.fullName
         ivAddFile.setOnClickListener {
             showAdd()
         }
         tvDiskUpload.setOnClickListener { choseFile() }
         tvDiskNew.setOnClickListener { newFolderDialog.show() }
-        ivFileRecord.setOnClickListener {
-            mStartActivity<CloudTransActivity>(this)
-        }
+
         initAdapter()
     }
 
@@ -83,25 +82,19 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
-        mViewModel.getPriCloudList()
-        mViewModel.getPubCloudList()
+        mViewModel.getPriCloudFiles(folderBean?.id)
     }
 
     private fun initAdapter() {
 
         mAdapterPri = DiskPriAdapter(R.layout.item_folder_pri, mPriData)
-        mAdapterPub = DiskPubAdapter(R.layout.item_disk, mPubData)
         rvDisk.recyclerView.apply {
-            layoutManager = LinearLayoutManager(this@CloudDiskActivity)
+            layoutManager = LinearLayoutManager(this@CloudFolderActivity)
             setAdapter(mAdapterPri)
         }
 
         mAdapterPri.setOnItemClickListener { adapter, view, position ->
-            mStartActivity<CloudFolderActivity>(this) {
-                var bean = mPriData[position]
-                bean.fullName = "私有云>"+bean.foldername
-                putExtra(Constant.DATA, mPriData[position])
-            }
+
         }
         mAdapterPri.setOnItemChildClickListener { adapter, view, position ->
             when (view.id) {
@@ -116,7 +109,7 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
     }
 
-    private fun showAdd(it: View=ivAddFile) {
+    private fun showAdd(it: View = ivAddFile) {
         val anim: ObjectAnimator
         if (rotationB) {
             anim = ObjectAnimator.ofFloat(it, "rotation", 45.0F, 0F)
@@ -138,26 +131,6 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         anim.start()
     }
 
-
-    private fun checkFirsTab() {
-        mCurrent = 0
-        tvPrivate.setBackgroundResource(R.drawable.bac_blue_bac)
-        tvPrivate.setTextColor(resources.getColor(R.color.white))
-        tvPublic.setBackgroundResource(R.drawable.bac_blue_line_21)
-        tvPublic.setTextColor(resources.getColor(R.color.themeColor))
-        rvDisk.recyclerView.setAdapter(mAdapterPri)
-        rvDisk.notifyDataSetChanged()
-    }
-
-    private fun checkSecondTab() {
-        mCurrent = 1
-        tvPublic.setBackgroundResource(R.drawable.bac_blue_bac)
-        tvPublic.setTextColor(resources.getColor(R.color.white))
-        tvPrivate.setBackgroundResource(R.drawable.bac_blue_line_21)
-        tvPrivate.setTextColor(resources.getColor(R.color.themeColor))
-        rvDisk.recyclerView.setAdapter(mAdapterPub)
-        rvDisk.notifyDataSetChanged()
-    }
 
     private fun choseFile() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -193,7 +166,13 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             object : OssListener {
                 override fun onSuccess() {
                     mRootView.post {
-
+                        var bean = DiskFileBean(
+                            token = UserInfo.getUserBean().token,
+                            filename = fileName ?: "",
+                            objectid = objectKey,
+                            folderid = folderBean?.id ?: ""
+                        )
+                        mViewModel.addFile(bean)
 
                     }
 
@@ -293,15 +272,5 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
         })
 
-        mViewModel.mPubCloudData.observe(this, Observer { response ->
-            response?.let {
-                netResponseFormat<DiskFileResp>(it)?.let {
-                    mPubData.clear()
-                    it.data?.let { it1 -> mPubData.addAll(it1) }
-
-                }
-
-            }
-        })
     }
 }
