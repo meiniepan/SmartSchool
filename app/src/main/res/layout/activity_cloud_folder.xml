@@ -65,10 +65,18 @@
             android:id="@+id/contentLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvParentName"
+                android:paddingStart="@dimen/title_padding"
+                android:paddingEnd="@dimen/title_padding"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:ellipsize="middle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -77,6 +85,94 @@
             <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
                 android:id="@+id/rvDisk"
                 style="@style/recycler_style" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grayF6"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/title_padding"
+            android:paddingTop="5dp"
+            android:paddingEnd="@dimen/title_padding"
+            android:paddingBottom="5dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvBottomDownload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_file_download"
+                android:drawablePadding="3dp"
+                android:gravity="center_horizontal"
+                android:text="下载"
+                android:textColor="@color/commonHint"
+                android:textSize="@dimen/sp_12" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tvBottomRename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_rename"
+                android:drawablePadding="3dp"
+                android:gravity="center_horizontal"
+                android:text="重命名"
+                android:textColor="@color/commonHint"
+                android:textSize="@dimen/sp_12" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tvBottomCopy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_copy"
+                android:drawablePadding="3dp"
+                android:gravity="center_horizontal"
+                android:text="复制到"
+                android:textColor="@color/commonHint"
+                android:textSize="@dimen/sp_12" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tvBottomMove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_move"
+                android:drawablePadding="3dp"
+                android:gravity="center_horizontal"
+                android:text="移动到"
+                android:textColor="@color/commonHint"
+                android:textSize="@dimen/sp_12" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tvBottomDel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_del"
+                android:drawablePadding="3dp"
+                android:gravity="center_horizontal"
+                android:text="删除"
+                android:textColor="@color/commonHint"
+                android:textSize="@dimen/sp_12" />
         </LinearLayout>
     </LinearLayout>
 

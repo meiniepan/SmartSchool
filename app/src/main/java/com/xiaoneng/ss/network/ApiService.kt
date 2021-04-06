@@ -1031,8 +1031,8 @@ interface ApiService {
     @POST("/api/v17/disk/folder/mylists")
     suspend fun getPriCloudList(
         @Field("token") token: String?,
-        @Field("uid") uid: String?,
-        @Field("fileid") fileid: String?
+        @Field("uid") uid: String?=null,
+        @Field("folderid") folderid: String?
     ): BaseResponse<Any>
 
     /**
@@ -1061,8 +1061,8 @@ interface ApiService {
     @POST("/api/v17/disk/folder/myShareFolder")
     suspend fun getPubCloudList(
         @Field("token") token: String?,
-        @Field("uid") uid: String?,
-        @Field("fileid") fileid: String?
+        @Field("uid") uid: String?=null,
+        @Field("folderid") folderid: String?
     ): BaseResponse<Any>
 
     /**

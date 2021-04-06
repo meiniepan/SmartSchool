@@ -10,6 +10,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.animation.doOnEnd
@@ -73,6 +74,21 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         ivFileRecord.setOnClickListener {
             mStartActivity<CloudTransActivity>(this)
         }
+        tvBottomDownload.setOnClickListener {
+
+        }
+        tvBottomRename.setOnClickListener {
+
+        }
+        tvBottomCopy.setOnClickListener {
+
+        }
+        tvBottomMove.setOnClickListener {
+
+        }
+        tvBottomDel.setOnClickListener {
+
+        }
         initAdapter()
     }
 
@@ -111,6 +127,14 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         putExtra(Constant.DATA, mPriData[position])
                     }
                 }
+                R.id.cbDiskFile -> {
+                    var cb:CheckBox = view as CheckBox
+                    if (cb.isChecked){
+                        llBottom.visibility = View.VISIBLE
+                    }else{
+                        llBottom.visibility = View.GONE
+                    }
+                }
 
             }
         }
@@ -122,14 +146,12 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             anim = ObjectAnimator.ofFloat(it, "rotation", 45.0F, 0F)
             anim.doOnEnd {
                 tvDiskNew.visibility = View.GONE
-                tvDiskUpload.visibility = View.GONE
                 llMain.visibility = View.GONE
             }
         } else {
             anim = ObjectAnimator.ofFloat(it, "rotation", 0.0F, 45.0F)
             anim.doOnEnd {
                 tvDiskNew.visibility = View.VISIBLE
-                tvDiskUpload.visibility = View.VISIBLE
                 llMain.visibility = View.VISIBLE
             }
         }

@@ -526,8 +526,8 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
-    suspend fun getPriCloudList(fileId:String?=null): Any {
-        return apiService.getPriCloudList(UserInfo.getUserBean().token, uid = UserInfo.getUserBean().uid,fileid = fileId)
+    suspend fun getPriCloudList(folderid:String?=null): Any {
+        return apiService.getPriCloudList(UserInfo.getUserBean().token, folderid = folderid)
             .dataConvert(loadState)
     }
 
@@ -541,8 +541,8 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
-    suspend fun getPubCloudList(fileId:String?=null): Any {
-        return apiService.getPubCloudList(UserInfo.getUserBean().token, uid = UserInfo.getUserBean().uid,fileid = fileId)
+    suspend fun getPubCloudList(folderid:String?=null): Any {
+        return apiService.getPubCloudList(UserInfo.getUserBean().token, folderid = folderid)
             .dataConvert(loadState)
     }
 

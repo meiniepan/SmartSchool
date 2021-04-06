@@ -10,6 +10,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.animation.doOnEnd
@@ -27,12 +28,6 @@ import com.xiaoneng.ss.module.school.adapter.DiskPriAdapter
 import com.xiaoneng.ss.module.school.adapter.DiskPubAdapter
 import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import kotlinx.android.synthetic.main.activity_cloud_disk.*
-import kotlinx.android.synthetic.main.activity_cloud_disk.ivAddFile
-import kotlinx.android.synthetic.main.activity_cloud_disk.llMain
-import kotlinx.android.synthetic.main.activity_cloud_disk.rvDisk
-import kotlinx.android.synthetic.main.activity_cloud_disk.tvDiskNew
-import kotlinx.android.synthetic.main.activity_cloud_disk.tvDiskUpload
 import kotlinx.android.synthetic.main.activity_cloud_folder.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -49,11 +44,14 @@ import java.io.File
 class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapterPri: DiskPriAdapter
     var mPriData: ArrayList<FolderBean> = ArrayList()
+    var mPriDataFolder: ArrayList<FolderBean> = ArrayList()
+    var mPriDataFile: ArrayList<FolderBean> = ArrayList()
     var rotationB = false
     var filePath: String? = null
     var fileName: String? = null
     var folderBean: FolderBean? = null
     var mCurrent: Int = 0
+    var mNetCount: Int = 0
     private val newFolderDialog: Dialog by lazy {
         initDialog()
     }
@@ -71,7 +69,21 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
         tvDiskUpload.setOnClickListener { choseFile() }
         tvDiskNew.setOnClickListener { newFolderDialog.show() }
+        tvBottomDownload.setOnClickListener {
 
+        }
+        tvBottomRename.setOnClickListener {
+
+        }
+        tvBottomCopy.setOnClickListener {
+
+        }
+        tvBottomMove.setOnClickListener {
+
+        }
+        tvBottomDel.setOnClickListener {
+
+        }
         initAdapter()
     }
 
@@ -83,6 +95,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun getData() {
         super.getData()
         mViewModel.getPriCloudFiles(folderBean?.id)
+        mViewModel.getPriCloudList(folderBean?.id)
     }
 
     private fun initAdapter() {
@@ -94,7 +107,11 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         mAdapterPri.setOnItemClickListener { adapter, view, position ->
-
+            mStartActivity<CloudFolderActivity>(this) {
+                var bean = mPriData[position]
+                bean.fullName = folderBean?.fullName+bean.foldername
+                putExtra(Constant.DATA, mPriData[position])
+            }
         }
         mAdapterPri.setOnItemChildClickListener { adapter, view, position ->
             when (view.id) {
@@ -102,6 +119,14 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 R.id.ivFolderInfo -> {
                     mStartActivity<FolderSettingActivity>(this) {
                         putExtra(Constant.DATA, mPriData[position])
+                    }
+                }
+                R.id.cbDiskFile -> {
+                    var cb: CheckBox = view as CheckBox
+                    if (cb.isChecked){
+                        llBottom.visibility = View.VISIBLE
+                    }else{
+                        llBottom.visibility = View.GONE
                     }
                 }
 
@@ -215,7 +240,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
 
             showLoading()
-            mViewModel.newFileFolder(foldername = folderName)
+            mViewModel.newFileFolder(parentid = folderBean?.id,foldername = folderName)
             bottomDialog.dismiss()
         }
 
@@ -264,10 +289,32 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mViewModel.mPriCloudData.observe(this, Observer { response ->
             response?.let {
                 netResponseFormat<DiskFileResp>(it)?.let {
-                    mPriData.clear()
-                    it.data?.let { it1 -> mPriData.addAll(it1) }
-                    rvDisk.recyclerView.setAdapter(mAdapterPri)
-                    rvDisk.notifyDataSetChanged()
+                    mNetCount++
+                    mPriDataFolder = it.data!!
+                    if (mNetCount == 2){
+                        mPriData.clear()
+                        mPriData.addAll(mPriDataFolder)
+                        mPriData.addAll(mPriDataFile)
+                        rvDisk.recyclerView.setAdapter(mAdapterPri)
+                        rvDisk.notifyDataSetChanged()
+                    }
+
+                }
+            }
+        })
+
+        mViewModel.mPriCloudFilesData.observe(this, Observer { response ->
+            response?.let {
+                netResponseFormat<DiskFileResp>(it)?.let {
+                    mNetCount++
+                    mPriDataFile = it.data!!
+                    if (mNetCount == 2){
+                        mPriData.clear()
+                        mPriData.addAll(mPriDataFolder)
+                        mPriData.addAll(mPriDataFile)
+                        rvDisk.recyclerView.setAdapter(mAdapterPri)
+                        rvDisk.notifyDataSetChanged()
+                    }
                 }
             }
         })
