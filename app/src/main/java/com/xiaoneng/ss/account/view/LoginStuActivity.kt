@@ -38,6 +38,8 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
     private var isHideFirst: Boolean = true
     private var isPwdType: Boolean = false
     private var timer: CountDownTimer? = null
+    private var isAgree: Boolean = true
+
 
     override fun getLayoutId() = R.layout.activity_login_stu
 
@@ -71,6 +73,9 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
 
             }
             return@setOnEditorActionListener false
+        }
+        cbProtocol.setOnCheckedChangeListener { buttonView, isChecked ->
+            isAgree = isChecked
         }
     }
 
@@ -151,22 +156,25 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
         var phoneStr = etPhone.text.toString()
         var vCodeStr = etCaptcha.text.toString()
         var pwdStr = etPwd.text.toString()
-        if (isPwdType) {
-            if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(pwdStr)) {
-                showTip("请输入完整信息")
-                return
-            }
-            showLoading()
-            mViewModel.login(1, LoginReq(phoneStr, spassword = pwdStr))
+        if (!isAgree) {
+            showTip("请先同意用户协议及隐私政策")
         } else {
-            if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(vCodeStr)) {
-                showTip("请输入完整信息")
-                return
+            if (isPwdType) {
+                if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(pwdStr)) {
+                    showTip("请输入完整信息")
+                    return
+                }
+                showLoading()
+                mViewModel.login(1, LoginReq(phoneStr, spassword = pwdStr))
+            } else {
+                if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(vCodeStr)) {
+                    showTip("请输入完整信息")
+                    return
+                }
+                showLoading()
+                mViewModel.login(1, LoginReq(phoneStr, vCodeStr))
             }
-            showLoading()
-            mViewModel.login(1, LoginReq(phoneStr, vCodeStr))
         }
-
     }
 
     override fun onDestroy() {

@@ -1,17 +1,9 @@
 package com.xiaoneng.ss.module.school.adapter
 
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.initSiteTimes
-import com.xiaoneng.ss.common.utils.mStartActivity
-import com.xiaoneng.ss.common.utils.toIntSafe
 import com.xiaoneng.ss.module.school.model.SiteBean
-import com.xiaoneng.ss.module.school.view.AddBookSiteActivity
-import com.xiaoneng.ss.module.school.view.RoomBookRecordsActivity
 
 
 /**

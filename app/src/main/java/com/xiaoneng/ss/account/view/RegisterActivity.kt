@@ -18,13 +18,17 @@ import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.module.mine.view.UserProtocolActivity
+import kotlinx.android.synthetic.main.activity_login_tea.*
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_register.cbProtocol
+import kotlinx.android.synthetic.main.activity_register.tvProtocolRegister
 import org.jetbrains.anko.toast
 
 class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClickListener {
     private var isHideFirst: Boolean = true
     private var isPwdType: Boolean = true
     private var timer: CountDownTimer? = null
+    private var isAgree: Boolean = true
 
     override fun getLayoutId(): Int = R.layout.activity_register
 
@@ -36,7 +40,9 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
         tvRegister.setOnClickListener(this)
         tvSwitchIdRegister.setOnClickListener(this)
         tvProtocolRegister.setOnClickListener(this)
-
+        cbProtocol.setOnCheckedChangeListener { buttonView, isChecked ->
+            isAgree = isChecked
+        }
     }
 
     override fun initDataObserver() {
@@ -84,22 +90,26 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
         var inviteStr = etInviteRegister.text.toString()
         var nameStr = etNameRegister.text.toString()
         var pwdStr = etPwdRegister.text.toString()
-        if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(vCodeStr) || TextUtils.isEmpty(
-                inviteStr
+        if (!isAgree) {
+            showTip("请先同意用户协议及隐私政策")
+        } else {
+            if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(vCodeStr) || TextUtils.isEmpty(
+                    inviteStr
+                )
+            ) {
+                showTip("请输入完整信息")
+                return
+            }
+
+            if (etPwdRegister.text.toString().trim().length < 8) {
+                mToast(R.string.pwd_too_short)
+                return
+            }
+
+            mViewModel.registerCo(
+                RegisterReq(phoneStr, vCodeStr, inviteStr, nameStr, pwdStr)
             )
-        ) {
-            showTip("请输入完整信息")
-            return
         }
-
-        if (etPwdRegister.text.toString().trim().length<8){
-            mToast(R.string.pwd_too_short)
-            return
-        }
-
-        mViewModel.registerCo(
-            RegisterReq(phoneStr, vCodeStr, inviteStr, nameStr, pwdStr)
-        )
     }
 
     private fun dpCaptcha() {

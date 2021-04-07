@@ -31,6 +31,7 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
 
     private var timer: CountDownTimer? = null
     var isTeacher = true
+    private var isAgree: Boolean = true
 
     override fun getLayoutId() = R.layout.activity_login_tea
 
@@ -62,6 +63,9 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
 
             }
             return@setOnEditorActionListener false
+        }
+        cbProtocol.setOnCheckedChangeListener { buttonView, isChecked ->
+            isAgree = isChecked
         }
     }
 
@@ -110,16 +114,19 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
     private fun doLogin() {
         var phoneStr = etPhoneTeacher.text.toString()
         var vCodeStr = etCaptchaTeacher.text.toString()
-
-        if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(vCodeStr)) {
-            showTip("请输入完整信息")
-            return
-        }
-        showLoading()
-        if (isTeacher) {
-            mViewModel.login(2, LoginReq(phoneStr, vCodeStr))
+        if (!isAgree) {
+            showTip("请先同意用户协议及隐私政策")
         } else {
-            mViewModel.login(3, LoginReq(phoneStr, vCodeStr))
+            if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(vCodeStr)) {
+                showTip("请输入完整信息")
+                return
+            }
+            showLoading()
+            if (isTeacher) {
+                mViewModel.login(2, LoginReq(phoneStr, vCodeStr))
+            } else {
+                mViewModel.login(3, LoginReq(phoneStr, vCodeStr))
+            }
         }
     }
 

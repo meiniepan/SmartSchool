@@ -57,6 +57,7 @@ class AddBookSite2Activity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var roomDialogAdapter: DialogListAdapter
     lateinit var timeRecycler: RecyclerView
     var timeTitles = ArrayList<String>()
+    var timeTitles24 = ArrayList<String>()
     var roomTitles = ArrayList<String>()
 
     override fun getLayoutId(): Int {
@@ -86,6 +87,13 @@ class AddBookSite2Activity : BaseLifeCycleActivity<SchoolViewModel>() {
                         add(d[i].timeStr ?: "")
                     }
                 }
+                timeTitles24.clear()
+                timeTitles24.apply {
+                    var d = initSiteTimes24()
+                    for (i in basePosition until d.size) {
+                        add(d[i].timeStr ?: "")
+                    }
+                }
                 timeDialogAdapter.notifyDataSetChanged()
 
             }
@@ -98,6 +106,13 @@ class AddBookSite2Activity : BaseLifeCycleActivity<SchoolViewModel>() {
                 timeTitles.clear()
                 timeTitles.apply {
                     var d = initSiteTimes()
+                    for (i in basePosition+startPosition+1 until d.size) {
+                        add(d[i].timeStr ?: "")
+                    }
+                }
+                timeTitles24.clear()
+                timeTitles24.apply {
+                    var d = initSiteTimes24()
                     for (i in basePosition+startPosition+1 until d.size) {
                         add(d[i].timeStr ?: "")
                     }
@@ -181,11 +196,11 @@ class AddBookSite2Activity : BaseLifeCycleActivity<SchoolViewModel>() {
         timeDialogAdapter.setOnItemClickListener { adapter, view, position ->
             if (isStart) {
                 startPosition = position
-                timeStart = timeTitles[position]
+                timeStart = timeTitles24[position]
                 tvAddSiteStart.text = dateText + " " + timeStart
             } else {
                 endPosition = position
-                timeEnd = timeTitles[position]
+                timeEnd = timeTitles24[position]
                 tvAddSiteEnd.text = dateText + " " + timeEnd
             }
 
