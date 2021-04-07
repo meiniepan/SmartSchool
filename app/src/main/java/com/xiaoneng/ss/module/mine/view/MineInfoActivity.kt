@@ -80,19 +80,6 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                 }
             }
         }
-        etMineItem8.setOnEditorActionListener { teew, i, keyEvent ->
-            when (i) {
-                EditorInfo.IME_ACTION_GO -> {
-                    var bean = UserBean()
-                    bean.token = UserInfo.getUserBean().token
-                    bean.wxname = etMineItem8.text.toString()
-                    showLoading()
-                    mViewModel.modifyUserInfoWx(bean)
-                }
-
-            }
-            return@setOnEditorActionListener false
-        }
 
         etMineItem1.setOnEditorActionListener { teew, i, keyEvent ->
             when (i) {
@@ -101,6 +88,20 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                         showLoading()
                         mViewModel.modifyParentName(etMineItem1.text.toString())
                     }
+                }
+
+            }
+            return@setOnEditorActionListener false
+        }
+
+        tvMineItem6.setOnEditorActionListener { teew, i, keyEvent ->
+            when (i) {
+                EditorInfo.IME_ACTION_GO -> {
+                    var bean = UserBean()
+                    bean.token = UserInfo.getUserBean().token
+                    bean.idcard = tvMineItem6.text.toString()
+                    showLoading()
+                    mViewModel.modifyUserInfoWx(bean)
                 }
 
             }
@@ -121,7 +122,6 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                     llMineItem5.visibility = View.GONE
                     llMineItem6.visibility = View.GONE
                     llMineItem7.visibility = View.GONE
-                    llMineItem8.visibility = View.GONE
                     llMineItemEduId.visibility = View.GONE
                     ivAvatarMineInfo.isClickable = false
                 }
@@ -146,10 +146,9 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
         tvMineItem3.setText(UserInfo.getUserBean().birthday)
         tvMineItem4.text = formatStarPhoneNum(phone)
         tvMineItem5.text = UserInfo.getUserBean().cno
-        tvMineItem6.text = UserInfo.getUserBean().cno
+        tvMineItem6.setText(UserInfo.getUserBean().idcard)
         tvMineItem7.text = UserInfo.getUserBean().sno
         tvMineItemEduId.text = UserInfo.getUserBean().eduid
-        etMineItem8.setText(UserInfo.getUserBean().wxname)
 
     }
 
@@ -362,7 +361,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
         mViewModel.mUserInfoDataWx.observe(this, Observer { response ->
             response?.let {
                 var bean = UserInfo.getUserBean()
-                bean.wxname = it.wxname
+                bean.idcard = it.idcard
                 UserInfo.modifyUserBean(bean)
                 mToast("修改成功")
             }

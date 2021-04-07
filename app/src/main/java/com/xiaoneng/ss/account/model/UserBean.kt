@@ -16,6 +16,7 @@ data class UserBean(
     var cno: String? = null,//学号
     var sno: String? = null,//教育局编号
     var eduid: String? = null,//教育局id
+    var idcard: String? = null,//身份证号
     var realname: String? = null,
     var sex: String? = null,//性别0未知1男2女
     var phone: String? = null,

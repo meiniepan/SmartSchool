@@ -234,11 +234,16 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="工号" />
+                            android:text="身份证号" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/tvMineItem6"
                             android:layout_width="wrap_content"
+                            android:background="@null"
+                            android:singleLine="true"
+                            android:imeOptions="actionGo"
+                            android:gravity="end"
+                            android:hint="请输入身份证号"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="24dp" />
 
@@ -307,42 +312,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="24dp"
                             android:hint="" />
-
-                    </LinearLayout>
-
-                    <include layout="@layout/layout_split" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llMineItem8"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:paddingTop="15dp"
-                        android:paddingBottom="15dp">
-
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="微信号" />
-
-                        <EditText
-                            android:id="@+id/etMineItem8"
-                            android:layout_width="wrap_content"
-                            android:background="@null"
-                            android:gravity="end"
-                            android:singleLine="true"
-                            android:imeOptions="actionGo"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="24dp"
-                            android:hint="请输入您的微信号" />
 
                     </LinearLayout>
 
