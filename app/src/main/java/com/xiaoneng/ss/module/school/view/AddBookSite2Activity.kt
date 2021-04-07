@@ -47,7 +47,7 @@ class AddBookSite2Activity : BaseLifeCycleActivity<SchoolViewModel>() {
     private val roomDialog: Dialog by lazy {
         initRoomDialog()
     }
-    var basePosition = 16
+    var basePosition = 12
     var startPosition = 0
     var endPosition = 0
     var timeStart = ""
@@ -136,8 +136,8 @@ class AddBookSite2Activity : BaseLifeCycleActivity<SchoolViewModel>() {
             oetime = DateUtil.formatDateCustomDay(mData!!) + " " + timeEnd,
             remark = etAddSiteRemark.text.toString(),
             status = "0",
-            os_position = startPosition.toString(),
-            oe_position = (startPosition+endPosition+1).toString()
+            os_position = (basePosition+startPosition).toString(),
+            oe_position = (basePosition+startPosition+endPosition+1).toString()
         )
         mViewModel.addBookSite(bean)
     }

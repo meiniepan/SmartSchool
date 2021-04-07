@@ -40,7 +40,6 @@ object Constant {
     const val ID = "id"
     const val ID2 = "id2"
 
-    val THIS_YEAR = Calendar.getInstance().get(Calendar.YEAR)
 
     const val SAVE_USER_LOGIN_KEY = "user/login"
     const val SAVE_USER_REGISTER_KEY = "user/register"

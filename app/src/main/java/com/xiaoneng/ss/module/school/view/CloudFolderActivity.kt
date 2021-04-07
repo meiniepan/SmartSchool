@@ -44,8 +44,8 @@ import java.io.File
 class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapterPri: DiskPriAdapter
     var mPriData: ArrayList<FolderBean> = ArrayList()
-    var mPriDataFolder: ArrayList<FolderBean> = ArrayList()
-    var mPriDataFile: ArrayList<FolderBean> = ArrayList()
+    var mPriDataFolder: ArrayList<FolderBean>? = ArrayList()
+    var mPriDataFile: ArrayList<FolderBean>? = ArrayList()
     var rotationB = false
     var filePath: String? = null
     var fileName: String? = null
@@ -290,11 +290,11 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             response?.let {
                 netResponseFormat<DiskFileResp>(it)?.let {
                     mNetCount++
-                    mPriDataFolder = it.data!!
+                    mPriDataFolder = it.data
                     if (mNetCount == 2){
                         mPriData.clear()
-                        mPriData.addAll(mPriDataFolder)
-                        mPriData.addAll(mPriDataFile)
+                        mPriDataFolder?.let { it1 -> mPriData.addAll(it1) }
+                        mPriDataFile?.let { it1 -> mPriData.addAll(it1) }
                         rvDisk.recyclerView.setAdapter(mAdapterPri)
                         rvDisk.notifyDataSetChanged()
                     }
@@ -307,11 +307,16 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             response?.let {
                 netResponseFormat<DiskFileResp>(it)?.let {
                     mNetCount++
-                    mPriDataFile = it.data!!
+                    mPriDataFile = it.data
+                    mPriDataFile?.let {
+                        it.forEach {
+                            it.isFolder = false
+                        }
+                    }
                     if (mNetCount == 2){
                         mPriData.clear()
-                        mPriData.addAll(mPriDataFolder)
-                        mPriData.addAll(mPriDataFile)
+                        mPriDataFolder?.let { it1 -> mPriData.addAll(it1) }
+                        mPriDataFile?.let { it1 -> mPriData.addAll(it1) }
                         rvDisk.recyclerView.setAdapter(mAdapterPri)
                         rvDisk.notifyDataSetChanged()
                     }
