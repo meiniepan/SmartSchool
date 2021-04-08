@@ -24,7 +24,7 @@ class AddImgAdapter(layoutId: Int, listData: MutableList<String>?) :
            var ivDelete: ImageView  = holder.getView(R.id.ivPropertyDelete)
             ivDelete.setOnClickListener {
                 mData.removeAt(holder.adapterPosition)
-                notifyDataSetChanged()
+                notifyItemRemoved(holder.adapterPosition)
             }
             if (holder.layoutPosition==mData.size-1){
                 displayImage(

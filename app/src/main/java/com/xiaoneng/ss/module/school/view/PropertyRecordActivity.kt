@@ -15,11 +15,9 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.dp2px
-import com.xiaoneng.ss.common.utils.mToast
-import com.xiaoneng.ss.common.utils.netResponseFormat
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
+import com.xiaoneng.ss.module.activity.ImageScaleActivity
 import com.xiaoneng.ss.module.school.adapter.PropertyRecordAdapter
 import com.xiaoneng.ss.module.school.adapter.PropertyShiftAdapter
 import com.xiaoneng.ss.module.school.interfaces.IPropertyRecord
@@ -71,7 +69,6 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
     private fun doRefresh() {
         lastId = null
         mData.clear()
-        rvPropertyRecord.showLoadingView()
         rvPropertyRecord.setNoMoreData(false)
         getData()
     }
@@ -79,11 +76,16 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
 
     override fun onResume() {
         super.onResume()
-        doRefresh()
+    }
+
+    override fun initData() {
+        super.initData()
+        getData()
     }
 
     override fun getData() {
         super.getData()
+        rvPropertyRecord.showLoadingView()
         mViewModel.getPropertyRecord(type = typeStr, lastid = lastId)
     }
 

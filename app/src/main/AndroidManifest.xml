@@ -249,6 +249,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".module.school.view.CloudFolderActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".module.activity.ImageScaleActivity"
+            android:screenOrientation="portrait"/>
 
 
         <provider

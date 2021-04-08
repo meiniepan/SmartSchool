@@ -163,4 +163,6 @@ dependencies {
     //状态栏适配
     implementation 'com.zackratos.ultimatebarx:ultimatebarx:0.3.3'
 
+    implementation 'cn.yc:YCGalleryLib:1.1.5'
+
 }

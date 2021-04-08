@@ -207,6 +207,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private fun initAdapterFile() {
         rvTaskFile.visibility = View.GONE
         mAdapterFile = NoticeFileAdapter(R.layout.item_notice_file, mDataFile)
+        mAdapterFile.canDel()
         rvTaskFile.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             setAdapter(mAdapterFile)

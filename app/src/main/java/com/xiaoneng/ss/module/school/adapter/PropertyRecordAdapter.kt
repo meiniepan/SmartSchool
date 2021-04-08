@@ -8,6 +8,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.module.activity.ImageScaleActivity
 import com.xiaoneng.ss.module.school.interfaces.IPropertyRecord
 import com.xiaoneng.ss.module.school.model.PropertyDetailBean
 import com.xiaoneng.ss.module.school.model.RepairBody
@@ -209,7 +212,9 @@ class PropertyRecordAdapter(
             adapter = mAdapter
         }
         mAdapter.setOnItemClickListener { _, view, position ->
-
+            mStartActivity <ImageScaleActivity> (mContext){
+                putExtra(Constant.DATA, eData[position])
+            }
         }
     }
 

@@ -1,44 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/llChooseCourse"
+    xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/bac_white_bac_stroke_15"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp"
-    android:layout_marginLeft="8dp"
-    >
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="3dp"
+    android:paddingEnd="3dp">
 
-    <com.xiaoneng.ss.custom.widgets.CornerImageView
-        android:id="@+id/ivNoticeFile"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:scaleType="centerCrop"
-        app:radius="0dp" />
-
-    <TextView
-        android:id="@+id/tvNoticeFileName"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_12"
-        android:singleLine="true"
-        android:layout_marginTop="7dp" />
-
-    <TextView
-        android:id="@+id/tvNoticeFileSize"
+    <LinearLayout
+        android:id="@+id/llChooseCourse"
         android:layout_width="wrap_content"
-        android:textColor="@color/commonHint"
-        android:drawableStart="@drawable/ic_downloadd"
-        android:textSize="@dimen/sp_12"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp" />
-</LinearLayout>
-</LinearLayout>
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="7dp"
+        android:background="@drawable/bac_white_bac_stroke_15"
+        android:paddingLeft="10dp"
+        android:paddingTop="16dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="16dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.xiaoneng.ss.custom.widgets.CornerImageView
+                android:id="@+id/ivNoticeFile"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:scaleType="centerCrop"
+                app:radius="0dp" />
+
+            <TextView
+                android:id="@+id/tvNoticeFileName"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="7dp"
+                android:singleLine="true"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:id="@+id/tvNoticeFileSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:drawableStart="@drawable/ic_downloadd"
+                android:drawablePadding="2dp"
+                android:textColor="@color/commonHint"
+                android:textSize="@dimen/sp_12" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ivPropertyDelete"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_gravity="end"
+        android:background="@drawable/ic_no"
+        android:visibility="gone"
+
+        />
+</FrameLayout>
