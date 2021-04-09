@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+            style="@style/title_style"
+            app:title="@string/diskTitle" />
+    </RelativeLayout>
+
+    <include layout="@layout/layout_split" />
+
+
+    <LinearLayout
+        android:id="@+id/contentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvParentName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/title_padding"
+            android:paddingTop="20dp"
+            android:paddingEnd="@dimen/title_padding"
+            android:paddingBottom="20dp"
+            android:singleLine="true" />
+
+        <include layout="@layout/layout_split" />
+
+        <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
+            android:id="@+id/rvDisk"
+            style="@style/recycler_style" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/title_padding"
+        android:paddingTop="16dp"
+        android:paddingEnd="@dimen/title_padding"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:id="@+id/tvDiskNew"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/bac_blue_line_6"
+            android:gravity="center"
+            android:text="新建文件夹"
+            android:textColor="@color/themeColor"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/tvDiskCopy"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_weight="1"
+            android:background="@drawable/bac_blue_bac_6"
+            android:gravity="center"
+            android:text="复制"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
+
+    </LinearLayout>
+</LinearLayout>
+
+
+
+

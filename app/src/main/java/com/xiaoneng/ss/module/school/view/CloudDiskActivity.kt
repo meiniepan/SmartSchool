@@ -29,6 +29,18 @@ import com.xiaoneng.ss.module.school.adapter.DiskPubAdapter
 import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_cloud_disk.*
+import kotlinx.android.synthetic.main.activity_cloud_disk.ivAddFile
+import kotlinx.android.synthetic.main.activity_cloud_disk.llBottom
+import kotlinx.android.synthetic.main.activity_cloud_disk.llMain
+import kotlinx.android.synthetic.main.activity_cloud_disk.rvDisk
+import kotlinx.android.synthetic.main.activity_cloud_disk.tvBottomCopy
+import kotlinx.android.synthetic.main.activity_cloud_disk.tvBottomDel
+import kotlinx.android.synthetic.main.activity_cloud_disk.tvBottomDownload
+import kotlinx.android.synthetic.main.activity_cloud_disk.tvBottomMove
+import kotlinx.android.synthetic.main.activity_cloud_disk.tvBottomRename
+import kotlinx.android.synthetic.main.activity_cloud_disk.tvDiskNew
+import kotlinx.android.synthetic.main.activity_cloud_disk.tvDiskUpload
+import kotlinx.android.synthetic.main.activity_cloud_folder.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -99,6 +111,7 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
+        rvDisk.showLoadingView()
         mViewModel.getPriCloudList()
         mViewModel.getPubCloudList()
     }

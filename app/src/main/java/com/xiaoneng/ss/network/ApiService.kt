@@ -1036,6 +1036,17 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
+     *复制文件到文件夹
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/disk/files/copyFile")
+    suspend fun copyCloudFile(
+        @Field("token") token: String?,
+        @Field("id") id: String?=null,
+        @Field("folderid") folderid: String?
+    ): BaseResponse<Any>
+
+    /**
      *私有云文件夹文件
      */
     @FormUrlEncoded

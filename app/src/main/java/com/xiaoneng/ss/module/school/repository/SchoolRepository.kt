@@ -531,6 +531,11 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
+    suspend fun copyCloudFile(fileid:String?=null,folderid:String?=null): Any {
+        return apiService.copyCloudFile(UserInfo.getUserBean().token,id = fileid, folderid = folderid)
+            .dataConvert(loadState)
+    }
+
     suspend fun getPriCloudFiles(folderid:String?=null): Any {
         return apiService.getPriCloudFiles(UserInfo.getUserBean().token, folderid = folderid)
             .dataConvert(loadState)

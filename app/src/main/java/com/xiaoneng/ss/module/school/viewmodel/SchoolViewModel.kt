@@ -37,6 +37,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
     val mBaseData: MutableLiveData<Any> = MutableLiveData()
     val mPriCloudData: MutableLiveData<Any> = MutableLiveData()
+    val mCopyCloudData: MutableLiveData<Any> = MutableLiveData()
     val mPriCloudFilesData: MutableLiveData<Any> = MutableLiveData()
     val mPubCloudData: MutableLiveData<Any> = MutableLiveData()
     val mNewFolderData: MutableLiveData<Any> = MutableLiveData()
@@ -335,6 +336,13 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     fun getPriCloudList(folderid:String?=null) {
         initiateRequest(
             { mPriCloudData.value = mRepository.getPriCloudList(folderid) },
+            loadState
+        )
+    }
+
+    fun copyCloudFile(fileid:String?=null,folderid:String?=null) {
+        initiateRequest(
+            { mCopyCloudData.value = mRepository.copyCloudFile(fileid = fileid,folderid = folderid) },
             loadState
         )
     }

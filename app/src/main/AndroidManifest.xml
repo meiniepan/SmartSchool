@@ -251,6 +251,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".module.activity.ImageScaleActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".module.school.view.CloudCopyActivity" />
 
 
         <provider

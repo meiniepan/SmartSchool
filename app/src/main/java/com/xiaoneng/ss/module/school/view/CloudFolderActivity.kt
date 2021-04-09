@@ -94,6 +94,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
+        rvDisk.showLoadingView()
         mViewModel.getPriCloudFiles(folderBean?.id)
         mViewModel.getPriCloudList(folderBean?.id)
     }
