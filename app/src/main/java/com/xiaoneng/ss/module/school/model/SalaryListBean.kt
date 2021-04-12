@@ -19,6 +19,7 @@ data class SalaryListBean(
     var total: String? = null,//工资条名称
     var reachwages: String? = null,//工资条名称
     var receivable: String? = null,//工资条名称
+    var read: String? = null,//已读
     var remark: String? = null,//工资条名称
     var schoolid: String? = null,//工资条名称
     var schoolname: String? = null

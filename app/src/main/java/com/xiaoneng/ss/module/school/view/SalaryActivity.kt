@@ -33,8 +33,8 @@ class SalaryActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         initAdapter()
     }
 
-    override fun initData() {
-        super.initData()
+    override fun onResume() {
+        super.onResume()
         doRefresh()
     }
 

@@ -32,14 +32,9 @@ import kotlin.collections.ArrayList
 class AddBookSite2Activity : BaseLifeCycleActivity<SchoolViewModel>() {
     private lateinit var mSiteData: ArrayList<SiteItemBean>
     private var chosenDay: Long? = System.currentTimeMillis()
-    var mMax = 47
-    lateinit var mAdapter: SiteItemAdapter
     var mData: Long? = null
     var mRoomData = ArrayList<RoomBean>()
-    var mBegin = 0
-    var mEnd = 1
     var dateText = ""
-    var roomId = ""
     var roomPosition = 0
     private val timeDialog: Dialog by lazy {
         initTimeDialog()
@@ -268,7 +263,7 @@ class AddBookSite2Activity : BaseLifeCycleActivity<SchoolViewModel>() {
                         roomTitles.clear()
                         roomTitles.apply {
                             mRoomData.forEach{
-                                add(it.classroomname?:"")
+                                add(it.classroomname+"("+it.total+"人)")
                             }
                         }
                         roomDialogAdapter.notifyDataSetChanged()

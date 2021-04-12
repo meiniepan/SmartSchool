@@ -34,6 +34,7 @@ class SalaryDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initData() {
         super.initData()
+        mViewModel.readSalaryDetail(id)
         getData()
     }
 
@@ -68,6 +69,11 @@ class SalaryDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         mAdapter.notifyDataSetChanged()
                     }
                 }
+            }
+        })
+        mViewModel.mSalaryReadData.observe(this, Observer {
+            it?.let {
+
             }
         })
     }

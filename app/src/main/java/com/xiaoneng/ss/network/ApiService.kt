@@ -870,6 +870,17 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
+     *员工工资条已读状态
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/admin/wages/modifyWD")
+    suspend fun readSalaryDetail(
+        @Field("token") token: String?,
+        @Field("id") id: String?,
+        @Field("read") read: String?="1"
+    ): BaseResponse<Any>
+
+    /**
      *工资列表
      */
     @FormUrlEncoded

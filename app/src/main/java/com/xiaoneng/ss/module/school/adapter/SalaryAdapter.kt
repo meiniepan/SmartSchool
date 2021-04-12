@@ -28,6 +28,13 @@ class SalaryAdapter(layoutId: Int, listData: MutableList<SalaryListBean>?) :
             } else {
                 view.setBackgroundColor(mContext.resources.getColor(R.color.transparent))
             }
+            if (item?.read == "1") {
+                holder.setGone(R.id.vOval, false)
+
+            } else {
+
+                holder.setGone(R.id.vOval, true)
+            }
         }
     }
 }
