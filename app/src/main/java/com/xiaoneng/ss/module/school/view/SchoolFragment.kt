@@ -27,7 +27,6 @@ import kotlinx.android.synthetic.main.fragment_school.*
 class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     lateinit var mAdapter: SchoolAdapter
     var mData = ArrayList<SchoolBean>()
-    var pp = ""
 
     override fun getLayoutId(): Int = R.layout.fragment_school
 
@@ -46,6 +45,18 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
 
     private fun checkRules() {//判断权限
         var bean1 = SchoolBean(name = "信息递送")
+        if (AppInfo.checkRule1("admin/spacebook/default")) {
+            bean1.items.add(
+                SchoolItemBean(
+                    name = getString(R.string.siteTitle),
+                    remark = "场地时段 一目了然",
+                    icon = R.drawable.ic_changdi,
+                    click = View.OnClickListener {
+                        mStartActivity<BookSiteActivity>(context)
+                    }
+                )
+            )
+        }
         if (AppInfo.checkRule1("admin/notices/default")) {
             bean1.items.add(
                 SchoolItemBean(
@@ -54,6 +65,18 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                     icon = R.drawable.ic_tonggao,
                     click = View.OnClickListener {
                         mStartActivity<NoticeActivity>(context)
+                    }
+                )
+            )
+        }
+        if (AppInfo.checkRule1("admin/schedules/default")) {
+            bean1.items.add(
+                SchoolItemBean(
+                    name = getString(R.string.scheduleTitle),
+                    remark = "工作安排 井井有条",
+                    icon = R.drawable.ic_richeng,
+                    click = View.OnClickListener {
+                        mStartActivity<ScheduleActivity>(context)
                     }
                 )
             )
@@ -71,37 +94,8 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                 )
             )
         }
-        if (AppInfo.checkRule1("admin/schedules/default")) {
-            bean1.items.add(
-                SchoolItemBean(
-                    name = getString(R.string.scheduleTitle),
-                    remark = "工作安排 井井有条",
-                    icon = R.drawable.ic_richeng,
-                    click = View.OnClickListener {
-                        mStartActivity<ScheduleActivity>(context)
-                    }
-                )
-            )
-        }
-        if (bean1.items.size > 0) {
-            mData.add(bean1)
-        }
-
-        var bean2 = SchoolBean(name = "效率提升")
-        if (AppInfo.checkRule1("admin/tasks/default")) {
-            bean2.items.add(
-                SchoolItemBean(
-                    name = getString(R.string.taskTitle),
-                    remark = "任务管理 办公协作",
-                    icon = R.drawable.ic_renwu,
-                    click = View.OnClickListener {
-                        mStartActivity<TaskActivity>(context)
-                    }
-                )
-            )
-        }
         if (AppInfo.checkRule1("admin/repair/default")) {
-            bean2.items.add(
+            bean1.items.add(
                 SchoolItemBean(
                     name = getString(R.string.propertyTitle),
                     remark = "一键拨打 随叫随到",
@@ -112,43 +106,34 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                 )
             )
         }
-        if (bean2.items.size > 0) {
-            mData.add(bean2)
-        }
 
-        var bean3 = SchoolBean(name = "OA办公")
-        if (AppInfo.checkRule1("admin/spacebook/default")) {
-            bean3.items.add(
+        if (AppInfo.checkRule1("admin/tasks/default")) {
+            bean1.items.add(
                 SchoolItemBean(
-                    name = getString(R.string.siteTitle),
-                    remark = "场地时段 一目了然",
-                    icon = R.drawable.ic_changdi,
+                    name = getString(R.string.taskTitle),
+                    remark = "任务管理 办公协作",
+                    icon = R.drawable.ic_renwu,
                     click = View.OnClickListener {
-                        mStartActivity<BookSiteActivity>(context)
+                        mStartActivity<TaskActivity>(context)
                     }
                 )
             )
         }
-//        if (AppInfo.checkRule1("admin/spacebook/default")) {
-//            bean3.items.add(
-//                    SchoolItemBean(
-//                            name = getString(R.string.diskTitle),
-//                            remark = "校本资源 协同备课",
-//                            icon = R.drawable.ic_yunpan,
-//                            click = View.OnClickListener {
-//                                mStartActivity<CloudDiskActivity>(context)
-//                            }
-//                    )
-//            )
-//        }
 
-        if (bean3.items.size > 0) {
-            mData.add(bean3)
+        if (AppInfo.checkRule1("admin/spacebook/default")) {
+            bean1.items.add(
+                    SchoolItemBean(
+                            name = getString(R.string.diskTitle),
+                            remark = "校本资源 协同备课",
+                            icon = R.drawable.ic_yunpan,
+                            click = View.OnClickListener {
+                                mStartActivity<CloudDiskActivity>(context)
+                            }
+                    )
+            )
         }
-
-        var bean4 = SchoolBean(name = "家校协同")
         if (AppInfo.checkRule1("admin/attendances/default")) {
-            bean4.items.add(
+            bean1.items.add(
                 SchoolItemBean(
                     name = getString(R.string.attendanceTitle),
                     remark = "实时更新 系统上报",
@@ -160,7 +145,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
             )
         }
         if (AppInfo.checkRule1("admin/achievements/default")) {
-            bean4.items.add(
+            bean1.items.add(
                 SchoolItemBean(
                     name = getString(R.string.achievementTitle),
                     remark = "各科成绩 汇总分析",
@@ -172,7 +157,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
             )
         }
         if (AppInfo.checkRule1("admin/courses/default")) {
-            bean4.items.add(SchoolItemBean(
+            bean1.items.add(SchoolItemBean(
                 name = getString(R.string.timetableTitle),
                 remark = "班级课表 教学课表",
                 icon = R.drawable.ic_kebiao,
@@ -181,11 +166,9 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                 }
             ))
         }
-
-        if (bean4.items.size > 0) {
-            mData.add(bean4)
+        if (bean1.items.size > 0) {
+            mData.add(bean1)
         }
-
 
     }
 
