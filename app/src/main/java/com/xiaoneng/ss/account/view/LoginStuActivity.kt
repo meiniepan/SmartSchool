@@ -18,10 +18,7 @@ import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.captchaToast
-import com.xiaoneng.ss.common.utils.mStartActivity
-import com.xiaoneng.ss.common.utils.mToast
-import com.xiaoneng.ss.common.utils.netResponseFormat
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.module.activity.MainActivity
 import com.xiaoneng.ss.module.mine.view.UserProtocolActivity
@@ -38,8 +35,7 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
     private var isHideFirst: Boolean = true
     private var isPwdType: Boolean = false
     private var timer: CountDownTimer? = null
-    private var isAgree: Boolean = true
-
+    private var isAgree: Boolean by SPreference(Constant.AGREE_PROTOCOL,false)
 
     override fun getLayoutId() = R.layout.activity_login_stu
 
@@ -74,6 +70,7 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
             }
             return@setOnEditorActionListener false
         }
+        cbProtocol.isChecked = isAgree
         cbProtocol.setOnCheckedChangeListener { buttonView, isChecked ->
             isAgree = isChecked
         }

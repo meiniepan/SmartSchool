@@ -10,32 +10,65 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingStart="11dp"
         android:paddingEnd="11dp">
 
         <TextView
             android:id="@+id/tvSalaryName"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_14"
-            android:textColor="@color/commonHint" />
+            android:layout_weight="1"
+            android:textColor="@color/commonHint"
+            android:textSize="@dimen/sp_14" />
 
 
         <TextView
             android:id="@+id/tvSalaryValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="@dimen/sp_20" />
+            android:textSize="@dimen/sp_20"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/ivRemark"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="10dp"
+            android:visibility="gone" />
     </LinearLayout>
 
     <include
         layout="@layout/layout_split"
-        android:layout_marginStart="11dp"
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="1dp"
+        android:layout_marginStart="11dp" />
+
+    <LinearLayout
+        android:id="@+id/llSalaryRemark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/tvSalaryRemark"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center_vertical"
+            android:paddingStart="21dp"
+            android:paddingEnd="11dp"
+            android:textColor="@color/commonHint"
+            android:textSize="@dimen/sp_14" />
+
+
+        <include
+            layout="@layout/layout_split"
+            android:layout_width="match_parent"
+            android:layout_marginStart="11dp"
+            android:layout_height="1dp" />
+    </LinearLayout>
 </LinearLayout>
 

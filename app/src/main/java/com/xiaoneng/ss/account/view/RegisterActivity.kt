@@ -13,9 +13,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.model.RegisterReq
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.utils.captchaToast
-import com.xiaoneng.ss.common.utils.mStartActivity
-import com.xiaoneng.ss.common.utils.mToast
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.module.mine.view.UserProtocolActivity
 import kotlinx.android.synthetic.main.activity_login_tea.*
@@ -28,7 +26,7 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
     private var isHideFirst: Boolean = true
     private var isPwdType: Boolean = true
     private var timer: CountDownTimer? = null
-    private var isAgree: Boolean = true
+    private var isAgree: Boolean by SPreference(Constant.AGREE_PROTOCOL,false)
 
     override fun getLayoutId(): Int = R.layout.activity_register
 
@@ -40,6 +38,7 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
         tvRegister.setOnClickListener(this)
         tvSwitchIdRegister.setOnClickListener(this)
         tvProtocolRegister.setOnClickListener(this)
+        cbProtocol.isChecked = isAgree
         cbProtocol.setOnCheckedChangeListener { buttonView, isChecked ->
             isAgree = isChecked
         }

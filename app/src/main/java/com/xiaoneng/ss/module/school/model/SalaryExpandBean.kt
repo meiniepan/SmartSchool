@@ -8,5 +8,6 @@ package com.xiaoneng.ss.module.school.model
 data class SalaryExpandBean(
     var keys: ArrayList<String>? = null,
     var vals: ArrayList<String>? = null,
+    var remark: ArrayList<SalaryExpandRemarkBean>? = null,
     var users: SalaryUserBean? = null
 )

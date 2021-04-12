@@ -133,8 +133,8 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
 //            bean3.items.add(
 //                    SchoolItemBean(
 //                            name = getString(R.string.diskTitle),
-//                            remark = "场地时段 一目了然",
-//                            icon = R.drawable.ic_changdi,
+//                            remark = "校本资源 协同备课",
+//                            icon = R.drawable.ic_yunpan,
 //                            click = View.OnClickListener {
 //                                mStartActivity<CloudDiskActivity>(context)
 //                            }

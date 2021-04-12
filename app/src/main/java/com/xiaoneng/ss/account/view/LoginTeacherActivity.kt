@@ -19,7 +19,10 @@ import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.module.activity.MainActivity
 import com.xiaoneng.ss.module.mine.view.UserProtocolActivity
+import kotlinx.android.synthetic.main.activity_login_stu.*
 import kotlinx.android.synthetic.main.activity_login_tea.*
+import kotlinx.android.synthetic.main.activity_login_tea.cbProtocol
+import kotlinx.android.synthetic.main.activity_login_tea.tvProtocolRegister
 
 /**
  * @author Burning
@@ -31,7 +34,7 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
 
     private var timer: CountDownTimer? = null
     var isTeacher = true
-    private var isAgree: Boolean = true
+    private var isAgree: Boolean by SPreference(Constant.AGREE_PROTOCOL,false)
 
     override fun getLayoutId() = R.layout.activity_login_tea
 
@@ -64,6 +67,7 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
             }
             return@setOnEditorActionListener false
         }
+        cbProtocol.isChecked = isAgree
         cbProtocol.setOnCheckedChangeListener { buttonView, isChecked ->
             isAgree = isChecked
         }
