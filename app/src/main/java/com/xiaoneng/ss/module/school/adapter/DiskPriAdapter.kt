@@ -25,7 +25,10 @@ class DiskPriAdapter(layoutId: Int, listData: MutableList<FolderBean>?) :
         viewHolder?.let { holder ->
             holder.addOnClickListener(R.id.ivFolderInfo)
             holder.addOnClickListener(R.id.cbDiskFile)
+
             var icon = holder.getView<ImageView>(R.id.ivDiskIcon)
+            holder.setGone(R.id.ivFolderInfo,item?.isFolder==true)
+
             if (item?.isFolder==true){
                 icon.setImageResource(R.drawable.ic_file)
                 holder.setText(R.id.tvDiskFileName, item?.foldername)

@@ -277,6 +277,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:text="定时发送"
+            android:visibility="gone"
             android:drawableTop="@drawable/ic_timing"
             android:textColor="@color/commonHint"
             android:textSize="@dimen/sp_12"

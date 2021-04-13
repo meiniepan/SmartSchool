@@ -120,18 +120,18 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
             )
         }
 
-//        if (AppInfo.checkRule1("admin/spacebook/default")) {
-//            bean1.items.add(
-//                    SchoolItemBean(
-//                            name = getString(R.string.diskTitle),
-//                            remark = "校本资源 协同备课",
-//                            icon = R.drawable.ic_yunpan,
-//                            click = View.OnClickListener {
-//                                mStartActivity<CloudDiskActivity>(context)
-//                            }
-//                    )
-//            )
-//        }
+        if (AppInfo.checkRule1("admin/spacebook/default")) {
+            bean1.items.add(
+                    SchoolItemBean(
+                            name = getString(R.string.diskTitle),
+                            remark = "校本资源 协同备课",
+                            icon = R.drawable.ic_yunpan,
+                            click = View.OnClickListener {
+                                mStartActivity<CloudDiskActivity>(context)
+                            }
+                    )
+            )
+        }
         if (AppInfo.checkRule1("admin/attendances/default")) {
             bean1.items.add(
                 SchoolItemBean(

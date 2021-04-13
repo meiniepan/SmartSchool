@@ -108,10 +108,12 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         mAdapterPri.setOnItemClickListener { adapter, view, position ->
-            mStartActivity<CloudFolderActivity>(this) {
-                var bean = mPriData[position]
-                bean.fullName = folderBean?.fullName+bean.foldername
-                putExtra(Constant.DATA, mPriData[position])
+            if (mPriData[position].isFolder) {
+                mStartActivity<CloudFolderActivity>(this) {
+                    var bean = mPriData[position]
+                    bean.fullName = folderBean?.fullName + bean.foldername
+                    putExtra(Constant.DATA, mPriData[position])
+                }
             }
         }
         mAdapterPri.setOnItemChildClickListener { adapter, view, position ->
@@ -124,9 +126,9 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 }
                 R.id.cbDiskFile -> {
                     var cb: CheckBox = view as CheckBox
-                    if (cb.isChecked){
+                    if (cb.isChecked) {
                         llBottom.visibility = View.VISIBLE
-                    }else{
+                    } else {
                         llBottom.visibility = View.GONE
                     }
                 }
@@ -241,7 +243,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
 
             showLoading()
-            mViewModel.newFileFolder(parentid = folderBean?.id,foldername = folderName)
+            mViewModel.newFileFolder(parentid = folderBean?.id, foldername = folderName)
             bottomDialog.dismiss()
         }
 
@@ -292,7 +294,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 netResponseFormat<DiskFileResp>(it)?.let {
                     mNetCount++
                     mPriDataFolder = it.data
-                    if (mNetCount == 2){
+                    if (mNetCount == 2) {
                         mPriData.clear()
                         mPriDataFolder?.let { it1 -> mPriData.addAll(it1) }
                         mPriDataFile?.let { it1 -> mPriData.addAll(it1) }
@@ -314,7 +316,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                             it.isFolder = false
                         }
                     }
-                    if (mNetCount == 2){
+                    if (mNetCount == 2) {
                         mPriData.clear()
                         mPriDataFolder?.let { it1 -> mPriData.addAll(it1) }
                         mPriDataFile?.let { it1 -> mPriData.addAll(it1) }
