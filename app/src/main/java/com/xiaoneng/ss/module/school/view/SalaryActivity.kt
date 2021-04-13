@@ -69,6 +69,9 @@ class SalaryActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         mAdapter.setOnItemClickListener { adapter, view, position ->
+            if (mData.get(position)?.read!="1"){
+                mViewModel.readSalaryDetail(mData.get(position)?.id)
+            }
             mStartActivity<SalaryDetailActivity>(this) {
                 putExtra(Constant.ID, mData.get(position)?.id)
             }
@@ -92,6 +95,11 @@ class SalaryActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         rvSalary.notifyDataSetChanged()
                     }
                 }
+            }
+        })
+        mViewModel.mSalaryReadData.observe(this, Observer {
+            it?.let {
+
             }
         })
     }
