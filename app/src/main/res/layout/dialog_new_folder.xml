@@ -16,9 +16,10 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tvTitle6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="新建共享文件夹"
+            android:text="新建文件夹"
             android:textSize="@dimen/sp_18"
             android:textStyle="bold"
             android:layout_weight="1" />
@@ -49,7 +50,7 @@
             android:paddingEnd="13dp"
             android:maxLength="10"
             android:layout_marginTop="7dp"
-            android:hint="共享文件夹名称"
+            android:hint="文件夹名称"
             />
     </LinearLayout>
     <TextView

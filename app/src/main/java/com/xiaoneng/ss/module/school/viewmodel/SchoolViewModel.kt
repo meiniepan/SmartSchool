@@ -37,6 +37,8 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
     val mBaseData: MutableLiveData<Any> = MutableLiveData()
     val mPriCloudData: MutableLiveData<Any> = MutableLiveData()
+    val mAddFileData: MutableLiveData<Any> = MutableLiveData()
+    val mModifyFileData: MutableLiveData<Any> = MutableLiveData()
     val mCopyCloudData: MutableLiveData<Any> = MutableLiveData()
     val mPriCloudFilesData: MutableLiveData<Any> = MutableLiveData()
     val mPubCloudData: MutableLiveData<Any> = MutableLiveData()
@@ -364,7 +366,21 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
 
     fun addFile(fileBean: DiskFileBean) {
         initiateRequest(
-            { mPriCloudData.value = mRepository.addFile(fileBean) },
+            { mAddFileData.value = mRepository.addFile(fileBean) },
+            loadState
+        )
+    }
+
+    fun modifyFile(fileBean: FolderBean) {
+        initiateRequest(
+            { mModifyFileData.value = mRepository.modifyFile(fileBean) },
+            loadState
+        )
+    }
+
+    fun modifyFolder(fileBean: FolderBean) {
+        initiateRequest(
+            { mModifyFileData.value = mRepository.modifyFolder(fileBean) },
             loadState
         )
     }

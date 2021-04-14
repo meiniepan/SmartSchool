@@ -1076,6 +1076,22 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
+     *修改我的文件
+     */
+    @POST("/api/v17/disk/files/modify")
+    suspend fun modifyFile(
+        @Body fileBean:FolderBean
+    ): BaseResponse<Any>
+
+    /**
+     *修改文件夹
+     */
+    @POST("/api/v17/disk/folder/modify")
+    suspend fun modifyFolder(
+        @Body fileBean:FolderBean
+    ): BaseResponse<Any>
+
+    /**
      *共享文件夹
 
      */

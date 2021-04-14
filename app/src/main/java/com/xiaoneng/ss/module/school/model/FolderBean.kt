@@ -16,9 +16,13 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class FolderBean(
+    var token: String? = null,
     var id: String = "",
     var parentid: String = "",
     var foldername: String = "",
+    var fileinfo: String = "",
+    var objectid: String = "",
+    var folderid: String = "",
     var filename: String = "",
     var fullName: String = "",
     var updatetime: String = "",

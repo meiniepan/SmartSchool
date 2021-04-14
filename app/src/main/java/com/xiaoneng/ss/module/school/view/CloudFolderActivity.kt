@@ -25,7 +25,6 @@ import com.xiaoneng.ss.common.utils.oss.OssListener
 import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.model.StsTokenResp
 import com.xiaoneng.ss.module.school.adapter.DiskPriAdapter
-import com.xiaoneng.ss.module.school.adapter.DiskPubAdapter
 import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_cloud_folder.*
@@ -53,7 +52,13 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var mCurrent: Int = 0
     var mNetCount: Int = 0
     private val newFolderDialog: Dialog by lazy {
-        initDialog()
+        initDialog(0)
+    }
+    private val renameFolderDialog: Dialog by lazy {
+        initDialog(1)
+    }
+    private val renameFileDialog: Dialog by lazy {
+        initDialog(2)
     }
 
     override fun getLayoutId(): Int {
@@ -73,7 +78,11 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         }
         tvBottomRename.setOnClickListener {
-
+            if (mPriData[mCurrent].isFolder) {
+                renameFolderDialog.show()
+            } else {
+                renameFileDialog.show()
+            }
         }
         tvBottomCopy.setOnClickListener {
 
@@ -126,6 +135,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 }
                 R.id.cbDiskFile -> {
                     var cb: CheckBox = view as CheckBox
+                    mCurrent = position
                     if (cb.isChecked) {
                         llBottom.visibility = View.VISIBLE
                     } else {
@@ -215,7 +225,8 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             })
     }
 
-    private fun initDialog(): Dialog {
+    private fun initDialog(i: Int): Dialog {
+        //i: 0 新建文件夹  1 文件夹重命名 2 文件重命名
         // 底部弹出对话框
         var bottomDialog =
             Dialog(this, R.style.BottomDialog)
@@ -229,6 +240,14 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         contentView.layoutParams = params
         bottomDialog.window!!.setGravity(Gravity.CENTER)
         var etFolderName = contentView.findViewById<EditText>(R.id.etFolderName)
+        var tvTitle = contentView.findViewById<TextView>(R.id.tvTitle6)
+        if (i == 0) {
+
+        } else if (i == 1) {
+            tvTitle.text = "重命名"
+        } else if (i == 2) {
+            tvTitle.text = "重命名"
+        }
         var tvConfirm = contentView.findViewById<TextView>(R.id.tvFolderConfirm)
         contentView.findViewById<View>(R.id.ivClose).setOnClickListener {
             bottomDialog.dismiss()
@@ -243,7 +262,20 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
 
             showLoading()
-            mViewModel.newFileFolder(parentid = folderBean?.id, foldername = folderName)
+            if (i == 0) {
+                mViewModel.newFileFolder(parentid = folderBean?.id, foldername = folderName)
+
+            } else if (i == 1) {
+                var bean = mPriData[mCurrent]
+                bean.token = UserInfo.getUserBean().token
+                bean.filename = folderName
+                mViewModel.modifyFolder(bean)
+            } else if (i == 2) {
+                var bean = mPriData[mCurrent]
+                bean.token = UserInfo.getUserBean().token
+                bean.foldername = folderName
+                mViewModel.modifyFile(bean)
+            }
             bottomDialog.dismiss()
         }
 
@@ -286,6 +318,13 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 toast(R.string.deal_done)
                 getData()
                 showAdd()
+            }
+        })
+
+        mViewModel.mAddFileData.observe(this, Observer { response ->
+            response?.let {
+                toast(R.string.deal_done)
+                getData()
             }
         })
 
