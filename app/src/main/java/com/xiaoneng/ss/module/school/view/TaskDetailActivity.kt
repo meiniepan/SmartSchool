@@ -264,6 +264,11 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     var logData: ArrayList<LogBean> = ArrayList()
                     logData.addAll(it.tasklist)
                     var isEmpty = true
+                    if (type == "1") {
+                        tvAddLogTaskDetail.visibility = View.VISIBLE
+                    } else {
+                        tvAddLogTaskDetail.visibility = View.GONE
+                    }
                     logData.forEach {
                         if (!it.feedback.isNullOrEmpty()) {
                             isEmpty = false
@@ -271,7 +276,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         }
                         if (it.uid == UserInfo.getUserBean().uid) {
                             myLogBean = it
-                            if (it.feedback.isNullOrEmpty() && type == "1") {
+                            if (it.feedback.isNullOrEmpty()) {
                                 tvAddLogTaskDetail.visibility = View.VISIBLE
                             } else {
                                 tvAddLogTaskDetail.visibility = View.GONE

@@ -23,6 +23,7 @@
             android:layout_height="match_parent"
             android:paddingStart="@dimen/title_padding"
             android:paddingEnd="@dimen/title_padding"
+            android:paddingBottom="10dp"
             android:orientation="vertical">
 
             <TextView
@@ -61,6 +62,22 @@
                 android:background="@drawable/bac_tint_bac_10"
                 android:layout_height="170dp"
                 android:hint="请简述您遇到的问题…" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="详细地址"
+                android:layout_marginTop="12dp"
+                android:textSize="@dimen/sp_12" />
+
+            <EditText
+                android:id="@+id/etPropertyAddr"
+                style="@style/edit_style"
+                android:gravity="start"
+                android:layout_marginTop="7dp"
+                android:padding="11dp"
+                android:background="@drawable/bac_tint_bac_10"
+                android:layout_height="75dp"
+                android:hint="例：xx楼xx栋xx层xxx房间" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

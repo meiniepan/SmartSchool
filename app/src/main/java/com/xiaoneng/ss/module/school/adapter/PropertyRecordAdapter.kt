@@ -105,6 +105,10 @@ class PropertyRecordAdapter(
 
                 }
 
+                holder.setGone(R.id.llReporterPhone,false)
+                    .setGone(R.id.llReporterDep,false)
+                    .setGone(R.id.llReporterClass,false)
+
             } else if (mType == "1") {
                 //维修人逻辑
                 if (item.status == "0") {
@@ -162,10 +166,16 @@ class PropertyRecordAdapter(
 
                 holder.setText(R.id.tvPropertyDetailTypeKey, "发起人")
                     .setText(R.id.tvPropertyDetailType, item.reportinfo?.realname)
+                    .setText(R.id.tvPropertyDetailPhone, item.reportinfo?.phone)
+                    .setText(R.id.tvPropertyDetailDep, item.reportinfo?.dep_name)
+                    .setText(R.id.tvPropertyDetailClass, item.reportinfo?.classmaster_classname)
 
-
+                holder.setGone(R.id.llReporterPhone,true)
+                    .setGone(R.id.llReporterDep,true)
+                    .setGone(R.id.llReporterClass,true)
             }
             holder.setText(R.id.tvPropertyDetailResult, statusStr)
+            .setText(R.id.tvPropertyDetailAddr, item.addr)
             initAdapter(holder, item)
         }
 

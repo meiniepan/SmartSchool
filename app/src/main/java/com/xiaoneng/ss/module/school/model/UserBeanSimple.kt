@@ -17,6 +17,8 @@ data class UserBeanSimple(
     var classid: String ? = null,
     var usertype: String ? = null,
     var dep_name: String ? = null,
+    var classmaster_classname: String ? = null,
+    var phone: String ? = null,
     var cno: String ? = null,
     var topdepartid: String ? = null,
     var secdepartid: String ? = null

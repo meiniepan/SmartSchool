@@ -48,6 +48,9 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
     private val shiftDialog: Dialog by lazy {
         initShiftDialog()
     }
+    private val finishDialog: Dialog by lazy {
+        initFinishDialog()
+    }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_property_record
@@ -115,8 +118,8 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
     override fun doFinish(bean: RepairBody) {
         bean.token = UserInfo.getUserBean().token
         bean.status = "3"
-        showLoading()
-        mViewModel.modifyRepair(bean)
+        chosenBean = bean
+        finishDialog.show()
     }
 
     override fun doReceive(bean: RepairBody) {
@@ -261,6 +264,37 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
                 bottomDialog.dismiss()
             }
         }
+        return bottomDialog
+    }
+
+    private fun initFinishDialog(): Dialog {
+        // 转单对话框
+        var bottomDialog =
+            Dialog(this, R.style.BottomDialog)
+        val contentView: View =
+            LayoutInflater.from(this).inflate(R.layout.dialog_repair_finish, null)
+        bottomDialog.setContentView(contentView)
+        val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
+        params.width =
+            this.resources.displayMetrics.widthPixels - dp2px(32f).toInt()
+        params.bottomMargin = dp2px(this, 0f).toInt()
+        contentView.layoutParams = params
+        bottomDialog.window!!.setGravity(Gravity.CENTER)
+        contentView.findViewById<View>(R.id.ivClose).setOnClickListener {
+            bottomDialog.dismiss()
+        }
+
+
+            var etRemark = contentView.findViewById<EditText>(R.id.etRemark)
+            var tvConfirm = contentView.findViewById<TextView>(R.id.tvConfirm)
+
+            tvConfirm.setOnClickListener { view ->
+
+                chosenBean.completeremark = etRemark.text.toString()
+                showLoading()
+                mViewModel.modifyRepair(chosenBean)
+                bottomDialog.dismiss()
+            }
         return bottomDialog
     }
 

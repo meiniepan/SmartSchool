@@ -34,5 +34,6 @@ data class PropertyDetailBean(
     var muser_id: String?,
     var cuser_id: String?,
     var createtime: String?,
+    var addr: String? = null,//详细地址
     var updatetime: String?
 )

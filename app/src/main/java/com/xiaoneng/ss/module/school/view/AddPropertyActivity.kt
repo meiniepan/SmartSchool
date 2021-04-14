@@ -172,6 +172,7 @@ class AddPropertyActivity : SpeechTranscriberActivity<SchoolViewModel>() {
             typeid = mData?.id,
             token = UserInfo.getUserBean().token,
             remark = etPropertyRemark.text.toString(),
+            addr = etPropertyAddr.text.toString(),
             fileinfo = Gson().toJson(fileInfo)
         )
         mViewModel.addRepair(bean)

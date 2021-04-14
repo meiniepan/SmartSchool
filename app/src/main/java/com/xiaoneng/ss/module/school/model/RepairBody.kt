@@ -22,5 +22,7 @@ data class RepairBody(
     var repairlog: String? = null,
     var reporttime: String? = null,
     var handletime: String? = null,
+    var completeremark: String? = null,//完成备注
+    var addr: String? = null,//详细地址
     var completetime: String? = null
 )
