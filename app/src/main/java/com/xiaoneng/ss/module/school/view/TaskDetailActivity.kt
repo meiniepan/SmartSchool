@@ -269,8 +269,10 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     } else {
                         tvAddLogTaskDetail.visibility = View.GONE
                     }
+                    var finishNum = 0
                     logData.forEach {
-                        if (!it.feedback.isNullOrEmpty()) {
+                        if (it.completestatus=="1") {
+                            finishNum++
                             isEmpty = false
                             mData.add(it)
                         }
@@ -283,6 +285,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                             }
                         }
                     }
+                    tvFinishNum.text = "完成情况($finishNum/${logData.size})"
                     if (isEmpty) {
                         if (type == "1") {
                             rvTaskDetail.visibility = View.GONE

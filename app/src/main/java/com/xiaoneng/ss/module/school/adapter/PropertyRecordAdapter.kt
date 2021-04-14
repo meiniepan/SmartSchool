@@ -176,6 +176,7 @@ class PropertyRecordAdapter(
             }
             holder.setText(R.id.tvPropertyDetailResult, statusStr)
             .setText(R.id.tvPropertyDetailAddr, item.addr)
+            .setText(R.id.tvPropertyDetailFinishRemark, item.completeremark)
             initAdapter(holder, item)
         }
 

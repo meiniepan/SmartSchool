@@ -27,6 +27,7 @@ data class LogBean(
     var updatetime: String? = "",
     var status: String? = "",
     var taskstatus: String? = "",
+    var completestatus: String? = null,
     var classroomname: String? = ""
 
 
