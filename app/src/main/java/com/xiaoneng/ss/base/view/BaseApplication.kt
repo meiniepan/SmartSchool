@@ -9,6 +9,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.tencent.bugly.Bugly
+import com.tencent.bugly.beta.Beta
 import com.umeng.commonsdk.UMConfigure
 import com.umeng.message.IUmengRegisterCallback
 import com.umeng.message.PushAgent
@@ -47,6 +48,7 @@ open class BaseApplication : Application() {
         SPreference.setContext(applicationContext)
         initPush()
         Bugly.init(getApplicationContext(), "c55b4f8e6e", false)
+        Beta.autoCheckUpgrade = true
         initMode()
         LoadSir.beginBuilder()
             .addCallback(ErrorCallBack())

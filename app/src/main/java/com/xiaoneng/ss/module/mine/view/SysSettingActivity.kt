@@ -3,6 +3,7 @@ package com.xiaoneng.ss.module.mine.view
 import android.content.Context
 import androidx.lifecycle.Observer
 import com.tencent.bugly.beta.Beta
+import com.xiaoneng.ss.BuildConfig
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
@@ -25,7 +26,7 @@ class SysSettingActivity : BaseLifeCycleActivity<AccountViewModel>() {
     override fun initView() {
         super.initView()
         tvSettingItem3.text = getCacheSize(this).formatMemorySize()
-
+        tvSettingItem1.text = "当前版本("+BuildConfig.VERSION_NAME+")"
         llItem1Setting.setOnClickListener {
             Beta.checkUpgrade(true,false)
         }

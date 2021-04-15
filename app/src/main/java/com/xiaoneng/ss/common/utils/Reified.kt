@@ -144,6 +144,40 @@ inline fun Activity.showDateDayPick(textView: TextView, crossinline block: Strin
 
 }
 
+inline fun Activity.showBirthDayPick(textView: TextView, crossinline block: String.() -> Unit) {
+    DateTimePicker(this, DateTimePicker.NONE).apply {
+//            setActionButtonTop(false)
+        val THIS_YEAR:Int = Calendar.getInstance().get(Calendar.YEAR)
+        setSelectedTextColor(resources.getColor(R.color.themeColor))
+        setDateRangeStart(1900, 1, 1)
+        setDateRangeEnd(THIS_YEAR , 12, 31)
+        setSelectedItem(
+            Calendar.getInstance().get(Calendar.YEAR),
+            Calendar.getInstance().get(Calendar.MONTH) + 1,
+            Calendar.getInstance().get(Calendar.DAY_OF_MONTH),
+            Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
+            Calendar.getInstance().get(Calendar.MINUTE)
+        )
+
+        setOnDateTimePickListener(object : DateTimePicker.OnYearMonthDayTimePickListener {
+            override fun onDateTimePicked(
+                year: String?,
+                month: String?,
+                day: String?,
+                hour: String?,
+                minute: String?
+            ) {
+                var timess = "${month}月${day}日"
+                "${year}${month}${day}".block()
+                textView.text = timess
+            }
+
+        })
+        show()
+    }
+
+}
+
 inline fun Activity.showSexPick(textView: TextView, crossinline block: String.() -> Unit) {
     SinglePicker(this, arrayOf("男", "女", "未知")).apply {
 //            setActionButtonTop(false)

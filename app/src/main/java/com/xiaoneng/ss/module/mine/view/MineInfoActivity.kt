@@ -70,7 +70,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
         }
         tvMineItem3.apply {
             setOnClickListener {
-                showDateDayPick(this) {
+                showBirthDayPick(this) {
                     birthday = this
                     var bean = UserBean()
                     bean.token = UserInfo.getUserBean().token
