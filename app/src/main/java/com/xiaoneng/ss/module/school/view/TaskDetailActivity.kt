@@ -249,7 +249,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         files = gson.fromJson<ArrayList<FileInfoBean>>(it.fileinfo, resultType)
 
                     } catch (e: Exception) {
-                        showError(getString(R.string.error_message))
+//                        showError(getString(R.string.error_message))
                     }
                     mDataFile.addAll(files)
                     if (mDataFile.size > 0) {

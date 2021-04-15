@@ -101,7 +101,7 @@ class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 initAdapterFile()
             }
         } catch (e: Exception) {
-            showError(getString(R.string.error_message))
+//            showError(getString(R.string.error_message))
         }
 
     }
