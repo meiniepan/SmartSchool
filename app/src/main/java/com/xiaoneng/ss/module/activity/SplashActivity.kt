@@ -39,7 +39,7 @@ class SplashActivity : BaseLifeCycleActivity<AccountViewModel>() {
     override fun initView() {
         super.initView()
         runnable = Runnable { startIntent() }
-        handler.postDelayed(runnable!!, 0)
+        handler.postDelayed(runnable!!, 1000)
 
     }
 
