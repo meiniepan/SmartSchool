@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.circular.adapter.DaysOfMonthAdapter
 import com.xiaoneng.ss.module.circular.adapter.DaysOfWeekAdapter
@@ -55,6 +56,11 @@ class BookSiteActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         ivDateNext.setOnClickListener {
             dateOffset++
             setMonthDays()
+        }
+        if (AppInfo.checkRule2("admin/spacebook/add")) {
+            ivAddEvent.visibility = View.VISIBLE
+        }else{
+            ivAddEvent.visibility = View.GONE
         }
         ivAddEvent.setOnClickListener {
             addEvent()
