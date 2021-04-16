@@ -492,6 +492,21 @@ fun String?.isImage(): Boolean {
     return false
 }
 
+fun String?.endIsImage(): Boolean {
+    this?.let {
+      var it = it.toLowerCase()
+        if (it.endsWith(".jpg")
+            ||it.endsWith(".png")
+            ||it.endsWith(".jpeg")
+            ||it.endsWith(".gif")
+            ||it.endsWith(".bmp")
+        ) {
+            return true
+        }
+    }
+    return false
+}
+
 fun Long.formatMemorySize(): String {
     val kiloByte = this / 1024.toDouble()
 

@@ -15,6 +15,7 @@ import com.xiaoneng.ss.base.view.BaseApplication
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
+import com.xiaoneng.ss.module.activity.ImageScaleActivity
 import com.xiaoneng.ss.module.circular.adapter.NoticeFileAdapter
 import com.xiaoneng.ss.module.school.adapter.InvolveSimpleAdapter
 import com.xiaoneng.ss.module.school.adapter.TaskLogAdapter
@@ -106,7 +107,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAdapter() {
-        mAdapterLog = TaskLogAdapter(R.layout.item_task_log, mData,this)
+        mAdapterLog = TaskLogAdapter(R.layout.item_task_log, mData, this)
         rvTaskDetail.apply {
             layoutManager = LinearLayoutManager(this@TaskDetailActivity)
             setAdapter(mAdapterLog)
@@ -123,17 +124,17 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 }
                 R.id.tvAction1Log -> {
                     var bean = TaskLogRequest(
-                            UserInfo.getUserBean().token,
-                            mData[position].id ?: "",
-                            examinestatus = "2"
+                        UserInfo.getUserBean().token,
+                        mData[position].id ?: "",
+                        examinestatus = "2"
                     )
                     mViewModel.refuseTask(bean)
                 }
                 R.id.tvAction2Log -> {
                     var bean = TaskLogRequest(
-                            UserInfo.getUserBean().token,
-                            mData[position].id ?: "",
-                            examinestatus = "1"
+                        UserInfo.getUserBean().token,
+                        mData[position].id ?: "",
+                        examinestatus = "1"
                     )
                     mViewModel.refuseTask(bean)
                 }
@@ -164,14 +165,20 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             setAdapter(mAdapterFile)
         }
         mAdapterFile.setOnItemClickListener { _, view, position ->
-            var path = PathSelector(BaseApplication.instance).getDownloadsDirPath()
-            var name = idString + mDataFile[position].name
-            var filePath = path + File.separator + name
-            var filename = File(filePath)
-            if (filename.exists()) {
-                doOpen(filePath)
+            if (mDataFile[position].url.endIsImage()) {
+                mStartActivity <ImageScaleActivity> (this){
+                    putExtra(Constant.DATA, UserInfo.getUserBean().domain+mDataFile[position].url)
+                }
             } else {
-                doDown(mDataFile[position].url, name)
+                var path = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+                var name = idString + mDataFile[position].name
+                var filePath = path + File.separator + name
+                var filename = File(filePath)
+                if (filename.exists()) {
+                    doOpen(filePath)
+                } else {
+                    doDown(mDataFile[position].url, name)
+                }
             }
         }
     }
@@ -242,7 +249,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mAdapterInvolve.notifyDataSetChanged()
                     //附件列表
                     mDataFile.clear()
-                    var files= ArrayList<FileInfoBean>()
+                    var files = ArrayList<FileInfoBean>()
                     val resultType = object : TypeToken<ArrayList<FileInfoBean>>() {}.type
                     val gson = Gson()
                     try {
@@ -271,7 +278,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     }
                     var finishNum = 0
                     logData.forEach {
-                        if (it.completestatus=="1") {
+                        if (it.completestatus == "1") {
                             finishNum++
                             isEmpty = false
                             mData.add(it)

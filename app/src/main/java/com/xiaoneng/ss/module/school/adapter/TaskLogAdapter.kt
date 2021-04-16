@@ -15,7 +15,11 @@ import com.tencent.smtt.sdk.QbSdk
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseApplication
 import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.endIsImage
+import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
+import com.xiaoneng.ss.module.activity.ImageScaleActivity
 import com.xiaoneng.ss.module.circular.adapter.NoticeFileAdapter
 import com.xiaoneng.ss.module.school.model.FileInfoBean
 import com.xiaoneng.ss.module.school.model.LogBean
@@ -31,7 +35,7 @@ import java.io.File
  * Time: 17:32
  */
 class TaskLogAdapter(layoutId: Int, listData: MutableList<LogBean>?, activity: TaskDetailActivity) :
-        BaseQuickAdapter<LogBean, BaseViewHolder>(layoutId, listData) {
+    BaseQuickAdapter<LogBean, BaseViewHolder>(layoutId, listData) {
     var activity = activity
     private var isOperator: Boolean = false
     var idString = ""
@@ -46,8 +50,8 @@ class TaskLogAdapter(layoutId: Int, listData: MutableList<LogBean>?, activity: T
             holder.addOnClickListener(R.id.tvAction2Log)
             holder.addOnClickListener(R.id.tvAction0Log)
             holder.setText(R.id.tvName4, item?.username)
-                    .setText(R.id.tvTime4, item?.updatetime)
-                    .setText(R.id.tvIntro4, item?.feedback)
+                .setText(R.id.tvTime4, item?.updatetime)
+                .setText(R.id.tvIntro4, item?.feedback)
             textView1.visibility = View.GONE
             textView2.visibility = View.GONE
 
@@ -114,14 +118,23 @@ class TaskLogAdapter(layoutId: Int, listData: MutableList<LogBean>?, activity: T
                 setAdapter(mAdapterFile)
             }
             mAdapterFile.setOnItemClickListener { _, view, position ->
-                var path = PathSelector(BaseApplication.instance).getDownloadsDirPath()
-                var name = idString + mDataFile[position].name
-                var filePath = path + File.separator + name
-                var filename = File(filePath)
-                if (filename.exists()) {
-                    doOpen(filePath)
+                if (mDataFile[position].url.endIsImage()) {
+                    mStartActivity<ImageScaleActivity>(mContext) {
+                        putExtra(
+                            Constant.DATA,
+                            UserInfo.getUserBean().domain + mDataFile[position].url
+                        )
+                    }
                 } else {
-                    doDown(mDataFile[position].url, name)
+                    var path = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+                    var name = idString + mDataFile[position].name
+                    var filePath = path + File.separator + name
+                    var filename = File(filePath)
+                    if (filename.exists()) {
+                        doOpen(filePath)
+                    } else {
+                        doDown(mDataFile[position].url, name)
+                    }
                 }
             }
         }

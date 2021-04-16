@@ -16,12 +16,11 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseApplication
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.getOssObjectKey
-import com.xiaoneng.ss.common.utils.mToast
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.common.utils.oss.OssListener
 import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.model.StsTokenResp
+import com.xiaoneng.ss.module.activity.ImageScaleActivity
 import com.xiaoneng.ss.module.circular.adapter.NoticeFileAdapter
 import com.xiaoneng.ss.module.school.model.FileExtBean
 import com.xiaoneng.ss.module.school.model.FileInfoBean
@@ -44,9 +43,9 @@ import java.io.File
  */
 class AddLogActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
-    lateinit var taskBean:LogBean
-    var filePath:String? = null
-    var fileName:String? = null
+    lateinit var taskBean: LogBean
+    var filePath: String? = null
+    var fileName: String? = null
     lateinit var mAdapterFile: NoticeFileAdapter
     var mDataFile = ArrayList<FileInfoBean>()
     var idString = ""
@@ -65,10 +64,10 @@ class AddLogActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
             var bean = TaskLogRequest(
                 UserInfo.getUserBean().token,
-                taskBean.id?:"",
+                taskBean.id ?: "",
                 etFeedback.text.toString(),
                 completestatus = "1",
-                    fileinfo = Gson().toJson(mDataFile)
+                fileinfo = Gson().toJson(mDataFile)
             )
             mViewModel.modifyTaskInfo(bean)
         }
@@ -88,6 +87,7 @@ class AddLogActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.initData()
 //        mViewModel.getTimetable()
     }
+
     private fun initAdapterFile() {
         rvTaskFile.visibility = View.GONE
         mAdapterFile = NoticeFileAdapter(R.layout.item_notice_file, mDataFile)
@@ -96,14 +96,20 @@ class AddLogActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             setAdapter(mAdapterFile)
         }
         mAdapterFile.setOnItemClickListener { _, view, position ->
-            var path = PathSelector(BaseApplication.instance).getDownloadsDirPath()
-            var name = idString + mDataFile[position].name
-            var filePath = path + File.separator + name
-            var filename = File(filePath)
-            if (filename.exists()) {
-                doOpen(filePath)
+            if (mDataFile[position].url.endIsImage()) {
+                mStartActivity<ImageScaleActivity>(this) {
+                    putExtra(Constant.DATA, UserInfo.getUserBean().domain + mDataFile[position].url)
+                }
             } else {
-                doDown(mDataFile[position].url, name)
+                var path = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+                var name = idString + mDataFile[position].name
+                var filePath = path + File.separator + name
+                var filename = File(filePath)
+                if (filename.exists()) {
+                    doOpen(filePath)
+                } else {
+                    doDown(mDataFile[position].url, name)
+                }
             }
         }
     }
@@ -123,8 +129,8 @@ class AddLogActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }.setOnStop { downloadBytes, totalBytes ->
             //do something...
         }.setOnFinished { filePath, fileName ->
-                showSuccess()
-            doOpen(filePath+fileName)
+            showSuccess()
+            doOpen(filePath + fileName)
         }.setOnError { exception ->
             //do something...
         }
@@ -147,38 +153,44 @@ class AddLogActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         var mId: String = System.currentTimeMillis().toString() + "_" + fileName
 
         var objectKey =
-                getOssObjectKey(UserInfo.getUserBean().usertype, UserInfo.getUserBean().uid, mId)
+            getOssObjectKey(UserInfo.getUserBean().usertype, UserInfo.getUserBean().uid, mId)
         OssUtils.asyncUploadFile(
-                this,
-                it.Credentials,
-                objectKey,
-                filePath,
-                object : OssListener {
-                    override fun onSuccess() {
-                        mRootView.post {
-                            showSuccess()
-                            mDataFile.add(FileInfoBean(name = fileName, url = objectKey, ext = FileExtBean(size = File(filePath).length().toString())))
-                            rvTaskFile.visibility = View.VISIBLE
-                            mAdapterFile.notifyDataSetChanged()
-
-                        }
+            this,
+            it.Credentials,
+            objectKey,
+            filePath,
+            object : OssListener {
+                override fun onSuccess() {
+                    mRootView.post {
+                        showSuccess()
+                        mDataFile.add(
+                            FileInfoBean(
+                                name = fileName,
+                                url = objectKey,
+                                ext = FileExtBean(size = File(filePath).length().toString())
+                            )
+                        )
+                        rvTaskFile.visibility = View.VISIBLE
+                        mAdapterFile.notifyDataSetChanged()
 
                     }
 
-                    override fun onFail() {
-                        mRootView.post {
-                            showSuccess()
-                            mToast("文件上传失败")
-                        }
-                    }
+                }
 
-                })
+                override fun onFail() {
+                    mRootView.post {
+                        showSuccess()
+                        mToast("文件上传失败")
+                    }
+                }
+
+            })
     }
 
     override fun onActivityResult(
-            requestCode: Int,
-            resultCode: Int,
-            data: Intent?
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
     ) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
@@ -188,7 +200,7 @@ class AddLogActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 fileName = filePath?.split("/")?.last()
                 if (!filePath.isNullOrEmpty()) {
                     mViewModel.getSts()
-                }else{
+                } else {
                     mToast(getString(R.string.errFile))
                 }
             }
@@ -199,13 +211,13 @@ class AddLogActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mViewModel.mStsData.observe(this, Observer { response ->
             response?.let {
                 Handler().postDelayed(
-                        {
-                            GlobalScope.launch() {
-                                async {
-                                    doUpload(it)
-                                }
+                    {
+                        GlobalScope.launch() {
+                            async {
+                                doUpload(it)
                             }
-                        }, 100
+                        }
+                    }, 100
                 )
 
             }
