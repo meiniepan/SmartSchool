@@ -4,8 +4,8 @@ ext {
             compileSdkVersion: 28,
             minSdkVersion    : 19,
             targetSdkVersion : 28,
-            versionCode      : 15,
-            versionName      : "1.8.5",
+            versionCode      : 16,
+            versionName      : "1.8.6",
     ]
 
     retrofit_version = '2.6.2'

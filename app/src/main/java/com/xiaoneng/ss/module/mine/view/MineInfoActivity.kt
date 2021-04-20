@@ -127,12 +127,20 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                 }
             }
             "2" -> {
+                //生日、身份证号隐藏
+                llMineItem3.visibility = View.GONE
+                llMineItem6.visibility = View.GONE
+
                 llMineItem5.visibility = View.GONE
                 llMineItem7.visibility = View.GONE
                 llMineItemEduId.visibility = View.GONE
             }
 
             "99" -> {
+                //生日、身份证号隐藏
+                llMineItem3.visibility = View.GONE
+                llMineItem6.visibility = View.GONE
+
                 llMineItem5.visibility = View.GONE
                 llMineItem7.visibility = View.GONE
                 llMineItemEduId.visibility = View.GONE
