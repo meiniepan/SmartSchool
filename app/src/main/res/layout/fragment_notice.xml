@@ -5,7 +5,15 @@
     android:background="@color/tintBac"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/bac_banner1"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="12dp" />
 
     <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
         android:id="@+id/rvNotice"

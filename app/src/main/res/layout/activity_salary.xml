@@ -27,7 +27,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="12dp"
-            android:background="@drawable/bac_salary_pic"
+            android:src="@drawable/bac_salary_pic"
+            android:scaleType="centerCrop"
             android:layout_marginBottom="12dp" />
 
         <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
