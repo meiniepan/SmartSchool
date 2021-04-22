@@ -92,8 +92,52 @@
         </LinearLayout>
 
         <include layout="@layout/layout_split_margin_login" />
-
         <LinearLayout
+            android:id="@+id/llPwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/title_padding"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:layout_marginBottom="0dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_lock" />
+
+
+            <EditText
+                android:id="@+id/etPwd"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="请输入您的密码"
+                android:imeActionLabel="登录"
+                android:imeOptions="actionGo"
+                android:inputType="textPassword"
+                android:maxLength="8"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:textSize="@dimen/sp_20" />
+
+            <ImageView
+                android:id="@+id/iv_eye"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="26dp"
+                android:paddingStart="14dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:src="@drawable/ic_eye_no" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llCaptcha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/title_padding"
@@ -139,7 +183,15 @@
         </LinearLayout>
 
         <include layout="@layout/layout_split_margin_login" />
-
+        <TextView
+            android:id="@+id/tvSwitchType"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:text="密码登录"
+            android:textColor="@color/colorGray555"
+            android:textSize="@dimen/sp_16" />
         <Space
             android:layout_width="0dp"
             android:layout_height="0dp"

@@ -4,6 +4,9 @@ import android.os.Build
 import android.os.CountDownTimer
 import android.os.Handler
 import android.text.TextUtils
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
+import android.text.method.TransformationMethod
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.annotation.RequiresApi
@@ -19,10 +22,7 @@ import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.module.activity.MainActivity
 import com.xiaoneng.ss.module.mine.view.UserProtocolActivity
-import kotlinx.android.synthetic.main.activity_login_stu.*
 import kotlinx.android.synthetic.main.activity_login_tea.*
-import kotlinx.android.synthetic.main.activity_login_tea.cbProtocol
-import kotlinx.android.synthetic.main.activity_login_tea.tvProtocolRegister
 
 /**
  * @author Burning
@@ -31,10 +31,11 @@ import kotlinx.android.synthetic.main.activity_login_tea.tvProtocolRegister
  */
 class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClickListener {
 
-
+    private var isHideFirst: Boolean = true
+    private var isPwdType: Boolean = false
     private var timer: CountDownTimer? = null
     var isTeacher = true
-    private var isAgree: Boolean by SPreference(Constant.AGREE_PROTOCOL,false)
+    private var isAgree: Boolean by SPreference(Constant.AGREE_PROTOCOL, false)
 
     override fun getLayoutId() = R.layout.activity_login_tea
 
@@ -42,6 +43,8 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
     override fun initView() {
         super.initView()
         isTeacher = intent.getBooleanExtra(Constant.FLAG, true)
+        iv_eye.setOnClickListener(this)
+        tvSwitchType.setOnClickListener(this)
         tvSendCaptchaTeacher.setOnClickListener(this)
         tvLoginTeacher.setOnClickListener(this)
         tvSwitchIdTeacher.setOnClickListener(this)
@@ -59,6 +62,15 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
             tvType.text = "家长"
         }
         etCaptchaTeacher.setOnEditorActionListener { teew, i, keyEvent ->
+            when (i) {
+                EditorInfo.IME_ACTION_GO -> {
+                    doLogin()
+                }
+
+            }
+            return@setOnEditorActionListener false
+        }
+        etPwd.setOnEditorActionListener { teew, i, keyEvent ->
             when (i) {
                 EditorInfo.IME_ACTION_GO -> {
                     doLogin()
@@ -104,7 +116,38 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
                 }.start()
 
             }
+            R.id.iv_eye -> {
+                if (isHideFirst) {
+                    iv_eye.setImageResource(R.drawable.ic_eye);
+                    //密文
+                    var method1: HideReturnsTransformationMethod =
+                        HideReturnsTransformationMethod.getInstance()
+                    etPwd.transformationMethod = method1;
+                    isHideFirst = false;
+                } else {
+                    iv_eye.setImageResource(R.drawable.ic_eye_no);
+                    //密文
+                    var method: TransformationMethod = PasswordTransformationMethod.getInstance();
+                    etPwd.transformationMethod = method;
+                    isHideFirst = true;
 
+                }
+                // 光标的位置
+                val index: Int = etPwd.getText().toString().length
+                etPwd.setSelection(index)
+            }
+            R.id.tvSwitchType -> {
+                if (isPwdType) {
+                    tvSwitchType.text = "密码登录"
+                    llPwd.visibility = View.GONE
+                    llCaptcha.visibility = View.VISIBLE
+                } else {
+                    tvSwitchType.text = "验证码登录"
+                    llPwd.visibility = View.VISIBLE
+                    llCaptcha.visibility = View.GONE
+                }
+                isPwdType = !isPwdType
+            }
             R.id.tvLoginTeacher -> {
                 doLogin()
             }
@@ -118,19 +161,34 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
     private fun doLogin() {
         var phoneStr = etPhoneTeacher.text.toString()
         var vCodeStr = etCaptchaTeacher.text.toString()
+        var pwdStr = etPwd.text.toString()
         if (!isAgree) {
             showTip("请先同意用户协议及隐私政策")
         } else {
-            if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(vCodeStr)) {
-                showTip("请输入完整信息")
-                return
-            }
-            showLoading()
-            if (isTeacher) {
-                mViewModel.login(2, LoginReq(phoneStr, vCodeStr))
+            if (isPwdType) {
+                if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(pwdStr)) {
+                    showTip("请输入完整信息")
+                    return
+                }
+                showLoading()
+                if (isTeacher) {
+                    mViewModel.login(2, LoginReq(phoneStr, spassword = pwdStr))
+                } else {
+                    mViewModel.login(3, LoginReq(phoneStr, spassword = pwdStr))
+                }
             } else {
-                mViewModel.login(3, LoginReq(phoneStr, vCodeStr))
+                if (!RegexUtils.isMobileSimple(phoneStr) || TextUtils.isEmpty(vCodeStr)) {
+                    showTip("请输入完整信息")
+                    return
+                }
+                showLoading()
+                if (isTeacher) {
+                    mViewModel.login(2, LoginReq(phoneStr, vCodeStr))
+                } else {
+                    mViewModel.login(3, LoginReq(phoneStr, vCodeStr))
+                }
             }
+
         }
     }
 

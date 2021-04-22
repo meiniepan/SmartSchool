@@ -38,11 +38,11 @@ class AccountSecureActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initTab() {
-        if (AppInfo.checkRule2("user/student/modify")) {
-            llTab2.visibility = View.VISIBLE
-        } else {
-            llTab2.visibility = View.GONE
-        }
+//        if (AppInfo.checkRule2("user/student/modify")) {
+//            llTab2.visibility = View.VISIBLE
+//        } else {
+//            llTab2.visibility = View.GONE
+//        }
         tvSecurityTab1.setOnClickListener {
             checkFirsTab()
         }

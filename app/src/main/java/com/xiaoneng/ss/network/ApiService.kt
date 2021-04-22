@@ -842,7 +842,7 @@ interface ApiService {
      *  教师更换手机号短信验证码验证
      */
     @FormUrlEncoded
-    @POST("/api/v17/user/teacher/checkCode")
+    @POST("/api/v17/user/teachers/checkCode")
     suspend fun changePhoneTea(
         @Field("token") token: String? = null,
         @Field("phone") phone: String? = null,

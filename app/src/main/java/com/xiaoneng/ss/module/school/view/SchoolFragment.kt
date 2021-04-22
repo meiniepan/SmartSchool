@@ -88,8 +88,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                     remark = "保护隐私 查看明细",
                     icon = R.drawable.ic_gongzitiao,
                     click = View.OnClickListener {
-                        showLoading()
-                        mViewModel.getSalaryList()
+                        mStartActivity<SalaryCaptchaActivity>(context)
                     }
                 )
             )
@@ -185,16 +184,15 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     }
 
     override fun initDataObserver() {
-        mViewModel.mSalaryListData.observe(this, Observer {
-            it?.let {
-                netResponseFormat<SalaryResponse>(it)?.let {
-                    mStartActivity<SalaryActivity>(requireContext()) {
-                        putExtra(Constant.DATA, it.data)
-                    }
-                }
-            }
-        })
+//        mViewModel.mSalaryListData.observe(this, Observer {
+//            it?.let {
+//                netResponseFormat<SalaryResponse>(it)?.let {
+//                    mStartActivity<SalaryActivity>(requireContext()) {
+//                        putExtra(Constant.DATA, it.data)
+//                    }
+//                }
+//            }
+//        })
     }
-
 
 }

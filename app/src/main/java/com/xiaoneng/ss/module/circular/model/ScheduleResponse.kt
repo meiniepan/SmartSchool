@@ -9,5 +9,6 @@ package com.xiaoneng.ss.module.circular.model
  */
 data class ScheduleResponse(
     var data: ArrayList<ScheduleBean>? = null,
+    var days: ArrayList<String>?,
     var semesters: String? = null
 )

@@ -239,11 +239,18 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
         })
         mViewModel.mScheduleMonthData.observe(this, Observer { response ->
             response?.let {
-                netResponseFormat<ScheduleDayResponse>(it)?.let {
-                    mDataMonth.clear()
-                    mDataMonth.addAll(Lunar.getCurrentDaysOfMonth(it.data, chosenDay,dateOffset))
-                    mAdapterMonth.notifyDataSetChanged()
-
+                netResponseFormat<ScheduleResponse>(it)?.let {
+                    it.days?.let {
+                        mDataMonth.clear()
+                        mDataMonth.addAll(
+                            Lunar.getCurrentDaysOfMonth(
+                                it,
+                                chosenDay,
+                                dateOffset
+                            )
+                        )
+                        mAdapterMonth.notifyDataSetChanged()
+                    }
                 }
             }
         })

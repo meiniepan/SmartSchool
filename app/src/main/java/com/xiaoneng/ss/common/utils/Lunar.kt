@@ -374,7 +374,7 @@ class Lunar(cal: Calendar) {
         }
 
         fun getCurrentDaysOfMonth(
-            data: ArrayList<ScheduleDayBean>,
+            data: ArrayList<String>,
             chosenDay: Long? = null,
             offset: Int = 0
         ): ArrayList<DayBean> {
@@ -403,12 +403,10 @@ class Lunar(cal: Calendar) {
             for (i in 0 until maxDays) {
                 isToday = DateUtil.isSameDay(cal.timeInMillis,calToday.timeInMillis)
                 var isShow = false
-                var beanRemove = ArrayList<ScheduleDayBean>()
+                var beanRemove = ArrayList<String>()
                 for (beans in data) {
-                    if (DateUtil.formatDateCustomDay(cal.timeInMillis) == beans.day) {
-                        if (beans.list.size>0){
+                    if (DateUtil.formatDateCustomDay(cal.timeInMillis) == beans) {
                             isShow = true
-                        }
                         beanRemove.add(beans)
                     }
                 }

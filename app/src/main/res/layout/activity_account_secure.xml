@@ -48,7 +48,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:id="@+id/llTab2"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:gravity="center">
 
                     <com.xiaoneng.ss.custom.widgets.CustomTabView2
