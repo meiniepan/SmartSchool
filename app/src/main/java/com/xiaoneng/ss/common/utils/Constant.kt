@@ -11,6 +11,7 @@ import java.util.*
  */
 object Constant {
     const val BASE_URL = "http://api.huiwencloud.com:81"
+    const val BASE_URL_DEV = "http://t1.huiwencloud.com:81"
     const val TO_DO = "20200814"
     const val TYPE_STUDENT = "1"
     const val TYPE_TEACHER = "2"

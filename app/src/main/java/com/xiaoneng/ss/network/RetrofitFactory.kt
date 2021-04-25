@@ -21,15 +21,21 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 
 class RetrofitFactory private constructor() {
-    private val retrofit : Retrofit
+    private val retrofit: Retrofit
 
-    fun <T> create(clazz: Class<T>) : T {
+    fun <T> create(clazz: Class<T>): T {
         return retrofit.create(clazz)
     }
 
     init {
+        var url:String
+        if (BuildConfig.IS_DEBUG) {
+            url = Constant.BASE_URL_DEV
+        } else {
+            url = Constant.BASE_URL
+        }
         retrofit = Retrofit.Builder()
-            .baseUrl(Constant.BASE_URL)
+            .baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(initOkHttpClient())
@@ -47,11 +53,14 @@ class RetrofitFactory private constructor() {
 //            .addInterceptor(initCookieIntercept())
 //            .addInterceptor(initLoginIntercept())
             .addInterceptor(initCommonInterceptor())
-        if (BuildConfig.IS_DEBUG){
-        builder.addInterceptor(LoggingInterceptor.Builder()
-            .setLevel(Level.BASIC)
-            .log(Platform.WARN)
-            .build())}
+        if (BuildConfig.IS_DEBUG) {
+            builder.addInterceptor(
+                LoggingInterceptor.Builder()
+                    .setLevel(Level.BASIC)
+                    .log(Platform.WARN)
+                    .build()
+            )
+        }
         return builder.build()
     }
 
@@ -62,10 +71,10 @@ class RetrofitFactory private constructor() {
             val requestUrl = request.url.toString()
             val domain = request.url.host
             //只保存登录或者注册
-            if(requestUrl.contains(Constant.SAVE_USER_LOGIN_KEY) || requestUrl.contains(Constant.SAVE_USER_REGISTER_KEY)){
+            if (requestUrl.contains(Constant.SAVE_USER_LOGIN_KEY) || requestUrl.contains(Constant.SAVE_USER_REGISTER_KEY)) {
                 val mCookie = response.headers(Constant.SET_COOKIE_KEY)
                 mCookie?.let {
-                    saveCookie(domain,parseCookie(it))
+                    saveCookie(domain, parseCookie(it))
                 }
             }
             response
@@ -79,10 +88,10 @@ class RetrofitFactory private constructor() {
             val builder = request.newBuilder()
             val domain = request.url.host
 
-            if(domain.isNotEmpty()){
-                val mCookie by SPreference("cookie","")
-                if(mCookie.isNotEmpty()){
-                    builder.addHeader(Constant.COOKIE_NAME,mCookie)
+            if (domain.isNotEmpty()) {
+                val mCookie by SPreference("cookie", "")
+                if (mCookie.isNotEmpty()) {
+                    builder.addHeader(Constant.COOKIE_NAME, mCookie)
                 }
             }
             val response = chain.proceed(builder.build())
@@ -102,7 +111,7 @@ class RetrofitFactory private constructor() {
     }
 
     private fun parseCookie(it: List<String>): String {
-        if(it.isEmpty()){
+        if (it.isEmpty()) {
             return ""
         }
 
@@ -112,7 +121,7 @@ class RetrofitFactory private constructor() {
             stringBuilder.append(cookie).append(";")
         }
 
-        if(stringBuilder.isEmpty()){
+        if (stringBuilder.isEmpty()) {
             return ""
         }
         //末尾的";"去掉
@@ -121,7 +130,7 @@ class RetrofitFactory private constructor() {
 
     private fun saveCookie(domain: String?, parseCookie: String) {
         domain?.let {
-            var resutl :String by SPreference("cookie",parseCookie)
+            var resutl: String by SPreference("cookie", parseCookie)
             resutl = parseCookie
         }
     }
