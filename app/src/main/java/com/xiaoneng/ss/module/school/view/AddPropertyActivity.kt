@@ -195,9 +195,10 @@ class AddPropertyActivity : SpeechTranscriberActivity<SchoolViewModel>() {
                             async {
                                 uploadNum = 0
                                 mUrlData.clear()
-                                mPicData.removeAt(mPicData.size - 1)
                                 mPicData.forEach {
-                                    doUpload(bean, it)
+                                    if (it.isNotEmpty()) {
+                                        doUpload(bean, it)
+                                    }
                                 }
                             }
                         }
