@@ -26,7 +26,11 @@ class SysSettingActivity : BaseLifeCycleActivity<AccountViewModel>() {
     override fun initView() {
         super.initView()
         tvSettingItem3.text = getCacheSize(this).formatMemorySize()
-        tvSettingItem1.text = "当前版本("+BuildConfig.VERSION_NAME+")"
+        var vType = ""
+        if (BuildConfig.IS_DEBUG){
+            vType = "_DEV"
+        }
+        tvSettingItem1.text = "当前版本("+BuildConfig.VERSION_NAME+vType+")"
         llItem1Setting.setOnClickListener {
             Beta.checkUpgrade(true,false)
         }

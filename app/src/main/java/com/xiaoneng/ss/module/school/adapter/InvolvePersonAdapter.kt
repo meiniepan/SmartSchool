@@ -1,10 +1,12 @@
 package com.xiaoneng.ss.module.school.adapter
 
+import android.widget.CheckBox
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.common.utils.getBooleanString
 import com.xiaoneng.ss.model.StudentBean
 import com.xiaoneng.ss.module.school.model.DepartmentPersonBean
 
@@ -22,6 +24,15 @@ class InvolvePersonAdapter(layoutId: Int, listData: MutableList<DepartmentPerson
 
     override fun convert(viewHolder: BaseViewHolder?, item: DepartmentPersonBean) {
         viewHolder?.let { holder ->
+            var cbAll = holder.getView<CheckBox>(R.id.cbDepAll)
+            cbAll.isChecked = item.isAll
+            cbAll.setOnCheckedChangeListener { buttonView, isChecked ->
+                item.isAll = isChecked
+                item.data.forEach {
+                    it.choice = getBooleanString(isChecked)
+                }
+                initRecycler(holder,item)
+            }
             holder.setText(R.id.tvNameDepart, item.departmentsname)
             initRecycler(holder, item)
         }

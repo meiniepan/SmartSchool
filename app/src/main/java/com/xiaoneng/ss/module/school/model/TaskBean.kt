@@ -31,5 +31,6 @@ data class TaskBean(
     var schoolid: String? = null,
     var operatorname: String? = null,
     var operatortype: String? = null,
-    var operatorid: String? = null
+    var operatorid: String? = null,
+    var sendlabel: String? = null//与involve二选一，all teacher students classmaster以逗号隔开
 )

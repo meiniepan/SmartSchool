@@ -15,6 +15,7 @@ import kotlinx.android.parcel.Parcelize
 data class DepartmentPersonBean(
     var id: String? = "",
     var departmentsname: String? = "",
+    var isAll: Boolean = false,
     var data: MutableList<StudentBean> = ArrayList()
 
 
