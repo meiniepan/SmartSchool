@@ -13,14 +13,18 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseApplication
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.DateUtil
-import com.xiaoneng.ss.common.utils.isImage
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.circular.adapter.NoticeFileAdapter
 import com.xiaoneng.ss.module.circular.adapter.NoticeImgAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
+import com.xiaoneng.ss.module.circular.model.NoticeResponse
+import com.xiaoneng.ss.module.circular.model.UnreadMemberResponse
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
+import com.xiaoneng.ss.module.school.model.DepartmentBean
 import com.xiaoneng.ss.module.school.model.FileInfoBean
+import com.xiaoneng.ss.module.school.model.UnreadMemberBean
+import com.xiaoneng.ss.module.school.model.UserBeanSimple
+import com.xiaoneng.ss.module.school.view.UnreadMemberActivity
 import kotlinx.android.synthetic.main.activity_notice_detail.*
 import java.io.File
 
@@ -37,6 +41,7 @@ class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
     var mDataImg = ArrayList<FileInfoBean>()
     lateinit var mAdapterFile: NoticeFileAdapter
     var mDataFile = ArrayList<FileInfoBean>()
+    var mDataUnread = ArrayList<UnreadMemberBean>()
     var idString = ""
     var fileNum = 0
     var downloadNum = 0
@@ -56,6 +61,10 @@ class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
             tvNoticeTitle.text = it.title
             tvNoticeInfo.text = it.remark
             tvTime1.text = DateUtil.formatShowTime(it.noticetime!!)
+            tvReadNum.setOnClickListener {
+                showLoading()
+                mViewModel.getNoticerList(status = "0", noticeid = bean?.noticeid)
+            }
             initReceivedUI()
             initFiles()
         }
@@ -218,6 +227,23 @@ class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
             response?.let {
                 tvRead.visibility = View.GONE
                 ivHasRead.visibility = View.VISIBLE
+            }
+        })
+
+        mViewModel.mNoticerData.observe(this, Observer { response ->
+            response?.let {
+                netResponseFormat<UnreadMemberResponse>(it)?.let {
+                    it.data?.let{
+                    mDataUnread.clear()
+                    mDataUnread.addAll(it)
+                    if (mDataUnread.size > 0) {
+                        mStartActivity<UnreadMemberActivity>(this) {
+                            putExtra(Constant.DATA, mDataUnread)
+                            putExtra(Constant.TITLE, getString(R.string.noticeTitle))
+                            putExtra(Constant.ID, 0)
+                        }
+                    }
+                }}
             }
         })
     }

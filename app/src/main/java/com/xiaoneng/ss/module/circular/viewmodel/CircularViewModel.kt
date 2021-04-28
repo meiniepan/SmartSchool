@@ -2,6 +2,7 @@ package com.xiaoneng.ss.module.circular.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.xiaoneng.ss.base.viewmodel.BaseViewModel
+import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.module.circular.model.NoticeDetailBean
 import com.xiaoneng.ss.module.circular.model.NoticeResponse
 import com.xiaoneng.ss.module.circular.model.ScheduleBean
@@ -18,6 +19,7 @@ import com.xiaoneng.ss.network.initiateRequest
 class CircularViewModel : BaseViewModel<CircularRepository>() {
 
     val mNoticeData: MutableLiveData<NoticeResponse> = MutableLiveData()
+    val mNoticerData: MutableLiveData<Any> = MutableLiveData()
     val mNoticeDetail: MutableLiveData<NoticeDetailBean> = MutableLiveData()
     val mReadData: MutableLiveData<Any> = MutableLiveData()
     val mScheduleData: MutableLiveData<Any> = MutableLiveData()
@@ -27,6 +29,17 @@ class CircularViewModel : BaseViewModel<CircularRepository>() {
     fun getNoticeList(lastid: String? = null, pagenum: String? = null,type:String? = null) {
         initiateRequest(
             { mNoticeData.value = mRepository.getNoticeList(lastid, pagenum,type) },
+            loadState
+        )
+    }
+
+    fun getNoticerList(lastid: String? = null, type:String? = null, status:String? = null, noticeid:String? = null) {
+        initiateRequest(
+            { mNoticerData.value = mRepository.getNoticerList(
+                lastid,
+                type,
+                status,
+                noticeid) },
             loadState
         )
     }

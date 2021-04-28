@@ -36,58 +36,59 @@
                 android:paddingTop="20dp"
                 android:paddingEnd="@dimen/title_padding"
                 android:paddingBottom="20dp">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:id="@+id/tvName"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_weight="1"
-                        android:text=""
-                        android:textColor="@color/themeColor"
-                        android:textSize="@dimen/sp_16" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical">
 
+                            <TextView
+                                android:id="@+id/tvName"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text=""
+                                android:textColor="@color/themeColor"
+                                android:textSize="@dimen/sp_16" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/tvTime1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="@color/colorGray999"
+                                android:textSize="@dimen/sp_12" />
+
+                        </LinearLayout>
+                    </LinearLayout>
                     <TextView
                         android:id="@+id/tvReadNum"
                         android:text="1/5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/button_blue_bac_5_style"
+                        android:layout_width="75dp"
+                        android:layout_height="35dp"
+                        android:drawableLeft="@drawable/ic_read_white"
+                        android:drawablePadding="0dp"
                         android:layout_marginStart="1dp"
-                        android:textColor="@color/colorGray999" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:id="@+id/tvTime1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textColor="@color/colorGray999"
-                        android:textSize="@dimen/sp_12" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_read" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="1dp"
-                        android:text="已阅数量"
-                        android:textColor="@color/colorGray999"
-                        android:textSize="@dimen/sp_12" />
-
+                        android:textColor="@color/white" />
                 </LinearLayout>
 
                 <TextView

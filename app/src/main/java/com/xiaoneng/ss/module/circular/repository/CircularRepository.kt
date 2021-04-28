@@ -19,7 +19,11 @@ import com.xiaoneng.ss.network.dataConvert
 class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository() {
 
 
-    suspend fun getNoticeList(lastid: String? = null, pagenum: String? = null, type: String? = null): NoticeResponse {
+    suspend fun getNoticeList(
+        lastid: String? = null,
+        pagenum: String? = null,
+        type: String? = null
+    ): NoticeResponse {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
                 apiService.getNoticeList(UserInfo.getUserBean().token, lastid, pagenum, type)
@@ -41,6 +45,22 @@ class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository(
 
             }
         }
+    }
+
+    suspend fun getNoticerList(
+        lastid: String? = null,
+        type: String? = null,
+        status: String? = null,
+        noticeid: String? = null
+    ): Any {
+        return apiService.getNoticerList(
+            UserInfo.getUserBean().token,
+            lastid,
+            type,
+            status,
+            noticeid
+        )
+            .dataConvert(loadState)
     }
 
     suspend fun getNoticeDetail(id: String? = null): NoticeDetailBean {
@@ -94,19 +114,19 @@ class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository(
     suspend fun readAll(): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.readAll(UserInfo.getUserBean().token, type = "system",status = "1")
+                apiService.readAll(UserInfo.getUserBean().token, type = "system", status = "1")
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.readAllTea(UserInfo.getUserBean().token, type = "system",status = "1")
+                apiService.readAllTea(UserInfo.getUserBean().token, type = "system", status = "1")
                     .dataConvert(loadState)
             }
             "99" -> {
-                apiService.readAllTea(UserInfo.getUserBean().token, type = "system",status = "1")
+                apiService.readAllTea(UserInfo.getUserBean().token, type = "system", status = "1")
                     .dataConvert(loadState)
             }
             else -> {
-                apiService.readAllTea(UserInfo.getUserBean().token, type = "system",status = "1")
+                apiService.readAllTea(UserInfo.getUserBean().token, type = "system", status = "1")
                     .dataConvert(loadState)
 
             }
@@ -188,21 +208,21 @@ class CircularRepository(val loadState: MutableLiveData<State>) : ApiRepository(
     suspend fun deleteSchedule(bean: ScheduleBean?): Any {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.deleteScheduleStu(UserInfo.getUserBean().token,bean?.id)
+                apiService.deleteScheduleStu(UserInfo.getUserBean().token, bean?.id)
                     .dataConvert(loadState)
             }
             "2" -> {
-                apiService.deleteScheduleTea(UserInfo.getUserBean().token,bean?.id)
+                apiService.deleteScheduleTea(UserInfo.getUserBean().token, bean?.id)
                     .dataConvert(loadState)
 
             }
             "99" -> {
-                apiService.deleteScheduleTea(UserInfo.getUserBean().token,bean?.id)
+                apiService.deleteScheduleTea(UserInfo.getUserBean().token, bean?.id)
                     .dataConvert(loadState)
 
             }
             else -> {
-                apiService.deleteScheduleTea(UserInfo.getUserBean().token,bean?.id)
+                apiService.deleteScheduleTea(UserInfo.getUserBean().token, bean?.id)
                     .dataConvert(loadState)
 
             }

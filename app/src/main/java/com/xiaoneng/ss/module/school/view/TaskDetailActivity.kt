@@ -55,6 +55,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private var type: String? = null
     lateinit var mAdapterFile: NoticeFileAdapter
     var mDataFile = ArrayList<FileInfoBean>()
+    var mDataUnread= ArrayList<UnreadMemberBean>()
     var idString = ""
     var fileNum = 0
     var downloadNum = 0
@@ -75,6 +76,15 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvConfirm.setOnClickListener {
             mAlert("是否关闭任务") {
                 closeTask()
+            }
+        }
+        tvFinishNum.setOnClickListener {
+            if (mDataUnread.size>0){
+                mStartActivity<UnreadMemberActivity>(this) {
+                    putExtra(Constant.DATA, mDataUnread)
+                    putExtra(Constant.TITLE, getString(R.string.taskTitle))
+                    putExtra(Constant.ID, 0)
+                }
             }
         }
         initAdapter()
@@ -277,11 +287,14 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         tvAddLogTaskDetail.visibility = View.GONE
                     }
                     var finishNum = 0
+                    mDataUnread.clear()
                     logData.forEach {
                         if (it.completestatus == "1") {
                             finishNum++
                             isEmpty = false
                             mData.add(it)
+                        }else{
+                            mDataUnread.add(UnreadMemberBean(uid=it.uid,username = it.username))
                         }
                         if (it.uid == UserInfo.getUserBean().uid) {
                             myLogBean = it

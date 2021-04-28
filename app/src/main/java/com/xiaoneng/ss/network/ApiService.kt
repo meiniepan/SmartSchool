@@ -170,6 +170,19 @@ interface ApiService {
     ): BaseResponse<NoticeResponse>
 
     /**
+     *通知与通知人关系列表
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/admin/noticesrs/lists")
+    suspend fun getNoticerList(
+        @Field("token") token: String? = null,
+        @Field("id") lastid: String? = null,
+        @Field("type") type: String? = null,
+        @Field("status") status: String? = null,
+        @Field("noticeid") noticeid: String? = null
+    ): BaseResponse<Any>
+
+    /**
      *教师通知列表
      */
     @FormUrlEncoded
