@@ -581,7 +581,10 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
-
+    suspend fun remindUnread(id:String?=null): Any {
+        return apiService.remindUnread(UserInfo.getUserBean().token, id)
+            .dataConvert(loadState)
+    }
 
     suspend fun getBookRoomList(start: String,end:String?=null): Any {
         return apiService.getBookRoomList(UserInfo.getUserBean().token, start,end)

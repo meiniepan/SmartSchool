@@ -1000,6 +1000,16 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
+     *任务提醒接口
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/admin/tasks/remind")
+    suspend fun remindUnread(
+        @Field("token") token: String?,
+        @Field("id") id: String?
+    ): BaseResponse<Any>
+
+    /**
      *可预约场地列表
      */
     @FormUrlEncoded

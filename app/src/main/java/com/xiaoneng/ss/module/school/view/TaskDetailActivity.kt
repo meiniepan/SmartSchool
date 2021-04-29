@@ -17,6 +17,7 @@ import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.activity.ImageScaleActivity
 import com.xiaoneng.ss.module.circular.adapter.NoticeFileAdapter
+import com.xiaoneng.ss.module.circular.model.UnreadMemberResponse
 import com.xiaoneng.ss.module.school.adapter.InvolveSimpleAdapter
 import com.xiaoneng.ss.module.school.adapter.TaskLogAdapter
 import com.xiaoneng.ss.module.school.model.*
@@ -51,11 +52,11 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapterPrincipal: InvolveSimpleAdapter
     var mDataInvolve = ArrayList<UserBeanSimple>()
     var mDataPrincipal = ArrayList<UserBeanSimple>()
-    lateinit var taskBean: TaskDetailBean
+    var taskBean: TaskDetailBean? = null
     private var type: String? = null
     lateinit var mAdapterFile: NoticeFileAdapter
     var mDataFile = ArrayList<FileInfoBean>()
-    var mDataUnread= ArrayList<UnreadMemberBean>()
+    var mDataUnread = ArrayList<UnreadMemberBean>()
     var idString = ""
     var fileNum = 0
     var downloadNum = 0
@@ -79,11 +80,16 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
         }
         tvFinishNum.setOnClickListener {
-            if (mDataUnread.size>0){
+            if (mDataUnread.size > 0) {
                 mStartActivity<UnreadMemberActivity>(this) {
-                    putExtra(Constant.DATA, mDataUnread)
-                    putExtra(Constant.TITLE, getString(R.string.taskTitle))
-                    putExtra(Constant.ID, 0)
+                    var mData = UnreadMemberResponse(
+                        data = mDataUnread,
+                        id = taskBean?.id,
+                        publishUserId = taskBean?.operatorid,
+                        title = getString(R.string.taskTitle),
+                        code = "1"
+                    )
+                    putExtra(Constant.DATA, mData)
                 }
             }
         }
@@ -94,7 +100,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun closeTask() {
         var bean = TaskBean()
-        bean.id = taskBean.id
+        bean.id = taskBean?.id
         bean.token = UserInfo.getUserBean().token
         bean.status = "3"
         mViewModel.modifyTaskStatus(bean)
@@ -176,8 +182,8 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
         mAdapterFile.setOnItemClickListener { _, view, position ->
             if (mDataFile[position].url.endIsImage()) {
-                mStartActivity <ImageScaleActivity> (this){
-                    putExtra(Constant.DATA, UserInfo.getUserBean().domain+mDataFile[position].url)
+                mStartActivity<ImageScaleActivity>(this) {
+                    putExtra(Constant.DATA, UserInfo.getUserBean().domain + mDataFile[position].url)
                 }
             } else {
                 var path = PathSelector(BaseApplication.instance).getDownloadsDirPath()
@@ -245,7 +251,7 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
                     //是否是发布人
                     isOperator = it.operatorid == UserInfo.getUserBean().uid
-                    if (isOperator && type == "2" && taskBean.status != "3") {
+                    if (isOperator && type == "2" && taskBean?.status != "3") {
                         tvConfirm.visibility = View.VISIBLE
                     } else {
                         tvConfirm.visibility = View.GONE
@@ -293,8 +299,8 @@ class TaskDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                             finishNum++
                             isEmpty = false
                             mData.add(it)
-                        }else{
-                            mDataUnread.add(UnreadMemberBean(uid=it.uid,username = it.username))
+                        } else {
+                            mDataUnread.add(UnreadMemberBean(uid = it.uid, username = it.username))
                         }
                         if (it.uid == UserInfo.getUserBean().uid) {
                             myLogBean = it

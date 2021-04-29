@@ -21,6 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 
 class RetrofitFactory private constructor() {
+    private var devUrl: String by SPreference(Constant.DEV_URL, Constant.BASE_URL_DEV)
     private val retrofit: Retrofit
 
     fun <T> create(clazz: Class<T>): T {
@@ -30,7 +31,7 @@ class RetrofitFactory private constructor() {
     init {
         var url:String
         if (BuildConfig.IS_DEBUG) {
-            url = Constant.BASE_URL_DEV
+            url = devUrl
         } else {
             url = Constant.BASE_URL
         }

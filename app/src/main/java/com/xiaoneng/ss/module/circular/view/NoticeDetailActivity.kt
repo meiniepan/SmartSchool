@@ -233,17 +233,23 @@ class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
         mViewModel.mNoticerData.observe(this, Observer { response ->
             response?.let {
                 netResponseFormat<UnreadMemberResponse>(it)?.let {
-                    it.data?.let{
-                    mDataUnread.clear()
-                    mDataUnread.addAll(it)
-                    if (mDataUnread.size > 0) {
-                        mStartActivity<UnreadMemberActivity>(this) {
-                            putExtra(Constant.DATA, mDataUnread)
-                            putExtra(Constant.TITLE, getString(R.string.noticeTitle))
-                            putExtra(Constant.ID, 0)
+                    it.data?.let {
+                        mDataUnread.clear()
+                        mDataUnread.addAll(it)
+                        if (mDataUnread.size > 0) {
+                            mStartActivity<UnreadMemberActivity>(this) {
+                                var mData = UnreadMemberResponse(
+                                    data = mDataUnread,
+                                    id = bean?.noticeid,
+                                    publishUserId = bean?.send_uid,
+                                    title = getString(R.string.noticeTitle),
+                                    code = "0"
+                                )
+                                putExtra(Constant.DATA, mData)
+                            }
                         }
                     }
-                }}
+                }
             }
         })
     }

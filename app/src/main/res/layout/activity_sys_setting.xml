@@ -147,5 +147,35 @@
 
             <include layout="@layout/layout_split" />
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llDevSetting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp">
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="切换环境" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp" />
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_split" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

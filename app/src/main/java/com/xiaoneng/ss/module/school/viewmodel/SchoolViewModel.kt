@@ -343,6 +343,13 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
+    fun remindUnread(id:String?=null) {
+        initiateRequest(
+            { mBaseData.value = mRepository.remindUnread(id) },
+            loadState
+        )
+    }
+
     fun getPriCloudList(folderid:String?=null) {
         initiateRequest(
             { mPriCloudData.value = mRepository.getPriCloudList(folderid) },
