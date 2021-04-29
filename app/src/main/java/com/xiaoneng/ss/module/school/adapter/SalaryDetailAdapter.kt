@@ -23,7 +23,7 @@ class SalaryDetailAdapter(layoutId: Int, listData: MutableList<String>?) :
     var eData: SalaryDetailBean? = null
     override fun convert(viewHolder: BaseViewHolder?, item: String) {
         viewHolder?.let { holder ->
-            var llOut = holder.getView<View>(R.id.llOut)
+            var llCc = holder.getView<View>(R.id.llCC)
             var ivRemark = holder.getView<ImageView>(R.id.ivRemark)
             var llRemark = holder.getView<View>(R.id.llSalaryRemark)
             var tvRemark = holder.getView<TextView>(R.id.tvSalaryRemark)
@@ -31,18 +31,12 @@ class SalaryDetailAdapter(layoutId: Int, listData: MutableList<String>?) :
                 eData?.expand?.remark?.get(holder.adapterPosition)
 
             //value为0时隐藏
-            var layoutParams: ViewGroup.LayoutParams = llOut.getLayoutParams();
-            llOut.visibility = View.VISIBLE
-            layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            llCc.visibility = View.VISIBLE
             if (remarkBean?.isShow == "0") {
                 if (eData?.expand?.vals?.get(holder.adapterPosition) == "0") {
-                    llOut.visibility = View.GONE
-                    layoutParams.height = 0;
-                    layoutParams.width = 0;
+                    llCc.visibility = View.GONE
                 }
             }
-            llOut.setLayoutParams(layoutParams);
 
 
             if (remarkBean?.remark.isNullOrEmpty()) {
