@@ -17,7 +17,6 @@ object Constant {
     const val TYPE_TEACHER = "2"
     const val TYPE_ADMIN = "99"
 
-    //    const val BASE_URL = "https://www.sojson.com"
     const val LOGIN_TYPE_STU = "self"
     const val LOGIN_TYPE_PAR = "parents"
     const val DATA = "data"
