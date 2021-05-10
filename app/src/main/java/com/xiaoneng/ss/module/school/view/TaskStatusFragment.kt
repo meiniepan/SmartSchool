@@ -1,14 +1,23 @@
 package com.xiaoneng.ss.module.school.view
 
+import android.app.Dialog
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.RecycleViewDivider
+import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.module.school.adapter.DialogListAdapter
 import com.xiaoneng.ss.module.school.adapter.TaskStatusAdapter
 import com.xiaoneng.ss.module.school.model.TaskDetailBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
@@ -27,6 +36,10 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     private var mType: String? = null//1接收 2发布
     lateinit var mAdapter: TaskStatusAdapter
     var mData = ArrayList<TaskDetailBean>()
+    var titlesP = ArrayList<String>()
+    var titlesR = ArrayList<String>()
+    private lateinit var dialogPublish: Dialog
+    private lateinit var dialogReceive: Dialog
 
     override fun getLayoutId(): Int = R.layout.fragment_task_status
 
@@ -39,6 +52,11 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
+        titlesP.add("进行中")
+        titlesP.add("草稿箱")
+        titlesP.add("已关闭")
+        titlesR.add("未完成")
+        titlesR.add("已完成")
         mData.clear()
         status = arguments?.getString(Constant.TASK_STATUS)
         mType = arguments?.getString(Constant.TYPE)
@@ -103,7 +121,40 @@ class TaskStatusFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         doRefresh()
     }
 
+    private fun initDialogPublish() {
+        // 底部弹出对话框
+        dialogPublish =
+            Dialog(context, R.style.BottomDialog)
+        val contentView: View =
+            LayoutInflater.from(requireContext()).inflate(R.layout.dialog_list, null)
+        dialogPublish.setContentView(contentView)
+        val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
+        params.width =
+            resources.displayMetrics.widthPixels
+        params.bottomMargin = dp2px(requireContext(), 0f).toInt()
+        contentView.layoutParams = params
+        dialogPublish.window!!.setGravity(Gravity.BOTTOM)
+        dialogPublish.window!!.setWindowAnimations(R.style.BottomDialog_Animation)
+        var dialogAdapter = DialogListAdapter(R.layout.item_dialog_list, titlesP)
+        var recyclerView = contentView.findViewById<RecyclerView>(R.id.rvDialogList).apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(
+                RecycleViewDivider(
+                    dp2px(context, 1f).toInt(),
+                    context.resources.getColor(R.color.splitColor)
+                )
+            )
+            adapter = dialogAdapter
+        }
+        dialogAdapter.setOnItemClickListener { adapter, view, position ->
+            tvActionStatus.text = titlesP[position]
+            rvTaskStatus.showLoadingView()
+            doRefresh()
+            dialogPublish.dismiss()
+        }
 
+    }
+    
     override fun initDataObserver() {
         mViewModel.mTaskListData.observe(this, Observer { response ->
             response?.let {

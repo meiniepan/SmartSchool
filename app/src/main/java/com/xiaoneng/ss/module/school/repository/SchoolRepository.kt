@@ -21,7 +21,9 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
     suspend fun getTaskList(
         pagenum: String? = null,
         status: String? = null,
-        lastid: String? = null
+        lastid: String? = null,
+        stime: String? = null,
+        etime: String? = null
     ): TaskResponse {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
@@ -29,7 +31,9 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                     UserInfo.getUserBean().token,
                     id = lastid,
                     pagenum = pagenum,
-                    status = status
+                    status = status,
+                    stime = stime,
+                    etime = etime
                 )
                     .dataConvert(loadState)
             }
@@ -38,7 +42,9 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                     UserInfo.getUserBean().token,
                     id = lastid,
                     pagenum = pagenum,
-                    status = status
+                    status = status,
+                    stime = stime,
+                    etime = etime
                 )
                     .dataConvert(loadState)
 
@@ -48,7 +54,9 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                     UserInfo.getUserBean().token,
                     id = lastid,
                     pagenum = pagenum,
-                    status = status
+                    status = status,
+                    stime = stime,
+                    etime = etime
                 )
                     .dataConvert(loadState)
 
@@ -58,7 +66,9 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
                     UserInfo.getUserBean().token,
                     id = lastid,
                     pagenum = pagenum,
-                    status = status
+                    status = status,
+                    stime = stime,
+                    etime = etime
                 )
                     .dataConvert(loadState)
 
@@ -69,13 +79,17 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
     suspend fun getPublishTaskList(
         pagenum: String? = null,
         status: String? = null,
-        lastid: String? = null
+        lastid: String? = null,
+        stime: String? = null,
+        etime: String? = null
     ): TaskResponse {
         return apiService.getPublishTaskListTea(
             UserInfo.getUserBean().token,
             id = lastid,
             pagenum = pagenum,
-            status = status
+            status = status,
+            stime = stime,
+            etime = etime
         )
             .dataConvert(loadState)
 

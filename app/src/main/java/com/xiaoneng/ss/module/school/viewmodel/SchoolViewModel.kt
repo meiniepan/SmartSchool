@@ -57,9 +57,19 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mRefuseData: MutableLiveData<Any> = MutableLiveData()
     val mModifyTaskStatusData: MutableLiveData<Any> = MutableLiveData()
 
-    fun getTaskList(lastid: String? = null, pagenum: String? = null, status: String? = null) {
+    fun getTaskList(
+        lastid: String? = null, pagenum: String? = null, status: String? = null,
+        stime: String? = null,
+        etime: String? = null
+    ) {
         initiateRequest(
-            { mTaskListData.value = mRepository.getTaskList(pagenum, status, lastid = lastid) },
+            {
+                mTaskListData.value = mRepository.getTaskList(
+                    pagenum, status, lastid = lastid,
+                    stime = stime,
+                    etime = etime
+                )
+            },
             loadState
         )
     }
@@ -67,12 +77,18 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     fun getPublishTaskList(
         lastid: String? = null,
         pagenum: String? = null,
-        status: String? = null
+        status: String? = null,
+        stime: String? = null,
+        etime: String? = null
     ) {
         initiateRequest(
             {
                 mTaskListData.value =
-                    mRepository.getPublishTaskList(pagenum, status, lastid = lastid)
+                    mRepository.getPublishTaskList(
+                        pagenum, status, lastid = lastid,
+                        stime = stime,
+                        etime = etime
+                    )
             },
             loadState
         )
@@ -336,35 +352,38 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getBookList(start: String,end:String?=null) {
+    fun getBookList(start: String, end: String? = null) {
         initiateRequest(
-                { mBaseData.value = mRepository.getBookList(start,end) },
-                loadState
+            { mBaseData.value = mRepository.getBookList(start, end) },
+            loadState
         )
     }
 
-    fun remindUnread(id:String?=null) {
+    fun remindUnread(id: String? = null) {
         initiateRequest(
             { mBaseData.value = mRepository.remindUnread(id) },
             loadState
         )
     }
 
-    fun getPriCloudList(folderid:String?=null) {
+    fun getPriCloudList(folderid: String? = null) {
         initiateRequest(
             { mPriCloudData.value = mRepository.getPriCloudList(folderid) },
             loadState
         )
     }
 
-    fun copyCloudFile(fileid:String?=null,folderid:String?=null) {
+    fun copyCloudFile(fileid: String? = null, folderid: String? = null) {
         initiateRequest(
-            { mCopyCloudData.value = mRepository.copyCloudFile(fileid = fileid,folderid = folderid) },
+            {
+                mCopyCloudData.value =
+                    mRepository.copyCloudFile(fileid = fileid, folderid = folderid)
+            },
             loadState
         )
     }
 
-    fun getPriCloudFiles(folderid:String?=null) {
+    fun getPriCloudFiles(folderid: String? = null) {
         initiateRequest(
             { mPriCloudFilesData.value = mRepository.getPriCloudFiles(folderid) },
             loadState
@@ -392,30 +411,30 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getPubCloudList(folderid:String?=null) {
+    fun getPubCloudList(folderid: String? = null) {
         initiateRequest(
             { mPubCloudData.value = mRepository.getPubCloudList(folderid) },
             loadState
         )
     }
 
-    fun newFileFolder(parentid:String?=null,foldername:String?=null) {
+    fun newFileFolder(parentid: String? = null, foldername: String? = null) {
         initiateRequest(
-            { mNewFolderData.value = mRepository.newFileFolder(parentid,foldername) },
+            { mNewFolderData.value = mRepository.newFileFolder(parentid, foldername) },
             loadState
         )
     }
 
-    fun setFileFolder(parentid:String?=null,folderid:String?=null,involve:String?=null) {
+    fun setFileFolder(parentid: String? = null, folderid: String? = null, involve: String? = null) {
         initiateRequest(
-            { mBaseData.value = mRepository.setFileFolder(parentid,folderid,involve) },
+            { mBaseData.value = mRepository.setFileFolder(parentid, folderid, involve) },
             loadState
         )
     }
 
-    fun getBookRoomList(start: String,end:String?=null) {
+    fun getBookRoomList(start: String, end: String? = null) {
         initiateRequest(
-            { mBookRoomData.value = mRepository.getBookRoomList(start,end) },
+            { mBookRoomData.value = mRepository.getBookRoomList(start, end) },
             loadState
         )
     }

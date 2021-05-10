@@ -273,7 +273,9 @@ interface ApiService {
         @Field("id") id: String? = null,
         @Field("pagenum") pagenum: String? = null,
         @Field("type") type: String? = null,
-        @Field("completestatus") status: String? = null
+        @Field("completestatus") status: String? = null,
+        @Field("stime") stime: String? = null,
+        @Field("etime") etime: String? = null
     ): BaseResponse<TaskResponse>
 
     /**
@@ -286,7 +288,9 @@ interface ApiService {
         @Field("id") id: String? = null,
         @Field("pagenum") pagenum: String? = null,
         @Field("type") type: String? = null,
-        @Field("completestatus") status: String? = null
+        @Field("completestatus") status: String? = null,
+        @Field("stime") stime: String? = null,
+        @Field("etime") etime: String? = null
     ): BaseResponse<TaskResponse>
 
     /**
@@ -299,7 +303,9 @@ interface ApiService {
         @Field("id") id: String? = null,
         @Field("pagenum") pagenum: String? = null,
         @Field("type") type: String? = null,
-        @Field("status") status: String? = null
+        @Field("status") status: String? = null,
+        @Field("stime") stime: String? = null,
+        @Field("etime") etime: String? = null
     ): BaseResponse<TaskResponse>
 
     /**

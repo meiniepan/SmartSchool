@@ -1,18 +1,27 @@
 package com.xiaoneng.ss.module.school.view
 
-import android.os.Bundle
+import android.app.Dialog
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
-import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.scwang.smartrefresh.layout.api.RefreshLayout
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.FragmentVpAdapter
+import com.xiaoneng.ss.common.utils.RecycleViewDivider
+import com.xiaoneng.ss.common.utils.dp2px
 import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.module.school.adapter.DialogListAdapter
+import com.xiaoneng.ss.module.school.adapter.TaskStatusAdapter
+import com.xiaoneng.ss.module.school.model.TaskDetailBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_task.*
-import kotlinx.android.synthetic.main.fragment_circular.vpCircular
 
 /**
  * Created with Android Studio.
@@ -22,8 +31,17 @@ import kotlinx.android.synthetic.main.fragment_circular.vpCircular
  * Time: 17:01
  */
 class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    private lateinit var fragmentAdapter: FragmentVpAdapter
-    private var fragmentList = ArrayList<Fragment>()
+    private var lastId: String? = null
+    private var status: String? = null
+    private var mType: String? = null//1接收 2发布
+    lateinit var mAdapter: TaskStatusAdapter
+    var mData = ArrayList<TaskDetailBean>()
+    var titlesP = ArrayList<String>()
+    var titlesR = ArrayList<String>()
+    var statusP = ArrayList<String>()
+    var statusR = ArrayList<String>()
+    private lateinit var dialogPublish: Dialog
+    private lateinit var dialogReceive: Dialog
 
     override fun getLayoutId(): Int = R.layout.activity_task
 
@@ -31,269 +49,159 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initView() {
         super.initView()
         //todo 权限 AppInfo.checkRule2("teacher/tasks/add"
+        initDialogPublish()
+        
+        titlesP.add("进行中")
+        titlesP.add("草稿箱")
+        titlesP.add("已关闭")
+        statusP.add("1")
+        statusP.add("0")
+        statusP.add("3")
+        
+        titlesR.add("未完成")
+        titlesR.add("已完成")
+        statusR.add("0")
+        statusR.add("1")
+        initAdapter()
         if (UserInfo.getUserBean().usertype != "1") {
             ivAddTask.visibility = View.VISIBLE
-            llTab1.visibility = View.VISIBLE
-            llTab2.visibility = View.GONE
-            initViewPager2()
-            initTab2()
+            llTitlePublish.visibility = View.VISIBLE
         } else {
             ivAddTask.visibility = View.GONE
-            llTab1.visibility = View.GONE
-            llTab2.visibility = View.VISIBLE
-            initViewPager1()
-            initTab1()
+            llTitlePublish.visibility = View.GONE
         }
 
         ivAddTask.setOnClickListener {
             mStartActivity<AddTaskActivity>(this)
         }
-
-    }
-
-
-    private fun initTab2() {
-        tvTaskTab1.setOnClickListener {
-            checkFirsTab()
+        tvPublish.setOnClickListener {
+            mType = "1"
+            tvPublish.setBackgroundResource(R.drawable.bac_blue_bac)
+            tvPublish.setTextColor(resources.getColor(R.color.white))
+            tvReceive.setBackgroundResource(R.drawable.bac_blue_line_21)
+            tvReceive.setTextColor(resources.getColor(R.color.themeColor))
+            initPublishData()
         }
-        tvTaskTab2.setOnClickListener {
-            checkSecondTab()
-        }
-        tvTaskTab3.setOnClickListener {
-            checkThirdTab()
-        }
-        tvTaskTab4.setOnClickListener {
-            check4Tab()
-        }
-        tvTaskTab5.setOnClickListener {
-            check5Tab()
-        }
-        tvTaskTab6.setOnClickListener {
-            check6Tab()
+        tvReceive.setOnClickListener {
+            mType = "2"
+            tvReceive.setBackgroundResource(R.drawable.bac_blue_bac)
+            tvReceive.setTextColor(resources.getColor(R.color.white))
+            tvPublish.setBackgroundResource(R.drawable.bac_blue_line_21)
+            tvPublish.setTextColor(resources.getColor(R.color.themeColor))
+            initReceiveData()
         }
 
-
     }
+    private fun initAdapter() {
+        rvTaskStatus.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+            override fun onLoadMore(refreshLayout: RefreshLayout) {
+                getData()
+            }
 
-    private fun initTab1() {
-        tvTaskTab21.setOnClickListener {
-            check21Tab()
-        }
-        tvTaskTab22.setOnClickListener {
-            check22Tab()
-        }
-        tvTaskTab23.setOnClickListener {
-            check23Tab()
-        }
-    }
-
-    private fun checkFirsTab() {
-        tvTaskTab1.setChecked(true)
-        tvTaskTab2.setChecked(false)
-        tvTaskTab3.setChecked(false)
-        tvTaskTab4.setChecked(false)
-        tvTaskTab5.setChecked(false)
-        tvTaskTab6.setChecked(false)
-        vpCircular.setCurrentItem(0, true)
-    }
-
-    private fun checkSecondTab() {
-        tvTaskTab2.setChecked(true)
-        tvTaskTab1.setChecked(false)
-        tvTaskTab3.setChecked(false)
-        tvTaskTab4.setChecked(false)
-        tvTaskTab5.setChecked(false)
-        tvTaskTab6.setChecked(false)
-        vpCircular.setCurrentItem(1, true)
-    }
-
-    private fun checkThirdTab() {
-        tvTaskTab3.setChecked(true)
-        tvTaskTab1.setChecked(false)
-        tvTaskTab2.setChecked(false)
-        tvTaskTab4.setChecked(false)
-        tvTaskTab5.setChecked(false)
-        tvTaskTab6.setChecked(false)
-        vpCircular.setCurrentItem(2, true)
-    }
-
-    private fun check4Tab() {
-        tvTaskTab4.setChecked(true)
-        tvTaskTab1.setChecked(false)
-        tvTaskTab2.setChecked(false)
-        tvTaskTab3.setChecked(false)
-        tvTaskTab5.setChecked(false)
-        tvTaskTab6.setChecked(false)
-        vpCircular.setCurrentItem(3, true)
-    }
-
-    private fun check5Tab() {
-        tvTaskTab5.setChecked(true)
-        tvTaskTab1.setChecked(false)
-        tvTaskTab2.setChecked(false)
-        tvTaskTab3.setChecked(false)
-        tvTaskTab4.setChecked(false)
-        tvTaskTab6.setChecked(false)
-        vpCircular.setCurrentItem(4, true)
-    }
-
-    private fun check6Tab() {
-        tvTaskTab6.setChecked(true)
-        tvTaskTab1.setChecked(false)
-        tvTaskTab2.setChecked(false)
-        tvTaskTab3.setChecked(false)
-        tvTaskTab4.setChecked(false)
-        tvTaskTab5.setChecked(false)
-        vpCircular.setCurrentItem(5, true)
-    }
-
-    private fun check21Tab() {
-        tvTaskTab21.setChecked(true)
-        tvTaskTab22.setChecked(false)
-        tvTaskTab23.setChecked(false)
-        vpCircular.setCurrentItem(0, true)
-    }
-
-    private fun check22Tab() {
-        tvTaskTab21.setChecked(false)
-        tvTaskTab22.setChecked(true)
-        tvTaskTab23.setChecked(false)
-        vpCircular.setCurrentItem(1, true)
-    }
-
-    private fun check23Tab() {
-        tvTaskTab21.setChecked(false)
-        tvTaskTab22.setChecked(false)
-        tvTaskTab23.setChecked(true)
-        vpCircular.setCurrentItem(2, true)
-    }
-
-    private fun initViewPager2() {
-        fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply {
-                putString(Constant.TASK_STATUS, "-1")
-                putString(Constant.TYPE, "1")
+            override fun onRefresh(refreshLayout: RefreshLayout) {
+                doRefresh()
             }
         })
-        fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply {
-                putString(Constant.TASK_STATUS, "1")
-                putString(Constant.TYPE, "2")
-            }
-        })
-        fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply {
-                putString(Constant.TASK_STATUS, "0")
-                putString(Constant.TYPE, "2")
-            }
-        })
-        fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply {
-                putString(Constant.TASK_STATUS, "3")
-                putString(Constant.TYPE, "2")
-            }
-        })
-        fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply {
-                putString(Constant.TASK_STATUS, "0")
-                putString(Constant.TYPE, "1")
-            }
-        })
-        fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply {
-                putString(Constant.TASK_STATUS, "1")
-                putString(Constant.TYPE, "1")
-            }
-        })
-        fragmentAdapter = FragmentVpAdapter(
-            supportFragmentManager,
-            fragmentList
-        )
-        vpCircular.adapter = fragmentAdapter
-        vpCircular.offscreenPageLimit = fragmentList.size
-        vpCircular.addOnPageChangeListener(object : OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
-
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-
-            }
-
-            override fun onPageSelected(position: Int) {
-                if (position == 0) {
-                    checkFirsTab()
-                } else if (position == 1) {
-                    checkSecondTab()
-                } else if (position == 2) {
-                    checkThirdTab()
-                } else if (position == 3) {
-                    check4Tab()
-                } else if (position == 4) {
-                    check5Tab()
-                } else if (position == 5) {
-                    check6Tab()
+        mAdapter = TaskStatusAdapter(R.layout.item_task_status, mData)
+        mAdapter.setType(mType ?: "")
+        rvTaskStatus.recyclerView.apply {
+            layoutManager = LinearLayoutManager(this@TaskActivity)
+            setAdapter(mAdapter)
+        }
+        mAdapter.setOnItemClickListener { _, view, position ->
+            if (mType == "2" && status == "0") {
+                mStartActivity<AddTaskActivity>(this) {
+                    putExtra(Constant.ID, mData[position].id)
+                    putExtra(Constant.TYPE, mType)
+                }
+            } else {
+                mStartActivity<TaskDetailActivity>(this) {
+                    putExtra(Constant.ID, mData[position].id)
+                    putExtra(Constant.TYPE, mType)
                 }
             }
-        })
+        }
+    }
+private fun initPublishData(){
+    
+}
+    private fun initReceiveData(){
+
     }
 
-    private fun initViewPager1() {
-        fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply {
-                putString(Constant.TASK_STATUS, "-1")
-                putString(Constant.TYPE, "1")
+    override fun getData() {
+        //任务状态0待发布1进行中2完成3关闭
+        if (status == "-1") {
+            mViewModel.getTaskList(lastid = lastId)
+        } else {
+            if (mType == "1") {
+                mViewModel.getTaskList(status = status, lastid = lastId)
+            } else if (mType == "2") {
+                mViewModel.getPublishTaskList(status = status, lastid = lastId)
             }
-        })
-        fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply {
-                putString(Constant.TASK_STATUS, "0")
-                putString(Constant.TYPE, "1")
-            }
-        })
-        fragmentList.add(TaskStatusFragment.getInstance().apply {
-            arguments = Bundle().apply {
-                putString(Constant.TASK_STATUS, "1")
-                putString(Constant.TYPE, "1")
-            }
-        })
-
-        fragmentAdapter = FragmentVpAdapter(
-            supportFragmentManager,
-            fragmentList
-        )
-        vpCircular.adapter = fragmentAdapter
-        vpCircular.addOnPageChangeListener(object : OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
-
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-
-            }
-
-            override fun onPageSelected(position: Int) {
-                if (position == 0) {
-                    check21Tab()
-                } else if (position == 1) {
-                    check22Tab()
-                } else if (position == 2) {
-                    check23Tab()
-                }
-            }
-        })
+        }
     }
 
+    
+    private fun initDialogPublish() {
+        // 底部弹出对话框
+        dialogPublish =
+            Dialog(this, R.style.BottomDialog)
+        val contentView: View =
+            LayoutInflater.from(this).inflate(R.layout.dialog_list, null)
+        dialogPublish.setContentView(contentView)
+        val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
+        params.width =
+            resources.displayMetrics.widthPixels
+        params.bottomMargin = dp2px(this, 0f).toInt()
+        contentView.layoutParams = params
+        dialogPublish.window!!.setGravity(Gravity.BOTTOM)
+        dialogPublish.window!!.setWindowAnimations(R.style.BottomDialog_Animation)
+        var dialogAdapter = DialogListAdapter(R.layout.item_dialog_list, titlesP)
+        var recyclerView = contentView.findViewById<RecyclerView>(R.id.rvDialogList).apply {
+            layoutManager = LinearLayoutManager(this@TaskActivity)
+            addItemDecoration(
+                RecycleViewDivider(
+                    dp2px(this@TaskActivity, 1f).toInt(),
+                    this.resources.getColor(R.color.splitColor)
+                )
+            )
+            adapter = dialogAdapter
+        }
+        dialogAdapter.setOnItemClickListener { adapter, view, position ->
+            tvActionStatus.text = titlesP[position]
+            rvTaskStatus.showLoadingView()
+            doRefresh()
+            dialogPublish.dismiss()
+        }
+
+    }
+
+    private fun doRefresh() {
+        lastId = null
+        mData.clear()
+        rvTaskStatus.showLoadingView()
+        rvTaskStatus.setNoMoreData(false)
+        getData()
+    }
+    
     override fun initDataObserver() {
-
+        mViewModel.mTaskListData.observe(this, Observer { response ->
+            response?.let {
+                rvTaskStatus.finishRefreshLoadMore()
+                it.data?.let {
+                    if (it.size > 0) {
+                        lastId = it.last().id
+                        mData.addAll(it)
+                    } else {
+                        if (lastId != null) {
+                            rvTaskStatus.showFinishLoadMore()
+                        }
+                    }
+                    rvTaskStatus.notifyDataSetChanged()
+                }
+            }
+        })
     }
 
 

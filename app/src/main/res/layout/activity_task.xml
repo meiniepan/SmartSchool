@@ -17,157 +17,109 @@
         <LinearLayout
             android:id="@+id/contentLayout"
             android:layout_width="match_parent"
-            android:background="@color/tintBac"
             android:layout_height="match_parent"
+            android:background="@color/tintBac"
             android:orientation="vertical">
 
             <LinearLayout
-                style="@style/title_style"
-                android:id="@+id/llTab1"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp">
+                android:id="@+id/llTitlePublish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/title_padding"
+                android:paddingTop="12dp"
+                android:paddingEnd="@dimen/title_padding"
+                android:paddingBottom="12dp">
 
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <com.xiaoneng.ss.custom.widgets.CustomTabView2
-                        android:id="@+id/tvTaskTab1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        app:check="true"
-                        app:text="全部" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                <TextView
+                    android:id="@+id/tvPublish"
+                    style="@style/button_blue_bac_style"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp"
                     android:layout_weight="1"
-                    android:gravity="center">
+                    android:text="我发起的" />
 
-                    <com.xiaoneng.ss.custom.widgets.CustomTabView2
-                        android:id="@+id/tvTaskTab2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:text="进行中" />
-                </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                <TextView
+                    android:id="@+id/tvReceive"
+                    style="@style/button_blue_line_style"
+                    android:layout_marginStart="17dp"
+                    android:layout_marginEnd="0dp"
                     android:layout_weight="1"
-                    android:gravity="center">
+                    android:text="我参与的" />
 
-                    <com.xiaoneng.ss.custom.widgets.CustomTabView2
-                        android:id="@+id/tvTaskTab3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:text="草稿箱" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <com.xiaoneng.ss.custom.widgets.CustomTabView2
-                        android:id="@+id/tvTaskTab4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:text="已关闭" />
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <com.xiaoneng.ss.custom.widgets.CustomTabView2
-                        android:id="@+id/tvTaskTab5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:text="未完成" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <com.xiaoneng.ss.custom.widgets.CustomTabView2
-                        android:id="@+id/tvTaskTab6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:text="已完成" />
-                </RelativeLayout>
             </LinearLayout>
 
-            <LinearLayout
-                style="@style/title_style"
-                android:paddingStart="12dp"
-                android:id="@+id/llTab2"
-                android:paddingEnd="12dp">
+            <include layout="@layout/layout_split" />
 
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <com.xiaoneng.ss.custom.widgets.CustomTabView2
-                        android:id="@+id/tvTaskTab21"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        app:check="true"
-                        app:text="全部" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <com.xiaoneng.ss.custom.widgets.CustomTabView2
-                        android:id="@+id/tvTaskTab22"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:text="未完成" />
-                </RelativeLayout>
-
-
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <com.xiaoneng.ss.custom.widgets.CustomTabView2
-                        android:id="@+id/tvTaskTab23"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:text="已完成" />
-                </RelativeLayout>
-            </LinearLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/vpCircular"
-                android:overScrollMode="never"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-            <com.xiaoneng.ss.custom.widgets.FingerMoveView
-                android:id="@+id/ivAddTask"
-                style="@style/button_add_style"
-                />
-        </FrameLayout>
+                <LinearLayout
+                    android:id="@+id/llSpinner2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/tintBac"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/title_padding"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="@dimen/title_padding"
+                    android:paddingBottom="10dp">
+
+
+                    <TextView
+                        android:id="@+id/tvActionStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:drawableRight="@drawable/ic_gray_triangle"
+                        android:drawablePadding="2dp"
+                        android:text="任务状态" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tvActionTimeS"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_gray_triangle"
+                        android:drawablePadding="2dp"
+                        android:text="开始时间" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tvActionTimeE"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:drawableRight="@drawable/ic_gray_triangle"
+                        android:drawablePadding="2dp"
+                        android:text="结束时间" />
+
+                </LinearLayout>
+
+                <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
+                    android:id="@+id/rvTaskStatus"
+                    style="@style/recycler_style"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="@dimen/title_padding"
+                    android:paddingEnd="@dimen/title_padding" />
+
+                <com.xiaoneng.ss.custom.widgets.FingerMoveView
+                    android:id="@+id/ivAddTask"
+                    style="@style/button_add_style" />
+            </FrameLayout>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout></RelativeLayout>
+</RelativeLayout>
