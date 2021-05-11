@@ -14,6 +14,8 @@
             style="@style/title_style"
             app:title="@string/taskTitle" />
 
+        <include layout="@layout/layout_split" />
+
         <LinearLayout
             android:id="@+id/contentLayout"
             android:layout_width="match_parent"
@@ -25,6 +27,7 @@
                 android:id="@+id/llTitlePublish"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingStart="@dimen/title_padding"
@@ -59,62 +62,70 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:id="@+id/llSpinner2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/tintBac"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingStart="@dimen/title_padding"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="@dimen/title_padding"
-                    android:paddingBottom="10dp">
+                    android:orientation="vertical">
 
-
-                    <TextView
-                        android:id="@+id/tvActionStatus"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/llSpinner2"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"
-                        android:drawableRight="@drawable/ic_gray_triangle"
-                        android:drawablePadding="2dp"
-                        android:text="任务状态" />
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/title_padding"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="@dimen/title_padding"
+                        android:paddingBottom="10dp">
 
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
 
-                    <TextView
-                        android:id="@+id/tvActionTimeS"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableRight="@drawable/ic_gray_triangle"
-                        android:drawablePadding="2dp"
-                        android:text="开始时间" />
+                        <TextView
+                            android:id="@+id/tvActionStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="20dp"
+                            android:drawableRight="@drawable/ic_gray_triangle"
+                            android:drawablePadding="2dp"
+                            android:text="任务状态" />
 
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
 
-                    <TextView
-                        android:id="@+id/tvActionTimeE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:drawableRight="@drawable/ic_gray_triangle"
-                        android:drawablePadding="2dp"
-                        android:text="结束时间" />
+                        <TextView
+                            android:id="@+id/tvActionTimeS"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/ic_gray_triangle"
+                            android:drawablePadding="2dp"
+                            android:text="开始时间" />
 
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/tvActionTimeE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:drawableRight="@drawable/ic_gray_triangle"
+                            android:drawablePadding="2dp"
+                            android:text="结束时间" />
+
+                    </LinearLayout>
+
+                    <include layout="@layout/layout_split" />
+
+                    <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
+                        android:id="@+id/rvTaskStatus"
+                        style="@style/recycler_style"
+                        android:layout_marginTop="10dp"
+                        android:paddingStart="@dimen/title_padding"
+                        android:paddingEnd="@dimen/title_padding" />
                 </LinearLayout>
-
-                <com.xiaoneng.ss.common.utils.recyclerview.RefreshStatusRecyclerView
-                    android:id="@+id/rvTaskStatus"
-                    style="@style/recycler_style"
-                    android:layout_marginTop="10dp"
-                    android:paddingStart="@dimen/title_padding"
-                    android:paddingEnd="@dimen/title_padding" />
 
                 <com.xiaoneng.ss.custom.widgets.FingerMoveView
                     android:id="@+id/ivAddTask"
