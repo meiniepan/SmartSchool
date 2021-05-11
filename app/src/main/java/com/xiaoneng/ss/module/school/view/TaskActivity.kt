@@ -62,7 +62,7 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         titlesR.add("已完成")
         statusR.add("0")
         statusR.add("1")
-        initAdapter()
+
         if (UserInfo.getUserBean().usertype != "1") {
             mType = "2"
             ivAddTask.visibility = View.VISIBLE
@@ -120,7 +120,7 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 doRefresh()
             }
         }
-
+        initAdapter()
     }
 
     private fun initAdapter() {
@@ -161,20 +161,21 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvActionTimeS.text = "开始时间"
         etime = null
         tvActionTimeE.text = "结束时间"
+        mAdapter.setType(mType ?: "")
         doRefresh()
     }
 
-    override fun initData() {
-        super.initData()
+    override fun onResume() {
+        super.onResume()
         doRefresh()
     }
 
     override fun getData() {
         //任务状态0待发布1进行中2完成3关闭
         if (mType == "1") {
-            mViewModel.getTaskList(status = status, lastid = lastId)
+            mViewModel.getTaskList(status = status, lastid = lastId,stime = stime,etime = etime)
         } else if (mType == "2") {
-            mViewModel.getPublishTaskList(status = status, lastid = lastId)
+            mViewModel.getPublishTaskList(status = status, lastid = lastId,stime = stime,etime = etime)
         }
     }
 
