@@ -15,6 +15,16 @@
         <com.xiaoneng.ss.custom.widgets.CustomTitleBar
             style="@style/title_style"
             app:title="@string/diskTitle" />
+        <TextView
+            android:id="@+id/tvCopyCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/themeColor"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/title_padding"
+            android:text="取消"
+            />
     </RelativeLayout>
 
     <include layout="@layout/layout_split" />

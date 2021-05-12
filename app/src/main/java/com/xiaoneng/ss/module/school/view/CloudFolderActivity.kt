@@ -85,7 +85,9 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
         }
         tvBottomCopy.setOnClickListener {
-
+            mStartActivity<CloudCopyActivity>(this) {
+                putExtra(Constant.DATA, mPriData[mCurrent])
+            }
         }
         tvBottomMove.setOnClickListener {
 
@@ -120,7 +122,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             if (mPriData[position].isFolder) {
                 mStartActivity<CloudFolderActivity>(this) {
                     var bean = mPriData[position]
-                    bean.fullName = folderBean?.fullName + bean.foldername
+                    bean.fullName = folderBean?.fullName + ">" + bean.foldername
                     putExtra(Constant.DATA, mPriData[position])
                 }
             }

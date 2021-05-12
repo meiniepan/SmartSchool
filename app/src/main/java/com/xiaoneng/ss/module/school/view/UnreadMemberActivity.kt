@@ -61,6 +61,7 @@ class UnreadMemberActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mViewModel.mBaseData.observe(this, Observer { response ->
             response?.let {
                 toast(R.string.deal_done)
+                finish()
 //                netResponseFormat<DepartmentPersonResp>(it)?.let {
 //
 //                }

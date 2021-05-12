@@ -1,11 +1,6 @@
 package com.xiaoneng.ss.module.school.view
 
-import android.animation.ObjectAnimator
-import android.app.Activity
 import android.app.Dialog
-import android.content.Intent
-import android.net.Uri
-import android.os.Handler
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -13,31 +8,18 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
-import androidx.core.animation.doOnEnd
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.state.FileTransInfo
-import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
-import com.xiaoneng.ss.common.utils.oss.OssListener
-import com.xiaoneng.ss.common.utils.oss.OssUtils
-import com.xiaoneng.ss.model.StsTokenResp
 import com.xiaoneng.ss.module.school.adapter.DiskPriAdapter
-import com.xiaoneng.ss.module.school.adapter.DiskPubAdapter
-import com.xiaoneng.ss.module.school.model.*
+import com.xiaoneng.ss.module.school.model.DiskFileResp
+import com.xiaoneng.ss.module.school.model.FolderBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_cloud_copy.*
-import kotlinx.android.synthetic.main.activity_cloud_folder.*
-import kotlinx.android.synthetic.main.activity_cloud_folder.rvDisk
-import kotlinx.android.synthetic.main.activity_cloud_folder.tvDiskNew
-import kotlinx.android.synthetic.main.activity_cloud_folder.tvParentName
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.custom_title_bar.*
 import org.jetbrains.anko.toast
-import java.io.File
 
 
 /**
@@ -48,8 +30,10 @@ import java.io.File
 class CloudCopyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapterPri: DiskPriAdapter
     var mPriData: ArrayList<FolderBean> = ArrayList()
-    var filePath: String? = null
+    var fullPathData: ArrayList<FolderBean> = ArrayList()
+    var fullPath: String? = null
     var fileName: String? = null
+    var cloudType: String = "1"//1私有云  2共享
     var folderBean: FolderBean? = null
     var sourceFolderBean: FolderBean? = null
     private val newFolderDialog: Dialog by lazy {
@@ -62,27 +46,73 @@ class CloudCopyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
-        folderBean = intent.getParcelableExtra(Constant.DATA)
-        sourceFolderBean = intent.getParcelableExtra(Constant.DATA2)
-        tvParentName.text = folderBean?.fullName
-
+        sourceFolderBean = intent.getParcelableExtra(Constant.DATA)
+        initFullPath()
         tvDiskNew.setOnClickListener { newFolderDialog.show() }
         tvDiskCopy.setOnClickListener {
             showLoading()
             mViewModel.copyCloudFile(fileid = sourceFolderBean?.id, folderid = folderBean?.id)
         }
+        tvCopyCancel.setOnClickListener {
+            finish()
+        }
+        initOriginalData()
         initAdapter()
+    }
+
+    private fun initOriginalData() {
+        mPriData.clear()
+        mPriData.add(FolderBean(foldername = "私有云", isFolder = true))
+        mPriData.add(FolderBean(foldername = "共享云", isFolder = true))
+    }
+
+    private fun initFullPath() {
+        fullPath = null
+        if (fullPathData.size > 0) {
+            fullPathData.forEach {
+                fullPath = it.foldername + ">"
+            }
+
+        }
+        if (fullPath.isNullOrEmpty()) {
+            tvParentName.visibility = View.GONE
+        } else {
+            tvParentName.visibility = View.VISIBLE
+            tvParentName.text = fullPath
+        }
+    }
+
+    override fun onBackPressed() {
+        doBack()
+    }
+
+    private fun doBack() {
+        if (fullPathData.size > 0) {
+            fullPathData.removeAt(fullPathData.size - 1)
+            folderBean = if (fullPathData.size > 0) {
+                fullPathData.get(fullPathData.size - 1)
+            }else{
+                null
+            }
+            initFullPath()
+            getData()
+        } else {
+            finish()
+        }
     }
 
     override fun initData() {
         super.initData()
-        getData()
     }
 
     override fun getData() {
         super.getData()
-        rvDisk.showLoadingView()
-        mViewModel.getPriCloudList(folderBean?.id)
+            rvDisk.showLoadingView()
+            if (cloudType == "1") {
+                mViewModel.getPriCloudList(folderBean?.id)
+            } else {
+                mViewModel.getPubCloudList(folderBean?.id)
+            }
     }
 
     private fun initAdapter() {
@@ -94,31 +124,22 @@ class CloudCopyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         mAdapterPri.setOnItemClickListener { adapter, view, position ->
-            mStartActivity<CloudCopyActivity>(this) {
-                var bean = mPriData[position]
-                bean.fullName = folderBean?.fullName + bean.foldername
-                putExtra(Constant.DATA, mPriData[position])
-            }
-        }
-        mAdapterPri.setOnItemChildClickListener { adapter, view, position ->
-            when (view.id) {
-
-                R.id.ivFolderInfo -> {
-                    mStartActivity<FolderSettingActivity>(this) {
-                        putExtra(Constant.DATA, mPriData[position])
-                    }
-                }
-                R.id.cbDiskFile -> {
-                    var cb: CheckBox = view as CheckBox
-                    if (cb.isChecked) {
-                        llBottom.visibility = View.VISIBLE
-                    } else {
-                        llBottom.visibility = View.GONE
-                    }
+            folderBean = mPriData[position]
+            fullPathData.add(folderBean!!)
+            if (mPriData[position].id.isNullOrEmpty()) {
+                if (mPriData[position].foldername == "私有云") {
+                    cloudType = "1"
+                } else if (mPriData[position].foldername == "共享云") {
+                    cloudType = "2"
                 }
 
+            } else {
+
             }
+            initFullPath()
+            getData()
         }
+
     }
 
     private fun initDialog(): Dialog {
@@ -175,9 +196,21 @@ class CloudCopyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
         })
 
+        mViewModel.mPubCloudData.observe(this, Observer { response ->
+            response?.let {
+                netResponseFormat<DiskFileResp>(it)?.let {
+                    mPriData.clear()
+                    it.data?.let { it1 -> mPriData.addAll(it1) }
+                    rvDisk.recyclerView.setAdapter(mAdapterPri)
+                    rvDisk.notifyDataSetChanged()
+                }
+            }
+        })
+
         mViewModel.mCopyCloudData.observe(this, Observer { response ->
             response?.let {
                 toast(R.string.deal_done)
+                finish()
             }
         })
     }
