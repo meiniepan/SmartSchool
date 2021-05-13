@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.*
+import com.xiaoneng.ss.module.school.adapter.DiskPathAdapter
 import com.xiaoneng.ss.module.school.adapter.DiskPriAdapter
 import com.xiaoneng.ss.module.school.model.DiskFileResp
 import com.xiaoneng.ss.module.school.model.FolderBean
@@ -28,12 +29,15 @@ import org.jetbrains.anko.toast
  * @date :2021/4/9 3:17 PM
  */
 class CloudCopyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
-    lateinit var mAdapterPri: DiskPriAdapter
+    lateinit var mAdapterPri: DiskPathAdapter
     var mPriData: ArrayList<FolderBean> = ArrayList()
+    var oriData: ArrayList<FolderBean> = ArrayList()
     var fullPathData: ArrayList<FolderBean> = ArrayList()
-    var fullPath: String? = null
+    var fullPath: String? = ""
     var fileName: String? = null
+    var isOriginal: Boolean = true
     var cloudType: String = "1"//1私有云  2共享
+    var actionType: Int = 1//1复制  2移动
     var folderBean: FolderBean? = null
     var sourceFolderBean: FolderBean? = null
     private val newFolderDialog: Dialog by lazy {
@@ -47,11 +51,21 @@ class CloudCopyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initView() {
         super.initView()
         sourceFolderBean = intent.getParcelableExtra(Constant.DATA)
+        actionType = intent.getIntExtra(Constant.DATA2, 1)
         initFullPath()
         tvDiskNew.setOnClickListener { newFolderDialog.show() }
+        if (actionType == 1) {
+            tvDiskCopy.text = "复制"
+        } else {
+            tvDiskCopy.text = "移动"
+        }
         tvDiskCopy.setOnClickListener {
             showLoading()
-            mViewModel.copyCloudFile(fileid = sourceFolderBean?.id, folderid = folderBean?.id)
+            if (actionType == 1) {
+                mViewModel.copyCloudFile(fileid = sourceFolderBean?.id, folderid = folderBean?.id)
+            } else {
+                mViewModel.moveCloudFile(fileid = sourceFolderBean?.id, folderid = folderBean?.id)
+            }
         }
         tvCopyCancel.setOnClickListener {
             finish()
@@ -61,16 +75,18 @@ class CloudCopyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initOriginalData() {
+        llBottom1.visibility = View.GONE
+        oriData.add(FolderBean(foldername = "私有云", isFolder = true))
+        oriData.add(FolderBean(foldername = "共享云", isFolder = true))
         mPriData.clear()
-        mPriData.add(FolderBean(foldername = "私有云", isFolder = true))
-        mPriData.add(FolderBean(foldername = "共享云", isFolder = true))
+        mPriData.addAll(oriData)
     }
 
     private fun initFullPath() {
-        fullPath = null
+        fullPath = ""
         if (fullPathData.size > 0) {
             fullPathData.forEach {
-                fullPath = it.foldername + ">"
+                fullPath = fullPath + it.foldername + ">"
             }
 
         }
@@ -87,18 +103,28 @@ class CloudCopyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun doBack() {
-        if (fullPathData.size > 0) {
+        if (fullPathData.size > 1) {
             fullPathData.removeAt(fullPathData.size - 1)
             folderBean = if (fullPathData.size > 0) {
                 fullPathData.get(fullPathData.size - 1)
-            }else{
+            } else {
                 null
             }
-            initFullPath()
             getData()
         } else {
-            finish()
+            fullPathData.clear()
+            if (isOriginal) {
+                finish()
+
+            } else {
+                isOriginal = true
+                llBottom1.visibility = View.GONE
+                mPriData.clear()
+                mPriData.addAll(oriData)
+                rvDisk.notifyDataSetChanged()
+            }
         }
+        initFullPath()
     }
 
     override fun initData() {
@@ -107,23 +133,25 @@ class CloudCopyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
-            rvDisk.showLoadingView()
-            if (cloudType == "1") {
-                mViewModel.getPriCloudList(folderBean?.id)
-            } else {
-                mViewModel.getPubCloudList(folderBean?.id)
-            }
+        rvDisk.showLoadingView()
+        if (cloudType == "1") {
+            mViewModel.getPriCloudList(folderBean?.id)
+        } else {
+            mViewModel.getPubCloudList(folderBean?.id)
+        }
     }
 
     private fun initAdapter() {
 
-        mAdapterPri = DiskPriAdapter(R.layout.item_folder_pri, mPriData)
+        mAdapterPri = DiskPathAdapter(R.layout.item_folder_path, mPriData)
         rvDisk.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@CloudCopyActivity)
             setAdapter(mAdapterPri)
         }
 
         mAdapterPri.setOnItemClickListener { adapter, view, position ->
+            isOriginal = false
+            llBottom1.visibility = View.VISIBLE
             folderBean = mPriData[position]
             fullPathData.add(folderBean!!)
             if (mPriData[position].id.isNullOrEmpty()) {

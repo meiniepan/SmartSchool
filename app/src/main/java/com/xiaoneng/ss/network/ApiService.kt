@@ -1087,6 +1087,37 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
+     *移动文件到文件夹
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/disk/files/moveFile")
+    suspend fun moveCloudFile(
+        @Field("token") token: String?,
+        @Field("id") id: String?=null,
+        @Field("folderid") folderid: String?
+    ): BaseResponse<Any>
+
+    /**
+     *删除我的文件
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/disk/files/del")
+    suspend fun delMyCloudFile(
+        @Field("token") token: String?,
+        @Field("fileid") fileid: String?
+    ): BaseResponse<Any>
+
+    /**
+     *删除文件夹
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/disk/folder/del")
+    suspend fun delCloudFolder(
+        @Field("token") token: String?,
+        @Field("id") id: String?
+    ): BaseResponse<Any>
+
+    /**
      *私有云文件夹文件
      */
     @FormUrlEncoded

@@ -555,6 +555,21 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
+    suspend fun moveCloudFile(fileid:String?=null,folderid:String?=null): Any {
+        return apiService.moveCloudFile(UserInfo.getUserBean().token,id = fileid, folderid = folderid)
+            .dataConvert(loadState)
+    }
+
+    suspend fun delMyCloudFile(fileid:String?=null): Any {
+        return apiService.delMyCloudFile(UserInfo.getUserBean().token,fileid = fileid)
+            .dataConvert(loadState)
+    }
+
+    suspend fun delCloudFolder(folderid:String?=null): Any {
+        return apiService.delCloudFolder(UserInfo.getUserBean().token,id = folderid)
+            .dataConvert(loadState)
+    }
+
     suspend fun getPriCloudFiles(folderid:String?=null): Any {
         return apiService.getPriCloudFiles(UserInfo.getUserBean().token, folderid = folderid)
             .dataConvert(loadState)

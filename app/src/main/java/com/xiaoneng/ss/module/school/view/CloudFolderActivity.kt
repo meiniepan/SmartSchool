@@ -28,6 +28,7 @@ import com.xiaoneng.ss.module.school.adapter.DiskPriAdapter
 import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_cloud_folder.*
+import kotlinx.android.synthetic.main.activity_sys_setting.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -87,13 +88,32 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvBottomCopy.setOnClickListener {
             mStartActivity<CloudCopyActivity>(this) {
                 putExtra(Constant.DATA, mPriData[mCurrent])
+                putExtra(Constant.DATA2, 1)
             }
         }
         tvBottomMove.setOnClickListener {
-
+            mStartActivity<CloudCopyActivity>(this) {
+                putExtra(Constant.DATA, mPriData[mCurrent])
+                putExtra(Constant.DATA2, 2)
+            }
         }
         tvBottomDel.setOnClickListener {
+            var str = "确认删除"
+            if (mPriData[mCurrent].isFolder) {
+                str = str+"文件夹"+mPriData[mCurrent].foldername
+            } else {
+                str = str+"文件"+mPriData[mCurrent].filename
+            }
+            str = str+"?"
+            mAlert(str) {
+                showLoading()
+                if (mPriData[mCurrent].isFolder) {
+                    mViewModel.delCloudFolder(folderid =mPriData[mCurrent].id )
+                } else {
+                    mViewModel.delMyCloudFile(fileid = mPriData[mCurrent].id )
+                }
 
+            }
         }
         initAdapter()
     }
@@ -106,6 +126,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun getData() {
         super.getData()
         rvDisk.showLoadingView()
+        mNetCount = 0
         mViewModel.getPriCloudFiles(folderBean?.id)
         mViewModel.getPriCloudList(folderBean?.id)
     }
@@ -137,9 +158,27 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 }
                 R.id.cbDiskFile -> {
                     var cb: CheckBox = view as CheckBox
+                    mPriData.forEach {
+                        it.isChecked = false
+                    }
+                    mPriData[position]?.isChecked = cb.isChecked
+                    mAdapterPri.notifyDataSetChanged()
                     mCurrent = position
                     if (cb.isChecked) {
                         llBottom.visibility = View.VISIBLE
+                        if (mPriData[position].isFolder) {
+                            llBottomDownload.visibility = View.GONE
+                            llBottomRename.visibility = View.VISIBLE
+                            llBottomCopy.visibility = View.GONE
+                            llBottomMove.visibility = View.GONE
+                            llBottomDel.visibility = View.VISIBLE
+                        } else {
+                            llBottomDownload.visibility = View.VISIBLE
+                            llBottomRename.visibility = View.VISIBLE
+                            llBottomCopy.visibility = View.VISIBLE
+                            llBottomMove.visibility = View.VISIBLE
+                            llBottomDel.visibility = View.VISIBLE
+                        }
                     } else {
                         llBottom.visibility = View.GONE
                     }
@@ -247,8 +286,10 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         } else if (i == 1) {
             tvTitle.text = "重命名"
+            etFolderName.hint = "文件夹名称"
         } else if (i == 2) {
             tvTitle.text = "重命名"
+            etFolderName.hint = "文件名称"
         }
         var tvConfirm = contentView.findViewById<TextView>(R.id.tvFolderConfirm)
         contentView.findViewById<View>(R.id.ivClose).setOnClickListener {
@@ -270,12 +311,12 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             } else if (i == 1) {
                 var bean = mPriData[mCurrent]
                 bean.token = UserInfo.getUserBean().token
-                bean.filename = folderName
+                bean.foldername = folderName
                 mViewModel.modifyFolder(bean)
             } else if (i == 2) {
                 var bean = mPriData[mCurrent]
                 bean.token = UserInfo.getUserBean().token
-                bean.foldername = folderName
+                bean.filename = folderName
                 mViewModel.modifyFile(bean)
             }
             bottomDialog.dismiss()
@@ -324,6 +365,28 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         })
 
         mViewModel.mAddFileData.observe(this, Observer { response ->
+            response?.let {
+                toast(R.string.deal_done)
+                getData()
+                showAdd()
+            }
+        })
+
+        mViewModel.mDelCloudFileData.observe(this, Observer { response ->
+            response?.let {
+                toast(R.string.deal_done)
+                getData()
+            }
+        })
+
+        mViewModel.mDelCloudFolderData.observe(this, Observer { response ->
+            response?.let {
+                toast(R.string.deal_done)
+                getData()
+            }
+        })
+
+        mViewModel.mModifyFileData.observe(this, Observer { response ->
             response?.let {
                 toast(R.string.deal_done)
                 getData()

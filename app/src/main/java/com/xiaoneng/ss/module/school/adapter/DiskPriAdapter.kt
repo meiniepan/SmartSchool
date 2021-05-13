@@ -1,6 +1,7 @@
 package com.xiaoneng.ss.module.school.adapter
 
 import android.media.Image
+import android.widget.CheckBox
 import android.widget.ImageView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -25,6 +26,9 @@ class DiskPriAdapter(layoutId: Int, listData: MutableList<FolderBean>?) :
         viewHolder?.let { holder ->
             holder.addOnClickListener(R.id.ivFolderInfo)
             holder.addOnClickListener(R.id.cbDiskFile)
+
+            var cb = holder.getView<CheckBox>(R.id.cbDiskFile)
+            cb.isChecked = item?.isChecked?:false
 
             var icon = holder.getView<ImageView>(R.id.ivDiskIcon)
             holder.setGone(R.id.ivFolderInfo,item?.isFolder==true)

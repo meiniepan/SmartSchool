@@ -40,6 +40,8 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mAddFileData: MutableLiveData<Any> = MutableLiveData()
     val mModifyFileData: MutableLiveData<Any> = MutableLiveData()
     val mCopyCloudData: MutableLiveData<Any> = MutableLiveData()
+    val mDelCloudFileData: MutableLiveData<Any> = MutableLiveData()
+    val mDelCloudFolderData: MutableLiveData<Any> = MutableLiveData()
     val mPriCloudFilesData: MutableLiveData<Any> = MutableLiveData()
     val mPubCloudData: MutableLiveData<Any> = MutableLiveData()
     val mNewFolderData: MutableLiveData<Any> = MutableLiveData()
@@ -378,6 +380,36 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
             {
                 mCopyCloudData.value =
                     mRepository.copyCloudFile(fileid = fileid, folderid = folderid)
+            },
+            loadState
+        )
+    }
+
+    fun moveCloudFile(fileid: String? = null, folderid: String? = null) {
+        initiateRequest(
+            {
+                mCopyCloudData.value =
+                    mRepository.moveCloudFile(fileid = fileid, folderid = folderid)
+            },
+            loadState
+        )
+    }
+
+    fun delMyCloudFile(fileid: String? = null) {
+        initiateRequest(
+            {
+                mDelCloudFileData.value =
+                    mRepository.delMyCloudFile(fileid = fileid)
+            },
+            loadState
+        )
+    }
+
+    fun delCloudFolder(folderid: String? = null) {
+        initiateRequest(
+            {
+                mDelCloudFolderData.value =
+                    mRepository.delCloudFolder(folderid = folderid)
             },
             loadState
         )
