@@ -6,6 +6,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Handler
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -82,13 +83,19 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvDiskNew.setOnClickListener { newFolderDialog.show() }
         tvBottomDownload.setOnClickListener {
             var bean = mPriData[mCurrent]
-
-            FileDownloadInfo.addFile(
-                DiskFileBean(
-                     objectid = bean.objectid, totalSize = 0
-                )
+            val filePath = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+            var diskFileBean = DiskFileBean(
+                path = filePath+File.separator+"cloud_" + bean.id + bean.filename,
+                filename = mPriData[mCurrent].filename,
+                objectid = bean.objectid, totalSize = 0
             )
-            doDown(bean.objectid,"cloud_"+bean.id+bean.filename)
+//            if (!FileDownloadInfo.hasFile(diskFileBean)) {
+                FileDownloadInfo.addFile(
+                    diskFileBean
+                )
+                doDown(bean.objectid, "cloud_" + bean.id + bean.filename)
+//            }
+            mToast("已加入下载队列")
         }
         tvBottomRename.setOnClickListener {
             if (mPriData[mCurrent].isFolder) {
@@ -112,20 +119,23 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvBottomDel.setOnClickListener {
             var str = "确认删除"
             if (mPriData[mCurrent].isFolder) {
-                str = str+"文件夹"+mPriData[mCurrent].foldername
+                str = str + "文件夹" + mPriData[mCurrent].foldername
             } else {
-                str = str+"文件"+mPriData[mCurrent].filename
+                str = str + "文件" + mPriData[mCurrent].filename
             }
-            str = str+"?"
+            str = str + "?"
             mAlert(str) {
                 showLoading()
                 if (mPriData[mCurrent].isFolder) {
-                    mViewModel.delCloudFolder(folderid =mPriData[mCurrent].id )
+                    mViewModel.delCloudFolder(folderid = mPriData[mCurrent].id)
                 } else {
-                    mViewModel.delMyCloudFile(fileid = mPriData[mCurrent].id )
+                    mViewModel.delMyCloudFile(fileid = mPriData[mCurrent].id)
                 }
 
             }
+        }
+        ivFileRecord.setOnClickListener {
+            mStartActivity<CloudTransActivity>(this)
         }
         initAdapter()
     }
@@ -230,41 +240,51 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         startActivityForResult(intent, 1)
 
     }
+
     private fun doDown(url: String?, fileName: String?) {
         AwesomeDownloader.init(BaseApplication.instance)
         //关闭通知栏
         AwesomeDownloader.option.showNotification = false
-        val url = UserInfo.getUserBean().domain + url
+        val url2 = UserInfo.getUserBean().domain + url
         //获取应用外部照片储存路径
         val filePath = PathSelector(BaseApplication.instance).getDownloadsDirPath()
         //加入下载队列
-        AwesomeDownloader.enqueue(url, filePath, fileName ?: "")
+        AwesomeDownloader.enqueue(url2, filePath, fileName ?: "")
         AwesomeDownloader.setOnProgressChange { progress ->
             //do something...
-            var bean = DiskFileBean(path = filePath + File.separator + fileName,
-                objectid = url,progress = progress.toInt()
+            var bean = DiskFileBean(
+                path = filePath + File.separator + fileName,
+                filename = mPriData[mCurrent].filename,
+                objectid = url?:"", progress = progress
             )
+            Log.w("=====", progress.toString() )
             FileDownloadInfo.modifyFile(bean)
             FileDownloadEvent(bean).postSticky()
         }.setOnStop { downloadBytes, totalBytes ->
             //do something...
         }.setOnFinished { filePath, fileName ->
-            var bean = DiskFileBean(path = filePath + File.separator + fileName,
-                objectid = url,status = 2
+            var bean = DiskFileBean(
+                path = filePath + File.separator + fileName,
+                filename = mPriData[mCurrent].filename,
+                objectid = url?:"", status = 2
             )
             FileDownloadInfo.modifyFile(bean)
             FileDownloadEvent(bean).postSticky()
         }.setOnError { exception ->
             //do something...
         }
-        var bean = DiskFileBean(path = filePath + File.separator + fileName,
-        objectid = url
+        var bean = DiskFileBean(
+            path = filePath + File.separator + fileName,
+            filename = mPriData[mCurrent].filename,
+            objectid = url?:""
         )
         FileDownloadEvent(bean).postSticky()
     }
+
     private fun doUpload(it: StsTokenResp) {
         mRootView.post {
             mToast("已加入上传列表")
+            showAdd()
         }
         var mId: String = System.currentTimeMillis().toString() + "_" + fileName
         var totalSize = 0L
@@ -276,8 +296,9 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             getOssObjectKey(UserInfo.getUserBean().usertype, UserInfo.getUserBean().uid, mId)
         FileTransInfo.addFile(
             DiskFileBean(
-                path
-                = filePath ?: "", objectKey = objectKey, totalSize = totalSize
+                path = filePath ?: "",
+                folderid = folderBean?.id,
+                objectKey = objectKey, totalSize = totalSize
             )
         )
         OssUtils.uploadResumeFile(
@@ -295,7 +316,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                             folderid = folderBean?.id ?: ""
                         )
                         mViewModel.addFile(bean)
-
+mToast("hahaha")
                     }
 
                 }
@@ -411,7 +432,6 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             response?.let {
                 toast(R.string.deal_done)
                 getData()
-                showAdd()
             }
         })
 

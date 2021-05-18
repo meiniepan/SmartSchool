@@ -7,6 +7,7 @@ import android.widget.ProgressBar
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.common.state.FileDownloadInfo
 import com.xiaoneng.ss.common.state.FileTransInfo
 import com.xiaoneng.ss.common.utils.formatMemorySize
 import com.xiaoneng.ss.module.school.interfaces.IFileTrans
@@ -26,29 +27,38 @@ class CloudTransAdapter(
     val listener: IFileTrans
 ) :
     BaseQuickAdapter<DiskFileBean, BaseViewHolder>(layoutId, listData) {
+    var type: Int = 0
     override fun convert(viewHolder: BaseViewHolder?, item: DiskFileBean?) {
         viewHolder?.let { holder ->
             var pb = holder.getView<ProgressBar>(R.id.pbFile)
             var action = holder.getView<ImageView>(R.id.ivAction)
             var total: Long = item?.totalSize ?: 0
             var p = 0L
-            if (total != 0L) {
-                p = (item?.currentSize ?: 0) * 100 / total
-
+            if (item?.progress != 0L) {
+                p = item?.progress ?: 0
             } else {
-                p = 0L
-            }
+                if (total != 0L) {
+                    p = (item?.currentSize ?: 0) * 100 / total
 
-            if (item?.status==2){
+                } else {
+                    p = 0L
+                }
+            }
+            if (item?.status == 2) {
                 pb.visibility = View.GONE
-            }else{
+            } else {
                 pb.visibility = View.VISIBLE
             }
             var fileSize =
                 item?.currentSize?.formatMemorySize() + "/" + item?.totalSize?.formatMemorySize()
             pb.setProgress(p.toInt())
-
-            holder.setText(R.id.tvDiskFileName, item?.path?.split("/")?.last())
+            var fileName: String? = ""
+            if (item?.filename.isNullOrEmpty()) {
+                fileName = item?.path?.split("/")?.last()
+            } else {
+                fileName = item?.filename
+            }
+            holder.setText(R.id.tvDiskFileName, fileName)
                 .setText(R.id.tvDiskFileSize, fileSize)
             if (item?.status == 0) {
                 action.setImageResource(R.drawable.ic_pause_d)
@@ -70,11 +80,16 @@ class CloudTransAdapter(
             } else {
                 action.setImageResource(R.drawable.ic_dustbin)
                 action.setOnClickListener {
+                    if (type == 0) {
                     FileTransInfo.delFile(item!!)
+                    } else {
+                        FileDownloadInfo.delFile(item!!)
+                    }
                     mData.remove(item!!)
                     notifyItemRemoved(holder.adapterPosition)
                 }
             }
         }
     }
+
 }

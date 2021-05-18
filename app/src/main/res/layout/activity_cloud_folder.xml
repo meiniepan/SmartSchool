@@ -19,6 +19,14 @@
             <com.xiaoneng.ss.custom.widgets.CustomTitleBar
                 style="@style/title_style"
                 app:title="@string/diskTitle" />
+            <ImageView
+                android:id="@+id/ivFileRecord"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/title_padding"
+                android:src="@drawable/ic_file_record" />
         </RelativeLayout>
 
         <include layout="@layout/layout_split" />

@@ -37,11 +37,24 @@ object FileDownloadInfo {
                 if (file.status!=0){
                     it.status = file.status
                 }
+                if (file.progress!=0L){
+                    it.progress = file.progress
+                }
                 
                 return@forEach
             }
         }
         fileInfoJson = gson.toJson(files)
+    }
+
+    fun hasFile(file: DiskFileBean) :Boolean{
+        var files = getFilesInfo()
+        files.forEach {
+            if (it.objectid == file.objectid){
+                return true
+            }
+        }
+        return false
     }
 
     fun reset() {

@@ -65,6 +65,7 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
             tvUpload.setTextColor(resources.getColor(R.color.white))
             tvDownload.setBackgroundResource(R.drawable.bac_blue_line_21)
             tvDownload.setTextColor(resources.getColor(R.color.themeColor))
+            mAdapter.type = 0
             mAdapter.setNewData(mData)
         }
         tvDownload.setOnClickListener {
@@ -73,6 +74,7 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
             tvDownload.setTextColor(resources.getColor(R.color.white))
             tvUpload.setBackgroundResource(R.drawable.bac_blue_line_21)
             tvUpload.setTextColor(resources.getColor(R.color.themeColor))
+            mAdapter.type = 1
             mAdapter.setNewData(mDataDownload)
         }
         initAdapter()
@@ -108,7 +110,6 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
                         putExtra(Constant.DATA, UserInfo.getUserBean().domain + bean.objectid)
                     }
                 } else {
-
                     var filePath = bean.path
                     var filename = File(filePath)
                     if (filename.exists()) {
@@ -141,7 +142,13 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
             object : OssListener {
                 override fun onSuccess() {
                     mRootView.post {
-
+                        var bean2 = DiskFileBean(
+                            token = UserInfo.getUserBean().token,
+                            filename = bean.filename,
+                            objectid = bean.objectKey,
+                            folderid = bean.folderid
+                        )
+                        mViewModel.addFile(bean2)
 
                     }
 
@@ -215,8 +222,9 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
             }
         }
 
-        FileTransInfo.modifyFilesInfo(mData)
-        mAdapter.setNewData(mData)
+        if (mCurrent==0) {
+            mAdapter.setNewData(mData)
+        }
 //        mAdapter.notifyItemChanged(pp)
     }
 
@@ -231,17 +239,19 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
                 if (event.file.totalSize != 0L) {
                     mDataDownload[i].totalSize = event.file.totalSize
                 }
+                if (event.file.progress != 0L) {
+                    mDataDownload[i].progress = event.file.progress
+                }
                 if (event.file.status != 0) {
                     mDataDownload[i].status = event.file.status
                 }
-
                 pp = i
-                break
             }
         }
 
-        FileDownloadInfo.modifyFilesInfo(mDataDownload)
-        mAdapter.setNewData(mDataDownload)
+        if (mCurrent==1) {
+            mAdapter.setNewData(mDataDownload)
+        }
 //        mAdapter.notifyItemChanged(pp)
     }
 

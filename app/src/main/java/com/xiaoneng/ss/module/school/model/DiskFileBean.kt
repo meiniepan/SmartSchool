@@ -22,12 +22,12 @@ data class DiskFileBean(
     var filename: String = "",
     var fileinfo: String = "",
     var objectid: String = "",
-    var folderid: String = "",
+    var folderid: String? = "",
     var path: String = "",
     var objectKey: String = "",
     var totalSize: Long = 0,
     var currentSize: Long = 0,
-    var progress: Int = 0,
+    var progress: Long = 0,
     var status: Int = 0,//0正在下载 1暂停  2完成
     @Transient  var task: OSSAsyncTask<*>? = null,
     var schoolname: String= ""
