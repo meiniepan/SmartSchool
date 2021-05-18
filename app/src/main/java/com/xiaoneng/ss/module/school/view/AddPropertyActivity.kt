@@ -43,7 +43,7 @@ class AddPropertyActivity : SpeechTranscriberActivity<SchoolViewModel>() {
     lateinit var mAdapter: AddImgAdapter
     var mPicData: ArrayList<String> = ArrayList()
     var mUrlData: ArrayList<String> = ArrayList()
-    var mData:PropertyTypeBean? = null
+    var mData: PropertyTypeBean? = null
 
     override fun getLayoutId(): Int {
         return R.layout.activity_add_property
@@ -143,7 +143,7 @@ class AddPropertyActivity : SpeechTranscriberActivity<SchoolViewModel>() {
                     mRootView.post {
                         uploadNum++
                         mUrlData.add(objectKey)
-                        if (uploadNum == mPicData.size) {
+                        if (uploadNum == mPicData.size - 1) {
                             doRealConfirm()
                         }
 
@@ -167,7 +167,10 @@ class AddPropertyActivity : SpeechTranscriberActivity<SchoolViewModel>() {
                 fileInfo.add(FileInfoBean(url = it))
             }
         }
-
+        if (etPropertyRemark.text.toString().isNullOrEmpty()) {
+            showTip(getString(R.string.lack_info))
+            return
+        }
         var bean = RepairBody(
             typeid = mData?.id,
             token = UserInfo.getUserBean().token,

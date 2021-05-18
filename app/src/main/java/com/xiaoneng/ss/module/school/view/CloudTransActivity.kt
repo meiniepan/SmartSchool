@@ -8,21 +8,27 @@ import android.text.TextUtils
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jiang.awesomedownloader.tool.PathSelector
+import com.tencent.smtt.sdk.QbSdk
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.base.view.BaseApplication
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.FileDownloadInfo
 import com.xiaoneng.ss.common.state.FileTransInfo
 import com.xiaoneng.ss.common.state.UserInfo
+import com.xiaoneng.ss.common.utils.*
+import com.xiaoneng.ss.common.utils.eventBus.FileDownloadEvent
 import com.xiaoneng.ss.common.utils.eventBus.FileUploadEvent
 import com.xiaoneng.ss.common.utils.eventBus.RefreshUnreadEvent
-import com.xiaoneng.ss.common.utils.getOssObjectKey
-import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.common.utils.oss.OssListener
 import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.model.StsTokenResp
+import com.xiaoneng.ss.module.activity.ImageScaleActivity
 import com.xiaoneng.ss.module.school.adapter.CloudTransAdapter
 import com.xiaoneng.ss.module.school.interfaces.IFileTrans
 import com.xiaoneng.ss.module.school.model.DiskFileBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
+import kotlinx.android.synthetic.main.activity_cloud_disk.*
 import kotlinx.android.synthetic.main.activity_cloud_trans.*
 import kotlinx.android.synthetic.main.fragment_circular.*
 import kotlinx.coroutines.GlobalScope
@@ -41,8 +47,10 @@ import java.io.File
 class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans {
     lateinit var mAdapter: CloudTransAdapter
     var mData: ArrayList<DiskFileBean> = ArrayList()
+    var mDataDownload: ArrayList<DiskFileBean> = ArrayList()
     var rotationB = false
-    var bean:DiskFileBean = DiskFileBean()
+    var mCurrent = 0
+    var bean: DiskFileBean = DiskFileBean()
 
     override fun getLayoutId(): Int {
         return R.layout.activity_cloud_trans
@@ -51,8 +59,22 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
     override fun initView() {
         super.initView()
 
-        tvUpload.setOnClickListener { }
-        tvDownload.setOnClickListener { }
+        tvUpload.setOnClickListener {
+            mCurrent = 0
+            tvUpload.setBackgroundResource(R.drawable.bac_blue_bac)
+            tvUpload.setTextColor(resources.getColor(R.color.white))
+            tvDownload.setBackgroundResource(R.drawable.bac_blue_line_21)
+            tvDownload.setTextColor(resources.getColor(R.color.themeColor))
+            mAdapter.setNewData(mData)
+        }
+        tvDownload.setOnClickListener {
+            mCurrent = 1
+            tvDownload.setBackgroundResource(R.drawable.bac_blue_bac)
+            tvDownload.setTextColor(resources.getColor(R.color.white))
+            tvUpload.setBackgroundResource(R.drawable.bac_blue_line_21)
+            tvUpload.setTextColor(resources.getColor(R.color.themeColor))
+            mAdapter.setNewData(mDataDownload)
+        }
         initAdapter()
     }
 
@@ -65,23 +87,41 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
         super.getData()
         mData.clear()
         mData.addAll(FileTransInfo.getFilesInfo())
+        mDataDownload.clear()
+        mDataDownload.addAll(FileDownloadInfo.getFilesInfo())
         rvTrans.notifyDataSetChanged()
     }
 
     private fun initAdapter() {
 
-        mAdapter = CloudTransAdapter(R.layout.item_cloud_trans, mData,this)
+        mAdapter = CloudTransAdapter(R.layout.item_cloud_trans, mData, this)
         rvTrans.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@CloudTransActivity)
             setAdapter(mAdapter)
         }
 
         mAdapter.setOnItemClickListener { adapter, view, position ->
+            var bean = mAdapter.data[position]
+            if (bean.status == 2) {
+                if (bean.objectid.endIsImage()) {
+                    mStartActivity<ImageScaleActivity>(this) {
+                        putExtra(Constant.DATA, UserInfo.getUserBean().domain + bean.objectid)
+                    }
+                } else {
 
+                    var filePath = bean.path
+                    var filename = File(filePath)
+                    if (filename.exists()) {
+                        doOpen(filePath)
+                    }
+                }
+            }
         }
     }
-
-    override fun upload(file:DiskFileBean){
+    private fun doOpen(filePath: String) {
+        QbSdk.openFileReader(this, filePath, null, null)
+    }
+    override fun upload(file: DiskFileBean) {
         if (!file.path.isNullOrEmpty()) {
             bean = file
             mViewModel.getSts()
@@ -155,18 +195,18 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun refreshFile(event: FileUploadEvent) {
         var pp = 0
-        for (i in 0..mData.size){
-            if (mData[i].objectKey == event.file.objectKey){
-                if (event.file.currentSize!=0L){
+        for (i in 0..mData.size) {
+            if (mData[i].objectKey == event.file.objectKey) {
+                if (event.file.currentSize != 0L) {
                     mData[i].currentSize = event.file.currentSize
                 }
-                if (event.file.totalSize!=0L){
+                if (event.file.totalSize != 0L) {
                     mData[i].totalSize = event.file.totalSize
                 }
-                if (event.file.status!=0){
+                if (event.file.status != 0) {
                     mData[i].status = event.file.status
                 }
-                if (event.file.task!=null){
+                if (event.file.task != null) {
                     mData[i].task?.cancel()
                     mData[i].task = event.file.task
                 }
@@ -176,7 +216,33 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
         }
 
         FileTransInfo.modifyFilesInfo(mData)
-        mAdapter.notifyItemChanged(pp)
+        mAdapter.setNewData(mData)
+//        mAdapter.notifyItemChanged(pp)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun refreshDownloadFile(event: FileDownloadEvent) {
+        var pp = 0
+        for (i in 0..mDataDownload.size) {
+            if (mDataDownload[i].objectid == event.file.objectid) {
+                if (event.file.currentSize != 0L) {
+                    mDataDownload[i].currentSize = event.file.currentSize
+                }
+                if (event.file.totalSize != 0L) {
+                    mDataDownload[i].totalSize = event.file.totalSize
+                }
+                if (event.file.status != 0) {
+                    mDataDownload[i].status = event.file.status
+                }
+
+                pp = i
+                break
+            }
+        }
+
+        FileDownloadInfo.modifyFilesInfo(mDataDownload)
+        mAdapter.setNewData(mDataDownload)
+//        mAdapter.notifyItemChanged(pp)
     }
 
 

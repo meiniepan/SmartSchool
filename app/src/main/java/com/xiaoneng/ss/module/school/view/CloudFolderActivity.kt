@@ -16,11 +16,16 @@ import android.widget.TextView
 import androidx.core.animation.doOnEnd
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jiang.awesomedownloader.downloader.AwesomeDownloader
+import com.jiang.awesomedownloader.tool.PathSelector
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.base.view.BaseApplication
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.FileDownloadInfo
 import com.xiaoneng.ss.common.state.FileTransInfo
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
+import com.xiaoneng.ss.common.utils.eventBus.FileDownloadEvent
 import com.xiaoneng.ss.common.utils.oss.OssListener
 import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.model.StsTokenResp
@@ -76,7 +81,14 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvDiskUpload.setOnClickListener { choseFile() }
         tvDiskNew.setOnClickListener { newFolderDialog.show() }
         tvBottomDownload.setOnClickListener {
+            var bean = mPriData[mCurrent]
 
+            FileDownloadInfo.addFile(
+                DiskFileBean(
+                     objectid = bean.objectid, totalSize = 0
+                )
+            )
+            doDown(bean.objectid,"cloud_"+bean.id+bean.filename)
         }
         tvBottomRename.setOnClickListener {
             if (mPriData[mCurrent].isFolder) {
@@ -218,7 +230,38 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         startActivityForResult(intent, 1)
 
     }
-
+    private fun doDown(url: String?, fileName: String?) {
+        AwesomeDownloader.init(BaseApplication.instance)
+        //关闭通知栏
+        AwesomeDownloader.option.showNotification = false
+        val url = UserInfo.getUserBean().domain + url
+        //获取应用外部照片储存路径
+        val filePath = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+        //加入下载队列
+        AwesomeDownloader.enqueue(url, filePath, fileName ?: "")
+        AwesomeDownloader.setOnProgressChange { progress ->
+            //do something...
+            var bean = DiskFileBean(path = filePath + File.separator + fileName,
+                objectid = url,progress = progress.toInt()
+            )
+            FileDownloadInfo.modifyFile(bean)
+            FileDownloadEvent(bean).postSticky()
+        }.setOnStop { downloadBytes, totalBytes ->
+            //do something...
+        }.setOnFinished { filePath, fileName ->
+            var bean = DiskFileBean(path = filePath + File.separator + fileName,
+                objectid = url,status = 2
+            )
+            FileDownloadInfo.modifyFile(bean)
+            FileDownloadEvent(bean).postSticky()
+        }.setOnError { exception ->
+            //do something...
+        }
+        var bean = DiskFileBean(path = filePath + File.separator + fileName,
+        objectid = url
+        )
+        FileDownloadEvent(bean).postSticky()
+    }
     private fun doUpload(it: StsTokenResp) {
         mRootView.post {
             mToast("已加入上传列表")
