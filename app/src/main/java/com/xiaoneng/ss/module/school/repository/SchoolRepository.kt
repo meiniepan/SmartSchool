@@ -595,6 +595,11 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
+    suspend fun getPubCloudFiles(folderid:String?=null): Any {
+        return apiService.getPubCloudFiles(UserInfo.getUserBean().token, folderid = folderid)
+            .dataConvert(loadState)
+    }
+
     suspend fun newFileFolder(parentid:String?=null,foldername:String?=null): Any {
         return apiService.newFileFolder(UserInfo.getUserBean().token, parentid = parentid,foldername = foldername)
             .dataConvert(loadState)

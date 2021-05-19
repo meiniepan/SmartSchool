@@ -13,6 +13,7 @@
         android:gravity="center_vertical">
 
         <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+            android:id="@+id/ctbAddInvolve"
             style="@style/title_style"
             app:title="@string/taskTitle" />
 
@@ -120,6 +121,7 @@
                         </RelativeLayout>
 
                         <RelativeLayout
+                            android:id="@+id/rlClass"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"

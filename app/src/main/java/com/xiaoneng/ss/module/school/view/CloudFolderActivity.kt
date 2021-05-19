@@ -85,16 +85,16 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             var bean = mPriData[mCurrent]
             val filePath = PathSelector(BaseApplication.instance).getDownloadsDirPath()
             var diskFileBean = DiskFileBean(
-                path = filePath+File.separator+"cloud_" + bean.id + bean.filename,
+                path = filePath + File.separator + "cloud_" + bean.id + bean.filename,
                 filename = mPriData[mCurrent].filename,
                 objectid = bean.objectid, totalSize = 0
             )
-//            if (!FileDownloadInfo.hasFile(diskFileBean)) {
+            if (!FileDownloadInfo.hasFile(diskFileBean)) {
                 FileDownloadInfo.addFile(
                     diskFileBean
                 )
                 doDown(bean.objectid, "cloud_" + bean.id + bean.filename)
-//            }
+            }
             mToast("已加入下载队列")
         }
         tvBottomRename.setOnClickListener {
@@ -149,8 +149,14 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.getData()
         rvDisk.showLoadingView()
         mNetCount = 0
-        mViewModel.getPriCloudFiles(folderBean?.id)
-        mViewModel.getPriCloudList(folderBean?.id)
+        if (folderBean?.isPrivate != false) {
+            mViewModel.getPriCloudFiles(folderBean?.folderid)
+            mViewModel.getPriCloudList(folderBean?.folderid)
+        } else {
+            mViewModel.getPubCloudFiles(folderBean?.folderid)
+            mViewModel.getPubCloudList(folderBean?.folderid)
+        }
+
     }
 
     private fun initAdapter() {
@@ -160,11 +166,12 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             layoutManager = LinearLayoutManager(this@CloudFolderActivity)
             setAdapter(mAdapterPri)
         }
-
+        mAdapterPri.isPrivate = folderBean?.isPrivate ?: true
         mAdapterPri.setOnItemClickListener { adapter, view, position ->
             if (mPriData[position].isFolder) {
                 mStartActivity<CloudFolderActivity>(this) {
                     var bean = mPriData[position]
+                    bean.isPrivate = folderBean?.isPrivate?:true
                     bean.fullName = folderBean?.fullName + ">" + bean.foldername
                     putExtra(Constant.DATA, mPriData[position])
                 }
@@ -255,28 +262,27 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             var bean = DiskFileBean(
                 path = filePath + File.separator + fileName,
                 filename = mPriData[mCurrent].filename,
-                objectid = url?:"", progress = progress
+                objectid = url ?: "", progress = progress
             )
-            Log.w("=====", progress.toString() )
             FileDownloadInfo.modifyFile(bean)
-            FileDownloadEvent(bean).postSticky()
+            FileDownloadEvent(bean).post()
         }.setOnStop { downloadBytes, totalBytes ->
             //do something...
         }.setOnFinished { filePath, fileName ->
             var bean = DiskFileBean(
                 path = filePath + File.separator + fileName,
                 filename = mPriData[mCurrent].filename,
-                objectid = url?:"", status = 2
+                objectid = url ?: "", status = 2
             )
             FileDownloadInfo.modifyFile(bean)
-            FileDownloadEvent(bean).postSticky()
+            FileDownloadEvent(bean).post()
         }.setOnError { exception ->
             //do something...
         }
         var bean = DiskFileBean(
             path = filePath + File.separator + fileName,
             filename = mPriData[mCurrent].filename,
-            objectid = url?:""
+            objectid = url ?: ""
         )
         FileDownloadEvent(bean).postSticky()
     }
@@ -316,7 +322,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                             folderid = folderBean?.id ?: ""
                         )
                         mViewModel.addFile(bean)
-mToast("hahaha")
+
                     }
 
                 }
@@ -430,7 +436,7 @@ mToast("hahaha")
 
         mViewModel.mAddFileData.observe(this, Observer { response ->
             response?.let {
-                toast(R.string.deal_done)
+                toast("上传完成")
                 getData()
             }
         })
@@ -459,15 +465,16 @@ mToast("hahaha")
         mViewModel.mPriCloudData.observe(this, Observer { response ->
             response?.let {
                 netResponseFormat<DiskFileResp>(it)?.let {
-                    mNetCount++
-                    mPriDataFolder = it.data
-                    if (mNetCount == 2) {
-                        mPriData.clear()
-                        mPriDataFolder?.let { it1 -> mPriData.addAll(it1) }
-                        mPriDataFile?.let { it1 -> mPriData.addAll(it1) }
-                        rvDisk.recyclerView.setAdapter(mAdapterPri)
-                        rvDisk.notifyDataSetChanged()
-                    }
+                    doFolderData(it)
+
+                }
+            }
+        })
+
+        mViewModel.mPubCloudData.observe(this, Observer { response ->
+            response?.let {
+                netResponseFormat<DiskFileResp>(it)?.let {
+                    doFolderData(it)
 
                 }
             }
@@ -476,23 +483,47 @@ mToast("hahaha")
         mViewModel.mPriCloudFilesData.observe(this, Observer { response ->
             response?.let {
                 netResponseFormat<DiskFileResp>(it)?.let {
-                    mNetCount++
-                    mPriDataFile = it.data
-                    mPriDataFile?.let {
-                        it.forEach {
-                            it.isFolder = false
-                        }
-                    }
-                    if (mNetCount == 2) {
-                        mPriData.clear()
-                        mPriDataFolder?.let { it1 -> mPriData.addAll(it1) }
-                        mPriDataFile?.let { it1 -> mPriData.addAll(it1) }
-                        rvDisk.recyclerView.setAdapter(mAdapterPri)
-                        rvDisk.notifyDataSetChanged()
-                    }
+                    doFilesData(it)
                 }
             }
         })
 
+        mViewModel.mPubCloudFilesData.observe(this, Observer { response ->
+            response?.let {
+                netResponseFormat<DiskFileResp>(it)?.let {
+                    doFilesData(it)
+                }
+            }
+        })
+
+    }
+
+    private fun doFilesData(it: DiskFileResp) {
+        mNetCount++
+        mPriDataFile = it.data
+        mPriDataFile?.let {
+            it.forEach {
+                it.isFolder = false
+            }
+        }
+        if (mNetCount == 2) {
+            mPriData.clear()
+            mPriDataFolder?.let { it1 -> mPriData.addAll(it1) }
+            mPriDataFile?.let { it1 -> mPriData.addAll(it1) }
+            rvDisk.recyclerView.setAdapter(mAdapterPri)
+            rvDisk.notifyDataSetChanged()
+        }
+    }
+
+    private fun doFolderData(it: DiskFileResp) {
+        mNetCount++
+        mPriDataFolder = it.data
+        if (mNetCount == 2) {
+            mPriData.clear()
+            mPriDataFolder?.let { it1 -> mPriData.addAll(it1) }
+            mPriDataFile?.let { it1 -> mPriData.addAll(it1) }
+            rvDisk.recyclerView.setAdapter(mAdapterPri)
+            rvDisk.notifyDataSetChanged()
+        }
     }
 }

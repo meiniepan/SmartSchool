@@ -6,12 +6,15 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.jiang.awesomedownloader.downloader.AwesomeDownloader
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.state.FileDownloadInfo
 import com.xiaoneng.ss.common.state.FileTransInfo
+import com.xiaoneng.ss.common.utils.eventBus.FileDownloadEvent
 import com.xiaoneng.ss.common.utils.formatMemorySize
 import com.xiaoneng.ss.module.school.interfaces.IFileTrans
 import com.xiaoneng.ss.module.school.model.DiskFileBean
+import java.io.File
 
 
 /**
@@ -63,25 +66,55 @@ class CloudTransAdapter(
             if (item?.status == 0) {
                 action.setImageResource(R.drawable.ic_pause_d)
                 action.setOnClickListener {
-                    item?.task?.cancel()
-                    item.status = 1
-                    FileTransInfo.modifyFile(item)
+                        item.status = 1
+                    if (type == 0) {
+                        item?.task?.cancel()
+                        FileTransInfo.modifyFile(item)
+                    } else {
+                        AwesomeDownloader.stopAll()
+                        FileDownloadInfo.modifyFile(item)
+                    }
+
                     notifyItemChanged(holder.adapterPosition)
 
                 }
             } else if (item?.status == 1) {
                 action.setImageResource(R.drawable.ic_start_d)
                 action.setOnClickListener {
-                    listener.upload(item)
-                    item.status = 0
-                    FileTransInfo.modifyFile(item)
+                        item.status = 0
+                    if (type == 0) {
+                        listener.upload(item)
+                        FileTransInfo.modifyFile(item)
+                    } else {
+                        AwesomeDownloader.resumeAndStart()
+                        AwesomeDownloader.setOnProgressChange { progress ->
+                            //do something...
+                            var bean = DiskFileBean(
+                                 progress = progress
+                            )
+                            FileDownloadInfo.modifyFile(bean)
+                            FileDownloadEvent(bean).post()
+                        }.setOnStop { downloadBytes, totalBytes ->
+                            //do something...
+                        }.setOnFinished { filePath, fileName ->
+                            var bean = DiskFileBean(
+                                 status = 2
+                            )
+                            FileDownloadInfo.modifyFile(bean)
+                            FileDownloadEvent(bean).post()
+                        }.setOnError { exception ->
+                            //do something...
+                        }
+                        FileDownloadInfo.modifyFile(item)
+                    }
+
                     notifyItemChanged(holder.adapterPosition)
                 }
             } else {
                 action.setImageResource(R.drawable.ic_dustbin)
                 action.setOnClickListener {
                     if (type == 0) {
-                    FileTransInfo.delFile(item!!)
+                        FileTransInfo.delFile(item!!)
                     } else {
                         FileDownloadInfo.delFile(item!!)
                     }

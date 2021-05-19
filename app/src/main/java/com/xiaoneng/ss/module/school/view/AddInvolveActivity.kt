@@ -37,8 +37,8 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private lateinit var mAdapterDepartment: DepartmentAdapter
     private lateinit var mAdapterInvolve: InvolvePerson2Adapter
     var mDataQuery = ArrayList<UserBeanSimple>()
-    var mDataDepartment = ArrayList<DepartmentBean>()
-    var mDataClasses = ArrayList<DepartmentBean>()
+    var mDataDepartment :ArrayList<DepartmentBean>? = ArrayList()
+    var mDataClasses :ArrayList<DepartmentBean>? = ArrayList()
     var mDataDepartment2 = ArrayList<DepartmentBean>()
     var mDataClasses2 = ArrayList<DepartmentBean>()
     var mDataInvolve: MutableList<StudentBean> = ArrayList()
@@ -52,9 +52,13 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
-        mDataDepartment = intent.getParcelableArrayListExtra(Constant.DATA)!!
-        mDataClasses = intent.getParcelableArrayListExtra(Constant.DATA2)!!
+        mDataDepartment = intent.getParcelableArrayListExtra(Constant.DATA)?: ArrayList()
+        mDataClasses = intent.getParcelableArrayListExtra(Constant.DATA2)?:ArrayList()
         mReceiveList = intent.getParcelableArrayListExtra(Constant.DATA3)
+        if (intent.getIntExtra(Constant.TYPE,0)==1){//来自云盘配置
+            ctbAddInvolve.setTitle(getString(R.string.diskTitle))
+            rlClass.visibility = View.GONE
+        }
         mReceiveList?.let {
             if (it.size > 0) {
                 it.forEach {
@@ -167,14 +171,14 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initData() {
         super.initData()
-        if (mDataDepartment.size > 0 || mDataClasses.size > 0) {
+        if (mDataDepartment?.size?:0 > 0 || mDataClasses?.size?:0 > 0) {
             mAdapterDepartment.notifyDataSetChanged()
-            mDataDepartment.forEach {
+            mDataDepartment?.forEach {
                 if (it.num!!.toInt() > 0) {
                     mDataInvolve.addAll(it.list)
                 }
             }
-            mDataClasses.forEach {
+            mDataClasses?.forEach {
                 if (it.num!!.toInt() > 0) {
                     mDataInvolve.addAll(it.list)
                 }
@@ -244,15 +248,20 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
             mStartForResult<InvolvePersonActivity>(this, Constant.REQUEST_CODE_COURSE) {
                 if (currentTab == tab1) {
-                    putExtra(Constant.ID, mDataDepartment[position].id)
-                    putParcelableArrayListExtra(Constant.DATA, mDataDepartment[position].list)
-                    putExtra(Constant.TYPE, tab1)
-                    currentItemId = mDataDepartment[position].id ?: ""
+                    mDataDepartment?.let {
+                        putExtra(Constant.ID, it[position]?.id)
+                        putParcelableArrayListExtra(Constant.DATA, it[position].list)
+                        putExtra(Constant.TYPE, tab1)
+                        currentItemId = it[position].id ?: ""
+                    }
+
                 } else {
-                    putExtra(Constant.ID, mDataClasses[position].id)
-                    putParcelableArrayListExtra(Constant.DATA, mDataClasses[position].list)
+                    mDataClasses?.let {
+                    putExtra(Constant.ID, it[position].id)
+                    putParcelableArrayListExtra(Constant.DATA, it[position].list)
                     putExtra(Constant.TYPE, tab2)
-                    currentItemId = mDataClasses[position].id ?: ""
+                    currentItemId = it[position].id ?: ""
+                    }
                 }
             }
         }
@@ -271,7 +280,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         if (isManage) {
             mAdapterInvolve.setOnItemClickListener { adapter, view, position ->
 
-                mDataDepartment.forEach {
+                mDataDepartment?.forEach {
                     if (it.id == mDataInvolve[position].parentId) {
                         if (it.num!!.toInt() > 0) {
                             it.list.remove(mDataInvolve[position])
@@ -279,7 +288,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         }
                     }
                 }
-                mDataClasses.forEach {
+                mDataClasses?.forEach {
                     if (it.id == mDataInvolve[position].parentId) {
                         if (it.num!!.toInt() > 0) {
                             it.list.remove(mDataInvolve[position])
@@ -321,7 +330,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 if (bean.topdepartid.isNullOrEmpty()) {
                     //学生
                     studentBean.parentId = tab2 + "_" + bean.classid
-                    mDataClasses.forEach {
+                    mDataClasses?.forEach {
                         if (studentBean.parentId == it.id) {
                             if (it.num == "0") {
                                 it.list.clear()
@@ -334,7 +343,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     }
                 } else {
                     studentBean.parentId = tab1 + "_" + bean.topdepartid
-                    mDataDepartment.forEach {
+                    mDataDepartment?.forEach {
                         if (studentBean.parentId == it.id) {
                             if (it.num == "0") {
                                 it.list.clear()
@@ -375,14 +384,14 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     }
                 }
                 if (currentTab == tab1) {
-                    mDataDepartment.forEach {
+                    mDataDepartment?.forEach {
                         if (it.id == currentItemId) {
                             it.list = receiveList
                             it.num = receiveList.size.toString()
                         }
                     }
                 } else {
-                    mDataClasses.forEach {
+                    mDataClasses?.forEach {
                         if (it.id == currentItemId) {
                             it.list = receiveList
                             it.num = receiveList.size.toString()
@@ -437,15 +446,15 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mViewModel.mBaseData.observe(this, Observer { response ->
             response?.let {
                 netResponseFormat<ArrayList<ClassesResponse>>(it)?.let {
-                    mDataClasses.clear()
+                    mDataClasses?.clear()
                     it.forEach {
                         it.list.forEach {
 
-                            mDataClasses.add(DepartmentBean(it.id, it.levelname + it.classname))
+                            mDataClasses?.add(DepartmentBean(it.id, it.levelname + it.classname))
                         }
 
                     }
-                    mDataClasses.forEach {
+                    mDataClasses?.forEach {
                         if (mDataClasses2.size > 0) {
                             mDataClasses2.forEach { it2 ->
                                 if (it2.id == it.id) {
@@ -465,9 +474,9 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             response?.let {
                 mViewModel.getClassesByTea()
                 netResponseFormat<ArrayList<DepartmentBean>>(it)?.let {
-                    mDataDepartment.clear()
-                    mDataDepartment.addAll(it)
-                    mDataDepartment.forEach {
+                    mDataDepartment?.clear()
+                    mDataDepartment?.addAll(it)
+                    mDataDepartment?.forEach {
                         if (mDataDepartment2.size > 0) {
                             mDataDepartment2.forEach { it2 ->
                                 if (it2.id == it.id) {

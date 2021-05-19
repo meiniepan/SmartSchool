@@ -1,17 +1,22 @@
 package com.xiaoneng.ss.module.school.view
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Handler
-import android.text.TextUtils
+import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jiang.awesomedownloader.tool.PathSelector
 import com.tencent.smtt.sdk.QbSdk
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.base.view.BaseApplication
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.FileDownloadInfo
 import com.xiaoneng.ss.common.state.FileTransInfo
@@ -19,7 +24,6 @@ import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.common.utils.eventBus.FileDownloadEvent
 import com.xiaoneng.ss.common.utils.eventBus.FileUploadEvent
-import com.xiaoneng.ss.common.utils.eventBus.RefreshUnreadEvent
 import com.xiaoneng.ss.common.utils.oss.OssListener
 import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.model.StsTokenResp
@@ -28,9 +32,7 @@ import com.xiaoneng.ss.module.school.adapter.CloudTransAdapter
 import com.xiaoneng.ss.module.school.interfaces.IFileTrans
 import com.xiaoneng.ss.module.school.model.DiskFileBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import kotlinx.android.synthetic.main.activity_cloud_disk.*
 import kotlinx.android.synthetic.main.activity_cloud_trans.*
-import kotlinx.android.synthetic.main.fragment_circular.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -51,6 +53,9 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
     var rotationB = false
     var mCurrent = 0
     var bean: DiskFileBean = DiskFileBean()
+    private val delDialog: Dialog by lazy {
+        initDialog()
+    }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_cloud_trans
@@ -67,6 +72,7 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
             tvDownload.setTextColor(resources.getColor(R.color.themeColor))
             mAdapter.type = 0
             mAdapter.setNewData(mData)
+            rvTrans.notifyDataSetChanged()
         }
         tvDownload.setOnClickListener {
             mCurrent = 1
@@ -76,6 +82,7 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
             tvUpload.setTextColor(resources.getColor(R.color.themeColor))
             mAdapter.type = 1
             mAdapter.setNewData(mDataDownload)
+            rvTrans.notifyDataSetChanged()
         }
         initAdapter()
     }
@@ -117,6 +124,10 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
                     }
                 }
             }
+        }
+        mAdapter.setOnItemLongClickListener { adapter, view, position ->
+            delDialog.show()
+            true
         }
     }
     private fun doOpen(filePath: String) {
@@ -163,25 +174,42 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
             })
     }
 
-    private fun choseFile() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.setType("*/*") //设置类型，我这里是任意类型，任意后缀的可以这样写。
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        startActivityForResult(intent, 1)
+    private fun initDialog(): Dialog {
+        //i: 0 新建文件夹  1 文件夹重命名 2 文件重命名
+        // 底部弹出对话框
+        var bottomDialog =
+            Dialog(this, R.style.BottomDialog)
+        val contentView: View =
+            LayoutInflater.from(this).inflate(R.layout.dialog_new_folder, null)
+        bottomDialog.setContentView(contentView)
+        val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
+        params.width =
+            this.resources.displayMetrics.widthPixels - dp2px(32f).toInt()
+        params.bottomMargin = dp2px(this, 0f).toInt()
+        contentView.layoutParams = params
+        bottomDialog.window!!.setGravity(Gravity.CENTER)
+        var etFolderName = contentView.findViewById<EditText>(R.id.etFolderName)
+        var tvTitle = contentView.findViewById<TextView>(R.id.tvTitle6)
 
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode === Activity.RESULT_OK) { //是否选择，没选择就不会继续
-            val uri: Uri = data?.getData()!! //得到uri，后面就是将uri转化成file的过程。
-            val img_path: String = OssUtils().getPath(this, uri)
-            val file = File(img_path)
-            Toast.makeText(this, file.toString(), Toast.LENGTH_SHORT).show()
+        var tvConfirm = contentView.findViewById<TextView>(R.id.tvFolderConfirm)
+        contentView.findViewById<View>(R.id.ivClose).setOnClickListener {
+            bottomDialog.dismiss()
         }
 
-    }
+        tvConfirm.setOnClickListener {
+            var folderName = etFolderName.text.toString()
 
+            if (folderName.isEmpty()) {
+                mToast(R.string.lack_info)
+                return@setOnClickListener
+            }
+
+
+            bottomDialog.dismiss()
+        }
+
+        return bottomDialog
+    }
     override fun initDataObserver() {
         mViewModel.mStsData.observe(this, Observer { response ->
             response?.let {
@@ -221,9 +249,9 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
                 break
             }
         }
-
         if (mCurrent==0) {
             mAdapter.setNewData(mData)
+            rvTrans.notifyDataSetChanged()
         }
 //        mAdapter.notifyItemChanged(pp)
     }
@@ -246,11 +274,12 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
                     mDataDownload[i].status = event.file.status
                 }
                 pp = i
+                break
             }
         }
-
         if (mCurrent==1) {
             mAdapter.setNewData(mDataDownload)
+            rvTrans.notifyDataSetChanged()
         }
 //        mAdapter.notifyItemChanged(pp)
     }

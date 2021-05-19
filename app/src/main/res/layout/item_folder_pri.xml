@@ -4,8 +4,8 @@
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="@dimen/title_padding"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingStart="@dimen/title_padding">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,32 +33,54 @@
             android:src="@drawable/ic_file" />
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/tvDiskFileName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:text=""
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tvCreator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/commonHint"
+        android:textSize="@dimen/sp_12"
+        android:layout_marginLeft="10dp"
+        android:singleLine="true"
+        android:text=""
+         />
 
-
+</LinearLayout>
             <TextView
                 android:id="@+id/tvDiskFileDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:singleLine="true"
                 android:text=""
-                android:layout_marginTop="2dp"
-                android:textSize="@dimen/sp_12"
                 android:textColor="@color/commonHint"
-                />
+                android:textSize="@dimen/sp_12" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivAdmin"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_admin" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
         <ImageView
             android:id="@+id/ivFolderInfo"
             android:layout_width="26dp"
@@ -66,8 +88,6 @@
             android:src="@drawable/ic_info" />
     </LinearLayout>
 
-    <include
-        layout="@layout/layout_split"
-         />
+    <include layout="@layout/layout_split" />
 </LinearLayout>
 

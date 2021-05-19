@@ -1,46 +1,22 @@
 package com.xiaoneng.ss.module.school.view
 
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
 import android.app.Activity
-import android.app.Dialog
 import android.content.Intent
-import android.net.Uri
-import android.os.Handler
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.animation.doOnEnd
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.model.UserBean
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.state.FileTransInfo
-import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.*
-import com.xiaoneng.ss.common.utils.oss.OssListener
-import com.xiaoneng.ss.common.utils.oss.OssUtils
-import com.xiaoneng.ss.model.StsTokenResp
-import com.xiaoneng.ss.model.TestCourseResp
-import com.xiaoneng.ss.module.school.adapter.DiskAdapter
-import com.xiaoneng.ss.module.school.adapter.DiskPriAdapter
-import com.xiaoneng.ss.module.school.adapter.DiskPubAdapter
-import com.xiaoneng.ss.module.school.model.*
+import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.mStartForResult
+import com.xiaoneng.ss.common.utils.netResponseFormat
+import com.xiaoneng.ss.module.school.model.DepartmentBean
+import com.xiaoneng.ss.module.school.model.DiskFileResp
+import com.xiaoneng.ss.module.school.model.FolderBean
+import com.xiaoneng.ss.module.school.model.UserBeanSimple
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import kotlinx.android.synthetic.main.activity_add_involve.*
-import kotlinx.android.synthetic.main.activity_add_task.*
-import kotlinx.android.synthetic.main.activity_cloud_disk.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.activity_folder_setting.*
 import org.jetbrains.anko.toast
-import java.io.File
 
 
 /**
@@ -51,8 +27,8 @@ import java.io.File
 class FolderSettingActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var folderBean: FolderBean? = null
     var involves: ArrayList<UserBean> = ArrayList()
-
-
+    var mDataDepartment = ArrayList<DepartmentBean>()
+    var receiveList: ArrayList<UserBeanSimple> = ArrayList()
 
     override fun getLayoutId(): Int {
         return R.layout.activity_folder_setting
@@ -63,6 +39,12 @@ class FolderSettingActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         folderBean = intent.getParcelableExtra(Constant.DATA)
         tvConfirm.setOnClickListener {
             doConfirm()
+        }
+        llInvite.setOnClickListener {
+            mStartForResult<AddInvolveActivity>(this, Constant.REQUEST_CODE_COURSE) {
+                //从草稿箱第一次选择参与人，传入原有参与人数据
+                putExtra(Constant.TYPE, 1)
+            }
         }
     }
 
@@ -76,16 +58,59 @@ class FolderSettingActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun doConfirm() {
-        involves.add(UserBean(uid = "12",usertype = "2"))
-        mViewModel.setFileFolder(parentid = folderBean?.parentid,folderid = folderBean?.id,involve = Gson().toJson(involves))
+//        if (involves.size <= 0) {
+//            toast(R.string.lack_info)
+//            return
+//        }
+        mViewModel.setFileFolder(
+            parentid = folderBean?.parentid,
+            folderid = folderBean?.id,
+            involve = Gson().toJson(involves)
+        )
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode === Activity.RESULT_OK) { //是否选择，没选择就不会继续
-
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == Constant.REQUEST_CODE_COURSE) {
+                if (data != null) {
+                    involves.clear()
+                    receiveList.clear()
+                    mDataDepartment = data.getParcelableArrayListExtra(Constant.DATA)!!
+                    var str = ""
+                    mDataDepartment.forEach {
+                        addDepartment(it)
+                    }
+                    if (receiveList.size > 0) {
+                        receiveList.forEach {
+                            str = str + it.realname + "、"
+                            involves.add(UserBean(uid = it.uid, usertype = it.usertype))
+                        }
+                        str = str.substring(0, str.length - 1)
+                    }
+                        tvPeople.text = str
+                }
+            }
         }
+    }
 
+    private fun addDepartment(it: DepartmentBean) {
+        if (it.num!!.toInt() > 0) {
+            it.list.forEach {
+                receiveList.add(
+                    UserBeanSimple(
+                        uid = it.uid,
+                        realname = it.realname,
+                        classid = it.classid,
+                        usertype = it.usertype
+                    )
+                )
+            }
+        }
     }
 
     override fun initDataObserver() {
@@ -93,10 +118,8 @@ class FolderSettingActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         mViewModel.mBaseData.observe(this, Observer { response ->
             response?.let {
-                netResponseFormat<DiskFileResp>(it)?.let {
-
-                }
-
+                toast(R.string.deal_done)
+                finish()
             }
         })
     }

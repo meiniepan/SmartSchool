@@ -36,7 +36,7 @@ class CloudCopyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var fullPath: String? = ""
     var fileName: String? = null
     var isOriginal: Boolean = true
-    var cloudType: String = "1"//1私有云  2共享
+    var cloudType: String = "0"//1私有云  2共享
     var actionType: Int = 1//1复制  2移动
     var folderBean: FolderBean? = null
     var sourceFolderBean: FolderBean? = null
@@ -62,9 +62,9 @@ class CloudCopyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvDiskCopy.setOnClickListener {
             showLoading()
             if (actionType == 1) {
-                mViewModel.copyCloudFile(fileid = sourceFolderBean?.id, folderid = folderBean?.id)
+                mViewModel.copyCloudFile(fileid = sourceFolderBean?.id, folderid = folderBean?.folderid)
             } else {
-                mViewModel.moveCloudFile(fileid = sourceFolderBean?.id, folderid = folderBean?.id)
+                mViewModel.moveCloudFile(fileid = sourceFolderBean?.id, folderid = folderBean?.folderid)
             }
         }
         tvCopyCancel.setOnClickListener {
@@ -76,8 +76,8 @@ class CloudCopyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun initOriginalData() {
         llBottom1.visibility = View.GONE
-        oriData.add(FolderBean(foldername = "私有云", isFolder = true))
-        oriData.add(FolderBean(foldername = "共享云", isFolder = true))
+        oriData.add(FolderBean(foldername = getString(R.string.cloudPrivate), isFolder = true))
+        oriData.add(FolderBean(foldername = getString(R.string.cloudPublic), isFolder = true))
         mPriData.clear()
         mPriData.addAll(oriData)
     }
@@ -134,10 +134,10 @@ class CloudCopyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun getData() {
         super.getData()
         rvDisk.showLoadingView()
-        if (cloudType == "1") {
-            mViewModel.getPriCloudList(folderBean?.id)
+        if (cloudType == "0") {
+            mViewModel.getPriCloudList(folderBean?.folderid)
         } else {
-            mViewModel.getPubCloudList(folderBean?.id)
+            mViewModel.getPubCloudList(folderBean?.folderid)
         }
     }
 
@@ -155,10 +155,10 @@ class CloudCopyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             folderBean = mPriData[position]
             fullPathData.add(folderBean!!)
             if (mPriData[position].id.isNullOrEmpty()) {
-                if (mPriData[position].foldername == "私有云") {
+                if (mPriData[position].foldername == getString(R.string.cloudPrivate)) {
+                    cloudType = "0"
+                } else if (mPriData[position].foldername == getString(R.string.cloudPublic)) {
                     cloudType = "1"
-                } else if (mPriData[position].foldername == "共享云") {
-                    cloudType = "2"
                 }
 
             } else {

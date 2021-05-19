@@ -25,8 +25,9 @@ import com.xiaoneng.ss.common.utils.oss.OssListener
 import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.model.StsTokenResp
 import com.xiaoneng.ss.module.school.adapter.DiskPriAdapter
-import com.xiaoneng.ss.module.school.adapter.DiskPubAdapter
-import com.xiaoneng.ss.module.school.model.*
+import com.xiaoneng.ss.module.school.model.DiskFileBean
+import com.xiaoneng.ss.module.school.model.DiskFileResp
+import com.xiaoneng.ss.module.school.model.FolderBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_cloud_disk.*
 import kotlinx.coroutines.GlobalScope
@@ -43,15 +44,21 @@ import java.io.File
  */
 class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapterPri: DiskPriAdapter
-    lateinit var mAdapterPub: DiskPubAdapter
     var mPriData: ArrayList<FolderBean> = ArrayList()
     var mPubData: ArrayList<FolderBean> = ArrayList()
     var rotationB = false
     var filePath: String? = null
     var fileName: String? = null
     var mCurrent: Int = 0
+    var mType: Int = 0
     private val newFolderDialog: Dialog by lazy {
-        initDialog()
+        initDialog(0)
+    }
+    private val renameFolderDialog: Dialog by lazy {
+        initDialog(1)
+    }
+    private val renameFileDialog: Dialog by lazy {
+        initDialog(2)
     }
 
     override fun getLayoutId(): Int {
@@ -78,16 +85,41 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         }
         tvBottomRename.setOnClickListener {
-
+            if (mPriData[mCurrent].isFolder) {
+                renameFolderDialog.show()
+            } else {
+                renameFileDialog.show()
+            }
         }
         tvBottomCopy.setOnClickListener {
-
+            mStartActivity<CloudCopyActivity>(this) {
+                putExtra(Constant.DATA, mPriData[mCurrent])
+                putExtra(Constant.DATA2, 1)
+            }
         }
         tvBottomMove.setOnClickListener {
-
+            mStartActivity<CloudCopyActivity>(this) {
+                putExtra(Constant.DATA, mPriData[mCurrent])
+                putExtra(Constant.DATA2, 2)
+            }
         }
         tvBottomDel.setOnClickListener {
+            var str = "确认删除"
+            if (mPriData[mCurrent].isFolder) {
+                str = str + "文件夹" + mPriData[mCurrent].foldername
+            } else {
+                str = str + "文件" + mPriData[mCurrent].filename
+            }
+            str = str + "?"
+            mAlert(str) {
+                showLoading()
+                if (mPriData[mCurrent].isFolder) {
+                    mViewModel.delCloudFolder(folderid = mPriData[mCurrent].id)
+                } else {
+                    mViewModel.delMyCloudFile(fileid = mPriData[mCurrent].id)
+                }
 
+            }
         }
         initAdapter()
     }
@@ -107,7 +139,6 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private fun initAdapter() {
 
         mAdapterPri = DiskPriAdapter(R.layout.item_folder_pri, mPriData)
-        mAdapterPub = DiskPubAdapter(R.layout.item_disk, mPubData)
         rvDisk.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@CloudDiskActivity)
             setAdapter(mAdapterPri)
@@ -115,9 +146,18 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         mAdapterPri.setOnItemClickListener { adapter, view, position ->
             mStartActivity<CloudFolderActivity>(this) {
-                var bean = mPriData[position]
-                bean.fullName = "私有云>"+bean.foldername
-                putExtra(Constant.DATA, mPriData[position])
+                if (mType == 0) {
+                    var bean = mPriData[position]
+                    bean.isPrivate = true
+                    bean.fullName = getString(R.string.cloudPrivate)+">" + bean.foldername
+                    putExtra(Constant.DATA, bean)
+                } else {
+                    var bean = mPubData[position]
+                    bean.isPrivate = false
+                    bean.fullName = getString(R.string.cloudPublic)+">" + bean.foldername
+                    putExtra(Constant.DATA, bean)
+                }
+
             }
         }
         mAdapterPri.setOnItemChildClickListener { adapter, view, position ->
@@ -129,10 +169,29 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     }
                 }
                 R.id.cbDiskFile -> {
-                    var cb:CheckBox = view as CheckBox
-                    if (cb.isChecked){
+                    var cb: CheckBox = view as CheckBox
+                    mPriData.forEach {
+                        it.isChecked = false
+                    }
+                    mPriData[position]?.isChecked = cb.isChecked
+                    mAdapterPri.notifyDataSetChanged()
+                    mCurrent = position
+                    if (cb.isChecked) {
                         llBottom.visibility = View.VISIBLE
-                    }else{
+                        if (mPriData[position].isFolder) {
+                            llBottomDownload.visibility = View.GONE
+                            llBottomRename.visibility = View.VISIBLE
+                            llBottomCopy.visibility = View.GONE
+                            llBottomMove.visibility = View.GONE
+                            llBottomDel.visibility = View.VISIBLE
+                        } else {
+                            llBottomDownload.visibility = View.VISIBLE
+                            llBottomRename.visibility = View.VISIBLE
+                            llBottomCopy.visibility = View.VISIBLE
+                            llBottomMove.visibility = View.VISIBLE
+                            llBottomDel.visibility = View.VISIBLE
+                        }
+                    } else {
                         llBottom.visibility = View.GONE
                     }
                 }
@@ -141,7 +200,7 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
     }
 
-    private fun showAdd(it: View=ivAddFile) {
+    private fun showAdd(it: View = ivAddFile) {
         val anim: ObjectAnimator
         if (rotationB) {
             anim = ObjectAnimator.ofFloat(it, "rotation", 45.0F, 0F)
@@ -163,22 +222,24 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
 
     private fun checkFirsTab() {
-        mCurrent = 0
+        mType = 0
         tvPrivate.setBackgroundResource(R.drawable.bac_blue_bac)
         tvPrivate.setTextColor(resources.getColor(R.color.white))
         tvPublic.setBackgroundResource(R.drawable.bac_blue_line_21)
         tvPublic.setTextColor(resources.getColor(R.color.themeColor))
-        rvDisk.recyclerView.setAdapter(mAdapterPri)
+        mAdapterPri.setNewData(mPriData)
+        mAdapterPri.isPrivate = true
         rvDisk.notifyDataSetChanged()
     }
 
     private fun checkSecondTab() {
-        mCurrent = 1
+        mType = 1
         tvPublic.setBackgroundResource(R.drawable.bac_blue_bac)
         tvPublic.setTextColor(resources.getColor(R.color.white))
         tvPrivate.setBackgroundResource(R.drawable.bac_blue_line_21)
         tvPrivate.setTextColor(resources.getColor(R.color.themeColor))
-        rvDisk.recyclerView.setAdapter(mAdapterPub)
+        mAdapterPri.setNewData(mPubData)
+        mAdapterPri.isPrivate = false
         rvDisk.notifyDataSetChanged()
     }
 
@@ -231,7 +292,8 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             })
     }
 
-    private fun initDialog(): Dialog {
+    private fun initDialog(i: Int): Dialog {
+        //i: 0 新建文件夹  1 文件夹重命名 2 文件重命名
         // 底部弹出对话框
         var bottomDialog =
             Dialog(this, R.style.BottomDialog)
@@ -245,6 +307,16 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         contentView.layoutParams = params
         bottomDialog.window!!.setGravity(Gravity.CENTER)
         var etFolderName = contentView.findViewById<EditText>(R.id.etFolderName)
+        var tvTitle = contentView.findViewById<TextView>(R.id.tvTitle6)
+        if (i == 0) {
+
+        } else if (i == 1) {
+            tvTitle.text = "重命名"
+            etFolderName.hint = "文件夹名称"
+        } else if (i == 2) {
+            tvTitle.text = "重命名"
+            etFolderName.hint = "文件名称"
+        }
         var tvConfirm = contentView.findViewById<TextView>(R.id.tvFolderConfirm)
         contentView.findViewById<View>(R.id.ivClose).setOnClickListener {
             bottomDialog.dismiss()
@@ -259,7 +331,20 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
 
             showLoading()
-            mViewModel.newFileFolder(foldername = folderName)
+            if (i == 0) {
+                mViewModel.newFileFolder(parentid = null, foldername = folderName)
+
+            } else if (i == 1) {
+                var bean = mPriData[mCurrent]
+                bean.token = UserInfo.getUserBean().token
+                bean.foldername = folderName
+                mViewModel.modifyFolder(bean)
+            } else if (i == 2) {
+                var bean = mPriData[mCurrent]
+                bean.token = UserInfo.getUserBean().token
+                bean.filename = folderName
+                mViewModel.modifyFile(bean)
+            }
             bottomDialog.dismiss()
         }
 

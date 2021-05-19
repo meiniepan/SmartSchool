@@ -29,7 +29,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/llTitleStu"
+            android:id="@+id/llInvite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -44,10 +44,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
                 android:layout_marginEnd="0dp"
-                android:layout_weight="1"
                 android:text="邀请老师"
                 android:textStyle="bold" />
-
 
             <TextView
                 android:id="@+id/tvPeople"
@@ -55,34 +53,29 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
                 android:layout_marginEnd="0dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="end"
+                android:maxLines="1"
+                android:text=""
+                android:textColor="@color/commonHint" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:drawableRight="@drawable/ic_next"
                 android:drawablePadding="5dp"
-                android:text=""
                 android:textColor="@color/commonHint" />
         </LinearLayout>
 
-    </LinearLayout>
-
     <include layout="@layout/layout_split" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingStart="@dimen/title_padding"
-        android:paddingTop="16dp"
-        android:paddingEnd="@dimen/title_padding"
-        android:paddingBottom="16dp">
-
-        <TextView
-            android:id="@+id/tvConfirm"
-            android:layout_width="0dp"
-            android:layout_height="42dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="确定"
-            android:textSize="@dimen/sp_16"
-            android:textStyle="bold" />
     </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tvConfirm"
+        style="@style/button_bottom_blue_bac_style"
+        android:text="确定" />
+
 </LinearLayout>
 

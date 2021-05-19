@@ -28,6 +28,9 @@ data class FolderBean(
     var updatetime: String = "",
     var path: String = "",
     var schoolname: String= "",
+    var cuser_id: String= "",
+    var cuser_realnem: String= "",
     var isFolder:Boolean = true,
-    var isChecked:Boolean = false
+    var isChecked:Boolean = false,
+    var isPrivate:Boolean = true
 ) : Parcelable

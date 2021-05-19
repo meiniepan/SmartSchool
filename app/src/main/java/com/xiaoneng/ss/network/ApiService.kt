@@ -1152,12 +1152,23 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
-     *共享文件夹
+     *授权文件夹列表
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/disk/folderrs/lists")
+    suspend fun getPubCloudList(
+        @Field("token") token: String?,
+        @Field("uid") uid: String?=null,
+        @Field("folderid") folderid: String?
+    ): BaseResponse<Any>
+
+    /**
+     *共享文件夹的文件
 
      */
     @FormUrlEncoded
-    @POST("/api/v17/disk/folder/myShareFolder")
-    suspend fun getPubCloudList(
+    @POST("/api/v17/disk/folder/myFolderFiles")
+    suspend fun getPubCloudFiles(
         @Field("token") token: String?,
         @Field("uid") uid: String?=null,
         @Field("folderid") folderid: String?
