@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.Gravity
@@ -15,6 +16,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.arialyy.annotations.Download
+import com.arialyy.aria.core.Aria
+import com.arialyy.aria.core.task.DownloadTask
 import com.tencent.smtt.sdk.QbSdk
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
@@ -61,6 +65,11 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
         return R.layout.activity_cloud_trans
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Aria.download(this).register()
+    }
+
     override fun initView() {
         super.initView()
 
@@ -71,8 +80,7 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
             tvDownload.setBackgroundResource(R.drawable.bac_blue_line_21)
             tvDownload.setTextColor(resources.getColor(R.color.themeColor))
             mAdapter.type = 0
-            mAdapter.setNewData(mData)
-            rvTrans.notifyDataSetChanged()
+            rvTrans.setNewData(mData)
         }
         tvDownload.setOnClickListener {
             mCurrent = 1
@@ -81,16 +89,12 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
             tvUpload.setBackgroundResource(R.drawable.bac_blue_line_21)
             tvUpload.setTextColor(resources.getColor(R.color.themeColor))
             mAdapter.type = 1
-            mAdapter.setNewData(mDataDownload)
-            rvTrans.notifyDataSetChanged()
+            rvTrans.setNewData(mDataDownload)
         }
+        getData()
         initAdapter()
     }
 
-    override fun initData() {
-        super.initData()
-        getData()
-    }
 
     override fun getData() {
         super.getData()
@@ -98,11 +102,9 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
         mData.addAll(FileTransInfo.getFilesInfo())
         mDataDownload.clear()
         mDataDownload.addAll(FileDownloadInfo.getFilesInfo())
-        rvTrans.notifyDataSetChanged()
     }
 
     private fun initAdapter() {
-
         mAdapter = CloudTransAdapter(R.layout.item_cloud_trans, mData, this)
         rvTrans.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@CloudTransActivity)
@@ -129,6 +131,7 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
             delDialog.show()
             true
         }
+        rvTrans.notifyDataSetChanged()
     }
     private fun doOpen(filePath: String) {
         QbSdk.openFileReader(this, filePath, null, null)
@@ -210,6 +213,38 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
 
         return bottomDialog
     }
+
+    //在这里处理任务执行中的状态，如进度进度条的刷新
+    @Download.onTaskRunning
+     fun running(task: DownloadTask) {
+        Log.w("=====",task.percent.toString())
+        var taskUrl = task.getKey()
+        if (taskUrl.length > UserInfo.getUserBean().domain?.length ?: 0) {
+            taskUrl = taskUrl.substring(UserInfo.getUserBean().domain?.length ?: 0, taskUrl.length)
+        }
+        var bean = DiskFileBean(
+            objectid = taskUrl, progress = task.getPercent().toLong(),
+            totalSize = task.fileSize, currentSize = task.fileSize * task.percent / 100
+        )
+        FileDownloadInfo.modifyFile(bean)
+        FileDownloadEvent(bean).post()
+
+    }
+
+    @Download.onTaskComplete
+    fun taskComplete(task: DownloadTask) {
+        //在这里处理任务完成的状态
+        var taskUrl = task.getKey()
+        if (taskUrl.length > UserInfo.getUserBean().domain?.length ?: 0) {
+            taskUrl = taskUrl.substring(UserInfo.getUserBean().domain?.length ?: 0, taskUrl.length)
+        }
+        var bean = DiskFileBean(
+            objectid = taskUrl, status = 2
+        )
+        FileDownloadInfo.modifyFile(bean)
+        FileDownloadEvent(bean).post()
+    }
+
     override fun initDataObserver() {
         mViewModel.mStsData.observe(this, Observer { response ->
             response?.let {

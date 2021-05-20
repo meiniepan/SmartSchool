@@ -16,6 +16,7 @@ import com.umeng.message.PushAgent
 import com.xiaoneng.ss.common.callback.EmptyCallBack
 import com.xiaoneng.ss.common.callback.ErrorCallBack
 import com.xiaoneng.ss.common.callback.LoadingCallBack
+import com.xiaoneng.ss.common.state.FileDownloadInfo
 import com.xiaoneng.ss.common.state.FileTransInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.SPreference
@@ -61,6 +62,7 @@ open class BaseApplication : Application() {
 
     private fun resetDownLoad() {
         FileTransInfo.reset()
+        FileDownloadInfo.reset()
     }
 
     private fun initPush() {

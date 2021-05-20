@@ -161,24 +161,28 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
         }
         mAdapterPri.setOnItemChildClickListener { adapter, view, position ->
+            var eData = mPriData
+            if (mType == 1) {
+                eData = mPubData
+            }
             when (view.id) {
 
                 R.id.ivFolderInfo -> {
                     mStartActivity<FolderSettingActivity>(this) {
-                        putExtra(Constant.DATA, mPriData[position])
+                        putExtra(Constant.DATA, eData[position])
                     }
                 }
                 R.id.cbDiskFile -> {
                     var cb: CheckBox = view as CheckBox
-                    mPriData.forEach {
+                    eData.forEach {
                         it.isChecked = false
                     }
-                    mPriData[position]?.isChecked = cb.isChecked
+                    eData[position]?.isChecked = cb.isChecked
                     mAdapterPri.notifyDataSetChanged()
                     mCurrent = position
                     if (cb.isChecked) {
                         llBottom.visibility = View.VISIBLE
-                        if (mPriData[position].isFolder) {
+                        if (eData[position].isFolder) {
                             llBottomDownload.visibility = View.GONE
                             llBottomRename.visibility = View.VISIBLE
                             llBottomCopy.visibility = View.GONE

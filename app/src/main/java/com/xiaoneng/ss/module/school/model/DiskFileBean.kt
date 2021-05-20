@@ -24,6 +24,7 @@ data class DiskFileBean(
     var objectid: String = "",
     var folderid: String? = "",
     var path: String = "",
+    var downTaskId: Long = 0,
     var objectKey: String = "",
     var totalSize: Long = 0,
     var currentSize: Long = 0,

@@ -1,20 +1,17 @@
 package com.xiaoneng.ss.module.school.adapter
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
+import com.arialyy.aria.core.Aria
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.jiang.awesomedownloader.downloader.AwesomeDownloader
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.state.FileDownloadInfo
 import com.xiaoneng.ss.common.state.FileTransInfo
-import com.xiaoneng.ss.common.utils.eventBus.FileDownloadEvent
 import com.xiaoneng.ss.common.utils.formatMemorySize
 import com.xiaoneng.ss.module.school.interfaces.IFileTrans
 import com.xiaoneng.ss.module.school.model.DiskFileBean
-import java.io.File
 
 
 /**
@@ -71,7 +68,10 @@ class CloudTransAdapter(
                         item?.task?.cancel()
                         FileTransInfo.modifyFile(item)
                     } else {
-                        AwesomeDownloader.stopAll()
+                        Aria.download(this)
+                            .load(item.downTaskId)     //读取任务id
+                            .stop();       // 停止任务
+                        //.resume();    // 恢复任务
                         FileDownloadInfo.modifyFile(item)
                     }
 
@@ -86,25 +86,9 @@ class CloudTransAdapter(
                         listener.upload(item)
                         FileTransInfo.modifyFile(item)
                     } else {
-                        AwesomeDownloader.resumeAndStart()
-                        AwesomeDownloader.setOnProgressChange { progress ->
-                            //do something...
-                            var bean = DiskFileBean(
-                                 progress = progress
-                            )
-                            FileDownloadInfo.modifyFile(bean)
-                            FileDownloadEvent(bean).post()
-                        }.setOnStop { downloadBytes, totalBytes ->
-                            //do something...
-                        }.setOnFinished { filePath, fileName ->
-                            var bean = DiskFileBean(
-                                 status = 2
-                            )
-                            FileDownloadInfo.modifyFile(bean)
-                            FileDownloadEvent(bean).post()
-                        }.setOnError { exception ->
-                            //do something...
-                        }
+                        Aria.download(this)
+                            .load(item.downTaskId)     //读取任务id
+                        .resume();    // 恢复任务
                         FileDownloadInfo.modifyFile(item)
                     }
 

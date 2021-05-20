@@ -1,6 +1,5 @@
 package com.xiaoneng.ss.module.school.adapter
 
-import android.media.Image
 import android.view.View
 import android.widget.CheckBox
 import android.widget.ImageView
@@ -10,8 +9,6 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.DateUtil
-import com.xiaoneng.ss.module.school.model.AchievementBean
-import com.xiaoneng.ss.module.school.model.DiskFileBean
 import com.xiaoneng.ss.module.school.model.FolderBean
 
 
@@ -44,7 +41,7 @@ class DiskPriAdapter(layoutId: Int, listData: MutableList<FolderBean>?) :
                 creator.visibility = View.GONE
             } else {
                 creator.visibility = View.VISIBLE
-                creator.text = item?.cuser_realnem
+                creator.text = item?.cuser_realname
             }
             if (item?.isFolder == true) {
                 icon.setImageResource(R.drawable.ic_file)

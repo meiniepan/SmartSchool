@@ -29,7 +29,7 @@ data class FolderBean(
     var path: String = "",
     var schoolname: String= "",
     var cuser_id: String= "",
-    var cuser_realnem: String= "",
+    var cuser_realname: String= "",
     var isFolder:Boolean = true,
     var isChecked:Boolean = false,
     var isPrivate:Boolean = true

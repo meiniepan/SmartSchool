@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.Gravity
@@ -17,8 +18,9 @@ import android.widget.TextView
 import androidx.core.animation.doOnEnd
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jiang.awesomedownloader.downloader.AwesomeDownloader
-import com.jiang.awesomedownloader.tool.PathSelector
+import com.arialyy.annotations.Download
+import com.arialyy.aria.core.Aria
+import com.arialyy.aria.core.task.DownloadTask
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseApplication
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
@@ -31,10 +33,11 @@ import com.xiaoneng.ss.common.utils.oss.OssListener
 import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.model.StsTokenResp
 import com.xiaoneng.ss.module.school.adapter.DiskPriAdapter
-import com.xiaoneng.ss.module.school.model.*
+import com.xiaoneng.ss.module.school.model.DiskFileBean
+import com.xiaoneng.ss.module.school.model.DiskFileResp
+import com.xiaoneng.ss.module.school.model.FolderBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_cloud_folder.*
-import kotlinx.android.synthetic.main.activity_sys_setting.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -72,6 +75,11 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         return R.layout.activity_cloud_folder
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Aria.download(this).register()
+    }
+
     override fun initView() {
         super.initView()
         folderBean = intent.getParcelableExtra(Constant.DATA)
@@ -83,17 +91,15 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvDiskNew.setOnClickListener { newFolderDialog.show() }
         tvBottomDownload.setOnClickListener {
             var bean = mPriData[mCurrent]
-            val filePath = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+            var filePath = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+            filePath = filePath + File.separator + "cloud_" + bean.id + bean.filename
             var diskFileBean = DiskFileBean(
-                path = filePath + File.separator + "cloud_" + bean.id + bean.filename,
+                path = filePath,
                 filename = mPriData[mCurrent].filename,
                 objectid = bean.objectid, totalSize = 0
             )
             if (!FileDownloadInfo.hasFile(diskFileBean)) {
-                FileDownloadInfo.addFile(
-                    diskFileBean
-                )
-                doDown(bean.objectid, "cloud_" + bean.id + bean.filename)
+                doDown(bean.objectid, filePath)
             }
             mToast("已加入下载队列")
         }
@@ -171,7 +177,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             if (mPriData[position].isFolder) {
                 mStartActivity<CloudFolderActivity>(this) {
                     var bean = mPriData[position]
-                    bean.isPrivate = folderBean?.isPrivate?:true
+                    bean.isPrivate = folderBean?.isPrivate ?: true
                     bean.fullName = folderBean?.fullName + ">" + bean.foldername
                     putExtra(Constant.DATA, mPriData[position])
                 }
@@ -248,43 +254,50 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     }
 
-    private fun doDown(url: String?, fileName: String?) {
-        AwesomeDownloader.init(BaseApplication.instance)
-        //关闭通知栏
-        AwesomeDownloader.option.showNotification = false
+    private fun doDown(url: String?, filePath: String) {
         val url2 = UserInfo.getUserBean().domain + url
-        //获取应用外部照片储存路径
-        val filePath = PathSelector(BaseApplication.instance).getDownloadsDirPath()
-        //加入下载队列
-        AwesomeDownloader.enqueue(url2, filePath, fileName ?: "")
-        AwesomeDownloader.setOnProgressChange { progress ->
-            //do something...
-            var bean = DiskFileBean(
-                path = filePath + File.separator + fileName,
-                filename = mPriData[mCurrent].filename,
-                objectid = url ?: "", progress = progress
-            )
-            FileDownloadInfo.modifyFile(bean)
-            FileDownloadEvent(bean).post()
-        }.setOnStop { downloadBytes, totalBytes ->
-            //do something...
-        }.setOnFinished { filePath, fileName ->
-            var bean = DiskFileBean(
-                path = filePath + File.separator + fileName,
-                filename = mPriData[mCurrent].filename,
-                objectid = url ?: "", status = 2
-            )
-            FileDownloadInfo.modifyFile(bean)
-            FileDownloadEvent(bean).post()
-        }.setOnError { exception ->
-            //do something...
-        }
+        val taskId: Long = Aria.download(this)
+            .load(url2) //读取下载地址
+            .setFilePath(filePath) //设置文件保存的完整路径
+            .create() //创建并启动下载
         var bean = DiskFileBean(
-            path = filePath + File.separator + fileName,
+            path = filePath,
+            downTaskId = taskId,
             filename = mPriData[mCurrent].filename,
             objectid = url ?: ""
         )
-        FileDownloadEvent(bean).postSticky()
+        FileDownloadInfo.addFile(bean)
+    }
+
+    //在这里处理任务执行中的状态，如进度进度条的刷新
+    @Download.onTaskRunning
+     fun running(task: DownloadTask) {
+        var taskUrl = task.getKey()
+        if (taskUrl.length > UserInfo.getUserBean().domain?.length ?: 0) {
+            taskUrl = taskUrl.substring(UserInfo.getUserBean().domain?.length ?: 0, taskUrl.length)
+        }
+        Log.w("=====",task.percent.toString())
+        var bean = DiskFileBean(
+            objectid = taskUrl, progress = task.getPercent().toLong(),
+            totalSize = task.fileSize, currentSize = task.fileSize * task.percent / 100
+        )
+        FileDownloadInfo.modifyFile(bean)
+        FileDownloadEvent(bean).post()
+
+    }
+
+    @Download.onTaskComplete
+    fun taskComplete(task: DownloadTask) {
+        //在这里处理任务完成的状态
+        var taskUrl = task.getKey()
+        if (taskUrl.length > UserInfo.getUserBean().domain?.length ?: 0) {
+            taskUrl = taskUrl.substring(UserInfo.getUserBean().domain?.length ?: 0, taskUrl.length)
+        }
+        var bean = DiskFileBean(
+            objectid = taskUrl, status = 2
+        )
+        FileDownloadInfo.modifyFile(bean)
+        FileDownloadEvent(bean).post()
     }
 
     private fun doUpload(it: StsTokenResp) {

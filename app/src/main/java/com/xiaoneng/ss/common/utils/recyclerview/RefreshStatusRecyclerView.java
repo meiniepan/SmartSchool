@@ -103,6 +103,10 @@ public class RefreshStatusRecyclerView extends SmartRefreshLayout implements Sta
         setAdapter(adapter,adapter.getData(),true);
     }
 
+    public void setNewData(List dataList) {
+        mRecyclerView.setNewData(dataList);
+    }
+
     /**
      * 绑定适配器
      * @param adapter   适配器
