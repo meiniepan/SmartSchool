@@ -167,11 +167,6 @@ public class StatusRecyclerView extends RecyclerView implements StatusChangeInte
         }*/
     }
 
-    public void setNewData(List dataList){
-        this.dataList = dataList;
-        notifyDataSetChanged();
-    }
-
     /**
      * 绑定适配器，同时判断此次设置的数据是否为空显示空布局
      * @param adapter   适配器

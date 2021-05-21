@@ -37,8 +37,8 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private lateinit var mAdapterDepartment: DepartmentAdapter
     private lateinit var mAdapterInvolve: InvolvePerson2Adapter
     var mDataQuery = ArrayList<UserBeanSimple>()
-    var mDataDepartment :ArrayList<DepartmentBean>? = ArrayList()
-    var mDataClasses :ArrayList<DepartmentBean>? = ArrayList()
+    var mDataDepartment: ArrayList<DepartmentBean>? = ArrayList()
+    var mDataClasses: ArrayList<DepartmentBean>? = ArrayList()
     var mDataDepartment2 = ArrayList<DepartmentBean>()
     var mDataClasses2 = ArrayList<DepartmentBean>()
     var mDataInvolve: MutableList<StudentBean> = ArrayList()
@@ -52,10 +52,10 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
-        mDataDepartment = intent.getParcelableArrayListExtra(Constant.DATA)?: ArrayList()
-        mDataClasses = intent.getParcelableArrayListExtra(Constant.DATA2)?:ArrayList()
+        mDataDepartment = intent.getParcelableArrayListExtra(Constant.DATA) ?: ArrayList()
+        mDataClasses = intent.getParcelableArrayListExtra(Constant.DATA2) ?: ArrayList()
         mReceiveList = intent.getParcelableArrayListExtra(Constant.DATA3)
-        if (intent.getIntExtra(Constant.TYPE,0)==1){//来自云盘配置
+        if (intent.getIntExtra(Constant.TYPE, 0) == 1) {//来自云盘配置
             ctbAddInvolve.setTitle(getString(R.string.diskTitle))
             rlClass.visibility = View.GONE
         }
@@ -171,7 +171,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initData() {
         super.initData()
-        if (mDataDepartment?.size?:0 > 0 || mDataClasses?.size?:0 > 0) {
+        if (mDataDepartment?.size ?: 0 > 0 || mDataClasses?.size ?: 0 > 0) {
             mAdapterDepartment.notifyDataSetChanged()
             mDataDepartment?.forEach {
                 if (it.num!!.toInt() > 0) {
@@ -223,8 +223,12 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         currentTab = tab2
         tvInvolveTab2.setChecked(true)
         tvInvolveTab1.setChecked(false)
-
         mAdapterDepartment.setNewData(mDataClasses)
+        if (mDataClasses?.size ?: 0 <= 0) {
+            rvDepartment.showEmptyView()
+        } else {
+            rvDepartment.showContentView()
+        }
     }
 
     private fun initAdapterQuery() {
@@ -257,10 +261,10 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
                 } else {
                     mDataClasses?.let {
-                    putExtra(Constant.ID, it[position].id)
-                    putParcelableArrayListExtra(Constant.DATA, it[position].list)
-                    putExtra(Constant.TYPE, tab2)
-                    currentItemId = it[position].id ?: ""
+                        putExtra(Constant.ID, it[position].id)
+                        putParcelableArrayListExtra(Constant.DATA, it[position].list)
+                        putExtra(Constant.TYPE, tab2)
+                        currentItemId = it[position].id ?: ""
                     }
                 }
             }

@@ -54,6 +54,7 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
     lateinit var mAdapter: CloudTransAdapter
     var mData: ArrayList<DiskFileBean> = ArrayList()
     var mDataDownload: ArrayList<DiskFileBean> = ArrayList()
+    var eData: ArrayList<DiskFileBean> = ArrayList()
     var rotationB = false
     var mCurrent = 0
     var bean: DiskFileBean = DiskFileBean()
@@ -80,7 +81,9 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
             tvDownload.setBackgroundResource(R.drawable.bac_blue_line_21)
             tvDownload.setTextColor(resources.getColor(R.color.themeColor))
             mAdapter.type = 0
-            rvTrans.setNewData(mData)
+            eData = mData
+            mAdapter.setNewData(eData)
+            rvTrans.notifyDataSetChanged()
         }
         tvDownload.setOnClickListener {
             mCurrent = 1
@@ -89,12 +92,22 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
             tvUpload.setBackgroundResource(R.drawable.bac_blue_line_21)
             tvUpload.setTextColor(resources.getColor(R.color.themeColor))
             mAdapter.type = 1
-            rvTrans.setNewData(mDataDownload)
+            eData = mDataDownload
+            mAdapter.setNewData(eData)
+            if (mDataDownload.size <= 0) {
+                rvTrans.showEmptyView()
+            } else {
+                rvTrans.showContentView()
+            }
+
         }
-        getData()
         initAdapter()
     }
 
+    override fun initData() {
+        super.initData()
+        getData()
+    }
 
     override fun getData() {
         super.getData()
@@ -102,6 +115,7 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
         mData.addAll(FileTransInfo.getFilesInfo())
         mDataDownload.clear()
         mDataDownload.addAll(FileDownloadInfo.getFilesInfo())
+        rvTrans.notifyDataSetChanged()
     }
 
     private fun initAdapter() {
@@ -112,30 +126,33 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
         }
 
         mAdapter.setOnItemClickListener { adapter, view, position ->
-            var bean = mAdapter.data[position]
-            if (bean.status == 2) {
-                if (bean.objectid.endIsImage()) {
-                    mStartActivity<ImageScaleActivity>(this) {
-                        putExtra(Constant.DATA, UserInfo.getUserBean().domain + bean.objectid)
-                    }
-                } else {
-                    var filePath = bean.path
-                    var filename = File(filePath)
-                    if (filename.exists()) {
-                        doOpen(filePath)
-                    }
+            onItem(position)
+        }
+
+    }
+
+    private fun onItem(position: Int) {
+        var bean = eData[position]
+        if (bean.status == 2) {
+            if (bean.objectid.endIsImage()) {
+                mStartActivity<ImageScaleActivity>(this) {
+                    putExtra(Constant.DATA, UserInfo.getUserBean().domain + bean.objectid)
+                }
+            } else {
+                var filePath = bean.path
+                var filename = File(filePath)
+                if (filename.exists()) {
+                    doOpen(filePath)
                 }
             }
         }
-        mAdapter.setOnItemLongClickListener { adapter, view, position ->
-            delDialog.show()
-            true
-        }
-        rvTrans.notifyDataSetChanged()
     }
+
+
     private fun doOpen(filePath: String) {
         QbSdk.openFileReader(this, filePath, null, null)
     }
+
     override fun upload(file: DiskFileBean) {
         if (!file.path.isNullOrEmpty()) {
             bean = file
@@ -216,8 +233,8 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
 
     //在这里处理任务执行中的状态，如进度进度条的刷新
     @Download.onTaskRunning
-     fun running(task: DownloadTask) {
-        Log.w("=====",task.percent.toString())
+    fun running(task: DownloadTask) {
+        Log.w("=====", task.percent.toString())
         var taskUrl = task.getKey()
         if (taskUrl.length > UserInfo.getUserBean().domain?.length ?: 0) {
             taskUrl = taskUrl.substring(UserInfo.getUserBean().domain?.length ?: 0, taskUrl.length)
@@ -284,7 +301,7 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
                 break
             }
         }
-        if (mCurrent==0) {
+        if (mCurrent == 0) {
             mAdapter.setNewData(mData)
             rvTrans.notifyDataSetChanged()
         }
@@ -312,7 +329,7 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
                 break
             }
         }
-        if (mCurrent==1) {
+        if (mCurrent == 1) {
             mAdapter.setNewData(mDataDownload)
             rvTrans.notifyDataSetChanged()
         }
