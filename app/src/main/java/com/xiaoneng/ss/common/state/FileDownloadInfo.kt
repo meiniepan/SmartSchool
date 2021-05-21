@@ -74,9 +74,18 @@ object FileDownloadInfo {
     }
 
     fun delFile(file: DiskFileBean) {
-        var arr = getFilesInfo()
-        arr.remove(file)
-        fileInfoJson = gson.toJson(arr)
+        var files = getFilesInfo()
+        var the:DiskFileBean? = null
+        files.forEach {
+            if (it.objectid == file.objectid){
+                the = it
+                return@forEach
+            }
+        }
+        the?.let {
+        files.remove(it)
+        }
+        fileInfoJson = gson.toJson(files)
     }
 
 

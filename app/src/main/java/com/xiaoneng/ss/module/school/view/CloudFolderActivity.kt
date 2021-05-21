@@ -143,12 +143,24 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         ivFileRecord.setOnClickListener {
             mStartActivity<CloudTransActivity>(this)
         }
+        llMain.setOnClickListener {
+            showAdd()
+        }
         initAdapter()
     }
 
-    override fun initData() {
-        super.initData()
+    override fun onResume() {
+        super.onResume()
         getData()
+        showBottom(false)
+    }
+
+    private fun showBottom(b: Boolean) {
+        if (b) {
+            llBottom.visibility = View.VISIBLE
+        } else {
+            llBottom.visibility = View.GONE
+        }
     }
 
     override fun getData() {
@@ -199,8 +211,8 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mPriData[position]?.isChecked = cb.isChecked
                     mAdapterPri.notifyDataSetChanged()
                     mCurrent = position
+                    showBottom(cb.isChecked)
                     if (cb.isChecked) {
-                        llBottom.visibility = View.VISIBLE
                         if (mPriData[position].isFolder) {
                             llBottomDownload.visibility = View.GONE
                             llBottomRename.visibility = View.VISIBLE
@@ -208,14 +220,22 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                             llBottomMove.visibility = View.GONE
                             llBottomDel.visibility = View.VISIBLE
                         } else {
-                            llBottomDownload.visibility = View.VISIBLE
-                            llBottomRename.visibility = View.VISIBLE
-                            llBottomCopy.visibility = View.VISIBLE
-                            llBottomMove.visibility = View.VISIBLE
-                            llBottomDel.visibility = View.VISIBLE
+                            if (folderBean?.isPrivate != true && UserInfo.getUserBean().uid != folderBean?.cuser_id) {
+                                llBottomDownload.visibility = View.VISIBLE
+                                llBottomRename.visibility = View.GONE
+                                llBottomCopy.visibility = View.GONE
+                                llBottomMove.visibility = View.GONE
+                                llBottomDel.visibility = View.GONE
+                            } else {
+                                llBottomDownload.visibility = View.VISIBLE
+                                llBottomRename.visibility = View.VISIBLE
+                                llBottomCopy.visibility = View.VISIBLE
+                                llBottomMove.visibility = View.VISIBLE
+                                llBottomDel.visibility = View.VISIBLE
+                            }
                         }
                     } else {
-                        llBottom.visibility = View.GONE
+
                     }
                 }
 
@@ -271,12 +291,12 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     //在这里处理任务执行中的状态，如进度进度条的刷新
     @Download.onTaskRunning
-     fun running(task: DownloadTask) {
+    fun running(task: DownloadTask) {
         var taskUrl = task.getKey()
         if (taskUrl.length > UserInfo.getUserBean().domain?.length ?: 0) {
             taskUrl = taskUrl.substring(UserInfo.getUserBean().domain?.length ?: 0, taskUrl.length)
         }
-        Log.w("=====",task.percent.toString())
+        Log.w("=====", task.percent.toString())
         var bean = DiskFileBean(
             objectid = taskUrl, progress = task.getPercent().toLong(),
             totalSize = task.fileSize, currentSize = task.fileSize * task.percent / 100

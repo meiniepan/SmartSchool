@@ -16,6 +16,15 @@
         android:paddingEnd="@dimen/title_padding"
         android:paddingBottom="10dp">
 
+        <CheckBox
+            android:id="@+id/cbDiskFile"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/selector_check_timetable"
+            android:button="@null"
+            android:checked="false" />
+
         <ImageView
             android:id="@+id/ivDiskIcon"
             android:layout_width="26dp"

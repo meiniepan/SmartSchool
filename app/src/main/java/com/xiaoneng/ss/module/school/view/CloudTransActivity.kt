@@ -1,9 +1,6 @@
 package com.xiaoneng.ss.module.school.view
 
-import android.app.Activity
 import android.app.Dialog
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -11,9 +8,8 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
+import android.widget.CheckBox
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arialyy.annotations.Download
@@ -42,6 +38,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.jetbrains.anko.toast
 import java.io.File
 
 
@@ -56,10 +53,19 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
     var mDataDownload: ArrayList<DiskFileBean> = ArrayList()
     var eData: ArrayList<DiskFileBean> = ArrayList()
     var rotationB = false
-    var mCurrent = 0
+    var mType = 0
     var bean: DiskFileBean = DiskFileBean()
-    private val delDialog: Dialog by lazy {
-        initDialog()
+    private val delDialog0: Dialog by lazy {
+        initDialog(0)
+    }
+    private val delDialog1: Dialog by lazy {
+        initDialog(1)
+    }
+    private val delDialog2: Dialog by lazy {
+        initDialog(2)
+    }
+    private val delDialog3: Dialog by lazy {
+        initDialog(3)
     }
 
     override fun getLayoutId(): Int {
@@ -75,7 +81,7 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
         super.initView()
 
         tvUpload.setOnClickListener {
-            mCurrent = 0
+            mType = 0
             tvUpload.setBackgroundResource(R.drawable.bac_blue_bac)
             tvUpload.setTextColor(resources.getColor(R.color.white))
             tvDownload.setBackgroundResource(R.drawable.bac_blue_line_21)
@@ -86,7 +92,7 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
             rvTrans.notifyDataSetChanged()
         }
         tvDownload.setOnClickListener {
-            mCurrent = 1
+            mType = 1
             tvDownload.setBackgroundResource(R.drawable.bac_blue_bac)
             tvDownload.setTextColor(resources.getColor(R.color.white))
             tvUpload.setBackgroundResource(R.drawable.bac_blue_line_21)
@@ -100,6 +106,27 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
                 rvTrans.showContentView()
             }
 
+        }
+        tvBottomDel.setOnClickListener {
+            if (mType == 0) {
+                delDialog0.show()
+            } else {
+                delDialog1.show()
+            }
+        }
+        ivClean.setOnClickListener {
+            if (mType == 0) {
+                delDialog2.show()
+            } else {
+                delDialog3.show()
+            }
+        }
+        tvCancel.setOnClickListener {
+            eData.forEach {
+                it.isChecked = false
+            }
+            mAdapter.notifyDataSetChanged()
+            showBottom(false)
         }
         initAdapter()
     }
@@ -128,7 +155,37 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
         mAdapter.setOnItemClickListener { adapter, view, position ->
             onItem(position)
         }
+        mAdapter.setOnItemChildClickListener { adapter, view, position ->
+            when (view.id) {
 
+                R.id.cbDiskFile -> {
+                    var cb: CheckBox = view as CheckBox
+
+                    eData[position]?.isChecked = cb.isChecked
+                    mAdapter.notifyDataSetChanged()
+                    var hasCheck = false
+                    eData.forEach {
+                        if (it.isChecked) {
+                            hasCheck = true
+                        }
+                    }
+                    showBottom(hasCheck)
+                }
+
+            }
+        }
+    }
+
+    private fun showBottom(b: Boolean) {
+        if (b) {
+            llBottom.visibility = View.VISIBLE
+            tvCancel.visibility = View.VISIBLE
+            ivClean.visibility = View.GONE
+        } else {
+            llBottom.visibility = View.GONE
+            tvCancel.visibility = View.GONE
+            ivClean.visibility = View.VISIBLE
+        }
     }
 
     private fun onItem(position: Int) {
@@ -194,13 +251,13 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
             })
     }
 
-    private fun initDialog(): Dialog {
-        //i: 0 新建文件夹  1 文件夹重命名 2 文件重命名
+    private fun initDialog(i: Int): Dialog {
+        //i: 0 上传  1 下载
         // 底部弹出对话框
         var bottomDialog =
             Dialog(this, R.style.BottomDialog)
         val contentView: View =
-            LayoutInflater.from(this).inflate(R.layout.dialog_new_folder, null)
+            LayoutInflater.from(this).inflate(R.layout.dialog_del_file, null)
         bottomDialog.setContentView(contentView)
         val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
         params.width =
@@ -208,24 +265,84 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
         params.bottomMargin = dp2px(this, 0f).toInt()
         contentView.layoutParams = params
         bottomDialog.window!!.setGravity(Gravity.CENTER)
-        var etFolderName = contentView.findViewById<EditText>(R.id.etFolderName)
-        var tvTitle = contentView.findViewById<TextView>(R.id.tvTitle6)
 
-        var tvConfirm = contentView.findViewById<TextView>(R.id.tvFolderConfirm)
+        var tvConfirm = contentView.findViewById<TextView>(R.id.tvDelConfirm)
+        var tvTitle = contentView.findViewById<TextView>(R.id.tvTitle7)
+        var llCb = contentView.findViewById<View>(R.id.llCb)
+        var cb = contentView.findViewById<CheckBox>(R.id.cbDelSource)
         contentView.findViewById<View>(R.id.ivClose).setOnClickListener {
             bottomDialog.dismiss()
         }
-
+        if (i == 0 ) {
+            llCb.visibility = View.INVISIBLE
+            tvTitle.text = "确定将所选文件从列表中删除？"
+        } else if (i == 1) {
+            llCb.visibility = View.VISIBLE
+            tvTitle.text = "确定将所选文件从列表中删除？"
+        }else if (i == 2) {
+            llCb.visibility = View.INVISIBLE
+            tvTitle.text = "确定删除所有文件？"
+        }else if (i == 3) {
+            llCb.visibility = View.VISIBLE
+            tvTitle.text = "确定删除所有文件？"
+        }
         tvConfirm.setOnClickListener {
-            var folderName = etFolderName.text.toString()
+var removeList = ArrayList<DiskFileBean>()
+            if (i == 0) {
+                eData.forEach {
+                    if (it.isChecked) {
+                        FileTransInfo.delFile(it)
+                        removeList.add(it)
+                    }
+                }
+                eData.removeAll(removeList)
+                    rvTrans.notifyDataSetChanged()
 
-            if (folderName.isEmpty()) {
-                mToast(R.string.lack_info)
-                return@setOnClickListener
+            } else if (i == 2) {
+                eData.forEach {
+                    FileTransInfo.delFile(it)
+                }
+                eData.clear()
+                rvTrans.notifyDataSetChanged()
+            } else if (i == 1) {
+                eData.forEach {
+                    if (it.isChecked) {
+                        if (cb.isChecked) {
+                            if (File(it.path).exists()) {
+                                File(it.path).delete()
+                            }
+                        }
+                        FileDownloadInfo.delFile(it)
+                        removeList.add(it)
+                    }
+                }
+                eData.removeAll(removeList)
+                mAdapter.notifyDataSetChanged()
+                if (mDataDownload.size <= 0) {
+                    rvTrans.showEmptyView()
+                } else {
+                    rvTrans.showContentView()
+                }
+            } else if (i == 3) {
+                eData.forEach {
+                    if (cb.isChecked) {
+                        if (File(it.path).exists()) {
+                            File(it.path).delete()
+                        }
+                    }
+                    FileDownloadInfo.delFile(it)
+                }
+                eData.clear()
+                mAdapter.notifyDataSetChanged()
+                if (mDataDownload.size <= 0) {
+                    rvTrans.showEmptyView()
+                } else {
+                    rvTrans.showContentView()
+                }
             }
-
-
             bottomDialog.dismiss()
+            showBottom(false)
+            toast(R.string.deal_done)
         }
 
         return bottomDialog
@@ -301,9 +418,8 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
                 break
             }
         }
-        if (mCurrent == 0) {
+        if (mType == 0) {
             mAdapter.setNewData(mData)
-            rvTrans.notifyDataSetChanged()
         }
 //        mAdapter.notifyItemChanged(pp)
     }
@@ -329,9 +445,8 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
                 break
             }
         }
-        if (mCurrent == 1) {
+        if (mType == 1) {
             mAdapter.setNewData(mDataDownload)
-            rvTrans.notifyDataSetChanged()
         }
 //        mAdapter.notifyItemChanged(pp)
     }

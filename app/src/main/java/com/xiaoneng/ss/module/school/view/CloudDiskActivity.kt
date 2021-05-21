@@ -123,12 +123,24 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
             }
         }
+        llMain.setOnClickListener {
+            showAdd()
+        }
         initAdapter()
     }
 
-    override fun initData() {
-        super.initData()
+    override fun onResume() {
+        super.onResume()
         getData()
+        showBottom(false)
+    }
+
+    private fun showBottom(b: Boolean) {
+        if (b) {
+            llBottom.visibility = View.VISIBLE
+        } else {
+            llBottom.visibility = View.GONE
+        }
     }
 
     override fun getData() {
@@ -178,8 +190,8 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     eData[position]?.isChecked = cb.isChecked
                     mAdapterPri.notifyDataSetChanged()
                     mCurrent = position
+                    showBottom(cb.isChecked)
                     if (cb.isChecked) {
-                        llBottom.visibility = View.VISIBLE
                         if (eData[position].isFolder) {
                             llBottomDownload.visibility = View.GONE
                             llBottomRename.visibility = View.VISIBLE
@@ -194,7 +206,6 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                             llBottomDel.visibility = View.VISIBLE
                         }
                     } else {
-                        llBottom.visibility = View.GONE
                     }
                 }
 
@@ -396,6 +407,20 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 toast(R.string.deal_done)
                 getData()
                 showAdd()
+            }
+        })
+
+        mViewModel.mDelCloudFolderData.observe(this, Observer { response ->
+            response?.let {
+                toast(R.string.deal_done)
+                getData()
+            }
+        })
+
+        mViewModel.mModifyFileData.observe(this, Observer { response ->
+            response?.let {
+                toast(R.string.deal_done)
+                getData()
             }
         })
 

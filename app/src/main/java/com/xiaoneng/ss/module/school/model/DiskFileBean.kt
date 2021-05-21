@@ -29,6 +29,7 @@ data class DiskFileBean(
     var totalSize: Long = 0,
     var currentSize: Long = 0,
     var progress: Long = 0,
+    var isChecked: Boolean = false,
     var status: Int = 0,//0正在下载 1暂停  2完成
     @Transient  var task: OSSAsyncTask<*>? = null,
     var schoolname: String= ""

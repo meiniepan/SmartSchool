@@ -1,6 +1,7 @@
 package com.xiaoneng.ss.module.school.adapter
 
 import android.view.View
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.ProgressBar
 import com.arialyy.aria.core.Aria
@@ -30,8 +31,11 @@ class CloudTransAdapter(
     var type: Int = 0
     override fun convert(viewHolder: BaseViewHolder?, item: DiskFileBean?) {
         viewHolder?.let { holder ->
+            holder.addOnClickListener(R.id.cbDiskFile)
             var pb = holder.getView<ProgressBar>(R.id.pbFile)
             var action = holder.getView<ImageView>(R.id.ivAction)
+            var cb = holder.getView<CheckBox>(R.id.cbDiskFile)
+            cb.isChecked = item?.isChecked ?: false
             var total: Long = item?.totalSize ?: 0
             var p = 0L
             if (item?.progress != 0L) {
@@ -51,6 +55,7 @@ class CloudTransAdapter(
             }
             var fileSize =
                 item?.currentSize?.formatMemorySize() + "/" + item?.totalSize?.formatMemorySize()
+            var fileSizeTotal = item?.totalSize?.formatMemorySize()
             pb.setProgress(p.toInt())
             var fileName: String? = ""
             if (item?.filename.isNullOrEmpty()) {
@@ -59,11 +64,13 @@ class CloudTransAdapter(
                 fileName = item?.filename
             }
             holder.setText(R.id.tvDiskFileName, fileName)
-                .setText(R.id.tvDiskFileSize, fileSize)
+
             if (item?.status == 0) {
+                holder.setText(R.id.tvDiskFileSize, fileSize)
+                action.visibility = View.VISIBLE
                 action.setImageResource(R.drawable.ic_pause_d)
                 action.setOnClickListener {
-                        item.status = 1
+                    item.status = 1
                     if (type == 0) {
                         item?.task?.cancel()
                         FileTransInfo.modifyFile(item)
@@ -79,32 +86,27 @@ class CloudTransAdapter(
 
                 }
             } else if (item?.status == 1) {
+                holder.setText(R.id.tvDiskFileSize, fileSize)
+                action.visibility = View.VISIBLE
                 action.setImageResource(R.drawable.ic_start_d)
                 action.setOnClickListener {
-                        item.status = 0
+                    item.status = 0
                     if (type == 0) {
                         listener.upload(item)
                         FileTransInfo.modifyFile(item)
                     } else {
                         Aria.download(this)
                             .load(item.downTaskId)     //读取任务id
-                        .resume();    // 恢复任务
+                            .resume();    // 恢复任务
                         FileDownloadInfo.modifyFile(item)
                     }
 
                     notifyItemChanged(holder.adapterPosition)
                 }
             } else {
+                holder.setText(R.id.tvDiskFileSize, fileSizeTotal)
                 action.setImageResource(R.drawable.ic_dustbin)
-                action.setOnClickListener {
-                    if (type == 0) {
-                        FileTransInfo.delFile(item!!)
-                    } else {
-                        FileDownloadInfo.delFile(item!!)
-                    }
-                    mData.remove(item!!)
-                    notifyItemRemoved(holder.adapterPosition)
-                }
+                action.visibility = View.GONE
             }
         }
     }

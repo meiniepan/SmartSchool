@@ -29,12 +29,16 @@ class DiskPriAdapter(layoutId: Int, listData: MutableList<FolderBean>?) :
 
             var cb = holder.getView<CheckBox>(R.id.cbDiskFile)
             cb.isChecked = item?.isChecked ?: false
-
+            cb.visibility = View.VISIBLE
             var icon = holder.getView<ImageView>(R.id.ivDiskIcon)
             var creator = holder.getView<TextView>(R.id.tvCreator)
 
-            var isAdmin = UserInfo.getUserBean().uid == item?.cuser_id
-            holder.setGone(R.id.ivAdmin, !isPrivate && isAdmin)
+            var isAdmin = UserInfo.getUserBean().uid == item?.cuser_id && !isPrivate
+            var isNotAdmin = UserInfo.getUserBean().uid != item?.cuser_id && !isPrivate
+            holder.setGone(R.id.ivAdmin, isAdmin)
+            if (item?.isFolder == true && isNotAdmin) {
+                cb.visibility = View.INVISIBLE
+            }
             var b = (item?.isFolder == true && (isPrivate || isAdmin))
             holder.setGone(R.id.ivFolderInfo, b)
             if (isPrivate) {

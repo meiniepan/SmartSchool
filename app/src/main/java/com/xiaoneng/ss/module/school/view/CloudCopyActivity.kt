@@ -19,6 +19,9 @@ import com.xiaoneng.ss.module.school.model.DiskFileResp
 import com.xiaoneng.ss.module.school.model.FolderBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_cloud_copy.*
+import kotlinx.android.synthetic.main.activity_cloud_copy.rvDisk
+import kotlinx.android.synthetic.main.activity_cloud_copy.tvDiskNew
+import kotlinx.android.synthetic.main.activity_cloud_disk.*
 import kotlinx.android.synthetic.main.custom_title_bar.*
 import org.jetbrains.anko.toast
 
@@ -33,7 +36,7 @@ class CloudCopyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var mPriData: ArrayList<FolderBean> = ArrayList()
     var oriData: ArrayList<FolderBean> = ArrayList()
     var fullPathData: ArrayList<FolderBean> = ArrayList()
-    var fullPath: String? = ""
+    var fullPath: String = ""
     var fileName: String? = null
     var isOriginal: Boolean = true
     var cloudType: String = "0"//1私有云  2共享
@@ -60,16 +63,30 @@ class CloudCopyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             tvDiskCopy.text = "移动"
         }
         tvDiskCopy.setOnClickListener {
-            showLoading()
             if (actionType == 1) {
-                mViewModel.copyCloudFile(fileid = sourceFolderBean?.id, folderid = folderBean?.folderid)
+                var str = "确认将文件复制到：$fullPath"
+                mAlert(str) {
+                    showLoading()
+                    mViewModel.copyCloudFile(
+                        fileid = sourceFolderBean?.id,
+                        folderid = folderBean?.folderid
+                    )
+                }
             } else {
-                mViewModel.moveCloudFile(fileid = sourceFolderBean?.id, folderid = folderBean?.folderid)
+                var str = "确认将文件移动到：$fullPath\n该文件移出后，原共享文件夹的成员将不能查看。"
+                mAlert(str) {
+                    showLoading()
+                    mViewModel.moveCloudFile(
+                        fileid = sourceFolderBean?.id,
+                        folderid = folderBean?.folderid
+                    )
+                }
             }
         }
         tvCopyCancel.setOnClickListener {
             finish()
         }
+
         initOriginalData()
         initAdapter()
     }
@@ -88,7 +105,7 @@ class CloudCopyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             fullPathData.forEach {
                 fullPath = fullPath + it.foldername + ">"
             }
-
+            fullPath = fullPath.subSequence(0, fullPath.length - 1).toString()
         }
         if (fullPath.isNullOrEmpty()) {
             tvParentName.visibility = View.GONE
