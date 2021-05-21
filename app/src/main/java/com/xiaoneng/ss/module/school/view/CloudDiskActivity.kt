@@ -429,8 +429,9 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 netResponseFormat<DiskFileResp>(it)?.let {
                     mPriData.clear()
                     it.data?.let { it1 -> mPriData.addAll(it1) }
-                    eData = mPriData
-                    rvDisk.notifyDataSetChanged()
+                    if (mType==0) {
+                        checkFirsTab()
+                    }
                 }
             }
         })
@@ -440,7 +441,9 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 netResponseFormat<DiskFileResp>(it)?.let {
                     mPubData.clear()
                     it.data?.let { it1 -> mPubData.addAll(it1) }
-
+                    if (mType==1) {
+                        checkSecondTab()
+                    }
                 }
 
             }
