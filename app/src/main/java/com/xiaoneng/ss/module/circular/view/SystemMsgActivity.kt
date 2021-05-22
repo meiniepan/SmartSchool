@@ -10,6 +10,7 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.mToast
+import com.xiaoneng.ss.model.PushBean
 import com.xiaoneng.ss.module.circular.adapter.SysMsgAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
@@ -18,6 +19,8 @@ import com.xiaoneng.ss.module.school.view.AttendanceActivity
 import com.xiaoneng.ss.module.school.view.TaskDetailActivity
 import com.xiaoneng.ss.module.school.view.TimetableActivity
 import kotlinx.android.synthetic.main.activity_system_msg.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.jetbrains.anko.toast
 
 /**
@@ -137,5 +140,10 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 getData()
             }
         })
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun refreshPush(event: PushBean) {
+        doRefresh()
     }
 }

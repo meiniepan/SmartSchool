@@ -10,12 +10,15 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.eventBus.RefreshUnreadEvent
 import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.model.PushBean
 import com.xiaoneng.ss.module.circular.adapter.NoticeAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import com.xiaoneng.ss.module.school.interfaces.INoticeUnread
 import com.xiaoneng.ss.module.school.view.NoticeActivity
 import kotlinx.android.synthetic.main.fragment_notice.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Created with Android Studio.
@@ -116,5 +119,8 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
         })
     }
 
-
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun refreshPush(event: PushBean) {
+        doRefresh()
+    }
 }

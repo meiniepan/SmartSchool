@@ -308,9 +308,7 @@ var removeList = ArrayList<DiskFileBean>()
                 eData.forEach {
                     if (it.isChecked) {
                         if (cb.isChecked) {
-                            if (File(it.path).exists()) {
-                                File(it.path).delete()
-                            }
+                            deleteFile(it)
                         }
                         FileDownloadInfo.delFile(it)
                         removeList.add(it)
@@ -326,9 +324,7 @@ var removeList = ArrayList<DiskFileBean>()
             } else if (i == 3) {
                 eData.forEach {
                     if (cb.isChecked) {
-                        if (File(it.path).exists()) {
-                            File(it.path).delete()
-                        }
+                        deleteFile(it)
                     }
                     FileDownloadInfo.delFile(it)
                 }
@@ -348,10 +344,15 @@ var removeList = ArrayList<DiskFileBean>()
         return bottomDialog
     }
 
+    private fun deleteFile(it: DiskFileBean) {
+        if (File(it.path).exists() && File(it.path).isFile) {
+            File(it.path).delete()
+        }
+    }
+
     //在这里处理任务执行中的状态，如进度进度条的刷新
     @Download.onTaskRunning
     fun running(task: DownloadTask) {
-        Log.w("=====", task.percent.toString())
         var taskUrl = task.getKey()
         if (taskUrl.length > UserInfo.getUserBean().domain?.length ?: 0) {
             taskUrl = taskUrl.substring(UserInfo.getUserBean().domain?.length ?: 0, taskUrl.length)

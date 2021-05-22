@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.text.TextUtils
+import android.util.Log
 import com.umeng.message.UmengNotifyClickActivity
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.state.UserInfo
@@ -29,5 +30,6 @@ class OtherPushActivity : UmengNotifyClickActivity() {
 
     override fun onMessage(p0: Intent?) {
         super.onMessage(p0)
+        Log.w("=====","other")
     }
 }
