@@ -285,7 +285,7 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         FileTransInfo.addFile(
             DiskFileBean(
                 path
-                = filePath ?: "", objectKey = objectKey, totalSize = totalSize
+                = filePath ?: "", objectid = objectKey, totalSize = totalSize
             )
         )
         OssUtils.uploadResumeFile(

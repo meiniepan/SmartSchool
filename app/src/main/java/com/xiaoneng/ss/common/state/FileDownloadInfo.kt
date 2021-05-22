@@ -1,5 +1,7 @@
 package com.xiaoneng.ss.common.state
 
+import android.content.Context
+import com.arialyy.aria.core.Aria
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.xiaoneng.ss.common.utils.Constant
@@ -34,7 +36,7 @@ object FileDownloadInfo {
                 if (file.totalSize!=0L){
                     it.totalSize = file.totalSize
                 }
-                if (file.status!=0){
+                if (file.status!=-1){
                     it.status = file.status
                 }
                 if (file.progress!=0L){
@@ -57,10 +59,27 @@ object FileDownloadInfo {
         return false
     }
 
+    fun checkComplete(context:Context) {
+        var files = getFilesInfo()
+        var completes = Aria.download(context).allCompleteTask
+        files.forEach {
+            completes?.let {c ->
+                c.forEach {cc->
+                    if (UserInfo.getUserBean().domain+it.objectid == cc.key){
+                        it.status=2
+                        return@forEach
+                    }
+                }
+            }
+
+        }
+        fileInfoJson = gson.toJson(files)
+    }
+
     fun reset() {
         var files = getFilesInfo()
         files.forEach {
-            if (it.status == 0){
+            if (it.status != 2){
                 it.status = 1
             }
         }

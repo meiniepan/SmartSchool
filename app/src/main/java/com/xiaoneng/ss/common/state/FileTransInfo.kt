@@ -27,14 +27,14 @@ object FileTransInfo {
     fun modifyFile(file: DiskFileBean) {
         var files = getFilesInfo()
         files.forEach {
-            if (it.objectKey == file.objectKey){
+            if (it.objectid == file.objectid){
                 if (file.currentSize!=0L){
                     it.currentSize = file.currentSize
                 }
                 if (file.totalSize!=0L){
                     it.totalSize = file.totalSize
                 }
-                if (file.status!=0){
+                if (file.status!=-1){
                     it.status = file.status
                 }
                 if (file.task!=null){
@@ -50,7 +50,7 @@ object FileTransInfo {
     fun reset() {
         var files = getFilesInfo()
         files.forEach {
-            if (it.status == 0){
+            if (it.status != 2){
                 it.status = 1
             }
         }
@@ -64,7 +64,7 @@ object FileTransInfo {
     }
 
     fun delFile(file: DiskFileBean) {
-        var files = FileDownloadInfo.getFilesInfo()
+        var files = getFilesInfo()
         var the:DiskFileBean? = null
         files.forEach {
             if (it.objectid == file.objectid){
@@ -75,7 +75,7 @@ object FileTransInfo {
         the?.let {
             files.remove(it)
         }
-        FileDownloadInfo.fileInfoJson = FileDownloadInfo.gson.toJson(files)
+        fileInfoJson = gson.toJson(files)
     }
 
 

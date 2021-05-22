@@ -199,7 +199,7 @@ public class OssUtils {
                 Log.d("resumableUpload====", "currentSize: " + currentSize + " totalSize: " + totalSize);
                 DiskFileBean bean = new DiskFileBean();
                 bean.setPath(filePath);
-                bean.setObjectKey(objectKey);
+                bean.setObjectid(objectKey);
                 bean.setCurrentSize(currentSize);
                 bean.setTotalSize(totalSize);
                 new FileUploadEvent(bean).post();
@@ -214,7 +214,7 @@ public class OssUtils {
                 listener.onSuccess();
                 DiskFileBean bean = new DiskFileBean();
                 bean.setPath(filePath);
-                bean.setObjectKey(objectKey);
+                bean.setObjectid(objectKey);
                 bean.setStatus(2);
                 new FileUploadEvent(bean).post();
                   FileTransInfo.INSTANCE.modifyFile(bean);
@@ -225,7 +225,7 @@ public class OssUtils {
                 // 异常处理。
                 DiskFileBean bean = new DiskFileBean();
                 bean.setPath(filePath);
-                bean.setObjectKey(objectKey);
+                bean.setObjectid(objectKey);
                 bean.setStatus(1);
                 new FileUploadEvent(bean).post();
                 FileTransInfo.INSTANCE.modifyFile(bean);
@@ -236,7 +236,8 @@ public class OssUtils {
 
         DiskFileBean bean = new DiskFileBean();
         bean.setPath(filePath);
-        bean.setObjectKey(objectKey);
+        bean.setObjectid(objectKey);
+        bean.setStatus(0);
         bean.setTask(resumableTask);
         new FileUploadEvent(bean).postSticky();
 

@@ -78,6 +78,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Aria.download(this).register()
+        Aria.download(this).allCompleteTask
     }
 
     override fun initView() {
@@ -283,6 +284,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         var bean = DiskFileBean(
             path = filePath,
             downTaskId = taskId,
+            status = 0,
             filename = mPriData[mCurrent].filename,
             objectid = url ?: ""
         )
@@ -337,7 +339,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             DiskFileBean(
                 path = filePath ?: "",
                 folderid = folderBean?.id,
-                objectKey = objectKey, totalSize = totalSize
+                objectid = objectKey, totalSize = totalSize
             )
         )
         OssUtils.uploadResumeFile(

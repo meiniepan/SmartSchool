@@ -3,7 +3,6 @@ package com.xiaoneng.ss.module.school.view
 import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -140,7 +139,9 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
         super.getData()
         mData.clear()
         mData.addAll(FileTransInfo.getFilesInfo())
+        eData = mData
         mDataDownload.clear()
+        FileDownloadInfo.checkComplete(this)
         mDataDownload.addAll(FileDownloadInfo.getFilesInfo())
         rvTrans.notifyDataSetChanged()
     }
@@ -225,7 +226,7 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
         OssUtils.uploadResumeFile(
             this,
             it.Credentials,
-            bean.objectKey,
+            bean.objectid,
             bean.path,
             object : OssListener {
                 override fun onSuccess() {
@@ -233,7 +234,7 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
                         var bean2 = DiskFileBean(
                             token = UserInfo.getUserBean().token,
                             filename = bean.filename,
-                            objectid = bean.objectKey,
+                            objectid = bean.objectid,
                             folderid = bean.folderid
                         )
                         mViewModel.addFile(bean2)
@@ -329,6 +330,7 @@ var removeList = ArrayList<DiskFileBean>()
                     FileDownloadInfo.delFile(it)
                 }
                 eData.clear()
+                Aria.download(this).removeAllTask(false)
                 mAdapter.notifyDataSetChanged()
                 if (mDataDownload.size <= 0) {
                     rvTrans.showEmptyView()
@@ -397,18 +399,18 @@ var removeList = ArrayList<DiskFileBean>()
         })
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     fun refreshFile(event: FileUploadEvent) {
         var pp = 0
         for (i in 0..mData.size) {
-            if (mData[i].objectKey == event.file.objectKey) {
+            if (mData[i].objectid == event.file.objectid) {
                 if (event.file.currentSize != 0L) {
                     mData[i].currentSize = event.file.currentSize
                 }
                 if (event.file.totalSize != 0L) {
                     mData[i].totalSize = event.file.totalSize
                 }
-                if (event.file.status != 0) {
+                if (event.file.status != -1) {
                     mData[i].status = event.file.status
                 }
                 if (event.file.task != null) {
@@ -439,7 +441,7 @@ var removeList = ArrayList<DiskFileBean>()
                 if (event.file.progress != 0L) {
                     mDataDownload[i].progress = event.file.progress
                 }
-                if (event.file.status != 0) {
+                if (event.file.status != -1) {
                     mDataDownload[i].status = event.file.status
                 }
                 pp = i
