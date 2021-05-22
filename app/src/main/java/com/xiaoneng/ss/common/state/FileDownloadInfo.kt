@@ -29,44 +29,44 @@ object FileDownloadInfo {
     fun modifyFile(file: DiskFileBean) {
         var files = getFilesInfo()
         files.forEach {
-            if (it.objectid == file.objectid){
-                if (file.currentSize!=0L){
+            if (it.objectid == file.objectid) {
+                if (file.currentSize != 0L) {
                     it.currentSize = file.currentSize
                 }
-                if (file.totalSize!=0L){
+                if (file.totalSize != 0L) {
                     it.totalSize = file.totalSize
                 }
-                if (file.status!=-1){
+                if (file.status != -1) {
                     it.status = file.status
                 }
-                if (file.progress!=0L){
+                if (file.progress != 0L) {
                     it.progress = file.progress
                 }
-                
+
                 return@forEach
             }
         }
         fileInfoJson = gson.toJson(files)
     }
 
-    fun hasFile(file: DiskFileBean) :Boolean{
+    fun hasFile(file: DiskFileBean): Boolean {
         var files = getFilesInfo()
         files.forEach {
-            if (it.objectid == file.objectid){
+            if (it.objectid == file.objectid) {
                 return true
             }
         }
         return false
     }
 
-    fun checkComplete(context:Context) {
+    fun checkComplete(context: Context) {
         var files = getFilesInfo()
         var completes = Aria.download(context).allCompleteTask
         files.forEach {
-            completes?.let {c ->
-                c.forEach {cc->
-                    if (UserInfo.getUserBean().domain+it.objectid == cc.key){
-                        it.status=2
+            completes?.let { c ->
+                c.forEach { cc ->
+                    if (UserInfo.getUserBean().domain + it.objectid == cc.key) {
+                        it.status = 2
                         return@forEach
                     }
                 }
@@ -79,7 +79,7 @@ object FileDownloadInfo {
     fun reset() {
         var files = getFilesInfo()
         files.forEach {
-            if (it.status != 2){
+            if (it.status != 2) {
                 it.status = 1
             }
         }
@@ -94,15 +94,15 @@ object FileDownloadInfo {
 
     fun delFile(file: DiskFileBean) {
         var files = getFilesInfo()
-        var the:DiskFileBean? = null
+        var the: DiskFileBean? = null
         files.forEach {
-            if (it.objectid == file.objectid){
+            if (it.objectid == file.objectid) {
                 the = it
                 return@forEach
             }
         }
         the?.let {
-        files.remove(it)
+            files.remove(it)
         }
         fileInfoJson = gson.toJson(files)
     }

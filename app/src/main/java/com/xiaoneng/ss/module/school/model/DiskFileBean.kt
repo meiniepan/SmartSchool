@@ -1,10 +1,6 @@
 package com.xiaoneng.ss.module.school.model
 
-import android.os.Parcel
 import com.alibaba.sdk.android.oss.internal.OSSAsyncTask
-import com.alibaba.sdk.android.oss.model.OSSResult
-import com.tencent.bugly.proguard.T
-import kotlinx.android.parcel.Parcelize
 
 /**
  * Created with Android Studio.
@@ -30,6 +26,6 @@ data class DiskFileBean(
     var progress: Long = 0,
     var isChecked: Boolean = false,
     var status: Int = -1,//0正在下载 1暂停  2完成
-    @Transient  var task: OSSAsyncTask<*>? = null,
-    var schoolname: String= ""
+    @Transient var task: OSSAsyncTask<*>? = null,
+    var schoolname: String = ""
 )
