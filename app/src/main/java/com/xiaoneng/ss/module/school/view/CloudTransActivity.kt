@@ -276,16 +276,16 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
         }
         if (i == 0 ) {
             llCb.visibility = View.INVISIBLE
-            tvTitle.text = "确定将所选文件从列表中删除？"
+            tvTitle.text = "确定将所选任务从列表中删除？"
         } else if (i == 1) {
             llCb.visibility = View.VISIBLE
-            tvTitle.text = "确定将所选文件从列表中删除？"
+            tvTitle.text = "确定将所选任务从列表中删除？"
         }else if (i == 2) {
             llCb.visibility = View.INVISIBLE
-            tvTitle.text = "确定删除所有文件？"
+            tvTitle.text = "确定删除所有任务？"
         }else if (i == 3) {
             llCb.visibility = View.VISIBLE
-            tvTitle.text = "确定删除所有文件？"
+            tvTitle.text = "确定删除所有任务？"
         }
         tvConfirm.setOnClickListener {
 var removeList = ArrayList<DiskFileBean>()
