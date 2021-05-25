@@ -274,21 +274,21 @@ class CloudTransActivity : BaseLifeCycleActivity<SchoolViewModel>(), IFileTrans 
         contentView.findViewById<View>(R.id.ivClose).setOnClickListener {
             bottomDialog.dismiss()
         }
-        if (i == 0 ) {
+        if (i == 0) {
             llCb.visibility = View.INVISIBLE
             tvTitle.text = "确定将所选任务从列表中删除？"
         } else if (i == 1) {
             llCb.visibility = View.VISIBLE
             tvTitle.text = "确定将所选任务从列表中删除？"
-        }else if (i == 2) {
+        } else if (i == 2) {
             llCb.visibility = View.INVISIBLE
             tvTitle.text = "确定删除所有任务？"
-        }else if (i == 3) {
+        } else if (i == 3) {
             llCb.visibility = View.VISIBLE
             tvTitle.text = "确定删除所有任务？"
         }
         tvConfirm.setOnClickListener {
-var removeList = ArrayList<DiskFileBean>()
+            var removeList = ArrayList<DiskFileBean>()
             if (i == 0) {
                 eData.forEach {
                     if (it.isChecked) {
@@ -297,7 +297,7 @@ var removeList = ArrayList<DiskFileBean>()
                     }
                 }
                 eData.removeAll(removeList)
-                    rvTrans.notifyDataSetChanged()
+                rvTrans.notifyDataSetChanged()
 
             } else if (i == 2) {
                 eData.forEach {
@@ -311,6 +311,9 @@ var removeList = ArrayList<DiskFileBean>()
                         if (cb.isChecked) {
                             deleteFile(it)
                         }
+                        Aria.download(this)
+                            .load(it.downTaskId)     //读取任务id
+                            .cancel();
                         FileDownloadInfo.delFile(it)
                         removeList.add(it)
                     }
@@ -399,7 +402,7 @@ var removeList = ArrayList<DiskFileBean>()
         })
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     fun refreshFile(event: FileUploadEvent) {
         var pp = 0
         for (i in 0..mData.size) {

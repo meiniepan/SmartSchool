@@ -316,7 +316,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             taskUrl = taskUrl.substring(UserInfo.getUserBean().domain?.length ?: 0, taskUrl.length)
         }
         var bean = DiskFileBean(
-            objectid = taskUrl, status = 2
+            objectid = taskUrl, status = 2,totalSize = task.fileSize
         )
         FileDownloadInfo.modifyFile(bean)
         FileDownloadEvent(bean).post()
