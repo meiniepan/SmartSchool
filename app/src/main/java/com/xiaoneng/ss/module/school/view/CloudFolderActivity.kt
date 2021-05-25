@@ -92,7 +92,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvDiskNew.setOnClickListener { newFolderDialog.show() }
         tvBottomDownload.setOnClickListener {
             var bean = mPriData[mCurrent]
-            var filePath = PathSelector(BaseApplication.instance).getDownloadsDirPath()
+            var filePath = PathSelector(BaseApplication.instance).getXiaonengPath()
             filePath = filePath + File.separator + "cloud_" + bean.id + bean.filename
             var diskFileBean = DiskFileBean(
                 path = filePath,

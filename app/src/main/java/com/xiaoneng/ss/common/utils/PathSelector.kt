@@ -1,6 +1,8 @@
 package com.xiaoneng.ss.common.utils
 import android.content.Context
 import android.os.Environment
+import android.os.Environment.DIRECTORY_DOWNLOADS
+import java.io.File
 
 
 /**
@@ -60,5 +62,12 @@ class PathSelector(private val context: Context) {
      * @return String
      */
     fun getExternalRootDir(): String = Environment.getExternalStorageDirectory().absolutePath
+    fun getXiaonengPath(): String {
+        var path = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS).absolutePath
+//        if (!File(path).exists()){
+//            File(path).mkdirs()
+//        }
+       return path
+    }
 
 }

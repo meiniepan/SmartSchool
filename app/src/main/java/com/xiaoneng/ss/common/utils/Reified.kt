@@ -18,6 +18,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.view.LoginStuActivity
 import com.xiaoneng.ss.account.view.LoginSwitchActivity
 import com.xiaoneng.ss.account.view.LoginTeacherActivity
+import com.xiaoneng.ss.base.view.BaseApplication
 import com.xiaoneng.ss.common.constclass.Solang
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
@@ -223,13 +224,11 @@ inline fun mainLogin(context: Context) {
 
 
 inline fun mDownloadFile(context: Context, name: String?): String? {
-
-    return context.getExternalFilesDir(null)?.absolutePath + File.separator + name
-
+    return PathSelector(BaseApplication.instance).getXiaonengPath() + File.separator + name
 }
 
 fun Context.mBitmap2Local(bitmap: Bitmap?, name: String): String? {
-    var path = getExternalFilesDir(null)?.absolutePath + File.separator + name
+    var path = PathSelector(BaseApplication.instance).getXiaonengPath() + File.separator + name
     val filename = File(path)
 
     if (bitmap != null) {
@@ -306,7 +305,7 @@ inline fun getOssObjectKey(@Solang.UserType type: String?, id: String?, fileName
     var mType = ""
     if (type == Solang.STUDENT) {
         mType = "student/"
-    } else if (type == Solang.TEACHER || type == Solang.ADMIN) {
+    } else {
         mType = "teacher/"
     }
     var result = "$mType$id/avatar/$fileName"
