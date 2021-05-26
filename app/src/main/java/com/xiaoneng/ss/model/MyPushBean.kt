@@ -7,7 +7,7 @@ package com.xiaoneng.ss.model
  * @date: 2021/05/22
  * Time: 17:06
  */
-data class PushBean(
-    var testname: String? = null
+data class MyPushBean(
+    var testname: String? = "null"
 
 )

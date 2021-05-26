@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.xiaoneng.ss.common.utils.eventBus.OnPushEvent
-import com.xiaoneng.ss.model.PushBean
 
 
 /**
@@ -17,6 +15,5 @@ class CustomTPushReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         Log.w("=====", "Tpush")
-        OnPushEvent(PushBean()).post()
     }
 }

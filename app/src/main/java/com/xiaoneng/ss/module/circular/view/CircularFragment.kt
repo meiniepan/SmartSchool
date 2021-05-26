@@ -1,6 +1,7 @@
 package com.xiaoneng.ss.module.circular.view
 
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -9,14 +10,12 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.FragmentVpAdapter
+import com.xiaoneng.ss.common.utils.eventBus.OnPushEvent
 import com.xiaoneng.ss.common.utils.eventBus.RefreshUnreadEvent
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.toIntSafe
-import com.xiaoneng.ss.model.PushBean
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
-import com.xiaoneng.ss.module.school.interfaces.INoticeUnread
-import kotlinx.android.synthetic.main.activity_notice.*
 import kotlinx.android.synthetic.main.fragment_circular.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -140,7 +139,7 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
         var unread = event.unread
         if (unread == "0" || TextUtils.isEmpty(unread)) {
             unread = "通知"
-        } else if (unread.toIntSafe()>99) {
+        } else if (unread.toIntSafe() > 99) {
             unread = "通知(99+)"
         } else {
             unread = "通知($unread)"
@@ -149,7 +148,7 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun refreshPush(event: PushBean) {
+    fun refreshPush(event: OnPushEvent) {
         getData()
     }
 }

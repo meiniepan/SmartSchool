@@ -13,6 +13,8 @@ import com.tencent.bugly.beta.Beta
 import com.umeng.commonsdk.UMConfigure
 import com.umeng.message.IUmengRegisterCallback
 import com.umeng.message.PushAgent
+import com.umeng.message.UmengMessageHandler
+import com.umeng.message.entity.UMessage
 import com.xiaoneng.ss.common.callback.EmptyCallBack
 import com.xiaoneng.ss.common.callback.ErrorCallBack
 import com.xiaoneng.ss.common.callback.LoadingCallBack
@@ -20,10 +22,16 @@ import com.xiaoneng.ss.common.state.FileDownloadInfo
 import com.xiaoneng.ss.common.state.FileTransInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.SPreference
+import com.xiaoneng.ss.common.utils.eventBus.ChangeThemeEvent
+import com.xiaoneng.ss.common.utils.eventBus.OnPushEvent
+import com.xiaoneng.ss.model.MyPushBean
 import org.android.agoo.huawei.HuaWeiRegister
 import org.android.agoo.oppo.OppoRegister
 import org.android.agoo.vivo.VivoRegister
 import org.android.agoo.xiaomi.MiPushRegistar
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 /**
@@ -74,11 +82,17 @@ open class BaseApplication : Application() {
                 UMConfigure.DEVICE_TYPE_PHONE,
                 "ab59d5ba71c396e8c388d2d9b309eb28"
             )
-//获取消息推送代理示例
-//获取消息推送代理示例
+            //获取消息推送代理示例
             val mPushAgent = PushAgent.getInstance(this)
-//注册推送服务，每次调用register方法都会回调该接口
-//注册推送服务，每次调用register方法都会回调该接口
+            mPushAgent.setMessageHandler(object : UmengMessageHandler() {
+                override fun dealWithNotificationMessage(p0: Context?, p1: UMessage?) {
+                    Log.w("=====", "mPushAgent")
+                    OnPushEvent(MyPushBean()).post()
+                    super.dealWithNotificationMessage(p0, p1)
+                }
+
+            })
+            //注册推送服务，每次调用register方法都会回调该接口
             mPushAgent.register(object : IUmengRegisterCallback {
                 override fun onSuccess(deviceToken: String) {
                     //注册成功会返回deviceToken deviceToken是推送消息的唯一标志
@@ -91,6 +105,8 @@ open class BaseApplication : Application() {
                     Log.e(TAG, "注册失败：-------->  s:$s,s1:$s1")
                 }
             })
+
+
             //该方法是【友盟+】Push后台进行日活统计及多维度推送的必调用方法，请务必调用！
             mPushAgent.onAppStart()
 
@@ -128,4 +144,5 @@ open class BaseApplication : Application() {
         var isNightMode: Boolean by SPreference(Constant.NIGHT_MODE, false)
         AppCompatDelegate.setDefaultNightMode(if (isNightMode) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO)
     }
+
 }

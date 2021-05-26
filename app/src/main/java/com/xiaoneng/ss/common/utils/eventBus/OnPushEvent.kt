@@ -1,7 +1,7 @@
 package com.xiaoneng.ss.common.utils.eventBus
 
-import com.xiaoneng.ss.model.PushBean
-import com.xiaoneng.ss.module.school.model.DiskFileBean
+import android.util.Log
+import com.xiaoneng.ss.model.MyPushBean
 import org.greenrobot.eventbus.EventBus
 
 /**
@@ -11,8 +11,9 @@ import org.greenrobot.eventbus.EventBus
  * @date: 2021/05/22
  * Time: 18:46
  */
-class OnPushEvent(val event:PushBean) {
+class OnPushEvent(val event:MyPushBean) {
     fun post() {
+        Log.w("=====", "post")
         EventBus.getDefault().post(this)
     }
     fun postSticky() {

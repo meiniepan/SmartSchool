@@ -8,9 +8,10 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.eventBus.OnPushEvent
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.mToast
-import com.xiaoneng.ss.model.PushBean
+import com.xiaoneng.ss.model.MyPushBean
 import com.xiaoneng.ss.module.circular.adapter.SysMsgAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
@@ -21,7 +22,6 @@ import com.xiaoneng.ss.module.school.view.TimetableActivity
 import kotlinx.android.synthetic.main.activity_system_msg.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import org.jetbrains.anko.toast
 
 /**
  * @author Burning
@@ -143,7 +143,7 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun refreshPush(event: PushBean) {
+    fun refreshPush(event: OnPushEvent) {
         doRefresh()
     }
 }

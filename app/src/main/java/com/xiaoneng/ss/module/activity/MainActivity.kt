@@ -251,5 +251,4 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
     override fun initDataObserver() {
 
     }
-
 }
