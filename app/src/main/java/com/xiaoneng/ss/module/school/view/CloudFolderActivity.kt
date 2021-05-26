@@ -78,7 +78,6 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Aria.download(this).register()
-        Aria.download(this).allCompleteTask
     }
 
     override fun initView() {

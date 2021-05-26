@@ -162,8 +162,7 @@ dependencies {
     //阿里云语音
     implementation files('libs/fastjson-1.1.46.android.jar')
     implementation(name: 'nuisdk-release', ext: 'aar')
-    //文件预览
-    implementation 'com.gitee.jiang_li_jie_j:awesome-downloader:v1.1.1'
+
     //下载框架
     implementation 'com.arialyy.aria:core:3.8.15'
     kapt 'com.arialyy.aria:compiler:3.8.15'

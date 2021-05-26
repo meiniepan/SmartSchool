@@ -5,20 +5,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.arialyy.aria.core.Aria
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.jiang.awesomedownloader.downloader.AwesomeDownloader
-import com.jiang.awesomedownloader.tool.PathSelector
 import com.tencent.smtt.sdk.QbSdk
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseApplication
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.PathSelector
 import com.xiaoneng.ss.common.utils.endIsImage
 import com.xiaoneng.ss.common.utils.mStartActivity
-import com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
 import com.xiaoneng.ss.module.activity.ImageScaleActivity
 import com.xiaoneng.ss.module.circular.adapter.NoticeFileAdapter
 import com.xiaoneng.ss.module.school.model.FileInfoBean
@@ -142,27 +141,14 @@ class TaskLogAdapter(layoutId: Int, listData: MutableList<LogBean>?, activity: T
     }
 
     private fun doDown(url: String?, fileName: String?) {
-        AwesomeDownloader.init(BaseApplication.instance)
-        //关闭通知栏
-        AwesomeDownloader.option.showNotification = false
         val url = UserInfo.getUserBean().domain + url
         //获取应用外部照片储存路径
-        val filePath = PathSelector(BaseApplication.instance).getDownloadsDirPath()
-        //加入下载队列
-        AwesomeDownloader.enqueue(url, filePath, fileName ?: "")
-        AwesomeDownloader.setOnProgressChange { progress ->
-            //do something...
-        }.setOnStop { downloadBytes, totalBytes ->
-            //do something...
-        }.setOnFinished { filePath, fileName ->
-            activity.showSuccess()
-            var path = PathSelector(BaseApplication.instance).getDownloadsDirPath()
-            var name = fileName
-            var filePath = path + File.separator + name
-            doOpen(filePath)
-        }.setOnError { exception ->
-            //do something...
-        }
+        val filePath =
+            com.xiaoneng.ss.common.utils.PathSelector(BaseApplication.instance).getDownloadsDirPath() + File.separator + fileName
+        Aria.download(this)
+            .load(url) //读取下载地址
+            .setFilePath(filePath) //设置文件保存的完整路径
+            .create() //创建并启动下载
     }
 
     private fun doOpen(filePath: String) {

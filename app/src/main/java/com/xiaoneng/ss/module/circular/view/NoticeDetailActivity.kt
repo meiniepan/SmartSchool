@@ -1,13 +1,15 @@
 package com.xiaoneng.ss.module.circular.view
 
+import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.arialyy.annotations.Download
+import com.arialyy.aria.core.Aria
+import com.arialyy.aria.core.task.DownloadTask
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.jiang.awesomedownloader.downloader.AwesomeDownloader
-import com.jiang.awesomedownloader.tool.PathSelector
 import com.tencent.smtt.sdk.QbSdk
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseApplication
@@ -17,13 +19,10 @@ import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.circular.adapter.NoticeFileAdapter
 import com.xiaoneng.ss.module.circular.adapter.NoticeImgAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
-import com.xiaoneng.ss.module.circular.model.NoticeResponse
 import com.xiaoneng.ss.module.circular.model.UnreadMemberResponse
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
-import com.xiaoneng.ss.module.school.model.DepartmentBean
 import com.xiaoneng.ss.module.school.model.FileInfoBean
 import com.xiaoneng.ss.module.school.model.UnreadMemberBean
-import com.xiaoneng.ss.module.school.model.UserBeanSimple
 import com.xiaoneng.ss.module.school.view.UnreadMemberActivity
 import kotlinx.android.synthetic.main.activity_notice_detail.*
 import java.io.File
@@ -48,6 +47,11 @@ class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_notice_detail
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Aria.download(this).register()
     }
 
     override fun initView() {
@@ -184,25 +188,22 @@ class NoticeDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
     }
 
     private fun doDown(url: String?, fileName: String?) {
-        AwesomeDownloader.init(BaseApplication.instance)
-        //关闭通知栏
-        AwesomeDownloader.option.showNotification = false
         val url = UserInfo.getUserBean().domain + url
         //获取应用外部照片储存路径
-        val filePath = PathSelector(BaseApplication.instance).getDownloadsDirPath()
-        //加入下载队列
-        AwesomeDownloader.enqueue(url, filePath, fileName ?: "")
-        AwesomeDownloader.setOnProgressChange { progress ->
-            //do something...
-        }.setOnStop { downloadBytes, totalBytes ->
-            //do something...
-        }.setOnFinished { filePath, fileName ->
-            downloadNum++
-            if (downloadNum == fileNum) {
-                showSuccess()
-            }
-        }.setOnError { exception ->
-            //do something...
+        val filePath =
+            PathSelector(BaseApplication.instance).getDownloadsDirPath() + File.separator + fileName
+        Aria.download(this)
+            .load(url) //读取下载地址
+            .setFilePath(filePath) //设置文件保存的完整路径
+            .create() //创建并启动下载
+    }
+
+    @Download.onTaskComplete
+    fun taskComplete(task: DownloadTask) {
+        //在这里处理任务完成的状态
+        downloadNum++
+        if (downloadNum == fileNum) {
+            showSuccess()
         }
     }
 

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.os.Handler
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -11,10 +12,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.arialyy.annotations.Download
+import com.arialyy.aria.core.Aria
+import com.arialyy.aria.core.task.DownloadTask
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.jiang.awesomedownloader.downloader.AwesomeDownloader
-import com.jiang.awesomedownloader.tool.PathSelector
 import com.tencent.smtt.sdk.QbSdk
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseApplication
@@ -68,6 +70,10 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getLayoutId(): Int = R.layout.activity_add_task
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Aria.download(this).register()
+    }
 
     override fun initView() {
         super.initView()
@@ -418,28 +424,21 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun doDown(url: String?, fileName: String?) {
         showLoading()
-        AwesomeDownloader.init(BaseApplication.instance)
-        //关闭通知栏
-        AwesomeDownloader.option.showNotification = false
         val url = UserInfo.getUserBean().domain + url
         //获取应用外部照片储存路径
-        val filePath = PathSelector(BaseApplication.instance).getDownloadsDirPath()
-        //加入下载队列
-        AwesomeDownloader.enqueue(url, filePath, fileName ?: "")
-        AwesomeDownloader.setOnProgressChange { progress ->
+        val filePath =
+            PathSelector(BaseApplication.instance).getDownloadsDirPath() + File.separator + fileName
+        Aria.download(this)
+            .load(url) //读取下载地址
+            .setFilePath(filePath) //设置文件保存的完整路径
+            .create() //创建并启动下载
+    }
 
-            //do something...
-        }.setOnStop { downloadBytes, totalBytes ->
-            //do something...
-        }.setOnFinished { filePath, fileName2 ->
-            showSuccess()
-            var path = PathSelector(BaseApplication.instance).getDownloadsDirPath()
-            var name = fileName
-            var filePath = path + File.separator + name
-            doOpen(filePath)
-        }.setOnError { exception ->
-            //do something...
-        }
+    @Download.onTaskComplete
+    fun taskComplete(task: DownloadTask) {
+        //在这里处理任务完成的状态
+        showSuccess()
+        doOpen(task.filePath)
     }
 
     override fun initDataObserver() {

@@ -119,7 +119,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
             )
         }
 
-        if (AppInfo.checkRule1("admin/spacebook/default")) {
+        if (AppInfo.checkRule1("disk/folder/default")) {
             bean1.items.add(
                     SchoolItemBean(
                             name = getString(R.string.diskTitle),
