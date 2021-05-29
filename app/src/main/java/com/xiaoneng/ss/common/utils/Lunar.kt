@@ -316,30 +316,6 @@ class Lunar(cal: Calendar) {
             return "第" + i + "周"
         }
 
-        @Throws(ParseException::class)
-        fun getFirstAndLastOfWeek(
-            dataStr: String?,
-            dateFormat: String?,
-            resultDateFormat: String?
-        ): String {
-            val cal = Calendar.getInstance()
-            cal.time = SimpleDateFormat(dateFormat).parse(dataStr)
-            var d = 0
-            d = if (cal[Calendar.DAY_OF_WEEK] == 1) {
-                -6
-            } else {
-                2 - cal[Calendar.DAY_OF_WEEK]
-            }
-            cal.add(Calendar.DAY_OF_WEEK, d)
-            // 所在周开始日期
-            val data1 =
-                SimpleDateFormat(resultDateFormat).format(cal.time)
-            cal.add(Calendar.DAY_OF_WEEK, 6)
-            // 所在周结束日期
-            val data2 =
-                SimpleDateFormat(resultDateFormat).format(cal.time)
-            return data1 + "_" + data2
-        }
 
         fun getCurrentDaysOfWeek(chosenDay: Long?): ArrayList<DayBean> {
             val cal = Calendar.getInstance()

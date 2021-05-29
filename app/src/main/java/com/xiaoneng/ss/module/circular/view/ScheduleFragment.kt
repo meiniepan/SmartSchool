@@ -243,7 +243,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
                     it.days?.let {
                         mDataMonth.clear()
                         mDataMonth.addAll(
-                            Lunar.getCurrentDaysOfMonth(
+                            Lunar.getDaysOfMonth(
                                 it,
                                 chosenDay,
                                 dateOffset
@@ -255,6 +255,5 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
             }
         })
     }
-
 
 }
