@@ -550,6 +550,11 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
+    suspend fun getAuthUsers(folderid:String?=null): Any {
+        return apiService.getAuthUsers(UserInfo.getUserBean().token, folderid = folderid)
+            .dataConvert(loadState)
+    }
+
     suspend fun copyCloudFile(fileid:String?=null,folderid:String?=null): Any {
         return apiService.copyCloudFile(UserInfo.getUserBean().token,id = fileid, folderid = folderid)
             .dataConvert(loadState)
@@ -567,6 +572,11 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
     suspend fun delCloudFolder(folderid:String?=null): Any {
         return apiService.delCloudFolder(UserInfo.getUserBean().token,id = folderid)
+            .dataConvert(loadState)
+    }
+
+    suspend fun cancelFolderAuth(folderid:String?=null): Any {
+        return apiService.cancelFolderAuth(UserInfo.getUserBean().token,folderid = folderid)
             .dataConvert(loadState)
     }
 

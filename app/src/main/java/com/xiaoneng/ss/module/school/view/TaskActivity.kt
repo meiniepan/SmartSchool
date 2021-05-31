@@ -140,7 +140,7 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             setAdapter(mAdapter)
         }
         mAdapter.setOnItemClickListener { _, view, position ->
-            if (mType == "2" && status == "0") {
+            if (mType == "2" &&  mData[position].status == "0") {
                 mStartActivity<AddTaskActivity>(this) {
                     putExtra(Constant.ID, mData[position].id)
                     putExtra(Constant.TYPE, mType)

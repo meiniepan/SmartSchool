@@ -10,10 +10,7 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.mStartForResult
 import com.xiaoneng.ss.common.utils.netResponseFormat
-import com.xiaoneng.ss.module.school.model.DepartmentBean
-import com.xiaoneng.ss.module.school.model.DiskFileResp
-import com.xiaoneng.ss.module.school.model.FolderBean
-import com.xiaoneng.ss.module.school.model.UserBeanSimple
+import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_folder_setting.*
 import org.jetbrains.anko.toast
@@ -26,9 +23,10 @@ import org.jetbrains.anko.toast
  */
 class FolderSettingActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var folderBean: FolderBean? = null
-    var involves: ArrayList<UserBean> = ArrayList()
+    var involves: ArrayList<UserBeanSimple> = ArrayList()
     var mDataDepartment = ArrayList<DepartmentBean>()
     var receiveList: ArrayList<UserBeanSimple> = ArrayList()
+    var isFirst = true
 
     override fun getLayoutId(): Int {
         return R.layout.activity_folder_setting
@@ -42,6 +40,13 @@ class FolderSettingActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
         llInvite.setOnClickListener {
             mStartForResult<AddInvolveActivity>(this, Constant.REQUEST_CODE_COURSE) {
+                putExtra(Constant.DATA, mDataDepartment)
+                //从草稿箱第一次选择参与人，传入原有参与人数据
+                if (isFirst) {
+                    if (receiveList.size > 0) {
+                        putExtra(Constant.DATA3, receiveList)
+                    }
+                }
                 //从草稿箱第一次选择参与人，传入原有参与人数据
                 putExtra(Constant.TYPE, 1)
             }
@@ -55,6 +60,7 @@ class FolderSettingActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
+        mViewModel.getAuthUsers(folderBean?.folderid)
     }
 
     private fun doConfirm() {
@@ -62,11 +68,8 @@ class FolderSettingActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 //            toast(R.string.lack_info)
 //            return
 //        }
-        mViewModel.setFileFolder(
-            parentid = folderBean?.parentid,
-            folderid = folderBean?.id,
-            involve = Gson().toJson(involves)
-        )
+        mViewModel.cancelFolderAuth(folderBean?.folderid)
+
     }
 
     override fun onActivityResult(
@@ -78,24 +81,29 @@ class FolderSettingActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == Constant.REQUEST_CODE_COURSE) {
                 if (data != null) {
+                    isFirst = false
                     involves.clear()
                     receiveList.clear()
                     mDataDepartment = data.getParcelableArrayListExtra(Constant.DATA)!!
-                    var str = ""
                     mDataDepartment.forEach {
                         addDepartment(it)
                     }
-                    if (receiveList.size > 0) {
-                        receiveList.forEach {
-                            str = str + it.realname + "、"
-                            involves.add(UserBean(uid = it.uid, usertype = it.usertype))
-                        }
-                        str = str.substring(0, str.length - 1)
-                    }
-                        tvPeople.text = str
+                    dealData()
                 }
             }
         }
+    }
+
+    private fun dealData() {
+        var str = ""
+        if (receiveList.size > 0) {
+            receiveList.forEach {
+                str = str + it.realname + "、"
+                involves.add(it)
+            }
+            str = str.substring(0, str.length - 1)
+        }
+        tvPeople.text = str
     }
 
     private fun addDepartment(it: DepartmentBean) {
@@ -120,6 +128,36 @@ class FolderSettingActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             response?.let {
                 toast(R.string.deal_done)
                 finish()
+            }
+        })
+
+        mViewModel.mCancelFolderAuthData.observe(this, Observer { response ->
+            response?.let {
+                mViewModel.setFileFolder(
+                    parentid = folderBean?.parentid,
+                    folderid = folderBean?.id,
+                    involve = Gson().toJson(involves)
+                )
+            }
+        })
+
+        mViewModel.mAuthUsersData.observe(this, Observer { response ->
+            response?.let {
+                netResponseFormat<ArrayList<UserBeanSimple>>(it)?.let {
+                    if (it.size>0){
+                        isFirst = true
+                        receiveList.clear()
+                        it.forEach {
+                            var bean = it
+                            if (it.deps?.size?:0>0){
+                                bean.topdepartid = it.deps!![0].topdepartid
+                                bean.secdepartid = it.deps!![0].secdepartid
+                            }
+                            receiveList.add(bean)
+                        }
+                        dealData()
+                    }
+                }
             }
         })
     }

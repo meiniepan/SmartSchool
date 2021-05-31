@@ -18,6 +18,7 @@ data class UserBeanSimple(
     var usertype: String ? = null,
     var dep_name: String ? = null,
     var classmaster_classname: String ? = null,
+    var deps: ArrayList<UserBeanSimple> ? = null,
     var phone: String ? = null,
     var cno: String ? = null,
     var topdepartid: String ? = null,

@@ -37,11 +37,13 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
     val mBaseData: MutableLiveData<Any> = MutableLiveData()
     val mPriCloudData: MutableLiveData<Any> = MutableLiveData()
+    val mAuthUsersData: MutableLiveData<Any> = MutableLiveData()
     val mAddFileData: MutableLiveData<Any> = MutableLiveData()
     val mModifyFileData: MutableLiveData<Any> = MutableLiveData()
     val mCopyCloudData: MutableLiveData<Any> = MutableLiveData()
     val mDelCloudFileData: MutableLiveData<Any> = MutableLiveData()
     val mDelCloudFolderData: MutableLiveData<Any> = MutableLiveData()
+    val mCancelFolderAuthData: MutableLiveData<Any> = MutableLiveData()
     val mPriCloudFilesData: MutableLiveData<Any> = MutableLiveData()
     val mPubCloudData: MutableLiveData<Any> = MutableLiveData()
     val mPubCloudFilesData: MutableLiveData<Any> = MutableLiveData()
@@ -376,6 +378,13 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
+    fun getAuthUsers(folderid: String? = null) {
+        initiateRequest(
+            { mAuthUsersData.value = mRepository.getAuthUsers(folderid) },
+            loadState
+        )
+    }
+
     fun copyCloudFile(fileid: String? = null, folderid: String? = null) {
         initiateRequest(
             {
@@ -411,6 +420,16 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
             {
                 mDelCloudFolderData.value =
                     mRepository.delCloudFolder(folderid = folderid)
+            },
+            loadState
+        )
+    }
+
+    fun cancelFolderAuth(folderid: String? = null) {
+        initiateRequest(
+            {
+                mCancelFolderAuthData.value =
+                    mRepository.cancelFolderAuth(folderid = folderid)
             },
             loadState
         )

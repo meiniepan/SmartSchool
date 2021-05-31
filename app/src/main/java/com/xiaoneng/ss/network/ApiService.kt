@@ -1076,6 +1076,16 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
+     *文件夹授权用户
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/disk/folderrs/authUsers")
+    suspend fun getAuthUsers(
+        @Field("token") token: String?,
+        @Field("folderid") folderid: String?
+    ): BaseResponse<Any>
+
+    /**
      *复制文件到文件夹
      */
     @FormUrlEncoded
@@ -1115,6 +1125,17 @@ interface ApiService {
     suspend fun delCloudFolder(
         @Field("token") token: String?,
         @Field("id") id: String?
+    ): BaseResponse<Any>
+
+    /**
+     *文件夹取消授权
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/disk/folderrs/del")
+    suspend fun cancelFolderAuth(
+        @Field("token") token: String?,
+        @Field("id") id: String?=null,
+        @Field("folderid") folderid: String?
     ): BaseResponse<Any>
 
     /**
