@@ -36,28 +36,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tvDiskFileName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:text=""
-                android:textStyle="bold" />
-    <TextView
-        android:id="@+id/tvCreator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/commonHint"
-        android:textSize="@dimen/sp_12"
-        android:layout_marginLeft="10dp"
-        android:singleLine="true"
-        android:text=""
-         />
 
-</LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvDiskFileName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvCreator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/commonHint"
+                    android:textSize="@dimen/sp_12" />
+
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/tvDiskFileDate"
                 android:layout_width="wrap_content"

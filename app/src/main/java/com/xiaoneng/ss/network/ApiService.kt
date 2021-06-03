@@ -1076,6 +1076,39 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
+     *私有云文件夹文件
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/disk/folder/myFiles")
+    suspend fun getPriCloudFiles(
+        @Field("token") token: String?,
+        @Field("folderid") folderid: String?
+    ): BaseResponse<Any>
+
+    /**
+     *授权文件夹列表
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/disk/folderrs/lists")
+    suspend fun getPubCloudList(
+        @Field("token") token: String?,
+        @Field("uid") uid: String?=null,
+        @Field("folderid") folderid: String?
+    ): BaseResponse<Any>
+
+    /**
+     *共享文件夹的文件
+
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/disk/folder/myFolderFiles")
+    suspend fun getPubCloudFiles(
+        @Field("token") token: String?,
+        @Field("uid") uid: String?=null,
+        @Field("folderid") folderid: String?
+    ): BaseResponse<Any>
+
+    /**
      *文件夹授权用户
      */
     @FormUrlEncoded
@@ -1139,16 +1172,6 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
-     *私有云文件夹文件
-     */
-    @FormUrlEncoded
-    @POST("/api/v17/disk/folder/myFiles")
-    suspend fun getPriCloudFiles(
-        @Field("token") token: String?,
-        @Field("folderid") folderid: String?
-    ): BaseResponse<Any>
-
-    /**
      *上传我的文件
      */
     @POST("/api/v17/disk/files/add")
@@ -1172,28 +1195,6 @@ interface ApiService {
         @Body fileBean:FolderBean
     ): BaseResponse<Any>
 
-    /**
-     *授权文件夹列表
-     */
-    @FormUrlEncoded
-    @POST("/api/v17/disk/folderrs/lists")
-    suspend fun getPubCloudList(
-        @Field("token") token: String?,
-        @Field("uid") uid: String?=null,
-        @Field("folderid") folderid: String?
-    ): BaseResponse<Any>
-
-    /**
-     *共享文件夹的文件
-
-     */
-    @FormUrlEncoded
-    @POST("/api/v17/disk/folder/myFolderFiles")
-    suspend fun getPubCloudFiles(
-        @Field("token") token: String?,
-        @Field("uid") uid: String?=null,
-        @Field("folderid") folderid: String?
-    ): BaseResponse<Any>
 
     /**
      *创建文件夹
