@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.arialyy.annotations.Download
 import com.arialyy.aria.core.Aria
 import com.arialyy.aria.core.task.DownloadTask
+import com.tencent.smtt.sdk.QbSdk
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseApplication
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
@@ -32,6 +33,8 @@ import com.xiaoneng.ss.common.utils.eventBus.FileDownloadEvent
 import com.xiaoneng.ss.common.utils.oss.OssListener
 import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.model.StsTokenResp
+import com.xiaoneng.ss.module.activity.ImageScaleActivity
+import com.xiaoneng.ss.module.activity.VideoActivity
 import com.xiaoneng.ss.module.school.adapter.DiskPriAdapter
 import com.xiaoneng.ss.module.school.model.DiskFileBean
 import com.xiaoneng.ss.module.school.model.DiskFileResp
@@ -58,6 +61,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var rotationB = false
     var filePath: String? = null
     var fileName: String? = null
+    var idString: String = "cloud_"
     var folderBean: FolderBean? = null
     var mCurrent: Int = 0
     var mNetCount: Int = 0
@@ -92,7 +96,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvBottomDownload.setOnClickListener {
             var bean = mPriData[mCurrent]
             var filePath = PathSelector(BaseApplication.instance).getXiaonengPath()
-            filePath = filePath + File.separator + "cloud_" + bean.id + bean.filename
+            filePath = filePath + File.separator + idString + bean.id + bean.filename
             var diskFileBean = DiskFileBean(
                 path = filePath,
                 filename = mPriData[mCurrent].filename,
@@ -193,6 +197,35 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     bean.fullName = folderBean?.fullName + ">" + bean.foldername
                     putExtra(Constant.DATA, mPriData[position])
                 }
+            } else {
+                var mUrl = ""
+                var path = PathSelector(BaseApplication.instance).getXiaonengPath()
+                var name = idString + mPriData[position].id + mPriData[position].filename
+                var filePath = path + File.separator + name
+                var file = File(filePath)
+                if (file.exists()) {
+                    mUrl = filePath
+                } else {
+                    mUrl = UserInfo.getUserBean().domain + mPriData[position].objectid
+                }
+                if (mPriData[position].objectid.endIsVideo()) {
+
+                    mStartActivity<VideoActivity>(this) {
+                        mPriData[position].path = mUrl
+                        putExtra(Constant.DATA, mPriData[position])
+                    }
+                } else if (mPriData[position].objectid.endIsImage()) {
+                    mStartActivity<ImageScaleActivity>(this) {
+                        putExtra(Constant.DATA, mUrl)
+                    }
+                } else {
+
+                    if (file.exists()) {
+                        doOpen(filePath)
+                    } else {
+                        doDown(mPriData[position].objectid, filePath)
+                    }
+                }
             }
         }
         mAdapterPri.setOnItemChildClickListener { adapter, view, position ->
@@ -274,6 +307,10 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     }
 
+    private fun doOpen(filePath: String) {
+        QbSdk.openFileReader(this, filePath, null, null)
+    }
+
     private fun doDown(url: String?, filePath: String) {
         val url2 = UserInfo.getUserBean().domain + url
         val taskId: Long = Aria.download(this)
@@ -315,7 +352,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             taskUrl = taskUrl.substring(UserInfo.getUserBean().domain?.length ?: 0, taskUrl.length)
         }
         var bean = DiskFileBean(
-            objectid = taskUrl, status = 2,totalSize = task.fileSize
+            objectid = taskUrl, status = 2, totalSize = task.fileSize
         )
         FileDownloadInfo.modifyFile(bean)
         FileDownloadEvent(bean).post()

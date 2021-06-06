@@ -255,6 +255,9 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".module.school.view.UnreadMemberActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".module.activity.VideoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"/>
 
 
         <provider

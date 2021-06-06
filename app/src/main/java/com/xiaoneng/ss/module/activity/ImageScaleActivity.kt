@@ -1,5 +1,6 @@
 package com.xiaoneng.ss.module.activity
 
+import android.util.Log
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseActivity
 import com.xiaoneng.ss.common.utils.Constant
@@ -23,6 +24,7 @@ var path:String? = null
     override fun initView() {
         super.initView()
         path = intent.getStringExtra(Constant.DATA)
+        Log.e("TAG", path )
         imageView.setOnZoomClickListener(OnZoomClickListener { finish() })
         imageView.setOnZoomLongClickListener(OnZoomLongClickListener { false })
         imageView.setMaxScale(4)

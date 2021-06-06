@@ -505,6 +505,25 @@ fun String?.endIsImage(): Boolean {
     }
     return false
 }
+fun String?.endIsVideo(): Boolean {
+    this?.let {
+        var it = it.toLowerCase()
+        if (it.endsWith(".avi")
+            ||it.endsWith(".rmvb")
+            ||it.endsWith(".rm")
+            ||it.endsWith(".mov")
+            ||it.endsWith(".flv")
+            ||it.endsWith(".mp4")
+            ||it.endsWith(".3gp")
+            ||it.endsWith(".m4v")
+            ||it.endsWith(".m3u8")
+            ||it.endsWith(".webm")
+        ) {
+            return true
+        }
+    }
+    return false
+}
 
 fun Long.formatMemorySize(): String {
     val kiloByte = this / 1024.toDouble()

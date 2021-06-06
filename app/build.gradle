@@ -170,7 +170,9 @@ dependencies {
     implementation 'com.tencent.tbs.tbssdk:sdk:43939'
     //状态栏适配
     implementation 'com.zackratos.ultimatebarx:ultimatebarx:0.3.3'
-
+    //图片预览
     implementation 'cn.yc:YCGalleryLib:1.1.5'
+    //视频播放
+    implementation 'cn.jzvd:jiaozivideoplayer:7.6.0'
 
 }

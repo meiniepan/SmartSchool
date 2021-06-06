@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/contentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    >
+    <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+        style="@style/title_style"
+        app:title="@string/diskTitle" />
+    <cn.jzvd.JzvdStd
+        android:id="@+id/jz_video"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+
+</LinearLayout>
