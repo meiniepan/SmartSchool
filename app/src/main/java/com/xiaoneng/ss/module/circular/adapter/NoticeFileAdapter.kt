@@ -6,6 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.utils.formatMemorySize
+import com.xiaoneng.ss.common.utils.getFileIcon
 import com.xiaoneng.ss.common.utils.toLongSafe
 import com.xiaoneng.ss.module.school.model.FileInfoBean
 
@@ -38,21 +39,7 @@ class NoticeFileAdapter(layoutId: Int, listData: MutableList<FileInfoBean>?) :
 
             holder.setText(R.id.tvNoticeFileName, item?.name)
                 .setText(R.id.tvNoticeFileSize, size)
-            if (path.endsWith(".doc") || path.endsWith(".docx")) {
-                holder.setBackgroundRes(R.id.ivNoticeFile, R.drawable.ic_type_word)
-            } else if (path.endsWith(".xls") || path.endsWith(".xlsx")) {
-                holder.setBackgroundRes(R.id.ivNoticeFile, R.drawable.ic_type_excel)
-            } else if (path.endsWith(".pdf")) {
-                holder.setBackgroundRes(R.id.ivNoticeFile, R.drawable.ic_type_pdf)
-            } else if (path.endsWith(".zip") || path.endsWith(".rar") || path.endsWith(".tar") || path.endsWith(
-                    ".gz"
-                )
-            ) {
-                holder.setBackgroundRes(R.id.ivNoticeFile, R.drawable.ic_type_zip)
-            } else {
-                holder.setBackgroundRes(R.id.ivNoticeFile, R.drawable.ic_type_unknow)
-            }
-
+            holder.setBackgroundRes(R.id.ivNoticeFile, path.getFileIcon())
         }
     }
 

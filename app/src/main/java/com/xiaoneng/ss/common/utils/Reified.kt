@@ -525,6 +525,33 @@ fun String?.endIsVideo(): Boolean {
     return false
 }
 
+fun String?.getFileIcon(): Int {
+    var srcId = -1
+    this?.let {
+        if (it.endIsImage()) {
+            srcId =  R.drawable.ic_type_image
+        } else if (it.endIsVideo()) {
+            srcId =  R.drawable.ic_type_video
+        } else if (it.endsWith(".doc") || it.endsWith(".docx")) {
+            srcId =  R.drawable.ic_type_word
+        } else if (it.endsWith(".xls") || it.endsWith(".xlsx")) {
+            srcId =  R.drawable.ic_type_excel
+        } else if (it.endsWith(".pdf")) {
+            srcId =  R.drawable.ic_type_pdf
+        } else if (it.endsWith(".zip") || it.endsWith(".rar") || it.endsWith(
+                ".tar"
+            ) || it.endsWith(
+                ".gz"
+            )
+        ) {
+            srcId =  R.drawable.ic_type_zip
+        } else {
+            srcId =  R.drawable.ic_type_unknow
+        }
+    }
+    return srcId
+}
+
 fun Long.formatMemorySize(): String {
     val kiloByte = this / 1024.toDouble()
 

@@ -10,7 +10,10 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.state.FileDownloadInfo
 import com.xiaoneng.ss.common.state.FileTransInfo
+import com.xiaoneng.ss.common.utils.endIsImage
+import com.xiaoneng.ss.common.utils.endIsVideo
 import com.xiaoneng.ss.common.utils.formatMemorySize
+import com.xiaoneng.ss.common.utils.getFileIcon
 import com.xiaoneng.ss.module.school.interfaces.IFileTrans
 import com.xiaoneng.ss.module.school.model.DiskFileBean
 
@@ -32,6 +35,7 @@ class CloudTransAdapter(
     override fun convert(viewHolder: BaseViewHolder?, item: DiskFileBean?) {
         viewHolder?.let { holder ->
             holder.addOnClickListener(R.id.cbDiskFile)
+            holder.setImageResource(R.id.ivDiskIcon, item?.objectid!!.getFileIcon())
             var pb = holder.getView<ProgressBar>(R.id.pbFile)
             var action = holder.getView<ImageView>(R.id.ivAction)
             var cb = holder.getView<CheckBox>(R.id.cbDiskFile)

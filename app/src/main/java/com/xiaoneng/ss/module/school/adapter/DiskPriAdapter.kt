@@ -9,6 +9,9 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.DateUtil
+import com.xiaoneng.ss.common.utils.endIsImage
+import com.xiaoneng.ss.common.utils.endIsVideo
+import com.xiaoneng.ss.common.utils.getFileIcon
 import com.xiaoneng.ss.module.school.model.FolderBean
 
 
@@ -52,22 +55,7 @@ class DiskPriAdapter(layoutId: Int, listData: MutableList<FolderBean>?) :
                 holder.setText(R.id.tvDiskFileName, item?.foldername)
                     .setText(R.id.tvDiskFileDate, DateUtil.formatShowTime(item?.updatetime ?: ""))
             } else {
-                if (item?.path!!.endsWith(".doc") || item?.path!!.endsWith(".docx")) {
-                    holder.setImageResource(R.id.ivDiskIcon, R.drawable.ic_type_word)
-                } else if (item?.path!!.endsWith(".xls") || item?.path!!.endsWith(".xlsx")) {
-                    holder.setImageResource(R.id.ivDiskIcon, R.drawable.ic_type_excel)
-                } else if (item?.path!!.endsWith(".pdf")) {
-                    holder.setImageResource(R.id.ivDiskIcon, R.drawable.ic_type_pdf)
-                } else if (item?.path!!.endsWith(".zip") || item?.path!!.endsWith(".rar") || item?.path!!.endsWith(
-                        ".tar"
-                    ) || item?.path!!.endsWith(
-                        ".gz"
-                    )
-                ) {
-                    holder.setImageResource(R.id.ivDiskIcon, R.drawable.ic_type_zip)
-                } else {
-                    holder.setImageResource(R.id.ivDiskIcon, R.drawable.ic_type_unknow)
-                }
+                holder.setImageResource(R.id.ivDiskIcon, item?.objectid!!.getFileIcon())
                 holder.setText(R.id.tvDiskFileName, item?.filename)
                     .setText(R.id.tvDiskFileDate, DateUtil.formatShowTime(item?.updatetime ?: ""))
             }
