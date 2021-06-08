@@ -449,14 +449,14 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun modifyFile(fileBean: FolderBean) {
+    fun modifyFile(fileBean: FolderModifyBean) {
         initiateRequest(
             { mModifyFileData.value = mRepository.modifyFile(fileBean) },
             loadState
         )
     }
 
-    fun modifyFolder(fileBean: FolderBean) {
+    fun modifyFolder(fileBean: FolderModifyBean) {
         initiateRequest(
             { mModifyFileData.value = mRepository.modifyFolder(fileBean) },
             loadState

@@ -28,8 +28,27 @@ import com.xiaoneng.ss.module.school.adapter.DiskPriAdapter
 import com.xiaoneng.ss.module.school.model.DiskFileBean
 import com.xiaoneng.ss.module.school.model.DiskFileResp
 import com.xiaoneng.ss.module.school.model.FolderBean
+import com.xiaoneng.ss.module.school.model.FolderModifyBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_cloud_disk.*
+import kotlinx.android.synthetic.main.activity_cloud_disk.ivAddFile
+import kotlinx.android.synthetic.main.activity_cloud_disk.ivFileRecord
+import kotlinx.android.synthetic.main.activity_cloud_disk.llBottom
+import kotlinx.android.synthetic.main.activity_cloud_disk.llBottomCopy
+import kotlinx.android.synthetic.main.activity_cloud_disk.llBottomDel
+import kotlinx.android.synthetic.main.activity_cloud_disk.llBottomDownload
+import kotlinx.android.synthetic.main.activity_cloud_disk.llBottomMove
+import kotlinx.android.synthetic.main.activity_cloud_disk.llBottomRename
+import kotlinx.android.synthetic.main.activity_cloud_disk.llMain
+import kotlinx.android.synthetic.main.activity_cloud_disk.rvDisk
+import kotlinx.android.synthetic.main.activity_cloud_disk.tvBottomCopy
+import kotlinx.android.synthetic.main.activity_cloud_disk.tvBottomDel
+import kotlinx.android.synthetic.main.activity_cloud_disk.tvBottomDownload
+import kotlinx.android.synthetic.main.activity_cloud_disk.tvBottomMove
+import kotlinx.android.synthetic.main.activity_cloud_disk.tvBottomRename
+import kotlinx.android.synthetic.main.activity_cloud_disk.tvDiskNew
+import kotlinx.android.synthetic.main.activity_cloud_disk.tvDiskUpload
+import kotlinx.android.synthetic.main.activity_cloud_folder.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -116,9 +135,9 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             mAlert(str) {
                 showLoading()
                 if (eData[mCurrent].isFolder) {
-                    mViewModel.delCloudFolder(folderid = eData[mCurrent].id)
+                    mViewModel.delCloudFolder(folderid = eData[mCurrent].folderid)
                 } else {
-                    mViewModel.delMyCloudFile(fileid = eData[mCurrent].id)
+                    mViewModel.delMyCloudFile(fileid = eData[mCurrent].fileid)
                 }
 
             }
@@ -129,12 +148,6 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         initAdapter()
     }
 
-    override fun onResume() {
-        super.onResume()
-        getData()
-        showBottom(false)
-    }
-
     private fun showBottom(b: Boolean) {
         if (b) {
             llBottom.visibility = View.VISIBLE
@@ -143,6 +156,10 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
     }
 
+    override fun initData() {
+        super.initData()
+        getData()
+    }
     override fun getData() {
         super.getData()
         rvDisk.showLoadingView()
@@ -355,14 +372,20 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 mViewModel.newFileFolder(parentid = null, foldername = folderName)
 
             } else if (i == 1) {
-                var bean = eData[mCurrent]
-                bean.token = UserInfo.getUserBean().token
-                bean.foldername = folderName
+                var bean = FolderModifyBean(
+                    token = UserInfo.getUserBean().token,
+                    id = eData[mCurrent].folderid,
+                    foldername = folderName
+                )
+                eData[mCurrent].foldername = folderName
                 mViewModel.modifyFolder(bean)
             } else if (i == 2) {
-                var bean = eData[mCurrent]
-                bean.token = UserInfo.getUserBean().token
-                bean.filename = folderName
+                var bean = FolderModifyBean(
+                    token = UserInfo.getUserBean().token,
+                    id = eData[mCurrent].fileid,
+                    filename = folderName
+                )
+                eData[mCurrent].filename = folderName
                 mViewModel.modifyFile(bean)
             }
             bottomDialog.dismiss()
@@ -420,7 +443,7 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mViewModel.mModifyFileData.observe(this, Observer { response ->
             response?.let {
                 toast(R.string.deal_done)
-                getData()
+                mAdapterPri.notifyItemChanged(mCurrent)
             }
         })
 
@@ -448,5 +471,13 @@ class CloudDiskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
             }
         })
+    }
+    private fun onDelDone() {
+        showBottom(false)
+        eData.removeAt(mCurrent)
+        mAdapterPri.notifyItemRemoved(mCurrent)
+        if (mPriData.size == 0) {
+            rvDisk.showEmptyView()
+        }
     }
 }

@@ -30,6 +30,7 @@ import com.xiaoneng.ss.common.state.FileTransInfo
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.common.utils.eventBus.FileDownloadEvent
+import com.xiaoneng.ss.common.utils.eventBus.FileMoveEvent
 import com.xiaoneng.ss.common.utils.oss.OssListener
 import com.xiaoneng.ss.common.utils.oss.OssUtils
 import com.xiaoneng.ss.model.StsTokenResp
@@ -39,11 +40,14 @@ import com.xiaoneng.ss.module.school.adapter.DiskPriAdapter
 import com.xiaoneng.ss.module.school.model.DiskFileBean
 import com.xiaoneng.ss.module.school.model.DiskFileResp
 import com.xiaoneng.ss.module.school.model.FolderBean
+import com.xiaoneng.ss.module.school.model.FolderModifyBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_cloud_folder.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.jetbrains.anko.toast
 import java.io.File
 
@@ -137,9 +141,9 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             mAlert(str) {
                 showLoading()
                 if (mPriData[mCurrent].isFolder) {
-                    mViewModel.delCloudFolder(folderid = mPriData[mCurrent].id)
+                    mViewModel.delCloudFolder(folderid = mPriData[mCurrent].folderid)
                 } else {
-                    mViewModel.delMyCloudFile(fileid = mPriData[mCurrent].id)
+                    mViewModel.delMyCloudFile(fileid = mPriData[mCurrent].fileid)
                 }
 
             }
@@ -153,11 +157,6 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         initAdapter()
     }
 
-    override fun onResume() {
-        super.onResume()
-        getData()
-        showBottom(false)
-    }
 
     private fun showBottom(b: Boolean) {
         if (b) {
@@ -166,7 +165,10 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             llBottom.visibility = View.GONE
         }
     }
-
+    override fun initData() {
+        super.initData()
+        getData()
+    }
     override fun getData() {
         super.getData()
         rvDisk.showLoadingView()
@@ -450,14 +452,20 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 mViewModel.newFileFolder(parentid = folderBean?.id, foldername = folderName)
 
             } else if (i == 1) {
-                var bean = mPriData[mCurrent]
-                bean.token = UserInfo.getUserBean().token
-                bean.foldername = folderName
+                var bean = FolderModifyBean(
+                    token = UserInfo.getUserBean().token,
+                    id = mPriData[mCurrent].folderid,
+                    foldername = folderName
+                )
+                mPriData[mCurrent].foldername = folderName
                 mViewModel.modifyFolder(bean)
             } else if (i == 2) {
-                var bean = mPriData[mCurrent]
-                bean.token = UserInfo.getUserBean().token
-                bean.filename = folderName
+                var bean = FolderModifyBean(
+                    token = UserInfo.getUserBean().token,
+                    id = mPriData[mCurrent].fileid,
+                    filename = folderName
+                )
+                mPriData[mCurrent].filename = folderName
                 mViewModel.modifyFile(bean)
             }
             bottomDialog.dismiss()
@@ -515,21 +523,21 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mViewModel.mDelCloudFileData.observe(this, Observer { response ->
             response?.let {
                 toast(R.string.deal_done)
-                getData()
+                onDelDone()
             }
         })
 
         mViewModel.mDelCloudFolderData.observe(this, Observer { response ->
             response?.let {
                 toast(R.string.deal_done)
-                getData()
+                onDelDone()
             }
         })
 
         mViewModel.mModifyFileData.observe(this, Observer { response ->
             response?.let {
                 toast(R.string.deal_done)
-                getData()
+                mAdapterPri.notifyItemChanged(mCurrent)
             }
         })
 
@@ -569,6 +577,16 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     }
 
+    private fun onDelDone() {
+
+        showBottom(false)
+        mPriData.removeAt(mCurrent)
+        mAdapterPri.notifyItemRemoved(mCurrent)
+        if (mPriData.size == 0) {
+            rvDisk.showEmptyView()
+        }
+    }
+
     private fun doFilesData(it: DiskFileResp) {
         mNetCount++
         mPriDataFile = it.data
@@ -596,5 +614,9 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             rvDisk.recyclerView.setAdapter(mAdapterPri)
             rvDisk.notifyDataSetChanged()
         }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun refreshMoveFile(event: FileMoveEvent) {
+        onDelDone()
     }
 }

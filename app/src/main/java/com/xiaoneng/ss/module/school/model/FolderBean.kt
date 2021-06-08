@@ -23,6 +23,7 @@ data class FolderBean(
     var fileinfo: String = "",
     var objectid: String = "",
     var folderid: String = "",
+    var fileid: String = "",
     var filename: String = "",
     var fullName: String = "",
     var updatetime: String = "",
@@ -30,6 +31,7 @@ data class FolderBean(
     var schoolname: String= "",
     var cuser_id: String= "",
     var cuser_realname: String= "",
+    var position: Int= -1,
     var isFolder:Boolean = true,
     var isChecked:Boolean = false,
     var isPrivate:Boolean = true

@@ -590,12 +590,12 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
-    suspend fun modifyFile(fileBean: FolderBean): Any {
+    suspend fun modifyFile(fileBean: FolderModifyBean): Any {
         return apiService.modifyFile(fileBean)
             .dataConvert(loadState)
     }
 
-    suspend fun modifyFolder(fileBean: FolderBean): Any {
+    suspend fun modifyFolder(fileBean: FolderModifyBean): Any {
         return apiService.modifyFolder(fileBean)
             .dataConvert(loadState)
     }

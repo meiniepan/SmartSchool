@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.*
+import com.xiaoneng.ss.common.utils.eventBus.FileMoveEvent
 import com.xiaoneng.ss.module.school.adapter.DiskPathAdapter
 import com.xiaoneng.ss.module.school.adapter.DiskPriAdapter
 import com.xiaoneng.ss.module.school.model.DiskFileResp
@@ -255,6 +256,9 @@ class CloudCopyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mViewModel.mCopyCloudData.observe(this, Observer { response ->
             response?.let {
                 toast(R.string.deal_done)
+                if (actionType==2){
+                    FileMoveEvent(sourceFolderBean!!).post()
+                }
                 finish()
             }
         })

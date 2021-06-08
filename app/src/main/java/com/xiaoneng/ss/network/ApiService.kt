@@ -1184,7 +1184,7 @@ interface ApiService {
      */
     @POST("/api/v17/disk/files/modify")
     suspend fun modifyFile(
-        @Body fileBean:FolderBean
+        @Body fileBean:FolderModifyBean
     ): BaseResponse<Any>
 
     /**
@@ -1192,7 +1192,7 @@ interface ApiService {
      */
     @POST("/api/v17/disk/folder/modify")
     suspend fun modifyFolder(
-        @Body fileBean:FolderBean
+        @Body fileBean:FolderModifyBean
     ): BaseResponse<Any>
 
 
