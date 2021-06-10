@@ -1,8 +1,11 @@
 package com.xiaoneng.ss.module.circular.view
 
+import android.app.Activity
+import android.content.Intent
 import android.text.TextUtils
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.gson.Gson
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
@@ -10,6 +13,9 @@ import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.circular.adapter.ChooseColorAdapter
 import com.xiaoneng.ss.module.circular.model.ScheduleBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
+import com.xiaoneng.ss.module.school.model.DepartmentBean
+import com.xiaoneng.ss.module.school.model.UserBeanSimple
+import com.xiaoneng.ss.module.school.view.AddInvolveActivity
 import kotlinx.android.synthetic.main.activity_add_schedule.*
 import java.util.*
 
@@ -29,6 +35,11 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
     var endTime: String? = ""
     var bean: ScheduleBean? = ScheduleBean()
     var isModify = false
+    var involves: ArrayList<UserBeanSimple> = ArrayList()
+    var mDataDepartment = ArrayList<DepartmentBean>()
+    var mDataClasses = ArrayList<DepartmentBean>()
+    var receiveList: ArrayList<UserBeanSimple> = ArrayList()
+    var isFirst = true
 
 
     override fun getLayoutId(): Int = R.layout.activity_add_schedule
@@ -75,7 +86,18 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 }
             }
         }
-//        initAdapter()
+        llInvite.setOnClickListener {
+            mStartForResult<AddInvolveActivity>(this, Constant.REQUEST_CODE_COURSE) {
+                putExtra(Constant.DATA, mDataDepartment)
+                putExtra(Constant.DATA2, mDataClasses)
+                //从草稿箱第一次选择参与人，传入原有参与人数据
+//                if (isFirst) {
+//                    if (receiveList.size > 0) {
+//                        putExtra(Constant.DATA3, receiveList)
+//                    }
+//                }
+            }
+        }
     }
 
     private fun initUI(it: ScheduleBean) {
@@ -118,7 +140,7 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
         bean!!.scheduletime = beginTime
         bean!!.scheduleover = endTime
         bean!!.remark = etRemarkAddSchedule.text.toString()
-        bean!!.color = chosenColor
+        bean!!.involve = Gson().toJson(involves)
         showLoading()
         if (isModify) {
             mViewModel.modifySchedule(bean)
@@ -154,6 +176,58 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
 //        mViewModel.getTimetable()
     }
 
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == Constant.REQUEST_CODE_COURSE) {
+                if (data != null) {
+                    isFirst = false
+                    involves.clear()
+                    receiveList.clear()
+                    mDataDepartment = data.getParcelableArrayListExtra(Constant.DATA)!!
+                    mDataClasses = data.getParcelableArrayListExtra(Constant.DATA2)!!
+                    mDataDepartment.forEach {
+                        addDepartment(it)
+                    }
+                    mDataClasses.forEach {
+                        addDepartment(it)
+                    }
+                    dealData()
+                }
+            }
+        }
+    }
+
+    private fun dealData() {
+        var str = ""
+        if (receiveList.size > 0) {
+            receiveList.forEach {
+                str = str + it.realname + "、"
+                involves.add(it)
+            }
+            str = str.substring(0, str.length - 1)
+        }
+        tvPeople.text = str
+    }
+
+    private fun addDepartment(it: DepartmentBean) {
+        if (it.num!!.toInt() > 0) {
+            it.list.forEach {
+                receiveList.add(
+                    UserBeanSimple(
+                        uid = it.uid,
+                        realname = it.realname,
+                        classid = it.classid,
+                        usertype = it.usertype
+                    )
+                )
+            }
+        }
+    }
 
     override fun initDataObserver() {
         mViewModel.mAddScheduleData.observe(this, Observer { response ->

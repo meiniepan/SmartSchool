@@ -1,6 +1,7 @@
 package com.xiaoneng.ss.module.circular.adapter
 
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
 import android.text.TextUtils
@@ -76,13 +77,11 @@ class EventAdapter(layoutId: Int, listData: MutableList<ScheduleBean>) :
             holder.setText(R.id.tvTitle5, item?.title)
                 .setText(R.id.tvTime5, timeStr)
 
-            var shape = ShapeDrawable(OvalShape())
-            if (!TextUtils.isEmpty(item.color)) {
-
-                shape.paint.color = Color.parseColor(item.color!!)
-            }
             var view = holder.getView<View>(R.id.vOval5)
-            view.background = shape
+            var shape = (view.background) as GradientDrawable
+            if (!TextUtils.isEmpty(item.color)) {
+                shape.setColor(Color.parseColor(item.color!!))
+            }
 //            if (item?.isCheck!!){
 //                holder.setBackgroundRes(R.id.tvDay2,R.drawable.bac_blue_oval)
 //                holder.setTextColor(R.id.tvDay2,mContext.resources.getColor(R.color.white))

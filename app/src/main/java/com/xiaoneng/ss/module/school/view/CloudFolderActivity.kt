@@ -392,10 +392,9 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                             token = UserInfo.getUserBean().token,
                             filename = fileName ?: "",
                             objectid = objectKey,
-                            folderid = folderBean?.id ?: ""
+                            folderid = folderBean?.folderid ?: ""
                         )
                         mViewModel.addFile(bean)
-
                     }
 
                 }

@@ -18,16 +18,17 @@
 
         <View
             android:id="@+id/vOval5"
-            android:layout_width="10dp"
-            android:visibility="gone"
-            android:layout_height="10dp"
+            android:layout_width="6dp"
+            android:layout_height="21dp"
             android:layout_marginEnd="5dp"
-            android:background="@drawable/shape_blue_oval" />
+            android:background="@drawable/bac_schedule_share" />
 
         <TextView
             android:id="@+id/tvTitle5"
             android:layout_width="0dp"
             android:maxLines="1"
+            android:textSize="@dimen/sp_15"
+            android:textStyle="bold"
             android:ellipsize="end"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -5,7 +5,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -15,15 +14,10 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.common.utils.eventBus.FileMoveEvent
 import com.xiaoneng.ss.module.school.adapter.DiskPathAdapter
-import com.xiaoneng.ss.module.school.adapter.DiskPriAdapter
 import com.xiaoneng.ss.module.school.model.DiskFileResp
 import com.xiaoneng.ss.module.school.model.FolderBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_cloud_copy.*
-import kotlinx.android.synthetic.main.activity_cloud_copy.rvDisk
-import kotlinx.android.synthetic.main.activity_cloud_copy.tvDiskNew
-import kotlinx.android.synthetic.main.activity_cloud_disk.*
-import kotlinx.android.synthetic.main.custom_title_bar.*
 import org.jetbrains.anko.toast
 
 
