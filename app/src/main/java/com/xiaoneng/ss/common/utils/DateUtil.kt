@@ -80,10 +80,10 @@ object DateUtil {
     fun formatShowTime(date: String): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
         var result = ""
-        if (date.length >= 10) {
+        if (date.length > 10) {
             if (isSameDay(date)) {
                 result = date.substring(
-                    date.length - 5,
+                    11,
                     date.length
                 )
             } else if (isSameYear(date)) {
@@ -300,8 +300,8 @@ object DateUtil {
             var date1 = Date(System.currentTimeMillis())
             cal1.time = date1
             cal1.get(Calendar.YEAR).toString() == date.substring(0, 4) &&
-                    (cal1.get(Calendar.MONTH) + 1).toString() == date.substring(5, 7) &&
-                    cal1.get(Calendar.DAY_OF_MONTH).toString() == date.substring(8, 10)
+                    (cal1.get(Calendar.MONTH) + 1) == date.substring(5, 7).toIntSafe() &&
+                    cal1.get(Calendar.DAY_OF_MONTH) == date.substring(8, 10).toIntSafe()
         } else {
             false
         }
