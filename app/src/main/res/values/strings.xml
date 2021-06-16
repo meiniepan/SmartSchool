@@ -13,6 +13,7 @@
     <string name="errFile">不支持该文件</string>
 
     <string name="scheduleTitle">日程安排</string>
+    <string name="quantizeTitle">量化评比</string>
     <string name="noticeTitle">通知公告</string>
     <string name="salaryTitle">工资条</string>
     <string name="taskTitle">任务协作</string>

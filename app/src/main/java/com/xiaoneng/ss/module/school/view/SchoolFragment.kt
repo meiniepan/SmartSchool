@@ -81,6 +81,18 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                 )
             )
         }
+        if (AppInfo.checkRule1("admin/schedules/default")) {
+            bean1.items.add(
+                SchoolItemBean(
+                    name = getString(R.string.quantizeTitle),
+                    remark = "工作安排 井井有条",
+                    icon = R.drawable.ic_richeng,
+                    click = View.OnClickListener {
+                        mStartActivity<QuantizeActivity>(context)
+                    }
+                )
+            )
+        }
         if (AppInfo.checkRule1("admin/wages/default")) {
             bean1.items.add(
                 SchoolItemBean(

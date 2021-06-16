@@ -3,6 +3,7 @@ package com.xiaoneng.ss.module.circular.view
 import android.app.Activity
 import android.content.Intent
 import android.text.TextUtils
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.gson.Gson
@@ -67,8 +68,17 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 showDatePick(tvBeginDate, tvBeginTime) {
                     beginTime = this
                     //当结束时间小于开始时间时
-                    if (endTime.isNullOrEmpty() || DateUtil.getTimeInMillis(beginTime) > DateUtil.getTimeInMillis(endTime)) {
-                        DateUtil.showTimeFromNet(DateUtil.getNearTimeBeginYear(DateUtil.getTimeInMillis(beginTime)), tvEndDate, tvEndTime)
+                    if (endTime.isNullOrEmpty() || DateUtil.getTimeInMillis(beginTime) > DateUtil.getTimeInMillis(
+                            endTime
+                        )
+                    ) {
+                        DateUtil.showTimeFromNet(
+                            DateUtil.getNearTimeBeginYear(
+                                DateUtil.getTimeInMillis(
+                                    beginTime
+                                )
+                            ), tvEndDate, tvEndTime
+                        )
                         endTime = DateUtil.getNearTimeBeginYear(DateUtil.getTimeInMillis(beginTime))
                     }
                 }
@@ -76,15 +86,27 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
         }
         llEndTime.apply {
             setOnClickListener {
-                showDatePick(tvEndDate, tvEndTime, beginTime = DateUtil.getTimeInMillis(beginTime)) {
+                showDatePick(
+                    tvEndDate,
+                    tvEndTime,
+                    beginTime = DateUtil.getTimeInMillis(beginTime)
+                ) {
                     endTime = this
                     //当结束时间小于开始时间时
-                    if (beginTime.isNullOrEmpty() || DateUtil.getTimeInMillis(beginTime) > DateUtil.getTimeInMillis(endTime)) {
+                    if (beginTime.isNullOrEmpty() || DateUtil.getTimeInMillis(beginTime) > DateUtil.getTimeInMillis(
+                            endTime
+                        )
+                    ) {
                         DateUtil.showTimeFromNet(endTime!!, tvBeginDate, tvBeginTime)
                         beginTime = endTime
                     }
                 }
             }
+        }
+        if (UserInfo.getUserBean().usertype == "1") {
+            llInvite.visibility = View.GONE
+        } else {
+            llInvite.visibility = View.VISIBLE
         }
         llInvite.setOnClickListener {
             mStartForResult<AddInvolveActivity>(this, Constant.REQUEST_CODE_COURSE) {
@@ -127,8 +149,8 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
 
     private fun addSchedule() {
         if (
-                TextUtils.isEmpty(etThemeAddSchedule.text.toString()) ||
-                TextUtils.isEmpty(tvBeginDate.text.toString())
+            TextUtils.isEmpty(etThemeAddSchedule.text.toString()) ||
+            TextUtils.isEmpty(tvBeginDate.text.toString())
 
         ) {
             mToast("请完善信息")

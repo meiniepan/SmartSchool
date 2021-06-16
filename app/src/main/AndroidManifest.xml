@@ -258,6 +258,10 @@
         <activity android:name=".module.activity.VideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"/>
+        <activity android:name=".module.school.view.QuantizeTypeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.school.view.QuantizeActivity"
+            android:screenOrientation="portrait"/>
 
 
         <provider
