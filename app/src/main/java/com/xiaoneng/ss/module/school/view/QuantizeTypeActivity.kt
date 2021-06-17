@@ -1,14 +1,15 @@
 package com.xiaoneng.ss.module.school.view
 
+import android.util.Log
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.netResponseFormat
+import com.xiaoneng.ss.custom.widgets.CustomTitleBar
 import com.xiaoneng.ss.module.school.adapter.PropertyTypeAdapter
 import com.xiaoneng.ss.module.school.model.PropertyTypeBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import com.xiaoneng.ss.network.response.BaseResp
-import kotlinx.android.synthetic.main.activity_property.rvPropertyType
 import kotlinx.android.synthetic.main.activity_quantize_type.*
 
 /**
@@ -30,6 +31,9 @@ class QuantizeTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvConfirmQuantize.setOnClickListener {
 
         }
+        var tit = CustomTitleBar(this)
+        tit.setTitle("haha")
+        llRoot.addView(tit)
         initAdapter()
     }
 
@@ -55,7 +59,6 @@ class QuantizeTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 netResponseFormat<BaseResp<PropertyTypeBean>>(it)?.let { bean ->
                     bean.data?.let {
                         mData.addAll(it)
-                        rvPropertyType.notifyDataSetChanged()
                     }
                 }
             }
