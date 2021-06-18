@@ -42,6 +42,7 @@ class QuantizeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
+        mViewModel.getMoralTypeList()
     }
 
     private fun initAdapter() {

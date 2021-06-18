@@ -378,6 +378,13 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
+    fun getMoralTypeList() {
+        initiateRequest(
+            { mBaseData.value = mRepository.getMoralTypeList() },
+            loadState
+        )
+    }
+
     fun getAuthUsers(folderid: String? = null) {
         initiateRequest(
             { mAuthUsersData.value = mRepository.getAuthUsers(folderid) },

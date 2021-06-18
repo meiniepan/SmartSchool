@@ -550,6 +550,11 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
+    suspend fun getMoralTypeList(): Any {
+        return apiService.getMoralTypeList(UserInfo.getUserBean().token)
+            .dataConvert(loadState)
+    }
+
     suspend fun getAuthUsers(folderid:String?=null): Any {
         return apiService.getAuthUsers(UserInfo.getUserBean().token, folderid = folderid)
             .dataConvert(loadState)
