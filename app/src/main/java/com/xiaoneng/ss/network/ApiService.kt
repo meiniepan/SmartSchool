@@ -972,7 +972,18 @@ interface ApiService {
     @POST("/api/v17/admin/repair/listsType")
     suspend fun getPropertyType(
         @Field("token") token: String?,
+        @Field("typeid") typeid: String?,
         @Field("lastid") lastid: String?
+    ): BaseResponse<Any>
+
+    /**
+     *查看报修设备列表
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/admin/repair/listsDevice")
+    suspend fun getDeviceType(
+        @Field("token") token: String?,
+        @Field("typeid") typeid: String?
     ): BaseResponse<Any>
     /**
      *我的预约列表瀑布流

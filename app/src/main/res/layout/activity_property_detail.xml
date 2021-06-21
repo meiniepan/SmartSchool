@@ -68,6 +68,29 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llPropertyDetailReportName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/sp_15"
+                    android:text="发起人" />
+
+                <TextView
+                    android:id="@+id/tvPropertyDetailReportName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/commonHint"
+                    android:text="" />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -80,10 +103,33 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="@dimen/sp_15"
-                    android:text="报修类型" />
+                    android:text="设备类型" />
 
                 <TextView
                     android:id="@+id/tvPropertyDetailType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/commonHint"
+                    android:text="" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/tvPropertyDetailDeviceKey"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/sp_15"
+                    android:text="报修设备" />
+
+                <TextView
+                    android:id="@+id/tvPropertyDetailDevice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_14"

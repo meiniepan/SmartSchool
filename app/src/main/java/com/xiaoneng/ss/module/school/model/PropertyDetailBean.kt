@@ -17,7 +17,9 @@ data class PropertyDetailBean(
     var reportinfo: UserBeanSimple?,
     var fileinfo: ArrayList<FileInfoBean>?,
     var typename: String?,
+    var type2name: String?,
     var typeid: String?,
+    var type2id: String?,
     var deviceid: String?,
     var device: String?,
     var status: String?,//0撤销 1未接单 2接单 3完成

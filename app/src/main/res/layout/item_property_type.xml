@@ -40,7 +40,7 @@
                 android:id="@+id/tvPropertyTypeName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="总务报修"
+                android:text=""
                 android:textSize="@dimen/sp_17"
                 android:textStyle="bold" />
 
@@ -48,7 +48,6 @@
                 android:id="@+id/tvPropertyTypeRemark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="校舍,家具,水暖,电路等"
                 android:textSize="@dimen/sp_15" />
         </LinearLayout>
     </LinearLayout>

@@ -36,6 +36,8 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mDeleteAttendanceData: MutableLiveData<Any> = MutableLiveData()
     val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
     val mBaseData: MutableLiveData<Any> = MutableLiveData()
+    val mRepairTypeData: MutableLiveData<Any> = MutableLiveData()
+    val mDeviceTypeData: MutableLiveData<Any> = MutableLiveData()
     val mPriCloudData: MutableLiveData<Any> = MutableLiveData()
     val mAuthUsersData: MutableLiveData<Any> = MutableLiveData()
     val mAddFileData: MutableLiveData<Any> = MutableLiveData()
@@ -519,9 +521,16 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getPropertyType(lastid: String? = null) {
+    fun getPropertyType(typeid: String? = null,lastid: String? = null) {
         initiateRequest(
-            { mBaseData.value = mRepository.getPropertyType(lastid) },
+            { mRepairTypeData.value = mRepository.getPropertyType(typeid=typeid) },
+            loadState
+        )
+    }
+
+    fun getDeviceType(typeid: String?=null) {
+        initiateRequest(
+            { mDeviceTypeData.value = mRepository.getDeviceType(typeid) },
             loadState
         )
     }

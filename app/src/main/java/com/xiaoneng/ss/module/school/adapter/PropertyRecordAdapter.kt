@@ -57,7 +57,7 @@ class PropertyRecordAdapter(
                 item.status == "2" -> {
                     if (item.isdelay == "1") {
 
-                        statusStr = "已延期("+item.delayreasons+")"
+                        statusStr = "已延期(" + item.delayreasons + ")"
                     } else {
 
                         statusStr = "已接单"
@@ -70,8 +70,7 @@ class PropertyRecordAdapter(
             if (mType == "0") {
                 //报修人逻辑
                 //0撤销 1未接单 2接单 3完成
-                holder.setText(R.id.tvPropertyDetailTypeKey, "报修类型")
-                    .setText(R.id.tvPropertyDetailType, item.typename)
+
                 if (item.status == "0") {
                     llAction.visibility = View.GONE
                 } else if (item.status == "1") {
@@ -105,9 +104,10 @@ class PropertyRecordAdapter(
 
                 }
 
-                holder.setGone(R.id.llReporterPhone,false)
-                    .setGone(R.id.llReporterDep,false)
-                    .setGone(R.id.llReporterClass,false)
+                holder.setGone(R.id.llReporterPhone, false)
+                    .setGone(R.id.llReporterDep, false)
+                    .setGone(R.id.llReporterClass, false)
+                    .setGone(R.id.llPropertyDetailReportName, false)
 
             } else if (mType == "1") {
                 //维修人逻辑
@@ -164,19 +164,21 @@ class PropertyRecordAdapter(
 
                 }
 
-                holder.setText(R.id.tvPropertyDetailTypeKey, "发起人")
-                    .setText(R.id.tvPropertyDetailType, item.reportinfo?.realname)
+                holder.setText(R.id.tvPropertyDetailReportName, item.reportinfo?.realname)
                     .setText(R.id.tvPropertyDetailPhone, item.reportinfo?.phone)
-                    .setText(R.id.tvPropertyDetailDep, item.reportinfo?.dep_name)
+                    .setText(R.id.tvPropertyDetailDep, item.reportinfo?.deps!![0].dep_name)
                     .setText(R.id.tvPropertyDetailClass, item.reportinfo?.classmaster_classname)
 
-                holder.setGone(R.id.llReporterPhone,true)
-                    .setGone(R.id.llReporterDep,true)
-                    .setGone(R.id.llReporterClass,true)
+                holder.setGone(R.id.llReporterPhone, true)
+                    .setGone(R.id.llReporterDep, true)
+                    .setGone(R.id.llReporterClass, true)
+                    .setGone(R.id.llPropertyDetailReportName, true)
             }
             holder.setText(R.id.tvPropertyDetailResult, statusStr)
-            .setText(R.id.tvPropertyDetailAddr, item.addr)
-            .setText(R.id.tvPropertyDetailFinishRemark, item.completeremark)
+                .setText(R.id.tvPropertyDetailAddr, item.addr)
+                .setText(R.id.tvPropertyDetailFinishRemark, item.completeremark)
+                .setText(R.id.tvPropertyDetailType, item.type2name)
+                .setText(R.id.tvPropertyDetailDevice, item.device)
             initAdapter(holder, item)
         }
 
@@ -223,7 +225,7 @@ class PropertyRecordAdapter(
             adapter = mAdapter
         }
         mAdapter.setOnItemClickListener { _, view, position ->
-            mStartActivity <ImageScaleActivity> (mContext){
+            mStartActivity<ImageScaleActivity>(mContext) {
                 putExtra(Constant.DATA, eData[position])
             }
         }

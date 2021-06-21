@@ -535,8 +535,13 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         return apiService.getBookSiteRecord(UserInfo.getUserBean().token, lastid)
             .dataConvert(loadState)
     }
-    suspend fun getPropertyType(lastid: String? = null): Any {
-        return apiService.getPropertyType(UserInfo.getUserBean().token, lastid)
+    suspend fun getPropertyType(typeid: String? = null,lastid: String? = null): Any {
+        return apiService.getPropertyType(UserInfo.getUserBean().token, typeid,lastid)
+            .dataConvert(loadState)
+    }
+
+    suspend fun getDeviceType(typeid: String?): Any {
+        return apiService.getDeviceType(UserInfo.getUserBean().token, typeid)
             .dataConvert(loadState)
     }
 

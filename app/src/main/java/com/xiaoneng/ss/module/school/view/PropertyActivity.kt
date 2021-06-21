@@ -122,7 +122,7 @@ class PropertyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     override fun initDataObserver() {
-        mViewModel.mBaseData.observe(this, Observer {
+        mViewModel.mRepairTypeData.observe(this, Observer {
             it?.let {
                 netResponseFormat<BaseResp<PropertyTypeBean>>(it)?.let { bean ->
                     bean.data?.let {

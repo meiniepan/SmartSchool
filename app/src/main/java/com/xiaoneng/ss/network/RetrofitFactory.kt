@@ -34,6 +34,7 @@ class RetrofitFactory private constructor() {
             url = devUrl
         } else {
             url = Constant.BASE_URL
+//            url = Constant.BASE_URL_DEV
         }
         retrofit = Retrofit.Builder()
             .baseUrl(url)
