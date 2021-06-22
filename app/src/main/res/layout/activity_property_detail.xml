@@ -29,7 +29,6 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="@dimen/sp_15"
@@ -37,7 +36,9 @@
 
                 <TextView
                     android:id="@+id/tvPropertyDetailTime"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="end"
                     android:layout_height="wrap_content"
                     android:textColor="@color/commonHint"
                     android:textSize="@dimen/sp_14"
@@ -52,7 +53,6 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="@dimen/sp_15"
@@ -60,7 +60,9 @@
 
                 <TextView
                     android:id="@+id/tvPropertyDetailCode"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="end"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_14"
                     android:textColor="@color/commonHint"
@@ -76,7 +78,6 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="@dimen/sp_15"
@@ -84,7 +85,9 @@
 
                 <TextView
                     android:id="@+id/tvPropertyDetailReportName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="end"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_14"
                     android:textColor="@color/commonHint"
@@ -99,7 +102,6 @@
                 <TextView
                     android:id="@+id/tvPropertyDetailTypeKey"
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="@dimen/sp_15"
@@ -107,7 +109,9 @@
 
                 <TextView
                     android:id="@+id/tvPropertyDetailType"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="end"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_14"
                     android:textColor="@color/commonHint"
@@ -122,7 +126,6 @@
                 <TextView
                     android:id="@+id/tvPropertyDetailDeviceKey"
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="@dimen/sp_15"
@@ -130,7 +133,9 @@
 
                 <TextView
                     android:id="@+id/tvPropertyDetailDevice"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="end"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_14"
                     android:textColor="@color/commonHint"
@@ -145,7 +150,6 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="@dimen/sp_15"
@@ -153,7 +157,9 @@
 
                 <TextView
                     android:id="@+id/tvPropertyDetailPhone"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="end"
                     android:layout_height="wrap_content"
                     android:autoLink="phone"
                     android:textColor="@color/commonHint"
@@ -169,7 +175,6 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="@dimen/sp_15"
@@ -177,7 +182,9 @@
 
                 <TextView
                     android:id="@+id/tvPropertyDetailDep"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="end"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_14"
                     android:textColor="@color/commonHint"
@@ -192,7 +199,6 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="@dimen/sp_15"
@@ -200,7 +206,9 @@
 
                 <TextView
                     android:id="@+id/tvPropertyDetailClass"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="end"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_14"
                     android:textColor="@color/commonHint"
@@ -215,7 +223,6 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="@dimen/sp_15"
@@ -223,7 +230,9 @@
 
                 <TextView
                     android:id="@+id/tvPropertyDetailPerson"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="end"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_14"
                     android:textColor="@color/commonHint"
@@ -239,7 +248,6 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="@dimen/sp_15"
@@ -247,7 +255,9 @@
 
                 <TextView
                     android:id="@+id/tvPropertyDetailResult"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="end"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_14"
                     android:textColor="@color/commonHint"
@@ -262,7 +272,6 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="@dimen/sp_15"
@@ -270,7 +279,9 @@
 
                 <TextView
                     android:id="@+id/tvPropertyDetailTime2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="end"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_14"
                     android:textColor="@color/commonHint"
@@ -286,7 +297,6 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="@dimen/sp_15"
@@ -309,7 +319,6 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="@dimen/sp_15"
@@ -317,7 +326,9 @@
 
                 <TextView
                     android:id="@+id/tvPropertyDetailAddr"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="end"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_14"
                     android:textColor="@color/commonHint"
@@ -332,7 +343,6 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="@dimen/sp_15"
@@ -349,11 +359,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:orientation="vertical"
                 android:layout_marginTop="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="@dimen/sp_15"
@@ -364,6 +374,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_14"
+                    android:layout_marginTop="10dp"
                     android:textColor="@color/commonHint"
                     android:text="" />
             </LinearLayout>
