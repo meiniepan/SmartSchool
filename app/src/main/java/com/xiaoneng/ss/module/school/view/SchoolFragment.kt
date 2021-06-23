@@ -85,8 +85,8 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
             bean1.items.add(
                 SchoolItemBean(
                     name = getString(R.string.quantizeTitle),
-                    remark = "工作安排 井井有条",
-                    icon = R.drawable.ic_richeng,
+                    remark = "简化工作 随录随查",
+                    icon = R.drawable.ic_quantize,
                     click = View.OnClickListener {
                         mStartActivity<QuantizeActivity>(context)
                     }

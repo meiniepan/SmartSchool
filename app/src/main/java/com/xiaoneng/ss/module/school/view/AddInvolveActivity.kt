@@ -55,10 +55,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mDataDepartment = intent.getParcelableArrayListExtra(Constant.DATA) ?: ArrayList()
         mDataClasses = intent.getParcelableArrayListExtra(Constant.DATA2) ?: ArrayList()
         mReceiveList = intent.getParcelableArrayListExtra(Constant.DATA3)
-        if (intent.getIntExtra(Constant.TYPE, 0) == 1) {//来自云盘配置
-            ctbAddInvolve.setTitle(getString(R.string.diskTitle))
-            rlClass.visibility = View.GONE
-        }
+
         mReceiveList?.let {
             if (it.size > 0) {
                 it.forEach {
@@ -167,6 +164,17 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             finish()
         }
 
+        if (intent.getIntExtra(Constant.TYPE, 0) == 1) {//来自云盘配置
+            ctbAddInvolve.setTitle(getString(R.string.diskTitle))
+            rlClass.visibility = View.GONE
+        }else if(intent.getIntExtra(Constant.TYPE, 0) == 2){//来自选择学生
+            ctbAddInvolve.setTitle("选择学生")
+            rlTeacher.visibility = View.GONE
+            currentTab = tab2
+            tvInvolveTab2.setChecked(true)
+            tvInvolveTab1.setChecked(false)
+        }
+
     }
 
     override fun initData() {
@@ -186,19 +194,9 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             mAdapterInvolve.notifyDataSetChanged()
             setPersonNum()
         } else {
-
             showLoading()
             mViewModel.queryDepartments()
         }
-//        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
-//        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
-//        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
-//        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
-//        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
-//        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
-//        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
-//        mDataDepartment.add(DepartmentBean("", "国际部门", "5"))
-
 
     }
 
@@ -469,6 +467,9 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         }
                         it.id = tab2 + "_" + it.id
                     }
+                    if(intent.getIntExtra(Constant.TYPE, 0) == 2){//来自选择学生
+                        checkSecondTab()
+                    }
 
                 }
             }
@@ -491,8 +492,9 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         }
                         it.id = tab1 + "_" + it.id
                     }
-
-                    rvDepartment.notifyDataSetChanged()
+                    if(intent.getIntExtra(Constant.TYPE, 0) != 2){//来自选择学生
+                        rvDepartment.notifyDataSetChanged()
+                    }
                 }
             }
         })

@@ -107,6 +107,7 @@
                         android:paddingEnd="12dp">
 
                         <RelativeLayout
+                            android:id="@+id/rlTeacher"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1">
