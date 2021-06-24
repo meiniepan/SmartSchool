@@ -32,12 +32,10 @@ class ViewTimeSection @JvmOverloads constructor(
     defStyleAttr: Int = 0,
     data: ArrayList<PropertyTypeBean>,
     position: Int
-) : FrameLayout(context, attrs, defStyleAttr), IChooseStudent {
+) : FrameLayout(context, attrs, defStyleAttr) {
     private var title: String? = ""
-    var involves: ArrayList<UserBeanSimple> = ArrayList()
-    var mClass = ArrayList<DepartmentBean>()
-    var receiveList: ArrayList<UserBeanSimple> = ArrayList()
-    var isFirst = true
+    var timeStart: String? = null
+    var timeEnd: String? = null
 
     init {
         val typedArray =
@@ -56,48 +54,12 @@ class ViewTimeSection @JvmOverloads constructor(
         }
 
         setOnClickListener {
-            context.showTimeSection(tvJumpTitle){
-
-            }
-        }
-        (context as QuantizeTypeActivity).mListener = this
-    }
-
-    override fun addInvolve(data: Intent) {
-        isFirst = false
-        involves.clear()
-        receiveList.clear()
-        mClass = data.getParcelableArrayListExtra(Constant.DATA)!!
-        mClass.forEach {
-            addPeople(it)
-        }
-        dealData()
-    }
-
-    private fun dealData() {
-        var str = ""
-        if (receiveList.size > 0) {
-            receiveList.forEach {
-                str = str + it.realname + "、"
-                involves.add(it)
-            }
-            str = str.substring(0, str.length - 1)
-        }
-        tvJumpTitle.text = str
-    }
-
-    fun addPeople(it: DepartmentBean) {
-        if (it.num!!.toInt() > 0) {
-            it.list.forEach {
-                receiveList.add(
-                    UserBeanSimple(
-                        uid = it.uid,
-                        realname = it.realname,
-                        classid = it.classid,
-                        usertype = it.usertype
-                    )
-                )
-            }
+            context.showTimeSection(tvJumpTitle,
+                { timeStart = this },
+                { timeEnd = this }
+            )
         }
     }
+
+
 }

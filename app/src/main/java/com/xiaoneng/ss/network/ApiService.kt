@@ -1096,6 +1096,16 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
+     *查询德育评比类型
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/moral/moralType/info")
+    suspend fun getMoralTypeInfo(
+        @Field("token") token: String?,
+        @Field("id") id: String?
+    ): BaseResponse<Any>
+
+    /**
      *私有云文件夹文件
      */
     @FormUrlEncoded

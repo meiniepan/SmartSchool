@@ -22,41 +22,10 @@
 
 
         <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
-            android:id="@+id/rvPropertyType"
+            android:id="@+id/rvQuantize"
             style="@style/recycler_style"
-            android:layout_marginTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:id="@+id/tvSanitation"
-                android:layout_width="wrap_content"
-                android:layout_marginEnd="43dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="卫生月检"
-                    android:textSize="@dimen/sp_14" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/commonHint" />
-            </LinearLayout>
-
-
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

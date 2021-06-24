@@ -9,6 +9,7 @@ import android.os.PowerManager
 import android.view.Gravity
 import android.widget.TextView
 import android.widget.Toast
+import cn.addapp.pickers.common.LineConfig
 import cn.addapp.pickers.picker.SinglePicker
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.gson.Gson
@@ -22,6 +23,7 @@ import com.xiaoneng.ss.base.view.BaseApplication
 import com.xiaoneng.ss.common.constclass.Solang
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
+import com.xiaoneng.ss.custom.DateRangePicker
 import com.xiaoneng.ss.custom.DateTimePicker
 import com.xiaoneng.ss.module.school.model.SiteItemBean
 import java.io.File
@@ -67,7 +69,7 @@ inline fun formatStarPhoneNum(phone: String?): String? {
 inline fun Activity.showDatePick(
     textView1: TextView,
     textView2: TextView,
-    beginTime:Long = System.currentTimeMillis(),
+    beginTime: Long = System.currentTimeMillis(),
     crossinline block: String.() -> Unit
 ) {
     val THIS_YEAR:Int = Calendar.getInstance().get(Calendar.YEAR)
@@ -79,11 +81,11 @@ inline fun Activity.showDatePick(
         var calendar = Calendar.getInstance()
         calendar.timeInMillis = beginTime
         setSelectedItem(
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH) + 1,
-                calendar.get(Calendar.DAY_OF_MONTH),
-                calendar.get(Calendar.HOUR_OF_DAY),
-                calendar.get(Calendar.MINUTE)
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH) + 1,
+            calendar.get(Calendar.DAY_OF_MONTH),
+            calendar.get(Calendar.HOUR_OF_DAY),
+            calendar.get(Calendar.MINUTE)
         )
 
         setOnDateTimePickListener(object : DateTimePicker.OnYearMonthDayTimePickListener {
@@ -151,7 +153,7 @@ inline fun Activity.showBirthDayPick(textView: TextView, crossinline block: Stri
         val THIS_YEAR:Int = Calendar.getInstance().get(Calendar.YEAR)
         setSelectedTextColor(resources.getColor(R.color.themeColor))
         setDateRangeStart(1900, 1, 1)
-        setDateRangeEnd(THIS_YEAR , 12, 31)
+        setDateRangeEnd(THIS_YEAR, 12, 31)
         setSelectedItem(
             Calendar.getInstance().get(Calendar.YEAR),
             Calendar.getInstance().get(Calendar.MONTH) + 1,
@@ -179,34 +181,54 @@ inline fun Activity.showBirthDayPick(textView: TextView, crossinline block: Stri
 
 }
 
-inline fun Activity.showTimeSection(textView: TextView, crossinline block: String.() -> Unit) {
-    DateTimePicker(this, DateTimePicker.HOUR_12).apply {
+inline fun Activity.showTimeSection(textView: TextView, crossinline block: String.() -> Unit, crossinline blockEnd: String.() -> Unit) {
+    DateRangePicker(this, DateRangePicker.NONE).apply {
 //            setActionButtonTop(false)
         val THIS_YEAR:Int = Calendar.getInstance().get(Calendar.YEAR)
         setSelectedTextColor(resources.getColor(R.color.themeColor))
         setDateRangeStart(THIS_YEAR, 1, 1)
         setDateRangeEnd(THIS_YEAR + 5, 11, 11)
-        var calendar = Calendar.getInstance()
-//        setSelectedItem(
-//            calendar.get(Calendar.YEAR),
-//            calendar.get(Calendar.MONTH) + 1,
-//            calendar.get(Calendar.DAY_OF_MONTH),
-//            calendar.get(Calendar.HOUR_OF_DAY),
-//            calendar.get(Calendar.MINUTE)
-//        )
 
-        setOnDateTimePickListener(object : DateTimePicker.OnYearMonthDayTimePickListener {
+        val config = LineConfig()
+        config.setColor(-0x120000) //线颜色
+        config.setAlpha(140) //线透明度
+
+        setLineConfig(config)
+        var calendar = Calendar.getInstance()
+        setSelectedItem(
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH) + 1,
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+
+        setOnDateTimePickListener(object : DateRangePicker.OnYearMonthDayRangePickListener {
             override fun onDateTimePicked(
                 year: String?,
-                month: String?,
-                day: String?,
-                hour: String?,
-                minute: String?
+                monthStart: String?,
+                dayStart: String?,
+                monthEnd: String?,
+                dayEnd: String?
             ) {
-                var timess = "${month}月${day}日"
-                "${year}${month}${day}".block()
+                var yearEnd = year
+                if (monthEnd.toIntSafe()<monthStart.toIntSafe()){
+                    yearEnd = (year.toIntSafe()+1).toString()
+                }
+                calendar.set(Calendar.YEAR, year.toIntSafe());
+                calendar.set(Calendar.MONTH, monthStart.toIntSafe()-1);
+                calendar.set(Calendar.DATE, dayStart.toIntSafe());
+                var aTime=calendar.getTimeInMillis();
+                calendar.set(Calendar.YEAR, yearEnd.toIntSafe());
+                calendar.set(Calendar.MONTH, monthEnd.toIntSafe()-1);
+                calendar.set(Calendar.DATE, dayEnd.toIntSafe());
+                var bTime=calendar.getTimeInMillis();
+                var cTime=bTime-aTime
+                var days = cTime/(1000*60*60*24)
+                var timess = "${year}年${monthStart}月${dayStart}日-${yearEnd}年${monthEnd}月${dayEnd}日(${days}天)"
+                "${year}${monthStart}${dayStart}".block()
+                "${year}${monthEnd}${dayEnd}".blockEnd()
                 textView.text = timess
             }
+
 
         })
         show()

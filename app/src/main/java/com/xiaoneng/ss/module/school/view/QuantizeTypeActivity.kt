@@ -10,11 +10,13 @@ import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.custom.widgets.CustomTitleBar
 import com.xiaoneng.ss.custom.widgets.ViewChooseStudent
+import com.xiaoneng.ss.custom.widgets.ViewText
 import com.xiaoneng.ss.custom.widgets.ViewTimeSection
 import com.xiaoneng.ss.module.school.adapter.PropertyTypeAdapter
 import com.xiaoneng.ss.module.school.interfaces.IChooseStudent
 import com.xiaoneng.ss.module.school.model.DepartmentBean
 import com.xiaoneng.ss.module.school.model.PropertyTypeBean
+import com.xiaoneng.ss.module.school.model.QuantizeTypeBean
 import com.xiaoneng.ss.module.school.model.UserBeanSimple
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import com.xiaoneng.ss.network.response.BaseResp
@@ -27,11 +29,8 @@ import kotlinx.android.synthetic.main.activity_quantize_type.*
  */
 class QuantizeTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapter: PropertyTypeAdapter
+    var mBean: QuantizeTypeBean? = null
     var mData: ArrayList<PropertyTypeBean> = ArrayList()
-    var involves: ArrayList<UserBeanSimple> = ArrayList()
-    var mClass = ArrayList<DepartmentBean>()
-    var receiveList: ArrayList<UserBeanSimple> = ArrayList()
-    var isFirst = true
     lateinit var mListener:IChooseStudent
 
     override fun getLayoutId(): Int {
@@ -40,6 +39,7 @@ class QuantizeTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
+        mBean = intent.getParcelableExtra(Constant.DATA)
         tvConfirmQuantize.setOnClickListener {
 
         }
@@ -50,6 +50,9 @@ class QuantizeTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         var timeSec = ViewTimeSection(this,data = mData,position = 1)
         llRoot.addView(timeSec)
+
+        var text = ViewText(this,data = mData,position = 2)
+        llRoot.addView(text)
 
         initAdapter()
     }
@@ -62,6 +65,7 @@ class QuantizeTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
+        mViewModel.getMoralTypeInfo(mBean?.id)
     }
 
     private fun initAdapter() {
@@ -89,11 +93,11 @@ class QuantizeTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initDataObserver() {
         mViewModel.mBaseData.observe(this, Observer {
             it?.let {
-                netResponseFormat<BaseResp<PropertyTypeBean>>(it)?.let { bean ->
-                    bean.data?.let {
-                        mData.addAll(it)
-                    }
-                }
+//                netResponseFormat<BaseResp<PropertyTypeBean>>(it)?.let { bean ->
+//                    bean.data?.let {
+//                        mData.addAll(it)
+//                    }
+//                }
             }
         })
     }

@@ -387,6 +387,13 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
+    fun getMoralTypeInfo(id:String?=null) {
+        initiateRequest(
+            { mBaseData.value = mRepository.getMoralTypeInfo(id) },
+            loadState
+        )
+    }
+
     fun getAuthUsers(folderid: String? = null) {
         initiateRequest(
             { mAuthUsersData.value = mRepository.getAuthUsers(folderid) },
