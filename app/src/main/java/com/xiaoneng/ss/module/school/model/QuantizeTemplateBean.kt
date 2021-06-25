@@ -1,0 +1,37 @@
+package com.xiaoneng.ss.module.school.model
+
+import android.os.Parcelable
+import com.xiaoneng.ss.model.ClassBean
+import kotlinx.android.parcel.Parcelize
+
+/**
+ * Created with Android Studio.
+ * Description:
+ * @author: Burning
+ * @date: 2021/06/24
+ * Time: 17:06
+ */
+@Parcelize
+data class QuantizeTemplateBean(
+    var fieldId: String?,
+    var name: String?,
+    //'Input', // 控件类型,单行文本框
+    //'Textarea', // 多行输入框
+    //'InputNumber', // 数字输入框
+    //'Radio', // 单选框
+    //'Checkbox', // 多选框
+    //'DatePicker', // 日期（单日）
+    //'DatePickerMultiple', // 日期范围（值是数组格式）
+    //'DateTimePicker', // 日期时间（单日）
+    //'CascaderClass', // 年级班级
+    //'ChoseStudents', // 选择学生（是用组织架构那种组件）
+    //
+    var label: String?,
+    var multiple: Boolean?,
+    var placeholder: String?,
+    var value: String?,
+    var stime: String?,
+    var etime: String?,
+    var selections: ArrayList<String>?,
+    var classes: ArrayList<ClassBean>?,
+) : Parcelable

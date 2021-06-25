@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.PowerManager
 import android.view.Gravity
+import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import cn.addapp.pickers.common.LineConfig
@@ -25,12 +26,15 @@ import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.custom.DateRangePicker
 import com.xiaoneng.ss.custom.DateTimePicker
+import com.xiaoneng.ss.custom.widgets.*
+import com.xiaoneng.ss.module.school.model.QuantizeTemplateBean
 import com.xiaoneng.ss.module.school.model.SiteItemBean
 import java.io.File
 import java.io.FileOutputStream
 import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -138,6 +142,40 @@ inline fun Activity.showDateDayPick(textView: TextView, crossinline block: Strin
             ) {
                 var timess = "${month}月${day}日"
                 "${year}${month}${day}".block()
+                textView.text = timess
+            }
+
+        })
+        show()
+    }
+
+}
+
+inline fun Activity.showDateDayHourPick(textView: TextView, crossinline block: String.() -> Unit) {
+    DateTimePicker(this, DateTimePicker.HOUR_24).apply {
+//            setActionButtonTop(false)
+        val THIS_YEAR:Int = Calendar.getInstance().get(Calendar.YEAR)
+        setSelectedTextColor(resources.getColor(R.color.themeColor))
+        setDateRangeStart(THIS_YEAR, 1, 1)
+        setDateRangeEnd(THIS_YEAR + 5, 11, 11)
+        setSelectedItem(
+            Calendar.getInstance().get(Calendar.YEAR),
+            Calendar.getInstance().get(Calendar.MONTH) + 1,
+            Calendar.getInstance().get(Calendar.DAY_OF_MONTH),
+            Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
+            0
+        )
+
+        setOnDateTimePickListener(object : DateTimePicker.OnYearMonthDayTimePickListener {
+            override fun onDateTimePicked(
+                year: String?,
+                month: String?,
+                day: String?,
+                hour: String?,
+                minute: String?
+            ) {
+                var timess = "${month}月${day}日 ${hour}:00"
+                "${year}${month}${day}${hour}".block()
                 textView.text = timess
             }
 
@@ -335,6 +373,34 @@ inline fun <reified T> netResponseFormat(response: Any): T? {
     val resultType = object : TypeToken<T>() {}.type
     var result = gson.fromJson<T>(jsonString, resultType)
     return result
+}
+
+fun dealTemplate(activity: Activity,root: ViewGroup,template:ArrayList<QuantizeTemplateBean>){
+    if (template.size>0){
+        for (i in 0 until template.size){
+            if (template[i].name=="Input"){
+                root.addView(ViewTextSingle(activity,data = template[i]))
+            }else if (template[i].name=="Textarea"){
+                root.addView(ViewText(activity,data = template[i]))
+            }else if (template[i].name=="InputNumber"){
+                root.addView(ViewText(activity,data = template[i]))
+            }else if (template[i].name=="Radio"){
+                root.addView(ViewJump(activity,data = template[i]))
+            }else if (template[i].name=="Checkbox"){
+                root.addView(ViewJump(activity,data = template[i]))
+            }else if (template[i].name=="DatePicker"){
+                root.addView(ViewJump(activity,data = template[i]))
+            }else if (template[i].name=="DatePickerMultiple"){
+                root.addView(ViewJump(activity,data = template[i]))
+            }else if (template[i].name=="DateTimePicker"){
+                root.addView(ViewJump(activity,data = template[i]))
+            }else if (template[i].name=="CascaderClass"){
+                root.addView(ViewJump(activity,data = template[i]))
+            }else if (template[i].name=="ChoseStudents"){
+                root.addView(ViewJump(activity,data = template[i]))
+            }
+        }
+    }
 }
 
 

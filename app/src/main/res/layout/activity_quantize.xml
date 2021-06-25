@@ -24,8 +24,7 @@
         <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
             android:id="@+id/rvQuantize"
             style="@style/recycler_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            />
 
     </LinearLayout>
 </LinearLayout>

@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llChooseCourse"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:background="@color/white"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="5dp"
+    android:layout_marginTop="10dp"
+    app:contentPaddingLeft="30dp"
+    app:contentPaddingRight="30dp"
+    app:contentPaddingTop="28dp"
+    app:contentPaddingBottom="28dp"
+    android:layout_marginStart="@dimen/title_padding"
+    android:layout_marginEnd="@dimen/title_padding"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingStart="30dp"
-        android:background="@drawable/bac_white_bac_6"
-        android:layout_marginTop="10dp"
-        android:paddingEnd="30dp"
-        android:paddingTop="28dp"
-        android:paddingBottom="28dp"
-        android:layout_marginStart="@dimen/title_padding"
-        android:layout_marginEnd="@dimen/title_padding">
+        >
 
         <TextView
             android:id="@+id/tvQuantizeName"
@@ -24,8 +29,6 @@
             android:textStyle="bold"
             android:textSize="@dimen/sp_18"
              />
-
-
     </LinearLayout>
 
-</LinearLayout>
+</androidx.cardview.widget.CardView>

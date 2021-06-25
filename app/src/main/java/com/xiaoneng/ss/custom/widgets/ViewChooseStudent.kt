@@ -11,6 +11,7 @@ import com.xiaoneng.ss.common.utils.mStartForResult
 import com.xiaoneng.ss.module.school.interfaces.IChooseStudent
 import com.xiaoneng.ss.module.school.model.DepartmentBean
 import com.xiaoneng.ss.module.school.model.PropertyTypeBean
+import com.xiaoneng.ss.module.school.model.QuantizeTemplateBean
 import com.xiaoneng.ss.module.school.model.UserBeanSimple
 import com.xiaoneng.ss.module.school.view.AddInvolveActivity
 import com.xiaoneng.ss.module.school.view.QuantizeTypeActivity
@@ -28,8 +29,7 @@ class ViewChooseStudent @JvmOverloads constructor(
     val context: Activity,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
-    data: ArrayList<PropertyTypeBean>,
-    position: Int
+    val data: QuantizeTemplateBean
 ) : FrameLayout(context, attrs, defStyleAttr), IChooseStudent {
     private var title: String? = ""
     var involves: ArrayList<UserBeanSimple> = ArrayList()

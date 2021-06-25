@@ -104,7 +104,6 @@ class TaskLogAdapter(layoutId: Int, listData: MutableList<LogBean>?, activity: T
         val gson = Gson()
         try {
             files = gson.fromJson<ArrayList<FileInfoBean>>(item?.fileinfo, resultType)
-
         } catch (e: Exception) {
 
         }

@@ -2,22 +2,25 @@ package com.xiaoneng.ss.module.school.view
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.lifecycle.Observer
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.dealTemplate
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.custom.widgets.CustomTitleBar
 import com.xiaoneng.ss.custom.widgets.ViewChooseStudent
 import com.xiaoneng.ss.custom.widgets.ViewText
 import com.xiaoneng.ss.custom.widgets.ViewTimeSection
+import com.xiaoneng.ss.model.ClassBean
 import com.xiaoneng.ss.module.school.adapter.PropertyTypeAdapter
 import com.xiaoneng.ss.module.school.interfaces.IChooseStudent
-import com.xiaoneng.ss.module.school.model.DepartmentBean
-import com.xiaoneng.ss.module.school.model.PropertyTypeBean
-import com.xiaoneng.ss.module.school.model.QuantizeTypeBean
-import com.xiaoneng.ss.module.school.model.UserBeanSimple
+import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import com.xiaoneng.ss.network.response.BaseResp
 import kotlinx.android.synthetic.main.activity_quantize_type.*
@@ -30,8 +33,9 @@ import kotlinx.android.synthetic.main.activity_quantize_type.*
 class QuantizeTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapter: PropertyTypeAdapter
     var mBean: QuantizeTypeBean? = null
-    var mData: ArrayList<PropertyTypeBean> = ArrayList()
-    lateinit var mListener:IChooseStudent
+    var mData: ArrayList<QuantizeTemplateBean> = ArrayList()
+    var mDataClasses: ArrayList<ClassBean>? = ArrayList()
+    lateinit var mListener: IChooseStudent
 
     override fun getLayoutId(): Int {
         return R.layout.activity_quantize_type
@@ -41,18 +45,10 @@ class QuantizeTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.initView()
         mBean = intent.getParcelableExtra(Constant.DATA)
         tvConfirmQuantize.setOnClickListener {
-
+            Log.w("TAG", mData.toString() )
         }
 
 //        var split = layoutInflater.inflate(R.layout.layout_split,llRoot)
-        var choose = ViewChooseStudent(this,data = mData,position = 0)
-        llRoot.addView(choose)
-
-        var timeSec = ViewTimeSection(this,data = mData,position = 1)
-        llRoot.addView(timeSec)
-
-        var text = ViewText(this,data = mData,position = 2)
-        llRoot.addView(text)
 
         initAdapter()
     }
@@ -66,6 +62,7 @@ class QuantizeTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun getData() {
         super.getData()
         mViewModel.getMoralTypeInfo(mBean?.id)
+
     }
 
     private fun initAdapter() {
@@ -89,15 +86,53 @@ class QuantizeTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
 
-
     override fun initDataObserver() {
+        mViewModel.mMoralTypeInfoData.observe(this, Observer {
+            it?.let {
+                netResponseFormat<QuantizeTypeBean>(it)?.let { bean ->
+                    ctbTitle.setTitle(bean.typename)
+                    bean.template?.let {
+                        mData.clear()
+                        var views = ArrayList<QuantizeTemplateBean>()
+                        val resultType = object : TypeToken<ArrayList<QuantizeTemplateBean>>() {}.type
+                        val gson = Gson()
+                        try {
+                            views = gson.fromJson<ArrayList<QuantizeTemplateBean>>(it, resultType)
+                        } catch (e: Exception) {
+
+                        }
+                            mData.addAll(views)
+
+                    }
+                }
+                Handler().postDelayed(
+                    {
+                        showLoading()
+                        mViewModel.getClassesByTea()
+                    }, 100
+                )
+            }
+        })
+
         mViewModel.mBaseData.observe(this, Observer {
             it?.let {
-//                netResponseFormat<BaseResp<PropertyTypeBean>>(it)?.let { bean ->
-//                    bean.data?.let {
-//                        mData.addAll(it)
-//                    }
-//                }
+                netResponseFormat<ArrayList<ClassesResponse>>(it)?.let {
+                    mDataClasses?.clear()
+                    var classes = ArrayList<String>()
+                    it.forEach {
+                        it.list.forEach {
+
+                            mDataClasses?.add(it)
+                        }
+
+                    }
+                    mData.forEach {
+                        if (it.name=="CascaderClass"){
+                            it.classes = mDataClasses
+                        }
+                    }
+                    dealTemplate(this,llRoot,mData)
+                }
             }
         })
     }

@@ -15,17 +15,14 @@ import org.jetbrains.anko.toast
 /**
  * @author Burning
  * @description:
- * @date :2021/06/24 7:38 PM
+ * @date :2021/06/25 7:38 PM
  */
-class ViewText @JvmOverloads constructor(
+class ViewTextSingle @JvmOverloads constructor(
     val context: Activity,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
     val data: QuantizeTemplateBean
 ) : FrameLayout(context, attrs, defStyleAttr) {
-    private var title: String? = ""
-    var timeStart: String? = null
-    var timeEnd: String? = null
 
     init {
 
@@ -38,7 +35,7 @@ class ViewText @JvmOverloads constructor(
 
     private fun init() {
 
-        View.inflate(context, R.layout.custom_text, this)
+        View.inflate(context, R.layout.custom_text_single, this)
         tvJumpTitleKey.text = data.label
         tvJumpTitle.hint = data.placeholder
         tvJumpTitle.addTextChangedListener {

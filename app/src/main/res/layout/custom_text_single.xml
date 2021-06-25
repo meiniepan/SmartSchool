@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:paddingStart="@dimen/title_padding"
@@ -24,11 +24,14 @@
 
         <EditText
             android:id="@+id/tvJumpTitle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="5dp"
+            android:gravity="end"
+            android:singleLine="true"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:layout_marginTop="2dp"
-            android:hint="最多20个字"
+            android:hint="最多10个字"
             android:textColor="@color/commonHint" />
 
     </LinearLayout>

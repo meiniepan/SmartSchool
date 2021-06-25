@@ -36,6 +36,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mDeleteAttendanceData: MutableLiveData<Any> = MutableLiveData()
     val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
     val mBaseData: MutableLiveData<Any> = MutableLiveData()
+    val mMoralTypeInfoData: MutableLiveData<Any> = MutableLiveData()
     val mRepairTypeData: MutableLiveData<Any> = MutableLiveData()
     val mDeviceTypeData: MutableLiveData<Any> = MutableLiveData()
     val mPriCloudData: MutableLiveData<Any> = MutableLiveData()
@@ -389,7 +390,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
 
     fun getMoralTypeInfo(id:String?=null) {
         initiateRequest(
-            { mBaseData.value = mRepository.getMoralTypeInfo(id) },
+            { mMoralTypeInfoData.value = mRepository.getMoralTypeInfo(id) },
             loadState
         )
     }

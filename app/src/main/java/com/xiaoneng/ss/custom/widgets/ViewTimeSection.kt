@@ -13,6 +13,7 @@ import com.xiaoneng.ss.common.utils.showTimeSection
 import com.xiaoneng.ss.module.school.interfaces.IChooseStudent
 import com.xiaoneng.ss.module.school.model.DepartmentBean
 import com.xiaoneng.ss.module.school.model.PropertyTypeBean
+import com.xiaoneng.ss.module.school.model.QuantizeTemplateBean
 import com.xiaoneng.ss.module.school.model.UserBeanSimple
 import com.xiaoneng.ss.module.school.view.AddInvolveActivity
 import com.xiaoneng.ss.module.school.view.QuantizeTypeActivity
@@ -30,8 +31,7 @@ class ViewTimeSection @JvmOverloads constructor(
     val context: Activity,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
-    data: ArrayList<PropertyTypeBean>,
-    position: Int
+    val data: QuantizeTemplateBean
 ) : FrameLayout(context, attrs, defStyleAttr) {
     private var title: String? = ""
     var timeStart: String? = null
@@ -54,6 +54,7 @@ class ViewTimeSection @JvmOverloads constructor(
         }
 
         setOnClickListener {
+            if (data.name == "CascaderClass") {}else{}
             context.showTimeSection(tvJumpTitle,
                 { timeStart = this },
                 { timeEnd = this }
