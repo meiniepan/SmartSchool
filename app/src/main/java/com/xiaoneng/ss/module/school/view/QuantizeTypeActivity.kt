@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Handler
 import android.util.Log
-import android.view.LayoutInflater
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -13,16 +12,11 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.dealTemplate
 import com.xiaoneng.ss.common.utils.netResponseFormat
-import com.xiaoneng.ss.custom.widgets.CustomTitleBar
-import com.xiaoneng.ss.custom.widgets.ViewChooseStudent
-import com.xiaoneng.ss.custom.widgets.ViewText
-import com.xiaoneng.ss.custom.widgets.ViewTimeSection
 import com.xiaoneng.ss.model.ClassBean
 import com.xiaoneng.ss.module.school.adapter.PropertyTypeAdapter
 import com.xiaoneng.ss.module.school.interfaces.IChooseStudent
 import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import com.xiaoneng.ss.network.response.BaseResp
 import kotlinx.android.synthetic.main.activity_quantize_type.*
 
 /**

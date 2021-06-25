@@ -381,9 +381,9 @@ fun dealTemplate(activity: Activity,root: ViewGroup,template:ArrayList<QuantizeT
             if (template[i].name=="Input"){
                 root.addView(ViewTextSingle(activity,data = template[i]))
             }else if (template[i].name=="Textarea"){
-                root.addView(ViewText(activity,data = template[i]))
+                root.addView(ViewTextAera(activity,data = template[i]))
             }else if (template[i].name=="InputNumber"){
-                root.addView(ViewText(activity,data = template[i]))
+                root.addView(ViewTextAera(activity,data = template[i]))
             }else if (template[i].name=="Radio"){
                 root.addView(ViewJump(activity,data = template[i]))
             }else if (template[i].name=="Checkbox"){

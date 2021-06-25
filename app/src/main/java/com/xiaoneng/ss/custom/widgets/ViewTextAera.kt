@@ -17,7 +17,7 @@ import org.jetbrains.anko.toast
  * @description:
  * @date :2021/06/24 7:38 PM
  */
-class ViewText @JvmOverloads constructor(
+class ViewTextAera @JvmOverloads constructor(
     val context: Activity,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
