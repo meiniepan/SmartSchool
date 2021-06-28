@@ -9,16 +9,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.school.adapter.DialogListAdapter
+import com.xiaoneng.ss.module.school.adapter.DialogMultiCheckAdapter
 import com.xiaoneng.ss.module.school.interfaces.IChooseStudent
-import com.xiaoneng.ss.module.school.model.DepartmentBean
-import com.xiaoneng.ss.module.school.model.QuantizeTemplateBean
-import com.xiaoneng.ss.module.school.model.UserBeanSimple
+import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.view.AddInvolveActivity
+import com.xiaoneng.ss.module.school.view.QuantizeSpecialActivity
 import com.xiaoneng.ss.module.school.view.QuantizeTypeActivity
 import kotlinx.android.synthetic.main.custom_choose_item.view.*
 import kotlinx.android.synthetic.main.custom_choose_item.view.tvJumpTitle
@@ -33,13 +35,14 @@ class ViewJump @JvmOverloads constructor(
     val context: Activity,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
-    val data: QuantizeTemplateBean
+    val data: QuantizeTemplateBean, val commit: QuantizeBody
 ) : FrameLayout(context, attrs, defStyleAttr), IChooseStudent {
     var involves: ArrayList<UserBeanSimple> = ArrayList()
     var mClass = ArrayList<DepartmentBean>()
     var receiveList: ArrayList<UserBeanSimple> = ArrayList()
     var isFirst = true
     private val dialogSingle: Dialog by lazy { initDialogSingle() }
+    private val dialogMulti: Dialog by lazy { initDialogMulti() }
 
     init {
 
@@ -56,7 +59,11 @@ class ViewJump @JvmOverloads constructor(
         tvJumpTitleKey.text = data.label
         tvJumpTitle.hint = data.placeholder
         if (data.name == "ChoseStudents") {
-            (context as QuantizeTypeActivity).mListener = this
+            if (context is QuantizeTypeActivity) {
+                context.mListener = this
+            } else if (context is QuantizeSpecialActivity) {
+                context.mListener = this
+            }
         }
         setOnClickListener {
             if (data.name == "CascaderClass") {
@@ -67,17 +74,26 @@ class ViewJump @JvmOverloads constructor(
                     {
                         data.etime = this
                         data.value = data.stime + "," + data.etime
+                        commit.checktime = data.value
+                        commit.stime = data.stime
+                        commit.etime = data.etime
                     }
                 )
             } else if (data.name == "DateTimePicker") {
-                context.showDateDayHourPick(tvJumpTitle) { data.value = this }
+                context.showDateDayHourPick(tvJumpTitle) {
+                    data.value = this
+                    commit.checktime = this
+                }
             } else if (data.name == "DatePicker") {
-                context.showDateDayPick(tvJumpTitle) { data.value = this }
-            }else if (data.name == "Radio") {
+                context.showDateDayPick(tvJumpTitle) {
+                    data.value = this
+                    commit.checktime = this
+                }
+            } else if (data.name == "Radio") {
                 dialogSingle.show()
-            }else if (data.name == "Checkbox") {
-                dialogSingle.show()
-            }else if (data.name == "ChoseStudents") {
+            } else if (data.name == "Checkbox") {
+                dialogMulti.show()
+            } else if (data.name == "ChoseStudents") {
                 mStartForResult<AddInvolveActivity>(context, Constant.REQUEST_CODE_COURSE) {
                     putExtra(Constant.DATA, mClass)
                     //从草稿箱第一次选择参与人，传入原有参与人数据
@@ -130,6 +146,7 @@ class ViewJump @JvmOverloads constructor(
         dialogAdapter.setOnItemClickListener { adapter, view, position ->
             if (data.name == "CascaderClass") {
                 data.value = data.classes!![position].id
+                commit.classid = data.classes!![position].id
             } else {
                 data.value = titles[position]
             }
@@ -138,6 +155,64 @@ class ViewJump @JvmOverloads constructor(
         }
         return dialogType
     }
+
+    private fun initDialogMulti(): Dialog {
+        var titles = ArrayList<MultiCheckBean>()
+
+        data.selections?.let {
+            it.forEach {
+                titles.add(MultiCheckBean(name = it))
+            }
+        }
+
+        // 底部弹出对话框
+        var dialogType =
+            Dialog(context, R.style.BottomDialog)
+        val contentView: View =
+            LayoutInflater.from(context).inflate(R.layout.dialog_check_multi, null)
+        dialogType.setContentView(contentView)
+        val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
+        params.width =
+            resources.displayMetrics.widthPixels
+        params.bottomMargin = dp2px(context, 0f).toInt()
+        contentView.layoutParams = params
+        dialogType.window!!.setGravity(Gravity.BOTTOM)
+        dialogType.window!!.setWindowAnimations(R.style.BottomDialog_Animation)
+        var dialogAdapter = DialogMultiCheckAdapter(R.layout.item_dialog_multi_check, titles)
+        var tvReset = contentView.findViewById<TextView>(R.id.tvReset)
+        var tvConfirm = contentView.findViewById<TextView>(R.id.tvConfirm)
+        var recyclerView = contentView.findViewById<RecyclerView>(R.id.rvDialogList).apply {
+            layoutManager = GridLayoutManager(context, 3)
+
+            adapter = dialogAdapter
+        }
+        dialogAdapter.setOnItemClickListener { adapter, view, position ->
+            titles[position].isChecked = !titles[position].isChecked
+            dialogAdapter.notifyDataSetChanged()
+        }
+        tvReset.setOnClickListener {
+            titles.forEach {
+                it.isChecked = false
+            }
+            dialogAdapter.notifyDataSetChanged()
+        }
+        tvConfirm.setOnClickListener {
+            var res = ""
+            titles.forEach {
+                if (it.isChecked) {
+                    res = res + it.name + ","
+                }
+            }
+            if (res.isNotEmpty()) {
+                res = res.substring(0, res.length - 1)
+            }
+            data.value = res
+            tvJumpTitle.text = res
+            dialogType.dismiss()
+        }
+        return dialogType
+    }
+
     override fun addInvolve(data: Intent) {
         isFirst = false
         involves.clear()

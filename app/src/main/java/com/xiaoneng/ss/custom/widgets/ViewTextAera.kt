@@ -8,6 +8,7 @@ import android.widget.FrameLayout
 import androidx.core.widget.addTextChangedListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.module.school.model.PropertyTypeBean
+import com.xiaoneng.ss.module.school.model.QuantizeBody
 import com.xiaoneng.ss.module.school.model.QuantizeTemplateBean
 import kotlinx.android.synthetic.main.custom_text.view.*
 import org.jetbrains.anko.toast
@@ -21,7 +22,7 @@ class ViewTextAera @JvmOverloads constructor(
     val context: Activity,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
-    val data: QuantizeTemplateBean
+    val data: QuantizeTemplateBean,val commit: QuantizeBody
 ) : FrameLayout(context, attrs, defStyleAttr) {
     private var title: String? = ""
     var timeStart: String? = null

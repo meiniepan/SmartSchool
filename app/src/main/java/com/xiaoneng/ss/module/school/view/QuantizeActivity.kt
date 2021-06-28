@@ -1,5 +1,6 @@
 package com.xiaoneng.ss.module.school.view
 
+import android.app.Activity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
@@ -53,9 +54,16 @@ class QuantizeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         mAdapter.setOnItemClickListener { adapter, view, position ->
-            mStartActivity<QuantizeTypeActivity>(this){
-                putExtra(Constant.DATA,mData[position])
+            if (mData[position].typename == "特殊情况报备") {
+                mStartActivity<QuantizeSpecialActivity>(this) {
+                    putExtra(Constant.DATA, mData[position])
+                }
+            } else {
+                mStartActivity<QuantizeTypeActivity>(this) {
+                    putExtra(Constant.DATA, mData[position])
+                }
             }
+
         }
     }
 

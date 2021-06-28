@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginEnd="12dp"
+    android:layout_marginBottom="12dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvDialogList"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="@drawable/bac_f5_bac_4"
+        android:gravity="center"
+        android:text=""
+        android:textSize="@dimen/sp_16" />
+
+    <ImageView
+        android:id="@+id/ivChecked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_check_multi" />
+</FrameLayout>
+

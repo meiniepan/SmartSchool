@@ -17,6 +17,7 @@ import com.xiaoneng.ss.network.initiateRequest
 class SchoolViewModel : BaseViewModel<SchoolRepository>() {
 
     val mAddAttendanceData: MutableLiveData<Any> = MutableLiveData()
+    val mAddMoralScoreData: MutableLiveData<Any> = MutableLiveData()
     val mTaskListData: MutableLiveData<TaskResponse> = MutableLiveData()
     val mAchievementData: MutableLiveData<AchievementResponse> = MutableLiveData()
     val mTestCourseData: MutableLiveData<Any> = MutableLiveData()
@@ -230,6 +231,20 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     fun addAttendance(bean: LeaveBean) {
         initiateRequest(
             { mAddAttendanceData.value = mRepository.addAttendance(bean) },
+            loadState
+        )
+    }
+
+    fun addMoralScore(bean: QuantizeBody) {
+        initiateRequest(
+            { mAddMoralScoreData.value = mRepository.addMoralScore(bean) },
+            loadState
+        )
+    }
+
+    fun addMoralScoreSpecial(bean: QuantizeBody) {
+        initiateRequest(
+            { mAddMoralScoreData.value = mRepository.addMoralScoreSpecial(bean) },
             loadState
         )
     }

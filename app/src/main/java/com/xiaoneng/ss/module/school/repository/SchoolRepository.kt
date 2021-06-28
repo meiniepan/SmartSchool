@@ -380,6 +380,16 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
     }
 
+    suspend fun addMoralScore(bean: QuantizeBody): Any {
+        return apiService.addMoralScore(bean)
+            .dataConvert(loadState)
+    }
+
+    suspend fun addMoralScoreSpecial(bean: QuantizeBody): Any {
+        return apiService.addMoralScoreSpecial(bean)
+            .dataConvert(loadState)
+    }
+
     suspend fun getSts(): StsTokenResp {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {

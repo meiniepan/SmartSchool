@@ -27,6 +27,7 @@ import com.xiaoneng.ss.common.utils.regex.RegexUtils
 import com.xiaoneng.ss.custom.DateRangePicker
 import com.xiaoneng.ss.custom.DateTimePicker
 import com.xiaoneng.ss.custom.widgets.*
+import com.xiaoneng.ss.module.school.model.QuantizeBody
 import com.xiaoneng.ss.module.school.model.QuantizeTemplateBean
 import com.xiaoneng.ss.module.school.model.SiteItemBean
 import java.io.File
@@ -375,29 +376,34 @@ inline fun <reified T> netResponseFormat(response: Any): T? {
     return result
 }
 
-fun dealTemplate(activity: Activity,root: ViewGroup,template:ArrayList<QuantizeTemplateBean>){
+fun dealTemplate(
+    activity: Activity,
+    root: ViewGroup,
+    template: ArrayList<QuantizeTemplateBean>,
+    mDataCommit: QuantizeBody
+){
     if (template.size>0){
         for (i in 0 until template.size){
             if (template[i].name=="Input"){
-                root.addView(ViewTextSingle(activity,data = template[i]))
+                root.addView(ViewTextSingle(activity,data = template[i],commit = mDataCommit))
             }else if (template[i].name=="Textarea"){
-                root.addView(ViewTextAera(activity,data = template[i]))
+                root.addView(ViewTextAera(activity,data = template[i],commit = mDataCommit))
             }else if (template[i].name=="InputNumber"){
-                root.addView(ViewTextAera(activity,data = template[i]))
+                root.addView(ViewNumber(activity,data = template[i],commit = mDataCommit))
             }else if (template[i].name=="Radio"){
-                root.addView(ViewJump(activity,data = template[i]))
+                root.addView(ViewJump(activity,data = template[i],commit = mDataCommit))
             }else if (template[i].name=="Checkbox"){
-                root.addView(ViewJump(activity,data = template[i]))
+                root.addView(ViewJump(activity,data = template[i],commit = mDataCommit))
             }else if (template[i].name=="DatePicker"){
-                root.addView(ViewJump(activity,data = template[i]))
+                root.addView(ViewJump(activity,data = template[i],commit = mDataCommit))
             }else if (template[i].name=="DatePickerMultiple"){
-                root.addView(ViewJump(activity,data = template[i]))
+                root.addView(ViewJump(activity,data = template[i],commit = mDataCommit))
             }else if (template[i].name=="DateTimePicker"){
-                root.addView(ViewJump(activity,data = template[i]))
+                root.addView(ViewJump(activity,data = template[i],commit = mDataCommit))
             }else if (template[i].name=="CascaderClass"){
-                root.addView(ViewJump(activity,data = template[i]))
+                root.addView(ViewJump(activity,data = template[i],commit = mDataCommit))
             }else if (template[i].name=="ChoseStudents"){
-                root.addView(ViewJump(activity,data = template[i]))
+                root.addView(ViewJump(activity,data = template[i],commit = mDataCommit))
             }
         }
     }

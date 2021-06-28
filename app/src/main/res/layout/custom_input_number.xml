@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/title_padding"
+        android:paddingEnd="11dp">
+
+        <TextView
+            android:id="@+id/tvJumpTitleKey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/ivMinus"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/ic_jian" />
+
+        <EditText
+            android:id="@+id/etNumber"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="20dp"
+            android:selectAllOnFocus="true"
+            android:background="@drawable/bac_tint0_bac_10"
+            android:gravity="center"
+            android:inputType="number" />
+
+        <ImageView
+            android:id="@+id/ivPlus"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/ic_jia" />
+    </LinearLayout>
+
+    <include layout="@layout/layout_split" />
+</LinearLayout>

@@ -72,9 +72,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-<!--            <meta-data-->
-<!--                android:name="android.app.shortcuts"-->
-<!--                android:resource="@xml/shortcuts" />-->
+            <!--            <meta-data-->
+            <!--                android:name="android.app.shortcuts"-->
+            <!--                android:resource="@xml/shortcuts" />-->
         </activity>
         <activity
             android:name=".module.activity.MainActivity"
@@ -196,9 +196,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.activity.OtherPushActivity"
-            android:screenOrientation="portrait"
+            android:exported="true"
             android:launchMode="singleTask"
-            android:exported="true" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".module.school.view.SalaryActivity"
             android:screenOrientation="portrait" />
@@ -241,27 +241,40 @@
         <activity
             android:name=".module.school.view.RoomBookRecordsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".module.school.view.AddBookSite2Activity"
+        <activity
+            android:name=".module.school.view.AddBookSite2Activity"
             android:screenOrientation="portrait" />
-        <activity android:name=".module.school.view.CloudTransActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".module.school.view.FolderSettingActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".module.school.view.CloudFolderActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".module.activity.ImageScaleActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".module.school.view.CloudCopyActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".module.school.view.UnreadMemberActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".module.activity.VideoActivity"
+        <activity
+            android:name=".module.school.view.CloudTransActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.FolderSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.CloudFolderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.activity.ImageScaleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.CloudCopyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.UnreadMemberActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.activity.VideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".module.school.view.QuantizeTypeActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".module.school.view.QuantizeActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.QuantizeTypeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.QuantizeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.school.view.QuantizeSpecialActivity"
+            android:screenOrientation="portrait" />
 
 
         <provider
@@ -380,8 +393,8 @@
 
         <service
             android:name="com.umeng.message.UmengMessageCallbackHandlerService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="false">
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE">
             <intent-filter>
                 <action android:name="com.umeng.messge.registercallback.action" />
             </intent-filter>
@@ -400,8 +413,8 @@
         </service>
         <service
             android:name="com.umeng.message.UmengDownloadResourceService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="false" />
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <provider
             android:name="com.umeng.message.provider.MessageProvider"

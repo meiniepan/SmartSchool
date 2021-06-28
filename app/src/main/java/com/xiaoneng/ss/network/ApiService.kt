@@ -754,6 +754,22 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
+     *增加德育评比评分
+     */
+    @POST("/api/v17/moral/moralScore/add")
+    suspend fun addMoralScore(
+        @Body requestBody: QuantizeBody
+    ): BaseResponse<Any>
+
+    /**
+     *增加德育评比评分
+     */
+    @POST("/api/v17/moral/moralRuleSpecial/add")
+    suspend fun addMoralScoreSpecial(
+        @Body requestBody: QuantizeBody
+    ): BaseResponse<Any>
+
+    /**
      *教师获取班级
      */
     @FormUrlEncoded
