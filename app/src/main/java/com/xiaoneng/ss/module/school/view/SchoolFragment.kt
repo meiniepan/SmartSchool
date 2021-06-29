@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.state.AppInfo
+import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.netResponseFormat
@@ -44,7 +45,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
     }
 
     private fun checkRules() {//判断权限
-        var bean1 = SchoolBean(name = "信息递送")
+        var bean1 = SchoolBean(name = "")
         if (AppInfo.checkRule1("admin/spacebook/default")) {
             bean1.items.add(
                 SchoolItemBean(
@@ -52,6 +53,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                     remark = "场地时段 一目了然",
                     icon = R.drawable.ic_changdi,
                     click = View.OnClickListener {
+                      var b=  UserInfo.getUserBean()
                         mStartActivity<BookSiteActivity>(context)
                     }
                 )

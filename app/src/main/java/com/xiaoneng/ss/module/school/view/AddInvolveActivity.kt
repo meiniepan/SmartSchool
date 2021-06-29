@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import androidx.core.view.forEach
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -167,7 +168,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         if (intent.getIntExtra(Constant.TYPE, 0) == 1) {//来自云盘配置
             ctbAddInvolve.setTitle(getString(R.string.diskTitle))
             rlClass.visibility = View.GONE
-        }else if(intent.getIntExtra(Constant.TYPE, 0) == 2){//来自选择学生
+        } else if (intent.getIntExtra(Constant.TYPE, 0) == 2) {//来自选择学生
             ctbAddInvolve.setTitle("选择学生")
             rlTeacher.visibility = View.GONE
             currentTab = tab2
@@ -321,48 +322,75 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 uid = bean.uid ?: "",
                 realname = bean.realname ?: "",
                 usertype = bean.usertype ?: "",
-                topdepartid = bean.topdepartid ?: "",
-                secdepartid = bean.secdepartid ?: "",
+                topdepartid = bean.deps?.get(0)?.topdepartid ?: "",
+                secdepartid = bean.deps?.get(0)?.secdepartid ?: "",
                 choice = "1",
                 parentId = pId
             )
             var msg =
                 mDataQuery[position].realname + ""
             mAlert(msg, "请确认身份") {
-                if (bean.topdepartid.isNullOrEmpty()) {
+
+                if (studentBean.topdepartid.isNullOrEmpty()) {
                     //学生
                     studentBean.parentId = tab2 + "_" + bean.classid
+
                     mDataClasses?.forEach {
                         if (studentBean.parentId == it.id) {
-                            if (it.num == "0") {
-                                it.list.clear()
-                                it.list.add(studentBean)
-                            } else {
-                                it.list.add(studentBean)
+                            var bb = false
+                            it.list.forEach {
+                                if (it.uid == studentBean.uid) {
+                                    bb = true
+                                }
                             }
-                            it.num = ((it.num ?: "0").toInt() + 1).toString()
+                            if (!bb) {
+                                if (it.num == "0") {
+                                    it.list.clear()
+                                    it.list.add(studentBean)
+                                } else {
+                                    it.list.add(studentBean)
+                                }
+                                it.num = ((it.num ?: "0").toInt() + 1).toString()
+                            }
                         }
                     }
                 } else {
-                    studentBean.parentId = tab1 + "_" + bean.topdepartid
+                    studentBean.parentId = tab1 + "_" + studentBean.topdepartid
                     mDataDepartment?.forEach {
                         if (studentBean.parentId == it.id) {
-                            if (it.num == "0") {
-                                it.list.clear()
-                                it.list.add(studentBean)
-                            } else {
-                                it.list.add(studentBean)
+                            var bb = false
+                            it.list.forEach {
+                                if (it.uid == studentBean.uid) {
+                                    bb = true
+                                }
                             }
-                            it.num = ((it.num ?: "0").toInt() + 1).toString()
+                            if (!bb) {
+                                if (it.num == "0") {
+                                    it.list.clear()
+                                    it.list.add(studentBean)
+                                } else {
+                                    it.list.add(studentBean)
+                                }
+                                it.num = ((it.num ?: "0").toInt() + 1).toString()
+                            }
                         }
                     }
                 }
-                rvDepartment.notifyDataSetChanged()
-                mDataInvolve.add(
-                    studentBean
-                )
-                rvInvolve.notifyDataSetChanged()
-                setPersonNum()
+                var bb = false
+                mDataInvolve.forEach {
+                    if (it.uid == studentBean.uid && it.parentId == studentBean.parentId) {
+                        bb = true
+                    }
+                }
+                if (!bb) {
+                    rvDepartment.notifyDataSetChanged()
+                    mDataInvolve.add(
+                        studentBean
+                    )
+                    rvInvolve.notifyDataSetChanged()
+                    setPersonNum()
+                }
+
                 rvSearchInvolve.visibility = View.GONE
                 llContent.visibility = View.VISIBLE
             }
@@ -467,7 +495,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         }
                         it.id = tab2 + "_" + it.id
                     }
-                    if(intent.getIntExtra(Constant.TYPE, 0) == 2){//来自选择学生
+                    if (intent.getIntExtra(Constant.TYPE, 0) == 2) {//来自选择学生
                         checkSecondTab()
                     }
 
@@ -492,7 +520,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         }
                         it.id = tab1 + "_" + it.id
                     }
-                    if(intent.getIntExtra(Constant.TYPE, 0) != 2){//来自选择学生
+                    if (intent.getIntExtra(Constant.TYPE, 0) != 2) {//来自选择学生
                         rvDepartment.notifyDataSetChanged()
                     }
                 }

@@ -98,6 +98,8 @@ object DateUtil {
                 )
             }
 
+        }else{
+            result = date
         }
         return result
 
