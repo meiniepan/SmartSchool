@@ -30,6 +30,7 @@ data class ScheduleBean(
     var cno: String? = null,
     var color: String? = null,
     var involve: String? = null,
+    var invtotal: String? = null,
     var schoolid: String? = null,
     var muser_id: String? = null,
     var cuser_id: String? = null

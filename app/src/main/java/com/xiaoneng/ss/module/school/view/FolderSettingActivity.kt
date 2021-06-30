@@ -114,7 +114,10 @@ class FolderSettingActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         uid = it.uid,
                         realname = it.realname,
                         classid = it.classid,
-                        usertype = it.usertype
+                        usertype = it.usertype,
+                        topdepartid = it.topdepartid,
+                        secdepartid = it.secdepartid
+
                     )
                 )
             }

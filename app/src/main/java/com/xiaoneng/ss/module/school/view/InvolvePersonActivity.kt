@@ -97,6 +97,9 @@ class InvolvePersonActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mDataInvolve.clear()
                     it.data.forEach {
                         it.parentId = id
+                        if (id.contains("_")) {
+                            it.secdepartid = id.split("_")[1]
+                        }
                         setChoice(it)
                     }
                     var bean: DepartmentPersonBean = DepartmentPersonBean()
@@ -113,9 +116,13 @@ class InvolvePersonActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             response?.let {
                 netResponseFormat<ArrayList<DepartmentPersonBean>>(it)?.let {
                     mDataInvolve.clear()
-                    it.forEach {
-                        it.data.forEach {
+                    it.forEach {bean->
+                        bean.data.forEach {
                             it.parentId = id
+                            if (id.contains("_")) {
+                                it.topdepartid = id.split("_")[1]
+                            }
+                            it.secdepartid = bean.id
                             setChoice(it)
                         }
                     }

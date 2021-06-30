@@ -715,3 +715,15 @@ inline fun Context.mToast(message: Int): Toast = Toast
         setGravity(Gravity.CENTER, 0, 0)
         show()
     }
+
+inline fun <reified T> mFromJson(response: String?): T? {
+    val gson =Gson()
+    val resultType = object : TypeToken<T>() {}.type
+    var result:T? = null
+    try {
+     result = gson.fromJson<T>(response, resultType)
+    } catch (e: Exception) {
+
+    }
+    return result
+}

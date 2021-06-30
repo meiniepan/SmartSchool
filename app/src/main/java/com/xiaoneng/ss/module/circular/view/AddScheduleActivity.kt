@@ -15,10 +15,12 @@ import com.xiaoneng.ss.module.circular.adapter.ChooseColorAdapter
 import com.xiaoneng.ss.module.circular.model.ScheduleBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import com.xiaoneng.ss.module.school.model.DepartmentBean
+import com.xiaoneng.ss.module.school.model.FileInfoBean
 import com.xiaoneng.ss.module.school.model.UserBeanSimple
 import com.xiaoneng.ss.module.school.view.AddInvolveActivity
 import kotlinx.android.synthetic.main.activity_add_schedule.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created with Android Studio.
@@ -53,6 +55,10 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
             bean = intent.getParcelableExtra(Constant.DATA)
             bean?.let {
                 initUI(it)
+                mFromJson<ArrayList<UserBeanSimple>>(it.involve)?.let{
+                    receiveList = it
+                    dealData()
+                }
             }
         }
         initTime()
@@ -113,11 +119,11 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 putExtra(Constant.DATA, mDataDepartment)
                 putExtra(Constant.DATA2, mDataClasses)
                 //从草稿箱第一次选择参与人，传入原有参与人数据
-//                if (isFirst) {
-//                    if (receiveList.size > 0) {
-//                        putExtra(Constant.DATA3, receiveList)
-//                    }
-//                }
+                if (isFirst) {
+                    if (receiveList.size > 0) {
+                        putExtra(Constant.DATA3, receiveList)
+                    }
+                }
             }
         }
     }
@@ -244,7 +250,9 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
                         uid = it.uid,
                         realname = it.realname,
                         classid = it.classid,
-                        usertype = it.usertype
+                        usertype = it.usertype,
+                        topdepartid = it.topdepartid,
+                        secdepartid = it.secdepartid
                     )
                 )
             }

@@ -1,7 +1,5 @@
 package com.xiaoneng.ss.module.school.view
 
-import android.os.Bundle
-import android.view.WindowManager
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
@@ -63,6 +61,17 @@ class SalaryDetailActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     tvReal.text = bean.reachwages
                     tvRealText.text = bean.title+"实发工资"
                     bean.expand?.keys?.let {
+                        var pp:Int? = null
+                        for (i in 0 until it.size){
+                            if (it[i]=="身份证号"){
+                                pp = i
+                            }
+                        }
+                        pp?.let {
+                            bean.expand?.keys?.removeAt(it)
+                            bean.expand?.vals?.removeAt(it)
+                            bean.expand?.remark?.removeAt(it)
+                        }
                         mAdapter.setNewData(it)
                         mAdapter.setEdata(bean)
                         mAdapter.notifyDataSetChanged()

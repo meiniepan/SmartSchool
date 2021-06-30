@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
+import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.circular.adapter.DaysOfMonthAdapter
 import com.xiaoneng.ss.module.circular.adapter.DaysOfWeekAdapter
@@ -161,10 +162,10 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
 //                mDataWeek.addAll(Lunar.getCurrentDaysOfWeek(chosenDay))
 //                mAdapterWeek.notifyDataSetChanged()
 //                switch()
-                mDataMonth.forEach{
+                mDataMonth.forEach {
                     it.isCheck = false
                 }
-                mDataMonth[position].isCheck=true
+                mDataMonth[position].isCheck = true
                 mAdapterMonth.notifyDataSetChanged()
                 getData()
             }
@@ -189,6 +190,9 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
             setAdapter(mAdapterEvent)
         }
         mAdapterEvent.setOnItemClickListener { adapter, view, position ->
+            if (mDataEvent[position].invtotal.toIntSafe() > 1 && (UserInfo.getUserBean().uid != mDataEvent[position].cuser_id)) {
+                return@setOnItemClickListener
+            }
             mStartActivity<ScheduleDetailActivity>(context) {
                 putExtra(Constant.DATA, mDataEvent[position])
             }
