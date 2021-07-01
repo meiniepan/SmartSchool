@@ -97,6 +97,7 @@ class InvolvePersonActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mDataInvolve.clear()
                     it.data.forEach {
                         it.parentId = id
+                        it.topdepartid = "grade0"
                         if (id.contains("_")) {
                             it.secdepartid = id.split("_")[1]
                         }

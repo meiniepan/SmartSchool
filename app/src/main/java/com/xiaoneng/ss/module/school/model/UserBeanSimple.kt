@@ -21,7 +21,7 @@ data class UserBeanSimple(
     var deps: ArrayList<UserBeanSimple> ? = null,
     var phone: String ? = null,
     var cno: String ? = null,
-    var topdepartid: String ? = null,
+    var topdepartid: String ? = null,//grade0 学生
     var secdepartid: String ? = null
 
 
