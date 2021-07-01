@@ -16,6 +16,7 @@ data class ScheduleBean(
     var id: String? = null,
     var realname: String? = null,
     var type: String? = null,
+    var itype: String? = null,//1个人日常2公共日程
     var title: String? = null,
     var remark: String? = null,
     var schoolname: String? = null,

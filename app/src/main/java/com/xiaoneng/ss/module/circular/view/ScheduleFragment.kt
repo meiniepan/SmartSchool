@@ -190,7 +190,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
             setAdapter(mAdapterEvent)
         }
         mAdapterEvent.setOnItemClickListener { adapter, view, position ->
-            if (mDataEvent[position].invtotal.toIntSafe() > 1 && (UserInfo.getUserBean().uid != mDataEvent[position].cuser_id)) {
+            if (mDataEvent[position].itype=="2" && (UserInfo.getUserBean().uid != mDataEvent[position].cuser_id)) {
                 return@setOnItemClickListener
             }
             mStartActivity<ScheduleDetailActivity>(context) {
