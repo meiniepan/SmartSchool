@@ -11,6 +11,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
+import com.xiaoneng.ss.module.activity.MainActivity
 import com.xiaoneng.ss.module.circular.adapter.ChooseColorAdapter
 import com.xiaoneng.ss.module.circular.model.ScheduleBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
@@ -51,19 +52,10 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
     override fun initView() {
         super.initView()
         isModify = intent.getBooleanExtra(Constant.TITLE, false)
-        if (isModify) {
-            bean = intent.getParcelableExtra(Constant.DATA)
-            bean?.let {
-                initUI(it)
-                mFromJson<ArrayList<UserBeanSimple>>(it.involve)?.let{
-                    receiveList = it
-                    dealData()
-                }
-            }
-        }
         initTime()
         beginTime = DateUtil.getNearTimeBeginYear(time)
         endTime = DateUtil.getNearTimeEndYear(time)
+
         tvActionTitle.setOnClickListener {
             addSchedule()
         }
@@ -126,10 +118,22 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 }
             }
         }
+        if (isModify) {
+            bean = intent.getParcelableExtra(Constant.DATA)
+            bean?.let {
+                initUI(it)
+                mFromJson<ArrayList<UserBeanSimple>>(it.involve)?.let {
+                    receiveList = it
+                    dealData()
+                }
+            }
+        }
     }
 
     private fun initUI(it: ScheduleBean) {
         etThemeAddSchedule.setText(it.title)
+        beginTime = it.scheduletime!!
+        endTime = it.scheduleover!!
         DateUtil.showTimeFromNet(it.scheduletime!!, tvBeginDate, tvBeginTime)
         DateUtil.showTimeFromNet(it.scheduleover!!, tvEndDate, tvEndTime)
         etRemarkAddSchedule.setText(it.remark)
@@ -267,8 +271,5 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 finish()
             }
         })
-
     }
-
-
 }
