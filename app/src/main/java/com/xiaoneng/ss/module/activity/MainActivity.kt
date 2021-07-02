@@ -132,6 +132,11 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
         text1L.setTextSize(TypedValue.COMPLEX_UNIT_DIP,14f)
         text2.setTextSize(TypedValue.COMPLEX_UNIT_DIP,14f)
         text2L.setTextSize(TypedValue.COMPLEX_UNIT_DIP,14f)
+
+        icon0.setImageResource(R.drawable.ic_tab_todo_c)
+        icon1.setImageResource(R.drawable.ic_tab_school)
+        icon2.setImageResource(R.drawable.ic_tab_mine)
+
         bottom_navigation.setOnNavigationItemSelectedListener { menuItem: MenuItem ->
 
             when (menuItem.itemId) {
@@ -164,7 +169,6 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
             }
         }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

@@ -9,11 +9,11 @@
     <item
         android:id="@+id/menu_school"
         android:icon="@drawable/ic_tab_school"
+        android:checked="false"
         android:title="@string/navigation_2" />
     <item
         android:id="@+id/menu_mine"
         android:icon="@drawable/ic_tab_mine"
+        android:checked="false"
         android:title="@string/navigation_3" />
-
-
 </menu>

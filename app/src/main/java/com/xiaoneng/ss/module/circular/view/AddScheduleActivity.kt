@@ -104,7 +104,10 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
         if (UserInfo.getUserBean().usertype == "1") {
             llInvite.visibility = View.GONE
         } else {
-            llInvite.visibility = View.VISIBLE
+            if(isModify&&bean?.cuser_id!=UserInfo.getUserBean().uid){
+                llInvite.visibility = View.GONE
+            }else{
+            llInvite.visibility = View.VISIBLE}
         }
         llInvite.setOnClickListener {
             mStartForResult<AddInvolveActivity>(this, Constant.REQUEST_CODE_COURSE) {
@@ -167,14 +170,15 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
             return
         }
 
-        bean!!.token = UserInfo.getUserBean().token
-        bean!!.title = etThemeAddSchedule.text.toString()
-        bean!!.scheduletime = beginTime
-        bean!!.scheduleover = endTime
-        bean!!.remark = etRemarkAddSchedule.text.toString()
-        bean!!.involve = Gson().toJson(involves)
+        bean?.token = UserInfo.getUserBean().token
+        bean?.title = etThemeAddSchedule.text.toString()
+        bean?.scheduletime = beginTime
+        bean?.scheduleover = endTime
+        bean?.remark = etRemarkAddSchedule.text.toString()
+        bean?.involve = Gson().toJson(involves)
         showLoading()
         if (isModify) {
+            bean?.involve = null
             mViewModel.modifySchedule(bean)
         } else {
             mViewModel.addSchedule(bean)
