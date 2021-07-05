@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_quantize.*
 class QuantizeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapter: QuantizeAdapter
     var mData: ArrayList<QuantizeTypeBean> = ArrayList()
-
+    var strSpecial = "特殊情况报备"
 
     override fun getLayoutId(): Int {
         return R.layout.activity_quantize
@@ -54,7 +54,7 @@ class QuantizeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         mAdapter.setOnItemClickListener { adapter, view, position ->
-            if (mData[position].typename == "特殊情况报备") {
+            if (mData[position].typename == strSpecial) {
                 mStartActivity<QuantizeSpecialActivity>(this) {
                     putExtra(Constant.DATA, mData[position])
                 }
@@ -74,6 +74,7 @@ class QuantizeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 netResponseFormat<BaseResp<QuantizeTypeBean>>(it)?.let { bean ->
                     bean.data?.let {
                         mData.addAll(it)
+                        mData.add(QuantizeTypeBean(typename = strSpecial))
                         rvQuantize.notifyDataSetChanged()
                     }
                 }

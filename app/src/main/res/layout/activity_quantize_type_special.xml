@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.xiaoneng.ss.custom.widgets.CustomTitleBar
+        android:id="@+id/ctbTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/quantizeTitle" />
+
+    <include layout="@layout/layout_split" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/contentLayout"
+        style="@style/nes_scroll_style"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/llRoot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llClass"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:gravity="center_vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/title_padding"
+                    android:text="选择班级"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvClass"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:singleLine="true"
+                    android:text="请选择班级"
+                    android:textColor="@color/commonHint" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/title_padding"
+                    android:src="@drawable/ic_next" />
+            </LinearLayout>
+
+            <include layout="@layout/layout_split" />
+
+            <LinearLayout
+                android:id="@+id/llStudent"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:gravity="center_vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/title_padding"
+                    android:text="选择学生"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvStudent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:singleLine="true"
+                    android:text="请选择学生"
+                    android:textColor="@color/commonHint" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/title_padding"
+                    android:src="@drawable/ic_next" />
+            </LinearLayout>
+
+            <include layout="@layout/layout_split" />
+
+            <LinearLayout
+                android:id="@+id/llTimeSec"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:gravity="center_vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/title_padding"
+                    android:text="选择时间段"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvTimeSec"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:singleLine="true"
+                    android:text="请选择时间段"
+                    android:textColor="@color/commonHint" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/title_padding"
+                    android:src="@drawable/ic_next" />
+            </LinearLayout>
+
+            <include layout="@layout/layout_split" />
+
+            <LinearLayout
+                android:id="@+id/llAct"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:gravity="center_vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/title_padding"
+                    android:text="情况类型"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvAct"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:singleLine="true"
+                    android:text="请选择情况类型"
+                    android:textColor="@color/commonHint" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/title_padding"
+                    android:src="@drawable/ic_next" />
+            </LinearLayout>
+
+            <include layout="@layout/layout_split" />
+
+            <LinearLayout
+                android:id="@+id/llRule"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:gravity="center_vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/title_padding"
+                    android:text="影响项目"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvRule"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:singleLine="true"
+                    android:text="请选择影响项目"
+                    android:textColor="@color/commonHint" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/title_padding"
+                    android:src="@drawable/ic_next" />
+            </LinearLayout>
+
+            <include layout="@layout/layout_split" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/title_padding"
+                android:paddingTop="15dp"
+                android:paddingEnd="@dimen/title_padding"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="情况说明"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/tvRemark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:background="@null"
+                    android:hint="最多20个字"
+                    android:textColor="@color/commonHint" />
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_split" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@color/grayF6"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvConfirmQuantize"
+            android:layout_width="86dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:background="@drawable/bac_blue_bac_0"
+            android:gravity="center"
+            android:text="提交"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

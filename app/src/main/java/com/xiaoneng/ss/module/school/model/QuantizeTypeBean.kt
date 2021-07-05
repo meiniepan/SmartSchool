@@ -12,14 +12,14 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class QuantizeTypeBean(
-    var id: String?,
-    var typename: String?,
-    var template: String?,
-    var remark: String?,
-    var operatorid: String?,
-    var realname: String?,
-    var schoolname: String?,
-    var createtime: String?,
-    var updatetime: String?,
+    var id: String? = null,
+    var typename: String? = null,
+    var template: String? = null,
+    var remark: String? = null,
+    var operatorid: String? = null,
+    var realname: String? = null,
+    var schoolname: String? = null,
+    var createtime: String? = null,
+    var updatetime: String? = null,
     var checked: Boolean = false
 ) : Parcelable

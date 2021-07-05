@@ -480,7 +480,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     it.forEach {
                         it.list.forEach {
 
-                            mDataClasses?.add(DepartmentBean(it.id, it.levelname + it.classname))
+                            mDataClasses?.add(DepartmentBean(it.id, it.levelclass))
                         }
 
                     }

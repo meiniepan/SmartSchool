@@ -762,7 +762,7 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
-     *增加德育评比评分
+     *增加德育评比特殊情况
      */
     @POST("/api/v17/moral/moralRuleSpecial/add")
     suspend fun addMoralScoreSpecial(
@@ -1103,7 +1103,7 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
-     *查询德育评比类型
+     *列表德育评比类型
      */
     @FormUrlEncoded
     @POST("/api/v17/moral/moralType/lists")
@@ -1112,7 +1112,7 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
-     *查询德育评比类型
+     *查询德育评比类型信息
      */
     @FormUrlEncoded
     @POST("/api/v17/moral/moralType/info")

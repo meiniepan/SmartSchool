@@ -23,7 +23,10 @@ data class QuantizeBody(
     var realname: String?=null,
     var uid: String?=null,
     var usertype: String?=null,
+    var involve: String?=null,
     var score: String?=null,//
+    var actname: String?=null,//情况类型
+    var rulename: String?=null,//影响项目
     var correctscore: String?=null,
     var templatedata: String?=null,//
     var remark: String?=null,

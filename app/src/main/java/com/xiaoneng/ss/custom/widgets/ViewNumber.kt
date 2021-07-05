@@ -40,6 +40,7 @@ class ViewNumber @JvmOverloads constructor(
         etNumber.setText(mNumber.toString())
         etNumber.addTextChangedListener {
             data.value = it.toString()
+            commit.score = it.toString()
             mNumber = it.toString().toIntSafe()
         }
 
@@ -49,6 +50,7 @@ class ViewNumber @JvmOverloads constructor(
                 mNumber -= 1
                 etNumber.setText(mNumber.toString())
                 data.value = mNumber.toString()
+                commit.score = mNumber.toString()
             } else {
                 context.toast("不能再减了~")
             }
@@ -58,6 +60,7 @@ class ViewNumber @JvmOverloads constructor(
             mNumber += 1
             etNumber.setText(mNumber.toString())
             data.value = mNumber.toString()
+            commit.score = mNumber.toString()
         }
     }
 

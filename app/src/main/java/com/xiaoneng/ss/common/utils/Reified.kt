@@ -175,8 +175,9 @@ inline fun Activity.showDateDayHourPick(textView: TextView, crossinline block: S
                 hour: String?,
                 minute: String?
             ) {
-                var timess = "${month}月${day}日 ${hour}:00"
-                "${year}${month}${day}${hour}".block()
+                var timess = "${month}月${day}日 ${hour}:${minute}"
+                var ss = "${year}${month}${day} ${hour}${minute}"
+                ss.block()
                 textView.text = timess
             }
 

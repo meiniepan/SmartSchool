@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.school.adapter.DialogListAdapter
@@ -60,8 +61,6 @@ class ViewJump @JvmOverloads constructor(
         tvJumpTitle.hint = data.placeholder
         if (data.name == "ChoseStudents") {
             if (context is QuantizeTypeActivity) {
-                context.mListener = this
-            } else if (context is QuantizeSpecialActivity) {
                 context.mListener = this
             }
         }
@@ -207,6 +206,7 @@ class ViewJump @JvmOverloads constructor(
                 res = res.substring(0, res.length - 1)
             }
             data.value = res
+            commit.rulename = res
             tvJumpTitle.text = res
             dialogType.dismiss()
         }
@@ -249,5 +249,6 @@ class ViewJump @JvmOverloads constructor(
                 )
             }
         }
+        commit.involve = Gson().toJson(involves)
     }
 }
