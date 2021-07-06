@@ -40,9 +40,13 @@ class QuantizeTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.initView()
         mBean = intent.getParcelableExtra(Constant.DATA)
         tvConfirmQuantize.setOnClickListener {
-            if (mDataCommit.checktime.isNullOrEmpty()){
-                toast(R.string.lack_info)
-                return@setOnClickListener
+            mData.forEach {
+                if (it.rules?.required?.required==true){
+                    if (it.rules?.required?.hasValue==false){
+                        toast(it.rules?.required?.message?:getString(R.string.lack_info))
+                        return@setOnClickListener
+                    }
+                }
             }
             mDataCommit.templatedata = Gson().toJson(mData)
             mDataCommit.typeid = mBean?.id

@@ -21,11 +21,8 @@ import com.xiaoneng.ss.module.school.adapter.DialogMultiCheckAdapter
 import com.xiaoneng.ss.module.school.interfaces.IChooseStudent
 import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.view.AddInvolveActivity
-import com.xiaoneng.ss.module.school.view.QuantizeSpecialActivity
 import com.xiaoneng.ss.module.school.view.QuantizeTypeActivity
 import kotlinx.android.synthetic.main.custom_choose_item.view.*
-import kotlinx.android.synthetic.main.custom_choose_item.view.tvJumpTitle
-import kotlinx.android.synthetic.main.custom_jump_item.view.*
 
 /**
  * @author Burning
@@ -64,6 +61,11 @@ class ViewJump @JvmOverloads constructor(
                 context.mListener = this
             }
         }
+        if (data.rules?.required?.required == true) {
+            tvRequired.visibility = View.VISIBLE
+        } else {
+            tvRequired.visibility = View.INVISIBLE
+        }
         setOnClickListener {
             if (data.name == "CascaderClass") {
                 dialogSingle.show()
@@ -76,17 +78,20 @@ class ViewJump @JvmOverloads constructor(
                         commit.checktime = data.value
                         commit.stime = data.stime
                         commit.etime = data.etime
+                        data.rules?.required?.hasValue = true
                     }
                 )
             } else if (data.name == "DateTimePicker") {
                 context.showDateDayHourPick(tvJumpTitle) {
                     data.value = this
                     commit.checktime = this
+                    data.rules?.required?.hasValue = true
                 }
             } else if (data.name == "DatePicker") {
                 context.showDateDayPick(tvJumpTitle) {
                     data.value = this
                     commit.checktime = this
+                    data.rules?.required?.hasValue = true
                 }
             } else if (data.name == "Radio") {
                 dialogSingle.show()
@@ -94,7 +99,7 @@ class ViewJump @JvmOverloads constructor(
                 dialogMulti.show()
             } else if (data.name == "ChoseStudents") {
                 mStartForResult<AddInvolveActivity>(context, Constant.REQUEST_CODE_COURSE) {
-                    putExtra(Constant.DATA, mClass)
+                    putExtra(Constant.DATA2, mClass)
                     //从草稿箱第一次选择参与人，传入原有参与人数据
                     if (isFirst) {
                         if (receiveList.size > 0) {
@@ -149,6 +154,7 @@ class ViewJump @JvmOverloads constructor(
             } else {
                 data.value = titles[position]
             }
+            data.rules?.required?.hasValue = true
             tvJumpTitle.text = titles[position]
             dialogType.dismiss()
         }
@@ -208,6 +214,7 @@ class ViewJump @JvmOverloads constructor(
             data.value = res
             commit.rulename = res
             tvJumpTitle.text = res
+            data.rules?.required?.hasValue = !res.isNullOrEmpty()
             dialogType.dismiss()
         }
         return dialogType
@@ -217,7 +224,7 @@ class ViewJump @JvmOverloads constructor(
         isFirst = false
         involves.clear()
         receiveList.clear()
-        mClass = data.getParcelableArrayListExtra(Constant.DATA)!!
+        mClass = data.getParcelableArrayListExtra(Constant.DATA2)!!
         mClass.forEach {
             addPeople(it)
         }
@@ -234,6 +241,8 @@ class ViewJump @JvmOverloads constructor(
             str = str.substring(0, str.length - 1)
         }
         tvJumpTitle.text = str
+        commit.involve = Gson().toJson(involves)
+        data.rules?.required?.hasValue = involves.size != 0
     }
 
     fun addPeople(it: DepartmentBean) {
@@ -249,6 +258,6 @@ class ViewJump @JvmOverloads constructor(
                 )
             }
         }
-        commit.involve = Gson().toJson(involves)
+
     }
 }

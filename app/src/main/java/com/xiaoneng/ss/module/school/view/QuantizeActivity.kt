@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.netResponseFormat
@@ -54,16 +55,21 @@ class QuantizeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         mAdapter.setOnItemClickListener { adapter, view, position ->
-            if (mData[position].typename == strSpecial) {
-                mStartActivity<QuantizeSpecialActivity>(this) {
+            if (UserInfo.getUserBean().usertype=="2"){
+                mStartActivity<QuantizeListStudentActivity>(this) {
                     putExtra(Constant.DATA, mData[position])
                 }
-            } else {
-                mStartActivity<QuantizeTypeActivity>(this) {
-                    putExtra(Constant.DATA, mData[position])
+            }else{
+                if (mData[position].typename == strSpecial) {
+                    mStartActivity<QuantizeSpecialActivity>(this) {
+                        putExtra(Constant.DATA, mData[position])
+                    }
+                } else {
+                    mStartActivity<QuantizeTypeActivity>(this) {
+                        putExtra(Constant.DATA, mData[position])
+                    }
                 }
             }
-
         }
     }
 

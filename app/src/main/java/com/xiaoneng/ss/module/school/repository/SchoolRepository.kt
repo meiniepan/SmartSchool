@@ -136,8 +136,9 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
     suspend fun getTimetableT(classid: String? = null, time: String? = null): TimetableResponse {
         return apiService.getTimetable2(UserInfo.getUserBean().token, time = time)
-                .dataConvert(loadState)
+            .dataConvert(loadState)
     }
+
     suspend fun getAttTimetable(time: String? = null, uId: String? = null): Any {
 
 
@@ -193,7 +194,11 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
     ): AchievementResponse {
         return when (UserInfo.getUserBean().usertype) {
             "1" -> {
-                apiService.getAchievement(UserInfo.getUserBean().token, testname = testname,crsid = crsid)
+                apiService.getAchievement(
+                    UserInfo.getUserBean().token,
+                    testname = testname,
+                    crsid = crsid
+                )
                     .dataConvert(loadState)
             }
             "2" -> {
@@ -219,7 +224,11 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
 
             }
             else -> {
-                apiService.getAchievement(UserInfo.getUserBean().token, testname = testname,crsid = crsid)
+                apiService.getAchievement(
+                    UserInfo.getUserBean().token,
+                    testname = testname,
+                    crsid = crsid
+                )
                     .dataConvert(loadState)
             }
         }
@@ -419,6 +428,16 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
+    suspend fun getQuantizeListCommon(typeid: String?): Any {
+        return apiService.getQuantizeListCommon(UserInfo.getUserBean().token,typeid=typeid)
+            .dataConvert(loadState)
+    }
+
+    suspend fun getQuantizeListSpecial(): Any {
+        return apiService.getQuantizeListSpecial(UserInfo.getUserBean().token)
+            .dataConvert(loadState)
+    }
+
     suspend fun getStudentsByClass(classId: String? = null, realName: String? = null): Any {
         return apiService.getStudentsByClass(
             UserInfo.getUserBean().token,
@@ -499,7 +518,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
     }
 
     suspend fun readSalaryDetail(id: String?): Any {
-        return apiService.readSalaryDetail(UserInfo.getUserBean().token, id=id)
+        return apiService.readSalaryDetail(UserInfo.getUserBean().token, id = id)
             .dataConvert(loadState)
     }
 
@@ -527,6 +546,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         return apiService.addBookSite(body)
             .dataConvert(loadState)
     }
+
     suspend fun modifyBookSite(body: AddBookSiteBody): Any {
         return apiService.modifyBookSite(body)
             .dataConvert(loadState)
@@ -545,8 +565,9 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         return apiService.getBookSiteRecord(UserInfo.getUserBean().token, lastid)
             .dataConvert(loadState)
     }
-    suspend fun getPropertyType(typeid: String? = null,lastid: String? = null): Any {
-        return apiService.getPropertyType(UserInfo.getUserBean().token, typeid,lastid)
+
+    suspend fun getPropertyType(typeid: String? = null, lastid: String? = null): Any {
+        return apiService.getPropertyType(UserInfo.getUserBean().token, typeid, lastid)
             .dataConvert(loadState)
     }
 
@@ -560,52 +581,68 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
-    suspend fun getPriCloudList(folderid:String?=null): Any {
+    suspend fun getPriCloudList(folderid: String? = null): Any {
         return apiService.getPriCloudList(UserInfo.getUserBean().token, folderid = folderid)
             .dataConvert(loadState)
     }
 
     suspend fun getMoralTypeList(): Any {
-        return apiService.getMoralTypeList(UserInfo.getUserBean().token)
+        return when (UserInfo.getUserBean().usertype) {
+            "1" -> {
+                apiService.getMoralTypeList(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+            }
+            else -> {
+                apiService.getMoralTypeList(UserInfo.getUserBean().token)
+                    .dataConvert(loadState)
+            }
+        }
+    }
+
+    suspend fun getMoralTypeInfo(id: String? = null): Any {
+        return apiService.getMoralTypeInfo(UserInfo.getUserBean().token, id)
             .dataConvert(loadState)
     }
 
-    suspend fun getMoralTypeInfo(id:String?=null): Any {
-        return apiService.getMoralTypeInfo(UserInfo.getUserBean().token,id)
-            .dataConvert(loadState)
-    }
-
-    suspend fun getAuthUsers(folderid:String?=null): Any {
+    suspend fun getAuthUsers(folderid: String? = null): Any {
         return apiService.getAuthUsers(UserInfo.getUserBean().token, folderid = folderid)
             .dataConvert(loadState)
     }
 
-    suspend fun copyCloudFile(fileid:String?=null,folderid:String?=null): Any {
-        return apiService.copyCloudFile(UserInfo.getUserBean().token,id = fileid, folderid = folderid)
+    suspend fun copyCloudFile(fileid: String? = null, folderid: String? = null): Any {
+        return apiService.copyCloudFile(
+            UserInfo.getUserBean().token,
+            id = fileid,
+            folderid = folderid
+        )
             .dataConvert(loadState)
     }
 
-    suspend fun moveCloudFile(fileid:String?=null,folderid:String?=null): Any {
-        return apiService.moveCloudFile(UserInfo.getUserBean().token,id = fileid, folderid = folderid)
+    suspend fun moveCloudFile(fileid: String? = null, folderid: String? = null): Any {
+        return apiService.moveCloudFile(
+            UserInfo.getUserBean().token,
+            id = fileid,
+            folderid = folderid
+        )
             .dataConvert(loadState)
     }
 
-    suspend fun delMyCloudFile(fileid:String?=null): Any {
-        return apiService.delMyCloudFile(UserInfo.getUserBean().token,fileid = fileid)
+    suspend fun delMyCloudFile(fileid: String? = null): Any {
+        return apiService.delMyCloudFile(UserInfo.getUserBean().token, fileid = fileid)
             .dataConvert(loadState)
     }
 
-    suspend fun delCloudFolder(folderid:String?=null): Any {
-        return apiService.delCloudFolder(UserInfo.getUserBean().token,id = folderid)
+    suspend fun delCloudFolder(folderid: String? = null): Any {
+        return apiService.delCloudFolder(UserInfo.getUserBean().token, id = folderid)
             .dataConvert(loadState)
     }
 
-    suspend fun cancelFolderAuth(folderid:String?=null): Any {
-        return apiService.cancelFolderAuth(UserInfo.getUserBean().token,folderid = folderid)
+    suspend fun cancelFolderAuth(folderid: String? = null): Any {
+        return apiService.cancelFolderAuth(UserInfo.getUserBean().token, folderid = folderid)
             .dataConvert(loadState)
     }
 
-    suspend fun getPriCloudFiles(folderid:String?=null): Any {
+    suspend fun getPriCloudFiles(folderid: String? = null): Any {
         return apiService.getPriCloudFiles(UserInfo.getUserBean().token, folderid = folderid)
             .dataConvert(loadState)
     }
@@ -625,43 +662,56 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
-    suspend fun getPubCloudList(folderid:String?=null): Any {
+    suspend fun getPubCloudList(folderid: String? = null): Any {
         return apiService.getPubCloudList(UserInfo.getUserBean().token, folderid = folderid)
             .dataConvert(loadState)
     }
 
-    suspend fun getPubCloudFiles(folderid:String?=null): Any {
+    suspend fun getPubCloudFiles(folderid: String? = null): Any {
         return apiService.getPubCloudFiles(UserInfo.getUserBean().token, folderid = folderid)
             .dataConvert(loadState)
     }
 
-    suspend fun newFileFolder(parentid:String?=null,foldername:String?=null): Any {
-        return apiService.newFileFolder(UserInfo.getUserBean().token, parentid = parentid,foldername = foldername)
+    suspend fun newFileFolder(parentid: String? = null, foldername: String? = null): Any {
+        return apiService.newFileFolder(
+            UserInfo.getUserBean().token,
+            parentid = parentid,
+            foldername = foldername
+        )
             .dataConvert(loadState)
     }
 
-    suspend fun setFileFolder(parentid:String?=null,folderid:String?=null,involve:String?=null): Any {
-        return apiService.setFileFolder(UserInfo.getUserBean().token, parentid = parentid,folderid = folderid,involve = involve)
+    suspend fun setFileFolder(
+        parentid: String? = null,
+        folderid: String? = null,
+        involve: String? = null
+    ): Any {
+        return apiService.setFileFolder(
+            UserInfo.getUserBean().token,
+            parentid = parentid,
+            folderid = folderid,
+            involve = involve
+        )
             .dataConvert(loadState)
     }
 
-    suspend fun getBookList(start: String,end:String?=null): Any {
-        return apiService.getBookList(UserInfo.getUserBean().token, start,end)
+    suspend fun getBookList(start: String, end: String? = null): Any {
+        return apiService.getBookList(UserInfo.getUserBean().token, start, end)
             .dataConvert(loadState)
     }
 
-    suspend fun remindUnread(id:String?=null): Any {
+    suspend fun remindUnread(id: String? = null): Any {
         return apiService.remindUnread(UserInfo.getUserBean().token, id)
             .dataConvert(loadState)
     }
 
-    suspend fun getBookRoomList(start: String,end:String?=null): Any {
-        return apiService.getBookRoomList(UserInfo.getUserBean().token, start,end)
+    suspend fun getBookRoomList(start: String, end: String? = null): Any {
+        return apiService.getBookRoomList(UserInfo.getUserBean().token, start, end)
             .dataConvert(loadState)
     }
 
     suspend fun getBookListMonth(month: String): Any {
-        return apiService.getBookListMonth(UserInfo.getUserBean().token, month=month)
+        return apiService.getBookListMonth(UserInfo.getUserBean().token, month = month)
             .dataConvert(loadState)
     }
 
@@ -671,7 +721,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
     }
 
     suspend fun remindRepair(id: String): Any {
-        return apiService.remindRepair(UserInfo.getUserBean().token,id)
+        return apiService.remindRepair(UserInfo.getUserBean().token, id)
             .dataConvert(loadState)
     }
 

@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import androidx.core.widget.addTextChangedListener
+import com.google.gson.Gson
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.module.school.model.PropertyTypeBean
 import com.xiaoneng.ss.module.school.model.QuantizeBody
@@ -40,10 +41,17 @@ class ViewTextAera @JvmOverloads constructor(
     private fun init() {
 
         View.inflate(context, R.layout.custom_text, this)
+        if (data.rules?.required?.required == true) {
+            tvRequired.visibility = View.VISIBLE
+        } else {
+            tvRequired.visibility = View.INVISIBLE
+        }
+
         tvJumpTitleKey.text = data.label
         tvJumpTitle.hint = data.placeholder
         tvJumpTitle.addTextChangedListener {
             data.value = it.toString()
+            data.rules?.required?.hasValue = !it.toString().isNullOrEmpty()
         }
     }
 

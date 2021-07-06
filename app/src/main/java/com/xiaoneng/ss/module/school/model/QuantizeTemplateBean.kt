@@ -29,6 +29,7 @@ data class QuantizeTemplateBean(
     var label: String?=null,
     var multiple: Boolean?=null,
     var placeholder: String?=null,
+    var rules: QuantizeRuleBean?=null,
     var value: String?=null,
     var stime: String?=null,
     var etime: String?=null,

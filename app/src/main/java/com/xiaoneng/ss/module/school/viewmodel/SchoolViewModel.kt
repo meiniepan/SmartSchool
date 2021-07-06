@@ -37,6 +37,8 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mDeleteAttendanceData: MutableLiveData<Any> = MutableLiveData()
     val mStsData: MutableLiveData<StsTokenResp> = MutableLiveData()
     val mBaseData: MutableLiveData<Any> = MutableLiveData()
+    val mQuantizeListCommonData: MutableLiveData<Any> = MutableLiveData()
+    val mQuantizeListSpecialData: MutableLiveData<Any> = MutableLiveData()
     val mMoralTypeInfoData: MutableLiveData<Any> = MutableLiveData()
     val mRepairTypeData: MutableLiveData<Any> = MutableLiveData()
     val mDeviceTypeData: MutableLiveData<Any> = MutableLiveData()
@@ -266,6 +268,20 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     fun getClassesByTea() {
         initiateRequest(
             { mBaseData.value = mRepository.getClassesByTea() },
+            loadState
+        )
+    }
+
+    fun getQuantizeListCommon(typeid: String?) {
+        initiateRequest(
+            { mQuantizeListCommonData.value = mRepository.getQuantizeListCommon(typeid) },
+            loadState
+        )
+    }
+
+    fun getQuantizeListSpecial() {
+        initiateRequest(
+            { mQuantizeListSpecialData.value = mRepository.getQuantizeListSpecial() },
             loadState
         )
     }

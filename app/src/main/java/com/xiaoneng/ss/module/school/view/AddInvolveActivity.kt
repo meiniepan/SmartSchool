@@ -174,6 +174,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             currentTab = tab2
             tvInvolveTab2.setChecked(true)
             tvInvolveTab1.setChecked(false)
+            checkSecondTab()
         }
 
     }

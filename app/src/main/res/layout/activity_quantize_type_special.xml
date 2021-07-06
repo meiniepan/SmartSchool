@@ -27,41 +27,6 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/llClass"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:gravity="center_vertical">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/title_padding"
-                    android:text="选择班级"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvClass"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:singleLine="true"
-                    android:text="请选择班级"
-                    android:textColor="@color/commonHint" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/title_padding"
-                    android:src="@drawable/ic_next" />
-            </LinearLayout>
-
-            <include layout="@layout/layout_split" />
-
-            <LinearLayout
                 android:id="@+id/llStudent"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
@@ -74,7 +39,13 @@
                     android:layout_marginStart="@dimen/title_padding"
                     android:text="选择学生"
                     android:textStyle="bold" />
-
+                <TextView
+                    android:id="@+id/tvRequiredStudent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*"
+                    android:textColor="@color/commonRed2"
+                    android:textStyle="bold" />
                 <TextView
                     android:id="@+id/tvStudent"
                     android:layout_width="0dp"
@@ -109,7 +80,13 @@
                     android:layout_marginStart="@dimen/title_padding"
                     android:text="选择时间段"
                     android:textStyle="bold" />
-
+                <TextView
+                    android:id="@+id/tvRequiredTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*"
+                    android:textColor="@color/commonRed2"
+                    android:textStyle="bold" />
                 <TextView
                     android:id="@+id/tvTimeSec"
                     android:layout_width="0dp"
@@ -144,7 +121,13 @@
                     android:layout_marginStart="@dimen/title_padding"
                     android:text="情况类型"
                     android:textStyle="bold" />
-
+                <TextView
+                    android:id="@+id/tvRequiredAct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*"
+                    android:textColor="@color/commonRed2"
+                    android:textStyle="bold" />
                 <TextView
                     android:id="@+id/tvAct"
                     android:layout_width="0dp"
@@ -179,7 +162,13 @@
                     android:layout_marginStart="@dimen/title_padding"
                     android:text="影响项目"
                     android:textStyle="bold" />
-
+                <TextView
+                    android:id="@+id/tvRequiredRule"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*"
+                    android:textColor="@color/commonRed2"
+                    android:textStyle="bold" />
                 <TextView
                     android:id="@+id/tvRule"
                     android:layout_width="0dp"
@@ -210,13 +199,22 @@
                 android:paddingTop="15dp"
                 android:paddingEnd="@dimen/title_padding"
                 android:paddingBottom="15dp">
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="情况说明"
                     android:textStyle="bold" />
-
+                    <TextView
+                        android:id="@+id/tvRequired"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="*"
+                        android:textColor="@color/commonRed2"
+                        android:textStyle="bold" />
+                </LinearLayout>
                 <EditText
                     android:id="@+id/tvRemark"
                     android:layout_width="match_parent"

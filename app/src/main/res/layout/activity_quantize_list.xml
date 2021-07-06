@@ -8,24 +8,42 @@
     android:orientation="vertical">
 
     <com.xiaoneng.ss.custom.widgets.CustomTitleBar
-        android:id="@+id/ctbNoticeDetail"
+        android:id="@+id/ctbTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="@string/quantizeTitle" />
+
+    <include layout="@layout/layout_split" />
+
 
     <LinearLayout
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/tintBac"
         android:orientation="vertical">
 
-
         <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
-            android:id="@+id/rvQuantize"
-            android:layout_marginTop="12dp"
+            android:id="@+id/rvQuantizeList"
             style="@style/recycler_style"
-            />
+            android:layout_marginTop="12dp" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@color/grayF6"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvConfirmQuantize"
+            android:layout_width="86dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:background="@drawable/bac_blue_bac_0"
+            android:gravity="center"
+            android:text="提交"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

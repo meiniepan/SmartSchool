@@ -35,6 +35,12 @@ class ViewNumber @JvmOverloads constructor(
     private fun init() {
 
         View.inflate(context, R.layout.custom_input_number, this)
+        if (data.rules?.required?.required == true) {
+            tvRequired.visibility = View.VISIBLE
+        } else {
+            tvRequired.visibility = View.INVISIBLE
+        }
+
         tvJumpTitleKey.text = data.label
         data.value = "0"
         etNumber.setText(mNumber.toString())

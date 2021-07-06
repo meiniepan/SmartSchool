@@ -779,6 +779,25 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
+     *学生列表德育评比评分
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/moral/moralScore/slists")
+    suspend fun getQuantizeListCommon(
+        @Field("token") token: String?,
+        @Field("typeid") typeid: String?
+    ): BaseResponse<Any>
+
+    /**
+     *学生列表德育评比特殊情况
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/moral/moralRuleSpecial/slists")
+    suspend fun getQuantizeListSpecial(
+        @Field("token") token: String?
+    ): BaseResponse<Any>
+
+    /**
      *教师按班级获取学生列表
      */
     @FormUrlEncoded
@@ -1103,7 +1122,7 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
-     *列表德育评比类型
+     *老师列表德育评比评分
      */
     @FormUrlEncoded
     @POST("/api/v17/moral/moralType/lists")

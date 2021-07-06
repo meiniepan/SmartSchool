@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,10 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.RecycleViewDivider
-import com.xiaoneng.ss.common.utils.dp2px
-import com.xiaoneng.ss.common.utils.netResponseFormat
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.model.ClassBean
 import com.xiaoneng.ss.module.school.adapter.DialogListAdapter
 import com.xiaoneng.ss.module.school.adapter.DialogMultiCheckAdapter
@@ -27,12 +25,11 @@ import com.xiaoneng.ss.module.school.interfaces.IChooseStudent
 import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_quantize_type_special.*
-import kotlinx.android.synthetic.main.custom_choose_item.view.*
 import org.jetbrains.anko.toast
 
 /**
  * @author Burning
- * @description:报修报送
+ * @description:
  * @date :2020/10/23 3:17 PM
  */
 class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
@@ -40,14 +37,17 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var mBean: QuantizeTypeBean? = null
     var mData: ArrayList<QuantizeTemplateBean> = ArrayList()
     var mDataClasses: ArrayList<ClassBean>? = ArrayList()
-    var commit= QuantizeBody()
+    var commit = QuantizeBody()
     var arr1 = ArrayList<String>()
     var arr2 = ArrayList<String>()
-    var classes: ArrayList<ClassBean>?=null
+    var classes: ArrayList<ClassBean>? = null
     var involves: ArrayList<UserBeanSimple> = ArrayList()
     var mClass = ArrayList<DepartmentBean>()
     var receiveList: ArrayList<UserBeanSimple> = ArrayList()
     var isFirst = true
+    private val dialogSingleClass: Dialog by lazy { initDialogSingleClass() }
+    private val dialogSingleAct: Dialog by lazy { initDialogSingleAct() }
+    private val dialogMulti: Dialog by lazy { initDialogMulti() }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_quantize_type_special
@@ -57,19 +57,17 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.initView()
         mBean = intent.getParcelableExtra(Constant.DATA)
         tvConfirmQuantize.setOnClickListener {
-            if (commit.checktime.isNullOrEmpty()){
+            if (involves.size==0||commit.stime.isNullOrEmpty()||commit.actname.isNullOrEmpty()||commit.rulename.isNullOrEmpty()||commit.remark.isNullOrEmpty()) {
                 toast(R.string.lack_info)
                 return@setOnClickListener
             }
-            commit.templatedata = Gson().toJson(mData)
-            commit.typeid = mBean?.id
             mViewModel.addMoralScoreSpecial(commit)
         }
         initAdapter()
     }
 
     private fun initUI(mDataClasses: ArrayList<ClassBean>?) {
-classes = mDataClasses
+        classes = mDataClasses
         arr1.add("病假")
         arr1.add("事假")
         arr1.add("外出考试")
@@ -81,8 +79,42 @@ classes = mDataClasses
         arr2.add("离校")
         arr2.add("出操")
 
-        llClass.setOnClickListener{
+//        llClass.setOnClickListener {
+//            dialogSingleClass.show()
+//        }
 
+        llStudent.setOnClickListener {
+            mStartForResult<AddInvolveActivity>(this, Constant.REQUEST_CODE_COURSE) {
+                putExtra(Constant.DATA2, mClass)
+                //从草稿箱第一次选择参与人，传入原有参与人数据
+                if (isFirst) {
+                    if (receiveList.size > 0) {
+                        putExtra(Constant.DATA3, receiveList)
+                    }
+                }
+                //从草稿箱第一次选择参与人，传入原有参与人数据
+                putExtra(Constant.TYPE, 2)
+            }
+        }
+
+        llTimeSec.setOnClickListener {
+            showTimeSection(tvTimeSec,
+                { commit.stime = this },
+                {
+                    commit.etime = this
+                }
+            )
+        }
+
+        llAct.setOnClickListener {
+            dialogSingleAct.show()
+        }
+
+        llRule.setOnClickListener {
+            dialogMulti.show()
+        }
+        tvRemark.addTextChangedListener {
+            commit.remark = it.toString()
         }
     }
 
@@ -105,9 +137,9 @@ classes = mDataClasses
 
     private fun initDialogSingleClass(): Dialog {
         var titles = ArrayList<String>()
-            classes?.forEach {
-                titles.add(it.levelclass ?: "")
-            }
+        classes?.forEach {
+            titles.add(it.levelclass ?: "")
+        }
 
         // 底部弹出对话框
         var dialogType =
@@ -135,9 +167,9 @@ classes = mDataClasses
         }
         dialogAdapter.setOnItemClickListener { adapter, view, position ->
 
-                commit.classid = classes!![position].id
+            commit.classid = classes!![position].id
 
-            tvClass.text = titles[position]
+//            tvClass.text = titles[position]
             dialogType.dismiss()
         }
         return dialogType
@@ -145,9 +177,9 @@ classes = mDataClasses
 
     private fun initDialogSingleAct(): Dialog {
         var titles = ArrayList<String>()
-            arr1?.forEach {
-                titles.add(it)
-            }
+        arr1?.forEach {
+            titles.add(it)
+        }
 
         // 底部弹出对话框
         var dialogType =
@@ -175,7 +207,7 @@ classes = mDataClasses
         }
         dialogAdapter.setOnItemClickListener { adapter, view, position ->
 
-                commit.actname = titles[position]
+            commit.actname = titles[position]
 
             tvAct.text = titles[position]
             dialogType.dismiss()
@@ -185,9 +217,9 @@ classes = mDataClasses
 
     private fun initDialogMulti(): Dialog {
         var titles = ArrayList<MultiCheckBean>()
-            arr2.forEach {
-                titles.add(MultiCheckBean(name = it))
-            }
+        arr2.forEach {
+            titles.add(MultiCheckBean(name = it))
+        }
         // 底部弹出对话框
         var dialogType =
             Dialog(this, R.style.BottomDialog)
@@ -235,11 +267,12 @@ classes = mDataClasses
         }
         return dialogType
     }
-     fun addInvolve(data: Intent) {
+
+    fun addInvolve(data: Intent) {
         isFirst = false
         involves.clear()
         receiveList.clear()
-        mClass = data.getParcelableArrayListExtra(Constant.DATA)!!
+        mClass = data.getParcelableArrayListExtra(Constant.DATA2)!!
         mClass.forEach {
             addPeople(it)
         }
@@ -255,6 +288,7 @@ classes = mDataClasses
             }
             str = str.substring(0, str.length - 1)
         }
+        commit.involve = Gson().toJson(involves)
         tvStudent.text = str
     }
 
@@ -271,8 +305,9 @@ classes = mDataClasses
                 )
             }
         }
-        commit.involve = Gson().toJson(involves)
+
     }
+
     override fun onActivityResult(
         requestCode: Int,
         resultCode: Int,

@@ -77,7 +77,7 @@ inline fun Activity.showDatePick(
     beginTime: Long = System.currentTimeMillis(),
     crossinline block: String.() -> Unit
 ) {
-    val THIS_YEAR:Int = Calendar.getInstance().get(Calendar.YEAR)
+    val THIS_YEAR: Int = Calendar.getInstance().get(Calendar.YEAR)
     DateTimePicker(this, DateTimePicker.HOUR_24).apply {
 //            setActionButtonTop(false)
         setSelectedTextColor(resources.getColor(R.color.themeColor))
@@ -121,7 +121,7 @@ inline fun Activity.showDatePick(
 inline fun Activity.showDateDayPick(textView: TextView, crossinline block: String.() -> Unit) {
     DateTimePicker(this, DateTimePicker.NONE).apply {
 //            setActionButtonTop(false)
-        val THIS_YEAR:Int = Calendar.getInstance().get(Calendar.YEAR)
+        val THIS_YEAR: Int = Calendar.getInstance().get(Calendar.YEAR)
         setSelectedTextColor(resources.getColor(R.color.themeColor))
         setDateRangeStart(THIS_YEAR, 1, 1)
         setDateRangeEnd(THIS_YEAR + 5, 11, 11)
@@ -155,7 +155,7 @@ inline fun Activity.showDateDayPick(textView: TextView, crossinline block: Strin
 inline fun Activity.showDateDayHourPick(textView: TextView, crossinline block: String.() -> Unit) {
     DateTimePicker(this, DateTimePicker.HOUR_24).apply {
 //            setActionButtonTop(false)
-        val THIS_YEAR:Int = Calendar.getInstance().get(Calendar.YEAR)
+        val THIS_YEAR: Int = Calendar.getInstance().get(Calendar.YEAR)
         setSelectedTextColor(resources.getColor(R.color.themeColor))
         setDateRangeStart(THIS_YEAR, 1, 1)
         setDateRangeEnd(THIS_YEAR + 5, 11, 11)
@@ -190,7 +190,7 @@ inline fun Activity.showDateDayHourPick(textView: TextView, crossinline block: S
 inline fun Activity.showBirthDayPick(textView: TextView, crossinline block: String.() -> Unit) {
     DateTimePicker(this, DateTimePicker.NONE).apply {
 //            setActionButtonTop(false)
-        val THIS_YEAR:Int = Calendar.getInstance().get(Calendar.YEAR)
+        val THIS_YEAR: Int = Calendar.getInstance().get(Calendar.YEAR)
         setSelectedTextColor(resources.getColor(R.color.themeColor))
         setDateRangeStart(1900, 1, 1)
         setDateRangeEnd(THIS_YEAR, 12, 31)
@@ -221,10 +221,14 @@ inline fun Activity.showBirthDayPick(textView: TextView, crossinline block: Stri
 
 }
 
-inline fun Activity.showTimeSection(textView: TextView, crossinline block: String.() -> Unit, crossinline blockEnd: String.() -> Unit) {
+inline fun Activity.showTimeSection(
+    textView: TextView,
+    crossinline block: String.() -> Unit,
+    crossinline blockEnd: String.() -> Unit
+) {
     DateRangePicker(this, DateRangePicker.NONE).apply {
 //            setActionButtonTop(false)
-        val THIS_YEAR:Int = Calendar.getInstance().get(Calendar.YEAR)
+        val THIS_YEAR: Int = Calendar.getInstance().get(Calendar.YEAR)
         setSelectedTextColor(resources.getColor(R.color.themeColor))
         setDateRangeStart(THIS_YEAR, 1, 1)
         setDateRangeEnd(THIS_YEAR + 5, 11, 11)
@@ -250,22 +254,23 @@ inline fun Activity.showTimeSection(textView: TextView, crossinline block: Strin
                 dayEnd: String?
             ) {
                 var yearEnd = year
-                if (monthEnd.toIntSafe()<monthStart.toIntSafe()){
-                    yearEnd = (year.toIntSafe()+1).toString()
+                if (monthEnd.toIntSafe() < monthStart.toIntSafe()) {
+                    yearEnd = (year.toIntSafe() + 1).toString()
                 }
                 calendar.set(Calendar.YEAR, year.toIntSafe());
-                calendar.set(Calendar.MONTH, monthStart.toIntSafe()-1);
+                calendar.set(Calendar.MONTH, monthStart.toIntSafe() - 1);
                 calendar.set(Calendar.DATE, dayStart.toIntSafe());
-                var aTime=calendar.getTimeInMillis();
+                var aTime = calendar.getTimeInMillis();
                 calendar.set(Calendar.YEAR, yearEnd.toIntSafe());
-                calendar.set(Calendar.MONTH, monthEnd.toIntSafe()-1);
+                calendar.set(Calendar.MONTH, monthEnd.toIntSafe() - 1);
                 calendar.set(Calendar.DATE, dayEnd.toIntSafe());
-                var bTime=calendar.getTimeInMillis();
-                var cTime=bTime-aTime
-                var days = cTime/(1000*60*60*24)
-                var timess = "${year}年${monthStart}月${dayStart}日-${yearEnd}年${monthEnd}月${dayEnd}日(${days}天)"
-                "${year}${monthStart}${dayStart}".block()
-                "${year}${monthEnd}${dayEnd}".blockEnd()
+                var bTime = calendar.getTimeInMillis();
+                var cTime = bTime - aTime
+                var days = cTime / (1000 * 60 * 60 * 24)
+                var timess =
+                    "${year}年${monthStart}月${dayStart}日-${yearEnd}年${monthEnd}月${dayEnd}日(${days}天)"
+                "${year}${monthStart?.to0String()}${dayStart?.to0String()}".block()
+                "${year}${monthEnd?.to0String()}${dayEnd?.to0String()}".blockEnd()
                 textView.text = timess
             }
 
@@ -382,29 +387,29 @@ fun dealTemplate(
     root: ViewGroup,
     template: ArrayList<QuantizeTemplateBean>,
     mDataCommit: QuantizeBody
-){
-    if (template.size>0){
-        for (i in 0 until template.size){
-            if (template[i].name=="Input"){
-                root.addView(ViewTextSingle(activity,data = template[i],commit = mDataCommit))
-            }else if (template[i].name=="Textarea"){
-                root.addView(ViewTextAera(activity,data = template[i],commit = mDataCommit))
-            }else if (template[i].name=="InputNumber"){
-                root.addView(ViewNumber(activity,data = template[i],commit = mDataCommit))
-            }else if (template[i].name=="Radio"){
-                root.addView(ViewJump(activity,data = template[i],commit = mDataCommit))
-            }else if (template[i].name=="Checkbox"){
-                root.addView(ViewJump(activity,data = template[i],commit = mDataCommit))
-            }else if (template[i].name=="DatePicker"){
-                root.addView(ViewJump(activity,data = template[i],commit = mDataCommit))
-            }else if (template[i].name=="DatePickerMultiple"){
-                root.addView(ViewJump(activity,data = template[i],commit = mDataCommit))
-            }else if (template[i].name=="DateTimePicker"){
-                root.addView(ViewJump(activity,data = template[i],commit = mDataCommit))
-            }else if (template[i].name=="CascaderClass"){
-                root.addView(ViewJump(activity,data = template[i],commit = mDataCommit))
-            }else if (template[i].name=="ChoseStudents"){
-                root.addView(ViewJump(activity,data = template[i],commit = mDataCommit))
+) {
+    if (template.size > 0) {
+        for (i in 0 until template.size) {
+            if (template[i].name == "Input") {
+                root.addView(ViewTextSingle(activity, data = template[i], commit = mDataCommit))
+            } else if (template[i].name == "Textarea") {
+                root.addView(ViewTextAera(activity, data = template[i], commit = mDataCommit))
+            } else if (template[i].name == "InputNumber") {
+                root.addView(ViewNumber(activity, data = template[i], commit = mDataCommit))
+            } else if (template[i].name == "Radio") {
+                root.addView(ViewJump(activity, data = template[i], commit = mDataCommit))
+            } else if (template[i].name == "Checkbox") {
+                root.addView(ViewJump(activity, data = template[i], commit = mDataCommit))
+            } else if (template[i].name == "DatePicker") {
+                root.addView(ViewJump(activity, data = template[i], commit = mDataCommit))
+            } else if (template[i].name == "DatePickerMultiple") {
+                root.addView(ViewJump(activity, data = template[i], commit = mDataCommit))
+            } else if (template[i].name == "DateTimePicker") {
+                root.addView(ViewJump(activity, data = template[i], commit = mDataCommit))
+            } else if (template[i].name == "CascaderClass") {
+                root.addView(ViewJump(activity, data = template[i], commit = mDataCommit))
+            } else if (template[i].name == "ChoseStudents") {
+                root.addView(ViewJump(activity, data = template[i], commit = mDataCommit))
             }
         }
     }
@@ -602,6 +607,13 @@ fun String?.toIntSafe(): Int {
 
 }
 
+fun String.to0String(): String {
+    if (this.length == 1) {
+        return "0$this"
+    }
+    return this
+}
+
 fun String?.toLongSafe(): Long {
     var result = 0L
     return try {
@@ -623,31 +635,32 @@ fun String?.isImage(): Boolean {
 
 fun String?.endIsImage(): Boolean {
     this?.let {
-      var it = it.toLowerCase()
+        var it = it.toLowerCase()
         if (it.endsWith(".jpg")
-            ||it.endsWith(".png")
-            ||it.endsWith(".jpeg")
-            ||it.endsWith(".gif")
-            ||it.endsWith(".bmp")
+            || it.endsWith(".png")
+            || it.endsWith(".jpeg")
+            || it.endsWith(".gif")
+            || it.endsWith(".bmp")
         ) {
             return true
         }
     }
     return false
 }
+
 fun String?.endIsVideo(): Boolean {
     this?.let {
         var it = it.toLowerCase()
         if (it.endsWith(".avi")
-            ||it.endsWith(".rmvb")
-            ||it.endsWith(".rm")
-            ||it.endsWith(".mov")
-            ||it.endsWith(".flv")
-            ||it.endsWith(".mp4")
-            ||it.endsWith(".3gp")
-            ||it.endsWith(".m4v")
-            ||it.endsWith(".m3u8")
-            ||it.endsWith(".webm")
+            || it.endsWith(".rmvb")
+            || it.endsWith(".rm")
+            || it.endsWith(".mov")
+            || it.endsWith(".flv")
+            || it.endsWith(".mp4")
+            || it.endsWith(".3gp")
+            || it.endsWith(".m4v")
+            || it.endsWith(".m3u8")
+            || it.endsWith(".webm")
         ) {
             return true
         }
@@ -659,24 +672,24 @@ fun String?.getFileIcon(): Int {
     var srcId = -1
     this?.let {
         if (it.endIsImage()) {
-            srcId =  R.drawable.ic_type_image
+            srcId = R.drawable.ic_type_image
         } else if (it.endIsVideo()) {
-            srcId =  R.drawable.ic_type_video
+            srcId = R.drawable.ic_type_video
         } else if (it.endsWith(".doc") || it.endsWith(".docx")) {
-            srcId =  R.drawable.ic_type_word
+            srcId = R.drawable.ic_type_word
         } else if (it.endsWith(".xls") || it.endsWith(".xlsx")) {
-            srcId =  R.drawable.ic_type_excel
+            srcId = R.drawable.ic_type_excel
         } else if (it.endsWith(".pdf")) {
-            srcId =  R.drawable.ic_type_pdf
+            srcId = R.drawable.ic_type_pdf
         } else if (it.endsWith(".zip") || it.endsWith(".rar") || it.endsWith(
                 ".tar"
             ) || it.endsWith(
                 ".gz"
             )
         ) {
-            srcId =  R.drawable.ic_type_zip
+            srcId = R.drawable.ic_type_zip
         } else {
-            srcId =  R.drawable.ic_type_unknow
+            srcId = R.drawable.ic_type_unknow
         }
     }
     return srcId
@@ -718,11 +731,11 @@ inline fun Context.mToast(message: Int): Toast = Toast
     }
 
 inline fun <reified T> mFromJson(response: String?): T? {
-    val gson =Gson()
+    val gson = Gson()
     val resultType = object : TypeToken<T>() {}.type
-    var result:T? = null
+    var result: T? = null
     try {
-     result = gson.fromJson<T>(response, resultType)
+        result = gson.fromJson<T>(response, resultType)
     } catch (e: Exception) {
 
     }
