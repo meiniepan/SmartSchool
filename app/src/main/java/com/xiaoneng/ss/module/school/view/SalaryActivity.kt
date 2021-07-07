@@ -15,6 +15,7 @@ import com.xiaoneng.ss.module.school.model.SalaryResponse
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_salary.*
 
+
 /**
  * @author Burning
  * @description:工资条
@@ -49,7 +50,7 @@ class SalaryActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun getData() {
         super.getData()
-        mViewModel.getSalaryList(type = "nopage",lastid = lastId)
+        mViewModel.getSalaryList(type = "nopage", lastid = lastId)
     }
 
     private fun initAdapter() {
