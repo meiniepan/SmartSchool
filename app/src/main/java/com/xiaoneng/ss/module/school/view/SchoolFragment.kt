@@ -1,6 +1,7 @@
 package com.xiaoneng.ss.module.school.view
 
 import android.view.View
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,7 +36,6 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
         fun getInstance(): Fragment {
             return SchoolFragment()
         }
-
     }
 
     override fun initView() {

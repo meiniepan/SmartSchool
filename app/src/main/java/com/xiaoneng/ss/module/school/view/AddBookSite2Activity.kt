@@ -78,7 +78,7 @@ class AddBookSite2Activity : BaseLifeCycleActivity<SchoolViewModel>() {
                 timeTitles.clear()
                 timeTitles.apply {
                     var d = initSiteTimes()
-                    for (i in basePosition until d.size) {
+                    for (i in basePosition until d.size-1) {
                         add(d[i].timeStr ?: "")
                     }
                 }
