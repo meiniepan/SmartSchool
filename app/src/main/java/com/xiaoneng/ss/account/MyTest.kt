@@ -1,5 +1,8 @@
 package com.xiaoneng.ss.account
 
+import okhttp3.internal.notifyAll
+import okhttp3.internal.wait
+
 /**
  * @author Burning
  * @description:
@@ -8,7 +11,7 @@ package com.xiaoneng.ss.account
 class MyTest {
     companion object {
         var ii = 0
-
+        var num = 0
         /** 我是main入口函数 **/
         @JvmStatic
         fun main(args: Array<String>) {
@@ -23,7 +26,26 @@ class MyTest {
                 , intArrayOf(8, 9)
                 , intArrayOf(1, 1)
             )
-            maxEnvelopes(ss)
+//            maxEnvelopes(ss)
+
+            var t1 = Thread(Runnable {
+                while (num<10){
+                        if(num%2==0){
+                            println("t1:"+num)
+                            num++
+                        }
+                }
+            })
+            var t2 = Thread(Runnable {
+                while (num<10){
+                        if(num%2==1){
+                            println("t2:"+num)
+                            num++
+                        }
+                }
+            })
+            t1.start()
+            t2.start()
         }
 
         fun maxEnvelopes(envelopes: ArrayList<IntArray>): Int {

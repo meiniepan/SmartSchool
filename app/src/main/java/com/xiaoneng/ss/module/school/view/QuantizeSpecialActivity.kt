@@ -36,10 +36,10 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapter: PropertyTypeAdapter
     var mBean: QuantizeTypeBean? = null
     var mData: ArrayList<QuantizeTemplateBean> = ArrayList()
+    var mDataType: ArrayList<QuantizeTypeBean>? = null
     var mDataClasses: ArrayList<ClassBean>? = ArrayList()
     var commit = QuantizeBody()
     var arr1 = ArrayList<String>()
-    var arr2 = ArrayList<String>()
     var classes: ArrayList<ClassBean>? = null
     var involves: ArrayList<UserBeanSimple> = ArrayList()
     var mClass = ArrayList<DepartmentBean>()
@@ -56,8 +56,9 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     override fun initView() {
         super.initView()
         mBean = intent.getParcelableExtra(Constant.DATA)
+        mDataType = intent.getParcelableArrayListExtra(Constant.DATA2)
         tvConfirmQuantize.setOnClickListener {
-            if (involves.size==0||commit.stime.isNullOrEmpty()||commit.actname.isNullOrEmpty()||commit.rulename.isNullOrEmpty()||commit.remark.isNullOrEmpty()) {
+            if (involves.size == 0 || commit.stime.isNullOrEmpty() || commit.actname.isNullOrEmpty() || commit.rulename.isNullOrEmpty() || commit.remark.isNullOrEmpty()) {
                 toast(R.string.lack_info)
                 return@setOnClickListener
             }
@@ -73,11 +74,6 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         arr1.add("外出考试")
         arr1.add("学校活动")
         arr1.add("其他")
-
-        arr2.add("全选")
-        arr2.add("入校")
-        arr2.add("离校")
-        arr2.add("出操")
 
 //        llClass.setOnClickListener {
 //            dialogSingleClass.show()
@@ -217,8 +213,10 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun initDialogMulti(): Dialog {
         var titles = ArrayList<MultiCheckBean>()
-        arr2.forEach {
-            titles.add(MultiCheckBean(name = it))
+        mDataType?.let {
+            it.forEach {
+                titles.add(MultiCheckBean(id = it.id, name = it.typename))
+            }
         }
         // 底部弹出对话框
         var dialogType =
@@ -255,7 +253,7 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             var res = ""
             titles.forEach {
                 if (it.isChecked) {
-                    res = res + it.name + ","
+                    res = res + it.id + ","
                 }
             }
             if (res.isNotEmpty()) {

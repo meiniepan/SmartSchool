@@ -7,6 +7,8 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.module.school.adapter.QuantizeAdapter
 import com.xiaoneng.ss.module.school.adapter.QuantizeListAdapter
+import com.xiaoneng.ss.module.school.adapter.QuantizeListSpecialAdapter
+import com.xiaoneng.ss.module.school.model.QuantizeBody
 import com.xiaoneng.ss.module.school.model.QuantizeTemplateBean
 import com.xiaoneng.ss.module.school.model.QuantizeTypeBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
@@ -19,8 +21,10 @@ import kotlinx.android.synthetic.main.activity_quantize_list.*
  */
 class QuantizeListStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapter: QuantizeListAdapter
+    lateinit var mAdapterSpecial: QuantizeListSpecialAdapter
     var mBean: QuantizeTypeBean? = null
     var mData: ArrayList<QuantizeTemplateBean> = ArrayList()
+    var mDataSpecial: ArrayList<QuantizeBody> = ArrayList()
     var strSpecial = "特殊情况报备"
 
 
@@ -32,7 +36,6 @@ class QuantizeListStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.initView()
         mBean = intent.getParcelableExtra(Constant.DATA)
 
-        initAdapter()
     }
 
 
@@ -54,11 +57,20 @@ class QuantizeListStudentActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     }
 
-    private fun initAdapter() {
+    private fun initAdapterCommon() {
         mAdapter = QuantizeListAdapter(R.layout.item_quantize, mData)
         rvQuantizeList.apply {
             layoutManager = LinearLayoutManager(context)
             setAdapter(mAdapter)
+        }
+
+    }
+
+    private fun initAdapterSpecial() {
+        mAdapterSpecial = QuantizeListSpecialAdapter(R.layout.item_quantize_list_special, mDataSpecial)
+        rvQuantizeList.apply {
+            layoutManager = LinearLayoutManager(context)
+            setAdapter(mAdapterSpecial)
         }
 
     }

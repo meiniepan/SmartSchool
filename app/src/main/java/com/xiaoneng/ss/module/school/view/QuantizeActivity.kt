@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_quantize.*
 class QuantizeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapter: QuantizeAdapter
     var mData: ArrayList<QuantizeTypeBean> = ArrayList()
+    var mDataType: ArrayList<QuantizeTypeBean> = ArrayList()
     var strSpecial = "特殊情况报备"
 
     override fun getLayoutId(): Int {
@@ -55,7 +56,7 @@ class QuantizeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         mAdapter.setOnItemClickListener { adapter, view, position ->
-            if (UserInfo.getUserBean().usertype=="2"){
+            if (UserInfo.getUserBean().usertype=="1"){
                 mStartActivity<QuantizeListStudentActivity>(this) {
                     putExtra(Constant.DATA, mData[position])
                 }
@@ -63,10 +64,12 @@ class QuantizeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 if (mData[position].typename == strSpecial) {
                     mStartActivity<QuantizeSpecialActivity>(this) {
                         putExtra(Constant.DATA, mData[position])
+                        putExtra(Constant.DATA2, mDataType)
                     }
                 } else {
                     mStartActivity<QuantizeTypeActivity>(this) {
                         putExtra(Constant.DATA, mData[position])
+                        putExtra(Constant.DATA2, mDataType)
                     }
                 }
             }
@@ -75,12 +78,13 @@ class QuantizeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
 
     override fun initDataObserver() {
-        mViewModel.mBaseData.observe(this, Observer {
+        mViewModel.mMoralTypeData.observe(this, Observer {
             it?.let {
                 netResponseFormat<BaseResp<QuantizeTypeBean>>(it)?.let { bean ->
                     bean.data?.let {
-                        mData.addAll(it)
                         mData.add(QuantizeTypeBean(typename = strSpecial))
+                        mData.addAll(it)
+                        mDataType.addAll(it)
                         rvQuantize.notifyDataSetChanged()
                     }
                 }

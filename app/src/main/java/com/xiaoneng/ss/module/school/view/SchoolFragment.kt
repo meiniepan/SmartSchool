@@ -83,7 +83,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                 )
             )
         }
-        if (AppInfo.checkRule1("admin/schedules/default")) {
+//        if (AppInfo.checkRule1("admin/moral/default")) {
             bean1.items.add(
                 SchoolItemBean(
                     name = getString(R.string.quantizeTitle),
@@ -94,7 +94,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                     }
                 )
             )
-        }
+//        }
         if (AppInfo.checkRule1("admin/wages/default")) {
             bean1.items.add(
                 SchoolItemBean(

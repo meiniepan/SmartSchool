@@ -26,7 +26,6 @@
             android:text="*"
             android:textColor="@color/commonRed2"
             android:textStyle="bold" />
-    </LinearLayout>
         <EditText
             android:id="@+id/tvJumpTitle"
             android:layout_width="wrap_content"
@@ -38,6 +37,6 @@
             android:background="@null"
             android:hint="最多10个字"
             android:textColor="@color/commonHint" />
-
+    </LinearLayout>
     <include layout="@layout/layout_split" />
 </LinearLayout>
