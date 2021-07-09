@@ -8,6 +8,7 @@
     android:paddingStart="@dimen/title_padding"
     android:paddingTop="15dp"
     android:paddingEnd="@dimen/title_padding"
+    android:layout_marginBottom="10dp"
     android:paddingBottom="15dp">
 
     <LinearLayout
@@ -50,78 +51,6 @@
 
         <TextView
             android:id="@+id/tvTimeE"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:gravity="end"
-            android:singleLine="true"
-            android:textColor="@color/commonHint" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="年级"
-            android:textSize="@dimen/sp_15"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvLevel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:gravity="end"
-            android:singleLine="true"
-            android:textColor="@color/commonHint" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="班级"
-            android:textSize="@dimen/sp_15"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvClass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:gravity="end"
-            android:singleLine="true"
-            android:textColor="@color/commonHint" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="姓名"
-            android:textSize="@dimen/sp_15"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -191,7 +120,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvQuantizeName"
+            android:id="@+id/tvRemark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"

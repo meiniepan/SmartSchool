@@ -21,6 +21,9 @@ class QuantizeListSpecialAdapter(layoutId: Int, listData: MutableList<QuantizeBo
     override fun convert(viewHolder: BaseViewHolder, item: QuantizeBody) {
         viewHolder?.let { holder ->
             holder.setText(R.id.tvTimeS, item.stime)
+                .setText(R.id.tvTimeE, item.etime)
+                .setText(R.id.tvAct, item.actname)
+                .setText(R.id.tvRemark, item.remark)
         }
     }
 

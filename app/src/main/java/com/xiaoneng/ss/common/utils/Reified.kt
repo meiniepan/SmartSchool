@@ -107,9 +107,9 @@ inline fun Activity.showDatePick(
                 var week = DateUtil.getWeek(sdf.parse("${year}${month}${day}"))
                 var time1 = "${month}月${day}日 $week"
                 var time2 = "${hour}:${minute}"
-                DateUtil.getDateString(year, month, day, hour, minute).block()
                 textView1.text = time1
                 textView2.text = time2
+                DateUtil.getDateString(year, month, day, hour, minute).block()
             }
 
         })
@@ -142,8 +142,8 @@ inline fun Activity.showDateDayPick(textView: TextView, crossinline block: Strin
                 minute: String?
             ) {
                 var timess = "${month}月${day}日"
-                "${year}${month}${day}".block()
                 textView.text = timess
+                "${year}${month}${day}".block()
             }
 
         })
@@ -177,8 +177,8 @@ inline fun Activity.showDateDayHourPick(textView: TextView, crossinline block: S
             ) {
                 var timess = "${month}月${day}日 ${hour}:${minute}"
                 var ss = "${year}${month}${day} ${hour}${minute}"
-                ss.block()
                 textView.text = timess
+                ss.block()
             }
 
         })
@@ -211,8 +211,8 @@ inline fun Activity.showBirthDayPick(textView: TextView, crossinline block: Stri
                 minute: String?
             ) {
                 var timess = "${month}月${day}日"
-                "${year}${month}${day}".block()
                 textView.text = timess
+                "${year}${month}${day}".block()
             }
 
         })
@@ -269,9 +269,9 @@ inline fun Activity.showTimeSection(
                 var days = cTime / (1000 * 60 * 60 * 24)
                 var timess =
                     "${year}年${monthStart}月${dayStart}日-${yearEnd}年${monthEnd}月${dayEnd}日(${days}天)"
+                textView.text = timess
                 "${year}${monthStart?.to0String()}${dayStart?.to0String()}".block()
                 "${year}${monthEnd?.to0String()}${dayEnd?.to0String()}".blockEnd()
-                textView.text = timess
             }
 
 
@@ -410,6 +410,38 @@ fun dealTemplate(
                 root.addView(ViewJump(activity, data = template[i], commit = mDataCommit))
             } else if (template[i].name == "ChoseStudents") {
                 root.addView(ViewJump(activity, data = template[i], commit = mDataCommit))
+            }
+        }
+    }
+}
+
+fun dealTemplateShow(
+    activity: Context,
+    root: ViewGroup,
+    template: ArrayList<QuantizeTemplateBean>,
+) {
+    if (template.size > 0) {
+        for (i in 0 until template.size) {
+            if (template[i].name == "Input") {
+                root.addView(ViewTextSingleShow(activity, data = template[i]))
+            } else if (template[i].name == "Textarea") {
+                root.addView(ViewTextAeraShow(activity, data = template[i]))
+            } else if (template[i].name == "InputNumber") {
+                root.addView(ViewTextSingleShow(activity, data = template[i]))
+            } else if (template[i].name == "Radio") {
+                root.addView(ViewTextSingleShow(activity, data = template[i]))
+            } else if (template[i].name == "Checkbox") {
+                root.addView(ViewTextSingleShow(activity, data = template[i]))
+            } else if (template[i].name == "DatePicker") {
+                root.addView(ViewTextSingleShow(activity, data = template[i]))
+            } else if (template[i].name == "DatePickerMultiple") {
+                root.addView(ViewTextSingleShow(activity, data = template[i]))
+            } else if (template[i].name == "DateTimePicker") {
+                root.addView(ViewTextSingleShow(activity, data = template[i]))
+            } else if (template[i].name == "CascaderClass") {
+                root.addView(ViewTextSingleShow(activity, data = template[i]))
+            } else if (template[i].name == "ChoseStudents") {
+                root.addView(ViewTextSingleShow(activity, data = template[i]))
             }
         }
     }

@@ -32,7 +32,6 @@ class QuantizeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
-
         initAdapter()
     }
 

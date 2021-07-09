@@ -74,8 +74,7 @@ class ViewJump @JvmOverloads constructor(
                     { data.stime = this },
                     {
                         data.etime = this
-                        data.value = data.stime + "," + data.etime
-                        commit.checktime = data.value
+                        data.value = tvJumpTitle.text.toString()
                         commit.stime = data.stime
                         commit.etime = data.etime
                         data.rules?.required?.hasValue = true
@@ -83,13 +82,13 @@ class ViewJump @JvmOverloads constructor(
                 )
             } else if (data.name == "DateTimePicker") {
                 context.showDateDayHourPick(tvJumpTitle) {
-                    data.value = this
+                    data.value = tvJumpTitle.text.toString()
                     commit.checktime = this
                     data.rules?.required?.hasValue = true
                 }
             } else if (data.name == "DatePicker") {
                 context.showDateDayPick(tvJumpTitle) {
-                    data.value = this
+                    data.value = tvJumpTitle.text.toString()
                     commit.checktime = this
                     data.rules?.required?.hasValue = true
                 }
@@ -149,7 +148,7 @@ class ViewJump @JvmOverloads constructor(
         }
         dialogAdapter.setOnItemClickListener { adapter, view, position ->
             if (data.name == "CascaderClass") {
-                data.value = data.classes!![position].id
+                data.value = data.classes!![position].levelclass
                 commit.classid = data.classes!![position].id
             } else {
                 data.value = titles[position]
@@ -241,6 +240,7 @@ class ViewJump @JvmOverloads constructor(
             str = str.substring(0, str.length - 1)
         }
         tvJumpTitle.text = str
+        data.value = str
         commit.involve = Gson().toJson(involves)
         data.rules?.required?.hasValue = involves.size != 0
     }
