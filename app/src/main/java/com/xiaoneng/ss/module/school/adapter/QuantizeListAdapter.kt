@@ -32,7 +32,7 @@ class QuantizeListAdapter(layoutId: Int, listData: MutableList<QuantizeBody>) :
                 val gson = Gson()
                 try {
                     views = gson.fromJson<ArrayList<QuantizeTemplateBean>>(it, resultType)
-                    dealTemplateShow(mContext,llRoot,views)
+                    dealTemplateShow(mContext, llRoot, views)
                 } catch (e: Exception) {
 
                 }

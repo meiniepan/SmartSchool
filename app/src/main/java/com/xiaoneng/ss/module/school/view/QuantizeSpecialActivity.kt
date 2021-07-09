@@ -251,16 +251,20 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
         tvConfirm.setOnClickListener {
             var res = ""
+            var res2 = ""
             titles.forEach {
                 if (it.isChecked) {
                     res = res + it.id + ","
+                    res2 = res2 + it.name + ","
                 }
             }
             if (res.isNotEmpty()) {
                 res = res.substring(0, res.length - 1)
+                res2 = res2.substring(0, res2.length - 1)
             }
-            commit.rulename = res
-            tvRule.text = res
+            commit.rulename = res2
+            commit.types = res
+            tvRule.text = res2
             dialogType.dismiss()
         }
         return dialogType

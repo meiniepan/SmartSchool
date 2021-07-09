@@ -442,6 +442,8 @@ fun dealTemplateShow(
                 root.addView(ViewTextSingleShow(activity, data = template[i]))
             } else if (template[i].name == "ChoseStudents") {
                 root.addView(ViewTextSingleShow(activity, data = template[i]))
+            } else {
+                root.addView(ViewTextSingleShow(activity, data = template[i]))
             }
         }
     }
