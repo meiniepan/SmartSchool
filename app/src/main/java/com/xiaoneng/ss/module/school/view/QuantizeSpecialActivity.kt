@@ -263,7 +263,7 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 res2 = res2.substring(0, res2.length - 1)
             }
             commit.rulename = res2
-            commit.types = res
+            commit.typeid = res
             tvRule.text = res2
             dialogType.dismiss()
         }

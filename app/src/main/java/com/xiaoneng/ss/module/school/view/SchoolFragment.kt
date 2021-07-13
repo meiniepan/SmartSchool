@@ -83,7 +83,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                 )
             )
         }
-//        if (AppInfo.checkRule1("admin/moral/default")) {
+//        if (AppInfo.checkRule1("moral/moral/default")) {
             bean1.items.add(
                 SchoolItemBean(
                     name = getString(R.string.quantizeTitle),
