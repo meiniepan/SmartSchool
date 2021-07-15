@@ -13,10 +13,7 @@ import com.xiaoneng.ss.module.circular.adapter.DaysOfMonthAdapter
 import com.xiaoneng.ss.module.circular.adapter.DaysOfWeekAdapter
 import com.xiaoneng.ss.module.circular.adapter.EventAdapter
 import com.xiaoneng.ss.module.circular.adapter.WeekTitleAdapter
-import com.xiaoneng.ss.module.circular.model.DayBean
-import com.xiaoneng.ss.module.circular.model.ScheduleBean
-import com.xiaoneng.ss.module.circular.model.ScheduleDayResponse
-import com.xiaoneng.ss.module.circular.model.ScheduleResponse
+import com.xiaoneng.ss.module.circular.model.*
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import java.util.*
@@ -243,7 +240,7 @@ class ScheduleFragment : BaseLifeCycleFragment<CircularViewModel>() {
         })
         mViewModel.mScheduleMonthData.observe(this, Observer { response ->
             response?.let {
-                netResponseFormat<ScheduleResponse>(it)?.let {
+                netResponseFormat<ScheduleMonthResponse>(it)?.let {
                     it.days?.let {
                         mDataMonth.clear()
                         mDataMonth.addAll(

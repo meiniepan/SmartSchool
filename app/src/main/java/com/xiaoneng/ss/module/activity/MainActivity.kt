@@ -48,6 +48,12 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
 
+    private val mBottoms = arrayOf(
+        R.id.menu_home,
+        R.id.menu_school,
+        R.id.menu_mine,
+    )
+
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
@@ -83,6 +89,7 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
         // 恢复recreate前的页面
         mLastIndex = savedInstanceState.getInt("index")
         contentLayout.currentItem = mLastIndex
+        bottom_navigation.selectedItemId = mBottoms[mLastIndex]
     }
 
 

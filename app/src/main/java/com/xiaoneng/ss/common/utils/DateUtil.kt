@@ -105,6 +105,7 @@ object DateUtil {
 
     }
 
+
     @SuppressLint("SimpleDateFormat")
     fun showTimeFromNet(date: String, textView1: TextView, textView2: TextView) {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")

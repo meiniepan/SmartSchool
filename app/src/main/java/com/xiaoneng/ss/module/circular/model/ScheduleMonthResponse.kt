@@ -7,7 +7,7 @@ package com.xiaoneng.ss.module.circular.model
  * @date: 2020/08/27
  * Time: 17:06
  */
-data class ScheduleResponse(
-    var data: ArrayList<ScheduleBean>? = null,
+data class ScheduleMonthResponse(
+    var days: ArrayList<String>?,
     var semesters: String? = null
 )

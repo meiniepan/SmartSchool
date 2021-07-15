@@ -82,13 +82,13 @@ class ViewJump @JvmOverloads constructor(
                 )
             } else if (data.name == "DateTimePicker") {
                 context.showDateDayHourPick(tvJumpTitle) {
-                    data.value = tvJumpTitle.text.toString()
+                    data.value = this
                     commit.checktime = this
                     data.rules?.required?.hasValue = true
                 }
             } else if (data.name == "DatePicker") {
                 context.showDateDayPick(tvJumpTitle) {
-                    data.value = tvJumpTitle.text.toString()
+                    data.value = this
                     commit.checktime = this
                     data.rules?.required?.hasValue = true
                 }
@@ -240,7 +240,7 @@ class ViewJump @JvmOverloads constructor(
             str = str.substring(0, str.length - 1)
         }
         tvJumpTitle.text = str
-        data.value = str
+        data.value = Gson().toJson(involves)
         commit.involve = Gson().toJson(involves)
         data.rules?.required?.hasValue = involves.size != 0
     }
