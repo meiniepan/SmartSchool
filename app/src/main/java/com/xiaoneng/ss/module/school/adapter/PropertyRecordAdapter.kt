@@ -163,10 +163,18 @@ class PropertyRecordAdapter(
                     llAction.visibility = View.GONE
 
                 }
+                var depName:String? = null
+                item.reportinfo?.deps?.let {
+                    if (it.size>0){
+                        depName = it[0].dep_name
+                    }
+                }
+                if(item.reportinfo?.deps != null){
 
+}
                 holder.setText(R.id.tvPropertyDetailReportName, item.reportinfo?.realname)
                     .setText(R.id.tvPropertyDetailPhone, item.reportinfo?.phone)
-                    .setText(R.id.tvPropertyDetailDep, item.reportinfo?.deps!![0].dep_name)
+                    .setText(R.id.tvPropertyDetailDep, depName)
                     .setText(R.id.tvPropertyDetailClass, item.reportinfo?.classmaster_classname)
 
                 holder.setGone(R.id.llReporterPhone, true)

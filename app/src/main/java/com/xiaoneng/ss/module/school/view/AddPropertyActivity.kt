@@ -88,7 +88,7 @@ class AddPropertyActivity : SpeechTranscriberActivity<SchoolViewModel>() {
             dialogType.show()
         }
         llDevice.setOnClickListener {
-            if (needShow) {
+            if (needShow&&!typeid.isNullOrEmpty()) {
                 showLoading()
                 mViewModel.getDeviceType(typeid)
             } else {
@@ -96,6 +96,7 @@ class AddPropertyActivity : SpeechTranscriberActivity<SchoolViewModel>() {
             }
         }
         initAdapter()
+        initDialog()
     }
 
     private fun initDialog() {
@@ -198,7 +199,9 @@ class AddPropertyActivity : SpeechTranscriberActivity<SchoolViewModel>() {
                 fileInfo.add(FileInfoBean(url = it))
             }
         }
-        if (etPropertyRemark.text.toString().isNullOrEmpty()||typeid.isNullOrEmpty()||deviceid.isNullOrEmpty()) {
+        if (etPropertyRemark.text.toString()
+                .isNullOrEmpty() || typeid.isNullOrEmpty() || deviceid.isNullOrEmpty()
+        ) {
             showTip(getString(R.string.lack_info))
             return
         }
@@ -310,10 +313,12 @@ class AddPropertyActivity : SpeechTranscriberActivity<SchoolViewModel>() {
             it?.let {
                 netResponseFormat<BaseResp<PropertyTypeBean>>(it)?.let { bean ->
                     bean.data?.let {
-                        mTypeData.clear()
-                        mTypeData.addAll(it)
-                        initDialogType()
-                        setTypeV(0)
+                        if (it.size > 0) {
+                            mTypeData.clear()
+                            mTypeData.addAll(it)
+                            initDialogType()
+                            setTypeV(0)
+                        }
                     }
                 }
             }
@@ -323,14 +328,16 @@ class AddPropertyActivity : SpeechTranscriberActivity<SchoolViewModel>() {
             it?.let {
                 netResponseFormat<BaseResp<PropertyTypeBean>>(it)?.let { bean ->
                     bean.data?.let {
-                        mDeviceData.clear()
-                        mDeviceData.addAll(it)
-                        initDialogDevice()
-                        if (needShow) {
-                            dialogDevice.show()
-                            needShow = false
-                        } else {
-                        setDeviceV(0)
+                        if (it.size > 0) {
+                            mDeviceData.clear()
+                            mDeviceData.addAll(it)
+                            initDialogDevice()
+                            if (needShow) {
+                                dialogDevice.show()
+                                needShow = false
+                            } else {
+                                setDeviceV(0)
+                            }
                         }
                     }
                 }

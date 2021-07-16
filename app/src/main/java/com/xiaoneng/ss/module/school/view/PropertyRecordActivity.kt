@@ -83,12 +83,11 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
 
     override fun initData() {
         super.initData()
-        getData()
+        doRefresh()
     }
 
     override fun getData() {
         super.getData()
-        rvPropertyRecord.showLoadingView()
         mViewModel.getPropertyRecord(type = typeStr, lastid = lastId)
     }
 
