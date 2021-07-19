@@ -226,9 +226,7 @@
         <activity
             android:name=".module.school.view.AddBookSiteActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".module.school.view.PropertyRecordActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".module.school.view.BookSiteRecordsActivity"
             android:screenOrientation="portrait" />

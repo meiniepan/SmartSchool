@@ -7,17 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
+import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
-import com.xiaoneng.ss.module.activity.ImageScaleActivity
 import com.xiaoneng.ss.module.school.adapter.PropertyRecordAdapter
 import com.xiaoneng.ss.module.school.adapter.PropertyShiftAdapter
 import com.xiaoneng.ss.module.school.interfaces.IPropertyRecord
@@ -34,7 +35,7 @@ import java.util.*
  * @description:填写报修报送
  * @date :2020/10/28 3:17 PM
  */
-class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IPropertyRecord {
+class PropertyRecordFragment : BaseLifeCycleFragment<SchoolViewModel>(), IPropertyRecord {
     private var lastId: String? = null
     lateinit var mAdapter: PropertyRecordAdapter
     var mData: ArrayList<PropertyDetailBean> = ArrayList()
@@ -56,10 +57,17 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
         return R.layout.activity_property_record
     }
 
+    companion object {
+        fun getInstance(): Fragment {
+            return PropertyRecordFragment()
+        }
+
+    }
+
     override fun initView() {
         super.initView()
-        mType = intent.getStringExtra(Constant.TYPE)
-        mTypeData = intent.getParcelableArrayListExtra(Constant.DATA)
+        mType = arguments?.getString(Constant.TYPE)
+        mTypeData = arguments?.getParcelableArrayList(Constant.DATA)
         if (mType == "0") {
             typeStr = "report"
         } else if (mType == "1") {
@@ -89,6 +97,9 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
     override fun getData() {
         super.getData()
         mViewModel.getPropertyRecord(type = typeStr, lastid = lastId)
+        if (mType == "1" && !AppInfo.checkRule2("teacher/repairservice/listsByID")) {
+            rvPropertyRecord.notifyDataSetChanged()
+        }
     }
 
     private fun initAdapter() {
@@ -154,14 +165,14 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
     private fun initDialog(): Dialog {
         // 底部弹出对话框
         var bottomDialog =
-            Dialog(this, R.style.BottomDialog)
+            Dialog(requireContext(), R.style.BottomDialog)
         val contentView: View =
-            LayoutInflater.from(this).inflate(R.layout.dialog_delay, null)
+            LayoutInflater.from(requireContext()).inflate(R.layout.dialog_delay, null)
         bottomDialog.setContentView(contentView)
         val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
         params.width =
-            this.resources.displayMetrics.widthPixels - dp2px(32f).toInt()
-        params.bottomMargin = dp2px(this, 0f).toInt()
+            requireContext().resources.displayMetrics.widthPixels - dp2px(32f).toInt()
+        params.bottomMargin = dp2px(requireContext(), 0f).toInt()
         contentView.layoutParams = params
         bottomDialog.window!!.setGravity(Gravity.CENTER)
         var tvAction1 = contentView.findViewById<TextView>(R.id.tvPropertyDetailAction1)
@@ -194,7 +205,7 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
                 remark = etRemark.text.toString()
             }
             if (remark.isEmpty()) {
-                mToast(R.string.lack_info)
+                requireContext().mToast(R.string.lack_info)
                 return@setOnClickListener
             }
             chosenBean.token = UserInfo.getUserBean().token
@@ -211,14 +222,14 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
     private fun initShiftDialog(): Dialog {
         // 转单对话框
         var bottomDialog =
-            Dialog(this, R.style.BottomDialog)
+            Dialog(requireContext(), R.style.BottomDialog)
         val contentView: View =
-            LayoutInflater.from(this).inflate(R.layout.dialog_shift, null)
+            LayoutInflater.from(requireContext()).inflate(R.layout.dialog_shift, null)
         bottomDialog.setContentView(contentView)
         val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
         params.width =
-            this.resources.displayMetrics.widthPixels - dp2px(32f).toInt()
-        params.bottomMargin = dp2px(this, 0f).toInt()
+            requireContext().resources.displayMetrics.widthPixels - dp2px(32f).toInt()
+        params.bottomMargin = dp2px(requireContext(), 0f).toInt()
         contentView.layoutParams = params
         bottomDialog.window!!.setGravity(Gravity.CENTER)
         contentView.findViewById<View>(R.id.ivClose).setOnClickListener {
@@ -269,14 +280,14 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
     private fun initFinishDialog(): Dialog {
         // 转单对话框
         var bottomDialog =
-            Dialog(this, R.style.BottomDialog)
+            Dialog(requireContext(), R.style.BottomDialog)
         val contentView: View =
-            LayoutInflater.from(this).inflate(R.layout.dialog_repair_finish, null)
+            LayoutInflater.from(requireContext()).inflate(R.layout.dialog_repair_finish, null)
         bottomDialog.setContentView(contentView)
         val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
         params.width =
-            this.resources.displayMetrics.widthPixels - dp2px(32f).toInt()
-        params.bottomMargin = dp2px(this, 0f).toInt()
+            requireContext().resources.displayMetrics.widthPixels - dp2px(32f).toInt()
+        params.bottomMargin = dp2px(requireContext(), 0f).toInt()
         contentView.layoutParams = params
         bottomDialog.window!!.setGravity(Gravity.CENTER)
         contentView.findViewById<View>(R.id.ivClose).setOnClickListener {
@@ -284,16 +295,16 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
         }
 
 
-            var etRemark = contentView.findViewById<EditText>(R.id.etRemark)
-            var tvConfirm = contentView.findViewById<TextView>(R.id.tvConfirm)
+        var etRemark = contentView.findViewById<EditText>(R.id.etRemark)
+        var tvConfirm = contentView.findViewById<TextView>(R.id.tvConfirm)
 
-            tvConfirm.setOnClickListener { view ->
+        tvConfirm.setOnClickListener { view ->
 
-                chosenBean.completeremark = etRemark.text.toString()
-                showLoading()
-                mViewModel.modifyRepair(chosenBean)
-                bottomDialog.dismiss()
-            }
+            chosenBean.completeremark = etRemark.text.toString()
+            showLoading()
+            mViewModel.modifyRepair(chosenBean)
+            bottomDialog.dismiss()
+        }
         return bottomDialog
     }
 
@@ -319,14 +330,14 @@ class PropertyRecordActivity : BaseLifeCycleActivity<SchoolViewModel>(), IProper
 
         mViewModel.mModifyRepairData.observe(this, Observer {
             it?.let {
-                mToast(R.string.deal_done)
+                requireContext().mToast(R.string.deal_done)
                 doRefresh()
             }
         })
 
         mViewModel.mRemindRepairData.observe(this, Observer {
             it?.let {
-                mToast(R.string.deal_done)
+                requireContext().mToast(R.string.deal_done)
             }
         })
     }

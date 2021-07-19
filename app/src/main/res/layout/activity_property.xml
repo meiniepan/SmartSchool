@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="@string/propertyTitle" />
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"
@@ -20,61 +22,92 @@
         android:background="@color/tintBac"
         android:orientation="vertical">
 
-
-        <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
-            android:id="@+id/rvPropertyType"
-            style="@style/recycler_style"
-            android:layout_marginTop="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:paddingStart="@dimen/title_padding"
+            android:paddingTop="12dp"
+            android:paddingEnd="@dimen/title_padding"
+            android:paddingBottom="12dp">
+
+            <TextView
+                android:id="@+id/tvRepair"
+                style="@style/button_blue_bac_style"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_weight="1"
+                android:text="维修记录" />
+
+
+            <TextView
+                android:id="@+id/tvReport"
+                style="@style/button_blue_line_style"
+                android:layout_marginStart="17dp"
+                android:layout_marginEnd="0dp"
+                android:layout_weight="1"
+                android:text="报修历史" />
+
+        </LinearLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vpProperty"
+            android:background="@color/white"
+            android:overScrollMode="never"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/llMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.6"
+        android:background="@color/commonHint"
+        android:orientation="vertical"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="100dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvType0"
+            style="@style/button_blue_bac_style"
+            android:layout_width="145dp"
+            android:layout_height="38dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="85dp"
+            android:text=""
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/tvPropertyRecord1"
-                android:layout_width="wrap_content"
-                android:layout_marginEnd="43dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvType1"
+                style="@style/button_blue_bac_style"
+                android:layout_width="145dp"
+                android:layout_height="38dp"
+                android:layout_marginEnd="15dp"
+                android:text=""
+                android:visibility="gone" />
 
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="查看维修记录"
-                    android:textSize="@dimen/sp_14" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/commonHint" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/tvPropertyRecord2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:orientation="vertical">
-
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="查看报修历史"
-                    android:textSize="@dimen/sp_14" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/commonHint" />
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/ivAddFile"
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:layout_marginEnd="34dp"
+                android:src="@drawable/ic_add_common" />
         </LinearLayout>
     </LinearLayout>
+</FrameLayout>
 </LinearLayout>
+

@@ -1,15 +1,19 @@
 package com.xiaoneng.ss.module.school.view
 
 import android.Manifest
+import android.animation.ObjectAnimator
+import android.os.Bundle
 import android.view.View
+import androidx.core.animation.doOnEnd
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager.widget.ViewPager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.permission.PermissionResult
 import com.xiaoneng.ss.common.permission.Permissions
-import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.utils.Constant
+import com.xiaoneng.ss.common.utils.FragmentVpAdapter
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.module.school.adapter.PropertyTypeAdapter
@@ -27,6 +31,9 @@ import pub.devrel.easypermissions.AppSettingsDialog
 class PropertyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapter: PropertyTypeAdapter
     var mData: ArrayList<PropertyTypeBean> = ArrayList()
+    private lateinit var fragmentAdapter: FragmentVpAdapter
+    private var fragmentList = ArrayList<Fragment>()
+    var rotationB = false
     private val mPermissions = arrayOf(
         Manifest.permission.RECORD_AUDIO
     )
@@ -37,33 +44,129 @@ class PropertyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
+        initViewPager()
+        initTab()
         initUI()
 
-        tvPropertyRecord1.setOnClickListener {
-            //维修记录
-            mStartActivity<PropertyRecordActivity>(this) {
-                putExtra(Constant.TYPE, "1")
-                putExtra(Constant.DATA, mData)
-            }
+        tvRepair.setOnClickListener {
+            checkFirsTab()
         }
-        tvPropertyRecord2.setOnClickListener {
-            //报修记录
-            mStartActivity<PropertyRecordActivity>(this)
-            {
-                putExtra(Constant.TYPE, "0")
-                putExtra(Constant.DATA, mData)
-            }
+        tvReport.setOnClickListener {
+            checkSecondTab()
+        }
+        ivAddFile.setOnClickListener {
+            showAdd()
+        }
+        llMain.setOnClickListener {
+            showAdd()
         }
         initAdapter()
+        tvType0.setOnClickListener {
+            if (mData.size > 0) {
+                initVoicePermission(0)
+                showAdd()
+            }
+        }
+        tvType1.setOnClickListener {
+            if (mData.size > 1) {
+                initVoicePermission(1)
+                showAdd()
+            }
+        }
     }
 
     private fun initUI() {
         //判断是否有维修权限
-        if (AppInfo.checkRule2("teacher/repairservice/listsByID")) {
-            tvPropertyRecord1.visibility = View.VISIBLE
-        } else {
-            tvPropertyRecord1.visibility = View.GONE
+
+    }
+
+    private fun initTab() {
+        tvRepair.setOnClickListener {
+            checkFirsTab()
         }
+        tvReport.setOnClickListener {
+            checkSecondTab()
+        }
+    }
+
+    private fun showAdd(it: View = ivAddFile) {
+        val anim: ObjectAnimator
+        if (rotationB) {
+            anim = ObjectAnimator.ofFloat(it, "rotation", 45.0F, 0F)
+            anim.doOnEnd {
+                tvType0.visibility = View.GONE
+                tvType1.visibility = View.GONE
+                llMain.visibility = View.GONE
+            }
+        } else {
+            anim = ObjectAnimator.ofFloat(it, "rotation", 0.0F, 45.0F)
+            anim.doOnEnd {
+                tvType0.visibility = View.VISIBLE
+                tvType1.visibility = View.VISIBLE
+                llMain.visibility = View.VISIBLE
+            }
+        }
+        rotationB = !rotationB
+        anim.duration = 300
+        anim.start()
+    }
+
+
+    private fun checkFirsTab() {
+        tvRepair.setBackgroundResource(R.drawable.bac_blue_bac)
+        tvRepair.setTextColor(resources.getColor(R.color.white))
+        tvReport.setBackgroundResource(R.drawable.bac_blue_line_21)
+        tvReport.setTextColor(resources.getColor(R.color.themeColor))
+        vpProperty.currentItem = 0
+    }
+
+    private fun checkSecondTab() {
+        tvReport.setBackgroundResource(R.drawable.bac_blue_bac)
+        tvReport.setTextColor(resources.getColor(R.color.white))
+        tvRepair.setBackgroundResource(R.drawable.bac_blue_line_21)
+        tvRepair.setTextColor(resources.getColor(R.color.themeColor))
+        vpProperty.currentItem = 1
+    }
+
+    private fun initViewPager() {
+        var fragment1 = PropertyRecordFragment.getInstance()
+        fragment1.arguments = Bundle().apply {
+            putString(Constant.TYPE, "1")
+            putParcelableArrayList(Constant.DATA, mData)
+        }
+        var fragment2 = PropertyRecordFragment.getInstance()
+        fragment2.arguments = Bundle().apply {
+            putString(Constant.TYPE, "0")
+            putParcelableArrayList(Constant.DATA, mData)
+        }
+        fragmentList.add(fragment1)
+        fragmentList.add(fragment2)
+        fragmentAdapter = FragmentVpAdapter(
+            supportFragmentManager,
+            fragmentList
+        )
+        vpProperty.adapter = fragmentAdapter
+        vpProperty.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                if (position == 0) {
+                    checkFirsTab()
+                } else if (position == 1) {
+                    checkSecondTab()
+                }
+            }
+        })
     }
 
     override fun initData() {
@@ -79,15 +182,6 @@ class PropertyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     private fun initAdapter() {
 
-        mAdapter = PropertyTypeAdapter(R.layout.item_property_type, mData)
-        rvPropertyType.apply {
-            layoutManager = LinearLayoutManager(context)
-            setAdapter(mAdapter)
-        }
-
-        mAdapter.setOnItemClickListener { adapter, view, position ->
-            initVoicePermission(position)
-        }
     }
 
     private fun initVoicePermission(position: Int) {
@@ -127,7 +221,12 @@ class PropertyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 netResponseFormat<BaseResp<PropertyTypeBean>>(it)?.let { bean ->
                     bean.data?.let {
                         mData.addAll(it)
-                        rvPropertyType.notifyDataSetChanged()
+                        if (mData.size > 1) {
+                            tvType0.text = mData[0].name
+                            tvType1.text = mData[1].name
+                        } else if (mData.size > 0) {
+                            tvType0.text = mData[0].name
+                        }
                     }
                 }
             }
