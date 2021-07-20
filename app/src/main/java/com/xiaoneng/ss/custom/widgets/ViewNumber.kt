@@ -46,6 +46,7 @@ class ViewNumber @JvmOverloads constructor(
         etNumber.setText(mNumber.toString())
         etNumber.addTextChangedListener {
             data.value = it.toString()
+            data.rules?.required?.hasValue = !it.toString().isNullOrEmpty()
             commit.score = it.toString()
             mNumber = it.toString().toIntSafe()
         }
@@ -56,6 +57,7 @@ class ViewNumber @JvmOverloads constructor(
                 mNumber -= 1
                 etNumber.setText(mNumber.toString())
                 data.value = mNumber.toString()
+                data.rules?.required?.hasValue = !mNumber.toString().isNullOrEmpty()
                 commit.score = mNumber.toString()
             } else {
                 context.toast("不能再减了~")
@@ -66,6 +68,7 @@ class ViewNumber @JvmOverloads constructor(
             mNumber += 1
             etNumber.setText(mNumber.toString())
             data.value = mNumber.toString()
+            data.rules?.required?.hasValue = !mNumber.toString().isNullOrEmpty()
             commit.score = mNumber.toString()
         }
     }

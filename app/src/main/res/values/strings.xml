@@ -12,6 +12,7 @@
     <string name="doneM">确定</string>
     <string name="errFile">不支持该文件</string>
 
+    <string name="organizeTitle">组织架构</string>
     <string name="scheduleTitle">日程安排</string>
     <string name="quantizeTitle">量化评比</string>
     <string name="noticeTitle">通知公告</string>

@@ -15,7 +15,7 @@
         <com.xiaoneng.ss.custom.widgets.CustomTitleBar
             android:id="@+id/ctbAddInvolve"
             style="@style/title_style"
-            app:title="@string/taskTitle" />
+            app:title="@string/organizeTitle" />
 
         <TextView
             android:id="@+id/tvConfirm"
