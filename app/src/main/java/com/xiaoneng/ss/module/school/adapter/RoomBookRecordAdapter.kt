@@ -7,7 +7,6 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.module.school.model.SiteBean
-import com.xiaoneng.ss.module.school.model.SiteItemBean
 
 
 /**

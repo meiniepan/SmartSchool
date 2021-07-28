@@ -101,13 +101,24 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 }
             }
         }
+        if (isModify) {
+            bean = intent.getParcelableExtra(Constant.DATA)
+            bean?.let {
+                initUI(it)
+                mFromJson<ArrayList<UserBeanSimple>>(it.involve)?.let {
+                    receiveList = it
+                    dealData()
+                }
+            }
+        }
         if (UserInfo.getUserBean().usertype == "1") {
             llInvite.visibility = View.GONE
         } else {
-            if(isModify&&bean?.cuser_id!=UserInfo.getUserBean().uid){
+            if (isModify && bean?.cuser_id != UserInfo.getUserBean().uid) {
                 llInvite.visibility = View.GONE
-            }else{
-            llInvite.visibility = View.VISIBLE}
+            } else {
+                llInvite.visibility = View.VISIBLE
+            }
         }
         llInvite.setOnClickListener {
             mStartForResult<AddInvolveActivity>(this, Constant.REQUEST_CODE_COURSE) {
@@ -121,16 +132,7 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 }
             }
         }
-        if (isModify) {
-            bean = intent.getParcelableExtra(Constant.DATA)
-            bean?.let {
-                initUI(it)
-                mFromJson<ArrayList<UserBeanSimple>>(it.involve)?.let {
-                    receiveList = it
-                    dealData()
-                }
-            }
-        }
+
     }
 
     private fun initUI(it: ScheduleBean) {
@@ -178,7 +180,6 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
         bean?.involve = Gson().toJson(involves)
         showLoading()
         if (isModify) {
-            bean?.involve = null
             mViewModel.modifySchedule(bean)
         } else {
             mViewModel.addSchedule(bean)
