@@ -33,9 +33,7 @@ class SalaryDetailAdapter(layoutId: Int, listData: MutableList<String>?) :
             //value为0时隐藏
             llCc.visibility = View.VISIBLE
             if (remarkBean?.isShow == "0") {
-                if (eData?.expand?.vals?.get(holder.adapterPosition) == "0") {
                     llCc.visibility = View.GONE
-                }
             }
 
 
