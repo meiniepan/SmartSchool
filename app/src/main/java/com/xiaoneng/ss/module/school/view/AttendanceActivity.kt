@@ -165,7 +165,7 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         } else if (AppInfo.checkRule2("teacher/attendances/sclists")) {
             getSchoolData()
         } else {
-            getStuData()
+//            getStuData()
         }
     }
 

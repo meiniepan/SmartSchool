@@ -1,5 +1,6 @@
 package com.xiaoneng.ss.module.school.view
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
@@ -53,7 +54,9 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                     remark = "场地时段 一目了然",
                     icon = R.drawable.ic_changdi,
                     click = View.OnClickListener {
-                      var b=  UserInfo.getUserBean()
+                        var b = UserInfo.getUserBean()
+                        Log.e("====cno", UserInfo.getUserBean().cno )
+                        Log.e("====bean", UserInfo.getUserBean().toString() )
                         mStartActivity<BookSiteActivity>(context)
                     }
                 )
