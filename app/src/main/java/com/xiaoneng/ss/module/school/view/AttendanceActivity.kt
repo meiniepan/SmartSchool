@@ -149,20 +149,24 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     override fun getData() {
-        rvAttendance.showLoadingView()
         if (AppInfo.checkRule2("student/attendances/privateAtts")) {
             if (AppInfo.checkRule2("student/attendances/lists")) {
+                rvAttendance.showLoadingView()
                 getTimetable()
             } else {
+                rvAttendance.showLoadingView()
                 getStuData()
             }
         } else if (AppInfo.checkRule2("teacher/attendances/lists")) {
             if (AppInfo.checkRule2("teacher/attendances/masterlists")) {
+                rvAttendance.showLoadingView()
                 getDataMaster()
             } else {
+                rvAttendance.showLoadingView()
                 getTimetable()
             }
         } else if (AppInfo.checkRule2("teacher/attendances/sclists")) {
+            rvAttendance.showLoadingView()
             getSchoolData()
         } else {
 //            getStuData()
