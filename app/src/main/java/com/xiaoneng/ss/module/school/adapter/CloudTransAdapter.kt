@@ -10,8 +10,6 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.common.state.FileDownloadInfo
 import com.xiaoneng.ss.common.state.FileTransInfo
-import com.xiaoneng.ss.common.utils.endIsImage
-import com.xiaoneng.ss.common.utils.endIsVideo
 import com.xiaoneng.ss.common.utils.formatMemorySize
 import com.xiaoneng.ss.common.utils.getFileIcon
 import com.xiaoneng.ss.module.school.interfaces.IFileTrans

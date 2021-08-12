@@ -429,7 +429,7 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
     }
 
     suspend fun getQuantizeListCommon(typeid: String?): Any {
-        return apiService.getQuantizeListCommon(UserInfo.getUserBean().token,typeid=typeid)
+        return apiService.getQuantizeListCommon(UserInfo.getUserBean().token, typeid = typeid)
             .dataConvert(loadState)
     }
 

@@ -420,7 +420,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getMoralTypeInfo(id:String?=null) {
+    fun getMoralTypeInfo(id: String? = null) {
         initiateRequest(
             { mMoralTypeInfoData.value = mRepository.getMoralTypeInfo(id) },
             loadState
@@ -561,14 +561,14 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getPropertyType(typeid: String? = null,lastid: String? = null) {
+    fun getPropertyType(typeid: String? = null, lastid: String? = null) {
         initiateRequest(
-            { mRepairTypeData.value = mRepository.getPropertyType(typeid=typeid) },
+            { mRepairTypeData.value = mRepository.getPropertyType(typeid = typeid) },
             loadState
         )
     }
 
-    fun getDeviceType(typeid: String?=null) {
+    fun getDeviceType(typeid: String? = null) {
         initiateRequest(
             { mDeviceTypeData.value = mRepository.getDeviceType(typeid) },
             loadState
