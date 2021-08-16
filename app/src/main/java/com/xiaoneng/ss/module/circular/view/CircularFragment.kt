@@ -10,6 +10,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.FragmentVpAdapter
+import com.xiaoneng.ss.common.utils.eventBus.CleanAllEvent
 import com.xiaoneng.ss.common.utils.eventBus.OnPushEvent
 import com.xiaoneng.ss.common.utils.eventBus.RefreshUnreadEvent
 import com.xiaoneng.ss.common.utils.mStartActivity
@@ -44,10 +45,14 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
         super.initView()
         initViewPager()
         initTab()
-        flSysMsg.setOnClickListener {
-            mStartActivity<SystemMsgActivity>(context) {
-                putExtra(Constant.DATA, mData)
-            }
+//        flSysMsg.setOnClickListener {
+//            mStartActivity<SystemMsgActivity>(context) {
+//                putExtra(Constant.DATA, mData)
+//            }
+//        }
+        tvCleanMsg.setOnClickListener {
+            showLoading()
+            mViewModel.readAll()
         }
     }
 
@@ -85,7 +90,7 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
     }
 
     private fun initViewPager() {
-        fragmentList.add(NoticeFragment.getInstance(this))
+        fragmentList.add(NoticeFragment2.getInstance(this))
         fragmentList.add(ScheduleFragment.getInstance())
         fragmentAdapter = FragmentVpAdapter(
             childFragmentManager,
@@ -117,19 +122,19 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
 
     override fun initDataObserver() {
         mViewModel.mNoticeData.observe(this, Observer { response ->
-            response?.let { hData ->
-                showSuccess()
-                mData.clear()
-                hData.data?.let {
-
-                    mData.addAll(it)
-                    if (hData.unread == "1") {
-                        vBadge.visibility = View.VISIBLE
-                    } else {
-                        vBadge.visibility = View.GONE
-                    }
-                }
-            }
+//            response?.let { hData ->
+//                showSuccess()
+//                mData.clear()
+//                hData.data?.let {
+//
+//                    mData.addAll(it)
+//                    if (hData.unread == "1") {
+//                        vBadge.visibility = View.VISIBLE
+//                    } else {
+//                        vBadge.visibility = View.GONE
+//                    }
+//                }
+//            }
         })
     }
 
@@ -145,6 +150,16 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
             unread = "通知($unread)"
         }
         tvCircular.setText(unread)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun cleanAll(event: CleanAllEvent) {
+        var unread = event.unread
+        if (unread == "1" ) {
+            tvCleanMsg.visibility = View.VISIBLE
+        } else {
+            tvCleanMsg.visibility = View.GONE
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
