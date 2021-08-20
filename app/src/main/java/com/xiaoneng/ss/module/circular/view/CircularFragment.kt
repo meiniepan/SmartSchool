@@ -58,7 +58,7 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        getData()
+//        getData()
     }
 
     override fun getData() {

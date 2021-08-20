@@ -18,10 +18,7 @@ import com.xiaoneng.ss.module.circular.adapter.NoticeAdapter
 import com.xiaoneng.ss.module.circular.adapter.SysMsgAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
-import com.xiaoneng.ss.module.school.view.AchievementActivity
-import com.xiaoneng.ss.module.school.view.AttendanceActivity
-import com.xiaoneng.ss.module.school.view.TaskDetailActivity
-import com.xiaoneng.ss.module.school.view.TimetableActivity
+import com.xiaoneng.ss.module.school.view.*
 import kotlinx.android.synthetic.main.fragment_notice.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -82,32 +79,44 @@ class NoticeFragment2 : BaseLifeCycleFragment<CircularViewModel>() {
 //        }
 
         mAdapter.setOnItemClickListener { _, view, position ->
-            mViewModel.read(mData[position].id!!, status = "1")
-            when (mData[position].action) {
+            if (mData[position].status != "1") {
+                mViewModel.read(mData[position].id!!, status = "1")
+            }
+            when (mData[position].expand?.action) {
                 //1同步新任务 2任务日志被驳回或通过 3考勤更新 4时令更替 5成绩更新 6发布新版本
-                "1" -> {
-                    mStartActivity<TaskDetailActivity>(requireContext()) {
-                        putExtra(Constant.ID, mData[position].actioninfo)
-                        putExtra(Constant.TYPE, "1")
+                "admin/spacebook/default" -> {
+                    mStartActivity<BookSiteActivity>(requireContext()) {
+
                     }
                 }
-                "2" -> {
-                    mStartActivity<TaskDetailActivity>(requireContext()) {
-                        putExtra(Constant.ID, mData[position].actioninfo)
-                        putExtra(Constant.TYPE, "1")
+                "admin/schedules/default" -> {
+                    mStartActivity<ScheduleActivity>(requireContext()) {
+
                     }
                 }
-                "3" -> {
+                "moral/moral/default" -> {
+                    mStartActivity<QuantizeActivity>(requireContext())
+                }
+                "admin/wages/default" -> {
+                    mStartActivity<SalaryActivity>(requireContext())
+                }
+                "admin/repair/default" -> {
+                    mStartActivity<PropertyActivity>(requireContext())
+                }
+                "admin/tasks/default" -> {
+                    mStartActivity<TaskActivity>(requireContext())
+                }
+                "disk/folder/default" -> {
+                    mStartActivity<CloudDiskActivity>(requireContext())
+                }
+                "admin/attendances/default" -> {
                     mStartActivity<AttendanceActivity>(requireContext())
                 }
-                "4" -> {
-                    mStartActivity<TimetableActivity>(requireContext())
-                }
-                "5" -> {
+                "admin/achievements/default" -> {
                     mStartActivity<AchievementActivity>(requireContext())
                 }
-                "6" -> {
-                    requireContext().mToast("已经是最新版本")
+                "admin/courses/default" -> {
+                    mStartActivity<TimetableActivity>(requireContext())
                 }
             }
 //            mStartActivity<NoticeDetailActivity>(this) {
@@ -148,7 +157,7 @@ class NoticeFragment2 : BaseLifeCycleFragment<CircularViewModel>() {
                     } else {
                         if (lastId != null) {
                             rvNotice.showFinishLoadMore()
-                        }else{
+                        } else {
                             CleanAllEvent().post()
                         }
                     }
@@ -160,7 +169,7 @@ class NoticeFragment2 : BaseLifeCycleFragment<CircularViewModel>() {
 
         mViewModel.mReadData.observe(this, Observer { response ->
             response?.let {
-                doRefresh()
+//                doRefresh()
             }
         })
     }

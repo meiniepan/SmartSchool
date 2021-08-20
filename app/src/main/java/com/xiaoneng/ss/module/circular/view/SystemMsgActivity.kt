@@ -15,10 +15,7 @@ import com.xiaoneng.ss.model.MyPushBean
 import com.xiaoneng.ss.module.circular.adapter.SysMsgAdapter
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
-import com.xiaoneng.ss.module.school.view.AchievementActivity
-import com.xiaoneng.ss.module.school.view.AttendanceActivity
-import com.xiaoneng.ss.module.school.view.TaskDetailActivity
-import com.xiaoneng.ss.module.school.view.TimetableActivity
+import com.xiaoneng.ss.module.school.view.*
 import kotlinx.android.synthetic.main.activity_system_msg.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -80,31 +77,41 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
         }
         mAdapter.setOnItemClickListener { _, view, position ->
             mViewModel.read(mData[position].id!!, status = "1")
-            when (mData[position].action) {
+            when (mData[position].expand?.action) {
                 //1同步新任务 2任务日志被驳回或通过 3考勤更新 4时令更替 5成绩更新 6发布新版本
-                "1" -> {
-                    mStartActivity<TaskDetailActivity>(this) {
-                        putExtra(Constant.ID, mData[position].actioninfo)
-                        putExtra(Constant.TYPE, "1")
+                "admin/spacebook/default" -> {
+                    mStartActivity<BookSiteActivity>(this) {
+
                     }
                 }
-                "2" -> {
-                    mStartActivity<TaskDetailActivity>(this) {
-                        putExtra(Constant.ID, mData[position].actioninfo)
-                        putExtra(Constant.TYPE, "1")
+                "admin/schedules/default" -> {
+                    mStartActivity<ScheduleActivity>(this) {
+
                     }
                 }
-                "3" -> {
+                "moral/moral/default" -> {
+                    mStartActivity<QuantizeActivity>(this)
+                }
+                "admin/wages/default" -> {
+                    mStartActivity<SalaryActivity>(this)
+                }
+                "admin/repair/default" -> {
+                    mStartActivity<PropertyActivity>(this)
+                }
+                "admin/tasks/default" -> {
+                    mStartActivity<TaskActivity>(this)
+                }
+                "disk/folder/default" -> {
+                    mStartActivity<CloudDiskActivity>(this)
+                }
+                "admin/attendances/default" -> {
                     mStartActivity<AttendanceActivity>(this)
                 }
-                "4" -> {
-                    mStartActivity<TimetableActivity>(this)
-                }
-                "5" -> {
+                "admin/achievements/default" -> {
                     mStartActivity<AchievementActivity>(this)
                 }
-                "6" -> {
-                    mToast("已经是最新版本")
+                "admin/courses/default" -> {
+                    mStartActivity<TimetableActivity>(this)
                 }
             }
 //            mStartActivity<NoticeDetailActivity>(this) {
