@@ -83,7 +83,6 @@ class NoticeFragment2 : BaseLifeCycleFragment<CircularViewModel>() {
                 mViewModel.read(mData[position].id!!, status = "1")
             }
             when (mData[position].expand?.action) {
-                //1同步新任务 2任务日志被驳回或通过 3考勤更新 4时令更替 5成绩更新 6发布新版本
                 "admin/spacebook/default" -> {
                     mStartActivity<BookSiteActivity>(requireContext()) {
 

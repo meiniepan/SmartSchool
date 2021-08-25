@@ -70,7 +70,7 @@ abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
                 title(R.string.title)
                 message(text = msg)
                 cornerRadius(8.0f)
-                negativeButton(R.string.doneM)
+                positiveButton(R.string.doneM)
             }
         }
         loadService.showCallback(SuccessCallback::class.java)
