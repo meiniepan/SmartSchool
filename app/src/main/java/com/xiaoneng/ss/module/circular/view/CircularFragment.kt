@@ -31,6 +31,7 @@ import org.greenrobot.eventbus.ThreadMode
 class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
     private lateinit var fragmentAdapter: FragmentVpAdapter
     private var fragmentList = ArrayList<Fragment>()
+    var  fragment1:NoticeFragment2=NoticeFragment2.getInstance()
     var mData = ArrayList<NoticeBean>()
     override fun getLayoutId(): Int = R.layout.fragment_circular
 
@@ -62,8 +63,7 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
     }
 
     override fun getData() {
-        super.getData()
-        mViewModel.getNoticeList(type = "system")
+
     }
 
     private fun initTab() {
@@ -90,7 +90,7 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
     }
 
     private fun initViewPager() {
-        fragmentList.add(NoticeFragment2.getInstance(this))
+        fragmentList.add(fragment1)
         fragmentList.add(ScheduleFragment.getInstance())
         fragmentAdapter = FragmentVpAdapter(
             childFragmentManager,
@@ -121,20 +121,10 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
     }
 
     override fun initDataObserver() {
-        mViewModel.mNoticeData.observe(this, Observer { response ->
-//            response?.let { hData ->
-//                showSuccess()
-//                mData.clear()
-//                hData.data?.let {
-//
-//                    mData.addAll(it)
-//                    if (hData.unread == "1") {
-//                        vBadge.visibility = View.VISIBLE
-//                    } else {
-//                        vBadge.visibility = View.GONE
-//                    }
-//                }
-//            }
+        mViewModel.mReadData.observe(this, Observer { response ->
+            response?.let {
+                fragment1.doRefresh()
+            }
         })
     }
 

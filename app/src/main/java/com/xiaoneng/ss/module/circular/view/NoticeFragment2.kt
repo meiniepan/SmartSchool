@@ -39,7 +39,7 @@ class NoticeFragment2 : BaseLifeCycleFragment<CircularViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_notice
 
     companion object {
-        fun getInstance(circularFragment: CircularFragment): Fragment {
+        fun getInstance(): NoticeFragment2 {
             return NoticeFragment2()
         }
 
@@ -125,7 +125,7 @@ class NoticeFragment2 : BaseLifeCycleFragment<CircularViewModel>() {
         }
     }
 
-    private fun doRefresh() {
+     fun doRefresh() {
         lastId = null
         mData.clear()
         rvNotice.showLoadingView()

@@ -35,7 +35,7 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_notice
 
     companion object {
-        fun getInstance(circularFragment: CircularFragment): Fragment {
+        fun getInstance(): Fragment {
             return NoticeFragment()
         }
 
