@@ -81,7 +81,7 @@ inline fun Activity.showDatePick(
     DateTimePicker(this, DateTimePicker.HOUR_24).apply {
 //            setActionButtonTop(false)
         setSelectedTextColor(resources.getColor(R.color.themeColor))
-        setDateRangeStart(THIS_YEAR, 1, 1)
+        setDateRangeStart(THIS_YEAR-2, 1, 1)
         setDateRangeEnd(THIS_YEAR + 5, 11, 11)
         var calendar = Calendar.getInstance()
         calendar.timeInMillis = beginTime
@@ -123,7 +123,7 @@ inline fun Activity.showDateDayPick(textView: TextView, crossinline block: Strin
 //            setActionButtonTop(false)
         val THIS_YEAR: Int = Calendar.getInstance().get(Calendar.YEAR)
         setSelectedTextColor(resources.getColor(R.color.themeColor))
-        setDateRangeStart(THIS_YEAR, 1, 1)
+        setDateRangeStart(THIS_YEAR-2, 1, 1)
         setDateRangeEnd(THIS_YEAR + 5, 11, 11)
         setSelectedItem(
             Calendar.getInstance().get(Calendar.YEAR),
@@ -157,7 +157,7 @@ inline fun Activity.showDateDayHourPick(textView: TextView, crossinline block: S
 //            setActionButtonTop(false)
         val THIS_YEAR: Int = Calendar.getInstance().get(Calendar.YEAR)
         setSelectedTextColor(resources.getColor(R.color.themeColor))
-        setDateRangeStart(THIS_YEAR, 1, 1)
+        setDateRangeStart(THIS_YEAR-2, 1, 1)
         setDateRangeEnd(THIS_YEAR + 5, 11, 11)
         setSelectedItem(
             Calendar.getInstance().get(Calendar.YEAR),
@@ -230,7 +230,7 @@ inline fun Activity.showTimeSection(
 //            setActionButtonTop(false)
         val THIS_YEAR: Int = Calendar.getInstance().get(Calendar.YEAR)
         setSelectedTextColor(resources.getColor(R.color.themeColor))
-        setDateRangeStart(THIS_YEAR, 1, 1)
+        setDateRangeStart(THIS_YEAR-2, 1, 1)
         setDateRangeEnd(THIS_YEAR + 5, 11, 11)
 
         val config = LineConfig()

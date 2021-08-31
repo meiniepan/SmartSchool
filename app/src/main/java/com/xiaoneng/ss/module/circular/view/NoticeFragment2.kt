@@ -22,6 +22,8 @@ import com.xiaoneng.ss.module.school.view.*
 import kotlinx.android.synthetic.main.fragment_notice.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created with Android Studio.
