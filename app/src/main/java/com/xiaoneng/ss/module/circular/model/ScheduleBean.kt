@@ -34,5 +34,6 @@ data class ScheduleBean(
     var invtotal: String? = null,
     var schoolid: String? = null,
     var muser_id: String? = null,
+    var sendlabel: String? = null,//与involve二选一，all teacher students classmaster以逗号隔开
     var cuser_id: String? = null
 ) : Parcelable

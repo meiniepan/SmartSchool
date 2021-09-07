@@ -62,6 +62,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     lateinit var mAdapterFile: NoticeFileAdapter
     var mDataFile = ArrayList<FileInfoBean>()
     var idString = ""
+    var label: String? = null
     var fileNum = 0
     var downloadNum = 0
     var filePath: String? = null
@@ -177,6 +178,10 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             mToast(R.string.lack_info)
             return
         }
+//        var involve = Gson().toJson(receiveList)
+//        label?.let {
+//            involve=null
+//        }
         var taskBean = TaskBean(
             UserInfo.getUserBean().token,
             taskname = tvTitleAddTask.text.toString(),
@@ -184,6 +189,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             plantotal = 10.toString(),
             overtime = endTime,
             involve = Gson().toJson(receiveList),
+            sendlabel = label,
             ordertime = orderTime,
             remark = etRemarkAddTask.text.toString(),
             status = "1",
@@ -334,6 +340,7 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mData.clear()
                     receiveList.clear()
                     mDataDepartment = data.getParcelableArrayListExtra(Constant.DATA)!!
+                    label = data.getStringExtra(Constant.DATA3)
                     mDataClasses = data.getParcelableArrayListExtra(Constant.DATA2)!!
                     mDataDepartment.forEach {
                         addDepartment(it)

@@ -44,6 +44,7 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
     var mDataClasses = ArrayList<DepartmentBean>()
     var receiveList: ArrayList<UserBeanSimple> = ArrayList()
     var isFirst = true
+    var label: String? = null
 
 
     override fun getLayoutId(): Int = R.layout.activity_add_schedule
@@ -178,6 +179,7 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
         bean?.scheduleover = endTime
         bean?.remark = etRemarkAddSchedule.text.toString()
         bean?.involve = Gson().toJson(involves)
+        bean?.sendlabel = label
         showLoading()
         if (isModify) {
             mViewModel.modifySchedule(bean)
@@ -227,6 +229,7 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
                     receiveList.clear()
                     mDataDepartment = data.getParcelableArrayListExtra(Constant.DATA)!!
                     mDataClasses = data.getParcelableArrayListExtra(Constant.DATA2)!!
+                    label = data.getStringExtra(Constant.DATA3)
                     mDataDepartment.forEach {
                         addDepartment(it)
                     }

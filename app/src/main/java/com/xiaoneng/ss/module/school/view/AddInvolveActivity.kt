@@ -2,6 +2,7 @@ package com.xiaoneng.ss.module.school.view
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.forEach
@@ -13,12 +14,10 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.model.StudentBean
 import com.xiaoneng.ss.module.school.adapter.DepartmentAdapter
+import com.xiaoneng.ss.module.school.adapter.InvolveLabelAdapter
 import com.xiaoneng.ss.module.school.adapter.InvolvePerson2Adapter
 import com.xiaoneng.ss.module.school.adapter.QueryDepartAdapter
-import com.xiaoneng.ss.module.school.model.ClassesResponse
-import com.xiaoneng.ss.module.school.model.DepartmentBean
-import com.xiaoneng.ss.module.school.model.DepartmentPersonResp
-import com.xiaoneng.ss.module.school.model.UserBeanSimple
+import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_add_involve.*
 
@@ -36,13 +35,16 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private var currentTab: String = "1"
     private lateinit var mAdapterQuery: QueryDepartAdapter
     private lateinit var mAdapterDepartment: DepartmentAdapter
+    private lateinit var mAdapterLabel: InvolveLabelAdapter
     private lateinit var mAdapterInvolve: InvolvePerson2Adapter
     var mDataQuery = ArrayList<UserBeanSimple>()
     var mDataDepartment: ArrayList<DepartmentBean>? = ArrayList()
+    var mDataLabel: ArrayList<InvolveLabelBean> = ArrayList()
     var mDataClasses: ArrayList<DepartmentBean>? = ArrayList()
     var mDataDepartment2 = ArrayList<DepartmentBean>()
     var mDataClasses2 = ArrayList<DepartmentBean>()
     var mDataInvolve: MutableList<StudentBean> = ArrayList()
+    var label: String = ""
     var mReceiveList: MutableList<UserBeanSimple>? = ArrayList()
     var isManage = false
     lateinit var chosenDay: String
@@ -118,6 +120,12 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 setPersonNum()
             }
         }
+        mDataLabel.clear()
+        mDataLabel.add(InvolveLabelBean(label = "all",name = "所有人"))
+        mDataLabel.add(InvolveLabelBean(label = "teacher",name = "所有老师"))
+        mDataLabel.add(InvolveLabelBean(label = "classmaster",name = "所有班主任"))
+        mDataLabel.add(InvolveLabelBean(label = "students",name = "所有学生"))
+        initAdapterLabel()
         initAdapterQuery()
         initTab()
         initAdapterDepart()
@@ -158,9 +166,22 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         tvConfirm.setOnClickListener {
+            mDataLabel.forEach {
+                if (it.checked){
+                    label = label+it.label+","
+                }
+            }
+            var label2:String?=null
+            if (!label.isNullOrEmpty()){
+                label2 = label.substring(0,label.length-1)
+
+            }
+
+            Log.e("=====", label2.toString() )
             var mIntent = intent
             mIntent.putParcelableArrayListExtra(Constant.DATA, mDataDepartment)
             mIntent.putParcelableArrayListExtra(Constant.DATA2, mDataClasses)
+            mIntent.putExtra(Constant.DATA3, label2)
             setResult(Activity.RESULT_OK, mIntent)
             finish()
         }
@@ -240,6 +261,15 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         mAdapterQuery.setOnItemClickListener { _, view, position ->
             mShowDialog(position)
         }
+    }
+
+    private fun initAdapterLabel() {
+        mAdapterLabel = InvolveLabelAdapter(R.layout.item_involve_label, mDataLabel)
+        rvLabel.apply {
+            layoutManager = GridLayoutManager(context, 3)
+            setAdapter(mAdapterLabel)
+        }
+
     }
 
     private fun initAdapterDepart() {
