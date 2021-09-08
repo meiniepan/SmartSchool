@@ -22,6 +22,7 @@ object Constant {
     const val DATA = "data"
     const val DATA2 = "data2"
     const val DATA3 = "data3"
+    const val DATA4 = "data4"
     const val TIME = "time"
     const val FLAG = "flag"
     const val BIND_PARENT_SMS = 4

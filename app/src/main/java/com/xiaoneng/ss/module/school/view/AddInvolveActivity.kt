@@ -166,14 +166,18 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         tvConfirm.setOnClickListener {
+            var label2:String?=null
+            var labelStr:String=""
+
             mDataLabel.forEach {
                 if (it.checked){
                     label = label+it.label+","
+                    labelStr = labelStr+it.name+","
                 }
             }
-            var label2:String?=null
             if (!label.isNullOrEmpty()){
                 label2 = label.substring(0,label.length-1)
+                labelStr = labelStr.substring(0,labelStr.length-1)
 
             }
 
@@ -182,6 +186,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             mIntent.putParcelableArrayListExtra(Constant.DATA, mDataDepartment)
             mIntent.putParcelableArrayListExtra(Constant.DATA2, mDataClasses)
             mIntent.putExtra(Constant.DATA3, label2)
+            mIntent.putExtra(Constant.DATA4, labelStr)
             setResult(Activity.RESULT_OK, mIntent)
             finish()
         }

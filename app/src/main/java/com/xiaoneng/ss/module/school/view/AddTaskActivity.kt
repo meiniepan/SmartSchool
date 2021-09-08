@@ -31,7 +31,14 @@ import com.xiaoneng.ss.module.circular.adapter.NoticeFileAdapter
 import com.xiaoneng.ss.module.school.adapter.InvolveSimpleAdapter
 import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
+import kotlinx.android.synthetic.main.activity_add_schedule.*
 import kotlinx.android.synthetic.main.activity_add_task.*
+import kotlinx.android.synthetic.main.activity_add_task.llBeginTime
+import kotlinx.android.synthetic.main.activity_add_task.llEndTime
+import kotlinx.android.synthetic.main.activity_add_task.tvBeginDate
+import kotlinx.android.synthetic.main.activity_add_task.tvBeginTime
+import kotlinx.android.synthetic.main.activity_add_task.tvEndDate
+import kotlinx.android.synthetic.main.activity_add_task.tvEndTime
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -178,17 +185,17 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             mToast(R.string.lack_info)
             return
         }
-//        var involve = Gson().toJson(receiveList)
-//        label?.let {
-//            involve=null
-//        }
+        var involve = Gson().toJson(receiveList)
+        if (!label.isNullOrEmpty()) {
+            involve=""
+        }
         var taskBean = TaskBean(
             UserInfo.getUserBean().token,
             taskname = tvTitleAddTask.text.toString(),
             plantime = beginTime,
             plantotal = 10.toString(),
             overtime = endTime,
-            involve = Gson().toJson(receiveList),
+            involve = involve,
             sendlabel = label,
             ordertime = orderTime,
             remark = etRemarkAddTask.text.toString(),
@@ -340,20 +347,25 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mData.clear()
                     receiveList.clear()
                     mDataDepartment = data.getParcelableArrayListExtra(Constant.DATA)!!
-                    label = data.getStringExtra(Constant.DATA3)
                     mDataClasses = data.getParcelableArrayListExtra(Constant.DATA2)!!
-                    mDataDepartment.forEach {
-                        addDepartment(it)
-                    }
-                    mDataClasses.forEach {
-                        addDepartment(it)
-                    }
-                    for (i in 0 until receiveList.size) {
-                        if (i < mMax) {
-                            mData.add(receiveList[i])
+                    label = data.getStringExtra(Constant.DATA3)
+                    if (!label.isNullOrEmpty()) {
+//                        tvPeople.text = data.getStringExtra(Constant.DATA4)
+                    } else {
+                        mDataDepartment.forEach {
+                            addDepartment(it)
                         }
+                        mDataClasses.forEach {
+                            addDepartment(it)
+                        }
+                        for (i in 0 until receiveList.size) {
+                            if (i < mMax) {
+                                mData.add(receiveList[i])
+                            }
+                        }
+                        mAdapter.notifyDataSetChanged()
                     }
-                    mAdapter.notifyDataSetChanged()
+
                 }
             } else if (requestCode == Constant.REQUEST_CODE_FILE) {
                 val uri: Uri? = data?.getData() //得到uri，后面就是将uri转化成file的过程。

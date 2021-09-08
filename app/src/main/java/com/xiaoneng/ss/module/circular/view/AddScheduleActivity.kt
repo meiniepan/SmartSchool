@@ -172,13 +172,16 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
             mToast("请完善信息")
             return
         }
-
+        var involve = Gson().toJson(involves)
+        if (!label.isNullOrEmpty()) {
+            involve=""
+        }
         bean?.token = UserInfo.getUserBean().token
         bean?.title = etThemeAddSchedule.text.toString()
         bean?.scheduletime = beginTime
         bean?.scheduleover = endTime
         bean?.remark = etRemarkAddSchedule.text.toString()
-        bean?.involve = Gson().toJson(involves)
+        bean?.involve = involve
         bean?.sendlabel = label
         showLoading()
         if (isModify) {
@@ -230,13 +233,18 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
                     mDataDepartment = data.getParcelableArrayListExtra(Constant.DATA)!!
                     mDataClasses = data.getParcelableArrayListExtra(Constant.DATA2)!!
                     label = data.getStringExtra(Constant.DATA3)
-                    mDataDepartment.forEach {
-                        addDepartment(it)
+                    if (!label.isNullOrEmpty()) {
+                        tvPeople.text = data.getStringExtra(Constant.DATA4)
+                    } else {
+                        mDataDepartment.forEach {
+                            addDepartment(it)
+                        }
+                        mDataClasses.forEach {
+                            addDepartment(it)
+                        }
+                        dealData()
                     }
-                    mDataClasses.forEach {
-                        addDepartment(it)
-                    }
-                    dealData()
+
                 }
             }
         }
