@@ -138,19 +138,26 @@
 
                         </LinearLayout>
 
-                        <include layout="@layout/layout_split" />
-
-                        <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
-                            android:id="@+id/rvLabel"
+                        <LinearLayout
+                            android:id="@+id/llLabel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/white"
-                            android:paddingStart="@dimen/title_padding"
-                            android:paddingTop="10dp"
-                            android:paddingEnd="@dimen/title_padding"
-                            android:paddingBottom="10dp" />
+                            android:orientation="vertical">
 
-                        <include layout="@layout/layout_split" />
+                            <include layout="@layout/layout_split" />
+
+                            <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
+                                android:id="@+id/rvLabel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/white"
+                                android:paddingStart="@dimen/title_padding"
+                                android:paddingTop="10dp"
+                                android:paddingEnd="@dimen/title_padding"
+                                android:paddingBottom="10dp" />
+
+                            <include layout="@layout/layout_split" />
+                        </LinearLayout>
 
                         <com.xiaoneng.ss.common.utils.recyclerview.StatusRecyclerView
                             android:id="@+id/rvDepartment"

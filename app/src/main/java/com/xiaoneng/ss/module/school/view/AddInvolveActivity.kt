@@ -195,6 +195,7 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             ctbAddInvolve.setTitle(getString(R.string.diskTitle))
             rlClass.visibility = View.GONE
         } else if (intent.getIntExtra(Constant.TYPE, 0) == 2) {//来自选择学生
+            llLabel.visibility = View.GONE
             ctbAddInvolve.setTitle("选择学生")
             rlTeacher.visibility = View.GONE
             currentTab = tab2
