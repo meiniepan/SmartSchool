@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.model.ClassBean
 import com.xiaoneng.ss.module.school.adapter.DialogListAdapter
@@ -26,6 +27,8 @@ import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_quantize_type_special.*
 import org.jetbrains.anko.toast
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * @author Burning
@@ -63,6 +66,47 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 return@setOnClickListener
             }
             mViewModel.addMoralScoreSpecial(commit)
+        }
+        tvLabel1.setOnClickListener {
+            var year = Calendar.getInstance().get(Calendar.YEAR)
+            var month = Calendar.getInstance().get(Calendar.MONTH) + 1
+            if (month > 8) {
+
+            } else {
+                year = year - 1
+            }
+            commit.stime = year.toString() + "-09-01"
+            commit.etime = (year + 1).toString() + "-08-31"
+
+            tvLabel1.setBackgroundResource(R.drawable.bac_blue_oval)
+            tvLabel1.setTextColor(resources.getColor(R.color.white))
+            tvLabel2.setBackgroundResource(R.drawable.bac_blue_line_oval)
+            tvLabel2.setTextColor(resources.getColor(R.color.themeColor))
+            tvTimeSec.text = commit.stime + " ~ " + commit.etime
+        }
+        tvLabel2.setOnClickListener {
+            var stime = UserInfo.getUserBean().stime
+            var etime = UserInfo.getUserBean().etime
+            if (stime?.length ?: 0 >= 8) {
+                stime = stime?.substring(0, 4) + "-" + stime?.substring(
+                    4,
+                    6
+                ) + "-" + stime?.substring(6, 8)
+            }
+            if (etime?.length ?: 0 >= 8) {
+                etime = etime?.substring(0, 4) + "-" + etime?.substring(
+                    4,
+                    6
+                ) + "-" + etime?.substring(6, 8)
+            }
+            commit.stime = stime
+            commit.etime = etime
+
+            tvLabel2.setBackgroundResource(R.drawable.bac_blue_oval)
+            tvLabel2.setTextColor(resources.getColor(R.color.white))
+            tvLabel1.setBackgroundResource(R.drawable.bac_blue_line_oval)
+            tvLabel1.setTextColor(resources.getColor(R.color.themeColor))
+            tvTimeSec.text = commit.stime + " ~ " + commit.etime
         }
         initAdapter()
     }

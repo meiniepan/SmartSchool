@@ -268,7 +268,7 @@ inline fun Activity.showTimeSection(
                 var cTime = bTime - aTime
                 var days = cTime / (1000 * 60 * 60 * 24)
                 var timess =
-                    "${year}年${monthStart}月${dayStart}日-${yearEnd}年${monthEnd}月${dayEnd}日(${days}天)"
+                    "${year}-${monthStart?.to0String()}-${dayStart?.to0String()} ~ ${yearEnd}-${monthEnd?.to0String()}-${dayEnd?.to0String()}"
                 textView.text = timess
                 "${year}${monthStart?.to0String()}${dayStart?.to0String()}".block()
                 "${year}${monthEnd?.to0String()}${dayEnd?.to0String()}".blockEnd()

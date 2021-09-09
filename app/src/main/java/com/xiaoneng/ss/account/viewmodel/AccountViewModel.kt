@@ -33,6 +33,7 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
     val mParentsData: MutableLiveData<Any> = MutableLiveData()
     val mChildData: MutableLiveData<Any> = MutableLiveData()
     val mBaseData: MutableLiveData<Any> = MutableLiveData()
+    val mSemesterData: MutableLiveData<Any> = MutableLiveData()
     val mAppData: MutableLiveData<Any> = MutableLiveData()
     val mVerifyData: MutableLiveData<Any> = MutableLiveData()
 
@@ -181,6 +182,12 @@ class AccountViewModel : BaseViewModel<AccountRepository>() {
     fun upToken(bean: UpTokenBean) {
         initiateRequest(
             { mBaseData.value = mRepository.upToken(bean) },
+            loadState
+        )
+    }
+    fun getSemester() {
+        initiateRequest(
+            { mSemesterData.value = mRepository.getSemester() },
             loadState
         )
     }

@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.MenuItem
 import android.widget.ImageView
@@ -22,11 +23,15 @@ import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.permission.PermissionResult
 import com.xiaoneng.ss.common.permission.Permissions
+import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.circular.view.CircularFragment
 import com.xiaoneng.ss.module.mine.view.MineFragment
+import com.xiaoneng.ss.module.school.model.ClassesResponse
+import com.xiaoneng.ss.module.school.model.SemesterBean
 import com.xiaoneng.ss.module.school.view.SchoolFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.toast
 import pub.devrel.easypermissions.AppSettingsDialog
 
 
@@ -67,6 +72,7 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
         super.initData()
         //上报设备token
         mViewModel.upToken(UpTokenBean(devicetoken = mDeviceToken))
+        mViewModel.getSemester()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -260,6 +266,15 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
     }
 
     override fun initDataObserver() {
-
+        mViewModel.mSemesterData.observe(this, Observer {
+            it?.let {
+                netResponseFormat<SemesterBean>(it)?.let {
+                    var bean = UserInfo.getUserBean()
+                    bean.stime = it.starttime
+                    bean.etime = it.endtime
+                    UserInfo.modifyUserBean(bean)
+                }
+            }
+        })
     }
 }

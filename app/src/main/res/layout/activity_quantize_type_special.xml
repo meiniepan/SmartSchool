@@ -68,7 +68,6 @@
             <include layout="@layout/layout_split" />
 
             <LinearLayout
-                android:id="@+id/llTimeSec"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:gravity="center_vertical">
@@ -88,6 +87,31 @@
                     android:textColor="@color/commonRed2"
                     android:textStyle="bold" />
                 <TextView
+                    android:id="@+id/tvLabel1"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:background="@drawable/bac_blue_line_oval"
+                    android:textColor="@color/themeColor"
+                    android:text="期"
+                    android:layout_marginStart="5dp"
+                    />
+                <TextView
+                    android:id="@+id/tvLabel2"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:background="@drawable/bac_blue_line_oval"
+                    android:textColor="@color/themeColor"
+                    android:text="年"
+                    android:layout_marginStart="5dp"
+                    />
+                <LinearLayout
+                    android:id="@+id/llTimeSec"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                <TextView
                     android:id="@+id/tvTimeSec"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -104,6 +128,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/title_padding"
                     android:src="@drawable/ic_next" />
+                </LinearLayout>
             </LinearLayout>
 
             <include layout="@layout/layout_split" />

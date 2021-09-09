@@ -250,6 +250,11 @@ class AccountRepository(val loadState: MutableLiveData<State>) : ApiRepository()
             .dataConvert(loadState)
     }
 
+    suspend fun getSemester(): Any {
+        return apiService.getSemester(UserInfo.getUserBean().token)
+            .dataConvert(loadState)
+    }
+
 
     suspend fun getApps(): Any {
         return when (UserInfo.getUserBean().usertype) {

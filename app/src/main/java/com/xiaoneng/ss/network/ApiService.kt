@@ -1093,6 +1093,15 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
+     *学期
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/global/setting/semesters")
+    suspend fun getSemester(
+        @Field("token") token: String?,
+    ): BaseResponse<Any>
+
+    /**
      *更新报修记录
      */
     @POST("/api/v17/teacher/repair/modify")
