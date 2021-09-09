@@ -61,7 +61,7 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         super.initView()
         var hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
         var minute = Calendar.getInstance().get(Calendar.MINUTE)
-        if (hour > 7 && minute > 30) {
+        if (hour > 7 || (hour == 7 && minute > 30)) {
 
         } else {
             canCheck = true
