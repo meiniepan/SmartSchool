@@ -23,7 +23,7 @@ class ViewNumber @JvmOverloads constructor(
     defStyleAttr: Int = 0,
     val data: QuantizeTemplateBean,val commit: QuantizeBody
 ) : FrameLayout(context, attrs, defStyleAttr) {
-    var mNumber = 0
+    var mNumber = data.value.toIntSafe()
 
     init {
         val typedArray =
@@ -42,7 +42,6 @@ class ViewNumber @JvmOverloads constructor(
         }
 
         tvJumpTitleKey.text = data.label
-        data.value = "0"
         etNumber.setText(mNumber.toString())
         etNumber.addTextChangedListener {
             data.value = it.toString()

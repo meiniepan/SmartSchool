@@ -36,6 +36,7 @@ import kotlin.collections.ArrayList
  * @date :2020/10/23 3:17 PM
  */
 class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
+    private var canCheck: Boolean = false
     lateinit var mAdapter: PropertyTypeAdapter
     var mBean: QuantizeTypeBean? = null
     var mData: ArrayList<QuantizeTemplateBean> = ArrayList()
@@ -58,6 +59,14 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
+        var hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        var minute = Calendar.getInstance().get(Calendar.MINUTE)
+        if (hour > 7 && minute > 30) {
+
+        } else {
+            canCheck = true
+        }
+
         mBean = intent.getParcelableExtra(Constant.DATA)
         mDataType = intent.getParcelableArrayListExtra(Constant.DATA2)
         tvConfirmQuantize.setOnClickListener {
@@ -284,8 +293,16 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             adapter = dialogAdapter
         }
         dialogAdapter.setOnItemClickListener { adapter, view, position ->
-            titles[position].isChecked = !titles[position].isChecked
-            dialogAdapter.notifyDataSetChanged()
+            if (titles[position].name == "入校迟到") {
+                if (canCheck) {
+                    titles[position].isChecked = !titles[position].isChecked
+                    dialogAdapter.notifyDataSetChanged()
+                }
+            } else {
+                titles[position].isChecked = !titles[position].isChecked
+                dialogAdapter.notifyDataSetChanged()
+            }
+
         }
         tvReset.setOnClickListener {
             titles.forEach {
