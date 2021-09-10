@@ -3,6 +3,7 @@ package com.xiaoneng.ss.module.school.view
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,7 @@ import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_quantize_type_special.*
 import org.jetbrains.anko.toast
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -160,6 +162,20 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         llRule.setOnClickListener {
+            val sdf = SimpleDateFormat("yyyy-MM-dd")
+            var year = Calendar.getInstance().get(Calendar.YEAR)
+            var month = Calendar.getInstance().get(Calendar.MONTH)+1
+            var day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+            commit.stime?.let {
+                var ss = "${year}-${month.toString().to0String()}-${day.toString().to0String()}"
+                var mill1 = sdf.parse(ss).time
+                var mill2 = sdf.parse(it).time
+
+                if (mill2>mill1){
+                    canCheck = true
+                }
+            }
+
             dialogMulti.show()
         }
         tvRemark.addTextChangedListener {
