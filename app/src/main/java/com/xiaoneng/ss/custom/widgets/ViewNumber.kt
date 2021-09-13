@@ -52,8 +52,11 @@ class ViewNumber @JvmOverloads constructor(
 
         ivMinus.setOnClickListener {
             etNumber.clearFocus()
-            if (mNumber > 0) {
-                mNumber -= 1
+            if (mNumber > data.setting?.min?:0) {
+                mNumber -= data.setting?.step?:1
+                if (mNumber < data.setting?.min?:0){
+                    mNumber = data.setting?.min?:0
+                }
                 etNumber.setText(mNumber.toString())
                 data.value = mNumber.toString()
                 data.rules?.required?.hasValue = !mNumber.toString().isNullOrEmpty()
@@ -64,11 +67,18 @@ class ViewNumber @JvmOverloads constructor(
         }
         ivPlus.setOnClickListener {
             etNumber.clearFocus()
-            mNumber += 1
-            etNumber.setText(mNumber.toString())
-            data.value = mNumber.toString()
-            data.rules?.required?.hasValue = !mNumber.toString().isNullOrEmpty()
-            commit.score = mNumber.toString()
+            if (mNumber < data.setting?.max?:9999) {
+                mNumber += data.setting?.step?:1
+                if (mNumber > data.setting?.max?:9999){
+                    mNumber = data.setting?.max?:9999
+                }
+                etNumber.setText(mNumber.toString())
+                data.value = mNumber.toString()
+                data.rules?.required?.hasValue = !mNumber.toString().isNullOrEmpty()
+                commit.score = mNumber.toString()
+            } else {
+                context.toast("不能再加了~")
+            }
         }
     }
 

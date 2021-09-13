@@ -34,5 +34,6 @@ data class QuantizeTemplateBean(
     var stime: String?=null,
     var etime: String?=null,
     var selections: ArrayList<String>?=null,
+    var setting: QuantizeTemplateSetting?=null,
     var classes: ArrayList<ClassBean>?=null,
 ) : Parcelable

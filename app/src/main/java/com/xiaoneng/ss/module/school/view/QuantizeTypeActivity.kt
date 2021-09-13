@@ -21,7 +21,7 @@ import org.jetbrains.anko.toast
 
 /**
  * @author Burning
- * @description:报修报送
+ * @description:
  * @date :2020/10/23 3:17 PM
  */
 class QuantizeTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
