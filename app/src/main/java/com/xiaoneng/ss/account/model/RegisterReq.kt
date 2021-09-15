@@ -12,5 +12,8 @@ data class RegisterReq(
     var vcode : String,
     var invitecode : String,
     var realname : String,//选填
-    var spassword : String//选填
+    var spassword : String,//选填
+    var cno : String,//选填
+    var sno : String,//选填
+    var eduid : String,//选填
 )

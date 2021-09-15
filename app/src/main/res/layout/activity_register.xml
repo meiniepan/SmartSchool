@@ -68,26 +68,20 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:src="@drawable/ic_person" />
-
-
                 <EditText
                     android:id="@+id/etNameRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    
                     android:layout_marginEnd="26dp"
                     android:background="@null"
                     android:paddingTop="14dp"
                     android:paddingBottom="14dp"
                     android:hint="输入真实姓名"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_16" />
             </LinearLayout>
 
-            <include layout="@layout/layout_split_margin_login" />
+            <include layout="@layout/layout_split_margin" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -98,27 +92,21 @@
                 android:layout_marginBottom="0dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:src="@drawable/ic_invite" />
-
 
                 <EditText
                     android:id="@+id/etInviteRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    
                     android:layout_marginEnd="26dp"
                     android:paddingTop="14dp"
                     android:paddingBottom="14dp"
                     android:background="@null"
                     android:hint="输入班级邀请码"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_16" />
             </LinearLayout>
 
-            <include layout="@layout/layout_split_margin_login" />
+            <include layout="@layout/layout_split_margin" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -130,28 +118,21 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:src="@drawable/icon_phone" />
-
-
                 <EditText
                     android:id="@+id/etPhoneRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    
                     android:layout_marginEnd="26dp"
                     android:background="@null"
                     android:paddingTop="14dp"
                     android:paddingBottom="14dp"
                     android:hint="输入手机号"
                     android:inputType="phone"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_16" />
             </LinearLayout>
 
-            <include layout="@layout/layout_split_margin_login" />
-
+            <include layout="@layout/layout_split_margin" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -162,11 +143,81 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:src="@drawable/icon_captcha" />
+                <EditText
+                    android:id="@+id/etCnoRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    
+                    android:layout_marginEnd="26dp"
+                    android:background="@null"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:hint="输入学号（选填）"
+                    android:inputType="phone"
+                    android:textSize="@dimen/sp_16" />
+            </LinearLayout>
 
+            <include layout="@layout/layout_split_margin" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/title_padding"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="@dimen/title_padding"
+                android:layout_marginBottom="0dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/etSnoRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    
+                    android:layout_marginEnd="26dp"
+                    android:background="@null"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:hint="输入教育号（选填）"
+                    android:inputType="phone"
+                    android:textSize="@dimen/sp_16" />
+            </LinearLayout>
+
+            <include layout="@layout/layout_split_margin" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/title_padding"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="@dimen/title_padding"
+                android:layout_marginBottom="0dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/etEduRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    
+                    android:layout_marginEnd="26dp"
+                    android:background="@null"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:hint="输入教育ID（选填）"
+                    android:inputType="phone"
+                    android:textSize="@dimen/sp_16" />
+            </LinearLayout>
+
+            <include layout="@layout/layout_split_margin" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/title_padding"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="@dimen/title_padding"
+                android:layout_marginBottom="0dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/etCaptchaRegister"
@@ -178,8 +229,8 @@
                     android:paddingTop="14dp"
                     android:paddingBottom="14dp"
                     android:inputType="number"
-                    android:textSize="@dimen/sp_20"
-                    android:layout_marginStart="12dp"
+                    android:textSize="@dimen/sp_16"
+                    
                     android:maxLength="8" />
 
                 <TextView
@@ -187,7 +238,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/title_padding"
-                    android:layout_marginEnd="26dp"
                     android:gravity="center"
                     android:text="发送验证码"
                     android:paddingTop="14dp"
@@ -195,7 +245,7 @@
                     android:textColor="@color/themeColor" />
             </LinearLayout>
 
-            <include layout="@layout/layout_split_margin_login" />
+            <include layout="@layout/layout_split_margin" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -207,12 +257,6 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:src="@drawable/ic_lock" />
-
-
                 <EditText
                     android:id="@+id/etPwdRegister"
                     android:layout_width="0dp"
@@ -222,8 +266,8 @@
                     android:hint="请设置8位密码"
                     android:paddingTop="14dp"
                     android:paddingBottom="14dp"
-                    android:textSize="@dimen/sp_20"
-                    android:layout_marginStart="12dp"
+                    android:textSize="@dimen/sp_16"
+                    
                     android:inputType="textPassword"
                     android:maxLength="8" />
 
@@ -234,12 +278,11 @@
                     android:paddingBottom="14dp"
                     android:paddingStart="14dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="26dp"
                     android:src="@drawable/ic_eye_no" />
             </LinearLayout>
 
 
-            <include layout="@layout/layout_split_margin_login" />
+            <include layout="@layout/layout_split_margin" />
 
 
             <TextView

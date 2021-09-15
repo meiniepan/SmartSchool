@@ -89,6 +89,9 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
         var inviteStr = etInviteRegister.text.toString()
         var nameStr = etNameRegister.text.toString()
         var pwdStr = etPwdRegister.text.toString()
+        var cno = etCnoRegister.text.toString()
+        var sno = etSnoRegister.text.toString()
+        var eduid = etEduRegister.text.toString()
         if (!isAgree) {
             showTip("请先同意用户协议及隐私政策")
         } else {
@@ -106,7 +109,8 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
             }
 
             mViewModel.registerCo(
-                RegisterReq(phoneStr, vCodeStr, inviteStr, nameStr, pwdStr)
+                RegisterReq(phoneStr, vCodeStr, inviteStr, nameStr, pwdStr,
+                cno=cno,sno=sno,eduid=eduid)
             )
         }
     }
