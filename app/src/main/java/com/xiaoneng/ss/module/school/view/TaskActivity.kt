@@ -51,15 +51,19 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         initDialogPublish()
         initDialogReceive()
 
+        titlesP.add("全部")
         titlesP.add("进行中")
         titlesP.add("草稿箱")
         titlesP.add("已关闭")
+        statusP.add("-1")
         statusP.add("1")
         statusP.add("0")
         statusP.add("3")
 
+        titlesR.add("全部")
         titlesR.add("未完成")
         titlesR.add("已完成")
+        statusR.add("-1")
         statusR.add("0")
         statusR.add("1")
 
