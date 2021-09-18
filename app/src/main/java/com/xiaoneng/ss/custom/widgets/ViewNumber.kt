@@ -21,7 +21,7 @@ class ViewNumber @JvmOverloads constructor(
     val context: Activity,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
-    val data: QuantizeTemplateBean,val commit: QuantizeBody
+    val data: QuantizeTemplateBean, val commit: QuantizeBody
 ) : FrameLayout(context, attrs, defStyleAttr) {
     var mNumber = data.value.toIntSafe()
 
@@ -44,18 +44,28 @@ class ViewNumber @JvmOverloads constructor(
         tvJumpTitleKey.text = data.label
         etNumber.setText(mNumber.toString())
         etNumber.addTextChangedListener {
-            data.value = it.toString()
-            data.rules?.required?.hasValue = !it.toString().isNullOrEmpty()
-            commit.score = it.toString()
-            mNumber = it.toString().toIntSafe()
+            var ss = it.toString()
+            if (ss.toIntSafe() < data.setting?.min ?: 0) {
+                ss = (data.setting?.min ?: 0).toString()
+                etNumber.setText(ss)
+                context.toast("注意最小值~")
+            } else if (ss.toIntSafe() > data.setting?.max ?: 9999) {
+                ss = (data.setting?.max ?: 9999).toString()
+                etNumber.setText(ss)
+                context.toast("注意最大值~")
+            }
+            data.value = ss
+            data.rules?.required?.hasValue = !ss.isNullOrEmpty()
+            commit.score = ss
+            mNumber = ss.toIntSafe()
         }
 
         ivMinus.setOnClickListener {
             etNumber.clearFocus()
-            if (mNumber > data.setting?.min?:0) {
-                mNumber -= data.setting?.step?:1
-                if (mNumber < data.setting?.min?:0){
-                    mNumber = data.setting?.min?:0
+            if (mNumber > data.setting?.min ?: 0) {
+                mNumber -= data.setting?.step ?: 1
+                if (mNumber < data.setting?.min ?: 0) {
+                    mNumber = data.setting?.min ?: 0
                 }
                 etNumber.setText(mNumber.toString())
                 data.value = mNumber.toString()
@@ -67,10 +77,10 @@ class ViewNumber @JvmOverloads constructor(
         }
         ivPlus.setOnClickListener {
             etNumber.clearFocus()
-            if (mNumber < data.setting?.max?:9999) {
-                mNumber += data.setting?.step?:1
-                if (mNumber > data.setting?.max?:9999){
-                    mNumber = data.setting?.max?:9999
+            if (mNumber < data.setting?.max ?: 9999) {
+                mNumber += data.setting?.step ?: 1
+                if (mNumber > data.setting?.max ?: 9999) {
+                    mNumber = data.setting?.max ?: 9999
                 }
                 etNumber.setText(mNumber.toString())
                 data.value = mNumber.toString()
