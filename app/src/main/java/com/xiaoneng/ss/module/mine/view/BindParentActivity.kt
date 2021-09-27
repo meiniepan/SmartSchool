@@ -8,6 +8,7 @@ import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.mAlert
 import com.xiaoneng.ss.common.utils.mStartActivity
+import com.xiaoneng.ss.common.utils.mToast
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.model.ParentBean
 import com.xiaoneng.ss.model.UnbindParentResp
@@ -64,7 +65,7 @@ class BindParentActivity : BaseLifeCycleActivity<AccountViewModel>() {
         UserInfo.getUserBean().parents?.let {
             mData.addAll(it)
         }
-            rvParent.notifyDataSetChanged()
+        rvParent.notifyDataSetChanged()
     }
 
     override fun initDataObserver() {
@@ -72,7 +73,7 @@ class BindParentActivity : BaseLifeCycleActivity<AccountViewModel>() {
             response?.let {
                 netResponseFormat<UnbindParentResp>(it)?.let {
                     it.parents?.let {
-
+                        mToast("解绑成功")
                         var userBean = UserInfo.getUserBean()
                         userBean.parents = it
                         UserInfo.modifyUserBean(userBean)
