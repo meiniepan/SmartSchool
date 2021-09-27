@@ -11,12 +11,10 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
-import com.xiaoneng.ss.module.activity.MainActivity
 import com.xiaoneng.ss.module.circular.adapter.ChooseColorAdapter
 import com.xiaoneng.ss.module.circular.model.ScheduleBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import com.xiaoneng.ss.module.school.model.DepartmentBean
-import com.xiaoneng.ss.module.school.model.FileInfoBean
 import com.xiaoneng.ss.module.school.model.UserBeanSimple
 import com.xiaoneng.ss.module.school.view.AddInvolveActivity
 import kotlinx.android.synthetic.main.activity_add_schedule.*
