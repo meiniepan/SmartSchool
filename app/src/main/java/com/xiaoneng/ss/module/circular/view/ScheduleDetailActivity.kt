@@ -4,10 +4,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.utils.Constant
-import com.xiaoneng.ss.common.utils.DateUtil
-import com.xiaoneng.ss.common.utils.mStartActivity
-import com.xiaoneng.ss.common.utils.mToast
+import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.circular.model.ScheduleBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
 import kotlinx.android.synthetic.main.activity_schedule_detail.*
@@ -56,7 +53,10 @@ class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
     }
 
     private fun onDelete() {
+        mAlert(getString(R.string.deleteSure)){
+        showLoading()
         mViewModel.deleteSchedule(bean)
+        }
     }
 
     private fun onEdit() {
