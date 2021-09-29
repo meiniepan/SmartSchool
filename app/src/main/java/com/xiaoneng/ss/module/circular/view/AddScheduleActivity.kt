@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.gson.Gson
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.module.circular.adapter.ChooseColorAdapter
@@ -116,7 +117,9 @@ class AddScheduleActivity : BaseLifeCycleActivity<CircularViewModel>() {
             if (isModify && bean?.cuser_id != UserInfo.getUserBean().uid) {
                 llInvite.visibility = View.GONE
             } else {
-                llInvite.visibility = View.VISIBLE
+                if (AppInfo.checkRule2("admin/schedules/add")) {
+                    llInvite.visibility = View.VISIBLE
+                }
             }
         }
         llInvite.setOnClickListener {
