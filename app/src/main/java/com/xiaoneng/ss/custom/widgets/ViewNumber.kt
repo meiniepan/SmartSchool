@@ -43,6 +43,7 @@ class ViewNumber @JvmOverloads constructor(
 
         tvJumpTitleKey.text = data.label
         etNumber.setText(mNumber.toString())
+        commit.score = data.value
         etNumber.addTextChangedListener {
             var ss = it.toString()
             if (ss.toIntSafe() < data.setting?.min ?: 0) {
