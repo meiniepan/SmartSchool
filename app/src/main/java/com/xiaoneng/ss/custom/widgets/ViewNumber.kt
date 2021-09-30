@@ -43,7 +43,12 @@ class ViewNumber @JvmOverloads constructor(
 
         tvJumpTitleKey.text = data.label
         etNumber.setText(mNumber.toString())
-        commit.score = data.value
+        if (data.label == "扣分") {
+            commit.score = data.value
+        } else if (data.label == "综合加分") {
+            commit.correctscore = data.value
+        }
+
         etNumber.addTextChangedListener {
             var ss = it.toString()
             if (ss.toIntSafe() < data.setting?.min ?: 0) {
@@ -57,7 +62,11 @@ class ViewNumber @JvmOverloads constructor(
             }
             data.value = ss
             data.rules?.required?.hasValue = !ss.isNullOrEmpty()
-            commit.score = ss
+            if (data.label == "扣分") {
+                commit.score = ss
+            } else if (data.label == "综合加分") {
+                commit.correctscore = ss
+            }
             mNumber = ss.toIntSafe()
         }
 
@@ -71,7 +80,11 @@ class ViewNumber @JvmOverloads constructor(
                 etNumber.setText(mNumber.toString())
                 data.value = mNumber.toString()
                 data.rules?.required?.hasValue = !mNumber.toString().isNullOrEmpty()
-                commit.score = mNumber.toString()
+                if (data.label == "扣分") {
+                    commit.score = mNumber.toString()
+                } else if (data.label == "综合加分") {
+                    commit.correctscore = mNumber.toString()
+                }
             } else {
                 context.toast("不能再减了~")
             }
@@ -86,7 +99,11 @@ class ViewNumber @JvmOverloads constructor(
                 etNumber.setText(mNumber.toString())
                 data.value = mNumber.toString()
                 data.rules?.required?.hasValue = !mNumber.toString().isNullOrEmpty()
-                commit.score = mNumber.toString()
+                if (data.label == "扣分") {
+                    commit.score = mNumber.toString()
+                } else if (data.label == "综合加分") {
+                    commit.correctscore = mNumber.toString()
+                }
             } else {
                 context.toast("不能再加了~")
             }
