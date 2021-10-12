@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.AppInfo.checkRule2
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.mStartActivity
@@ -82,7 +83,9 @@ class QuantizeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 netResponseFormat<BaseResp<QuantizeTypeBean>>(it)?.let { bean ->
                     bean.data?.let {
                         mData.add(QuantizeTypeBean(typename = strSpecial))
-                        mData.addAll(it)
+                        if (checkRule2("moral/moralScore/add")) {
+                            mData.addAll(it)
+                        }
                         mDataType.addAll(it)
                         rvQuantize.notifyDataSetChanged()
                     }
