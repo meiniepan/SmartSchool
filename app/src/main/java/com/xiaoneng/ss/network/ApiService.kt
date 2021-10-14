@@ -635,7 +635,8 @@ interface ApiService {
     suspend fun getStudentsByClass(
         @Field("token") token: String? = null,
         @Field("classid") classid: String? = null,
-        @Field("realname") realname: String? = null
+        @Field("realname") realname: String? = null,
+        @Field("isall") isall: String? = null,
     ): BaseResponse<Any>
 
     /**
@@ -786,7 +787,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/v17/teacher/classs/treeClass")
     suspend fun getClassesByTea(
-        @Field("token") token: String?
+        @Field("token") token: String?,
+        @Field("isall") isall: String?=null,
     ): BaseResponse<Any>
 
     /**

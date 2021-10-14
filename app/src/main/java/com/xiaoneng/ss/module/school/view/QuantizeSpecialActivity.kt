@@ -143,8 +143,8 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         putExtra(Constant.DATA3, receiveList)
                     }
                 }
-                //从草稿箱第一次选择参与人，传入原有参与人数据
                 putExtra(Constant.TYPE, 2)
+                putExtra(Constant.TYPE2, 0)
             }
         }
 

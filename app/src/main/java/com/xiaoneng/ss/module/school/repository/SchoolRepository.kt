@@ -423,8 +423,8 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
         }
     }
 
-    suspend fun getClassesByTea(): Any {
-        return apiService.getClassesByTea(UserInfo.getUserBean().token)
+    suspend fun getClassesByTea(isall: String?): Any {
+        return apiService.getClassesByTea(UserInfo.getUserBean().token,isall)
             .dataConvert(loadState)
     }
 
@@ -438,10 +438,10 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             .dataConvert(loadState)
     }
 
-    suspend fun getStudentsByClass(classId: String? = null, realName: String? = null): Any {
+    suspend fun getStudentsByClass(classId: String? = null, realName: String? = null, isall: String? = null): Any {
         return apiService.getStudentsByClass(
             UserInfo.getUserBean().token,
-            classid = classId, realname = realName
+            classid = classId, realname = realName,isall=isall
         )
             .dataConvert(loadState)
     }

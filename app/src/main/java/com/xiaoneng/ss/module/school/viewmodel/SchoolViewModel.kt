@@ -266,9 +266,9 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getClassesByTea() {
+    fun getClassesByTea(isall: String?=null) {
         initiateRequest(
-            { mBaseData.value = mRepository.getClassesByTea() },
+            { mBaseData.value = mRepository.getClassesByTea(isall) },
             loadState
         )
     }
@@ -287,9 +287,9 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun getStudentsByClass(classId: String? = null, realName: String? = null) {
+    fun getStudentsByClass(classId: String? = null, realName: String? = null, isall: String? = null) {
         initiateRequest(
-            { mStudentData.value = mRepository.getStudentsByClass(classId, realName) },
+            { mStudentData.value = mRepository.getStudentsByClass(classId, realName,isall=isall) },
             loadState
         )
     }

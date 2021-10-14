@@ -39,6 +39,7 @@ object Constant {
     const val FILE_TRANS_INFO = "file_trans_info"
     const val TITLE = "title"
     const val TYPE = "type"
+    const val TYPE2 = "type2"
     const val TITLE_2 = "title_2"
     const val LEAVE_TYPE = "leave_type"
     const val ID = "id"

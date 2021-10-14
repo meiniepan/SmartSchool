@@ -509,7 +509,12 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mDataQuery.clear()
                     it.data?.let {
                         mDataQuery.addAll(it)
-                        mViewModel.getStudentsByClass(realName = etSearch.text.toString())
+                        if (intent.getIntExtra(Constant.TYPE2, 1)==0){
+                            mViewModel.getStudentsByClass(realName = etSearch.text.toString())
+                        }else{
+                            mViewModel.getStudentsByClass(realName = etSearch.text.toString(),isall = "all")
+                        }
+
                     }
                 }
             }
@@ -547,7 +552,12 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         mViewModel.mDepartmentsData.observe(this, Observer { response ->
             response?.let {
-                mViewModel.getClassesByTea()
+                if (intent.getIntExtra(Constant.TYPE2, 1)==0){
+                    mViewModel.getClassesByTea()
+                }else{
+                    mViewModel.getClassesByTea(isall = "all")
+                }
+
                 netResponseFormat<ArrayList<DepartmentBean>>(it)?.let {
                     mDataDepartment?.clear()
                     mDataDepartment?.addAll(it)
