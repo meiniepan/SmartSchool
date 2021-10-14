@@ -79,23 +79,6 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             mViewModel.addMoralScoreSpecial(commit)
         }
         tvLabel1.setOnClickListener {
-            var year = Calendar.getInstance().get(Calendar.YEAR)
-            var month = Calendar.getInstance().get(Calendar.MONTH) + 1
-            if (month > 8) {
-
-            } else {
-                year = year - 1
-            }
-            commit.stime = year.toString() + "-09-01"
-            commit.etime = (year + 1).toString() + "-08-31"
-
-            tvLabel1.setBackgroundResource(R.drawable.bac_blue_oval)
-            tvLabel1.setTextColor(resources.getColor(R.color.white))
-            tvLabel2.setBackgroundResource(R.drawable.bac_blue_line_oval)
-            tvLabel2.setTextColor(resources.getColor(R.color.themeColor))
-            tvTimeSec.text = commit.stime + " ~ " + commit.etime
-        }
-        tvLabel2.setOnClickListener {
             var stime = UserInfo.getUserBean().stime
             var etime = UserInfo.getUserBean().etime
             if (stime?.length ?: 0 >= 8) {
@@ -113,6 +96,23 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             commit.stime = stime
             commit.etime = etime
 
+            tvLabel1.setBackgroundResource(R.drawable.bac_blue_oval)
+            tvLabel1.setTextColor(resources.getColor(R.color.white))
+            tvLabel2.setBackgroundResource(R.drawable.bac_blue_line_oval)
+            tvLabel2.setTextColor(resources.getColor(R.color.themeColor))
+            tvTimeSec.text = commit.stime + " ~ " + commit.etime
+        }
+        tvLabel2.setOnClickListener {
+
+            var year = Calendar.getInstance().get(Calendar.YEAR)
+            var month = Calendar.getInstance().get(Calendar.MONTH) + 1
+            if (month > 8) {
+
+            } else {
+                year = year - 1
+            }
+            commit.stime = year.toString() + "-09-01"
+            commit.etime = (year + 1).toString() + "-08-31"
             tvLabel2.setBackgroundResource(R.drawable.bac_blue_oval)
             tvLabel2.setTextColor(resources.getColor(R.color.white))
             tvLabel1.setBackgroundResource(R.drawable.bac_blue_line_oval)

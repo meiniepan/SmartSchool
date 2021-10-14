@@ -628,6 +628,17 @@ interface ApiService {
     ): BaseResponse<Any>
 
     /**
+     *教师按班级获取学生列表
+     */
+    @FormUrlEncoded
+    @POST("/api/v17/teacher/student/listByClass")
+    suspend fun getStudentsByClass(
+        @Field("token") token: String? = null,
+        @Field("classid") classid: String? = null,
+        @Field("realname") realname: String? = null
+    ): BaseResponse<Any>
+
+    /**
      *学生发布任务审批
      */
     @FormUrlEncoded
@@ -797,16 +808,7 @@ interface ApiService {
         @Field("token") token: String?
     ): BaseResponse<Any>
 
-    /**
-     *教师按班级获取学生列表
-     */
-    @FormUrlEncoded
-    @POST("/api/v17/teacher/student/listByClass")
-    suspend fun getStudentsByClass(
-        @Field("token") token: String? = null,
-        @Field("classid") classid: String? = null,
-        @Field("realname") realname: String? = null
-    ): BaseResponse<Any>
+
 
     /**
      *学生任务详情

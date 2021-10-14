@@ -244,6 +244,11 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         tvInvolveTab1.setChecked(true)
         tvInvolveTab2.setChecked(false)
         mAdapterDepartment.setNewData(mDataDepartment)
+        if (mDataDepartment?.size ?: 0 <= 0) {
+            rvDepartment.showEmptyView()
+        } else {
+            rvDepartment.showContentView()
+        }
     }
 
     private fun checkSecondTab() {
