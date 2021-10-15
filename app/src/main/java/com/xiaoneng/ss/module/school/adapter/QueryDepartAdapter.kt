@@ -21,7 +21,7 @@ class QueryDepartAdapter(layoutId: Int, listData: MutableList<UserBeanSimple>) :
             var nameStr = item.realname
             holder.setText(R.id.tvName1Query, nameStr)
             if (item.usertype == "1") {
-                holder.setText(R.id.tvName2Query, item.cno)
+                holder.setText(R.id.tvName2Query, item.levelclass)
             } else {
                 holder.setText(R.id.tvName2Query, item.dep_name)
             }
