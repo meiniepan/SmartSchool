@@ -15,6 +15,7 @@ import com.umeng.message.IUmengRegisterCallback
 import com.umeng.message.PushAgent
 import com.umeng.message.UmengMessageHandler
 import com.umeng.message.entity.UMessage
+import com.xiaoneng.ss.BuildConfig
 import com.xiaoneng.ss.common.callback.EmptyCallBack
 import com.xiaoneng.ss.common.callback.ErrorCallBack
 import com.xiaoneng.ss.common.callback.LoadingCallBack
@@ -57,7 +58,9 @@ open class BaseApplication : Application() {
         SPreference.setContext(applicationContext)
         initPush()
         Bugly.init(getApplicationContext(), "c55b4f8e6e", false)
-        Beta.autoCheckUpgrade = true
+        if (!BuildConfig.IS_DEBUG) {
+            Beta.autoCheckUpgrade = true
+        }
         initMode()
         LoadSir.beginBuilder()
             .addCallback(ErrorCallBack())
