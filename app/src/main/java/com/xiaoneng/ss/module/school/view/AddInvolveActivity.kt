@@ -5,7 +5,6 @@ import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import androidx.core.view.forEach
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,8 +46,6 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var label: String = ""
     var mReceiveList: MutableList<UserBeanSimple>? = ArrayList()
     var isManage = false
-    lateinit var chosenDay: String
-
 
     override fun getLayoutId(): Int = R.layout.activity_add_involve
 
@@ -357,7 +354,6 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     private fun mShowDialog(position: Int) {
         // 弹出对话框
 
-        chosenDay = DateUtil.formatDate()
         mDataQuery[position].let { bean ->
             var pId = ""
             var studentBean = StudentBean(
