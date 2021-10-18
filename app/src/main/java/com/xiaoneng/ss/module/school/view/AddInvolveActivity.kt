@@ -135,7 +135,11 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         llContent.visibility = View.GONE
                         tvSearchClear.visibility = View.VISIBLE
                         rvSearchInvolve.showLoadingView()
+                        if (intent.getIntExtra(Constant.TYPE, 0) == 2) {//来自选择学生
+                            queryStu()
+                        }else{
                         mViewModel.listByDepartment(realName = etSearch.text.toString())
+                        }
                     }
                 }
 
@@ -505,12 +509,11 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mDataQuery.clear()
                     it.data?.let {
                         mDataQuery.addAll(it)
-                        if (intent.getIntExtra(Constant.TYPE2, 1)==0){
-                            mViewModel.getStudentsByClass(realName = etSearch.text.toString())
-                        }else{
-                            mViewModel.getStudentsByClass(realName = etSearch.text.toString(),isall = "all")
+                        if (intent.getIntExtra(Constant.TYPE, 0) == 1) {//来自选择老师
+                            rvSearchInvolve.notifyDataSetChanged()
+                        }else if (intent.getIntExtra(Constant.TYPE, 0) == 0){
+                            queryStu()
                         }
-
                     }
                 }
             }
@@ -575,6 +578,14 @@ class AddInvolveActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             }
         })
 
+    }
+
+    private fun queryStu() {
+        if (intent.getIntExtra(Constant.TYPE2, 1) == 0) {
+            mViewModel.getStudentsByClass(realName = etSearch.text.toString())
+        } else {
+            mViewModel.getStudentsByClass(realName = etSearch.text.toString(), isall = "all")
+        }
     }
 
 }
