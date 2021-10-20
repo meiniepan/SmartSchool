@@ -30,5 +30,9 @@ class UserProtocolActivity : BaseLifeCycleActivity<AccountViewModel>() {
     override fun initDataObserver() {
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        webView.destroy()
+    }
 
 }
