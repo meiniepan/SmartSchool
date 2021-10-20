@@ -19,17 +19,17 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingStart="@dimen/title_padding"
             android:paddingTop="20dp"
             android:paddingEnd="@dimen/title_padding"
             android:paddingBottom="20dp">
 
-            <TextView
-                android:id="@+id/tvUserProtocol"
+            <WebView
+                android:id="@+id/webView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>
