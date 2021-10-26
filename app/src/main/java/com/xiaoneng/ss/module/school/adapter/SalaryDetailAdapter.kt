@@ -1,7 +1,6 @@
 package com.xiaoneng.ss.module.school.adapter
 
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -36,43 +35,41 @@ class SalaryDetailAdapter(layoutId: Int, listData: MutableList<String>?) :
             llCc.visibility = View.VISIBLE
             if (remarkBean?.isShow != "1") {
                 llCc.visibility = View.GONE
-            }
-
-
-            if (remarkBean?.remark.isNullOrEmpty()) {
-                ivRemark.visibility = View.GONE
-                llRemark.visibility = View.GONE
-            } else {
-                ivRemark.visibility = View.VISIBLE
-                if (remarkBean?.show == true) {
-                    ivRemark.setImageResource(R.drawable.ic_up)
-                    llRemark.visibility = View.VISIBLE
-                    tvRemark.text = remarkBean.remark
-                } else {
-                    ivRemark.setImageResource(R.drawable.ic_down)
-                    llRemark.visibility = View.GONE
-                }
-            }
-
-            ivRemark.setOnClickListener {
-                if (remarkBean?.show != true) {
-                    ivRemark.setImageResource(R.drawable.ic_up)
-                    llRemark.visibility = View.VISIBLE
-                    tvRemark.text = remarkBean?.remark
-                } else {
-                    ivRemark.setImageResource(R.drawable.ic_down)
-                    llRemark.visibility = View.GONE
-                }
-                remarkBean?.show = !(remarkBean?.show ?: false)
-            }
-            holder.setText(R.id.tvSalaryName, eData?.expand?.keys?.get(holder.adapterPosition))
-
-            if (eData?.expand?.vals != null && holder.adapterPosition < eData?.expand?.vals?.size!!) {
-                holder.setText(R.id.tvSalaryValue, eData?.expand?.vals?.get(holder.adapterPosition))
             }else{
-                holder.setText(R.id.tvSalaryValue, null)
-            }
+                if (remarkBean?.remark.isNullOrEmpty()) {
+                    ivRemark.visibility = View.GONE
+                    llRemark.visibility = View.GONE
+                } else {
+                    ivRemark.visibility = View.VISIBLE
+                    if (remarkBean?.show == true) {
+                        ivRemark.setImageResource(R.drawable.ic_up)
+                        llRemark.visibility = View.VISIBLE
+                        tvRemark.text = remarkBean.remark
+                    } else {
+                        ivRemark.setImageResource(R.drawable.ic_down)
+                        llRemark.visibility = View.GONE
+                    }
+                }
 
+                ivRemark.setOnClickListener {
+                    if (remarkBean?.show != true) {
+                        ivRemark.setImageResource(R.drawable.ic_up)
+                        llRemark.visibility = View.VISIBLE
+                        tvRemark.text = remarkBean?.remark
+                    } else {
+                        ivRemark.setImageResource(R.drawable.ic_down)
+                        llRemark.visibility = View.GONE
+                    }
+                    remarkBean?.show = !(remarkBean?.show ?: false)
+                }
+                holder.setText(R.id.tvSalaryName, eData?.expand?.keys?.get(holder.adapterPosition))
+
+                if (eData?.expand?.vals != null && holder.adapterPosition < eData?.expand?.vals?.size!!) {
+                    holder.setText(R.id.tvSalaryValue, eData?.expand?.vals?.get(holder.adapterPosition))
+                }else{
+                    holder.setText(R.id.tvSalaryValue, null)
+                }
+            }
         }
     }
 

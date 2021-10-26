@@ -57,8 +57,8 @@ open class BaseApplication : Application() {
         instance = this
         SPreference.setContext(applicationContext)
         initPush()
-        Bugly.init(getApplicationContext(), "c55b4f8e6e", false)
         if (!BuildConfig.IS_DEBUG) {
+        Bugly.init(getApplicationContext(), "c55b4f8e6e", false)
             Beta.autoCheckUpgrade = true
         }
         initMode()
