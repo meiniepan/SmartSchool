@@ -27,13 +27,15 @@ class SalaryDetailAdapter(layoutId: Int, listData: MutableList<String>?) :
             var ivRemark = holder.getView<ImageView>(R.id.ivRemark)
             var llRemark = holder.getView<View>(R.id.llSalaryRemark)
             var tvRemark = holder.getView<TextView>(R.id.tvSalaryRemark)
-            var remarkBean: SalaryExpandRemarkBean? =
-                eData?.expand?.remark?.get(holder.adapterPosition)
+            var remarkBean: SalaryExpandRemarkBean? = null
+            if (eData?.expand?.remark != null && holder.adapterPosition < eData?.expand?.remark?.size!!) {
+                remarkBean = eData?.expand?.remark?.get(holder.adapterPosition)
+            }
 
             //value为0时隐藏
             llCc.visibility = View.VISIBLE
-            if (remarkBean?.isShow == "0") {
-                    llCc.visibility = View.GONE
+            if (remarkBean?.isShow != "1") {
+                llCc.visibility = View.GONE
             }
 
 
@@ -64,8 +66,12 @@ class SalaryDetailAdapter(layoutId: Int, listData: MutableList<String>?) :
                 remarkBean?.show = !(remarkBean?.show ?: false)
             }
             holder.setText(R.id.tvSalaryName, eData?.expand?.keys?.get(holder.adapterPosition))
-                .setText(R.id.tvSalaryValue, eData?.expand?.vals?.get(holder.adapterPosition))
 
+            if (eData?.expand?.vals != null && holder.adapterPosition < eData?.expand?.vals?.size!!) {
+                holder.setText(R.id.tvSalaryValue, eData?.expand?.vals?.get(holder.adapterPosition))
+            }else{
+                holder.setText(R.id.tvSalaryValue, null)
+            }
 
         }
     }

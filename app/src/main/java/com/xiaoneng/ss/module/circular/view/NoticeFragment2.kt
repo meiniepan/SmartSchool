@@ -99,7 +99,7 @@ class NoticeFragment2 : BaseLifeCycleFragment<CircularViewModel>() {
                     mStartActivity<QuantizeActivity>(requireContext())
                 }
                 "admin/wages/default" -> {
-                    mStartActivity<SalaryActivity>(requireContext())
+                    mStartActivity<SalaryCaptchaActivity>(requireContext())
                 }
                 "admin/repair/default" -> {
                     mStartActivity<PropertyActivity>(requireContext())

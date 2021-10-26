@@ -93,7 +93,7 @@ class SystemMsgActivity : BaseLifeCycleActivity<CircularViewModel>() {
                     mStartActivity<QuantizeActivity>(this)
                 }
                 "admin/wages/default" -> {
-                    mStartActivity<SalaryActivity>(this)
+                    mStartActivity<SalaryCaptchaActivity>(this)
                 }
                 "admin/repair/default" -> {
                     mStartActivity<PropertyActivity>(this)
