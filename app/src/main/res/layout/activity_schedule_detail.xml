@@ -57,7 +57,74 @@
 
                 <include layout="@layout/layout_split" />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/title_padding"
+                    android:paddingTop="15dp"
+                    android:paddingEnd="@dimen/title_padding"
+                    android:paddingBottom="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="发布人"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvPublishName2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:textColor="@color/commonHint" />
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_split" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/llReceive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/title_padding"
+                    android:paddingTop="15dp"
+                    android:paddingEnd="@dimen/title_padding"
+                    android:paddingBottom="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="收件人"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvReceive"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:drawableRight="@drawable/ic_next"
+                        android:textColor="@color/commonHint" />
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_split" />
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

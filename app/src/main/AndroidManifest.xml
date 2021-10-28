@@ -275,6 +275,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".module.school.view.QuantizeListStudentActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".module.activity.PersonsActivity"
+            android:screenOrientation="portrait"/>
 
 
         <provider

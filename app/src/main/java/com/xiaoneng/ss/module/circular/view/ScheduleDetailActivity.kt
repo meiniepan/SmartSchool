@@ -5,8 +5,10 @@ import androidx.lifecycle.Observer
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.utils.*
+import com.xiaoneng.ss.module.activity.PersonsActivity
 import com.xiaoneng.ss.module.circular.model.ScheduleBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
+import com.xiaoneng.ss.module.school.model.UserBeanSimple
 import kotlinx.android.synthetic.main.activity_schedule_detail.*
 import org.jetbrains.anko.toast
 
@@ -38,6 +40,22 @@ class ScheduleDetailActivity : BaseLifeCycleActivity<CircularViewModel>() {
                 }
             }
             tvTitleScheduleDetail.text = it.title
+            tvPublishName2.text = it.cuser_realname
+            var str = ""
+            mFromJson<ArrayList<UserBeanSimple>>(it.involve)?.let {
+                if (it.size > 0) {
+                    it.forEach {
+                        str = str + it.realname + "、"
+                    }
+                    str = str.substring(0, str.length - 1)
+                }
+            }
+
+            llReceive.setOnClickListener {
+                mStartActivity<PersonsActivity>(this){
+                    putExtra(Constant.DATA,str)
+                }
+            }
             DateUtil.showTimeFromNet(it.scheduletime!!, tvBeginDate, tvBeginTime)
             DateUtil.showTimeFromNet(it.scheduleover!!, tvEndDate, tvEndTime)
         }
