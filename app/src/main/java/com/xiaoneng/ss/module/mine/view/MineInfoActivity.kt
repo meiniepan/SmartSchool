@@ -120,6 +120,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                     llMineItem2.visibility = View.GONE
                     llMineItem3.visibility = View.GONE
                     llMineItem5.visibility = View.GONE
+                    llMineItem51.visibility = View.GONE
                     llMineItem6.visibility = View.GONE
                     llMineItem7.visibility = View.GONE
                     llMineItemEduId.visibility = View.GONE
@@ -132,6 +133,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                 llMineItem6.visibility = View.GONE
 
                 llMineItem5.visibility = View.GONE
+                llMineItem51.visibility = View.GONE
                 llMineItem7.visibility = View.GONE
                 llMineItemEduId.visibility = View.GONE
             }
@@ -142,6 +144,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
                 llMineItem6.visibility = View.GONE
 
                 llMineItem5.visibility = View.GONE
+                llMineItem51.visibility = View.GONE
                 llMineItem7.visibility = View.GONE
                 llMineItemEduId.visibility = View.GONE
             }
@@ -154,6 +157,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
         tvMineItem3.setText(UserInfo.getUserBean().birthday)
         tvMineItem4.text = formatStarPhoneNum(phone)
         tvMineItem5.text = UserInfo.getUserBean().cno
+        tvMineItem51.text = UserInfo.getUserBean().levelclass
         tvMineItem6.setText(UserInfo.getUserBean().idcard)
         tvMineItem7.text = UserInfo.getUserBean().sno
         tvMineItemEduId.text = UserInfo.getUserBean().eduid

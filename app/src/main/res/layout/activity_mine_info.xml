@@ -215,6 +215,38 @@
 
                     <include layout="@layout/layout_split" />
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llMineItem51"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="我的班级" />
+
+                        <TextView
+                            android:id="@+id/tvMineItem51"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="24dp"
+                            android:gravity="end"
+                            android:hint="" />
+
+                    </LinearLayout>
+
+                    <include layout="@layout/layout_split" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/llMineItem6"

@@ -119,6 +119,11 @@ class NoticeFragment2 : BaseLifeCycleFragment<CircularViewModel>() {
                 "admin/courses/default" -> {
                     mStartActivity<TimetableActivity>(requireContext())
                 }
+                else -> {
+                    mStartActivity<NoticeDetailActivity>(requireContext()){
+                        putExtra(Constant.DATA, mData[position])
+                    }
+                }
             }
 //            mStartActivity<NoticeDetailActivity>(this) {
 //                putExtra(Constant.TITLE, mData!![position].title)

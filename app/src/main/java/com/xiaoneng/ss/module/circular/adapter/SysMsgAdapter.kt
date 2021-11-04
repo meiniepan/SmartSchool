@@ -76,6 +76,11 @@ class SysMsgAdapter(layoutId: Int, listData: MutableList<NoticeBean>?) :
                     iv.background = mContext.resources.getDrawable(
                         R.drawable.ic_kebiao)
                 }
+                else -> {
+                    text0.text = mContext.resources.getString(R.string.noticeTitle)
+                    iv.background = mContext.resources.getDrawable(
+                        R.drawable.ic_tonggao)
+                }
             }
             holder.setText(R.id.tvAction, item?.title)
                 .setText(R.id.tvTime3, DateUtil.formatShowTime(item?.noticetime!!))

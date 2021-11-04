@@ -31,6 +31,7 @@ data class UserBean(
     var wxname: String? = null,
     var remark: String? = null,
     var isactive: String? = null,
+    var levelclass: String? = null,
     var device_no: String? = null,
     var parentphone: String? = null,
     var parentuid: String? = null,
