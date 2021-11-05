@@ -82,7 +82,18 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun initAdapter() {
-        if (AppInfo.checkRule2("student/attendances/privateAtts")) {
+        if (AppInfo.checkRule2("teacher/attendances/sclists")) {
+            titles1.add("校级考勤")
+            ivAddAttendance.apply {
+                visibility = View.VISIBLE
+                setOnClickListener {
+                    mStartActivity<AddStudentActivity>(this@AttendanceActivity)
+                }
+            }
+            tvLabel2Attendance.visibility = View.GONE
+            tvLabel3Attendance.visibility = View.GONE
+            initAdapterSchool()
+        } else if (AppInfo.checkRule2("student/attendances/privateAtts")) {
             llSearch.visibility = View.GONE
             tvLabel2Attendance.visibility = View.GONE
             tvLabel3Attendance.visibility = View.GONE
@@ -109,17 +120,6 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 tvLabel3Attendance.visibility = View.GONE
             }
             titles1.add("课堂考勤")
-        } else if (AppInfo.checkRule2("teacher/attendances/sclists")) {
-            titles1.add("校级考勤")
-            ivAddAttendance.apply {
-                visibility = View.VISIBLE
-                setOnClickListener {
-                    mStartActivity<AddStudentActivity>(this@AttendanceActivity)
-                }
-            }
-            tvLabel2Attendance.visibility = View.GONE
-            tvLabel3Attendance.visibility = View.GONE
-            initAdapterSchool()
         } else {
             llSearch.visibility = View.GONE
             tvLabel2Attendance.visibility = View.GONE
@@ -149,7 +149,10 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     override fun getData() {
-        if (AppInfo.checkRule2("student/attendances/privateAtts")) {
+        if (AppInfo.checkRule2("teacher/attendances/sclists")) {
+            rvAttendance.showLoadingView()
+            getSchoolData()
+        } else if (AppInfo.checkRule2("student/attendances/privateAtts")) {
             if (AppInfo.checkRule2("student/attendances/lists")) {
                 rvAttendance.showLoadingView()
                 getTimetable()
@@ -165,9 +168,6 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 rvAttendance.showLoadingView()
                 getTimetable()
             }
-        } else if (AppInfo.checkRule2("teacher/attendances/sclists")) {
-            rvAttendance.showLoadingView()
-            getSchoolData()
         } else {
 //            getStuData()
         }
@@ -419,10 +419,10 @@ class AttendanceActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         titles2.clear()
                         mClassData.addAll(it.classs)
                         mClassData.forEach {
-                            titles2.add(it.levelname +it.classname)
+                            titles2.add(it.levelname + it.classname)
                             if (it.choice == "1") {
                                 currentClassId = it.classid
-                                tvLabel2Attendance.text = it.levelname+it.classname
+                                tvLabel2Attendance.text = it.levelname + it.classname
                             }
                         }
                     }
