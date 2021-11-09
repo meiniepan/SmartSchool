@@ -25,6 +25,7 @@
     <string name="attendanceTitle">学生考勤</string>
     <string name="achievementTitle">成绩汇总</string>
     <string name="timetableTitle">我的课表</string>
+    <string name="teaTitle">教师档案</string>
 
     <string name="cloudPrivate">我创建的</string>
     <string name="cloudPublic">共享文件夹</string>

@@ -277,6 +277,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".module.activity.PersonsActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".module.school.view.ArchivesActivity" android:screenOrientation="portrait" />
 
 
         <provider
