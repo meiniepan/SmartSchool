@@ -14,6 +14,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.xiaoneng.ss.R;
@@ -91,6 +92,9 @@ public class RoundImageView extends ImageView {
             radius = (defaultWidth < defaultHeight ? defaultWidth : defaultHeight) / 2 - mBorderThickness;
             drawCircleBorder(canvas, radius + mBorderThickness / 2, mBorderInsideColor);
         } else if (mBorderInsideColor == defaultColor && mBorderOutsideColor != defaultColor) {// 定义画一个边框
+            radius = (defaultWidth < defaultHeight ? defaultWidth : defaultHeight) / 2 - mBorderThickness;
+            drawCircleBorder(canvas, radius + mBorderThickness / 2, mBorderOutsideColor);
+        }else if (mBorderThickness!=0) {// 定义画一个边框
             radius = (defaultWidth < defaultHeight ? defaultWidth : defaultHeight) / 2 - mBorderThickness;
             drawCircleBorder(canvas, radius + mBorderThickness / 2, mBorderOutsideColor);
         } else {// 没有边框

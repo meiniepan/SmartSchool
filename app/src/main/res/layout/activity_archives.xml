@@ -165,6 +165,7 @@
 
                 <com.xiaoneng.ss.custom.widgets.RoundImageView
                     android:id="@+id/ivAvatarMineInfo"
+                    app:border_thickness="3dp"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:src="@drawable/ic_avatar_default" />
