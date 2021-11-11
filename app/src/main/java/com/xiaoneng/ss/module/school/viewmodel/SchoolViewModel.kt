@@ -20,6 +20,7 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
     val mAddMoralScoreData: MutableLiveData<Any> = MutableLiveData()
     val mTaskListData: MutableLiveData<TaskResponse> = MutableLiveData()
     val mAchievementData: MutableLiveData<AchievementResponse> = MutableLiveData()
+    val mArchivesData: MutableLiveData<Any> = MutableLiveData()
     val mTestCourseData: MutableLiveData<Any> = MutableLiveData()
     val mTimetableData: MutableLiveData<TimetableResponse> = MutableLiveData()
     val mAttTimetableData: MutableLiveData<Any> = MutableLiveData()
@@ -137,6 +138,16 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
             {
                 mAchievementData.value =
                     mRepository.getAchievement(testname, crsid, classid, lastid = lastid)
+            },
+            loadState
+        )
+    }
+
+    fun getArchives() {
+        initiateRequest(
+            {
+                mArchivesData.value =
+                    mRepository.getArchives()
             },
             loadState
         )

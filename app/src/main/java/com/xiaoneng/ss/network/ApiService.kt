@@ -395,6 +395,16 @@ interface ApiService {
     ): BaseResponse<AchievementResponse>
 
     /**
+     *教师信息查询接口
+     */
+    @FormUrlEncoded
+    @POST("/api/index.php?c=develop&a=teachers&do=info")
+    suspend fun getArchives(
+        @Field("token") token: String? = null,
+        @Field("uid") uid: String? = null
+    ): BaseResponse<Any>
+
+    /**
      *教师查看成绩
      */
     @FormUrlEncoded

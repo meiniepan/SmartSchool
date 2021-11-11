@@ -55,7 +55,6 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                     icon = R.drawable.ic_changdi,
                     click = View.OnClickListener {
                         var b = UserInfo.getUserBean()
-                        Log.e("====cno", UserInfo.getUserBean().cno )
                         Log.e("====bean", UserInfo.getUserBean().toString() )
                         mStartActivity<BookSiteActivity>(context)
                     }

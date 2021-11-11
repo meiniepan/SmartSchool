@@ -233,6 +233,13 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
             }
         }
     }
+    suspend fun getArchives(): Any {
+        return  apiService.getArchives(
+                    UserInfo.getUserBean().token,
+                    uid = UserInfo.getUserBean().uid
+                )
+                    .dataConvert(loadState)
+            }
 
     suspend fun getAttendance(
         classid: String? = null, courseId: String? = null, atttime: String? = null,

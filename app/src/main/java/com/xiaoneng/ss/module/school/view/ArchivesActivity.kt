@@ -1,26 +1,16 @@
 package com.xiaoneng.ss.module.school.view
 
-import android.app.Dialog
-import android.view.*
+import android.util.Log
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
-import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.*
-import com.xiaoneng.ss.model.ClassBean
-import com.xiaoneng.ss.module.school.adapter.DialogListAdapter
-import com.xiaoneng.ss.module.school.adapter.TimetableAdapter
-import com.xiaoneng.ss.module.school.adapter.TimetableLabelAdapter
-import com.xiaoneng.ss.module.school.adapter.TitleTimetableAdapter
+import com.xiaoneng.ss.common.utils.displayImage
+import com.xiaoneng.ss.common.utils.netResponseFormat
+import com.xiaoneng.ss.model.ArchivesBean
 import com.xiaoneng.ss.module.school.model.TimetableBean
-import com.xiaoneng.ss.module.school.model.TimetableLabelBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import kotlinx.android.synthetic.main.activity_timetable_master.*
-import java.util.*
-import kotlin.collections.ArrayList
+import kotlinx.android.synthetic.main.activity_archives.*
 
 /**
  * Created with Android Studio.
@@ -42,12 +32,31 @@ class ArchivesActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initData() {
         super.initData()
+        mViewModel.getArchives()
     }
 
     override fun initDataObserver() {
-        mViewModel.mTimetableData.observe(this, Observer { response ->
+        mViewModel.mArchivesData.observe(this, Observer { response ->
             response?.let {
+                netResponseFormat<ArchivesBean>(it)?.let {
+                    if (!UserInfo.getUserBean().portrait.isNullOrEmpty()) {
+                        displayImage(
+                            this,
+                            UserInfo.getUserBean().domain + UserInfo.getUserBean().portrait,
+                            ivAvatar2
+                        )
+                    }
+                    Log.e("====cno", it.toString())
+                    tvName2.text = UserInfo.getUserBean().realname
 
+                    tvItem1.text = it.birthday
+                    tvItem2.text = it.highest_education_str
+                    tvItem3.text = it.speciality
+                    tvItem4.text = it.professional
+                    tvItem5.text = it.teach_year
+                    tvItem6.text = it.backbone
+
+                }
             }
         })
     }

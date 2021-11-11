@@ -164,7 +164,7 @@
                 android:orientation="vertical">
 
                 <com.xiaoneng.ss.custom.widgets.RoundImageView
-                    android:id="@+id/ivAvatarMineInfo"
+                    android:id="@+id/ivAvatar2"
                     app:border_thickness="3dp"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
