@@ -398,7 +398,7 @@ interface ApiService {
      *教师信息查询接口
      */
     @FormUrlEncoded
-    @POST("/api/index.php?c=develop&a=teachers&do=info")
+    @POST("/api/v17/develop/teachers/info")
     suspend fun getArchives(
         @Field("token") token: String? = null,
         @Field("uid") uid: String? = null

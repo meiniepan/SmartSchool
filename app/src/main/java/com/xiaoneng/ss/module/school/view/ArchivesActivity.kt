@@ -46,7 +46,6 @@ class ArchivesActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                             ivAvatar2
                         )
                     }
-                    Log.e("====cno", it.toString())
                     tvName2.text = UserInfo.getUserBean().realname
 
                     tvItem1.text = it.birthday
