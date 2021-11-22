@@ -37,6 +37,7 @@ class NoticeFragment2 : BaseLifeCycleFragment<CircularViewModel>() {
     private var readPosition: Int = 0
     lateinit var mAdapter: SysMsgAdapter
     var mData = ArrayList<NoticeBean>()
+    var curPosition = 0
 
     override fun getLayoutId(): Int = R.layout.fragment_notice
 
@@ -81,49 +82,11 @@ class NoticeFragment2 : BaseLifeCycleFragment<CircularViewModel>() {
 //        }
 
         mAdapter.setOnItemClickListener { _, view, position ->
+            curPosition = position
             if (mData[position].status != "1") {
                 mViewModel.read(mData[position].id!!, status = "1")
-            }
-            when (mData[position].expand?.action) {
-                "admin/spacebook/default" -> {
-                    mStartActivity<BookSiteActivity>(requireContext()) {
-
-                    }
-                }
-                "admin/schedules/default" -> {
-                    mStartActivity<ScheduleActivity>(requireContext()) {
-
-                    }
-                }
-                "moral/moral/default" -> {
-                    mStartActivity<QuantizeActivity>(requireContext())
-                }
-                "admin/wages/default" -> {
-                    mStartActivity<SalaryCaptchaActivity>(requireContext())
-                }
-                "admin/repair/default" -> {
-                    mStartActivity<PropertyActivity>(requireContext())
-                }
-                "admin/tasks/default" -> {
-                    mStartActivity<TaskActivity>(requireContext())
-                }
-                "disk/folder/default" -> {
-                    mStartActivity<CloudDiskActivity>(requireContext())
-                }
-                "admin/attendances/default" -> {
-                    mStartActivity<AttendanceActivity>(requireContext())
-                }
-                "admin/achievements/default" -> {
-                    mStartActivity<AchievementActivity>(requireContext())
-                }
-                "admin/courses/default" -> {
-                    mStartActivity<TimetableActivity>(requireContext())
-                }
-                else -> {
-                    mStartActivity<NoticeDetailActivity>(requireContext()){
-                        putExtra(Constant.DATA, mData[position])
-                    }
-                }
+            }else{
+            doJump(position)
             }
 //            mStartActivity<NoticeDetailActivity>(this) {
 //                putExtra(Constant.TITLE, mData!![position].title)
@@ -132,7 +95,51 @@ class NoticeFragment2 : BaseLifeCycleFragment<CircularViewModel>() {
         }
     }
 
-     fun doRefresh() {
+    private fun doJump(position: Int) {
+        when (mData[position].expand?.action) {
+            "admin/spacebook/default" -> {
+                mStartActivity<BookSiteActivity>(requireContext()) {
+
+                }
+            }
+            "admin/schedules/default" -> {
+                mStartActivity<ScheduleActivity>(requireContext()) {
+
+                }
+            }
+            "moral/moral/default" -> {
+                mStartActivity<QuantizeActivity>(requireContext())
+            }
+            "admin/wages/default" -> {
+                mStartActivity<SalaryCaptchaActivity>(requireContext())
+            }
+            "admin/repair/default" -> {
+                mStartActivity<PropertyActivity>(requireContext())
+            }
+            "admin/tasks/default" -> {
+                mStartActivity<TaskActivity>(requireContext())
+            }
+            "disk/folder/default" -> {
+                mStartActivity<CloudDiskActivity>(requireContext())
+            }
+            "admin/attendances/default" -> {
+                mStartActivity<AttendanceActivity>(requireContext())
+            }
+            "admin/achievements/default" -> {
+                mStartActivity<AchievementActivity>(requireContext())
+            }
+            "admin/courses/default" -> {
+                mStartActivity<TimetableActivity>(requireContext())
+            }
+            else -> {
+                mStartActivity<NoticeDetailActivity>(requireContext()) {
+                    putExtra(Constant.DATA, mData[position])
+                }
+            }
+        }
+    }
+
+    fun doRefresh() {
         lastId = null
         mData.clear()
         rvNotice.showLoadingView()
@@ -175,7 +182,7 @@ class NoticeFragment2 : BaseLifeCycleFragment<CircularViewModel>() {
 
         mViewModel.mReadData.observe(this, Observer { response ->
             response?.let {
-//                doRefresh()
+                doJump(curPosition)
             }
         })
     }
