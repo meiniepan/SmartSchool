@@ -66,10 +66,15 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
             if (mData[position].status == "0") {
                 mViewModel.read(mData[position].id!!, "1")
                 readPosition = position
+            }else{
+            doJump(position)
             }
-            mStartActivity<NoticeDetailActivity>(context) {
-                putExtra(Constant.DATA, mData[position])
-            }
+        }
+    }
+
+    private fun doJump(position: Int) {
+        mStartActivity<NoticeDetailActivity>(context) {
+            putExtra(Constant.DATA, mData[position])
         }
     }
 
@@ -112,8 +117,7 @@ class NoticeFragment : BaseLifeCycleFragment<CircularViewModel>() {
 
         mViewModel.mReadData.observe(this, Observer { response ->
             response?.let {
-                mData[readPosition].status = "1"
-                rvNotice.notifyDataSetChanged()
+                doJump(readPosition)
             }
         })
     }

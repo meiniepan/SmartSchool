@@ -544,9 +544,9 @@ class SchoolViewModel : BaseViewModel<SchoolRepository>() {
         )
     }
 
-    fun setFileFolder(parentid: String? = null, folderid: String? = null, involve: String? = null) {
+    fun setFileFolder(parentid: String? = null, folderid: String? = null, involve: String? = null, sendlabel: String? = null) {
         initiateRequest(
-            { mBaseData.value = mRepository.setFileFolder(parentid, folderid, involve) },
+            { mBaseData.value = mRepository.setFileFolder(parentid, folderid, involve,sendlabel) },
             loadState
         )
     }

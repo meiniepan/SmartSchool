@@ -691,13 +691,15 @@ class SchoolRepository(val loadState: MutableLiveData<State>) : ApiRepository() 
     suspend fun setFileFolder(
         parentid: String? = null,
         folderid: String? = null,
-        involve: String? = null
+        involve: String? = null,
+        sendlabel: String? = null,
     ): Any {
         return apiService.setFileFolder(
             UserInfo.getUserBean().token,
             parentid = parentid,
             folderid = folderid,
-            involve = involve
+            involve = involve,
+            sendlabel = sendlabel
         )
             .dataConvert(loadState)
     }

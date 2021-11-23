@@ -27,6 +27,7 @@ class FolderSettingActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     var mDataDepartment = ArrayList<DepartmentBean>()
     var receiveList: ArrayList<UserBeanSimple> = ArrayList()
     var isFirst = true
+    var label: String? = null
 
     override fun getLayoutId(): Int {
         return R.layout.activity_folder_setting
@@ -85,10 +86,15 @@ class FolderSettingActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     involves.clear()
                     receiveList.clear()
                     mDataDepartment = data.getParcelableArrayListExtra(Constant.DATA)!!
-                    mDataDepartment.forEach {
-                        addDepartment(it)
+                    label = data.getStringExtra(Constant.DATA3)
+                    if (!label.isNullOrEmpty()) {
+                        tvPeople.text = data.getStringExtra(Constant.DATA4)
+                    } else {
+                        mDataDepartment.forEach {
+                            addDepartment(it)
+                        }
+                        dealData()
                     }
-                    dealData()
                 }
             }
         }
@@ -136,10 +142,15 @@ class FolderSettingActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
         mViewModel.mCancelFolderAuthData.observe(this, Observer { response ->
             response?.let {
+                var involve = Gson().toJson(involves)
+                if (!label.isNullOrEmpty()) {
+                    involve=""
+                }
                 mViewModel.setFileFolder(
                     parentid = folderBean?.parentid,
                     folderid = folderBean?.id,
-                    involve = Gson().toJson(involves)
+                    involve = involve,
+                    sendlabel = label
                 )
             }
         })

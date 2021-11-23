@@ -36,18 +36,19 @@
                 android:paddingTop="20dp"
                 android:paddingEnd="@dimen/title_padding"
                 android:paddingBottom="20dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    >
+                    android:orientation="horizontal">
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        >
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -79,15 +80,16 @@
 
                         </LinearLayout>
                     </LinearLayout>
+
                     <TextView
                         android:id="@+id/tvReadNum"
-                        android:text="1/5"
                         style="@style/button_blue_bac_5_style"
                         android:layout_width="75dp"
                         android:layout_height="35dp"
+                        android:layout_marginStart="1dp"
                         android:drawableLeft="@drawable/ic_read_white"
                         android:drawablePadding="0dp"
-                        android:layout_marginStart="1dp"
+                        android:text=""
                         android:textColor="@color/white" />
                 </LinearLayout>
 
@@ -107,32 +109,32 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvNoticeImg"
                 style="@style/recycler_margin_style"
-                android:visibility="gone"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="-7dp"
-                android:layout_height="wrap_content" />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tvRead"
                 style="@style/button_blue_bac_style"
                 android:layout_marginTop="80dp"
-                android:visibility="gone"
                 android:layout_marginBottom="20dp"
-                android:text="我已阅读" />
+                android:text="我已阅读"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/ivHasRead"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="20dp"
-                android:textSize="40dp"
-                android:textColor="@color/themeColor"
                 android:alpha="0.3"
                 android:rotation="-15"
                 android:text="我已阅读"
+                android:textColor="@color/themeColor"
+                android:textSize="40dp"
                 android:textStyle="bold"
-                android:layout_gravity="center_horizontal" />
+                android:visibility="gone" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

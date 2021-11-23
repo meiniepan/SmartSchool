@@ -48,9 +48,9 @@ class NoticeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     fun refreshNotice(event: RefreshUnreadEvent) {
         var unread = event.unread
         if (unread=="0"|| TextUtils.isEmpty(unread)){
-            unread="通知"
+            unread="通知公告"
         }else{
-            unread = "通知($unread)"
+            unread = "通知公告($unread)"
         }
         ctbNotice.setTitle(unread)
     }
