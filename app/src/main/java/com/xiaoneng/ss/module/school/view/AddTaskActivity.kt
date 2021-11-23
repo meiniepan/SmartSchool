@@ -31,14 +31,8 @@ import com.xiaoneng.ss.module.circular.adapter.NoticeFileAdapter
 import com.xiaoneng.ss.module.school.adapter.InvolveSimpleAdapter
 import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
-import kotlinx.android.synthetic.main.activity_add_schedule.*
 import kotlinx.android.synthetic.main.activity_add_task.*
-import kotlinx.android.synthetic.main.activity_add_task.llBeginTime
-import kotlinx.android.synthetic.main.activity_add_task.llEndTime
-import kotlinx.android.synthetic.main.activity_add_task.tvBeginDate
-import kotlinx.android.synthetic.main.activity_add_task.tvBeginTime
-import kotlinx.android.synthetic.main.activity_add_task.tvEndDate
-import kotlinx.android.synthetic.main.activity_add_task.tvEndTime
+
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -349,8 +343,9 @@ class AddTaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     mDataDepartment = data.getParcelableArrayListExtra(Constant.DATA)!!
                     mDataClasses = data.getParcelableArrayListExtra(Constant.DATA2)!!
                     label = data.getStringExtra(Constant.DATA3)
+                    tvPeople.text = null
                     if (!label.isNullOrEmpty()) {
-//                        tvPeople.text = data.getStringExtra(Constant.DATA4)
+                        tvPeople.text = data.getStringExtra(Constant.DATA4)
                     } else {
                         mDataDepartment.forEach {
                             addDepartment(it)
