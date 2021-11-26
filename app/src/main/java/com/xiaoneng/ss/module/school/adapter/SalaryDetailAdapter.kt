@@ -27,13 +27,17 @@ class SalaryDetailAdapter(layoutId: Int, listData: MutableList<String>?) :
             var llRemark = holder.getView<View>(R.id.llSalaryRemark)
             var tvRemark = holder.getView<TextView>(R.id.tvSalaryRemark)
             var remarkBean: SalaryExpandRemarkBean? = null
+            var value:String? = null
             if (eData?.expand?.remark != null && holder.adapterPosition < eData?.expand?.remark?.size!!) {
                 remarkBean = eData?.expand?.remark?.get(holder.adapterPosition)
+            }
+            if (eData?.expand?.vals != null && holder.adapterPosition < eData?.expand?.vals?.size!!) {
+                value = eData?.expand?.vals?.get(holder.adapterPosition)
             }
 
             //value为0时隐藏
             llCc.visibility = View.VISIBLE
-            if (remarkBean?.isShow != "1") {
+            if ((value.isNullOrEmpty()||value=="0") && remarkBean?.isShow != "1") {
                 llCc.visibility = View.GONE
             }else{
                 if (remarkBean?.remark.isNullOrEmpty()) {
