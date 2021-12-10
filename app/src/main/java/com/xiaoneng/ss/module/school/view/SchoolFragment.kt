@@ -183,16 +183,16 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                 }
             ))
         }
-//        if (AppInfo.checkRule1("admin/archives/default")) {
-//            bean1.items.add(SchoolItemBean(
-//                name = getString(R.string.teaTitle),
-//                remark = "个人成长 长期维护",
-//                icon = R.drawable.ic_teacher,
-//                click = View.OnClickListener {
-//                    mStartActivity<ArchivesActivity>(context)
-//                }
-//            ))
-//        }
+        if (AppInfo.checkRule1("admin/archives/default")) {
+            bean1.items.add(SchoolItemBean(
+                name = getString(R.string.teaTitle),
+                remark = "个人成长 长期维护",
+                icon = R.drawable.ic_teacher,
+                click = View.OnClickListener {
+                    mStartActivity<ArchivesActivity>(context)
+                }
+            ))
+        }
         if (bean1.items.size > 0) {
             mData.add(bean1)
         }

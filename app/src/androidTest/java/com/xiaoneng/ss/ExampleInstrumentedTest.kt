@@ -21,4 +21,21 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.xiaoneng.ss", appContext.packageName)
     }
+
+    @Test
+    fun twoSum(nums: IntArray, target: Int): IntArray {
+        var result = intArrayOf()
+        for (i in 0..nums.size) {
+            for (j in 0..nums.size) {
+                if (j != i) {
+                    if (nums[i] + nums[j] == target) {
+                        result[0] = i
+                        result[1] = j
+                        return result
+                    }
+                }
+            }
+        }
+        return result
+    }
 }
