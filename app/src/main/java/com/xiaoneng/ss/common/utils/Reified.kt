@@ -775,3 +775,11 @@ inline fun <reified T> mFromJson(response: String?): T? {
     }
     return result
 }
+fun getSexString(a: String?): String {
+    return when (a) {
+        "0" -> "未知"
+        "1" -> "男"
+        "2" -> "女"
+        else -> "未知"
+    }
+}

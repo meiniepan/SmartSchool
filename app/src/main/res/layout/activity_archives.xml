@@ -71,10 +71,28 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:text="性别" />
+
+                        <TextView
+                            android:id="@+id/tvItemSex"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="20dp"
+                        >
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:text="最高学历" />
 
                         <TextView
-                            android:id="@+id/tvItem2"
+                            android:id="@+id/tvItemHighEdu"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:singleLine="true" />
@@ -89,10 +107,10 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="学科" />
+                            android:text="政治面貌" />
 
                         <TextView
-                            android:id="@+id/tvItem3"
+                            android:id="@+id/tvItemPolitical"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:singleLine="true" />
@@ -107,10 +125,46 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="职称" />
+                            android:text="初高中任教学科" />
 
                         <TextView
-                            android:id="@+id/tvItem4"
+                            android:id="@+id/tvItemTeachSubject"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="20dp"
+                        >
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="人事关系所在校区" />
+
+                        <TextView
+                            android:id="@+id/tvItemRelation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="20dp"
+                        >
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="工龄" />
+
+                        <TextView
+                            android:id="@+id/tvItemWorkYear"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:singleLine="true" />
@@ -128,7 +182,7 @@
                             android:text="教龄" />
 
                         <TextView
-                            android:id="@+id/tvItem5"
+                            android:id="@+id/tvItemTeachYear"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:singleLine="true" />
@@ -143,10 +197,10 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="骨干级别" />
+                            android:text="入本集团时间" />
 
                         <TextView
-                            android:id="@+id/tvItem6"
+                            android:id="@+id/tvItemJoinTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:singleLine="true" />

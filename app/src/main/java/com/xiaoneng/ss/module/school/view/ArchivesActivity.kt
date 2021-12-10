@@ -6,6 +6,7 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.displayImage
+import com.xiaoneng.ss.common.utils.getSexString
 import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.model.ArchivesBean
 import com.xiaoneng.ss.module.school.model.TimetableBean
@@ -49,11 +50,14 @@ class ArchivesActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     tvName2.text = UserInfo.getUserBean().realname
 
                     tvItem1.text = it.birthday
-                    tvItem2.text = it.highest_education_str
-                    tvItem3.text = it.speciality
-                    tvItem4.text = it.professional
-                    tvItem5.text = it.teach_year
-                    tvItem6.text = it.backbone
+                    tvItemSex.text = getSexString(it.sex)
+                    tvItemHighEdu.text = it.highest_education_str
+                    tvItemPolitical.text = it.political_str
+                    tvItemTeachSubject.text = it.teach_subject_str
+                    tvItemRelation.text = it.relation_school_str
+                    tvItemWorkYear.text = it.work_year+"年"
+                    tvItemTeachYear.text = it.teach_year+"年"
+                    tvItemJoinTime.text = it.join_time
 
                 }
             }

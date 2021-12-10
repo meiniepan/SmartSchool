@@ -9,6 +9,7 @@ package com.xiaoneng.ss.model
  */
 data class ArchivesBean(
     var birthday: String?,
+    var sex: String?,
     var realname: String?,
     var speciality: String?,
     var education: String?,
@@ -21,6 +22,7 @@ data class ArchivesBean(
     var teach_year: String?,
     var work_year: String?,
     var join_time: String?,
+    var relation_school_str: String?,
     var professional: String?,
     var backbone: String?,
     var portrait: String?,
