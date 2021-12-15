@@ -47,6 +47,12 @@ class ArchivesActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                             ivAvatar2
                         )
                     }
+                    if(!it.work_year.isNullOrEmpty()){
+                        it.work_year = it.work_year+"年"
+                    }
+                    if(!it.teach_year.isNullOrEmpty()){
+                        it.teach_year = it.teach_year+"年"
+                    }
                     tvName2.text = UserInfo.getUserBean().realname
 
                     tvItem1.text = it.birthday
@@ -55,8 +61,8 @@ class ArchivesActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     tvItemPolitical.text = it.political_str
                     tvItemTeachSubject.text = it.teach_subject_str
                     tvItemRelation.text = it.relation_school_str
-                    tvItemWorkYear.text = it.work_year+"年"
-                    tvItemTeachYear.text = it.teach_year+"年"
+                    tvItemWorkYear.text = it.work_year
+                    tvItemTeachYear.text = it.teach_year
                     tvItemJoinTime.text = it.join_time
 
                 }
