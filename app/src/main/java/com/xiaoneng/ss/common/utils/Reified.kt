@@ -713,6 +713,8 @@ fun String?.getFileIcon(): Int {
             srcId = R.drawable.ic_type_word
         } else if (it.endsWith(".xls") || it.endsWith(".xlsx")) {
             srcId = R.drawable.ic_type_excel
+        } else if (it.endsWith(".ppt") || it.endsWith(".pptx")) {
+            srcId = R.drawable.ic_type_ppt
         } else if (it.endsWith(".pdf")) {
             srcId = R.drawable.ic_type_pdf
         } else if (it.endsWith(".zip") || it.endsWith(".rar") || it.endsWith(

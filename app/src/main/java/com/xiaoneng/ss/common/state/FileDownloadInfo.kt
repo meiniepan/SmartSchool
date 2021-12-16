@@ -49,10 +49,10 @@ object FileDownloadInfo {
         fileInfoJson = gson.toJson(files)
     }
 
-    fun hasFile(file: DiskFileBean): Boolean {
+    fun hasFile(file: String?): Boolean {
         var files = getFilesInfo()
         files.forEach {
-            if (it.objectid == file.objectid) {
+            if (it.objectid == file) {
                 return true
             }
         }

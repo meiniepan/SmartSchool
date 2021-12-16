@@ -106,9 +106,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 filename = mPriData[mCurrent].filename,
                 objectid = bean.objectid, totalSize = 0
             )
-            if (!FileDownloadInfo.hasFile(diskFileBean)) {
                 doDown(bean.objectid, filePath)
-            }
             mToast("已加入下载队列")
         }
         tvBottomRename.setOnClickListener {
@@ -225,6 +223,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     if (file.exists()) {
                         doOpen(filePath)
                     } else {
+                        mToast("下载中，请稍后查看")
                         doDown(mPriData[position].objectid, filePath)
                     }
                 }
@@ -314,6 +313,9 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
     }
 
     private fun doDown(url: String?, filePath: String) {
+        if (FileDownloadInfo.hasFile(url)) {
+            return
+        }
         val url2 = UserInfo.getUserBean().domain + url
         val taskId: Long = Aria.download(this)
             .load(url2) //读取下载地址
