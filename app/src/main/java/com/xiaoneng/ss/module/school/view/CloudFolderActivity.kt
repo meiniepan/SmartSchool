@@ -106,7 +106,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 filename = mPriData[mCurrent].filename,
                 objectid = bean.objectid, totalSize = 0
             )
-                doDown(bean.objectid, filePath)
+            doDown(bean.objectid, filePath)
             mToast("已加入下载队列")
         }
         tvBottomRename.setOnClickListener {
@@ -163,10 +163,12 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             llBottom.visibility = View.GONE
         }
     }
+
     override fun initData() {
         super.initData()
         getData()
     }
+
     override fun getData() {
         super.getData()
         rvDisk.showLoadingView()
@@ -361,7 +363,9 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         )
         FileDownloadInfo.modifyFile(bean)
         FileDownloadEvent(bean).post()
-        mAdapterPri?.notifyDataSetChanged()
+        if (mAdapterPri != null) {
+            mAdapterPri.notifyDataSetChanged()
+        }
     }
 
     private fun doUpload(it: StsTokenResp) {
@@ -618,6 +622,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             rvDisk.notifyDataSetChanged()
         }
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun refreshMoveFile(event: FileMoveEvent) {
         onDelDone()
