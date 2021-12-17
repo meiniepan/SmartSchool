@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.common.state.FileDownloadInfo
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.DateUtil
 import com.xiaoneng.ss.common.utils.endIsImage
@@ -55,6 +56,12 @@ class DiskPriAdapter(layoutId: Int, listData: MutableList<FolderBean>?) :
                 holder.setText(R.id.tvDiskFileName, item?.foldername)
                     .setText(R.id.tvDiskFileDate, DateUtil.formatShowTime(item?.updatetime ?: ""))
             } else {
+                var name = holder.getView<TextView>(R.id.tvDiskFileName)
+                if (FileDownloadInfo.hasFile(item?.objectid)) {
+                    name.setTextColor(mContext.resources.getColor(R.color.titleBlack))
+                }else{
+                    name.setTextColor(mContext.resources.getColor(R.color.commonHint))
+                }
                 holder.setImageResource(R.id.ivDiskIcon, item?.objectid!!.getFileIcon())
                 holder.setText(R.id.tvDiskFileName, item?.filename)
                     .setText(R.id.tvDiskFileDate, DateUtil.formatShowTime(item?.updatetime ?: ""))

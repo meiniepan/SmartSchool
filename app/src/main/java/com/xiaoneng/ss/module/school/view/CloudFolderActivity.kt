@@ -190,6 +190,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
         mAdapterPri.isPrivate = folderBean?.isPrivate ?: true
         mAdapterPri.setOnItemClickListener { adapter, view, position ->
+            mCurrent = position
             if (mPriData[position].isFolder) {
                 mStartActivity<CloudFolderActivity>(this) {
                     var bean = mPriData[position]
@@ -360,6 +361,7 @@ class CloudFolderActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         )
         FileDownloadInfo.modifyFile(bean)
         FileDownloadEvent(bean).post()
+        mAdapterPri?.notifyDataSetChanged()
     }
 
     private fun doUpload(it: StsTokenResp) {
