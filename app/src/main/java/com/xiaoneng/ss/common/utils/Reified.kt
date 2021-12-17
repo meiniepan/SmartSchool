@@ -785,3 +785,14 @@ fun getSexString(a: String?): String {
         else -> "未知"
     }
 }
+var oldTime = 0L
+fun clickBlock(): Boolean {
+    var newTime = System.currentTimeMillis()
+    if (newTime - oldTime<3000){
+        oldTime = newTime
+        return true;
+    }else {
+        oldTime = newTime
+        return false
+    }
+}
