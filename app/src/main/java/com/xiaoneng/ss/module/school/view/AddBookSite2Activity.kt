@@ -137,7 +137,6 @@ class AddBookSite2Activity : BaseLifeCycleActivity<SchoolViewModel>() {
         if (clickBlock()){
             return
         }
-        Log.e("TAG", "doConfirm: ", )
         if (etAddSiteRemark.text.toString().isEmpty()) {
             mToast(R.string.lack_info)
             return
