@@ -2,19 +2,14 @@ package com.xiaoneng.ss.module.school.view
 
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
 import com.xiaoneng.ss.common.state.AppInfo
 import com.xiaoneng.ss.common.state.UserInfo
-import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.mStartActivity
-import com.xiaoneng.ss.common.utils.netResponseFormat
 import com.xiaoneng.ss.module.school.adapter.SchoolAdapter
-import com.xiaoneng.ss.module.school.model.SalaryResponse
 import com.xiaoneng.ss.module.school.model.SchoolBean
 import com.xiaoneng.ss.module.school.model.SchoolItemBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
@@ -55,7 +50,7 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                     icon = R.drawable.ic_changdi,
                     click = View.OnClickListener {
                         var b = UserInfo.getUserBean()
-                        Log.e("====bean", UserInfo.getUserBean().toString() )
+                        Log.e("====bean", UserInfo.getUserBean().toString())
                         mStartActivity<BookSiteActivity>(context)
                     }
                 )
@@ -137,14 +132,14 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
 
         if (AppInfo.checkRule1("disk/folder/default")) {
             bean1.items.add(
-                    SchoolItemBean(
-                            name = getString(R.string.diskTitle),
-                            remark = "校本资源 协同备课",
-                            icon = R.drawable.ic_yunpan,
-                            click = View.OnClickListener {
-                                mStartActivity<CloudDiskActivity>(context)
-                            }
-                    )
+                SchoolItemBean(
+                    name = getString(R.string.diskTitle),
+                    remark = "校本资源 协同备课",
+                    icon = R.drawable.ic_yunpan,
+                    click = View.OnClickListener {
+                        mStartActivity<CloudDiskActivity>(context)
+                    }
+                )
             )
         }
 
