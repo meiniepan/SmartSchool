@@ -1,19 +1,16 @@
 package com.xiaoneng.ss.module.circular.view
 
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleFragment
-import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.FragmentVpAdapter
 import com.xiaoneng.ss.common.utils.eventBus.CleanAllEvent
 import com.xiaoneng.ss.common.utils.eventBus.OnPushEvent
 import com.xiaoneng.ss.common.utils.eventBus.RefreshUnreadEvent
-import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.toIntSafe
 import com.xiaoneng.ss.module.circular.model.NoticeBean
 import com.xiaoneng.ss.module.circular.viewmodel.CircularViewModel
@@ -31,7 +28,7 @@ import org.greenrobot.eventbus.ThreadMode
 class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
     private lateinit var fragmentAdapter: FragmentVpAdapter
     private var fragmentList = ArrayList<Fragment>()
-    var  fragment1:NoticeFragment2=NoticeFragment2.getInstance()
+    var fragment1: NoticeFragment2 = NoticeFragment2.getInstance()
     var mData = ArrayList<NoticeBean>()
     override fun getLayoutId(): Int = R.layout.fragment_circular
 
@@ -145,7 +142,7 @@ class CircularFragment : BaseLifeCycleFragment<CircularViewModel>() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun cleanAll(event: CleanAllEvent) {
         var unread = event.unread
-        if (unread == "1" ) {
+        if (unread == "1") {
             tvCleanMsg.visibility = View.VISIBLE
         } else {
             tvCleanMsg.visibility = View.GONE

@@ -44,7 +44,7 @@ import java.io.FileOutputStream;
  */
 public class OssUtils {
     static String END_POINT = UserInfo.INSTANCE.getUserBean().getDomain();
-//    static String END_POINT = "oss-cn-beijing.aliyuncs.com";
+    //    static String END_POINT = "oss-cn-beijing.aliyuncs.com";
     static String BUCKET = "xiaoneng";
     private static String OBJECT_KEY = "avatar/student/id/avatar";
     private static String FILE_PATH = "student/id/fileName";
