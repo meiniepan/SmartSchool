@@ -14,6 +14,7 @@ import com.xiaoneng.ss.common.callback.LoadingCallBack
 import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.StateType
 import com.xiaoneng.ss.common.utils.CommonUtil
+import com.xiaoneng.ss.common.utils.mAlert
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.mainLogin
 import com.xiaoneng.ss.module.school.view.SalaryCaptchaActivity
@@ -65,11 +66,8 @@ abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
 
     open fun showTip(msg: String) {
         if (!TextUtils.isEmpty(msg)) {
-            MaterialDialog(this).show {
-                title(R.string.title)
-                message(text = msg)
-                cornerRadius(8.0f)
-                positiveButton(R.string.doneM)
+            mAlert(msg){
+
             }
         }
         loadService.showCallback(SuccessCallback::class.java)
@@ -77,16 +75,10 @@ abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
 
     open fun showNotLoginTip(msg: String) {
         if (!TextUtils.isEmpty(msg)) {
-            MaterialDialog(this).show {
-                title(R.string.title)
-                message(text = msg)
-                cornerRadius(8.0f)
-                positiveButton(R.string.doneM)
-                positiveButton {
-                    mainLogin(this@BaseLifeCycleActivity)
-                }
-                cancelOnTouchOutside(false)
+            mAlert(msg){
+                mainLogin(this@BaseLifeCycleActivity)
             }
+
         }
         loadService.showCallback(SuccessCallback::class.java)
     }
