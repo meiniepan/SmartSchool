@@ -64,8 +64,9 @@ object DateUtil {
     }
 
     @SuppressLint("SimpleDateFormat")
-    fun formatTitleToday(date: String = ""): String {
+    fun formatTitleToday(date0: String = ""): String {
         var cal = Calendar.getInstance()
+            var date = formatDateString(date0)
         if (date.length >= 8) {
             cal.set(Calendar.YEAR, date.substring(0, 4).toInt())
             cal.set(Calendar.MONTH, date.substring(4, 6).toInt() - 1)
@@ -76,32 +77,38 @@ object DateUtil {
 
     }
 
+    fun formatDateString(date0: String): String {
+        var date = ""
+        date = date0.replace("-", "")
+        date = date.replace("/", "")
+        return date
+    }
+
     @SuppressLint("SimpleDateFormat")
     fun formatShowTime(date: String): String {
-        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
-        var result = ""
-        if (date.length > 10) {
-            if (isSameDay(date)) {
-                result = date.substring(
-                    11,
-                    date.length
-                )
-            } else if (isSameYear(date)) {
-                result = date.substring(
-                    5,
-                    date.length
-                )
-            } else {
-                result = date.substring(
-                    2,
-                    date.length
-                )
-            }
-
-        }else{
-            result = date
-        }
-        return result
+//        var result = ""
+//        if (date.length > 10) {
+//            if (isSameDay(date)) {
+//                result = date.substring(
+//                    11,
+//                    date.length
+//                )
+//            } else if (isSameYear(date)) {
+//                result = date.substring(
+//                    5,
+//                    date.length
+//                )
+//            } else {
+//                result = date.substring(
+//                    2,
+//                    date.length
+//                )
+//            }
+//
+//        } else {
+//            result = date
+//        }
+        return date
 
     }
 
@@ -141,9 +148,8 @@ object DateUtil {
     }
 
 
-
     fun formatDateCustomWeekDay(date: Long = System.currentTimeMillis()): String {
-        val sdf = SimpleDateFormat("yyyy年MM月dd "+ getWeek(Date(date)))
+        val sdf = SimpleDateFormat("yyyy年MM月dd " + getWeek(Date(date)))
         return sdf.format(Date(date))
 
     }
@@ -284,7 +290,7 @@ object DateUtil {
     }
 
 
-    fun isSameDay(date: Long = Date().time,date0: Long = System.currentTimeMillis()): Boolean {
+    fun isSameDay(date: Long = Date().time, date0: Long = System.currentTimeMillis()): Boolean {
         var cal1: Calendar = Calendar.getInstance()
         var cal2: Calendar = Calendar.getInstance()
         var date1 = Date(date0)
@@ -367,11 +373,11 @@ object DateUtil {
         }
     }
 
-    fun getTimeInMillis(day:String?): Long {
+    fun getTimeInMillis(day: String?): Long {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
-        return if (day.isNullOrEmpty()){
+        return if (day.isNullOrEmpty()) {
             System.currentTimeMillis()
-        }else{
+        } else {
             sdf.parse(day).time
         }
     }
