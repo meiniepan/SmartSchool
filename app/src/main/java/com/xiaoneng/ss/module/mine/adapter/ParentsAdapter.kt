@@ -3,6 +3,7 @@ package com.xiaoneng.ss.module.mine.adapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
+import com.xiaoneng.ss.common.utils.formatStarPhoneNum
 import com.xiaoneng.ss.model.ParentBean
 
 
@@ -19,7 +20,7 @@ class ParentsAdapter(layoutId: Int, listData: MutableList<ParentBean>?) :
     override fun convert(viewHolder: BaseViewHolder?, item: ParentBean) {
         viewHolder?.let { holder ->
             holder.addOnClickListener(R.id.tvUnbindParent)
-            holder.setText(R.id.tvPhoneParent, item.phone)
+            holder.setText(R.id.tvPhoneParent, formatStarPhoneNum(item.phone))
 
         }
     }
