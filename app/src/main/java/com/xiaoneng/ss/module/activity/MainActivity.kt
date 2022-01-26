@@ -47,8 +47,6 @@ class MainActivity : BaseLifeCycleActivity<AccountViewModel>() {
     private var fragmentList = ArrayList<Fragment>()
 
     private val mPermissions = arrayOf(
-        Manifest.permission.CAMERA,
-        Manifest.permission.RECORD_AUDIO,
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )

@@ -55,6 +55,7 @@ class LeaveTypeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
+        initPermission(mPermissionsCam)
         tvTimeToday.text = "您的请假时间是" + DateUtil.formatTitleToday()
         leaveType = intent.getStringExtra(Constant.LEAVE_TYPE)!!
         bean = intent.getParcelableExtra(Constant.DATA)

@@ -1,6 +1,7 @@
 package com.xiaoneng.ss.base.view
 
 
+import android.Manifest
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -11,6 +12,8 @@ import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.viewmodel.BaseViewModel
 import com.xiaoneng.ss.common.callback.EmptyCallBack
 import com.xiaoneng.ss.common.callback.LoadingCallBack
+import com.xiaoneng.ss.common.permission.PermissionResult
+import com.xiaoneng.ss.common.permission.Permissions
 import com.xiaoneng.ss.common.state.State
 import com.xiaoneng.ss.common.state.StateType
 import com.xiaoneng.ss.common.utils.CommonUtil
@@ -18,6 +21,7 @@ import com.xiaoneng.ss.common.utils.mAlert
 import com.xiaoneng.ss.common.utils.mStartActivity
 import com.xiaoneng.ss.common.utils.mainLogin
 import com.xiaoneng.ss.module.school.view.SalaryCaptchaActivity
+import pub.devrel.easypermissions.AppSettingsDialog
 
 
 /**
@@ -29,6 +33,12 @@ import com.xiaoneng.ss.module.school.view.SalaryCaptchaActivity
  */
 abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
     protected lateinit var mViewModel: VM
+     val mPermissionsCam = arrayOf(
+        Manifest.permission.CAMERA,
+    )
+     val mPermissionsAudio = arrayOf(
+        Manifest.permission.RECORD_AUDIO,
+    )
 
     override fun initView() {
 
@@ -102,6 +112,33 @@ abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity() {
 
     open fun showEmpty() {
         loadService.showCallback(EmptyCallBack::class.java)
+    }
+
+     fun initPermission(permissions: Array<String>) {
+        Permissions(this).request(*permissions).observe(
+            this, Observer {
+                when (it) {
+
+                    // 进入设置界面申请权限
+                    is PermissionResult.Rationale -> {
+                        AppSettingsDialog.Builder(this)
+                            .setTitle("申请权限")
+                            .setRationale("没有相关权限应用将无法正常运行，点击确定进入权限设置界面来进行更改")
+                            .build()
+                            .show()
+                    }
+                    // 进入设置界面申请权限
+                    is PermissionResult.Deny -> {
+                        AppSettingsDialog.Builder(this)
+                            .setTitle("申请权限")
+                            .setRationale("没有相关权限应用将无法正常运行，点击确定进入权限设置界面来进行更改")
+                            .build()
+                            .show()
+                    }
+                }
+            }
+        )
+
     }
 
     /**

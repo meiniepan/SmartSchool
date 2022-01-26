@@ -44,6 +44,7 @@ class PropertyActivity : BaseLifeCycleActivity<SchoolViewModel>() {
 
     override fun initView() {
         super.initView()
+        initPermission(mPermissionsAudio)
         initViewPager()
         initTab()
         initUI()

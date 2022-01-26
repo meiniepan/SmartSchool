@@ -46,6 +46,7 @@ class MineInfoActivity : BaseLifeCycleActivity<AccountViewModel>() {
 //        if (!isSystemWhiteList()){
 //            mAlert("为不影响使用，请把智慧校园加入系统白名单"){}
 //        }
+        initPermission(mPermissionsCam)
         var bean = UserInfo.getUserBean()
         var name = bean.realname
         var phone = bean.phone
