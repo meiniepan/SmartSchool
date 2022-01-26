@@ -466,7 +466,6 @@ fun Context.mAlert(
         positiveButton {
             onConfirm()
         }
-        message {  }
         cancelOnTouchOutside(cancelOutside)
     }
 }
