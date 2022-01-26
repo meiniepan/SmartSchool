@@ -147,6 +147,32 @@
 
             <include layout="@layout/layout_split" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llItemZhuxiao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp">
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="变更/删除个人信息及注销账号" />
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_split" />
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/llDevSetting"
             android:layout_width="match_parent"

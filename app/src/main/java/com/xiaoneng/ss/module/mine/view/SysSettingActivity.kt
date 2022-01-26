@@ -61,6 +61,12 @@ class SysSettingActivity : BaseLifeCycleActivity<AccountViewModel>() {
         llItem3Setting.setOnClickListener {
             clearCache(this)
         }
+        llItemZhuxiao.setOnClickListener {
+            mAlert(
+                "变更/删除个人信息及注销账号请联系您所在学校的相关工作人员，对方将在15个工作日内完成核查和处理。",
+                "温馨提示"
+            ) {}
+        }
         llItem4Setting.setOnClickListener {
             mAlert(
                 "退出登录后将无法接收该账号信息",
