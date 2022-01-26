@@ -35,7 +35,7 @@ class LoginStuActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
     private var isHideFirst: Boolean = true
     private var isPwdType: Boolean = false
     private var timer: CountDownTimer? = null
-    private var isAgree: Boolean by SPreference(Constant.AGREE_PROTOCOL,false)
+    private var isAgree: Boolean by SPreference(Constant.AGREE_PROTOCOL_STU,false)
 
     override fun getLayoutId() = R.layout.activity_login_stu
 

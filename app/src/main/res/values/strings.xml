@@ -12,6 +12,7 @@
     <string name="doneM">确定</string>
     <string name="deleteSure">确定删除？</string>
     <string name="errFile">不支持该文件</string>
+    <string name="user_protocol">用户协议及隐私政策</string>
 
     <string name="organizeTitle">组织架构</string>
     <string name="scheduleTitle">日程安排</string>

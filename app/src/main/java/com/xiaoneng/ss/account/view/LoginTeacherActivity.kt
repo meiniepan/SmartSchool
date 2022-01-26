@@ -35,7 +35,8 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
     private var isPwdType: Boolean = false
     private var timer: CountDownTimer? = null
     var isTeacher = true
-    private var isAgree: Boolean by SPreference(Constant.AGREE_PROTOCOL, false)
+    private var isAgreeTea: Boolean by SPreference(Constant.AGREE_PROTOCOL_TEA, false)
+    private var isAgreePar: Boolean by SPreference(Constant.AGREE_PROTOCOL_PAR, false)
 
     override fun getLayoutId() = R.layout.activity_login_tea
 
@@ -79,9 +80,18 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
             }
             return@setOnEditorActionListener false
         }
-        cbProtocol.isChecked = isAgree
+        if (isTeacher) {
+            cbProtocol.isChecked = isAgreeTea
+        } else {
+            cbProtocol.isChecked = isAgreePar
+        }
+
         cbProtocol.setOnCheckedChangeListener { buttonView, isChecked ->
-            isAgree = isChecked
+            if (isTeacher) {
+                isAgreeTea = isChecked
+            } else {
+                isAgreePar = isChecked
+            }
         }
     }
 
@@ -162,6 +172,12 @@ class LoginTeacherActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnC
         var phoneStr = etPhoneTeacher.text.toString()
         var vCodeStr = etCaptchaTeacher.text.toString()
         var pwdStr = etPwd.text.toString()
+        var isAgree = false
+        if (isTeacher) {
+           isAgree = isAgreeTea
+        } else {
+            isAgree = isAgreePar
+        }
         if (!isAgree) {
             showTip("请先同意用户协议及隐私政策")
         } else {
