@@ -32,6 +32,7 @@ object Constant {
     const val DEVICE_TOKEN = "device_token"
     const val DEV_URL = "dev_url"
     const val AGREE_PROTOCOL = "agree_protocol"
+    const val AGREE_PROTOCOL_REG = "agree_protocol_reg"
     const val AGREE_PROTOCOL_TEA = "agree_protocol_tea"
     const val AGREE_PROTOCOL_PAR = "agree_protocol_par"
     const val AGREE_PROTOCOL_STU = "agree_protocol_stu"

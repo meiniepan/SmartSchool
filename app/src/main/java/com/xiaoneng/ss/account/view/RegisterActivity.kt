@@ -26,7 +26,7 @@ class RegisterActivity : BaseLifeCycleActivity<AccountViewModel>(), View.OnClick
     private var isHideFirst: Boolean = true
     private var isPwdType: Boolean = true
     private var timer: CountDownTimer? = null
-    private var isAgree: Boolean by SPreference(Constant.AGREE_PROTOCOL,false)
+    private var isAgree: Boolean by SPreference(Constant.AGREE_PROTOCOL_REG,false)
 
     override fun getLayoutId(): Int = R.layout.activity_register
 
