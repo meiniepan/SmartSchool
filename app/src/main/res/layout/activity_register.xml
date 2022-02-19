@@ -177,7 +177,7 @@
                     android:background="@null"
                     android:paddingTop="14dp"
                     android:paddingBottom="14dp"
-                    android:hint="输入教育号（选填）"
+                    android:hint="输入学籍号（选填）"
                     android:inputType="phone"
                     android:textSize="@dimen/sp_16" />
             </LinearLayout>
