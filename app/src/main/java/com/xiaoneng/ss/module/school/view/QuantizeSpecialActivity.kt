@@ -126,8 +126,10 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         classes = mDataClasses
         arr1.add("病假")
         arr1.add("事假")
+        arr1.add("住宿生外出")
+        arr1.add("课外活动")
         arr1.add("外出考试")
-        arr1.add("学校活动")
+        arr1.add("个人培训")
         arr1.add("其他")
 
 //        llClass.setOnClickListener {
