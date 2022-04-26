@@ -674,6 +674,7 @@ fun String?.endIsImage(): Boolean {
             || it.endsWith(".png")
             || it.endsWith(".jpeg")
             || it.endsWith(".gif")
+            || it.endsWith(".heic")//ios图片格式
             || it.endsWith(".bmp")
         ) {
             return true
