@@ -36,6 +36,7 @@ data class UserBean(
     var parentphone: String? = null,
     var parentuid: String? = null,
     var parentname: String? = null,
+    var levelmaster: String? = null,//年级组长
     var classmaster: String? = null,//是否班主任
     var isad: String? = null,//学生是否是考勤员
     var roleid: String? = null,

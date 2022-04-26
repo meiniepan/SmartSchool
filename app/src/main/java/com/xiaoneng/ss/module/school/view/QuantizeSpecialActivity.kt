@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
+import com.xiaoneng.ss.common.state.AppInfo.checkRule2
 import com.xiaoneng.ss.common.state.UserInfo
 import com.xiaoneng.ss.common.utils.*
 import com.xiaoneng.ss.model.ClassBean
@@ -147,7 +148,15 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     }
                 }
                 putExtra(Constant.TYPE, 2)
-                putExtra(Constant.TYPE2, 0)
+                //是否全量班级
+                if(checkRule2("moral/moralScore/examines")) {//德育老师
+
+                }else if(UserInfo.getUserBean().levelmaster=="1") {//年级组长
+                    putExtra(Constant.TYPE2, 0)
+                }else if(UserInfo.getUserBean().classmaster=="1") {//班主任
+                    putExtra(Constant.TYPE2, 0)
+                }else {
+                }
             }
         }
 
