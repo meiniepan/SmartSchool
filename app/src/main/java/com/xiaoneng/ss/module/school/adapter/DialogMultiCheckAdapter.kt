@@ -20,7 +20,12 @@ class DialogMultiCheckAdapter(layoutId: Int, listData: MutableList<MultiCheckBea
     override fun convert(viewHolder: BaseViewHolder, item: MultiCheckBean) {
         viewHolder?.let { holder ->
             holder.setText(R.id.tvDialogList, item.name)
-            holder.setGone(R.id.ivChecked,item.isChecked)
+            holder.setGone(R.id.ivChecked, item.isChecked)
+            if (item.canCheck) {
+                holder.setTextColor(R.id.tvDialogList, mContext.resources.getColor(R.color.black))
+            } else {
+                holder.setTextColor(R.id.tvDialogList, mContext.resources.getColor(R.color.commonHint))
+            }
 
 //                .setText(R.id.tvTime3,item?.noticetime)
 //

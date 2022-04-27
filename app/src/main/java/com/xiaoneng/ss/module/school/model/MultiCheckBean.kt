@@ -15,5 +15,6 @@ import kotlinx.android.parcel.Parcelize
 data class MultiCheckBean(
     var id: String? = "",
     var name: String? = "",
-    var isChecked: Boolean = false
+    var isChecked: Boolean = false,
+    var canCheck: Boolean = true
 ) : Parcelable

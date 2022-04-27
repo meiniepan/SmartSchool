@@ -290,8 +290,8 @@ inline fun Activity.showDateSection(
                 var timess =
                     "${year}-${monthStart?.to0String()}-${dayStart?.to0String()} ~ ${yearEnd}-${monthEnd?.to0String()}-${dayEnd?.to0String()}"
                 textView.text = timess
-                "${year}${monthStart?.to0String()}${dayStart?.to0String()}".block()
-                "${year}${monthEnd?.to0String()}${dayEnd?.to0String()}".blockEnd()
+                "${year}-${monthStart?.to0String()}-${dayStart?.to0String()}".block()
+                "${year}-${monthEnd?.to0String()}-${dayEnd?.to0String()}".blockEnd()
             }
 
 

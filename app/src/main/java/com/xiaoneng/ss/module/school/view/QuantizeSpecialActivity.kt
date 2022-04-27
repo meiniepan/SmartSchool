@@ -3,6 +3,7 @@ package com.xiaoneng.ss.module.school.view
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -148,13 +149,13 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 }
                 putExtra(Constant.TYPE, 2)
                 //是否全量班级
-                if(checkRule2("moral/moralScore/examines")) {//德育老师
+                if (checkRule2("moral/moralScore/examines")) {//德育老师
 
-                }else if(UserInfo.getUserBean().levelmaster=="1") {//年级组长
+                } else if (UserInfo.getUserBean().levelmaster == "1") {//年级组长
                     putExtra(Constant.TYPE2, 0)
-                }else if(UserInfo.getUserBean().classmaster=="1") {//班主任
+                } else if (UserInfo.getUserBean().classmaster == "1") {//班主任
                     putExtra(Constant.TYPE2, 0)
-                }else {
+                } else {
                 }
             }
         }
@@ -191,14 +192,15 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         llRule.setOnClickListener {
             val sdf = SimpleDateFormat("yyyy-MM-dd")
             var year = Calendar.getInstance().get(Calendar.YEAR)
-            var month = Calendar.getInstance().get(Calendar.MONTH)+1
+            var month = Calendar.getInstance().get(Calendar.MONTH) + 1
             var day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
             commit.stime?.let {
                 var ss = "${year}-${month.toString().to0String()}-${day.toString().to0String()}"
+                Log.e("stime====", it)
                 var mill1 = sdf.parse(ss).time
                 var mill2 = sdf.parse(it).time
 
-                if (mill2>mill1){
+                if (mill2 > mill1) {
                     canCheck = true
                 }
             }
@@ -311,7 +313,11 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         var titles = ArrayList<MultiCheckBean>()
         mDataType?.let {
             it.forEach {
-                titles.add(MultiCheckBean(id = it.id, name = it.typename))
+                if (it.typename.equals("入校迟到")) {
+                    titles.add(MultiCheckBean(id = it.id, name = it.typename,canCheck = canCheck))
+                } else {
+                    titles.add(MultiCheckBean(id = it.id, name = it.typename))
+                }
             }
         }
         // 底部弹出对话框
