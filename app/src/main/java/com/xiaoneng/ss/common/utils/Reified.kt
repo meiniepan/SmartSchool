@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import cn.addapp.pickers.common.LineConfig
 import cn.addapp.pickers.picker.SinglePicker
+import cn.addapp.pickers.picker.TimePicker
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -113,6 +114,26 @@ inline fun Activity.showDatePick(
             }
 
         })
+        show()
+    }
+
+}
+
+inline fun Activity.showHourPick(
+    textView1: TextView,
+    crossinline block: String.() -> Unit
+) {
+
+    TimePicker(this, TimePicker.HOUR_24).apply {
+//            setActionButtonTop(false)
+        setSelectedTextColor(resources.getColor(R.color.themeColor))
+        setOnTimePickListener { hour, minute ->
+            var ss = hour +":"+ minute
+            textView1.text = ss
+            ss.block()
+        }
+
+
         show()
     }
 
@@ -221,18 +242,17 @@ inline fun Activity.showBirthDayPick(textView: TextView, crossinline block: Stri
 
 }
 
-inline fun Activity.showTimeSection(
+inline fun Activity.showDateSection(
     textView: TextView,
     crossinline block: String.() -> Unit,
     crossinline blockEnd: String.() -> Unit
 ) {
-    DateRangePicker(this, DateRangePicker.NONE).apply {
+    DateRangePicker(this, DateRangePicker.HOUR_24).apply {
 //            setActionButtonTop(false)
         val THIS_YEAR: Int = Calendar.getInstance().get(Calendar.YEAR)
         setSelectedTextColor(resources.getColor(R.color.themeColor))
         setDateRangeStart(THIS_YEAR-2, 1, 1)
         setDateRangeEnd(THIS_YEAR + 5, 11, 11)
-
         val config = LineConfig()
         config.setColor(-0x120000) //线颜色
         config.setAlpha(140) //线透明度

@@ -70,7 +70,7 @@ class ViewJump @JvmOverloads constructor(
             if (data.name == "CascaderClass") {
                 dialogSingle.show()
             } else if (data.name == "DatePickerMultiple") {
-                context.showTimeSection(tvJumpTitle,
+                context.showDateSection(tvJumpTitle,
                     { data.stime = this },
                     {
                         data.etime = this

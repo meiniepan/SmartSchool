@@ -21,5 +21,6 @@ data class QuantizeTypeBean(
     var schoolname: String? = null,
     var createtime: String? = null,
     var updatetime: String? = null,
+    var showspecial: String? = null,
     var checked: Boolean = false
 ) : Parcelable

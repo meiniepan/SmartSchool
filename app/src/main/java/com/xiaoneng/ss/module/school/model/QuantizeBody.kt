@@ -17,6 +17,8 @@ data class QuantizeBody(
     var token: String?=UserInfo.getUserBean().token,//
     var stime: String?=null,//
     var etime: String?=null,//
+    var shis: String?="00:00",//
+    var ehis: String?="23:59",//
     var checktime: String?=null,//
     var classid: String?=null,//
     var typeid: String?=null,//

@@ -3,7 +3,6 @@ package com.xiaoneng.ss.module.school.view
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -24,10 +23,10 @@ import com.xiaoneng.ss.model.ClassBean
 import com.xiaoneng.ss.module.school.adapter.DialogListAdapter
 import com.xiaoneng.ss.module.school.adapter.DialogMultiCheckAdapter
 import com.xiaoneng.ss.module.school.adapter.PropertyTypeAdapter
-import com.xiaoneng.ss.module.school.interfaces.IChooseStudent
 import com.xiaoneng.ss.module.school.model.*
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.activity_quantize_type_special.*
+import kotlinx.android.synthetic.main.item_notice.*
 import org.jetbrains.anko.toast
 import java.text.SimpleDateFormat
 import java.util.*
@@ -161,11 +160,27 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         }
 
         llTimeSec.setOnClickListener {
-            showTimeSection(tvTimeSec,
+            showDateSection(tvTimeSec,
                 { commit.stime = this },
                 {
                     commit.etime = this
                 }
+            )
+        }
+
+        tvTimeSec2.text = commit.shis
+        llTimeSec2.setOnClickListener {
+            showHourPick(tvTimeSec2,
+                { commit.shis = this }
+
+            )
+        }
+
+        tvTimeSec3.text = commit.ehis
+        llTimeSec3.setOnClickListener {
+            showHourPick(tvTimeSec3,
+                { commit.ehis = this }
+
             )
         }
 

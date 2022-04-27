@@ -86,7 +86,13 @@ class QuantizeActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                         if (checkRule2("moral/moralScore/add")) {
                             mData.addAll(it)
                         }
-                        mDataType.addAll(it)
+                        it.forEach {it2->
+                            if (it2.showspecial == "1") {
+                                it2.checked = false
+                                mDataType.add(it2)
+                            }
+                        }
+
                         rvQuantize.notifyDataSetChanged()
                     }
                 }
