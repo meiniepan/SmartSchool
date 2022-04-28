@@ -64,6 +64,13 @@ object DateUtil {
     }
 
     @SuppressLint("SimpleDateFormat")
+    fun getTodayStr(date: Long = System.currentTimeMillis()): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        return sdf.format(Date(date))
+
+    }
+
+    @SuppressLint("SimpleDateFormat")
     fun formatTitleToday(date0: String = ""): String {
         var cal = Calendar.getInstance()
             var date = formatDateString(date0)

@@ -77,6 +77,8 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                 toast(R.string.lack_info)
                 return@setOnClickListener
             }
+            commit.stime += " "+commit.shis
+            commit.etime += " "+commit.ehis
             mViewModel.addMoralScoreSpecial(commit)
         }
         tvLabel1.setOnClickListener {
@@ -94,7 +96,7 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
                     6
                 ) + "-" + etime?.substring(6, 8)
             }
-            commit.stime = stime
+            commit.stime = DateUtil.getTodayStr()
             commit.etime = etime
 
             tvLabel1.setBackgroundResource(R.drawable.bac_blue_oval)
@@ -112,7 +114,8 @@ class QuantizeSpecialActivity : BaseLifeCycleActivity<SchoolViewModel>() {
             } else {
                 year = year - 1
             }
-            commit.stime = year.toString() + "-09-01"
+//            commit.stime = year.toString() + "-09-01"
+            commit.stime = DateUtil.getTodayStr()
             commit.etime = (year + 1).toString() + "-08-31"
             tvLabel2.setBackgroundResource(R.drawable.bac_blue_oval)
             tvLabel2.setTextColor(resources.getColor(R.color.white))
