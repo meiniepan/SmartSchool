@@ -118,7 +118,7 @@ class TaskStatusAdapter(layoutId: Int, listData: MutableList<TaskDetailBean>?) :
                 tvRemark.visibility = View.GONE
             } else {
                 tvRemark.visibility = View.VISIBLE
-                tvRemark.text = item?.remark
+                tvRemark.text = "备注："+item?.remark
             }
 
         }
