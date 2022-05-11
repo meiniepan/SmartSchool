@@ -32,6 +32,7 @@ data class TaskDetailBean(
     var schoolname: String? = null,
     var schoolid: String? = null,
     var operatorname: String? = null,
+    var sendlabel: String? = null,
     var operatortype: String? = null,
     var createtime: String? = null,
     var updatetime: String? = null,

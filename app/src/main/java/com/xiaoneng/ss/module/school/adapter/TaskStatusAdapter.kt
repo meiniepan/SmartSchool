@@ -1,5 +1,6 @@
 package com.xiaoneng.ss.module.school.adapter
 
+import android.text.TextUtils.isEmpty
 import android.view.View
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -25,11 +26,24 @@ class TaskStatusAdapter(layoutId: Int, listData: MutableList<TaskDetailBean>?) :
             var statusStr = ""
             var line2Str = "负责人：" + item?.operatorname
             var ss = ""
+            var sendlabel = item?.sendlabel
+            if (sendlabel == "all") {
+                sendlabel = "所有人"
+            } else if (sendlabel == "teacher") {
+                sendlabel = "所有老师"
+            } else if (sendlabel == "classmaster") {
+                sendlabel = "所有班主任"
+            } else if (sendlabel == "students") {
+                sendlabel = "所有学生"
+            }
+            if (!isEmpty(sendlabel)) {
+                ss = sendlabel + "、"
+            }
             item?.involve?.let {
                 ss = if (it.size > 3) {
-                    it[0].realname + "、" +
+                    ss + it[0].realname + "、" +
                             it[1].realname + "、" +
-                            it[2].realname + "等" + item.involve.size + "人..."
+                            it[2].realname + "等" + it.size + "人..."
                 } else {
                     if (it.size > 0) {
                         it.forEach {
@@ -37,6 +51,9 @@ class TaskStatusAdapter(layoutId: Int, listData: MutableList<TaskDetailBean>?) :
                         }
                         ss.substring(0, ss.length - 1)
                     } else {
+                        if (ss.length > 0) {
+                            ss = ss.substring(0, ss.length - 1)
+                        }
                         ss
                     }
 

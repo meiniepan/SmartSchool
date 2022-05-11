@@ -68,7 +68,7 @@ class TaskActivity : BaseLifeCycleActivity<SchoolViewModel>() {
         statusR.add("1")
 
         if (UserInfo.getUserBean().usertype != "1") {
-            mType = "2"
+            mType = "1"
             ivAddTask.visibility = View.VISIBLE
             llTitlePublish.visibility = View.VISIBLE
         } else {
