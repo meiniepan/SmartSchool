@@ -2,14 +2,18 @@ package com.xiaoneng.ss.base.view
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.SkinAppCompatDelegateImpl
 import androidx.core.graphics.ColorUtils
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
@@ -23,6 +27,7 @@ import com.zackratos.ultimatebarx.library.UltimateBarX
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import skin.support.SkinCompatManager
 
 
 /**
@@ -160,10 +165,34 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
+//    override fun getDelegate(): AppCompatDelegate {
+//        return SkinAppCompatDelegateImpl.get(this, this)
+//    }
+//
+//    override fun onConfigurationChanged(newConfig: Configuration) {
+//        val nightModeFlags:Int = resources.configuration.uiMode and
+//                Configuration.UI_MODE_NIGHT_MASK
+//        Log.e("theme====", nightModeFlags.toString() )
+//        when (nightModeFlags) {
+//            Configuration.UI_MODE_NIGHT_YES -> {
+//                SkinCompatManager.getInstance().loadSkin("night", SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN); // 后缀加载
+//
+//            }
+//            Configuration.UI_MODE_NIGHT_NO -> {
+//                SkinCompatManager.getInstance().restoreDefaultTheme(); // 后缀加载
+//            }
+//            Configuration.UI_MODE_NIGHT_UNDEFINED -> {
+//            }
+//        }
+//
+//        super.onConfigurationChanged(newConfig)
+//    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun changeThemeEvent(event: ChangeThemeEvent) {
         initStatusColor(0)
     }
+
+
 
 }

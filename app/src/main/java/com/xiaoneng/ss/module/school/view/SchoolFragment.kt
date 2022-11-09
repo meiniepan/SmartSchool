@@ -14,6 +14,7 @@ import com.xiaoneng.ss.module.school.model.SchoolBean
 import com.xiaoneng.ss.module.school.model.SchoolItemBean
 import com.xiaoneng.ss.module.school.viewmodel.SchoolViewModel
 import kotlinx.android.synthetic.main.fragment_school.*
+import skin.support.SkinCompatManager
 
 /**
  * Created with Android Studio.
@@ -49,9 +50,11 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                     remark = "场地时段 一目了然",
                     icon = R.drawable.ic_changdi,
                     click = View.OnClickListener {
-                        var b = UserInfo.getUserBean()
-                        Log.e("====bean", UserInfo.getUserBean().toString())
-                        mStartActivity<BookSiteActivity>(context)
+//                        var b = UserInfo.getUserBean()
+//                        Log.e("====bean", UserInfo.getUserBean().toString())
+//                        mStartActivity<BookSiteActivity>(context)
+//                        SkinCompatManager.getInstance().loadSkin("night", SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN); // 后缀加载
+
                     }
                 )
             )
@@ -63,7 +66,9 @@ class SchoolFragment : BaseLifeCycleFragment<SchoolViewModel>() {
                     remark = "快速准确 一键提醒",
                     icon = R.drawable.ic_tonggao,
                     click = View.OnClickListener {
-                        mStartActivity<NoticeActivity>(context)
+//                        mStartActivity<NoticeActivity>(context)
+//                        SkinCompatManager.getInstance().restoreDefaultTheme(); // 后缀加载
+
                     }
                 )
             )

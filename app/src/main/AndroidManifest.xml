@@ -88,9 +88,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".account.view.LoginStuActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"/>
 
-        </activity>
+        <activity
+            android:name=".module.activity.MyTestActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".account.view.RegisterActivity"
             android:screenOrientation="portrait" />
