@@ -4,7 +4,6 @@ import android.os.CountDownTimer
 import android.os.Handler
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import androidx.core.view.marginLeft
 import androidx.core.view.marginRight
 import androidx.lifecycle.Lifecycle
@@ -14,11 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.xiaoneng.ss.R
-import com.xiaoneng.ss.common.utils.formatMemorySize
-import com.xiaoneng.ss.common.utils.getFileIcon
-import com.xiaoneng.ss.common.utils.toLongSafe
 import com.xiaoneng.ss.module.school.model.FileInfoBean
-import kotlinx.android.synthetic.main.activity_my_test.*
 
 
 /**
@@ -31,9 +26,8 @@ import kotlinx.android.synthetic.main.activity_my_test.*
 class ImageMarqueeAdapter(layoutId: Int, listData: MutableList<FileInfoBean>?) :
     BaseQuickAdapter<FileInfoBean, BaseViewHolder>(layoutId, listData), LifecycleObserver {
     private var timer: CountDownTimer? = null
-    var childNum = 0
     var mWidth = 0
-    var mPWidth = 0
+    var mParentWidth = 0
     var xScrolled = 0
     lateinit var ll: View
     var paused = false
@@ -68,26 +62,27 @@ class ImageMarqueeAdapter(layoutId: Int, listData: MutableList<FileInfoBean>?) :
 
     private fun initTimer() {
         Log.e("initTimer===", "initTimer")
-        if (timer==null) {
-            mWidth = ll.width + ll.marginLeft + ll.marginRight
-            childNum = recyclerView.childCount
-            mPWidth = recyclerView.width - recyclerView.paddingLeft - recyclerView.paddingRight
-            Log.e("scrollToEnd: childNum", childNum.toString())
-            Log.e("scrollToEnd: mPWidth", mPWidth.toString())
-            Log.e("scrollToEnd: mWidth", mWidth.toString())
-            if (mData.size * mWidth < mPWidth) {
+        if (timer == null) {
+            //单个item宽度
+            mWidth = ll.width + ll.marginLeft + ll.marginRight//单个item宽度
+            //recyclerView宽度
+            mParentWidth = recyclerView.width - recyclerView.paddingLeft - recyclerView.paddingRight
+            //如果可以显示完整，返回
+            if (mData.size * mWidth < mParentWidth) {
                 return
             }
-            var xTotalScroll = mWidth * mData.size - mPWidth + 50L
-            Log.e("xTotalScroll", xTotalScroll.toString())
+            //需要滚动的总长度
+            var xTotalScroll = mWidth * mData.size - mParentWidth + 50L
+            //滚动间隔
             var interval = 50L
+            //每次滚动距离
             var step = 20
+            //总共滚动时间
             var time = xTotalScroll / step * interval
-            Log.e("time", time.toString())
             timer = object : CountDownTimer(time, interval) {
                 override fun onFinish() {
-                    Log.e("onFinish", timer.toString())
                     Handler().postDelayed({
+                        //重置滚动状态
                         xScrolled = 0
                         recyclerView.scrollToPosition(0)
                     }, 1000)
@@ -95,9 +90,8 @@ class ImageMarqueeAdapter(layoutId: Int, listData: MutableList<FileInfoBean>?) :
                 }
 
                 override fun onTick(p0: Long) {
-                    Log.e("onTick", p0.toString())
                     recyclerView.scrollBy(step, 0)
-                    xScrolled += 20
+                    xScrolled += step
                 }
             }
             realScroll()
@@ -112,7 +106,7 @@ class ImageMarqueeAdapter(layoutId: Int, listData: MutableList<FileInfoBean>?) :
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        Log.e("onAttached===", recyclerView.toString())
+        //初始化跑马灯
         recyclerView.post {
             initTimer()
         }
@@ -120,6 +114,7 @@ class ImageMarqueeAdapter(layoutId: Int, listData: MutableList<FileInfoBean>?) :
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
+        //停止计时器
         stopWork()
     }
 
@@ -135,9 +130,6 @@ class ImageMarqueeAdapter(layoutId: Int, listData: MutableList<FileInfoBean>?) :
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun onPause() {
-        /*
-         确保Adapter#onDetachedFromRecyclerView被调用
-         */
         Log.e("onPause===", "onPause")
         paused = true
         stopWork()

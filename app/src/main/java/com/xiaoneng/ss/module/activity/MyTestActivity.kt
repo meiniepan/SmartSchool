@@ -2,7 +2,9 @@ package com.xiaoneng.ss.module.activity
 
 import android.os.CountDownTimer
 import android.os.Handler
+import android.view.MotionEvent
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.xiaoneng.ss.R
 import com.xiaoneng.ss.account.viewmodel.AccountViewModel
 import com.xiaoneng.ss.base.view.BaseLifeCycleActivity
@@ -44,6 +46,20 @@ class MyTestActivity : BaseLifeCycleActivity<AccountViewModel>() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             mAdapterFile.bindToRecyclerView(this)
         }
+        //禁止手动滑动
+        rvTest.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
+            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                return true
+            }
+
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+
+            }
+
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+
+            }
+        })
         lifecycle.addObserver(mAdapterFile)
         tv1.setOnClickListener {
             rvTest.scrollToPosition(0)
