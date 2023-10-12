@@ -143,6 +143,13 @@ abstract class BaseActivity : AppCompatActivity() {
             .color(Color.TRANSPARENT)
 //            .drawableRes(R.drawable.bac_blue_bac_19)
             .light(true)
+            .applyNavigationBar()
+
+        UltimateBarX.with(this)
+            .fitWindow(false)
+            .color(Color.TRANSPARENT)
+//            .drawableRes(R.drawable.bac_blue_bac_19)
+            .light(true)
             .applyStatusBar()
     }
 
