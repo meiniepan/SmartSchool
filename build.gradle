@@ -29,6 +29,25 @@ allprojects {
         maven { url 'https://dl.bintray.com/novoda-oss/snapshots/' }
         maven { url 'https://developer.huawei.com/repo/' }
         maven { url 'https://dl.bintray.com/umsdk/release' }
+
+        maven {
+            url 'https://maven.aliyun.com/repository/public'	// 云效的maven仓库
+        }
+        maven {
+            credentials {
+                username '633295fca5020a75d4d02848'		// 之前设置账号
+                password '5mQVMp-uIXDL'		// 密码
+            }
+            url 'https://packages.aliyun.com/maven/repository/2192081-release-cZkSeO/'
+        }
+        maven {
+            credentials {
+                username '633295fca5020a75d4d02848'		// 之前设置账号
+                password '5mQVMp-uIXDL'		// 之前设置账号
+            }
+            url 'https://packages.aliyun.com/maven/repository/2192081-snapshot-4wbzw8/'
+        }
+
     }
 }
 

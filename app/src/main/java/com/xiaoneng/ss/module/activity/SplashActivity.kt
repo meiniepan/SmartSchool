@@ -45,13 +45,13 @@ class SplashActivity : BaseLifeCycleActivity<AccountViewModel>() {
 
 
     private fun startIntent() {
-        if (TextUtils.isEmpty(UserInfo.getUserBean().token)) {
-            mainLogin(this)
-            finish()
-        } else {
-            mViewModel.getApps()
-        }
-
+//        if (TextUtils.isEmpty(UserInfo.getUserBean().token)) {
+//            mainLogin(this)
+//            finish()
+//        } else {
+//            mViewModel.getApps()
+//        }
+        mStartActivity<MyTestActivity>(this)
     }
 
     override fun onDestroy() {

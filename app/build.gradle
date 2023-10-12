@@ -8,11 +8,17 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'com.huawei.agconnect'
 
+
 def rootAndroidId = rootProject.ext.android
 def appId = rootProject.ext.appId
 def support = rootProject.ext.dependencies
 
 android {
+
+    lintOptions {
+        abortOnError false
+    }
+
     signingConfigs {
         release {
             storeFile file('SmartSchool.jks')
@@ -176,5 +182,55 @@ dependencies {
     implementation 'cn.jzvd:jiaozivideoplayer:7.6.0'
     //leak
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.3'
+    implementation 'skin.support:skin-support:4.0.5'   // skin-support
+    implementation 'skin.support:skin-support-appcompat:4.0.5'   // skin-support 基础控件支持
+    implementation 'skin.support:skin-support-design:4.0.5'            // skin-support-design material design 控件支持[可选]
+    implementation 'skin.support:skin-support-cardview:4.0.5'          // skin-support-cardview CardView 控件支持[可选]
+    implementation 'skin.support:skin-support-constraint-layout:4.0.5' // skin-support-constraint-layout ConstraintLayout 控件支持[可选]
 
+}
+
+apply plugin: 'maven-publish'
+
+afterEvaluate {
+    publishing {
+        repositories {
+            // 本地仓库
+            //maven {
+            //    name('modulelive')
+            //    url uri("../repo")
+            //}
+            // 远程仓库
+            maven {
+                name('ReleaseMaven')
+                url = 'https://packages.aliyun.com/maven/repository/2192081-release-cZkSeO/'				//私有maven库地址(这个是“非生成库”版本，可以设置成生产库的url)
+                credentials {
+                    username '633295fca5020a75d4d02848'			// 账号
+                    password '5mQVMp-uIXDL'			// 密码
+                }
+            }
+            maven {
+                name('SnapshotMaven')
+                url = 'https://packages.aliyun.com/maven/repository/2192081-snapshot-4wbzw8/'				//私有maven库地址(这个是“非生成库”版本，可以设置成生产库的url)
+                credentials {
+                    username '633295fca5020a75d4d02848'			// 账号
+                    password '5mQVMp-uIXDL'			// 密码
+                }
+            }
+        }
+        publications {
+            debugType(MavenPublication) {
+                from components.debug_apk
+                groupId "com.test.demo"
+                artifactId "mydemo"
+                version "1.0.5-SNAPSHOT"
+            }
+            releaseType(MavenPublication) {
+                from components.release_apk
+                groupId "com.test.demo"
+                artifactId "mydemo"
+                version "1.0.5"
+            }
+        }
+    }
 }

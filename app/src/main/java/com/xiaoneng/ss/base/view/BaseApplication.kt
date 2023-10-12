@@ -2,6 +2,7 @@ package com.xiaoneng.ss.base.view
 
 import android.app.Application
 import android.content.Context
+import android.content.res.Configuration
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import com.kingja.loadsir.core.LoadSir
@@ -23,16 +24,17 @@ import com.xiaoneng.ss.common.state.FileDownloadInfo
 import com.xiaoneng.ss.common.state.FileTransInfo
 import com.xiaoneng.ss.common.utils.Constant
 import com.xiaoneng.ss.common.utils.SPreference
-import com.xiaoneng.ss.common.utils.eventBus.ChangeThemeEvent
 import com.xiaoneng.ss.common.utils.eventBus.OnPushEvent
 import com.xiaoneng.ss.model.MyPushBean
 import org.android.agoo.huawei.HuaWeiRegister
 import org.android.agoo.oppo.OppoRegister
 import org.android.agoo.vivo.VivoRegister
 import org.android.agoo.xiaomi.MiPushRegistar
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
+import skin.support.SkinCompatManager
+import skin.support.app.SkinAppCompatViewInflater
+import skin.support.app.SkinCardViewInflater
+import skin.support.constraint.app.SkinConstraintViewInflater
+import skin.support.design.app.SkinMaterialViewInflater
 
 
 /**
@@ -69,7 +71,39 @@ open class BaseApplication : Application() {
             .commit()
         initSmartRefreshHeaderFooter()
         resetDownLoad()
+//        initSkin()
     }
+
+//    private fun initSkin() {
+//        SkinCompatManager.withoutActivity(this)
+//            .addInflater(SkinAppCompatViewInflater()) // 基础控件换肤初始化
+//            .addInflater(SkinMaterialViewInflater()) // material design 控件换肤初始化[可选]
+//            .addInflater(SkinConstraintViewInflater()) // ConstraintLayout 控件换肤初始化[可选]
+//            .addInflater(SkinCardViewInflater()) // CardView v7 控件换肤初始化[可选]
+////            .setSkinStatusBarColorEnable(false) // 关闭状态栏换肤，默认打开[可选]
+////            .setSkinWindowBackgroundEnable(false) // 关闭windowBackground换肤，默认打开[可选]
+//            .loadSkin()
+//
+//    }
+//
+//    override fun onConfigurationChanged(newConfig: Configuration?) {
+//        super.onConfigurationChanged(newConfig)
+//        //适配 Dark Mode
+//        val nightModeFlags:Int = resources.configuration.uiMode and
+//                Configuration.UI_MODE_NIGHT_MASK
+//        Log.e("theme====", nightModeFlags.toString() )
+//        when (nightModeFlags) {
+//            Configuration.UI_MODE_NIGHT_YES -> {
+//                SkinCompatManager.getInstance().loadSkin("night", SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN); // 后缀加载
+//
+//            }
+//            Configuration.UI_MODE_NIGHT_NO -> {
+//                SkinCompatManager.getInstance().restoreDefaultTheme(); // 后缀加载
+//            }
+//            Configuration.UI_MODE_NIGHT_UNDEFINED -> {
+//            }
+//        }
+//    }
 
     private fun resetDownLoad() {
         FileTransInfo.reset()
